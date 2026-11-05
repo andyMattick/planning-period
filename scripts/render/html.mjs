@@ -1,6 +1,7 @@
 // Print HTML for student copies, teacher copies, rubrics, slide handouts and review-game cards.
 // Letter size, black-and-white safe: color is only ever a second signal next to weight, borders or text.
 
+import { mathHtml as mh, withMathCss, plainMath } from './math.mjs';
 import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel } from './util.mjs';
 
 const qLabel = (n, ctx) => (ctx.dayLabels ? `Day ${n}` : numLabel(n, ctx.layout));
@@ -63,7 +64,7 @@ export function baseCss(ctx) {
 }
 
 function page(title, css, body) {
-  return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(title)}</title><style>${css}</style></head><body>${body}</body></html>`;
+  return withMathCss(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(title)}</title><style>${css}</style></head><body>${body}</body></html>`);
 }
 
 export const PREVIEW_MARK = 'PREVIEW — not approved for use';
@@ -99,7 +100,7 @@ function figureHtml(fig) {
 }
 
 function choiceCols(choices) {
-  const longest = Math.max(0, ...choices.map((c) => String(c).length));
+  const longest = Math.max(0, ...choices.map((c) => plainMath(c).length));
   if (choices.length === 4 && longest <= 14) return 'c4';
   if (longest <= 34) return 'c2';
   return 'c1';
@@ -111,12 +112,12 @@ function questionHtml(item, ver, ctx, teacher) {
   const type = q.type || 'short';
   const prompt = vv(q.prompt, ver);
   const ans = vv(q.answer, ver);
-  let inner = `<p>${esc(prompt)}${teacher ? `<span class="tag">L${esc(q.level ?? '?')} · ${esc(q.skill || 'skill')}</span>` : ''}</p>`;
+  let inner = `<p>${mh(prompt)}${teacher ? `<span class="tag">L${esc(q.level ?? '?')} · ${esc(q.skill || 'skill')}</span>` : ''}</p>`;
   inner += figureHtml(vv(q.figure, ver));
   if (type === 'mc') {
     const ch = vv(q.choices, ver) || [];
     inner += `<div class="choices ${choiceCols(ch)}">${ch
-      .map((c, i) => `<div class="ch${teacher && Number(ans) === i ? ' right' : ''}"><span class="l">${choiceLabel(i, L)}</span><span>${esc(c)}</span></div>`)
+      .map((c, i) => `<div class="ch${teacher && Number(ans) === i ? ' right' : ''}"><span class="l">${choiceLabel(i, L)}</span><span>${mh(c, { bold: teacher && Number(ans) === i })}</span></div>`)
       .join('')}</div>`;
   } else if (type === 'tf') {
     const t = tfValue(ans);
@@ -126,19 +127,19 @@ function questionHtml(item, ver, ctx, teacher) {
     const right = vv(q.choices, ver) || [];
     const a = Array.isArray(ans) ? ans : [];
     inner += `<div class="match"><div>${left
-      .map((x, i) => `<div class="row"><span class="blank">${teacher && a[i] != null ? letter(Number(a[i])) : '&nbsp;'}</span><span>${i + 1}. ${esc(x)}</span></div>`)
-      .join('')}</div><div>${right.map((x, i) => `<div class="row"><b>${letter(i)}.</b> <span>${esc(x)}</span></div>`).join('')}</div></div>`;
+      .map((x, i) => `<div class="row"><span class="blank">${teacher && a[i] != null ? letter(Number(a[i])) : '&nbsp;'}</span><span>${i + 1}. ${mh(x)}</span></div>`)
+      .join('')}</div><div>${right.map((x, i) => `<div class="row"><b>${letter(i)}.</b> <span>${mh(x)}</span></div>`).join('')}</div></div>`;
   }
   if (!teacher) {
     const lines = workLinesFor(q, ctx);
     if (lines > 0) inner += `<div class="work">${'<div class="wl"></div>'.repeat(lines)}</div>`;
     const unit = vv(q.unit, ver);
-    if (!['mc', 'tf', 'match', 'open'].includes(type)) inner += `<div class="ans"><span>Answer:</span><span class="ln"></span>${unit ? `<span>${esc(unit)}</span>` : ''}</div>`;
+    if (!['mc', 'tf', 'match', 'open'].includes(type)) inner += `<div class="ans"><span>Answer:</span><span class="ln"></span>${unit ? `<span>${mh(unit)}</span>` : ''}</div>`;
   }
   if (teacher) {
-    const accept = (q.accept || []).length ? ` <span class="small">(also accept: ${esc(q.accept.join('; '))})</span>` : '';
+    const accept = (q.accept || []).length ? ` <span class="small">(also accept: ${mh(q.accept.join('; '))})</span>` : '';
     const label = type === 'open' ? 'A strong answer' : 'Answer';
-    inner += `<div class="key"><div>${label}: <b>${esc(keyText(q, ver))}</b>${accept}</div>${q.why ? `<div class="why">Why: ${esc(vv(q.why, ver))}</div>` : ''}</div>`;
+    inner += `<div class="key"><div>${label}: <b>${mh(keyText(q, ver), { bold: true })}</b>${accept}</div>${q.why ? `<div class="why">Why: ${mh(vv(q.why, ver))}</div>` : ''}</div>`;
   }
   return `<div class="q${ctx.dayLabels ? ' day' : ''}"><div class="num">${qLabel(n, ctx)}</div><div class="body">${inner}</div></div>`;
 }
@@ -168,7 +169,7 @@ function skillsMapHtml(doc, ver) {
   <table><tr><th>#</th><th>Skill</th><th>Level</th><th>Type</th><th>Key${ver ? ` (version ${esc(ver)})` : ''}</th></tr>${items
     .map(
       ({ q, n }) =>
-        `<tr><td>${n}</td><td>${esc(q.skill || '')}</td><td>${esc(q.level ?? '')}</td><td>${esc(q.type || 'short')}</td><td><b>${esc(keyText(q, ver))}</b></td></tr>`
+        `<tr><td>${n}</td><td>${esc(q.skill || '')}</td><td>${esc(q.level ?? '')}</td><td>${esc(q.type || 'short')}</td><td><b>${mh(keyText(q, ver), { bold: true })}</b></td></tr>`
     )
     .join('')}</table>`;
 }
@@ -187,7 +188,7 @@ function headerHtml(doc, ver, ctx, teacher) {
   const sub = [o.grade && `Grade ${o.grade}`, ctx.subjectLabel, o.topic].filter(Boolean).join(' · ');
   return `${teacher ? `<div class="tbanner">TEACHER COPY${ver ? ` · VERSION ${esc(ver)}` : ''} · the key is in bold, with why under each answer</div>` : fieldsHtml(ctx.layout)}
   <div class="titlerow"><div><h1>${esc(doc.title)}</h1>${teacher && sub ? `<p class="sub">${esc(sub)}</p>` : ''}</div>${ver ? `<div class="ver">Version ${esc(ver)}</div>` : ''}</div>
-  ${doc.directions ? `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${esc(vv(doc.directions, ver))}</p>` : ''}`;
+  ${doc.directions ? `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${mh(vv(doc.directions, ver))}</p>` : ''}`;
 }
 
 export function copyHtml(doc, ver, ctx, teacher) {
@@ -197,7 +198,7 @@ export function copyHtml(doc, ver, ctx, teacher) {
     // The heading and its directions travel with the first question: never alone at the foot of a page.
     let head = '';
     if (sec.heading) head += `<h2>${esc(sec.heading)}</h2>`;
-    if (sec.directions) head += `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${esc(vv(sec.directions, ver))}</p>`;
+    if (sec.directions) head += `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${mh(vv(sec.directions, ver))}</p>`;
     const qs = items.filter((it) => it.si === si).map((it) => questionHtml(it, ver, ctx, teacher));
     body += head ? `<div class="keep">${head}${qs[0] || ''}</div>${qs.slice(1).join('')}` : qs.join('');
   });
@@ -225,7 +226,7 @@ export function handoutHtml(doc, ctx) {
   const body = `${fieldsHtml(ctx.layout)}<h1>${esc(doc.title)}</h1>${doc.directions ? `<p class="directions">${esc(doc.directions)}</p>` : '<p class="directions">Follow along and add your own notes on the right.</p>'}
   ${slides
     .map(
-      (s, i) => `<div class="slide"><div><div class="snum">Slide ${i + 2}</div><h3>${esc(s.title)}</h3>${(s.bullets || []).length ? `<ul>${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}${figureHtml(s.figure)}</div>
+      (s, i) => `<div class="slide"><div><div class="snum">Slide ${i + 2}</div><h3>${esc(s.title)}</h3>${(s.bullets || []).length ? `<ul>${s.bullets.map((b) => `<li>${mh(b)}</li>`).join('')}</ul>` : ''}${figureHtml(s.figure)}</div>
       <div class="notes">My notes${'<div class="wl"></div>'.repeat(4)}</div></div>`
     )
     .join('')}`;
@@ -251,9 +252,9 @@ export function cardsHtml(doc, ctx, { days = false } = {}) {
     .map(({ q, n }) => {
       const ch = q.type === 'mc' ? vv(q.choices) || [] : [];
       const unit = vv(q.unit);
-      const line = days && !['mc', 'tf', 'match'].includes(q.type || 'short') ? `<div class="ans"><span>Answer:</span><span class="ln"></span>${unit ? `<span>${esc(unit)}</span>` : ''}</div>` : '';
-      return `<div class="card"><div class="cn">${days ? `Day ${n}` : n}</div><div class="cl">Level ${esc(q.level ?? '')}</div><p>${esc(vv(q.prompt))}</p>${figureHtml(vv(q.figure))}${
-        ch.length ? `<div class="choices">${ch.map((c, i) => `<div class="ch"><span class="l">${choiceLabel(i, ctx.layout)}</span><span>${esc(c)}</span></div>`).join('')}</div>` : ''
+      const line = days && !['mc', 'tf', 'match'].includes(q.type || 'short') ? `<div class="ans"><span>Answer:</span><span class="ln"></span>${unit ? `<span>${mh(unit)}</span>` : ''}</div>` : '';
+      return `<div class="card"><div class="cn">${days ? `Day ${n}` : n}</div><div class="cl">Level ${esc(q.level ?? '')}</div><p>${mh(vv(q.prompt))}</p>${figureHtml(vv(q.figure))}${
+        ch.length ? `<div class="choices">${ch.map((c, i) => `<div class="ch"><span class="l">${choiceLabel(i, ctx.layout)}</span><span>${mh(c)}</span></div>`).join('')}</div>` : ''
       }${q.type === 'tf' ? '<div class="tf"><span>True</span><span>False</span></div>' : ''}${line}</div>`;
     })
     .join('')}</div>`;

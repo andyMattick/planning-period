@@ -1,5 +1,6 @@
 // Shared helpers for the pack renderer. Nothing here knows the product's name:
 // the brand always comes from brand.config.json.
+import { isGraphFigure, graphSvg } from './graph.mjs';
 
 export const esc = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -33,7 +34,9 @@ export function slug(s) {
 }
 
 // Strip anything active from an agent-written SVG before it is shown or rasterized.
+// A graph given as data (`{graph: {...}}`, docs/KINDS-MATH.md) is drawn to SVG first.
 export function cleanSvg(svg) {
+  if (isGraphFigure(svg)) svg = graphSvg(svg.graph);
   if (typeof svg !== 'string' || !/<svg[\s>]/i.test(svg)) return null;
   let s = svg
     .replace(/<script[\s\S]*?<\/script\s*>/gi, '')

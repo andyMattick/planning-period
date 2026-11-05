@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "docx": "^9.15.2",
+    "katex": "^0.16.47",
+    "mathjs": "^13.2.3",
     "pptxgenjs": "^4.0.1"
   }
 }

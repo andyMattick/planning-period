@@ -17,6 +17,7 @@ import { copyDocx, rubricDocx } from './render/docx.mjs';
 import { deckPptx } from './render/pptx.mjs';
 import { auditHtml, tptHtml } from './render/audit.mjs';
 import { reviewHtml, STATEMENT } from './render/review.mjs';
+import { mathPngMaker, setMathEnabled } from './render/math.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -106,8 +107,10 @@ export async function renderPack(folder, { mode } = {}) {
     const page = await browser.newPage();
     const figPage = await (await browser.newContext({ deviceScaleFactor: 3 })).newPage();
     const figCache = new Map();
+    setMathEnabled(pack);
     const ctx = {
       pack, brand, style, layout: layoutOf(style), subjectLabel, date, preview, approval,
+      mathPng: mathPngMaker(figPage), // typeset math as a PNG: Word's fallback and PowerPoint (docs/KINDS-MATH.md)
       async figurePng(svgText) {
         const svg = cleanSvg(svgText);
         if (!svg) return null;

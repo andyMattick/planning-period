@@ -4,6 +4,7 @@ import {
   Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, Footer,
   PageNumber, BorderStyle, ShadingType, TabStopType,
 } from 'docx';
+import { docxRuns as mr, plainMath } from './math.mjs';
 import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel } from './util.mjs';
 
 const PAGE = { size: { width: 12240, height: 15840 }, margin: { top: 1008, bottom: 1008, left: 1008, right: 1008, footer: 500 } };
@@ -93,7 +94,7 @@ async function questionParas(item, ver, ctx, teacher) {
   const type = q.type || 'short';
   const ans = vv(q.answer, ver);
   const out = [];
-  const head = [runs(`${ctx.dayLabels ? `Day ${n}:` : numLabel(n, L)}  `, { bold: true }), runs(vv(q.prompt, ver))];
+  const head = [runs(`${ctx.dayLabels ? `Day ${n}:` : numLabel(n, L)}  `, { bold: true }), ...(await mr(vv(q.prompt, ver), {}, ctx))];
   if (teacher) head.push(runs(`   [L${q.level ?? '?'} · ${q.skill || 'skill'}]`, { size: 17, color: '444444' }));
   out.push(P(head, { spacing: { before: 200, after: 60 }, keepNext: true, keepLines: true, indent: ctx.dayLabels ? { left: 800, hanging: 800 } : { left: 360, hanging: 360 } }));
   out.push(...(await figurePara(vv(q.figure, ver), ctx)));
@@ -102,16 +103,16 @@ async function questionParas(item, ver, ctx, teacher) {
     // Keep a question's lines together, but end the chain at its last line: a chain that runs into the next
     // question links the whole page and Word breaks it anywhere (a heading left alone at the foot of a page).
     const tail = !teacher && workLinesFor(q, ctx) === 0;
-    chs.forEach((c, i) => {
+    for (const [i, c] of chs.entries()) {
       const right = teacher && Number(ans) === i;
       out.push(
-        P([runs(`${choiceLabel(i, L)}  `, { bold: true }), runs(c, { bold: right }), ...(right ? [runs('   ◀ answer', { bold: true })] : [])], {
+        P([runs(`${choiceLabel(i, L)}  `, { bold: true }), ...(await mr(c, { bold: right }, ctx)), ...(right ? [runs('   ◀ answer', { bold: true })] : [])], {
           indent: { left: 720 },
           spacing: { after: 30 },
           keepNext: !(tail && i === chs.length - 1),
         })
       );
-    });
+    }
   } else if (type === 'tf') {
     const t = tfValue(ans);
     out.push(P([runs('True', { bold: true, underline: teacher && t ? {} : undefined }), runs('          '), runs('False', { bold: true, underline: teacher && !t ? {} : undefined })], { indent: { left: 720 } }));
@@ -120,8 +121,8 @@ async function questionParas(item, ver, ctx, teacher) {
     const right = vv(q.choices, ver) || [];
     const a = Array.isArray(ans) ? ans : [];
     const rows = Array.from({ length: Math.max(left.length, right.length) }, (_, i) => [
-      left[i] != null ? P([runs(teacher && a[i] != null ? ` ${letter(Number(a[i]))} ` : '____', { bold: true, underline: teacher ? {} : undefined }), runs(`  ${i + 1}. ${left[i]}`)]) : P(runs('')),
-      right[i] != null ? P([runs(`${letter(i)}. `, { bold: true }), runs(right[i])]) : P(runs('')),
+      left[i] != null ? P([runs(teacher && a[i] != null ? ` ${letter(Number(a[i]))} ` : '____', { bold: true, underline: teacher ? {} : undefined }), runs(`  ${i + 1}. ${plainMath(left[i])}`)]) : P(runs('')),
+      right[i] != null ? P([runs(`${letter(i)}. `, { bold: true }), runs(plainMath(right[i]))]) : P(runs('')),
     ]);
     out.push(
       new Table({
@@ -138,14 +139,14 @@ async function questionParas(item, ver, ctx, teacher) {
     // One dotted tab leader per line: bordered empty paragraphs would merge into a single line in Word.
     for (let i = 0; i < lines; i++) out.push(P(runs('\t', { color: '999999' }), { indent: { left: 360 }, spacing: { before: 200 }, tabStops: [{ type: TabStopType.RIGHT, position: TEXT_W, leader: 'dot' }] }));
     const unit = vv(q.unit, ver);
-    if (!['mc', 'tf', 'match', 'open'].includes(type)) out.push(P([runs('Answer: '), runs('_'.repeat(30)), ...(unit ? [runs(` ${unit}`)] : [])], { indent: { left: 360 }, spacing: { before: 160 } }));
+    if (!['mc', 'tf', 'match', 'open'].includes(type)) out.push(P([runs('Answer: '), runs('_'.repeat(30)), ...(unit ? [runs(` ${plainMath(unit)}`)] : [])], { indent: { left: 360 }, spacing: { before: 160 } }));
   }
   if (teacher) {
-    const kp = [runs(type === 'open' ? 'A strong answer: ' : 'Answer: '), runs(keyText(q, ver), { bold: true })];
-    if ((q.accept || []).length) kp.push(runs(`  (also accept: ${q.accept.join('; ')})`, { size: 19 }));
+    const kp = [runs(type === 'open' ? 'A strong answer: ' : 'Answer: '), ...(await mr(keyText(q, ver), { bold: true }, ctx))];
+    if ((q.accept || []).length) kp.push(...(await mr(`  (also accept: ${q.accept.join('; ')})`, { size: 19 }, ctx)));
     const keyOpts = { indent: { left: 360 }, border: { left: { style: BorderStyle.SINGLE, size: 18, color: '000000', space: 6 } }, shading: { type: ShadingType.CLEAR, fill: 'F4F4F4', color: 'auto' } };
     out.push(P(kp, { ...keyOpts, spacing: { before: 80 } }));
-    if (q.why) out.push(P([runs('Why: ', { italics: true }), runs(vv(q.why, ver), { size: 20 })], keyOpts));
+    if (q.why) out.push(P([runs('Why: ', { italics: true }), ...(await mr(vv(q.why, ver), { size: 20 }, ctx))], keyOpts));
   }
   return out;
 }
@@ -176,7 +177,7 @@ export function rubricTable(rubric) {
   return out;
 }
 
-function skillsMap(doc, ver, accent) {
+async function skillsMap(doc, ver, accent, ctx) {
   const items = questionsOf(doc);
   const levels = {};
   const skills = {};
@@ -199,7 +200,7 @@ function skillsMap(doc, ver, accent) {
     table([['Skill', 'Questions', 'How many'], ...Object.entries(skills).map(([s, ns]) => [s, ns.join(', '), String(ns.length)])], [3, 2, 1]),
     P(runs(''), { spacing: { after: 120 } }),
     table(
-      [['#', 'Skill', 'Level', 'Type', `Key${ver ? ` (version ${ver})` : ''}`], ...items.map(({ q, n }) => [String(n), q.skill || '', String(q.level ?? ''), q.type || 'short', P(runs(keyText(q, ver), { bold: true }))])],
+      [['#', 'Skill', 'Level', 'Type', `Key${ver ? ` (version ${ver})` : ''}`], ...(await Promise.all(items.map(async ({ q, n }) => [String(n), q.skill || '', String(q.level ?? ''), q.type || 'short', P(await mr(keyText(q, ver), { bold: true }, ctx))])))],
       [0.5, 2.6, 0.7, 0.9, 3]
     ),
   ];
@@ -238,15 +239,15 @@ export async function copyDocx(doc, ver, ctx, teacher) {
     const sub = [o.grade && `Grade ${o.grade}`, ctx.subjectLabel, o.topic].filter(Boolean).join(' · ');
     if (sub) kids.push(P(runs(sub, { size: 19, color: '333333' })));
   }
-  if (doc.directions) kids.push(P(runs(vv(doc.directions, ver), { bold: ctx.layout.boldDirections }), { spacing: { before: 100, after: 120 } }));
+  if (doc.directions) kids.push(P(await mr(vv(doc.directions, ver), { bold: ctx.layout.boldDirections }, ctx), { spacing: { before: 100, after: 120 } }));
   const items = questionsOf(doc);
   for (const [si, sec] of (doc.sections || []).entries()) {
     if (sec.heading) kids.push(heading(sec.heading, accent));
-    if (sec.directions) kids.push(P(runs(vv(sec.directions, ver), { bold: ctx.layout.boldDirections }), { keepNext: (sec.questions || []).length > 0, keepLines: true }));
+    if (sec.directions) kids.push(P(await mr(vv(sec.directions, ver), { bold: ctx.layout.boldDirections }, ctx), { keepNext: (sec.questions || []).length > 0, keepLines: true }));
     for (const it of items.filter((x) => x.si === si)) kids.push(...(await questionParas(it, ver, ctx, teacher)));
   }
   if (doc.rubric) kids.push(heading(doc.rubric.title || 'Rubric', accent), ...rubricTable(doc.rubric));
-  if (teacher && items.length) kids.push(...skillsMap(doc, ver, accent));
+  if (teacher && items.length) kids.push(...(await skillsMap(doc, ver, accent, ctx)));
   const label = `${doc.title} · ${teacher ? 'Teacher' : 'Student'} copy${ver ? ` ${ver}` : ''}`;
   return Packer.toBuffer(docShell(ctx, label, kids));
 }
