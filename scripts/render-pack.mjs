@@ -18,6 +18,8 @@ import { deckPptx } from './render/pptx.mjs';
 import { auditHtml, tptHtml } from './render/audit.mjs';
 import { reviewHtml, STATEMENT } from './render/review.mjs';
 import { mathPngMaker, setMathEnabled } from './render/math.mjs';
+import { GAME_KINDS, renderGame } from './render/games.mjs';
+import { isAppDoc, renderAppDoc } from './render/apps.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -148,8 +150,11 @@ export async function renderPack(folder, { mode } = {}) {
       let base = slug(doc.title || doc.item);
       for (let i = 2; used.has(base); i++) base = `${slug(doc.title || doc.item)}-${i}`;
       used.add(base);
+      // review apps and interactive worksheets: docs/KINDS-APPS.md
+      if (isAppDoc(doc)) { await renderAppDoc(doc, base, ctx, { pdf, write, browser }).catch((e) => { throw e instanceof RenderError ? e : new RenderError(e.message); }); continue; }
       const hasQs = questionsOf(doc).length > 0;
       const kind = kindOf(doc);
+      if (GAME_KINDS.has(kind)) { await renderGame(doc, base, ctx, { pdf, write, later }); continue; } // docs/KINDS-GAMES.md
       const bell = kind === 'bellringer'; // one question a day: day cards for students, a slide a day
       const deck = DECK_ITEMS.has(kind) || DECK_ITEMS.has(doc.item) || (Array.isArray(doc.slides) && doc.slides.length > 0);
       ctx.dayLabels = bell;

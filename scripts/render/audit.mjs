@@ -2,6 +2,7 @@
 // Display formats are the same everywhere: minutes to 1 decimal, money to 2, percents whole (util.mjs).
 
 import { esc, money, int, mins, pct, questionsOf, inkAccent, fontStack } from './util.mjs';
+import { gameItemCount } from './games.mjs';
 
 const CHECK_NAMES = { blind: '🙈 Blind tester', solver: '🧮 Solver', wilco: '🤖 Wilco', facts: '🔎 Fact checker' };
 const norm = (s) => String(s || '').replace(/[^\p{L}\p{N} ]/gu, '').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -69,7 +70,7 @@ export function auditStats(pack) {
   const roundOf = (r) => Number(r.round) || 1;
   const orderRuns = runs.filter((r) => r.kind !== 'wilco');
   const rounds = Number(pack.rounds) || (orderRuns.length ? Math.max(...orderRuns.map(roundOf)) : runs.length ? Math.max(...runs.map(roundOf)) : 0);
-  const questionsInPack = (pack.documents || []).reduce((s, d) => s + questionsOf(d).length * Math.max(1, (d.versions || []).length), 0);
+  const questionsInPack = (pack.documents || []).reduce((s, d) => s + (questionsOf(d).length || gameItemCount(d)) * Math.max(1, (d.versions || []).length), 0); // games: docs/KINDS-GAMES.md
   const checkedCounts = runs.map((r) => Number(r.of ?? r.checked ?? 0)).filter(Boolean);
   const fixed = count('fixed'), open = count('open');
   return {

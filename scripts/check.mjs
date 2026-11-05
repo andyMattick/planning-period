@@ -9,6 +9,7 @@
         broken copies of it (made here, in a temporary folder) fail them.
      5. Every samples/<name>/pack.json passes checks/keys.mjs and checks/test-wise.mjs.
      5a. Every sample with a math check passes checks/math.mjs (SymPy), and broken copies of samples/_cap-math fail it.
+     5c. checks/puzzles.mjs catches broken copies of samples/_cap-games (a bad grid, a word twice, a non-unique puzzle…).
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
    Exit 1 on any problem. */
@@ -149,7 +150,7 @@ if (existsSync(FIX)) {
 const SAMPLES = join(ROOT, 'samples');
 const packs = existsSync(SAMPLES) ? readdirSync(SAMPLES).map((d) => join('samples', d, 'pack.json')).filter((p) => existsSync(join(ROOT, p))) : [];
 if (!packs.length) skip('no samples/*/pack.json yet: nothing to check');
-for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs']) {
+for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs', 'puzzles.mjs']) {   // puzzles.mjs: games and puzzles (docs/KINDS-GAMES.md)
   const r = run(s, join(ROOT, p));
   if (r.status === 0) ok(`${p} passes checks/${s}`); else fail(`${p} fails checks/${s}:\n${r.stdout}${r.stderr}`);
 }
@@ -178,6 +179,14 @@ if (existsSync(CAP_MATH)) {
     if (r.status === 1) ok(`checks/math.mjs catches ${what}`); else fail(`checks/math.mjs did not catch ${what} (exit ${r.status}):\n${r.stdout}${r.stderr}`);
   });
   rmSync(tmp, { recursive: true, force: true });
+}
+
+/* 5c. the puzzle checks still bite: break the games fixture one way at a time (checks/puzzles.mjs --self-test) */
+const GAMES = join(ROOT, 'samples/_cap-games/pack.json');
+if (existsSync(GAMES)) {
+  const r = spawnSync(process.execPath, [join(ROOT, 'checks', 'puzzles.mjs'), GAMES, '--self-test'], { cwd: ROOT, encoding: 'utf8' });
+  const n = (r.stdout.match(/✓ catches/g) || []).length;
+  if (r.status === 0) ok(`checks/puzzles.mjs catches all ${n} broken copies of samples/_cap-games`); else fail(`checks/puzzles.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
 }
 
 /* 5b. no release without the teacher's agreement (CLAUDE.md rule 7): a sample with rendered final files has an approval */
@@ -213,9 +222,44 @@ else {
     for (const i of m.icons || []) if (!existsSync(join(ROOT, 'site', i.src))) errs.push(`icon ${i.src} is missing`);
     if (!(m.icons || []).some((i) => i.purpose === 'maskable')) errs.push('no maskable icon');
     if (!existsSync(join(ROOT, 'site', 'sw.js'))) errs.push('site/sw.js is missing');
+    else {   // every page and script is in the offline shell (a new page needs a VERSION bump too)
+      const sw = readFileSync(join(ROOT, 'site', 'sw.js'), 'utf8');
+      for (const f of readdirSync(join(ROOT, 'site')).filter((f) => /\.(html|js|css)$/.test(f) && f !== 'sw.js')) if (!sw.includes(`'${f}'`)) errs.push(`site/${f} is not in sw.js SHELL_FILES`);
+    }
     if (errs.length) errs.forEach((e) => fail(`site/manifest.webmanifest: ${e}`));
     else ok(`site/manifest.webmanifest generated from brand.config.json (${m.icons.length} icons, service worker present)`);
   } catch (e) { fail(`site/manifest.webmanifest: ${e.message}`); }
+}
+
+/* 8. review apps and interactive worksheets (docs/KINDS-APPS.md): content, hashes, no plain-text key, and a browser
+   smoke test of each generated page (checks/apps.mjs skips the browser part with a message when Playwright isn't here) */
+{
+  const APPS = join(ROOT, 'checks', 'apps.mjs'), CAP = join(ROOT, 'samples/_cap-apps/pack.json');
+  const appPacks = packs.filter((p) => { try { return readJSON(p).documents.some((d) => ['interactive', 'reviewapp'].includes(d.kind || d.item)); } catch { return false; } });
+  for (const p of appPacks) {
+    const r = spawnSync(process.execPath, [APPS, join(ROOT, p)], { cwd: ROOT, encoding: 'utf8', timeout: 300000 });
+    const skipped = /skipped/.test(r.stdout || '');
+    if (r.status === 0) (skipped ? skip : ok)(`${p} passes checks/apps.mjs${skipped ? ' (content only: ' + (r.stdout.match(/⏭️\s+(.*)/) || [, ''])[1] + ')' : ' (content and browser)'}`);
+    else fail(`${p} fails checks/apps.mjs:\n${r.stdout}${r.stderr}`);
+  }
+  if (existsSync(CAP)) {   // the check bites: broken copies of the capability fixture fail it
+    const tmp = mkdtempSync(join(tmpdir(), 'pp-apps-')), good = readJSON('samples/_cap-apps/pack.json');
+    const ia = (p) => p.documents.find((d) => d.item === 'interactive'), ra = (p) => p.documents.find((d) => d.item === 'reviewapp');
+    const breaks = [
+      ['a duplicate flashcard', (p) => ra(p).cards.push({ ...ra(p).cards[0], id: 'dup' })],
+      ['a typed answer with no accepted form', (p) => { const q = ia(p).sections[1].questions.find((x) => x.type === 'numeric'); q.answer = ''; delete q.accept; }],
+      ['a worksheet item with no hint', (p) => { delete ia(p).sections[0].questions[0].hint; }],
+      ['a wrong-answer message on a right answer', (p) => { const q = ia(p).sections[1].questions.find((x) => x.type === 'numeric'); q.miss = [{ answer: q.answer, why: 'no' }]; }],
+      ['a mode with nothing in it', (p) => { ra(p).passages = []; }],
+    ];
+    breaks.forEach(([what, f], i) => {
+      const p = structuredClone(good); f(p);
+      const file = join(tmp, `apps-broken-${i}.json`); writeFileSync(file, JSON.stringify(p));
+      const r = spawnSync(process.execPath, [APPS, file, '--no-browser'], { cwd: ROOT, encoding: 'utf8' });
+      if (r.status === 1) ok(`checks/apps.mjs catches ${what}`); else fail(`checks/apps.mjs did not catch ${what} (exit ${r.status}):\n${r.stdout}${r.stderr}`);
+    });
+    rmSync(tmp, { recursive: true, force: true });
+  }
 }
 
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');
