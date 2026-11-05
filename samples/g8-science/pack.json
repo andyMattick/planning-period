@@ -857,7 +857,8 @@
               "why": {
                 "A": "2Mg + O₂ → 2MgO: Mg 2 and 2, O 2 and 2. Every row of the table matches.",
                 "B": "4Fe + 3O₂ → 2Fe₂O₃: Fe 4 and 4, O 6 and 6. Every row of the table matches."
-              }
+              },
+              "space": 2
             },
             {
               "id": "q6",
@@ -886,7 +887,7 @@
                 "A": "Mass of reactants = mass of products: 12.0 g + 5.0 g = 17.0 g.",
                 "B": "Mass of reactants = mass of products: 25.0 g + 9.5 g = 34.5 g."
               },
-              "space": 2
+              "space": 5
             },
             {
               "id": "q7",
@@ -936,21 +937,21 @@
               "skill": "balancing: coefficients, not subscripts",
               "type": "mc",
               "prompt": {
-                "A": "Dev starts balancing Na + Cl₂ → NaCl by writing a 2 in front of NaCl. He counts atoms and finds one row that still doesn't match. Which change correctly finishes balancing it?",
-                "B": "Rosa starts balancing Cu + O₂ → CuO by writing a 2 in front of CuO. She counts atoms and finds one row that still doesn't match. Which change correctly finishes balancing it?"
+                "A": "Dev starts balancing Al + Cl₂ → AlCl₃ by writing a 2 in front of AlCl₃. He counts atoms and finds two rows that still don't match. Which change correctly finishes balancing it?",
+                "B": "Rosa starts balancing Fe + Cl₂ → FeCl₃ by writing a 2 in front of Fe. She counts atoms and finds two rows that still don't match. Which change correctly finishes balancing it?"
               },
               "choices": {
                 "A": [
-                  "Change the Cl₂ on the left to Cl",
-                  "Write a 2 in front of Na",
-                  "Remove the 2 from NaCl",
-                  "Put a 2 in front of Cl₂"
+                  "Put a 2 before Al, then rewrite Cl₂ as Cl₆",
+                  "Write a 2 before Al and a 3 before Cl₂",
+                  "Write a 3 before Cl₂ but leave Al alone",
+                  "Write 6 in front of Cl₂, then a 2 before Al"
                 ],
                 "B": [
-                  "Change the O₂ on the left to O",
-                  "Take the 2 off CuO",
-                  "Write a 2 in front of O₂",
-                  "Put a 2 in front of Cu"
+                  "Give Cl₂ a 3 and leave FeCl₃ as it is",
+                  "Turn FeCl₃ into Fe₂Cl₂ so both sides have 2 Fe and 2 Cl",
+                  "Write 3FeCl₃ on the right and 2Cl₂ on the left",
+                  "Use 3Cl₂ on the left and 2FeCl₃ on the right"
                 ]
               },
               "answer": {
@@ -958,8 +959,8 @@
                 "B": 3
               },
               "why": {
-                "A": "After the 2 on NaCl: Na 1 on the left, 2 on the right; Cl 2 and 2. A 2 in front of Na makes 2Na + Cl₂ → 2NaCl: Na 2 and 2, Cl 2 and 2. Changing Cl₂ to Cl is a subscript change and leaves Na (1 vs 2) and Cl (1 vs 2) unmatched. Removing the 2 from NaCl leaves Cl unmatched (2 vs 1). A 2 in front of Cl₂ leaves Na (1 vs 2) and Cl (4 vs 2) unmatched.",
-                "B": "After the 2 on CuO: Cu 1 on the left, 2 on the right; O 2 and 2. A 2 in front of Cu makes 2Cu + O₂ → 2CuO: Cu 2 and 2, O 2 and 2. Changing O₂ to O is a subscript change and leaves Cu (1 vs 2) and O (1 vs 2) unmatched. Taking the 2 off CuO leaves O unmatched (2 vs 1). A 2 in front of O₂ leaves Cu (1 vs 2) and O (4 vs 2) unmatched."
+                "A": "After the 2 on AlCl₃: Al 1 on the left, 2 on the right; Cl 2 on the left, 6 on the right. Two coefficients are needed: 2Al + 3Cl₂ → 2AlCl₃ gives Al 2 and 2, Cl 3 × 2 = 6 and 2 × 3 = 6. A 2 before Al with Cl₂ rewritten as Cl₆ makes the counts match (Al 2 and 2, Cl 6 and 6) but changes a subscript, so it is no longer chlorine gas. A 3 before Cl₂ alone fixes Cl (6 and 6) but leaves Al unmatched (1 vs 2). A 6 before Cl₂ puts 12 Cl on the left against 6 on the right: the 6 is the count of Cl atoms needed, not the number of Cl₂ molecules.",
+                "B": "After the 2 on Fe: Fe 2 on the left, 1 on the right; Cl 2 on the left, 3 on the right. Two coefficients are needed: 2Fe + 3Cl₂ → 2FeCl₃ gives Fe 2 and 2, Cl 3 × 2 = 6 and 2 × 3 = 6. A 3 on Cl₂ with no coefficient on FeCl₃ leaves Fe at 2 vs 1 and Cl at 6 vs 3. Turning FeCl₃ into Fe₂Cl₂ makes the counts match but changes subscripts, so it is a different substance. Swapping the numbers (3FeCl₃ and 2Cl₂) gives Fe 2 vs 3 and Cl 4 vs 9."
               }
             },
             {
@@ -1336,6 +1337,84 @@
           }
         ],
         "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 5,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T15:01:58.062Z",
+        "rows": 54,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 5,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T15:01:58.153Z",
+        "questions": 14,
+        "chance": 0.25,
+        "worst": [
+          [
+            "absolute",
+            0.286
+          ],
+          [
+            "posC",
+            0.286
+          ],
+          [
+            "posD",
+            0.286
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Guided Notes: Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz A",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz B",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz (all versions)",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
       }
     ],
     "blind": [
@@ -1467,12 +1546,18 @@
           {
             "where": "Chemical Reactions Quiz A q8",
             "kind": "FIX",
-            "what": "Too easy for L3. Without its first coefficient, the equation is the notes' first board example and first practice line, and the stem already does the first step, so students can recall 2H₂ + O₂ → 2H₂O instead of reasoning. Use an equation the notes don't practice (e.g. Cu + O₂ → CuO, or Na + Cl₂ → NaCl, first step given), with the same four kinds of choices: subscript trap, undo the step, wrong coefficient, key."
+            "what": "Too easy for L3. Without its first coefficient, the equation is the notes' first board example and first practice line, and the stem already does the first step, so students can recall 2H₂ + O₂ → 2H₂O instead of reasoning. Use an equation the notes don't practice (e.g. Cu + O₂ → CuO, or Na + Cl₂ → NaCl, first step given), with the same four kinds of choices: subscript trap, undo the step, wrong coefficient, key.",
+            "fixed": "Round 4 (fresh maker): rewritten as Al + Cl₂ → AlCl₃ with the 2 on AlCl₃ given, so two rows stay unmatched and two coefficients must be found (key 2Al + 3Cl₂ → 2AlCl₃); stem says \"two rows\"; wrong choices: Cl₆ subscript trap, 3Cl₂ only, 6Cl₂. Confirmed by the round 4 blind recheck and fact checker.",
+            "before": "Round 2: H₂ + O₂ → H₂O with the 2 on H₂O given (the notes’ practice line); round 3: Na + Cl₂ → NaCl with the 2 on NaCl given, one row left, key a 2 in front of Na",
+            "after": "Al + Cl₂ → AlCl₃ with the 2 on AlCl₃ given; two rows left; key: a 2 before Al and a 3 before Cl₂"
           },
           {
             "where": "Chemical Reactions Quiz B q8",
             "kind": "FIX",
-            "what": "Same issue as A q8: methane burning is a practice equation in the notes, word for word, so the key can be recalled. Swap in an unpracticed equation of the same shape (one mismatched row, a subscript trap that balances the count), and change A and B together so they stay parallel."
+            "what": "Same issue as A q8: methane burning is a practice equation in the notes, word for word, so the key can be recalled. Swap in an unpracticed equation of the same shape (one mismatched row, a subscript trap that balances the count), and change A and B together so they stay parallel.",
+            "fixed": "Round 4 (fresh maker): rewritten as Fe + Cl₂ → FeCl₃ (not an iron oxide) with the 2 on Fe given, so two rows stay unmatched and two coefficients must be found (key 2Fe + 3Cl₂ → 2FeCl₃); wrong choices: 3Cl₂ only, Fe₂Cl₂ subscript trap, swapped 3FeCl₃ and 2Cl₂. Confirmed by the round 4 blind recheck and fact checker.",
+            "before": "Round 2: methane burning (a practice line in the notes); round 3: Cu + O₂ → CuO with the 2 on CuO given, one row left, key a 2 in front of Cu",
+            "after": "Fe + Cl₂ → FeCl₃ with the 2 on Fe given; two rows left; key: 3Cl₂ on the left and 2FeCl₃ on the right"
           },
           {
             "where": "Chemical Reactions Quiz B q4",
@@ -1578,12 +1663,24 @@
           {
             "where": "Chemical Reactions Quiz A q8",
             "kind": "FIX",
-            "what": "Still too easy for L3, though the key and all three wrong choices check out (no twins, no two-right). The stem does the first step, so only one row is left: a 1-vs-2 metal count with an obvious fix. The equation has the same shape as the practiced 2Mg + O₂ → 2MgO with new symbols, so a strong student answers in seconds. Fix: use an equation where the first step leaves two rows unmatched and both coefficients must be found, e.g. Al + Cl₂ → AlCl₃ with a 2 already in front of AlCl₃ (key: 2 in front of Al and 3 in front of Cl₂). Keep the same choice types: a subscript trap (Cl₂ to Cl₃), Al only, Cl₂ only. Update the stem's 'one row' wording to match."
+            "what": "Still too easy for L3, though the key and all three wrong choices check out (no twins, no two-right). The stem does the first step, so only one row is left: a 1-vs-2 metal count with an obvious fix. The equation has the same shape as the practiced 2Mg + O₂ → 2MgO with new symbols, so a strong student answers in seconds. Fix: use an equation where the first step leaves two rows unmatched and both coefficients must be found, e.g. Al + Cl₂ → AlCl₃ with a 2 already in front of AlCl₃ (key: 2 in front of Al and 3 in front of Cl₂). Keep the same choice types: a subscript trap (Cl₂ to Cl₃), Al only, Cl₂ only. Update the stem's 'one row' wording to match.",
+            "fixed": "Same problem as the round 2 finding on this item (still too easy for level 3), counted there. Round 4 (fresh maker): rewritten as Al + Cl₂ → AlCl₃ with the 2 on AlCl₃ given, so two rows stay unmatched and two coefficients must be found (key 2Al + 3Cl₂ → 2AlCl₃); stem says \"two rows\"; wrong choices: Cl₆ subscript trap, 3Cl₂ only, 6Cl₂. Confirmed by the round 4 blind recheck and fact checker.",
+            "sameAs": {
+              "check": "blind",
+              "round": 2,
+              "where": "Chemical Reactions Quiz A q8"
+            }
           },
           {
             "where": "Chemical Reactions Quiz B q8",
             "kind": "FIX",
-            "what": "Same problem as A q8, and closer to recall: Cu + O₂ → 2CuO is the practiced 2Mg + O₂ → 2MgO with Cu in place of Mg (same O₂, same metal-oxide product). Change it with A q8 to the same two-unknown shape, e.g. Fe + Cl₂ → FeCl₃ with a 2 already in front of FeCl₃ (key: 2Fe and 3Cl₂). Avoid an iron oxide, because 4Fe + 3O₂ → 2Fe₂O₃ is a practice line. A and B stay parallel: same choice types, the key at a different letter."
+            "what": "Same problem as A q8, and closer to recall: Cu + O₂ → 2CuO is the practiced 2Mg + O₂ → 2MgO with Cu in place of Mg (same O₂, same metal-oxide product). Change it with A q8 to the same two-unknown shape, e.g. Fe + Cl₂ → FeCl₃ with a 2 already in front of FeCl₃ (key: 2Fe and 3Cl₂). Avoid an iron oxide, because 4Fe + 3O₂ → 2Fe₂O₃ is a practice line. A and B stay parallel: same choice types, the key at a different letter.",
+            "fixed": "Same problem as the round 2 finding on this item (still too easy for level 3), counted there. Round 4 (fresh maker): rewritten as Fe + Cl₂ → FeCl₃ (not an iron oxide) with the 2 on Fe given, so two rows stay unmatched and two coefficients must be found (key 2Fe + 3Cl₂ → 2FeCl₃); wrong choices: 3Cl₂ only, Fe₂Cl₂ subscript trap, swapped 3FeCl₃ and 2Cl₂. Confirmed by the round 4 blind recheck and fact checker.",
+            "sameAs": {
+              "check": "blind",
+              "round": 2,
+              "where": "Chemical Reactions Quiz B q8"
+            }
           },
           {
             "where": "Chemical Reactions Quiz B q4",
@@ -1618,6 +1715,33 @@
         ],
         "minutes": 6,
         "tokens": "about 30k"
+      },
+      {
+        "round": 4,
+        "agent": "🙈 Blind tester (science), recheck",
+        "matched": 2,
+        "of": 2,
+        "byLevel": {
+          "3": {
+            "items": 2,
+            "matched": 2,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          }
+        },
+        "findings": [
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "kind": "JUDGMENT",
+            "what": "Now a real L3, with no flags and no mismatch: two rows are still off after the given 2, so two coefficients must be found, which is clearly harder than q4 and q5. The key, the why line and all three wrong choices check out: a subscript trap, a Cl-only fix, and using the Cl total as the coefficient. No twins, no two-right, no cue. For the teacher: since it is multiple choice, a student can still find the key by counting atoms in each option, a close cousin of q5. Reading 1: keep it, because each option needs edits applied before counting, which is a fair L3 for grade 8. Reading 2: for a harder item, give no starting coefficient. I recommend keeping it."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q8",
+            "kind": "JUDGMENT",
+            "what": "Now a real L3, with no flags and no mismatch. It is the same skill, level and shape as A q8 (an MCl3 equation, one coefficient given, 2 and 3 to find), and the key sits at a different letter. B is no easier, perhaps slightly harder, since the given 2 is on the reactant side. The key, the why line and the wrong choices all check out: Cl-only, the Fe2Cl2 subscript trap, and swapped coefficients. No twins, no two-right, no cue. For the teacher: A's fourth wrong choice is 'Cl total as the coefficient' while B's is 'swapped coefficients'. Reading 1: both are real errors, so the forms stay parallel enough (my recommendation: keep). Reading 2: for strict parallel forms, make B's version a 6Cl2 choice like A's."
+          }
+        ]
       }
     ],
     "facts": [
@@ -1875,6 +1999,46 @@
           }
         ],
         "notFixed": []
+      },
+      {
+        "round": 4,
+        "agent": "🔎 Fact checker, recheck",
+        "claims": 37,
+        "flagged": 1,
+        "notes": "Scope: A q8 and B q8 only (rewritten), plus the round 3 tester's suggested wording. I solved both from view-r4.md before opening pack.json (notes.md): A q8 key B (2Al + 3Cl₂ → 2AlCl₃), B q8 key D (2Fe + 3Cl₂ → 2FeCl₃). Both match the pack keys (answer index 1 and 3). Both reactions are real direct combinations (aluminum + chlorine → aluminum chloride; iron + chlorine → iron(III) chloride; reference: OpenStax Chemistry 2e, ch. 18 on the main group metals and ch. 19 on transition metals and their halides). Every atom count in the prompts, choices and why lines is right. Each item now needs two coefficients. The order requests are met: no mass or gas claims, and the 'rows' wording matches the teacher's counting table. The terms (coefficient, subscript, 'different substance') follow the source §3–4. The only off claim is in the round 3 suggestion, and the pack did not use it. Claims: 16 in A q8, 14 in B q8, 7 in the round 3 suggestion.",
+        "findings": [
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "kind": "KEEP",
+            "what": "Real and balanced: 2Al + 3Cl₂ → 2AlCl₃ (Al 2 = 2, Cl 6 = 6). The stem's start (Al + Cl₂ → 2AlCl₃) really leaves two rows off: Al 1 vs 2 and Cl 2 vs 6. The key is B. The wrong choices are each wrong for a reason a student can learn. A: 2Al + Cl₆ makes the counts match but changes a subscript, so it is no longer chlorine gas. C: 3Cl₂ alone fixes Cl but leaves Al at 1 vs 2. D: 6Cl₂ gives 12 vs 6 Cl, which confuses the atoms needed with the number of molecules. Every count in the why line checks out.",
+            "source": "unit4-lesson3-notes.md §3 (subscript vs coefficient), §4 (coefficients only, never change a subscript, recount every row); reaction: OpenStax Chemistry 2e"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q8",
+            "kind": "KEEP",
+            "what": "Real and balanced: 2Fe + 3Cl₂ → 2FeCl₃ (Fe 2 = 2, Cl 6 = 6). The stem's start (2Fe + Cl₂ → FeCl₃) really leaves two rows off: Fe 2 vs 1 and Cl 2 vs 3. The key is D. The wrong choices are each wrong for a learnable reason. A: 3Cl₂ with no coefficient on FeCl₃ leaves Fe 2 vs 1 and Cl 6 vs 3. B: Fe₂Cl₂ does give 2 Fe and 2 Cl on each side (the choice's own claim is true), but it changes subscripts, so it is a different substance. C: swapping the numbers gives Fe 2 vs 3 and Cl 4 vs 9. Every count in the why line checks out. It is not a practice line, and it avoids the iron oxide (rust) practice equation.",
+            "source": "unit4-lesson3-notes.md §3–4 (the practice list has no FeCl₃; the rust line is 4Fe + 3O₂ → 2Fe₂O₃); reaction: OpenStax Chemistry 2e"
+          },
+          {
+            "where": "Round 3 suggested wording, A q8 (subscript trap)",
+            "kind": "FIX",
+            "what": "Off in the suggestion only, with nothing to change in the pack. Round 3 suggested a subscript trap of 'Cl₂ to Cl₃'. But 2Al + Cl₃ → 2AlCl₃ gives Cl 3 vs 6, so the counts don't match and it fails as a 'counts match, but the subscript is wrong' trap. The pack instead uses Cl₆ (2Al + Cl₆ gives Cl 6 = 6), which is the right form of that trap. Keep Cl₆, and don't switch to the round 3 Cl₃ wording.",
+            "source": "atom count; unit4-lesson3-notes.md §4",
+            "fixed": "Nothing to change in the pack: the round 4 maker wrote the trap as Cl₆ (2Al + Cl₆ gives Cl 6 and 6), and the round 3 Cl₃ wording was never used."
+          },
+          {
+            "where": "Round 3 suggested wording, A q8 and B q8 (equations, keys, choice types)",
+            "kind": "KEEP",
+            "what": "The rest of the suggestion checks out. Its equations are real and balanced: Al + Cl₂ → AlCl₃ with a 2 on AlCl₃, keyed 2Al + 3Cl₂; Fe + Cl₂ → FeCl₃ with a 2 on FeCl₃, keyed 2Fe + 3Cl₂. Its other choice types are sound wrong answers: 'Al only' (2Al + Cl₂ → 2AlCl₃ leaves Cl 2 vs 6) and 'Cl₂ only'. Its warning to avoid an iron oxide is right, because 4Fe + 3O₂ → 2Fe₂O₃ is a practice line. The pack departs from it in two acceptable ways. In B, the given 2 is on Fe, not FeCl₃, so the key is 3Cl₂ + 2FeCl₃ instead of 2Fe + 3Cl₂. In A, '6 before Cl₂' replaces 'Al only'. Both still need two coefficients, and A and B stay parallel (subscript trap, one-coefficient-only, wrong-number choice).",
+            "source": "atom counts; unit4-lesson3-notes.md §4"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q8 / B q8 (placement)",
+            "kind": "JUDGMENT",
+            "what": "Not a fact error. It is for the order lead to confirm, if this is not already intended. q8 is an mc item, but it sits under 'Part 3 · Explain it' with the directions 'Write in complete sentences.' The student copy's header also says 'For the last part, write in complete sentences.' A student may not know whether to circle a letter or write.",
+            "source": "pack.json section heading/directions for q8"
+          }
+        ]
       }
     ]
   },
@@ -2112,6 +2276,96 @@
       "tokens": null,
       "cost": null,
       "round": "preview"
+    },
+    {
+      "at": "14:53",
+      "who": "Order lead",
+      "what": "Owner approved round 4; set up fresh folders and the FIX list (A q8, B q8 only) (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": "round 4"
+    },
+    {
+      "at": "14:55",
+      "who": "📝 Maker",
+      "what": "New session, round 4: rewrote A q8 (Al + Cl₂ → AlCl₃, 2AlCl₃ given) and B q8 (Fe + Cl₂ → FeCl₃, 2Fe given) as two-coefficient items; keys B and D; nothing else changed (see maker-r4-changes.md)",
+      "minutes": 2.6,
+      "tokens": 1326327,
+      "cost": 1.0031,
+      "round": "round 4"
+    },
+    {
+      "at": "14:58",
+      "who": "🙈 Blind tester (science), recheck",
+      "what": "Fresh agent: answered A q8 and B q8 from the student view without the key (phase 1, round 4)",
+      "minutes": 1.3,
+      "tokens": 248491,
+      "cost": 0.395,
+      "round": "round 4"
+    },
+    {
+      "at": "14:58",
+      "who": "🔎 Fact checker, recheck",
+      "what": "Fresh agent: solved both items blind, then checked 37 claims (both items and the round 3 tester's suggested wording); 1 FIX (in the suggestion only: its Cl₃ trap doesn't make the counts match; the pack uses Cl₆), 3 KEEP, 1 JUDGMENT (mc item under \"Explain it\" directions)",
+      "minutes": 2,
+      "tokens": 571265,
+      "cost": 0.6164,
+      "round": "round 4"
+    },
+    {
+      "at": "15:01",
+      "who": "🙈 Blind tester (science), recheck",
+      "what": "Scored 2 of 2 matched (phase 2); both round 3 q8 FIXes confirmed fixed; 2 JUDGMENT for the teacher",
+      "minutes": 0.7,
+      "tokens": 297421,
+      "cost": 0.1781,
+      "round": "round 4"
+    },
+    {
+      "at": "15:01",
+      "who": "🤖 Wilco (keys)",
+      "what": "script; no model tokens — keys round 5: 54 rows, 0 errors, 0 warnings, pass",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 4"
+    },
+    {
+      "at": "15:01",
+      "who": "🤖 Wilco (test-wise bots)",
+      "what": "script; no model tokens — test-wise round 5: 14 MC items, chance 25%, worst absolute / posC / posD 29%, pass (line 35%)",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 4"
+    },
+    {
+      "at": "15:02",
+      "who": "Order lead",
+      "what": "Merged the checkers' entries; set `fixed` on the round 2 A/B q8 FIXes and on the round 3 duplicates (`sameAs` → round 2) so the problem is one problem fixed in round 4 (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": "round 4"
+    },
+    {
+      "at": "15:03",
+      "who": "🧾 Reporter",
+      "what": "Round 4: added the round 4 log rows and notes from a short hand-off (numbers table, slim pack without documents); cheaper model tier; numbers filled in by the lead from the session record (exact)",
+      "minutes": 7.7,
+      "tokens": 345797,
+      "cost": 0.9182,
+      "round": "report"
+    },
+    {
+      "at": "15:11",
+      "who": "Order lead",
+      "what": "Round 4 preview: rendered the watermarked preview and looked at every page; the longer q8 choices left the Part 3 heading alone at the foot of page 2 in version A, so set work lines on quiz q5 (2) and q6 (5, was 2) so both versions break the same way with Part 3 starting page 3; re-rendered (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": "preview"
     }
   ],
   "audit": {
@@ -2127,11 +2381,17 @@
       "Round 3 — Maker (1.3 min, 538,400 tokens, $0.488 exact): new session fixed all 4 round 2 FIX items: A q8 and B q8 changed to Na + Cl₂ → NaCl and Cu + O₂ → CuO (not in the teacher's notes); B q4 wrong choice D replaced with 4, 12 (coefficient applied twice); n33 accept list extended with larger, a larger, bigger, a bigger and higher. Lead ran Wilco (round 4): pass, worst specific 32%.",
       "Round 3 — Blind tester (0.6 + 0.8 = 1.4 min, 525,381 tokens, $0.511 exact): fresh agent rechecked 4 items; 4 of 4 matched. B q4 and n33 confirmed fixed. A q8 and B q8 still too easy for L3: the equations were swapped for unpracticed ones, but the one-step shape (stem does the first step, one mismatched row left) echoes the practiced 2Mg + O₂ → 2MgO pattern. After round 3 the runbook says stop.",
       "Round 3 — Fact checker (0.9 min, 291,967 tokens, $0.369 exact): fresh agent rechecked 4 items; 31 claims, 0 flagged. All 4 fixes confirmed factually correct. A q8 and B q8 equations are real and from published references (OpenStax Chemistry 2e, RSC Education). No key or why line says mass disappears.",
-      "Wilco history (all test-wise runs on the 14 MC quiz items; chance 25%, line 35%): round 1 worst middle 32% — pass; round 2 worst middle 36% — FAIL; round 3 (after second pass) worst longest 32% — pass; round 4 (after round 3 maker) worst specific 32% — pass. The one fail sent the pack back to the maker for a second pass on wrong-choice lengths.",
-      "Open after round 3 — goes to teacher with JUDGMENT calls: (1) FIX: A q8 and B q8 remain too easy for L3; tester's suggested fix is equations where two rows are unmatched after the first step (e.g. Al + Cl₂ → AlCl₃ and Fe + Cl₂ → FeCl₃), forcing the student to find two coefficients. (2) JUDGMENT B q4: easier than A q4 because it does not need the parentheses rule; teacher can keep both at L2 or change B to also use parentheses (e.g. 2Mg(OH)₂). (3) JUDGMENT n2: 'created; lost' accepted — close to the 'mass disappeared' language the teacher wants students to drop. (4) JUDGMENT sealed-bag buoyancy: 150.0 g keys are correct at grade 8, but a class balance may read a few tenths lower; consider 'about 150.0 g' in why lines for B q7, A q7, A q9 and slide 7. (5) JUDGMENT B q9: steel-wool simplification (all iron assumed burned; source uses same). (6) JUDGMENT A q3 why: glow-stick causation slightly backwards; source says clue is light. (7) JUDGMENT 'molecule' for ionic compounds throughout — grade 8 simplification from source. (8) JUDGMENT slide 6: 'gets heavier' in bullet 5 and speaker notes — source uses same phrase, so round 1 left it as a judgment.",
-      "Totals (all numbers exact from each session's own total_cost_usd and wall-clock minutes, as reported in handoffs.md): agent minutes 22.5 (Maker 11.3, Blind tester 6.1, Fact checker 5.1); order lead not measured; Wilco ~1 s per run (8 runs ≈ 8 s), not counted. Total agent tokens 7,834,556 (Maker 4,335,396, Blind tester 1,978,126, Fact checker 1,521,034). Total agent cost $8.275 (Maker $3.981, Blind tester $2.207, Fact checker $2.087). Reporter cost added by the lead after session ends. Per document and per question: the maker wrote all three documents in one session, so costs cannot be split by document. Per question: guided notes 34 items, slides 9 (no student items), quiz 10 questions × 2 versions = 20 quiz items. Cost preferred source: each session's own total_cost_usd (API list prices), as the brief recommends, since token counts can understate billed use in sessions that re-read context.",
-      "Minutes in the log are each session's wall-clock time rounded to whole minutes (at least 1); the exact times to a tenth of a minute are in the order lead's notes. Tokens and dollars are exact from each session's record.",
-      "With the reporter (11 minutes, 1,257,876 tokens, $1.69, cheaper model tier) the logged agent total is $9.97 for 54 questions (about $0.18 a question) and 9.09 million tokens; the order lead's own work (writing the sample order, setting up each fresh agent, running Wilco, merging entries, rendering and fixing the preview) was not measured."
+      "Round 4 — Order lead: owner approved an extra round for the one open FIX after round 3 (A q8 and B q8 too easy for L3); set up fresh folders and the FIX list (A q8, B q8 only); not measured.",
+      "Round 4 — Maker (2.6 min, 1,326,327 tokens, $1.0031 exact): new session. The q8 difficulty problem was first recorded in round 2 (A q8 and B q8 too easy for L3: equations too close to the teacher's practice lines, so students could recall the answer instead of reasoning) and recorded again in round 3 (the round 3 equations had the same one-step shape as the practiced 2Mg + O₂ → 2MgO, so the recall problem remained). It is one problem, carried over two rounds and fixed in round 4. A q8 before (entering round 4): Na + Cl₂ → NaCl with a 2 in front of NaCl given; one row left; key: a 2 in front of Na. A q8 after: Al + Cl₂ → AlCl₃ with a 2 in front of AlCl₃ given; two rows left (Al 1 vs 2, Cl 2 vs 6); key: 2 in front of Al and 3 in front of Cl₂. B q8 before (entering round 4): Cu + O₂ → CuO with a 2 in front of CuO given; one row left; key: a 2 in front of Cu. B q8 after: Fe + Cl₂ → FeCl₃ with a 2 in front of Fe given; two rows left (Fe 2 vs 1, Cl 2 vs 3); key: 3Cl₂ on the left and 2FeCl₃ on the right. Nothing else changed.",
+      "Round 4 — Blind tester (1.3 + 0.7 = 2.0 min, 545,912 tokens, $0.5731 exact): fresh agent in two phases of one session. Phase 1: answered A q8 and B q8 from the student view without the key. Phase 2: scored 2 of 2 against the key; both round 3 q8 FIXes confirmed fixed. 2 JUDGMENT for the teacher: A q8 — now a real L3 with no flags; a student can still find the key by counting atoms in each option, which is a close cousin of q5; for a harder item, give no starting coefficient (teacher's call, recommended keep). B q8 — now a real L3 of the same shape and level as A q8; B's given 2 is on the reactant side, which may be slightly harder; for strict parallel forms, make B's fourth wrong choice match A's style (teacher's call, recommended keep).",
+      "Round 4 — Fact checker (2.0 min, 571,265 tokens, $0.6164 exact): fresh agent solved A q8 and B q8 blind, then checked 37 claims across both rewritten items and the round 3 tester's suggested wording. 1 FIX (in the round 3 suggestion only, with nothing to change in the pack): the suggestion proposed 'Cl₂ to Cl₃' as the subscript trap for A q8, but 2Al + Cl₃ → 2AlCl₃ gives Cl 3 vs 6, so the counts do not match and it fails as a valid trap; the pack instead uses Cl₆ (2Al + Cl₆ gives Cl 6 = 6), which is the correct form; the round 3 Cl₃ wording was never used in the pack, so nothing changed. 3 KEEP: A q8 is real and balanced (2Al + 3Cl₂ → 2AlCl₃, Al 2 = 2, Cl 6 = 6; every count in the why line correct; wrong choices each wrong for a learnable reason); B q8 is real and balanced (2Fe + 3Cl₂ → 2FeCl₃, Fe 2 = 2, Cl 6 = 6; not a practice line, avoids the iron-oxide practice equation); the rest of the round 3 suggestion also checks out (equations real and balanced, choice types sound). 1 JUDGMENT (for the order lead and teacher): q8 is an MC item but sits under 'Part 3 · Explain it' with directions to write in complete sentences; a student may not know whether to circle a letter or write.",
+      "Round 4 — Wilco (run 5): keys: 54 rows, 0 errors, 0 warnings, pass. Test-wise: 14 MC items, chance 25%, worst absolute / posC / posD 29%, pass (line 35%). Script only; no model tokens; 0 minutes counted. Wilco before → after round 4: worst specific 32% (run 4, after round 3 maker) → absolute / posC / posD 29% (run 5, after round 4 maker).",
+      "Round 4 — Order lead (closing): merged the checkers' entries; set fixed on the round 2 A/B q8 FIXes and on the round 3 duplicates (sameAs → round 2) so the q8 problem is recorded once, carried twice and fixed once in round 4; not measured.",
+      "Wilco history (all test-wise runs on the 14 MC quiz items; chance 25%, line 35%): round 1 worst middle 32% — pass; round 2 worst middle 36% — FAIL; round 3 (after second pass) worst longest 32% — pass; round 4 (after round 3 maker) worst specific 32% — pass; round 5 (after round 4 maker) worst absolute / posC / posD 29% — pass. The one fail sent the pack back to the maker for a second pass on wrong-choice lengths.",
+      "Open after round 3 / round 4 outcome: the one open FIX (A q8 and B q8 too easy for L3) was fixed in round 4; see Round 4 notes above. All items below are JUDGMENTs left for the teacher and remain open: (1) JUDGMENT B q4: easier than A q4 because it does not need the parentheses rule; teacher can keep both at L2 or change B to also use parentheses (e.g. 2Mg(OH)₂). (2) JUDGMENT n2: 'created; lost' accepted — close to the 'mass disappeared' language the teacher wants students to drop. (3) JUDGMENT sealed-bag buoyancy: 150.0 g keys are correct at grade 8, but a class balance may read a few tenths lower; consider 'about 150.0 g' in why lines for B q7, A q7, A q9 and slide 7. (4) JUDGMENT B q9: steel-wool simplification (all iron assumed burned; source uses same). (5) JUDGMENT A q3 why: glow-stick causation slightly backwards; source says clue is light. (6) JUDGMENT 'molecule' for ionic compounds throughout — grade 8 simplification from source. (7) JUDGMENT slide 6: 'gets heavier' in bullet 5 and speaker notes — source uses same phrase, so round 1 left it as a judgment. (8) JUDGMENT q8 placement (round 4 fact checker): q8 is MC but sits under 'Explain it' / 'write in complete sentences' directions; a student may not know whether to circle a letter or write.",
+      "Totals (all numbers exact from each session's own total_cost_usd and wall-clock minutes, as reported in handoffs): agent minutes 29.1 (Maker 13.9, Blind tester 8.1, Fact checker 7.1); order lead not measured; Wilco ~1 s per run (10 runs ≈ 10 s), not counted. Total agent tokens 10,278,060 (Maker 5,661,723, Blind tester 2,524,038, Fact checker 2,092,299). Total agent cost $10.4676 (Maker $4.9841, Blind tester $2.7801, Fact checker $2.7034). Round 4 added 6.6 min, 2,443,504 tokens, $2.1926. Reporter cost added by the lead after session ends. Per document and per question: the maker wrote all three documents in one session, so costs cannot be split by document. Per question: guided notes 34 items, slides 9 (no student items), quiz 10 questions × 2 versions = 20 quiz items. Cost preferred source: each session's own total_cost_usd (API list prices), as the brief recommends, since token counts can understate billed use in sessions that re-read context.",
+      "Minutes in the log through round 3 and the report/preview rows are each session's wall-clock time rounded to whole minutes (at least 1). Round 4 agent minutes are reported to a tenth of a minute (exact from each session's start/stop times). Tokens and dollars are exact from each session's record.",
+      "With the reporters (rounds 1–3: 11 minutes, 1,257,876 tokens, $1.69; round 4: 7.7 minutes, 345,797 tokens, $0.92; cheaper model tier) the logged agent total is $13.08 for 54 questions (about $0.24 a question) and 11.88 million tokens. Round 4 on its own (maker, blind recheck, fact checker, reporter) cost $3.11, 2,789,301 tokens and 14.3 agent minutes. The order lead's own work (writing the sample order, setting up each fresh agent, running Wilco, merging entries, rendering and fixing the preview) was not measured."
     ]
   }
 }
