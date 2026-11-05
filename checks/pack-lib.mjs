@@ -3,7 +3,7 @@
    2026) so a number choice reads the same way it does there. */
 import { readFileSync, writeFileSync } from 'node:fs';
 
-export const TYPES = ['mc', 'short', 'numeric', 'open', 'match', 'tf'];
+export const TYPES = ['mc', 'short', 'numeric', 'open', 'match', 'tf', 'fixit'];   // fixit: practice games (docs/KINDS-PRACTICEGAMES.md)
 // documents where the answers are handed back (practice) and where they are not (assessment)
 export const TEST_KINDS = ['test'];
 export const VERSIONED_KINDS = ['quiz', 'test'];
