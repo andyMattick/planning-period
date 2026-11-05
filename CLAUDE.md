@@ -35,6 +35,9 @@ the work.
    before Send.
 5. Fix wrong choices, never keys, to pass a check. Never weaken a check to pass.
 6. Samples use made-up teachers and students only.
+7. **No release without the teacher's agreement.** The teacher gets a watermarked preview first and either asks for
+   changes (a maker round, a fresh recheck, a new preview) or agrees; only then are the final files rendered and sent
+   (`approval.json` in the order folder; `docs/RUNBOOK.md` step 10).
 
 ## Before every commit
 `npm run check` (brand name in one place, menu and pack files valid, the renderer builds the samples, Wilco's bots pass
