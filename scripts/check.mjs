@@ -140,12 +140,12 @@ const RENDER = join(ROOT, 'scripts/render-pack.mjs'), FIXTURE = join(ROOT, 'samp
 if (!existsSync(RENDER)) skip('scripts/render-pack.mjs is not here yet: render check skipped');
 else if (!existsSync(FIXTURE)) skip('samples/_fixture is not here yet: render check skipped');
 else {
-  const out = mkdtempSync(join(tmpdir(), 'pp-render-'));
-  const r = spawnSync(process.execPath, [RENDER, FIXTURE, '--out', out], { cwd: ROOT, encoding: 'utf8', timeout: 300000 });
+  // the renderer writes the preview to <folder>/out-preview (docs/PACK-FORMAT.md, "Preview, sign-off, final")
+  const out = join(FIXTURE, 'out-preview');
+  const r = spawnSync(process.execPath, [RENDER, FIXTURE, '--preview'], { cwd: ROOT, encoding: 'utf8', timeout: 300000 });
   const made = existsSync(out) ? readdirSync(out, { recursive: true }).length : 0;
   if (r.status === 0 && made) ok(`render-pack.mjs rendered samples/_fixture (${made} files)`);
   else fail(`render-pack.mjs could not render samples/_fixture (exit ${r.status}, ${made} files):\n${(r.stdout || '').slice(-2000)}${(r.stderr || '').slice(-2000)}`);
-  rmSync(out, { recursive: true, force: true });
 }
 
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');

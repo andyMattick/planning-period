@@ -92,10 +92,10 @@ measured") and `audit.notes`: every round, every catch, every fix, Wilco before 
 ## 10. Preview, then the teacher agrees or asks for changes (CLAUDE.md rule 7)
 
 ```
-node $REPO/scripts/render-pack.mjs "$WORK" --preview --out "$WORK/preview"   # watermarked PDFs, AUDIT-REPORT, REVIEW.html
+node $REPO/scripts/render-pack.mjs "$WORK" --preview   # writes $WORK/out-preview/ and $WORK/preview.zip: watermarked PDFs, AUDIT-REPORT, REVIEW.html
 cd "$WORK/preview" && zip -qr "$WORK/$ORDER-preview.zip" . && cd -
 ```
-(Check `node $REPO/scripts/render-pack.mjs --help` for the renderer's exact flags.) Send the preview zip. The teacher
+(Modes: docs/PACK-FORMAT.md, "Preview, sign-off, final".) Send the preview zip. The teacher
 opens `REVIEW.html` offline, looks everything over and saves one of two files:
 
 - **`comments-<id>.json` (changes requested).** Copy their comments, in their words, to the repository:
@@ -117,7 +117,7 @@ Nothing goes out as final without `approval.json`; the renderer's final mode ref
 ## 11. Render the final pack
 
 ```
-node $REPO/scripts/render-pack.mjs "$WORK" --out "$WORK/out"      # refuses without $WORK/approval.json
+node $REPO/scripts/render-pack.mjs "$WORK" --final     # writes $WORK/out/ and $WORK/out.zip; refuses without a matching $WORK/approval.json
 ls "$WORK/out"                                                    # student/teacher copies, A/B, AUDIT-REPORT.pdf, project.json, README.txt
 cd "$WORK/out" && zip -qr "$WORK/$ORDER.zip" . && cd -
 ```
