@@ -95,3 +95,59 @@ agent minutes; wall clock 14:13–14:52 UTC. The lead's own time and tokens were
   "Answer:" line; round minute sums; render or reject markdown.
 - Cheaper: Wilco only needed to rerun the quiz; the reporter could get a shorter hand-off (numbers table plus the
   checks) instead of every agent's full reply.
+
+## Round 4 (extra round, owner approved; written by the round 4 order lead)
+
+Open item after round 3: quiz A q8 and B q8 too easy for level 3 (one coefficient). Same separation as rounds 1–3:
+every role a fresh headless session in its own folder with only what its brief allows; the maker got a pack without
+`checks`/`log`/`audit` and a two-item FIX list, and the lead copied only q8 back (diffed: nothing else changed).
+
+| Step | Session | Minutes (wall) | Tokens | Cost |
+|---|---|---|---|---|
+| 📝 Maker r4 (Opus) | fresh | 2.6 | 1,326,327 | $1.00 |
+| 🔎 Fact checker r4 (Opus) | fresh | 2.0 | 571,265 | $0.62 |
+| 🙈 Blind tester r4 (Opus, 2 phases) | fresh | 1.3 + 0.7 | 248,491 + 297,421 | $0.40 + $0.18 |
+| 🤖 Wilco (scripts) | — | 0 | — | — |
+| 🧾 Reporter r4 (Sonnet, slim hand-off) | fresh | 7.7 | 345,797 | $0.92 |
+| **Round 4 total** | | **14.3** | **2,789,301** | **$3.11** |
+
+- **Before → after.** A q8: Na + Cl₂ → NaCl with 2NaCl given, one row left (key: 2 in front of Na) → Al + Cl₂ → AlCl₃
+  with 2AlCl₃ given, two rows left (key B: 2Al and 3Cl₂; wrong: Cl₆ subscript trap, 3Cl₂ only, 6Cl₂). B q8: Cu + O₂ →
+  CuO with 2CuO given (key: 2Cu) → Fe + Cl₂ → FeCl₃ with 2Fe given, two rows left (key D: 3Cl₂ and 2FeCl₃; wrong: 3Cl₂
+  only, Fe₂Cl₂ subscript trap, swapped 3FeCl₃/2Cl₂).
+- **Fact checker:** both equations real and balanced, every count right. **It caught an error in the round 3 tester's
+  suggested wording**: the suggested subscript trap "Cl₂ to Cl₃" doesn't make the counts match (Cl 3 vs 6). The maker
+  had already written Cl₆, so nothing in the pack changed; recorded as a FIX with `fixed` "nothing to change in the
+  pack". New JUDGMENT: q8 is mc but sits under "Part 3 · Explain it / Write in complete sentences" (pre-existing).
+- **Blind tester:** 2 of 2 matched, confidence 5, no flags; both round 3 FIXes confirmed fixed (now real L3, clearly
+  harder than q4/q5, A and B parallel, B no easier). 2 JUDGMENT for the teacher (MC lets a student check options by
+  counting; A's 4th wrong choice is "6Cl₂", B's is "swapped coefficients").
+- **Wilco:** keys pass; test-wise pass, worst specific 32% → absolute/posC/posD 29% (chance 25%, line 35%).
+- No new FIX in the pack, so **no round 5**.
+- Preview look: the longer q8 choices left Part 3's heading alone at the foot of page 2 in A only; `space` is one value
+  for both versions, so set q5 `space: 2` and q6 `space: 5` (was 2) so A and B break the same way (Part 3 opens page
+  3). The **teacher copies** still end page 3 with the Part 3 heading alone (no keep-with-next past the directions line).
+
+### Counting: duplicates (for the coordinator)
+
+The round 2 and round 3 q8 FIXes (A and B) are one problem per item. Both now carry `fixed`; the round 3 ones also
+carry `sameAs: {check: "blind", round: 2, where}` and their `fixed` text starts "Same problem as the round 2 finding".
+**The renderer ignores `sameAs`**, so the front page now says **20 needed a fix: all 20 fixed · 17 kept · 14 left for
+you** (before round 4: 15 fixed, 4 not fixed yet). Counted once each, the real numbers are **18 problems, all fixed**
+(20 minus the two round 3 duplicates; the fact checker's FIX on the suggestion is counted as a real catch). The round 1
+A q8 finding (recall, not parallel) is a different problem, fixed in round 2. I did not change the renderer.
+Suggestion: `bucketOf`/`auditStats` skip findings with `sameAs` in the counts and show them under their original.
+
+Also on the front page: "**5 rounds** of checks" comes from Wilco's run counter (`--write` numbers its runs 1–5, and
+round 2 had two Wilco runs), not the order's 4 rounds. It said 4 for 3 order rounds before. Suggestion: count
+rounds from blind/solver/facts only, or let Wilco take the order round.
+
+### Brief suggestions from round 4 (for the auditor)
+
+- `agents/blind-science.md`: a suggested fix ("e.g. …") must be counted and checked like any item; the round 3 tester's
+  Cl₃ trap was wrong. Or the RUNBOOK: the fact checker always checks the previous round's suggested wording.
+- `agents/maker.md`: when an item moves to a section with written-answer directions, check the section still fits the
+  item type (q8 mc under "Write in complete sentences").
+- A slim reporter hand-off (numbers table + pack without documents) cut the reporter from $1.53 to $0.92 but still
+  took 7.7 minutes; most of it was copying 26 rows unchanged. The lead could append rows and let the reporter write only
+  notes.
