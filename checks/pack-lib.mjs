@@ -48,7 +48,7 @@ export function rows(pack) {
 
 export const norm = (s) => String(s ?? '').toLowerCase().replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').replace(/[.!?;:,]+$/, '').trim();
 // what makes two questions "the same question": the prompt, the picture and the choices (as a set) or the answer
-export const signature = (r) => [norm(r.prompt), String(r.figure || ''), Array.isArray(r.choices) ? r.choices.map(norm).sort().join('¦') : norm(r.answer)].join('‖');
+export const signature = (r) => [norm(r.prompt), typeof r.figure === 'object' && r.figure ? JSON.stringify(r.figure) : String(r.figure || ''), Array.isArray(r.choices) ? r.choices.map(norm).sort().join('¦') : norm(r.answer)].join('‖');
 
 /* ---------- exact values (from Pet World scripts/notes/choice-gate.mjs) ---------- */
 const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a || 1; };

@@ -8,6 +8,7 @@
      4. The checks still bite: checks/fixtures/good.pack.json passes checks/keys.mjs and checks/test-wise.mjs, and
         broken copies of it (made here, in a temporary folder) fail them.
      5. Every samples/<name>/pack.json passes checks/keys.mjs and checks/test-wise.mjs.
+     5a. Every sample with a math check passes checks/math.mjs (SymPy), and broken copies of samples/_cap-math fail it.
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
    Exit 1 on any problem. */
@@ -151,6 +152,32 @@ if (!packs.length) skip('no samples/*/pack.json yet: nothing to check');
 for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs']) {
   const r = run(s, join(ROOT, p));
   if (r.status === 0) ok(`${p} passes checks/${s}`); else fail(`${p} fails checks/${s}:\n${r.stdout}${r.stderr}`);
+}
+
+/* 5a. math (docs/KINDS-MATH.md): every sample with a `math.check` passes checks/math.mjs (SymPy), and the check bites */
+const hasMathCheck = (p) => JSON.stringify(JSON.parse(readFileSync(join(ROOT, p), 'utf8')).documents || []).includes('"math":{');
+const mathPacks = packs.filter(hasMathCheck);
+for (const p of mathPacks) {
+  const r = run('math.mjs', join(ROOT, p));
+  if (r.status === 0) ok(`${p} passes checks/math.mjs`); else fail(`${p} fails checks/math.mjs:\n${r.stdout}${r.stderr}`);
+}
+const CAP_MATH = join(ROOT, 'samples/_cap-math/pack.json');
+if (existsSync(CAP_MATH)) {
+  const tmp = mkdtempSync(join(tmpdir(), 'pp-math-'));
+  const base = JSON.parse(readFileSync(CAP_MATH, 'utf8'));
+  const q = (p, d, id) => p.documents[d].sections.flatMap((s) => s.questions).find((x) => x.id === id);
+  const breaks = [];
+  { const p = structuredClone(base); q(p, 0, 'q4').answer = '$x = 6$'; breaks.push(['a wrong key', p]); }
+  { const p = structuredClone(base); q(p, 2, 'q3').choices.A[0] = '$x^3 \\cos x + 3x^2 \\sin x$'; breaks.push(['a wrong choice equal to the key', p]); }
+  { const p = structuredClone(base); q(p, 0, 'q5').figure.graph.hide = []; breaks.push(['a graph label that gives the key away', p]); }
+  { const p = structuredClone(base); q(p, 0, 'q4').accept.push('x = 6'); breaks.push(['a wrong accept form', p]); }
+  { const p = structuredClone(base); q(p, 2, 'q7').answer.B = '$3x^4 + x^2 + \\frac{C}$'; breaks.push(['LaTeX that does not parse', p]); }
+  breaks.forEach(([what, p], i) => {
+    const f = join(tmp, `broken-math-${i}.json`); writeFileSync(f, JSON.stringify(p));
+    const r = run('math.mjs', f);
+    if (r.status === 1) ok(`checks/math.mjs catches ${what}`); else fail(`checks/math.mjs did not catch ${what} (exit ${r.status}):\n${r.stdout}${r.stderr}`);
+  });
+  rmSync(tmp, { recursive: true, force: true });
 }
 
 /* 5b. no release without the teacher's agreement (CLAUDE.md rule 7): a sample with rendered final files has an approval */

@@ -14,6 +14,7 @@
    with checks/score-blind.mjs. Keep the view outside the order folder's pack (it is a working copy: delete it after). */
 import { writeFileSync } from 'node:fs';
 import { loadPack, rows, argsOf } from './pack-lib.mjs';
+import { isGraphFigure, graphText } from '../scripts/render/graph.mjs';
 
 const { opt, files } = argsOf(process.argv);
 if (!files.length) { console.error('usage: node checks/student-view.mjs <pack.json> [--out view.md] [--only "where|where"]'); process.exit(2); }
@@ -21,7 +22,7 @@ const pack = loadPack(files[0]);
 const onlyRaw = opt('only');
 const only = onlyRaw ? new Set(onlyRaw.split(onlyRaw.includes('|') ? '|' : ',').map((s) => s.trim()).filter(Boolean)) : null;
 const L = 'ABCDEF';
-const figText = (svg) => { const t = [...String(svg).matchAll(/>([^<>]+)</g)].map((m) => m[1].trim()).filter(Boolean); return `[picture${t.length ? `; its labels: ${t.join(' · ')}` : ''}]`; };
+const figText = (svg) => { if (isGraphFigure(svg)) return `[graph: ${graphText(svg)}]`; const t = [...String(svg).matchAll(/>([^<>]+)</g)].map((m) => m[1].trim()).filter(Boolean); return `[picture${t.length ? `; its labels: ${t.join(' · ')}` : ''}]`; };
 const out = [`# Student copy (no key): ${pack.order?.subject || ''} ${pack.order?.grade ? 'grade ' + pack.order.grade : ''}, ${pack.order?.topic || ''}`, '',
   'Answer every item as a strong student and a careful teacher would. One JSON line per item: {"where": "<the item\'s where>", "answer": <letter, number or text>, "confidence": 1-5, "flags": [two-right, none-right, giveaway, missing-given, ambiguous-wording, factually-wrong, too-easy, unrealistic, grammar-typo, off-source], "note": "…"}', ''];
 let doc = null;
