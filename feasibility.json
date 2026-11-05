@@ -1,0 +1,39 @@
+{
+  "_note": "What we can make well from the material a teacher sends. Shared by the order page (live warnings) and the onboarding agent (agents/onboarding.md). Pilot estimates, owner Nov 5, 2026; recalibrate from real orders (docs/FEASIBILITY.md).",
+  "wordsPerPage": 300,
+  "questionsPerPage": { "low": 6, "high": 10, "_why": "distinct, fair questions one page of source supports without repeating itself; A/B versions don't count twice" },
+  "defaults": {
+    "worksheet":  { "questions": 12, "types": { "short": 8, "mc": 4 }, "choices": 4, "levels": "4 at each of 3 levels" },
+    "homework":   { "questions": 8,  "types": { "short": 6, "mc": 2 }, "choices": 4 },
+    "bellringer": { "questions": 10, "types": { "short": 6, "mc": 4 }, "choices": 4, "note": "one per day" },
+    "quiz":       { "questions": 10, "types": { "mc": 7, "short": 2, "open": 1 }, "choices": 4, "versions": 2 },
+    "test":       { "questions": 25, "types": { "mc": 18, "short": 5, "open": 2 }, "choices": 4, "versions": 2, "harder": 0.4 },
+    "versions":   { "versions": 2, "note": "same number and types as the teacher's test" },
+    "studyguide": { "pages": 2, "questions": 10 },
+    "notes":      { "pages": 3 },
+    "slides":     { "slides": 12 },
+    "reviewgame": { "questions": 24 },
+    "project":    { "days": 5, "grouping": "either", "turnIn": "a product plus a short reflection" },
+    "unitfull":   { "days": 10, "lessons": 4, "quizzes": 2, "tests": 1, "bellringers": 10 }
+  },
+  "limits": {
+    "worksheet":  { "questions": [4, 30] },
+    "homework":   { "questions": [3, 20] },
+    "bellringer": { "questions": [5, 20] },
+    "quiz":       { "questions": [5, 20], "versions": [1, 3], "choices": [3, 5] },
+    "test":       { "questions": [10, 60], "versions": [1, 3], "choices": [3, 5] },
+    "versions":   { "versions": [2, 3], "questions": [1, 60] },
+    "studyguide": { "pages": [1, 4] },
+    "notes":      { "pages": [1, 6] },
+    "slides":     { "slides": [5, 30] },
+    "reviewgame": { "questions": [10, 40] },
+    "project":    { "days": [1, 30] },
+    "unitfull":   { "days": [3, 20], "lessons": [1, 4], "quizzes": [0, 3], "tests": [0, 1] }
+  },
+  "fromStandardsOnly": { "_why": "when the source is only standards, the maker writes the lessons itself, so we can make more, but the fact checker and blind tester carry more weight", "questionsPerStandard": [4, 8] },
+  "messages": {
+    "tooMany": "{asked} questions from about {pages} page(s) of material is more than it can support without repeating itself. From what you sent, we can make about {low}–{high} good questions. Add more source material, lower the number, or let us use our best judgment.",
+    "noSource": "We need something to work from: notes, a chapter, standards or an old test.",
+    "defaultUsed": "If you leave this blank, we'll use the most common mix for your grade and subject: {default}."
+  }
+}
