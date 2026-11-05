@@ -1,0 +1,23 @@
+[
+  {
+    "id": "g11-history",
+    "title": "Reconstruction, 1865–1877: study guide and A/B unit test",
+    "grade": "11",
+    "subject": "social",
+    "folder": "samples/g11-history/"
+  },
+  {
+    "id": "g4-math",
+    "title": "Remainders in Stories: worksheet and A/B quiz",
+    "grade": "4",
+    "subject": "math",
+    "folder": "samples/g4-math"
+  },
+  {
+    "id": "g8-science",
+    "title": "Chemical reactions and conservation of mass",
+    "grade": "8",
+    "subject": "science",
+    "folder": "g8-science/"
+  }
+]
