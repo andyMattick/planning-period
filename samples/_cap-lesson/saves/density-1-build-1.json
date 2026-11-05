@@ -1,0 +1,208 @@
+{
+ "app": "pp-lesson",
+ "key": "pp-lesson:pp-2026-11-05-g6-science-cap-lesson:density-1:v1",
+ "lesson": "density-1",
+ "build": 1,
+ "at": "2026-11-05T19:30:38.063Z",
+ "data": {
+  "v": 1,
+  "lesson": "density-1",
+  "name": "",
+  "at": 1793907037744,
+  "build": 1,
+  "page": "notes",
+  "items": {
+   "scale-q1": {
+    "v": "2",
+    "ok": true,
+    "wrong": [
+     0
+    ],
+    "misses": 1,
+    "until": 1793907036093,
+    "think": "",
+    "hint": false,
+    "msg": "",
+    "changed": false,
+    "ex": "A heavy block can still float if its mass is spread through a big volume. What matters is the mass in each cubic centimeter.",
+    "q": "In your runs, what decided whether a block sank or floated?",
+    "a": "How much mass it packed into its volume",
+    "at": 1793907037180
+   },
+   "c1": {
+    "v": "0",
+    "ok": true,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false,
+    "msg": "",
+    "changed": false,
+    "ex": "30 ÷ 120 = 0.25 g/cm³, less than water’s 1.00, so it floats.",
+    "q": "A 30 g cork block has a volume of 120 cm³. What does it do in water?",
+    "a": "It floats",
+    "at": 1793907037429
+   },
+   "c3": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "c4": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "c2": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "c5": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "c6": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "c7": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "c8": {
+    "v": "2.5",
+    "ok": true,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false,
+    "msg": "",
+    "changed": false,
+    "ex": "20 ÷ 8 = 2.5 g/cm³.",
+    "q": "A 20 g rock has a volume of 8 cm³. What is its density?",
+    "a": "2.5",
+    "at": 1793907037331
+   },
+   "c9": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "c10": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "c11": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "e1": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "e2": {
+    "v": "",
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   }
+  },
+  "blanks": {},
+  "widgets": {
+   "scale-sim": {
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   },
+   "mistake-1": {
+    "ok": false,
+    "wrong": [],
+    "misses": 0,
+    "until": 0,
+    "think": "",
+    "hint": false
+   }
+  },
+  "open": {
+   "e1": "The log has lots of mass but a huge volume so its density is under one and it floats."
+  },
+  "frq": {},
+  "tq": {
+   "revealed": false,
+   "q": "",
+   "a": ""
+  },
+  "notes": {
+   "lab-scale": {
+    "text": "Heavy blocks can float if they are big enough.",
+    "src": "Lab 1: The virtual tank",
+    "at": 1793907037251
+   }
+  },
+  "extra": "",
+  "stuck": [
+   {
+    "id": "scale-q1",
+    "page": "lab-scale",
+    "q": "In your runs, what decided whether a block sank or floated?",
+    "a": "Its mass alone, since heavy blocks sank",
+    "at": 1793907031093
+   }
+  ]
+ }
+}

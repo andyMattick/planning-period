@@ -21,6 +21,7 @@ import { mathPngMaker, setMathEnabled } from './render/math.mjs';
 import { GAME_KINDS, renderGame } from './render/games.mjs';
 import { isAppDoc, renderAppDoc } from './render/apps.mjs';
 import { isPracticeGameDoc, renderPracticeGameDoc } from './render/practicegames.mjs';
+import { isLessonDoc, renderLessonDoc } from './render/lesson.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -112,7 +113,7 @@ export async function renderPack(folder, { mode } = {}) {
     const figCache = new Map();
     setMathEnabled(pack);
     const ctx = {
-      pack, brand, style, layout: layoutOf(style), subjectLabel, date, preview, approval,
+      pack, brand, style, layout: layoutOf(style), subjectLabel, date, preview, approval, folder,
       mathPng: mathPngMaker(figPage), // typeset math as a PNG: Word's fallback and PowerPoint (docs/KINDS-MATH.md)
       async figurePng(svgText) {
         const svg = cleanSvg(svgText);
@@ -153,6 +154,8 @@ export async function renderPack(folder, { mode } = {}) {
       used.add(base);
       // review apps and interactive worksheets: docs/KINDS-APPS.md
       if (isAppDoc(doc)) { await renderAppDoc(doc, base, ctx, { pdf, write, browser }).catch((e) => { throw e instanceof RenderError ? e : new RenderError(e.message); }); continue; }
+      // interactive lessons: docs/KINDS-LESSONS.md
+      if (isLessonDoc(doc)) { await renderLessonDoc(doc, base, ctx, { pdf, write, browser }).catch((e) => { throw e instanceof RenderError ? e : new RenderError(e.message); }); continue; }
       // practice games: docs/KINDS-PRACTICEGAMES.md
       if (isPracticeGameDoc(doc)) { await renderPracticeGameDoc(doc, base, ctx, { pdf, write, browser }).catch((e) => { throw e instanceof RenderError ? e : new RenderError(e.message); }); continue; }
       const hasQs = questionsOf(doc).length > 0;

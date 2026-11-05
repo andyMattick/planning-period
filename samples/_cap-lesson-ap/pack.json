@@ -1,0 +1,718 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-ap-stats-cap-lesson",
+  "date": "2026-11-05",
+  "capabilityTest": "lesson",
+  "_note": "A capability test for the AP bell ringer in an interactive lesson (docs/KINDS-LESSONS.md), not a gallery sample. Made-up teacher and made-up source notes; no blind tester or solver has run on it. CED codes are not checked against the CED.",
+  "order": {
+    "teacher": "Mr. Delgado (made-up sample)",
+    "grade": "11",
+    "subject": "math",
+    "topic": "AP Statistics: the sampling distribution of a sample proportion",
+    "items": [
+      "lesson"
+    ],
+    "requests": "AP Statistics. Include a bell ringer. Use my p-hat notes; every blank on them should be in the lesson.",
+    "sources": [
+      "phat-notes.pdf"
+    ],
+    "styleExamples": []
+  },
+  "style": {
+    "notes": [
+      "AP exam wording",
+      "Short sentences"
+    ],
+    "accent": "#2b6cb0"
+  },
+  "documents": [
+    {
+      "item": "lesson",
+      "kind": "lesson",
+      "title": "Sampling Distributions of p-hat",
+      "lessonId": "ap-phat-1",
+      "ap": true,
+      "build": {
+        "n": 1,
+        "note": "First build"
+      },
+      "locking": false,
+      "source": {
+        "title": "p-hat notes (made-up)",
+        "file": "phat-notes.pdf"
+      },
+      "blanksInventory": [
+        {
+          "id": "i1",
+          "source": "p-hat notes, #1",
+          "text": "The mean of the sampling distribution of p̂ is ______.",
+          "answer": "p"
+        },
+        {
+          "id": "i2",
+          "source": "p-hat notes, #2",
+          "text": "SD of p̂ = √(p(1 − p) / ______)",
+          "answer": "n"
+        },
+        {
+          "id": "i3",
+          "source": "p-hat notes, #3",
+          "text": "Large Counts: np ≥ ______ and n(1 − p) ≥ ______.",
+          "answer": "10"
+        },
+        {
+          "id": "i4",
+          "source": "p-hat notes, #4",
+          "text": "Larger samples give ______ variability.",
+          "answer": "less"
+        }
+      ],
+      "teacherQuestion": {
+        "code": "PHAT-7",
+        "question": "A poll of 1,000 adults and a poll of 4,000 adults both report p̂ = 0.52. How much smaller is the second poll’s standard deviation, and why isn’t it four times smaller?",
+        "look": [
+          "Half as large (√4 = 2)",
+          "n is under a square root in the SD formula",
+          "Uses the polls in the answer"
+        ]
+      },
+      "teacherNotes": [
+        "This page is a pacing tool, not tamper-proof (T4).",
+        "The bell ringer’s CED codes are in the teacher copy and review only; they are not checked against the CED yet (A4)."
+      ],
+      "pages": [
+        {
+          "id": "bell",
+          "part": "bell",
+          "title": "Bell ringer: statistics and sampling",
+          "minutes": 10,
+          "intro": "About 10 minutes. Answer the four multiple-choice questions, then the free response.",
+          "questions": [
+            {
+              "id": "b1",
+              "type": "mc",
+              "level": 2,
+              "skill": "sampling distributions",
+              "prompt": "A survey of 80 randomly chosen seniors finds that 0.35 plan to take a gap year. What is 0.35?",
+              "choices": [
+                "A parameter for all seniors",
+                "A statistic from this sample",
+                "The population proportion p",
+                "A margin of error for p"
+              ],
+              "answer": 1,
+              "why": "0.35 describes the 80 seniors who were sampled, so it is a statistic (p̂), not a parameter.",
+              "hint": "Does 0.35 describe the sample or every senior?",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "A parameter describes the whole population. Nobody asked every senior."
+                },
+                {
+                  "answer": 2,
+                  "why": "p is the population value. This number came from 80 people."
+                },
+                {
+                  "answer": 3,
+                  "why": "A margin of error is a ± amount around an estimate, not the estimate itself."
+                }
+              ],
+              "ced": "UNC-3.A"
+            },
+            {
+              "id": "b2",
+              "type": "mc",
+              "level": 2,
+              "skill": "sampling distributions",
+              "prompt": "Which change makes the sampling distribution of p̂ less variable?",
+              "choices": [
+                "Survey fewer people each time",
+                "Draw from a bigger school",
+                "Use a larger random sample",
+                "Ask for volunteers instead"
+              ],
+              "answer": 2,
+              "why": "The standard deviation of p̂ is √(p(1 − p)/n), so a larger n makes it smaller.",
+              "hint": "Which letter in the standard deviation formula can you change?",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "Smaller samples bounce around more, not less."
+                },
+                {
+                  "answer": 1,
+                  "why": "The population size is not in the formula (as long as the sample is under 10% of it)."
+                },
+                {
+                  "answer": 3,
+                  "why": "Volunteers add bias. They do not reduce variability."
+                }
+              ],
+              "ced": "UNC-3.J"
+            },
+            {
+              "id": "b3",
+              "type": "mc",
+              "level": 2,
+              "skill": "sampling distributions",
+              "prompt": "Samples of size n = 40 come from a population with p = 0.2. What is the mean of the sampling distribution of p̂?",
+              "choices": [
+                "0.16",
+                "8.00",
+                "0.80",
+                "0.20"
+              ],
+              "answer": 3,
+              "why": "The sampling distribution of p̂ is centered at p, so its mean is 0.20.",
+              "hint": "Where is the sampling distribution of p̂ centered?",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "0.16 is p(1 − p), the piece inside the standard deviation."
+                },
+                {
+                  "answer": 1,
+                  "why": "8 is np, the expected count, not the expected proportion."
+                },
+                {
+                  "answer": 2,
+                  "why": "0.80 is 1 − p, the proportion of failures."
+                }
+              ],
+              "ced": "UNC-3.J"
+            },
+            {
+              "id": "b4",
+              "type": "mc",
+              "level": 2,
+              "skill": "sampling distributions",
+              "prompt": "For n = 40 and p = 0.2, is the Large Counts condition met?",
+              "choices": [
+                "Yes, 8 successes are enough",
+                "No, since np = 8 is below 10",
+                "Yes, since n is over 30",
+                "No, too few failures expected"
+              ],
+              "answer": 1,
+              "why": "np = 40 × 0.2 = 8, which is less than 10, so the condition fails.",
+              "hint": "Find np and n(1 − p). Both need to be at least 10.",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "The AP rule needs at least 10 expected successes, not 8."
+                },
+                {
+                  "answer": 2,
+                  "why": "n ≥ 30 is a rule of thumb for means, not for proportions."
+                },
+                {
+                  "answer": 3,
+                  "why": "n(1 − p) = 32, which is plenty. The problem is np."
+                }
+              ],
+              "ced": "UNC-3.K"
+            }
+          ],
+          "frq": {
+            "id": "frq-1",
+            "prompt": "A school says that 60% of its students walk to school. A random sample of 50 students is taken.",
+            "parts": [
+              "Describe the shape, center and variability of the sampling distribution of p̂.",
+              "Find the probability that p̂ is less than 0.50. Show your work."
+            ],
+            "guide": [
+              "(a) Shape: approximately normal because np = 30 and n(1 − p) = 20 are both at least 10",
+              "(a) Center: mean of p̂ = 0.60",
+              "(a) Variability: SD = √(0.6·0.4/50) ≈ 0.069",
+              "(b) z = (0.50 − 0.60)/0.069 ≈ −1.44 and P(p̂ < 0.50) ≈ 0.075, with the work shown"
+            ],
+            "model": "(a) Since np = 30 ≥ 10 and n(1 − p) = 20 ≥ 10, the sampling distribution of p̂ is approximately normal, with mean 0.60 and standard deviation √(0.6 × 0.4 / 50) ≈ 0.069. (b) z = (0.50 − 0.60)/0.069 ≈ −1.44, so P(p̂ < 0.50) ≈ 0.075.",
+            "errors": [
+              "Saying the shape is normal without checking Large Counts",
+              "Using p(1 − p)/n without the square root",
+              "Using 0.50 as the mean of the distribution",
+              "Describing the sample instead of the sampling distribution"
+            ],
+            "ced": [
+              "UNC-3.J",
+              "UNC-3.K",
+              "VAR-6.A"
+            ]
+          }
+        },
+        {
+          "id": "hook",
+          "part": "hook",
+          "title": "The candy jar contest",
+          "minutes": 4,
+          "story": "Two classes are guessing the share of red candies in the same giant jar. Class A pulls 10 candies at a time; Class B pulls 100. Each class records many samples, and the class whose guesses land closest to the truth wins the jar.",
+          "widget": {
+            "id": "hook-predict",
+            "mechanic": "predict-then-reveal",
+            "prompt": "Before you simulate it: whose sample proportions will be more spread out?",
+            "options": [
+              "Class A (samples of 10)",
+              "Class B (samples of 100)",
+              "About the same spread",
+              "It depends on the jar"
+            ],
+            "reveal": "Class A’s proportions are much more spread out. Small samples bounce around; large samples stay close to the true proportion. The lab shows how much."
+          }
+        },
+        {
+          "id": "lab-sim",
+          "part": "lab",
+          "title": "Lab 1: Simulate the samples",
+          "minutes": 9,
+          "intro": "Each run draws one random sample of size n from a jar where the true proportion of red is p, and records p̂.",
+          "widget": {
+            "id": "sim-phat",
+            "mechanic": "simulate",
+            "prompt": "Set n and p, then run at least 30 samples. Then change n and watch the dot plot.",
+            "vars": [
+              {
+                "id": "n",
+                "label": "Sample size n",
+                "min": 5,
+                "max": 200,
+                "step": 5,
+                "value": 10
+              },
+              {
+                "id": "p",
+                "label": "True proportion p",
+                "min": 0.05,
+                "max": 0.95,
+                "step": 0.05,
+                "value": 0.3
+              }
+            ],
+            "outputs": [
+              {
+                "label": "Sample proportion p̂",
+                "expr": "binom(n, p) / n",
+                "places": 3
+              }
+            ],
+            "verdicts": [],
+            "runs": 30,
+            "repeat": 25,
+            "button": "Draw one sample"
+          },
+          "questions": [
+            {
+              "id": "sim-q1",
+              "type": "mc",
+              "level": 1,
+              "skill": "sampling distributions",
+              "prompt": "As n went up, what happened to the spread of the p̂ values?",
+              "choices": [
+                "It got narrower",
+                "It stayed the same",
+                "It got much wider"
+              ],
+              "answer": 0,
+              "why": "Bigger samples average out more of the luck, so p̂ lands closer to p and the dot plot gets narrower.",
+              "hint": "Run 25 samples with n = 10, then 25 with n = 200. Compare the dot plots.",
+              "miss": [
+                {
+                  "answer": 1,
+                  "why": "Look again at the dot plot for n = 200 next to n = 10."
+                },
+                {
+                  "answer": 2,
+                  "why": "Wider would mean bigger samples are less reliable. Check the plot."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lab-sort",
+          "part": "lab",
+          "title": "Lab 2: Is a normal model OK?",
+          "minutes": 6,
+          "intro": "The Large Counts condition: np ≥ 10 and n(1 − p) ≥ 10.",
+          "widget": {
+            "id": "sort-lc",
+            "mechanic": "sort",
+            "prompt": "Sort each situation by whether the Large Counts condition is met.",
+            "bins": [
+              {
+                "id": "met",
+                "label": "Met"
+              },
+              {
+                "id": "not",
+                "label": "Not met"
+              }
+            ],
+            "cards": [
+              {
+                "id": "c50",
+                "text": "n = 50, p = 0.3",
+                "bin": "met",
+                "why": "np = 15 and n(1 − p) = 35, both at least 10.",
+                "miss": "Find np and n(1 − p) first."
+              },
+              {
+                "id": "c20",
+                "text": "n = 20, p = 0.3",
+                "bin": "not",
+                "why": "np = 6, which is under 10.",
+                "miss": "Find np: 20 × 0.3."
+              },
+              {
+                "id": "c100",
+                "text": "n = 100, p = 0.05",
+                "bin": "not",
+                "why": "np = 5, which is under 10, even though n is large.",
+                "miss": "A big n is not enough. Find np."
+              },
+              {
+                "id": "c40",
+                "text": "n = 40, p = 0.5",
+                "bin": "met",
+                "why": "np = n(1 − p) = 20, both at least 10.",
+                "miss": "Find np and n(1 − p)."
+              },
+              {
+                "id": "c200",
+                "text": "n = 200, p = 0.08",
+                "bin": "met",
+                "why": "np = 16 and n(1 − p) = 184.",
+                "miss": "Find np: 200 × 0.08."
+              },
+              {
+                "id": "c30",
+                "text": "n = 30, p = 0.9",
+                "bin": "not",
+                "why": "n(1 − p) = 3, which is under 10.",
+                "miss": "Check the failures too: n(1 − p)."
+              }
+            ],
+            "hint": "Compute both np and n(1 − p) for each card. Both have to be at least 10.",
+            "why": "The condition needs at least 10 expected successes and 10 expected failures."
+          }
+        },
+        {
+          "id": "lab-slider",
+          "part": "lab",
+          "title": "Lab 3: Hunt for the sample size",
+          "minutes": 4,
+          "widget": {
+            "id": "slider-n",
+            "mechanic": "slider-hunt",
+            "prompt": "With p = 0.5, find the sample size that makes the standard deviation of p̂ exactly 0.05.",
+            "slider": {
+              "label": "Sample size n",
+              "min": 10,
+              "max": 400,
+              "step": 10,
+              "value": 20,
+              "unit": ""
+            },
+            "readout": [
+              {
+                "label": "SD of p̂",
+                "expr": "sqrt(0.25 / x)",
+                "places": 3
+              }
+            ],
+            "answer": 100,
+            "tol": 0,
+            "hint": "Watch the readout. Quadrupling n halves the SD.",
+            "wrong": "Not yet. The readout has to say 0.050.",
+            "why": "√(0.5 × 0.5 / 100) = √0.0025 = 0.05."
+          }
+        },
+        {
+          "id": "rule",
+          "part": "rule",
+          "title": "The rule: the sampling distribution of p̂",
+          "minutes": 3,
+          "sentences": [
+            "The mean of the sampling distribution of p̂ equals {r-mean}.",
+            "Its standard deviation is the square root of p(1 − p) divided by {r-n}.",
+            "Use a normal model when np and n(1 − p) are both at least {r-ten}."
+          ],
+          "blanks": [
+            {
+              "id": "r-mean",
+              "answer": "p",
+              "accept": [
+                "the population proportion",
+                "the true proportion"
+              ],
+              "inv": "i1",
+              "hint": "Where was the dot plot centered in Lab 1?",
+              "why": "p̂ is unbiased: its sampling distribution is centered at p.",
+              "miss": [
+                {
+                  "answer": "0.5",
+                  "why": "Only when p happens to be 0.5. In general it is centered at p."
+                }
+              ]
+            },
+            {
+              "id": "r-n",
+              "answer": "n",
+              "accept": [
+                "the sample size",
+                "sample size"
+              ],
+              "inv": "i2",
+              "hint": "Which number did you change in Lab 3?",
+              "why": "Dividing by n is why larger samples vary less.",
+              "miss": [
+                {
+                  "answer": "p",
+                  "why": "p is already in the top part, p(1 − p)."
+                }
+              ]
+            },
+            {
+              "id": "r-ten",
+              "type": "numeric",
+              "answer": "10",
+              "inv": "i3",
+              "hint": "Look at the intro of Lab 2.",
+              "why": "At least 10 expected successes and 10 expected failures.",
+              "miss": [
+                {
+                  "answer": "30",
+                  "why": "30 is a rule of thumb for means, not proportions."
+                },
+                {
+                  "answer": "5",
+                  "why": "Some old books use 5. The AP course uses 10."
+                }
+              ]
+            }
+          ],
+          "keyIdeas": [
+            "p̂ is an unbiased estimator of p.",
+            "Larger samples give less variability: the SD shrinks with √n.",
+            "Check Large Counts before using a normal model."
+          ]
+        },
+        {
+          "id": "check",
+          "part": "check",
+          "title": "Check: score the contest",
+          "minutes": 5,
+          "intro": "Time to judge the contest entries. A judge’s mistake comes first.",
+          "widget": {
+            "id": "mistake-sd",
+            "mechanic": "find-the-mistake",
+            "prompt": "Ana finds the standard deviation of p̂ for p = 0.3 and n = 84. Tap the step with the mistake.",
+            "steps": [
+              "Check: np = 25.2 and n(1 − p) = 58.8, both at least 10.",
+              "Mean of p̂ = p = 0.3.",
+              "SD = 0.3 × 0.7 ÷ 84 = 0.0025.",
+              "So most p̂ values fall within about 0.005 of 0.3."
+            ],
+            "answer": 2,
+            "miss": {
+              "0": "Both counts are right and both are at least 10.",
+              "1": "The mean of p̂ is p. This step is right.",
+              "3": "This follows from the step before. Fix the earlier step first."
+            },
+            "hint": "Compare Ana’s SD step with the rule card.",
+            "why": "Ana forgot the square root: √(0.21 / 84) = 0.05, not 0.0025."
+          },
+          "questions": [
+            {
+              "id": "k1",
+              "type": "mc",
+              "level": 2,
+              "skill": "sampling distributions",
+              "prompt": "A population has p = 0.6. Samples of n = 150 are drawn. What is the standard deviation of p̂?",
+              "choices": [
+                "0.0016",
+                "0.063",
+                "0.040",
+                "0.49"
+              ],
+              "answer": 2,
+              "why": "√(0.6 × 0.4 / 150) = √0.0016 = 0.04.",
+              "hint": "Use √(p(1 − p)/n).",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "0.0016 is the variance. Take the square root."
+                },
+                {
+                  "answer": 1,
+                  "why": "That uses p/n inside the root instead of p(1 − p)/n."
+                },
+                {
+                  "answer": 3,
+                  "why": "That is √(p(1 − p)): you forgot to divide by n."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "type": "mc",
+              "level": 3,
+              "skill": "sampling distributions",
+              "prompt": "Quadrupling the sample size does what to the standard deviation of p̂?",
+              "choices": [
+                "Cuts it to one quarter",
+                "It doubles the SD",
+                "Leaves it the same",
+                "Cuts it in half"
+              ],
+              "answer": 3,
+              "why": "n is under a square root, so 4 times the n divides the SD by √4 = 2.",
+              "hint": "Remember Lab 3: what happened between n = 25 and n = 100?",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "n sits under a square root, so the SD shrinks by √4, not 4."
+                },
+                {
+                  "answer": 1,
+                  "why": "More data means less spread, not more."
+                },
+                {
+                  "answer": 2,
+                  "why": "n is in the formula, so the SD changes."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "type": "mc",
+              "level": 2,
+              "skill": "sampling distributions",
+              "prompt": "Why is the sampling distribution of p̂ centered at p?",
+              "choices": [
+                "p̂ is an unbiased estimator of p",
+                "Large samples hit p exactly",
+                "Every sample has the same p̂",
+                "The population is normal"
+              ],
+              "answer": 0,
+              "why": "On average over all random samples, p̂ equals p: it has no bias.",
+              "hint": "Think about the center of the dot plot in Lab 1.",
+              "miss": [
+                {
+                  "answer": 1,
+                  "why": "Even large samples miss p by a little. They are just close on average."
+                },
+                {
+                  "answer": 2,
+                  "why": "Your dot plot showed many different p̂ values."
+                },
+                {
+                  "answer": 3,
+                  "why": "A yes/no population is not normal. The center comes from no bias."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "type": "numeric",
+              "level": 3,
+              "skill": "sampling distributions",
+              "prompt": "Find the standard deviation of p̂ when p = 0.4 and n = 96.",
+              "answer": "0.05",
+              "calc": "sqrt(0.4*0.6/96)",
+              "round": [
+                2,
+                3
+              ],
+              "hint": "√(p(1 − p)/n).",
+              "why": "√(0.4 × 0.6 / 96) = √0.0025 = 0.05.",
+              "miss": [
+                {
+                  "answer": "0.0025",
+                  "why": "That is the variance. Take the square root."
+                },
+                {
+                  "answer": "0.24",
+                  "why": "That is p(1 − p). Divide by n and take the square root."
+                }
+              ],
+              "wrong": "Use √(p(1 − p)/n)."
+            },
+            {
+              "id": "k5",
+              "type": "short",
+              "level": 1,
+              "skill": "sampling distributions",
+              "inv": "i4",
+              "prompt": "Do larger random samples give more or less variability in p̂?",
+              "answer": "less",
+              "accept": [
+                "smaller",
+                "lower"
+              ],
+              "hint": "Look at your dot plots from Lab 1.",
+              "why": "Larger n means a smaller SD, so less variability.",
+              "miss": [
+                {
+                  "answer": "more",
+                  "why": "Your Lab 1 plot got narrower as n went up."
+                }
+              ],
+              "wrong": "Answer more or less."
+            }
+          ]
+        },
+        {
+          "id": "explain",
+          "part": "check",
+          "title": "Explain it, then your teacher’s question",
+          "minutes": 4,
+          "questions": [
+            {
+              "id": "e1",
+              "type": "open",
+              "minWords": 12,
+              "level": 2,
+              "skill": "sampling distributions",
+              "prompt": "Explain why Class B’s samples of 100 give a more reliable estimate of the red share than Class A’s samples of 10. Use the idea of a sampling distribution.",
+              "answer": "The sampling distribution of p̂ for n = 100 has a smaller standard deviation than for n = 10, so Class B’s sample proportions cluster more tightly around the true proportion of red candies.",
+              "look": [
+                "Refers to the sampling distribution of p̂",
+                "Says larger n gives a smaller SD",
+                "Ties it to the candy jar context"
+              ]
+            },
+            {
+              "id": "e2",
+              "type": "open",
+              "minWords": 12,
+              "level": 2,
+              "skill": "sampling distributions",
+              "prompt": "A friend says, “If the sample is random, p̂ equals p.” Explain what is wrong, using the candy jar.",
+              "answer": "Random samples vary: one sample of 10 candies might have 20% red and another 40%, even though the jar is 30% red. p̂ equals p only on average over many samples.",
+              "look": [
+                "Says p̂ varies from sample to sample",
+                "Distinguishes unbiased (on average) from exact",
+                "Uses the candy jar"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {},
+  "log": [
+    {
+      "at": "17:00",
+      "who": "📝 Maker",
+      "what": "Wrote the AP capability-test lesson with a bell ringer; a capability test, not an order",
+      "minutes": null
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Capability test for the AP bell ringer in interactive lessons. Not a real order: no blind tester or solver ran on it."
+    ]
+  }
+}

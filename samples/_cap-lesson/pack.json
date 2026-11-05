@@ -1,0 +1,897 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g6-science-cap-lesson",
+  "date": "2026-11-05",
+  "capabilityTest": "lesson",
+  "_note": "A capability test for the interactive lesson (docs/KINDS-LESSONS.md), not a sample for the gallery. Made-up teacher and made-up source worksheet; no blind tester or fact checker has run on it.",
+  "order": {
+    "teacher": "Ms. Rivera (made-up sample)",
+    "grade": "6",
+    "subject": "science",
+    "topic": "Density: sink or float",
+    "items": [
+      "lesson"
+    ],
+    "requests": "One 40-minute lesson on density that my students can do on Chromebooks. Use my density notes worksheet; every blank on it should be in the lesson.",
+    "sources": [
+      "density-notes-worksheet.pdf"
+    ],
+    "styleExamples": []
+  },
+  "style": {
+    "notes": [
+      "Short sentences",
+      "Bold directions"
+    ],
+    "accent": "#2f6f5e"
+  },
+  "documents": [
+    {
+      "item": "lesson",
+      "kind": "lesson",
+      "title": "Density: Sink or Float",
+      "lessonId": "density-1",
+      "build": {
+        "n": 2,
+        "note": "Added the optional density tower lab"
+      },
+      "locking": false,
+      "source": {
+        "title": "Density Notes (made-up worksheet)",
+        "file": "density-notes-worksheet.pdf"
+      },
+      "blanksInventory": [
+        {
+          "id": "i1",
+          "source": "Density Notes, #1",
+          "text": "Density is the amount of ______ in a given volume.",
+          "answer": "mass"
+        },
+        {
+          "id": "i2",
+          "source": "Density Notes, #2",
+          "text": "Density = mass ÷ ______",
+          "answer": "volume"
+        },
+        {
+          "id": "i3",
+          "source": "Density Notes, #3",
+          "text": "Density of a solid is often given in ______ per cubic centimeter.",
+          "answer": "grams"
+        },
+        {
+          "id": "i4",
+          "source": "Density Notes, #4",
+          "text": "Water has a density of ______ g/cm³.",
+          "answer": "1"
+        },
+        {
+          "id": "i5",
+          "source": "Density Notes, #5",
+          "text": "An object less dense than water will ______.",
+          "answer": "float"
+        },
+        {
+          "id": "i6",
+          "source": "Density Notes, #6",
+          "text": "To find the volume of an odd-shaped object, use water ______.",
+          "answer": "displacement"
+        },
+        {
+          "id": "i7",
+          "source": "Density Notes, #7",
+          "text": "A 20 g rock with a volume of 8 cm³ has a density of ______ g/cm³.",
+          "answer": "2.5"
+        }
+      ],
+      "teacherQuestion": {
+        "code": "FLOAT-42",
+        "question": "An egg barely sinks in a glass of tap water. You stir salt into the water until the egg rises. What did the salt change, and why does the egg float now?",
+        "look": [
+          "Salt adds mass to the water without adding much volume",
+          "So the salt water is denser than before",
+          "The egg floats once the water is denser than the egg"
+        ]
+      },
+      "teacherNotes": [
+        "This page is a pacing tool, not tamper-proof (T4): answers are stored as hashes and the teacher question as ciphertext, which stops casual peeking, not a determined adult with programming tools.",
+        "Students who skip the hands-on lab can press “Simulate it for me”; the My notes page says their results were simulated."
+      ],
+      "pages": [
+        {
+          "id": "hook",
+          "part": "hook",
+          "title": "The Great Float-Off",
+          "minutes": 3,
+          "story": "Ms. Rivera's class is holding the Great Float-Off. Each team calls sink or float before an object goes into the class tank, and every right call scores a point. First up: a 5 kg pine log and a 2 g steel paper clip. The log is 2,500 times heavier.",
+          "widget": {
+            "id": "hook-predict",
+            "mechanic": "predict-then-reveal",
+            "prompt": "Make your call before the reveal. Which one sinks?",
+            "options": [
+              "The 5 kg pine log",
+              "The 2 g steel paper clip",
+              "Both of them sink",
+              "Neither of them sinks"
+            ],
+            "reveal": "The paper clip sinks and the log floats. The log has far more mass, but that mass is spread through a huge volume. Weight alone does not decide it. The labs show what does."
+          }
+        },
+        {
+          "id": "lab-scale",
+          "part": "lab",
+          "title": "Lab 1: The virtual tank",
+          "minutes": 6,
+          "intro": "Every block here has a mass (how much stuff) and a volume (how much space it takes up). Water has 1 gram of mass in every cubic centimeter.",
+          "widget": {
+            "id": "scale-sim",
+            "mechanic": "simulate",
+            "prompt": "Set a mass and a volume, then press Record. Record at least 4 blocks. Try to find a heavy block that floats and a light block that sinks.",
+            "vars": [
+              {
+                "id": "m",
+                "label": "Mass (g)",
+                "min": 10,
+                "max": 200,
+                "step": 5,
+                "value": 50
+              },
+              {
+                "id": "v",
+                "label": "Volume (cm³)",
+                "min": 10,
+                "max": 200,
+                "step": 5,
+                "value": 100
+              }
+            ],
+            "outputs": [
+              {
+                "label": "Mass in each cm³ (g/cm³)",
+                "expr": "m/v",
+                "places": 2
+              }
+            ],
+            "verdicts": [
+              {
+                "when": "out1 < 1",
+                "text": "Floats"
+              },
+              {
+                "when": "out1 > 1",
+                "text": "Sinks"
+              },
+              {
+                "when": "out1 == 1",
+                "text": "Hangs in the middle"
+              }
+            ],
+            "runs": 4,
+            "button": "Record this block"
+          },
+          "questions": [
+            {
+              "id": "scale-q1",
+              "type": "mc",
+              "level": 1,
+              "skill": "density",
+              "prompt": "In your runs, what decided whether a block sank or floated?",
+              "choices": [
+                "Its mass alone, since heavy blocks sank",
+                "The block's color and its shape",
+                "How much mass it packed into its volume"
+              ],
+              "answer": 2,
+              "why": "A heavy block can still float if its mass is spread through a big volume. What matters is the mass in each cubic centimeter.",
+              "hint": "Look at your table. Find a heavy block that floated, or a light one that sank. What else was different about it?",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "Check your table: a 150 g block with a volume of 200 cm³ floats. Heavy alone does not mean sink."
+                },
+                {
+                  "answer": 1,
+                  "why": "The tank never asked for a color or a shape, only a mass and a volume, and those were enough to decide."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lab-sort",
+          "part": "lab",
+          "title": "Lab 2: Sink or float sort",
+          "minutes": 5,
+          "intro": "Water's density is 1.00 g/cm³. Use that number to sort each object.",
+          "widget": {
+            "id": "sort-1",
+            "mechanic": "sort",
+            "prompt": "Put each object in the bin for what it does in water.",
+            "bins": [
+              {
+                "id": "sink",
+                "label": "Sinks"
+              },
+              {
+                "id": "float",
+                "label": "Floats"
+              }
+            ],
+            "cards": [
+              {
+                "id": "steel",
+                "text": "Steel bolt: 7.9 g/cm³",
+                "bin": "sink",
+                "why": "7.9 is more than water’s 1.00, so it sinks.",
+                "miss": "Compare 7.9 with water’s 1.00. Which is bigger?"
+              },
+              {
+                "id": "cork",
+                "text": "Cork: 0.24 g/cm³",
+                "bin": "float",
+                "why": "0.24 is less than 1.00, so cork floats.",
+                "miss": "Compare 0.24 with water’s 1.00. Which is bigger?"
+              },
+              {
+                "id": "ice",
+                "text": "Ice: 0.92 g/cm³",
+                "bin": "float",
+                "why": "0.92 is a little less than 1.00, so ice floats, mostly under the surface.",
+                "miss": "0.92 is close to 1, but which side of 1 is it on?"
+              },
+              {
+                "id": "honey",
+                "text": "Honey: 1.4 g/cm³",
+                "bin": "sink",
+                "why": "1.4 is more than 1.00, so honey sinks below water.",
+                "miss": "Compare 1.4 with water’s 1.00."
+              },
+              {
+                "id": "block",
+                "text": "A 600 g block with a volume of 800 cm³",
+                "bin": "float",
+                "why": "600 ÷ 800 = 0.75 g/cm³, less than water, so it floats even though it is heavy.",
+                "miss": "Find its density first: divide the mass by the volume."
+              },
+              {
+                "id": "marble",
+                "text": "A 12 g marble with a volume of 5 cm³",
+                "bin": "sink",
+                "why": "12 ÷ 5 = 2.4 g/cm³, more than water, so the light marble sinks.",
+                "miss": "Find its density first: divide the mass by the volume."
+              }
+            ],
+            "hint": "For the last two, divide mass by volume first. Then compare the answer with 1.00.",
+            "why": "Every object is sorted by comparing its density with water’s 1.00 g/cm³."
+          }
+        },
+        {
+          "id": "lab-measure",
+          "part": "lab",
+          "title": "Lab 3: Measure a real object",
+          "minutes": 6,
+          "intro": "Off the board: find the density of something real. No scale or cup? Press \"Simulate it for me\".",
+          "widget": {
+            "id": "measure",
+            "mechanic": "hands-on",
+            "prompt": "Measure one small object that fits in the cup.",
+            "materials": [
+              "A kitchen scale that reads grams",
+              "A measuring cup with mL marks, about half full of water",
+              "A small object that fits in the cup (a rock, a toy, a key)",
+              "A towel"
+            ],
+            "steps": [
+              "Weigh the dry object on the scale. Write its mass.",
+              "Read the water level in the cup. Write it.",
+              "Gently drop the object in. Read the new water level.",
+              "The rise in the water is the object’s volume (1 mL = 1 cm³)."
+            ],
+            "fields": [
+              {
+                "id": "mass",
+                "label": "Mass of the object",
+                "unit": "g",
+                "sim": "randint(40, 90)"
+              },
+              {
+                "id": "start",
+                "label": "Water level before",
+                "unit": "mL",
+                "sim": "randint(200, 250)"
+              },
+              {
+                "id": "end",
+                "label": "Water level after",
+                "unit": "mL",
+                "sim": "start + randint(15, 35)"
+              }
+            ],
+            "calc": [
+              {
+                "label": "Volume (cm³)",
+                "expr": "end - start",
+                "places": 0
+              },
+              {
+                "label": "Density (g/cm³)",
+                "expr": "mass / (end - start)",
+                "places": 2
+              }
+            ]
+          },
+          "sentences": [
+            "Finding volume by how far the water level rises is called water {m-disp}."
+          ],
+          "blanks": [
+            {
+              "id": "m-disp",
+              "answer": "displacement",
+              "accept": [
+                "displacing"
+              ],
+              "inv": "i6",
+              "hint": "The object pushes water out of its way. The word starts with \"dis\".",
+              "why": "The object displaces (pushes aside) its own volume of water, so the rise equals its volume.",
+              "miss": [
+                {
+                  "answer": "evaporation",
+                  "why": "Evaporation is water turning into a gas. Here the water is pushed up, not lost."
+                }
+              ]
+            }
+          ],
+          "questions": [
+            {
+              "id": "measure-q1",
+              "type": "open",
+              "minWords": 8,
+              "level": 2,
+              "skill": "density",
+              "prompt": "Does your object’s density say it should sink or float? Did it? Write what you saw.",
+              "answer": "My rock had a density of about 2.6 g/cm³, which is more than water’s 1.00, so it should sink, and it did sink to the bottom.",
+              "look": [
+                "States the density they found",
+                "Compares it with 1.00 g/cm³",
+                "Says whether what they saw matched"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lab-slider",
+          "part": "lab",
+          "title": "Lab 4: Just barely floating",
+          "minutes": 3,
+          "widget": {
+            "id": "slider-1",
+            "mechanic": "slider-hunt",
+            "prompt": "A sealed toy box has a mass of 60 g. Slide its volume until it neither sinks nor floats up: it hangs in the middle of the tank.",
+            "slider": {
+              "label": "Volume of the box",
+              "min": 20,
+              "max": 120,
+              "step": 5,
+              "value": 30,
+              "unit": "cm³"
+            },
+            "readout": [
+              {
+                "label": "Density (g/cm³)",
+                "expr": "60 / x",
+                "places": 2
+              }
+            ],
+            "answer": 60,
+            "tol": 0,
+            "hint": "Watch the density readout. An object hangs in the middle when its density matches water’s.",
+            "wrong": "Not yet. Look at the density readout: it has to match water’s density exactly.",
+            "why": "60 g ÷ 60 cm³ = 1.00 g/cm³, the same as water, so the box neither sinks nor rises."
+          }
+        },
+        {
+          "id": "lab-build",
+          "part": "lab",
+          "title": "Lab 5: Build the rule",
+          "minutes": 3,
+          "widget": {
+            "id": "build-1",
+            "mechanic": "build",
+            "prompt": "Use the tiles to build the way you found density in every lab: density = ? ? ?",
+            "tiles": [
+              "mass",
+              "volume",
+              "÷",
+              "×",
+              "+"
+            ],
+            "slots": 3,
+            "answer": [
+              [
+                "mass",
+                "÷",
+                "volume"
+              ]
+            ],
+            "miss": [
+              {
+                "answer": [
+                  "volume",
+                  "÷",
+                  "mass"
+                ],
+                "why": "That’s upside down. In Lab 2 you did 600 ÷ 800 for a 600 g block: mass on top."
+              },
+              {
+                "answer": [
+                  "mass",
+                  "×",
+                  "volume"
+                ],
+                "why": "Multiplying makes a big block seem denser just for being big. Density is mass in each cm³, so share the mass out."
+              }
+            ],
+            "wrong": "Not quite. Think about what you did with the two numbers in Lab 2.",
+            "hint": "In Lab 2 you found the density of a 600 g block with a volume of 800 cm³. What did you do with 600 and 800?",
+            "why": "Density is mass divided by volume: the mass packed into each cubic centimeter."
+          }
+        },
+        {
+          "id": "lab-tower",
+          "part": "lab",
+          "optional": true,
+          "title": "Extra lab: The density tower",
+          "minutes": 4,
+          "intro": "Optional challenge. It never blocks finishing the lesson.",
+          "widget": {
+            "id": "tower-predict",
+            "mechanic": "predict-then-reveal",
+            "prompt": "You pour honey (1.4 g/cm³), water (1.00 g/cm³) and olive oil (0.91 g/cm³) into one jar and wait. Which layer ends up on top?",
+            "options": [
+              "Honey on top",
+              "Water on top",
+              "Olive oil on top",
+              "They mix into one layer"
+            ],
+            "reveal": "Olive oil ends up on top, water in the middle and honey at the bottom: the least dense liquid floats on the others."
+          }
+        },
+        {
+          "id": "rule",
+          "part": "rule",
+          "title": "The rule: density",
+          "minutes": 3,
+          "sentences": [
+            "Density is the amount of {r-mass} packed into each unit of volume.",
+            "Density = mass ÷ {r-vol}",
+            "Water’s density is {r-water} g/cm³.",
+            "An object that is less dense than water will {r-float}."
+          ],
+          "blanks": [
+            {
+              "id": "r-mass",
+              "answer": "mass",
+              "inv": "i1",
+              "hint": "It is what the scale measures.",
+              "why": "Density tells how much mass is in each cm³.",
+              "miss": [
+                {
+                  "answer": "volume",
+                  "why": "Volume is the space it takes up. Density is what fills each bit of that space."
+                }
+              ]
+            },
+            {
+              "id": "r-vol",
+              "answer": "volume",
+              "accept": [
+                "v"
+              ],
+              "inv": "i2",
+              "hint": "You divided by the number that tells how much space it takes up.",
+              "why": "Density is mass divided by volume, so the volume goes on the bottom.",
+              "miss": [
+                {
+                  "answer": "mass",
+                  "why": "Mass is already on top. You divide it by the other measurement."
+                }
+              ]
+            },
+            {
+              "id": "r-water",
+              "type": "numeric",
+              "answer": "1",
+              "accept": [
+                "1.0",
+                "1.00"
+              ],
+              "inv": "i4",
+              "hint": "Look back at the intro of Lab 1.",
+              "why": "Water has 1 gram in every cubic centimeter.",
+              "miss": [
+                {
+                  "answer": "0",
+                  "why": "Water has mass, so its density can’t be 0."
+                }
+              ]
+            },
+            {
+              "id": "r-float",
+              "answer": "float",
+              "accept": [
+                "float on top",
+                "rise"
+              ],
+              "inv": "i5",
+              "hint": "Think of the cork in Lab 2.",
+              "why": "Less dense than water means it floats.",
+              "miss": [
+                {
+                  "answer": "sink",
+                  "why": "Sinking is for objects denser than water, like the steel bolt."
+                }
+              ]
+            }
+          ],
+          "keyIdeas": [
+            "Heavy does not mean sink: the mass in each cm³ decides.",
+            "Compare an object’s density with 1.00 g/cm³ to tell if it floats in water.",
+            "Cutting an object in pieces doesn’t change its density."
+          ]
+        },
+        {
+          "id": "check",
+          "part": "check",
+          "title": "Check: Float-Off final round",
+          "minutes": 8,
+          "intro": "The final round of the Float-Off: one judge’s mistake, then your own calls. No new rules, only the ones you found.",
+          "widget": {
+            "id": "mistake-1",
+            "mechanic": "find-the-mistake",
+            "prompt": "Judge Jordan found the density of a 48 g toy car with a volume of 16 cm³. Tap the step with the mistake.",
+            "steps": [
+              "Write the rule: density = mass ÷ volume.",
+              "Put in the numbers: density = 16 ÷ 48.",
+              "Divide: 16 ÷ 48 ≈ 0.33.",
+              "So the car is about 0.33 g/cm³, and it floats."
+            ],
+            "answer": 1,
+            "miss": {
+              "0": "This rule is right. Look at what Jordan did with it next.",
+              "2": "The division itself is done right. The trouble started one step earlier.",
+              "3": "This follows from the step before. Fix the earlier step and this changes too."
+            },
+            "hint": "Check which number Jordan put on top of the fraction.",
+            "why": "Jordan put the volume on top. It should be 48 ÷ 16 = 3 g/cm³, so the car sinks."
+          },
+          "questions": [
+            {
+              "id": "c1",
+              "type": "mc",
+              "level": 2,
+              "skill": "density",
+              "prompt": "A 30 g cork block has a volume of 120 cm³. What does it do in water?",
+              "choices": [
+                "It floats",
+                "It sinks"
+              ],
+              "answer": 0,
+              "why": "30 ÷ 120 = 0.25 g/cm³, less than water’s 1.00, so it floats.",
+              "hint": "Divide 30 by 120 and compare with 1.00.",
+              "miss": [
+                {
+                  "answer": 1,
+                  "why": "Find its density: 30 ÷ 120 = 0.25. Is that more or less than 1.00?"
+                }
+              ]
+            },
+            {
+              "id": "c3",
+              "type": "mc",
+              "level": 2,
+              "skill": "density",
+              "prompt": "Which change makes an object’s density smaller?",
+              "choices": [
+                "The same mass in more volume",
+                "More mass, same volume",
+                "Cutting the object in half",
+                "Less volume, same mass"
+              ],
+              "answer": 0,
+              "why": "Spreading the same mass through more space puts less mass in each cm³.",
+              "hint": "Density = mass ÷ volume. Which change makes that fraction smaller?",
+              "miss": [
+                {
+                  "answer": 1,
+                  "why": "More mass in the same space packs each cm³ tighter: denser, not less dense."
+                },
+                {
+                  "answer": 2,
+                  "why": "Each half has half the mass and half the volume, so the density stays the same."
+                },
+                {
+                  "answer": 3,
+                  "why": "Squeezing the same mass into less space makes it denser."
+                }
+              ]
+            },
+            {
+              "id": "c4",
+              "type": "mc",
+              "level": 1,
+              "skill": "density",
+              "prompt": "Two blocks are the same size. Block A has more mass. Which is true?",
+              "choices": [
+                "Block B is denser",
+                "They have equal density",
+                "Block A is denser",
+                "You need a scale to tell"
+              ],
+              "answer": 2,
+              "why": "Same volume, more mass: Block A has more mass in each cm³.",
+              "hint": "Same volume, so compare the masses.",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "Block B has less mass in the same space, so it is less dense."
+                },
+                {
+                  "answer": 1,
+                  "why": "Equal density would need equal mass for the same size."
+                },
+                {
+                  "answer": 3,
+                  "why": "The question already tells you which has more mass."
+                }
+              ]
+            },
+            {
+              "id": "c2",
+              "type": "mc",
+              "level": 2,
+              "skill": "density",
+              "prompt": "A 90 g lump of clay has a volume of 45 cm³. What does it do in water?",
+              "choices": [
+                "It floats",
+                "It sinks"
+              ],
+              "answer": 1,
+              "why": "90 ÷ 45 = 2 g/cm³, more than water’s 1.00, so it sinks.",
+              "hint": "Divide 90 by 45 and compare with 1.00.",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "Find its density: 90 ÷ 45 = 2. Is that more or less than 1.00?"
+                }
+              ]
+            },
+            {
+              "id": "c5",
+              "type": "mc",
+              "level": 2,
+              "skill": "density",
+              "prompt": "A steel bolt sinks. You cut it into two halves. What does each half do?",
+              "choices": [
+                "One sinks, one floats",
+                "Each half sinks",
+                "Each half floats"
+              ],
+              "answer": 1,
+              "why": "Cutting doesn’t change density. Each half is still steel at 7.9 g/cm³.",
+              "hint": "Does cutting change how much mass is in each cm³?",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "Both halves are the same steel, so they do the same thing."
+                },
+                {
+                  "answer": 2,
+                  "why": "A smaller piece is lighter, but its density is the same as before."
+                }
+              ]
+            },
+            {
+              "id": "c6",
+              "type": "mc",
+              "level": 3,
+              "skill": "density",
+              "prompt": "Ice is 0.92 g/cm³. Where does an ice cube sit in a glass of water?",
+              "choices": [
+                "On the bottom of the glass",
+                "Floating with most of it under water",
+                "Floating with most of it above water",
+                "Halfway down, not moving"
+              ],
+              "answer": 1,
+              "why": "0.92 is just under 1.00, so ice floats, but low: about 92% of it is under water.",
+              "hint": "Is 0.92 a lot less than 1.00, or only a little?",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "Ice is less dense than water, so it can’t sink."
+                },
+                {
+                  "answer": 2,
+                  "why": "That is what something very light like cork does. Ice is only a little less dense than water."
+                },
+                {
+                  "answer": 3,
+                  "why": "Hanging in the middle needs a density of exactly 1.00."
+                }
+              ]
+            },
+            {
+              "id": "c7",
+              "type": "mc",
+              "level": 1,
+              "skill": "density",
+              "prompt": "Which tool would you use to find the mass of a rock?",
+              "choices": [
+                "A balance or scale",
+                "A measuring cup of water",
+                "A metric ruler"
+              ],
+              "answer": 0,
+              "why": "A balance or scale measures mass in grams.",
+              "hint": "Mass is what Lab 3 measured first.",
+              "miss": [
+                {
+                  "answer": 1,
+                  "why": "The cup of water measures volume, by displacement."
+                },
+                {
+                  "answer": 2,
+                  "why": "A ruler measures length. You could use it for the volume of a box, not for mass."
+                }
+              ]
+            },
+            {
+              "id": "c8",
+              "type": "numeric",
+              "level": 2,
+              "skill": "density",
+              "inv": "i7",
+              "prompt": "A 20 g rock has a volume of 8 cm³. What is its density?",
+              "unit": "g/cm³",
+              "answer": "2.5",
+              "accept": [
+                "5/2"
+              ],
+              "calc": "20/8",
+              "hint": "Density = mass ÷ volume.",
+              "why": "20 ÷ 8 = 2.5 g/cm³.",
+              "miss": [
+                {
+                  "answer": "0.4",
+                  "why": "That is 8 ÷ 20: volume divided by mass. Put the mass on top."
+                },
+                {
+                  "answer": "160",
+                  "why": "You multiplied. Density divides mass by volume."
+                }
+              ],
+              "wrong": "Divide the mass by the volume and try again."
+            },
+            {
+              "id": "c9",
+              "type": "numeric",
+              "level": 3,
+              "skill": "density",
+              "prompt": "A block of wood is 0.6 g/cm³ and has a volume of 50 cm³. What is its mass?",
+              "unit": "g",
+              "answer": "30",
+              "calc": "0.6*50",
+              "hint": "Density tells the mass in each cm³. How many cm³ are there?",
+              "why": "0.6 g in each of 50 cm³ is 0.6 × 50 = 30 g.",
+              "miss": [
+                {
+                  "answer": "83.3",
+                  "why": "That is 50 ÷ 0.6. The density is the mass in each cm³, so multiply."
+                },
+                {
+                  "answer": "83.33",
+                  "why": "That is 50 ÷ 0.6. The density is the mass in each cm³, so multiply."
+                },
+                {
+                  "answer": "50.6",
+                  "why": "Adding mixes a density with a volume. Multiply them instead."
+                }
+              ],
+              "wrong": "Think: 0.6 g in each cubic centimeter, and there are 50 of them."
+            },
+            {
+              "id": "c10",
+              "type": "short",
+              "level": 1,
+              "skill": "units",
+              "inv": "i3",
+              "prompt": "Density is often written in g/cm³. What does the g stand for?",
+              "answer": "grams",
+              "hint": "It is the unit a kitchen scale reads.",
+              "why": "g is grams, the unit of mass.",
+              "miss": [
+                {
+                  "answer": "gravity",
+                  "why": "Gravity is a pull, not a unit. The g is the unit the mass is measured in."
+                }
+              ],
+              "wrong": "Look at Lab 3: what unit did the scale read?"
+            },
+            {
+              "id": "c11",
+              "type": "numeric",
+              "level": 3,
+              "skill": "density",
+              "prompt": "Ice is 0.92 g/cm³ and water is 1.00 g/cm³. What part of a floating ice cube is under water? Give a decimal, a fraction or a percent.",
+              "answer": "0.92",
+              "accept": [
+                "92%",
+                "23/25"
+              ],
+              "calc": "0.92/1",
+              "hint": "Compare the two densities: ice ÷ water.",
+              "why": "0.92 ÷ 1.00 = 0.92, so 92% of the cube is under water.",
+              "miss": [
+                {
+                  "answer": "0.08",
+                  "why": "That is the part above the water. The question asks for the part under it."
+                }
+              ],
+              "wrong": "Divide the ice’s density by the water’s."
+            }
+          ]
+        },
+        {
+          "id": "explain",
+          "part": "check",
+          "title": "Explain it, then your teacher’s question",
+          "minutes": 5,
+          "questions": [
+            {
+              "id": "e1",
+              "type": "open",
+              "minWords": 12,
+              "level": 2,
+              "skill": "density",
+              "prompt": "Explain to a friend why a huge log floats but a tiny paper clip sinks. Use the words mass, volume and density.",
+              "answer": "The log has a lot of mass, but it has a huge volume, so its density is less than water’s and it floats. The paper clip has little mass but even less volume, so its density is more than water’s and it sinks.",
+              "look": [
+                "Uses mass, volume and density correctly",
+                "Says density compares with water (1.00 g/cm³)",
+                "Explains the log’s mass is spread through a big volume"
+              ]
+            },
+            {
+              "id": "e2",
+              "type": "open",
+              "minWords": 12,
+              "level": 2,
+              "skill": "density",
+              "prompt": "Jordan says, “Heavy things sink.” Use one example from today’s labs to show why that isn’t always true.",
+              "answer": "The 600 g block in Lab 2 is heavy, but its volume is 800 cm³, so its density is 0.75 g/cm³ and it floats. Being heavy doesn’t decide it; density does.",
+              "look": [
+                "Names a specific heavy object that floats (or a light one that sinks)",
+                "Gives or explains its density",
+                "Concludes that density, not weight, decides"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {},
+  "log": [
+    {
+      "at": "16:00",
+      "who": "📝 Maker",
+      "what": "Wrote the capability-test lesson (grade 6 density); a capability test, not an order",
+      "minutes": null
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Capability test for interactive lessons (docs/KINDS-LESSONS.md). Not a real order and not a gallery sample: no blind tester, solver or fact checker ran on it."
+    ]
+  }
+}

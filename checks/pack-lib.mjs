@@ -24,13 +24,15 @@ export const versionsOf = (doc) => (Array.isArray(doc.versions) && doc.versions.
 // a whole unit pack holds several documents under one item; each may say what it is with `kind` (worksheet, quiz, test…)
 export const kindOf = (doc) => doc.kind || doc.item;
 export const docName = (doc, i) => doc.title || `${doc.item || 'document'} ${i + 1}`;
+// a lesson (docs/KINDS-LESSONS.md) keeps its questions on pages, in the same shape as sections
+export const sectionsOf = (doc) => doc.sections || doc.pages || [];
 
 // one row per question per version
 export function rows(pack) {
   const out = [];
   pack.documents.forEach((doc, d) => {
     const vers = versionsOf(doc);
-    (doc.sections || []).forEach((sec, s) => (sec.questions || []).forEach((q, n) => {
+    sectionsOf(doc).forEach((sec, s) => (sec.questions || []).forEach((q, n) => {
       for (const ver of vers) {
         out.push({
           doc, d, docTitle: docName(doc, d), kind: kindOf(doc), sec, s, q, n, ver,

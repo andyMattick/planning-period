@@ -23,7 +23,7 @@
    --write adds {check: "keys", round, pass, errors, warnings, problems} to pack.checks.wilco (round = the next one for
    this check, or --round N). Only Wilco runs it with --write; the maker may run it without, while writing. */
 import { loadPack, rows, norm, signature, valueOf, sameValue, pick, perVersion, versionsOf, kindOf, docName,
-  TYPES, TEST_KINDS, VERSIONED_KINDS, SCORED_KINDS, nextRound, writeWilco, argsOf } from './pack-lib.mjs';
+  TYPES, TEST_KINDS, VERSIONED_KINDS, SCORED_KINDS, nextRound, writeWilco, argsOf, sectionsOf } from './pack-lib.mjs';
 import { writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
@@ -35,8 +35,8 @@ export function checkKeys(pack) {
 
   pack.documents.forEach((doc, d) => {
     const name = docName(doc, d), kind = kindOf(doc), vers = versionsOf(doc);
-    const qs = (doc.sections || []).flatMap((s) => s.questions || []);
-    if (!doc.sections || !Array.isArray(doc.sections)) { if (!doc.slides && !doc.rubric) warn(`${name}: no sections, slides or rubric`); }
+    const qs = sectionsOf(doc).flatMap((s) => s.questions || []);
+    if (!Array.isArray(doc.sections) && !Array.isArray(doc.pages)) { if (!doc.slides && !doc.rubric) warn(`${name}: no sections, slides or rubric`); }
     if (VERSIONED_KINDS.includes(kind) && (vers.length < 2 || vers[0] === null)) err(`${name}: a ${kind} needs versions ["A", "B"]`);
     if (new Set(vers).size !== vers.length) err(`${name}: a version is listed twice`);
     const ids = new Set();

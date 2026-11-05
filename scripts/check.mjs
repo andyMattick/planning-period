@@ -13,8 +13,10 @@
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
+     10. Interactive lessons: every sample with a lesson passes checks/lesson.mjs (the standard, and a browser play-through),
+         and broken copies of samples/_cap-lesson fail it, one rule at a time.
    Exit 1 on any problem. */
-import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -285,6 +287,61 @@ else {
     const r = spawnSync(process.execPath, [PG, '--self-test'], { cwd: ROOT, encoding: 'utf8' });
     const n = (r.stdout.match(/✓ catches/g) || []).length;
     if (r.status === 0) ok(`checks/practicegames.mjs catches all ${n} broken copies of samples/_cap-practicegame`); else fail(`checks/practicegames.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
+  }
+}
+
+/* 10. interactive lessons (docs/KINDS-LESSONS.md, docs/INTERACTIVE-STANDARD.md): every sample with a lesson builds to the
+   standard and plays through in a browser (checks/lesson.mjs), and broken copies of samples/_cap-lesson fail it, one rule
+   at a time (content only, plus one old-save copy in the browser for S5) */
+{
+  const LS = join(ROOT, 'checks', 'lesson.mjs'), CAPL = join(ROOT, 'samples/_cap-lesson');
+  const lessonPacks = packs.filter((p) => { try { return readJSON(p).documents.some((d) => (d.kind || d.item) === 'lesson'); } catch { return false; } });
+  for (const p of lessonPacks) {
+    const r = spawnSync(process.execPath, [LS, join(ROOT, p)], { cwd: ROOT, encoding: 'utf8', timeout: 600000 });
+    const skipped = /⏭️/.test(r.stdout || '');
+    if (r.status === 0) (skipped ? skip : ok)(`${p} passes checks/lesson.mjs${skipped ? ' (content only: Playwright not here)' : ' (content and browser)'}`);
+    else fail(`${p} fails checks/lesson.mjs:\n${r.stdout}${r.stderr}`);
+  }
+  if (existsSync(join(CAPL, 'pack.json'))) {
+    const good = readJSON('samples/_cap-lesson/pack.json');
+    const L = (p) => p.documents[0], pg = (p, id) => L(p).pages.find((x) => x.id === id), q = (p, id) => L(p).pages.flatMap((x) => x.questions || []).find((x) => x.id === id);
+    const breaks = [
+      ['L1: a rule card before the labs', (p) => { const ps = L(p).pages, i = ps.findIndex((x) => x.part === 'rule'); ps.splice(1, 0, ps.splice(i, 1)[0]); }],
+      ['L2: too few required minutes', (p) => { L(p).pages.forEach((x) => { x.minutes = 2; }); }],
+      ['L3: the same mechanic twice in a row', (p) => { pg(p, 'lab-sort').widget = { ...pg(p, 'lab-scale').widget, id: 'scale-sim-2' }; }],
+      ['L5: an off-the-board activity without materials or a fallback', (p) => { const w = pg(p, 'lab-measure').widget; w.materials = []; delete w.fields[0].sim; }],
+      ['L6: a source blank that is no fill-in', (p) => { L(p).blanksInventory.push({ id: 'i9', text: 'Mass is measured in ______.', answer: 'grams' }); }],
+      ['L7: a rule card that unlocks on a page that is not a lab above it', (p) => { pg(p, 'rule').after = ['check']; }],
+      ['Q1: a wrong choice with no message', (p) => { q(p, 'c3').miss.pop(); }],
+      ['Q1: a question with no hint', (p) => { delete q(p, 'c8').hint; }],
+      ['Q3a: the key always the longest', (p) => { for (const x of L(p).pages.flatMap((y) => y.questions || []).filter((y) => y.type === 'mc')) x.choices[x.answer] += ' (as the labs showed, every time)'; }],
+      ['Q3b: the key the only choice with "because"', (p) => { q(p, 'c6').choices[1] += ' because ice is less dense'; }],
+      ['Q5: a free response without look-fors', (p) => { delete q(p, 'e1').look; }],
+      ['T1: one short answer before the teacher question', (p) => { pg(p, 'explain').questions.pop(); }],
+      ['T1: no teacher question', (p) => { delete L(p).teacherQuestion; }],
+      ['A1: an AP lesson with no bell ringer', (p) => { L(p).ap = true; }],
+      ['D1: no build line', (p) => { delete L(p).build; }],
+      ['S2: an id that was in an earlier build is gone', (p) => { pg(p, 'lab-slider').id = 'lab-slide'; }],
+      ['a teacher-only explanation copied into the student text', (p) => { pg(p, 'check').intro = q(p, 'c9').why; }],
+    ];
+    const tmp = mkdtempSync(join(tmpdir(), 'pp-lesson-'));
+    breaks.forEach(([what, f], i) => {
+      const dir = join(tmp, `b${i}`); mkdirSync(dir);
+      writeFileSync(join(dir, 'ids.lock.json'), readFileSync(join(CAPL, 'ids.lock.json')));
+      const p = structuredClone(good); f(p); writeFileSync(join(dir, 'pack.json'), JSON.stringify(p));
+      const r = spawnSync(process.execPath, [LS, join(dir, 'pack.json'), '--no-browser'], { cwd: ROOT, encoding: 'utf8' });
+      if (r.status === 1) ok(`checks/lesson.mjs catches ${what}`); else fail(`checks/lesson.mjs did not catch ${what} (exit ${r.status}):\n${r.stdout}${r.stderr}`);
+    });
+    if (existsSync(join(CAPL, 'saves'))) {   // S5: an answer key changed under an old save: the old work no longer shows, and the check says so
+      const dir = join(tmp, 's5'); mkdirSync(join(dir, 'saves'), { recursive: true });
+      for (const f of readdirSync(join(CAPL, 'saves'))) writeFileSync(join(dir, 'saves', f), readFileSync(join(CAPL, 'saves', f)));
+      const p = structuredClone(good); q(p, 'c8').answer = '2.4'; q(p, 'c8').accept = []; delete q(p, 'c8').calc; writeFileSync(join(dir, 'pack.json'), JSON.stringify(p));
+      const r = spawnSync(process.execPath, [LS, join(dir, 'pack.json'), '--only-saves'], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
+      if (/⏭️/.test(r.stdout || '')) skip('S5 old-save check skipped: Playwright not here');
+      else if (r.status === 1 && /S5/.test(r.stdout)) ok('checks/lesson.mjs catches an old save whose right answer no longer shows (S5)');
+      else fail(`checks/lesson.mjs did not catch a changed answer under an old save (exit ${r.status}):\n${r.stdout}${r.stderr}`);
+    }
+    rmSync(tmp, { recursive: true, force: true });
   }
 }
 

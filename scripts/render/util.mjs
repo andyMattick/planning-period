@@ -57,7 +57,7 @@ export function cleanSvg(svg) {
 export function questionsOf(doc) {
   const out = [];
   let n = 0;
-  (doc.sections || []).forEach((sec, si) => {
+  (doc.sections || doc.pages || []).forEach((sec, si) => {
     (sec.questions || []).forEach((q) => out.push({ q, n: ++n, si, section: sec }));
   });
   return out;
