@@ -182,7 +182,7 @@ details summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
   .foot { padding-bottom: 16px; }
 
   .tabbar {
-    display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
     background: var(--surface); border-top: 1px solid var(--line);
     padding: 4px max(4px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(4px, env(safe-area-inset-left));
   }
@@ -206,9 +206,9 @@ details summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
   .install .share { display: inline-flex; vertical-align: -3px; color: var(--accent); }
 
   /* One step per screen on the order page */
-  body.wizard #order .step { display: none; }
-  body.wizard #order .step.current { display: block; }
-  body.wizard .how { display: none; }
+  body.wizard #order .step, body.wizard #world .step { display: none; }
+  body.wizard #order .step.current, body.wizard #world .step.current { display: block; }
+  body.wizard .how, body.wizard .world-intro { display: none; }
   body.wizard .wizard-dots { display: flex; justify-content: space-between; gap: 4px; margin: 6px 0 2px; padding: 0; list-style: none; }
   .wizard-dots button {
     flex: 1 1 0; min-width: 0; min-height: 48px; display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -223,7 +223,24 @@ details summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
     padding: 10px 0; background: var(--bg); border-top: 1px solid var(--line); margin-top: 8px;
   }
   .wizard-nav .btn { flex: 1 1 0; min-height: 48px; }
-  body.wizard #order .step.current { animation: stepIn .18s ease-out; }
+  body.wizard #order .step.current, body.wizard #world .step.current { animation: stepIn .18s ease-out; }
   @keyframes stepIn { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
 }
-@media (max-width: 640px) and (prefers-reduced-motion: reduce) { body.wizard #order .step.current { animation: none; } }
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) { body.wizard #order .step.current, body.wizard #world .step.current { animation: none; } }
+
+/* The "Build a learning world" request form (world.html) */
+.subj-card { border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 10px 12px; margin: 12px 0; background: var(--surface); }
+.subj-card h3 { margin: 0 0 6px; }
+.choice-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0; }
+.choice-row label { flex: 1 1 200px; display: flex; gap: 10px; align-items: flex-start; font-weight: 500; cursor: pointer; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); margin: 0; }
+.choice-row input { width: 22px; height: 22px; margin: 1px 0 0; flex: 0 0 auto; accent-color: var(--accent); }
+.choice-row label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.checks label:has(input:checked) { border-color: var(--accent); }
+.grade-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 6px; }
+.grade-grid label { display: flex; gap: 8px; align-items: center; font-weight: 500; padding: 6px 8px; border: 1px solid var(--line); border-radius: 10px; margin: 0; min-height: 44px; cursor: pointer; background: var(--surface); }
+.grade-grid label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.grade-grid label.wide { grid-column: span 2; }
+.grade-grid input { width: 20px; height: 20px; accent-color: var(--accent); }
+.checks .why { display: block; font-weight: 400; color: var(--muted); font-size: .88rem; }
+.summary dl.order { grid-template-columns: minmax(110px, max-content) 1fr; }
+.summary dd ul { margin: 0; padding-left: 1.1em; }
