@@ -97,30 +97,30 @@
               "skill": "What a detail suggests (story)",
               "type": "mc",
               "prompt": {
-                "A": "Read paragraph 1 again. Marisol reties her shoes over and over, three hours before the concert. What does this detail suggest?",
-                "B": "Read paragraph 2 again. Marisol unzips her backpack pocket three times to look at her drumsticks. What does this detail suggest?"
+                "A": "Read paragraph 1 again. What do Marisol's actions suggest about how she feels?",
+                "B": "Read paragraph 2 again. What do Marisol's actions suggest about how she feels?"
               },
               "choices": {
                 "A": [
-                  "Her new shoes do not fit her feet well yet.",
-                  "She is worried and needs something to keep her busy.",
-                  "She wants to look neat when Abuela sees her play.",
-                  "She is excited and eager for the big concert to start soon."
+                  "She is worried that she is already late for the concert.",
+                  "She is nervous that Dad will forget to drive her to the concert on time.",
+                  "She is nervous about the concert and keeps fussing over small things.",
+                  "She is worried that she will not be picked to play a part in the concert."
                 ],
                 "B": [
-                  "She feels proud about her new drumsticks and likes to see them.",
-                  "She plans to practice her part in the car on the way to the concert.",
-                  "The zipper on it is broken and keeps getting stuck.",
-                  "She is anxious about how the concert will go."
+                  "She is too sleepy to eat much this early in the day.",
+                  "She is too nervous about the day ahead to eat much.",
+                  "She is too upset with Dad to eat much of the food he made.",
+                  "She is too busy getting ready to eat much."
                 ]
               },
               "answer": {
-                "A": 1,
-                "B": 3
+                "A": 2,
+                "B": 1
               },
               "why": {
-                "A": "B is right. She reties her shoes over and over, which shows worry and a need to stay busy. A and C are not in the story. D sounds reasonable, but the story shows nerves, not eagerness: she can't eat.",
-                "B": "D is right. Checking the pocket three times shows worry. The story never says the sticks are new or that she is proud of them (A). It says nothing about practicing in the car (B) or a broken zipper (C)."
+                "A": "C is right. She reties both shoes and then checks one again, which is fussing over small things, so she is nervous about the concert. A is wrong: it is only seven o'clock, and the concert starts at ten. B: nothing in paragraph 1 is about Dad or a ride. D: she is already in her black concert shirt, and nothing says she might not play.",
+                "B": "B is right. She takes one small bite of toast and unzips the pocket three times to check that her drumsticks are still there, so she is too nervous to eat. A: checking the pocket again and again does not fit being sleepy. C: Dad only offers her eggs; nothing shows she is upset with him. D: she is already sitting at the table."
               }
             },
             {
@@ -130,29 +130,29 @@
               "type": "mc",
               "prompt": {
                 "A": "Part A: Read paragraph 3. What can you infer about how Leo feels about his sister?",
-                "B": "Part A: Read paragraphs 4-6. Why does Marisol go quiet for a long minute after she yells at Leo?"
+                "B": "Part A: Read paragraphs 4-6. What is Marisol most likely feeling during the long quiet minute?"
               },
               "choices": {
                 "A": [
-                  "He is bored and hopes she will play a game with him.",
-                  "He wants to bug her by making a lot of noise at the table.",
-                  "He is jealous of all the attention his sister gets.",
-                  "He looks up to her and wants to be like her."
+                  "He looks up to her and wants to be like her.",
+                  "He wants to show her that he can drum better than she can.",
+                  "He wants her to stop practicing and play a game with him.",
+                  "He wants to bug her so that she will hurry up and leave."
                 ],
                 "B": [
-                  "She feels bad about how she spoke to him.",
-                  "She wants Dad to scold Leo.",
-                  "She is thinking hard about how to play her drum solo.",
-                  "She is too tired to talk after a short night."
+                  "She feels worried that Dad is upset with her.",
+                  "She feels worried that the concert will start soon.",
+                  "She feels sorry that Abuela had to fly so far.",
+                  "She feels sorry that she hurt Leo's feelings."
                 ]
               },
               "answer": {
-                "A": 3,
-                "B": 0
+                "A": 0,
+                "B": 3
               },
               "why": {
-                "A": "D. Leo copies the exact beat she practiced and grins at her, so he admires her. B is wrong because he grins at her and is upset when she snaps, so he was not trying to annoy her. A and C are not shown. He never asks to play, and nothing shows him wanting her attention for himself.",
-                "B": "A. She just made Leo's grin disappear, and right after the quiet she is kind to him. That shows she feels bad. C is wrong because the quiet comes right after she hurts Leo, and she ends it by helping him, not by practicing. B and D have no support. Dad says nothing, and nothing says she slept badly."
+                "A": "A is right. Leo plays the same beat Marisol practiced every night for a month and looks up at her with a huge grin, so he wants to be like her. B: when she says he is doing it wrong, he does not argue; his grin disappears. C: she is eating breakfast, not practicing, and he never asks to play a game. D: nothing in the story shows he wants her to leave.",
+                "B": "D is right. She has just made Leo's grin disappear, and she ends the quiet by giving him her sticks and helping him. That shows she feels bad. A: Dad says nothing, and she turns to Leo, not Dad. B: she looks at the clock, but it is seven and the concert is at ten. C: the story never says Abuela's trip was hard or that Marisol feels sorry about it."
               }
             },
             {
@@ -166,25 +166,25 @@
               },
               "choices": {
                 "A": [
-                  "He taps out the same beat she practiced, then grins at her. (paragraph 3)",
-                  "Leo grabs two spoons and taps them on the edge of the table. (paragraph 3)",
-                  "It is seven o'clock, and the concert does not start until ten. (paragraph 1)",
-                  "Marisol is wearing her black concert shirt for the big day. (paragraph 1)"
+                  "He looked up at her with a huge grin. (paragraph 3)",
+                  "Across the table, her little brother Leo grabbed two spoons. (paragraph 3)",
+                  "He set the spoons down slowly and stared at his cereal. (paragraph 4)",
+                  "It was the same beat Marisol had practiced every night for a month. (paragraph 3)"
                 ],
                 "B": [
-                  "Then the kitchen got very quiet. (paragraph 5)",
-                  "She glances up at the clock on the wall. (paragraph 5)",
-                  "She speaks softly and gently moves Leo's fingers into place. (paragraph 7)",
-                  "Marisol pushes her eggs around and takes one bite of toast. (paragraph 2)"
+                  "Leo's grin disappeared. (paragraph 4)",
+                  "Dad poured his coffee and said nothing. (paragraph 6)",
+                  "\"Hold them like this,\" she said quietly, moving his fingers. (paragraph 7)",
+                  "Marisol looked at the clock. (paragraph 5)"
                 ]
               },
               "answer": {
-                "A": 0,
+                "A": 3,
                 "B": 2
               },
               "why": {
-                "A": "A. Copying HER beat and grinning at her shows he looks up to her. B tells us only that he makes noise. It could seem to back up 'he wants to bug her,' but it leaves out that the beat is hers. C could seem to back up 'he is bored,' but it is about the time, not Leo. D could seem to back up 'he is jealous,' but it tells us nothing about how Leo feels.",
-                "B": "C is right. Her soft, gentle help shows she feels bad and wants to make it up to Leo. A is true (after she snapped, the kitchen got very quiet), but a quiet room does not show how she feels. B and D show nerves."
+                "A": "D is right. Leo plays HER beat, the one she practiced every night for a month, so he is copying her. A shows he wants her to see him, but alone it could also back 'show her he can drum better' or 'bug her.' B shows only that he picked up spoons. C shows how he feels after she snaps, not why he played.",
+                "B": "C is right. Right after the quiet minute she speaks quietly and helps Leo hold the sticks, which shows she is sorry for snapping. A shows that Leo was hurt, but not how Marisol feels about it. B is about Dad (it could seem to back 'Dad is upset'). D could seem to back 'worried about the time,' but looking at a clock shows nothing about how she feels toward Leo."
               }
             },
             {
@@ -194,29 +194,29 @@
               "type": "mc",
               "prompt": {
                 "A": "A classmate says, \"Marisol cares about Leo, even when she is stressed.\" Which detail, if it were the ONLY one you had, would BEST prove this?",
-                "B": "A classmate says, \"Marisol is nervous because Abuela will hear her play for the first time.\" Which detail, if it were the ONLY one you had, would BEST prove this?"
+                "B": "A classmate says, \"Thinking about Abuela makes Marisol fidget.\" Which detail, if it were the ONLY one you had, would BEST prove this?"
               },
               "choices": {
                 "A": [
-                  "Marisol finally picks up her toast and eats the whole piece. (paragraph 8)",
-                  "Marisol snaps at Leo and tells him he is doing the beat all wrong. (paragraph 4)",
-                  "Marisol slides her old practice sticks across to her brother. (paragraph 6)",
-                  "Marisol's fingers drum on her knee under the table. (paragraph 5)"
+                  "\"Leo, stop it!\" Marisol snapped. (paragraph 4)",
+                  "Marisol did not say anything either for a long minute. (paragraph 6)",
+                  "Under the table, Marisol's fingers drummed on her knee. (paragraph 5)",
+                  "She slid them across the table to Leo. (paragraph 6)"
                 ],
                 "B": [
-                  "Marisol says Leo can sit in the front row. (paragraph 7)",
-                  "Right after looking at Abuela's photo, Marisol drums on her knee. (paragraph 5)",
-                  "Marisol ties and reties both of her shoes. (paragraph 1)",
-                  "Abuela landed at the airport last night. (paragraph 5)"
+                  "Then she looked at the photo on the fridge of Abuela waving from an airport. ... Under the table, Marisol's fingers drummed on her knee. (paragraph 5)",
+                  "Then she looked at the photo on the fridge of Abuela waving from an airport. ... today she would finally hear it in person. (paragraph 5)",
+                  "She bent down and retied her left shoe. ... Then she checked the left one again. (paragraph 1)",
+                  "Dad poured his coffee and said nothing. ... Then she reached into her backpack and pulled out her practice sticks, the old ones with the chipped tips. (paragraph 6)"
                 ]
               },
               "answer": {
-                "A": 2,
-                "B": 1
+                "A": 3,
+                "B": 0
               },
               "why": {
-                "A": "C is right. She is still stressed, but she gives Leo her own sticks, so she cares about him. A shows she feels calmer, not that she cares. B shows only stress. D shows only nerves.",
-                "B": "B. This links Abuela to a nervous habit at the same moment, so it proves both parts of the claim. D names Abuela but shows no nerves at all. C shows nerves but says nothing about Abuela. A shows neither."
+                "A": "D is right. 'Them' are her own practice sticks, and she gives them to Leo before she has calmed down: so far she has taken only one small bite of toast, and she eats the whole piece only at the end (paragraph 8). So she cares about him even while she is stressed. A shows the stress but not the caring. B is the quiet minute before she acts; being quiet alone does not show what she feels about Leo. C shows she is tense, but it shows nothing about Leo.",
+                "B": "A is right. In the same paragraph, she looks at Abuela's photo, and a little later her fingers drum on her knee under the table. So it links her fidgeting to Abuela. B tells why Abuela matters, but it shows no fidgeting at all. C shows fidgeting, but it is in paragraph 1 and says nothing about Abuela. D shows what she does after the quiet minute; it is about Leo, and it shows no fidgeting and no link to Abuela."
               }
             },
             {
@@ -225,30 +225,30 @@
               "skill": "Why the author included a detail (story)",
               "type": "mc",
               "prompt": {
-                "A": "Why does the author include the photo of Abuela on the fridge in paragraph 5?",
-                "B": "Why does the author end the story with Marisol eating the whole piece of toast?"
+                "A": "Read paragraph 5. Why does the author include the photo of Abuela on the fridge?",
+                "B": "Read paragraph 8. Why does the author end the story this way?"
               },
               "choices": {
                 "A": [
-                  "To hint at a reason this concert means so much to Marisol.",
-                  "To show that Marisol misses Abuela and wants her to visit.",
-                  "To show that Marisol is sad Abuela lives far away.",
-                  "To describe what the kitchen looks like in the morning."
+                  "To hint that Marisol is sad because Abuela lives so far away.",
+                  "To hint at why this concert matters so much to Marisol.",
+                  "To hint that Marisol is waiting for Abuela to call her.",
+                  "To hint that Abuela is the one who taught Marisol to drum."
                 ],
                 "B": [
-                  "To hint that she is excited for the big day ahead.",
-                  "To show she is still too nervous to say much to anyone.",
-                  "To show that Leo has forgiven her after she snapped at him.",
-                  "To show that she feels calmer after being kind to Leo."
+                  "To show that Marisol is still too nervous to talk to Leo.",
+                  "To show that Marisol eats to please Dad before they leave.",
+                  "To show that Marisol feels calmer than she did before.",
+                  "To show that Marisol forgives Leo for copying her beat."
                 ]
               },
               "answer": {
-                "A": 0,
-                "B": 3
+                "A": 1,
+                "B": 2
               },
               "why": {
-                "A": "A is right. Abuela will hear Marisol play in person for the first time, so the concert matters a lot. B and C are wrong because Abuela is already here (she landed last night), and the story never shows Marisol sad about distance. D misses the point.",
-                "B": "D is right. She could not eat before. Now she eats the whole piece after helping Leo, so she is calmer. The story never shows her excited (A). B is the opposite of what happens. C is about Leo, not the toast."
+                "A": "B is right. The photo leads to the news that Abuela landed last night and today will finally hear Marisol play in person, so this concert matters a lot. A and C are wrong because Abuela is already here; she landed last night. D: the story never says who taught Marisol to drum.",
+                "B": "C is right. Earlier she took only one small bite of toast. Now, after she helps Leo, she eats the whole piece, so she is calmer. A: she has just talked to Leo and shown him how to hold the sticks. B: Dad offered her eggs at the start, but paragraph 8 says nothing about Dad or leaving, and the concert is hours away. D is backward: Leo did nothing wrong, and she was the one who snapped."
               }
             }
           ]
@@ -282,30 +282,30 @@
               "skill": "What a detail suggests (article)",
               "type": "mc",
               "prompt": {
-                "A": "Read paragraph 4 again. After a nut is cracked, the crow waits for a break in traffic before it flies down. What does this detail suggest?",
-                "B": "Read paragraph 2 again. Crows that had never been caught also scolded the person in the mask. What does this detail suggest?"
+                "A": "Read paragraph 4 again. Think about when the crow flies down to eat. What does this suggest about the crow?",
+                "B": "Read paragraph 2 again. What does it suggest about crows?"
               },
               "choices": {
                 "A": [
-                  "Crows can tell when a nut has cracked open all the way.",
-                  "Crows feel safer eating near people than out in the woods.",
-                  "Crows want to be sure no other crow takes the nut first.",
-                  "Crows understand that moving cars can hurt them."
+                  "It understands that it must wait until a car has cracked the nut.",
+                  "It understands that the cars on the road could hit it.",
+                  "It understands that the nut is too hot to eat right away.",
+                  "It understands that people in the cars might be watching it."
                 ],
                 "B": [
-                  "Crows can learn about danger from other crows.",
-                  "The crows remembered the person's face from when they were caught.",
-                  "Crows feel upset when people wear masks to hide their faces.",
-                  "The crows were likely hungry and wanted food from people."
+                  "Crows can learn about a person from other crows.",
+                  "Crows can learn to scold any person who walks by them.",
+                  "Crows can learn to trust a person who let other crows go.",
+                  "Crows can pick out a new face after seeing it just one time."
                 ]
               },
               "answer": {
-                "A": 3,
+                "A": 1,
                 "B": 0
               },
               "why": {
-                "A": "D is right. The crow waits for traffic to stop before it flies down, so it knows cars are a danger. The article never compares cities to woods (B). A and C are not why it waits for a break in traffic.",
-                "B": "A is right. Crows that were never caught still scolded the mask, so they learned it from other crows. B is wrong because these crows were never caught. C is wrong because they scolded one certain mask, not every mask. D is not in the article."
+                "A": "B is right. The crow waits for a break in traffic before it flies down, so it seems to know the cars could hurt it. A: the car has already cracked the nut when the crow waits; it is waiting for the traffic, not the nut. C: nothing says the nut is hot. D: the paragraph never mentions drivers watching the crow.",
+                "B": "A is right. Crows that had never been caught joined in the scolding, and some had not even hatched when the first crows were caught, so they seem to have learned about the mask from other crows. B: they scolded people wearing that one mask, not everyone who walked by. C: the researchers let the caught crows go unharmed, but the crows scolded the mask instead of trusting it. D: the article says the scolding kept happening for years, but it never says how fast a crow learns a face."
               }
             },
             {
@@ -319,25 +319,25 @@
               },
               "choices": {
                 "A": [
-                  "The author likes crows but can find them a little scary.",
-                  "The author thinks most people do not give crows enough credit.",
-                  "The author thinks crows should not be allowed to live in cities with people.",
-                  "The author thinks crows are noisy pests that pick through trash."
+                  "The author thinks crows are smart, but less smart than scientists once believed.",
+                  "The author thinks city crows are smarter than crows that live in the wild.",
+                  "The author thinks crows are smarter than many people give them credit for.",
+                  "The author thinks crows are smart because they copy what people do."
                 ],
                 "B": [
-                  "That it was bringing food to share with them.",
-                  "That the person was there to help them.",
-                  "That the person was a threat to crows.",
-                  "That the person was kind and there to visit them."
+                  "That the person had once helped them.",
+                  "That the person was someone they did not know.",
+                  "That the person was afraid of them.",
+                  "That the person was a danger to them."
                 ]
               },
               "answer": {
-                "A": 1,
-                "B": 2
+                "A": 2,
+                "B": 3
               },
               "why": {
-                "A": "B is right. The author says many people see crows as pests, then shows how smart they are. The author never says crows feel scary (A). C and D are views the author argues against.",
-                "B": "C is right. Crows scolded loudly and dove toward the mask, which is how they act toward danger. A, B and D are friendly ideas, but scolding and diving show the crows saw a threat."
+                "A": "C is right. The author says many people think of crows as noisy pests, then shows how smart they are. A: the article never says scientists once thought crows were smarter; it says scientists found they may be some of the smartest animals around. B: the article never compares city crows with wild crows, and it calls New Caledonian crows on Pacific islands especially skilled with tools. D: the article shows crows learning from other crows and solving problems, not copying people.",
+                "B": "D is right. The crows scolded loudly and dove toward the mask, so they treated the person in it as a threat. A: the researchers did let the crows go unharmed, but the crows scolded the mask instead of acting friendly. B: the crows remembered the mask; the scolding kept happening for years. C: the crows were the ones scolding and diving; nothing shows the person was afraid of them."
               }
             },
             {
@@ -351,25 +351,25 @@
               },
               "choices": {
                 "A": [
-                  "Crows scolded loudly and dove toward the mask, year after year. (paragraph 2)",
-                  "Some city crows fly down into busy roads to eat. (paragraph 4)",
-                  "Many see crows as pests, but they may be very smart. (paragraph 1)",
-                  "Crows made a lot of noise whenever someone wore the mask. (paragraph 2)"
+                  "Many people think of crows as noisy pests. (paragraph 1)",
+                  "But scientists have found that the crows living in our cities may be some of the smartest animals around. (paragraph 1)",
+                  "City crows have found their own tricks. (paragraph 4)",
+                  "Crows also solve problems with tools. (paragraph 3)"
                 ],
                 "B": [
-                  "The researchers let the crows go unharmed. (paragraph 2)",
-                  "Researchers wore the mask while catching some crows. (paragraph 2)",
-                  "Some crows had not even hatched when the first crows were caught. (paragraph 2)",
-                  "City crows have found their own tricks for getting food on busy roads. (paragraph 4)"
+                  "In one set of studies, researchers wore a certain mask while they caught a few crows, checked them, and let them go unharmed. (paragraph 2)",
+                  "Crows can remember human faces. (paragraph 2)",
+                  "Later, whenever someone walked by wearing that mask, crows scolded loudly and dove toward it. (paragraph 2)",
+                  "It might even remember you. (paragraph 6)"
                 ]
               },
               "answer": {
-                "A": 2,
-                "B": 1
+                "A": 1,
+                "B": 2
               },
               "why": {
-                "A": "C is right. The author sets the 'pests' view against how smart crows are, which backs Part A choice B. A seems to back 'scary' (Part A choice A). B seems to back crows being trouble in cities (Part A choice C). D seems to back 'noisy pests' (Part A choice D).",
-                "B": "B. Being caught is scary for a crow, and the mask was there each time. That is why crows saw it as a threat. A is about the mask study, but being let go unharmed would not make the mask seem scary. C is about crows learning from others, not why the mask means danger. D is about food, not the mask."
+                "A": "B is right. 'But' sets what scientists found against what many people think, so the author thinks crows get too little credit. A gives only what many people think, not the author's view. C could seem to back 'city crows are smarter,' but it does not compare them with any other crows. D shows crows are clever, but it does not set that against what people believe.",
+                "B": "C is right. Scolding loudly and diving toward the mask shows the crows treated its wearer as a threat. A is the cause: it tells why the crows linked the mask to being caught, but not what they believed (and 'unharmed' could seem to back 'had once helped them'). B shows crows remember faces, but not what they think of this person. D is about the reader, not the person in the mask."
               }
             },
             {
@@ -383,25 +383,25 @@
               },
               "choices": {
                 "A": [
-                  "Scientists have found that city crows may be some of the smartest animals. (paragraph 1)",
-                  "A crow might even remember you. (paragraph 6)",
-                  "Crows do not stay quiet when a crow dies; they gather and call. (paragraph 5)",
-                  "Crows that were not caught joined in scolding the mask. (paragraph 2)"
+                  "Even more surprising, crows that had never been caught joined in the scolding. (paragraph 2)",
+                  "You have probably seen a crow picking through trash or calling from a power line. (paragraph 1)",
+                  "When a crow dies, other crows often gather around it and call loudly. (paragraph 5)",
+                  "Crows can remember human faces. (paragraph 2)"
                 ],
                 "B": [
-                  "A crow drops a nut on a busy road and waits for a break in traffic to eat it. (paragraph 4)",
-                  "Crows dive at people who once bothered them. (paragraph 2)",
-                  "Some crows poke sticks into holes to pull out bugs. (paragraph 3)",
-                  "A crow may watch you from a fence. (paragraph 6)"
+                  "Some have been seen dropping hard nuts onto busy roads. (paragraph 4)",
+                  "When a car rolls over a nut and cracks it, the crow waits for a break in traffic. (paragraph 4)",
+                  "Then it flies down to eat. (paragraph 4)",
+                  "New Caledonian crows, which live on islands in the Pacific Ocean, are especially skilled with tools. (paragraph 3)"
                 ]
               },
               "answer": {
-                "A": 3,
-                "B": 0
+                "A": 0,
+                "B": 1
               },
               "why": {
-                "A": "D. These crows never met the masked person, so they had to learn about the mask from other crows. B and C sound close but do not prove sharing. B is about one crow remembering, not crows teaching each other. In C, the crows may be studying the scene, but nothing shows them passing anything on. A says crows are smart, not that they share.",
-                "B": "A is right. The crow drops the nut, lets traffic crack it, then waits for a safe time to eat. That is a plan with several steps. C is a one-step tool use. B is memory. D is only watching."
+                "A": "A is right. These crows were never caught, yet they joined in scolding the mask, so they seem to have learned about it from other crows. B shows a crow calling, not one crow passing what it knows to another. C shows crows gathering and calling, but it does not show one crow passing what it knows to another. D shows that a crow can remember a face, not that it passes what it knows to another crow.",
+                "B": "B is right. After a car cracks the nut, the crow waits for a break in traffic before it goes for the food, so it is doing one step, waiting, and then the next. A shows only the first step; alone it does not show what the crow does next. C shows only the last step. D says some crows are skilled with tools, but it does not show a crow planning steps."
               }
             },
             {
@@ -410,30 +410,30 @@
               "skill": "Why the author included a detail (article)",
               "type": "mc",
               "prompt": {
-                "A": "Why does the author say that crows gathering around a dead crow can look like a funeral (paragraph 5)?",
-                "B": "Why does the author end the article by saying a crow \"might even remember you\" (paragraph 6)?"
+                "A": "Read paragraph 5. Why does the author say the scene can look like a funeral?",
+                "B": "Read paragraph 6. Why does the author end the article this way?"
               },
               "choices": {
                 "A": [
-                  "To help readers picture the scene with something familiar.",
-                  "To prove crows feel sad like people.",
-                  "To show that crows bury their dead under the ground like people.",
-                  "To show that crows care deeply about the members of their flock."
+                  "To help readers picture the scene by comparing it to something they know.",
+                  "To help readers see that crows feel sad the way people do.",
+                  "To suggest that the crows gather to keep people and other animals away from the dead crow.",
+                  "To suggest that the crows around the dead crow are all one family."
                 ],
                 "B": [
-                  "To show that crows like to make friends with the people nearby.",
-                  "To show that crows enjoy being around people.",
-                  "To link the face studies to a reader's own daily life.",
-                  "To prove that crows are the smartest animals around."
+                  "To suggest that readers should feed the crows near their homes.",
+                  "To suggest that the crows near readers' homes may be dangerous to people.",
+                  "To suggest that city crows are smarter than crows on islands.",
+                  "To connect the article's ideas to things readers may see every day."
                 ]
               },
               "answer": {
                 "A": 0,
-                "B": 2
+                "B": 3
               },
               "why": {
-                "A": "A is right. The author says it 'can look like' a funeral, which compares it to something readers know. Scientists think the crows may be studying the scene, so the article does not claim sadness (B) or deep caring (D). C is not in the article.",
-                "B": "C is right. The ending ties the face studies to a crow on the reader's own fence. The article never says crows make friends with people (A) or enjoy being near them (B). D goes further than the article does."
+                "A": "A is right. The author says the scene 'can look like' a funeral, comparing it to something readers know. B: the next sentences say some scientists think the crows are studying the scene, not that they feel sad. C and D are never said in the article.",
+                "B": "D is right. The ending turns to a crow on the reader's own fence, linking the studies to everyday life. A: the article never tells readers to feed crows. B: the ending says a crow may pay attention and might remember you, not that it will hurt you. C: paragraph 3 says New Caledonian crows on Pacific islands are especially skilled with tools; the article never says city crows are smarter."
               }
             }
           ]
@@ -469,7 +469,7 @@
       "item": "rubric",
       "kind": "rubric",
       "title": "SHORT RESPONSE SELF-CHECK: C-E-E",
-      "directions": "Before you turn in your short response, read each row. Circle the box that matches your answer. If you are not at a 4 yet, fix your answer first!",
+      "directions": "Before you turn in your short response, read each row. Circle the box that matches your answer. If two boxes fit, circle the lower one. For each piece of evidence, ask yourself: If this were the ONLY sentence I had, would it prove my answer? If any row is below 4, fix that part of your answer first!",
       "rubric": {
         "title": "What can you infer about the character? (4 points)",
         "levelNames": [
@@ -483,17 +483,17 @@
             "name": "Claim (my inference)",
             "levels": [
               "I wrote a clear inference about the character. The story does not say it outright. I figured it out from clues.",
-              "I wrote an inference, but it is a little unclear or very general.",
-              "My claim is close to a detail the story already says.",
-              "I only retold what happened, or I made a guess with no clues behind it."
+              "I wrote an inference, but it is a little unclear or very general (like \"She is nice\").",
+              "My claim just repeats something the story says in plain words (like \"Marisol plays the drums\").",
+              "I did not write a claim, or I guessed with no clues."
             ]
           },
           {
             "name": "Evidence (proof from the text)",
             "levels": [
-              "I used TWO pieces of evidence. I named the paragraph or quoted for each one. Each one really proves my inference.",
-              "I used two pieces of evidence, but one does not really prove my inference.",
-              "I used only one piece of evidence, or I did not say where it came from.",
+              "I used TWO pieces of evidence. I named the paragraph for each one. Each one really proves my inference.",
+              "I used two pieces of evidence, but only one really proves my inference. Or I forgot to name a paragraph.",
+              "I used two pieces, but neither one really proves my inference. Or I used only one piece of evidence.",
               "I did not use evidence from the story."
             ]
           },
@@ -501,13 +501,13 @@
             "name": "Explanation (how it proves it)",
             "levels": [
               "For each piece of evidence, I explained HOW it shows my inference (\"This shows that...\").",
-              "I explained one piece of evidence well, but not the other.",
+              "I explained one piece of evidence well. For the other one, I did not explain it or I only repeated it.",
               "I tried to explain, but I mostly repeated the evidence.",
               "I did not explain how my evidence connects to my inference."
             ]
           }
         ],
-        "note": "This task is worth 4 points in all. It is not 4 points for each row. Find the level that fits each row. Your score is the level that fits most of your rows (4, 3, 2, or 1). If all three rows are different, your score is the middle one. A 4 means all three parts are strong. A 1 means an inference with no real support, or just retelling the story. Ask yourself: If this were the ONLY sentence I had, would it prove my answer?"
+        "note": "This task is worth 4 points in all, not 4 points for each row. Here is how to find your score: 1. Circle the level (4, 3, 2 or 1) that fits each row. 2. Add your three numbers. 3. Use your total: 11 or 12 = 4 points. 8, 9 or 10 = 3 points. 5, 6 or 7 = 2 points. 3 or 4 = 1 point."
       }
     }
   ],
@@ -898,6 +898,148 @@
         ],
         "pass": true,
         "note": "after the maker reworded B wrong choices so the key is longest 3, shortest 3, middle 4 times"
+      },
+      {
+        "check": "keys",
+        "round": 4,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T16:25:04.851Z",
+        "rows": 22,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 4,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T16:25:04.964Z",
+        "questions": 20,
+        "chance": 0.25,
+        "worst": [
+          [
+            "middleValue",
+            0.313
+          ],
+          [
+            "converge",
+            0.3
+          ],
+          [
+            "longest",
+            0.275
+          ]
+        ],
+        "groups": [
+          {
+            "group": "INFERENCE AND EVIDENCE QUIZ A",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "INFERENCE AND EVIDENCE QUIZ B",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "INFERENCE AND EVIDENCE QUIZ (all versions)",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "SHORT RESPONSE SELF-CHECK: C-E-E",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 5,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T16:42:25.696Z",
+        "rows": 22,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 5,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T16:42:25.784Z",
+        "questions": 20,
+        "chance": 0.25,
+        "worst": [
+          [
+            "middle",
+            0.308
+          ],
+          [
+            "notLongest",
+            0.283
+          ],
+          [
+            "notVote",
+            0.283
+          ]
+        ],
+        "groups": [
+          {
+            "group": "INFERENCE AND EVIDENCE QUIZ A",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "INFERENCE AND EVIDENCE QUIZ B",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "INFERENCE AND EVIDENCE QUIZ (all versions)",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "SHORT RESPONSE SELF-CHECK: C-E-E",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
       }
     ],
     "facts": [
@@ -942,6 +1084,232 @@
             "kind": "JUDGMENT",
             "what": "Nut-dropping on roads is well documented (Sendai, Japan), but whether crows use cars on purpose is still debated (a Davis, California study found American crows did not drop more nuts when cars were coming). Inside the passage, the B q9 'plan with several steps' inference is defensible; the teacher may want to keep it as a passage-based inference only.",
             "source": "Nihei 1995; Cristol, Switzer, Johnson & Walke 1997, Animal Behaviour"
+          }
+        ]
+      },
+      {
+        "round": 4,
+        "agent": "🔎 Fact checker",
+        "claims": 131,
+        "flagged": 14,
+        "notes": "Checked every > line in changed-text.diff (q1-q10 versions A and B: prompts, all 80 choices, keys, why lines; the new rubric) against passages.md and the teacher's notes, plus the 9 science claims the crow article makes. Tally: 103 source, 14 reference, 5 off (FIX), 9 judgment. All 32 Part B / evidence choices are in the paragraph they cite (32/32 citations right). Every quoted choice matches the story or article word for word, or nearly so. Exceptions are noted as findings: q4 A choice B and q4 B choice C are each two sentences joined into one, and q9 B choice D is a paraphrase. Every key is defensible from the text. Rubric arithmetic checks out (row totals 3-12 map onto 1-4 with no gaps or overlaps; all 4s = 12 = 4 points, matching the teacher's '4 = all three strong'). Science: the article's claims are true or carefully hedged. Face and mask memory with social spread: Marzluff et al. 2010; Cornell, Marzluff & Pecoraro 2012. Wire hook: Weir, Chappell & Kacelnik 2002, where one New Caledonian crow named Betty bent the wire; rooks have also done it (Bird & Emery 2009), so the plural 'crows' holds. Sticks for grubs: Hunt 1996. New Caledonia is a group of islands in the southwest Pacific. Gathering around dead crows to learn about danger: Swift & Marzluff 2015. Nut dropping on roads: seen in Sendai (Nihei 1995; Nihei & Higuchi 2001), but a California study (Cristol et al. 1997) found car use there was coincidental. 'Have been seen' is accurate, but saying the crows plan it is a judgment. Out of scope (unchanged text), for whoever owns q11: key A says Marisol 'notices how quiet he has gone'. The story never says what she notices, so that wording is itself an inference. Time: about 25 minutes; tokens: about 70k.",
+        "findings": [
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q5 (why)",
+            "kind": "FIX",
+            "what": "'C: Dad never asks her to eat' is false. In paragraph 2 Dad asks \"Eggs?\" while sliding a plate toward her, which is an offer of food a student can point to. Direction: give a true reason, e.g. 'C: Dad offers eggs at the start, but he says nothing at the end, and nothing shows she eats to please him; she eats after helping Leo.'",
+            "source": "passages.md Passage 1 ¶2 (\"Eggs?\" Dad asked, sliding a plate toward her) and ¶6 (Dad ... said nothing)",
+            "fixed": "Round 5: why line corrected; confirmed by the round 5 recheck."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q6 (why, reason for A)",
+            "kind": "FIX",
+            "what": "'these crows were not there when crows were caught' is more than the article says. Paragraph 2 says only that they had never been caught, and that SOME had not even hatched. A crow that was never caught could still have been nearby. The real study separates 'never trapped' from 'not present'. Direction: 'A: these crows were never caught themselves (some had not even hatched), so they are not remembering their own capture, and the article says the scolding went on for years, not for a whole life.'",
+            "source": "passages.md Passage 2 ¶2; Cornell, Marzluff & Pecoraro 2012, Proc. R. Soc. B 279:499-508, https://pmc.ncbi.nlm.nih.gov/articles/PMC3234554/",
+            "fixed": "Round 5: why line corrected; confirmed by the round 5 recheck."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q9 (why, reason for D)",
+            "kind": "FIX",
+            "what": "'scientists think they are studying the scene, not teaching' has two problems. The article says 'SOME scientists think', and the article never says 'not teaching'. The researchers behind the dead-crow study even suggested the calls might share information with the group. Direction: 'D sounds close, but the article says only that some scientists think the crows are studying the scene; it never says one crow passes what it knows to another.'",
+            "source": "passages.md Passage 2 ¶5; Swift & Marzluff 2015, Animal Behaviour 109:187-197, https://digital.lib.washington.edu/researchworks/handle/1773/33178; Carl Zimmer, NYT, Oct 1 2015, https://carlzimmer.com/crows-may-learn-lessons-from-death-88/",
+            "fixed": "Round 5: why line corrected; confirmed by the round 5 recheck."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q10 (why, reason for B)",
+            "kind": "FIX",
+            "what": "'the next sentences say scientists think the crows are studying the scene' drops 'Some'. The article says 'Some scientists think', and that hedge is part of why sadness is not proved. Direction: 'the next sentences say some scientists think the crows are studying the scene'.",
+            "source": "passages.md Passage 2 ¶5",
+            "fixed": "Round 5: why line corrected; confirmed by the round 5 recheck."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q4 (why)",
+            "kind": "FIX",
+            "what": "'(she still has not eaten)' is not quite true: in paragraph 2 she took one small bite of toast. Direction: '(she has still taken only one bite of toast)'.",
+            "source": "passages.md Passage 1 ¶2 (She took one small bite of toast and set it back down) and ¶8",
+            "fixed": "Round 5: why line corrected; confirmed by the round 5 recheck."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q1 (why, reason for C)",
+            "kind": "JUDGMENT",
+            "what": "'nothing shows she dislikes the food' is arguable. In the same paragraph she pushes the eggs around with her fork, which on its own could look like dislike. The choice is still wrong, but the lesson for the student is that the eating goes with her checking the drumsticks three times, which points to the concert, not the food. Direction (optional): 'C: pushing food around could mean many things, but she also checks her drumsticks three times, so the concert, not the food, is on her mind.'",
+            "source": "passages.md Passage 1 ¶2"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q5 (why, reason for B)",
+            "kind": "JUDGMENT",
+            "what": "'Leo did nothing wrong' is an evaluation. Some students (and teachers) will say that banging spoons loudly at breakfast was a little wrong. The second half ('she was the one who snapped') is the reason the text supports. Direction (optional): drop 'Leo did nothing wrong' and say 'she was the one who snapped, so she is making up with Leo, not forgiving him'.",
+            "source": "passages.md Passage 1 ¶3-4, ¶6-7"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q6 (key and why)",
+            "kind": "JUDGMENT",
+            "what": "The key and the why line say the crow 'knows' cars are dangerous. The article says only that it waits for a break in traffic, and 'knows' is the inference the question asks for. Studies of birds near roads support the idea that they treat traffic as danger, but what a crow understands is not directly shown. This is acceptable for an inference key. If the teacher wants to model hedged language, use 'It seems to understand that moving cars can hurt it.'",
+            "source": "passages.md Passage 2 ¶4; Legagneux & Ducatez 2013, 'European birds adjust their flight initiation distance to road speed limits', Biology Letters 9:20130417"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q9 (why, key)",
+            "kind": "JUDGMENT",
+            "what": "'they could only know about the mask from other crows' is strong for choice C taken alone. Without the next sentence ('some had not even hatched'), a crow that was never caught might have watched the capture. The real study does count both kinds as social learning, so the key is right, but 'could only' overclaims for C alone. Direction (optional): 'so they most likely learned about the mask from other crows.' The q6 B key ('Crows can learn about danger from other crows') is KEEP: the study supports it directly.",
+            "source": "passages.md Passage 2 ¶2; Cornell, Marzluff & Pecoraro 2012, https://pmc.ncbi.nlm.nih.gov/articles/PMC3234554/"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q9 (key choice D and why)",
+            "kind": "JUDGMENT",
+            "what": "There are two issues. (1) The why says the crow 'lets a car crack it', but choice D as written leaves out the car ('dropped a hard nut onto a busy road, then waited for a break in traffic'). The why describes the article, not the choice. (2) 'That is a plan with several steps' is stated as fact. The science on deliberate car use is mixed: Sendai crows look deliberate, while California crows' car use was found to be coincidental. Direction: restore the car step in choice D ('...a car cracked it, and the crow waited for a break in traffic to eat'), and write 'That looks like a plan with several steps.' Also, choice D is the only paraphrase among verbatim distractors (see the q4 finding).",
+            "source": "passages.md Passage 2 ¶4; Nihei 1995 / Nihei & Higuchi 2001 (Sendai carrion crows), https://tohoku.repo.nii.ac.jp/record/1503/files/0040-8743-2001-60-93.pdf; Cristol, Switzer, Johnson & Walke 1997, 'Crows do not use automobiles as nutcrackers', The Auk 114:296-298, https://sora-dev.unm.edu/sites/default/files/journals/auk/v114n02/p0296-p0298.pdf"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q4 (key choice C and why); also A q4 key choice B",
+            "kind": "JUDGMENT",
+            "what": "B q4 choice C ('She looked at the photo of Abuela, and under the table her fingers drummed on her knee') joins the first and last sentences of paragraph 5, which are separated by two others ('Abuela had landed last night. For two years...'). The why's 'right then' makes them sound back to back. It is the right paragraph and close wording, so it passes item 1. Two cautions: it reads as a quote but is not one, and the joining is what makes it the only choice that links Abuela and nerves. A q4 choice B likewise joins two sentences of paragraph 6. With B q9 D, these three keys are the only non-verbatim choices in sets where the distractors are exact sentences, a pattern a test-wise student could spot. Direction: hand to the assessment check. Either quote the keys as exact sentences (with an ellipsis where text is cut) or paraphrase the distractors too. Change 'right then' to 'in the same paragraph'.",
+            "source": "passages.md Passage 1 ¶5, ¶6"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q7 (why, reason for B)",
+            "kind": "JUDGMENT",
+            "what": "'it says New Caledonian crows on Pacific islands are especially skilled' drops 'with tools'. The article says they are especially skilled with tools, not smarter overall. The clean reason is that the article never compares city crows with wild crows. Direction: 'B: the article never compares city crows with wild ones; the crows it calls especially skilled with tools live on Pacific islands.' (New Caledonia is a group of islands in the southwest Pacific: true.)",
+            "source": "passages.md Passage 2 ¶1, ¶3; New Caledonian crow, https://en.wikipedia.org/wiki/New_Caledonian_crow"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q7 (why, reason for C)",
+            "kind": "JUDGMENT",
+            "what": "'C: the crows acted, not the person' is true, but it does not tell the student why C is wrong. Direction: 'C: nothing shows the person was afraid; crows scold and dive at something they see as a threat, not at someone who is scared.'",
+            "source": "passages.md Passage 2 ¶2; Marzluff et al. 2010, 'Lasting recognition of threatening people by wild American crows', Animal Behaviour 79:699-707"
+          },
+          {
+            "where": "SHORT RESPONSE SELF-CHECK: C-E-E rubric (Evidence row)",
+            "kind": "JUDGMENT",
+            "what": "The new level 4 requires 'I named the paragraph for each one', and level 3 adds 'Or I forgot to name a paragraph'. The teacher's notes allow either: 'Quote it or name the paragraph'. Under this rubric, a student who quotes exactly but names no paragraph drops a level. The q11 prompts do ask students to name the paragraph, so the rubric matches the prompt but not the notes. Teacher's call: either restore 'named the paragraph or quoted' or keep it as is.",
+            "source": "sources/inference-lesson-notes.md, 'Citing evidence' (Quote it or name the paragraph)"
+          },
+          {
+            "where": "Passage 2 ¶4 and INFERENCE AND EVIDENCE QUIZ A q6 (why)",
+            "kind": "KEEP",
+            "what": "Nut dropping on roads: 'Some have been seen dropping hard nuts onto busy roads' is accurate (Sendai carrion crows). 'Waits for a break in traffic' matches the Sendai reports of crows collecting nuts at red lights. The why line's 'C: the car has already cracked the nut' matches the article.",
+            "source": "Nihei & Higuchi 2001, https://tohoku.repo.nii.ac.jp/record/1503/files/0040-8743-2001-60-93.pdf; caveat Cristol et al. 1997, The Auk 114:296-298"
+          },
+          {
+            "where": "Passage 2 ¶2 and INFERENCE AND EVIDENCE QUIZ A q6 / B q6 / B q7 / B q8 (keys and whys)",
+            "kind": "KEEP",
+            "what": "Mask studies: researchers wore a distinctive mask while trapping, banding and releasing crows near Seattle. Crows scolded and mobbed the mask for years, birds never trapped joined in, and young crows learned it from their parents. A neutral control mask was not scolded, which supports 'one certain mask, not every mask'. Mobbing is an anti-predator response, which supports 'a danger to them'.",
+            "source": "Marzluff et al. 2010, Animal Behaviour 79:699-707; Cornell, Marzluff & Pecoraro 2012, https://pmc.ncbi.nlm.nih.gov/articles/PMC3234554/"
+          },
+          {
+            "where": "Passage 2 ¶3 and INFERENCE AND EVIDENCE QUIZ B q8 choice A, B q9 choice B",
+            "kind": "KEEP",
+            "what": "Wire hook to lift a small basket (a bucket) of food from a tube: true. The original subject was one New Caledonian crow, Betty, and rooks have since done the same, so the plural 'crows have bent' is fair. New Caledonian crows poke sticks into holes for grubs (Hunt 1996, Nature). Calling stick use 'a one-step use of a tool' (B q9 why) fits the sentence as written, though in the wild New Caledonian crows also make their tools.",
+            "source": "Weir, Chappell & Kacelnik 2002, Science 297:981, https://www.chd.ucsd.edu/_files/winter2009/weir.02.pdf; Bird & Emery 2009, PNAS 106:10370; Hunt 1996, Nature 379:249"
+          },
+          {
+            "where": "Passage 2 ¶5 and INFERENCE AND EVIDENCE QUIZ A q10",
+            "kind": "KEEP",
+            "what": "Crows gather and call around dead crows, and scientists found they learn about danger from it: true. The key (a comparison to help readers picture the scene) and 'sadness is not proved' are both sound.",
+            "source": "Swift & Marzluff 2015, Animal Behaviour 109:187-197, https://digital.lib.washington.edu/researchworks/handle/1773/33178"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A/B q3, q4, q8, q9 (all Part B choices)",
+            "kind": "KEEP",
+            "what": "All 32 evidence choices are in the paragraph they cite. Exact sentences: A q3 A-D, B q3 A-D, A q4 A/C/D, B q4 A/B/D, A q8 A-D, B q8 A/B, A q9 A-D, B q9 A-C. Close paraphrases in the right paragraph: A q4 B (¶6), B q4 C (¶5), B q8 C/D (¶2), B q9 D (¶4). All paragraph citations in prompts are right too, including B q6 'last two sentences of paragraph 2'.",
+            "source": "passages.md"
+          }
+        ]
+      },
+      {
+        "round": 5,
+        "agent": "🔎 Fact checker",
+        "claims": 203,
+        "flagged": 8,
+        "notes": "Checked every > line of changed-text.diff against pack.json (final text), passages.md and sources/inference-lesson-notes.md. I counted each key, each wrong choice stated as true, each reason in a why line, each Part B quote with its paragraph citation, the crow science the article asserts, and the changed rubric rows: 203 claims. Tally: 186 source, 9 reference, 4 off (all FIX), 4 judgment. All 32 Part B quotes in the changed items (A/B q3, q4, q8, q9) match the passage word for word, ellipses included, and every '(paragraph N)' points to the right paragraph. No key is wrong. B q8's new key (C) is correct. The crow science in Passage 2 holds up against the primary studies (see the KEEP rows). Only the car/nut trick is contested in the research, and the article already hedges it ('have been seen'). Time and tokens are in my reply to the reporter.",
+        "findings": [
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q6 (choice D + why)",
+            "kind": "FIX",
+            "what": "Choice D ('Crows can pick out a new face after seeing it just one time') can be defended from paragraph 2. The crows saw the mask while they were being caught, and later they scolded it for years, so a student can reasonably infer that one catching was enough. That is also close to what happened in the real study: crows trapped once while the researcher wore the mask scolded it for years. The why line ('it never says how fast a crow learns a face') does not make D false. Suggested direction: swap D for a choice paragraph 2 clearly rules out. Example: 'Crows forget a face after a few weeks'. This is wrong because the scolding 'kept happening for years' (paragraph 2). Rewrite the D part of the why line to match.",
+            "source": "passages.md P2 ¶2; Marzluff et al. 2010, 'Lasting recognition of threatening people by wild American crows,' Animal Behaviour 79:699-707, doi:10.1016/j.anbehav.2009.12.022 (crows trapped while the researcher wore a 'dangerous' mask; recognition lasted at least 2.7 years); BirdNote summary https://birdnote.org/node/11006"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q5 (why, reason for A)",
+            "kind": "FIX",
+            "what": "The why line says 'A and C are wrong because Abuela is already here; she landed last night.' That works for C (waiting for her to call) but not for A ('sad because Abuela lives so far away'). The story suggests Abuela really does live far away: two years of hearing about the drumming 'on the phone,' a photo 'waving from an airport,' and she 'landed.' Her being here now does not show Marisol isn't sad about the distance. Suggested direction: give A its own reason, e.g. 'A: nothing in paragraph 5 shows Marisol is sad; the photo leads straight to the news that Abuela will hear her play in person today (paragraph 5).' Keep 'she landed last night' as the reason for C only.",
+            "source": "passages.md P1 ¶5",
+            "sameAs": {
+              "check": "blind",
+              "round": 5,
+              "where": "INFERENCE AND EVIDENCE QUIZ A q5"
+            }
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q2 (why, reason for C)",
+            "kind": "FIX",
+            "what": "The why line says 'she is eating breakfast, not practicing.' In paragraph 2 she pushes her eggs around and takes one small bite of toast. She is hardly eating, and B q1 and B q5 both depend on that. Suggested direction: 'C: she is sitting at breakfast, not practicing (paragraph 2), and Leo never asks to play a game.'",
+            "source": "passages.md P1 ¶2, ¶3"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q1 (why, reason for D)",
+            "kind": "FIX",
+            "what": "'D: she is already sitting at the table' is true (paragraph 1), but it doesn't rule out 'too busy getting ready.' A student could point to her checking the backpack as getting ready. The reason students can learn: she isn't doing new jobs. She checks the same pocket three times, which is fussing, not being busy. Suggested direction: 'D: she is not doing a list of jobs; she unzips the same pocket three times to check the same drumsticks (paragraph 2), which shows worry, not being busy.'",
+            "source": "passages.md P1 ¶2"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q9 (key B, why) and A q6",
+            "kind": "JUDGMENT",
+            "what": "Whether crows use cars on purpose as nutcrackers is debated. Nihei (1995) recorded carrion crows in Sendai, Japan, putting walnuts where cars would crack them. Cristol et al. (1997) found American crows in Davis, California, were no more likely to drop walnuts when a car was coming. The article hedges ('have been seen'), and A q6's why says 'seems to know,' which is fine. B q9's claim that crows 'plan a few steps ahead' rests on this contested behavior. Also, on the article's own terms, choice A ('dropping hard nuts onto busy roads') arguably shows planning ahead too, because a crow that picks a BUSY road expects cars. The key B (car cracks the nut, crow waits for traffic) shows two steps and is still the best answer. The teacher may want to accept a well-argued A in discussion, or change the why for A to: 'A shows where the crow drops the nut, but alone it does not show the crow waiting for the right moment.'",
+            "source": "passages.md P2 ¶4; Nihei 1995, carrion crows using automobiles to crack walnuts, Sendai (Tohoku Univ. record https://tohoku.repo.nii.ac.jp/record/1503/files/0040-8743-2001-60-93.pdf); Cristol, Switzer, Johnson & Walke 1997, 'Crows do not use automobiles as nutcrackers: putting an anecdote to the test,' The Auk 114:296-298 https://sora-dev.unm.edu/sites/default/files/journals/auk/v114n02/p0296-p0298.pdf"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q4 (key D)",
+            "kind": "JUDGMENT",
+            "what": "The stem asks which detail, 'if it were the ONLY one you had,' would best prove 'Marisol cares about Leo, even when she is stressed.' The key, 'She slid them across the table to Leo,' read on its own, doesn't say what 'them' is or show any stress. The why line has to pull in paragraphs 6 and 8 to make the case. Everything the why line says is true, and D is still the best of the four. But the 'ONLY sentence' test the teacher teaches doesn't really work for this key. Option: quote the whole sentence pair from paragraph 6 ('Then she reached into her backpack and pulled out her practice sticks, the old ones with the chipped tips. She slid them across the table to Leo.'), or accept it as is.",
+            "source": "passages.md P1 ¶6, ¶8; sources/inference-lesson-notes.md ('If this sentence were the only one I had...')"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q4 (stem, key A, why)",
+            "kind": "JUDGMENT",
+            "what": "The key treats 'fingers drummed on her knee' as fidgeting. The teacher's notes support that reading ('she is nervous (actions: retying shoes, tapping...)'). But Marisol is a drummer, so some students will read it as running through her part. The link to Abuela also comes from order in the paragraph (photo, then Abuela's news, then drumming), not from anything that says it's the cause. The why line keeps its wording modest ('links'), and A is still clearly the best choice. No change is needed if the teacher is happy with 'fidget.'",
+            "source": "passages.md P1 ¶5; sources/inference-lesson-notes.md"
+          },
+          {
+            "where": "SHORT RESPONSE SELF-CHECK: C-E-E rubric, Claim row level 1",
+            "kind": "JUDGMENT",
+            "what": "Round 5 changed Claim level 1 from 'I only retold what happened...' to 'I did not write a claim, or I guessed with no clues.' Retelling now fits only Claim level 2. The teacher's notes say '1 = an inference with no real support or just retelling.' With the score table, a pure retelling with some evidence could now total 5-7 and earn 2 points, not the teacher's 1. Teacher's call: either put 'or I only retold what happened' back into level 1, or accept the change.",
+            "source": "sources/inference-lesson-notes.md, Rubric notes"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q6, A q9, B q7 (crows learn about the mask from other crows; scolding for years; unhatched crows)",
+            "kind": "KEEP",
+            "what": "Reference: confirmed. Crows that were never caught learned to scold the 'dangerous' mask (horizontal social learning), and young crows learned it from their parents (vertical social learning), which matches 'had not even hatched.' The why lines say 'seem to have learned,' which is the right strength.",
+            "source": "Cornell, Marzluff & Pecoraro 2012, 'Social learning spreads knowledge about dangerous humans among American crows,' Proc. R. Soc. B 279:499-508, doi:10.1098/rspb.2011.0957; Marzluff et al. 2010 (above)"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q10 (why) / Passage 2 ¶5",
+            "kind": "KEEP",
+            "what": "Reference: confirmed. Crows gather and mob around a dead crow and afterward avoid the people and places linked with it. 'Some scientists think... they may be learning what to stay away from' is accurate and suitably hedged. The why for B ('not that they feel sad') is true to the article.",
+            "source": "Swift & Marzluff 2015, 'Wild American crows gather around their dead to learn about danger,' Animal Behaviour 109:187-197 https://www.gwern.net/doc/psychology/animal/bird/2015-swift.pdf"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q8 D, B q10 C, A q7 B (tools, wire hook, New Caledonian crows)",
+            "kind": "KEEP",
+            "what": "Reference: confirmed. A New Caledonian crow (Betty) bent a straight wire into a hook to lift a small bucket of food out of a vertical tube. Wild New Caledonian crows use sticks to pull larvae out of holes. New Caledonia is a group of islands in the southwest Pacific. Note: the wire-hook test used a New Caledonian crow, not a city crow, and the article doesn't claim otherwise. A 2021 re-analysis (van Buuren et al.) questions how new Betty's bending was, but not that it happened.",
+            "source": "Weir, Chappell & Kacelnik 2002, 'Shaping of hooks in New Caledonian crows,' Science 297:981; Oxford group page https://users.ox.ac.uk/~kgroup/tools/tool_manufacture.shtml; https://en.wikipedia.org/wiki/New_Caledonian_crow"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q7 / A q8 B (crows 'may be some of the smartest animals')",
+            "kind": "KEEP",
+            "what": "Reference: the hedged wording ('may be some of') matches the scientific consensus that corvid cognition rivals that of great apes. The A q7 why line quotes it correctly and doesn't overclaim.",
+            "source": "Emery & Clayton 2004, 'The mentality of crows: convergent evolution of intelligence in corvids and apes,' Science 306:1903-1907"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q2 (why, reason for B)",
+            "kind": "KEEP",
+            "what": "'It is seven and the concert is at ten': the time comes from paragraph 1 ('only seven o'clock'), and the stem points to paragraphs 4-6. Since this is the same breakfast scene, it's fair, and students can learn the reason.",
+            "source": "passages.md P1 ¶1, ¶5"
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q6 (choice A, why)",
+            "kind": "KEEP",
+            "what": "In real life the crow does rely on a car to crack the nut, so choice A is partly true. But the stem asks about WHEN the crow flies down. The why line ('the car has already cracked the nut when the crow waits; it is waiting for the traffic, not the nut') is true to paragraph 4, so A is wrong for a reason students can learn.",
+            "source": "passages.md P2 ¶4"
           }
         ]
       }
@@ -1150,7 +1518,8 @@
           {
             "where": "INFERENCE AND EVIDENCE QUIZ B q3",
             "kind": "FIX",
-            "what": "Choice A reads like a quote but changes the passage's words ('The kitchen got very quiet'). Make it match paragraph 5."
+            "what": "Choice A reads like a quote but changes the passage's words ('The kitchen got very quiet'). Make it match paragraph 5.",
+            "fixed": "Round 4: choice A is now the story’s exact words; confirmed by the round 4 recheck."
           },
           {
             "where": "INFERENCE AND EVIDENCE QUIZ A q7/q8",
@@ -1182,19 +1551,19 @@
         "byLevel": {
           "L1": {
             "items": 4,
-            "accuracy": 1.0,
+            "accuracy": 1,
             "meanConfidence": 4.5,
             "tooEasy": 2
           },
           "L2": {
             "items": 12,
-            "accuracy": 1.0,
+            "accuracy": 1,
             "meanConfidence": 4.6,
             "tooEasy": 2
           },
           "L3": {
             "items": 4,
-            "accuracy": 1.0,
+            "accuracy": 1,
             "meanConfidence": 4.8,
             "tooEasy": 2
           }
@@ -1208,32 +1577,38 @@
           {
             "where": "INFERENCE AND EVIDENCE QUIZ B q7",
             "kind": "FIX",
-            "what": "Left open after the last round. Choices A, B and D all say the person was friendly, so only C is left. One of them should become a different wrong belief, e.g. 'the person was just walking by and was not worth noticing.'"
+            "what": "Left open after the last round. Choices A, B and D all say the person was friendly, so only C is left. One of them should become a different wrong belief, e.g. 'the person was just walking by and was not worth noticing.'",
+            "fixed": "Round 4: the three friendly look-alikes became different beliefs (feed them, a danger, afraid of the crows, not worth noticing); confirmed by the round 4 recheck."
           },
           {
             "where": "INFERENCE AND EVIDENCE QUIZ B q10",
             "kind": "FIX",
-            "what": "Left open after the last round. A (make friends) and B (enjoy being around people) mean the same thing. B could become 'To warn readers that crows may dive at them.'"
+            "what": "Left open after the last round. A (make friends) and B (enjoy being around people) mean the same thing. B could become 'To warn readers that crows may dive at them.'",
+            "fixed": "Round 4: the wrong choices are now three different ideas (warn about diving, crows want to be friends, smartest of all); confirmed by the round 4 recheck."
           },
           {
             "where": "INFERENCE AND EVIDENCE QUIZ A q5",
             "kind": "FIX",
-            "what": "Left open after the last round. B (misses Abuela) and C (sad she lives far away) mean the same thing. C could become something believable the story doesn't support, e.g. 'Abuela taught Marisol to drum.'"
+            "what": "Left open after the last round. B (misses Abuela) and C (sad she lives far away) mean the same thing. C could become something believable the story doesn't support, e.g. 'Abuela taught Marisol to drum.'",
+            "fixed": "Round 4: the wrong choices are now misses Abuela, Abuela taught her to drum, and guilty about not calling; confirmed by the round 4 recheck."
           },
           {
             "where": "SHORT RESPONSE SELF-CHECK: C-E-E (rubric)",
             "kind": "FIX",
-            "what": "Left open (the rubric was first read by a checker in this round). The note contradicts itself: 'the level that fits most rows' gives 4/4/3 a 4, but 'a 4 means all three parts are strong'. Also: the Evidence row mixes quoting with naming the paragraph, has no box for 'two pieces, neither proves it', and 'close to a detail the story already says' is vague for this age."
+            "what": "Left open (the rubric was first read by a checker in this round). The note contradicts itself: 'the level that fits most rows' gives 4/4/3 a 4, but 'a 4 means all three parts are strong'. Also: the Evidence row mixes quoting with naming the paragraph, has no box for 'two pieces, neither proves it', and 'close to a detail the story already says' is vague for this age.",
+            "fixed": "Round 4: one scoring rule (circle a level per row, add the three, 11–12 = 4 … 3–4 = 1), Evidence asks only for the paragraph, a box for two pieces where neither proves it, Claim examples; confirmed by the round 4 recheck (smaller wording problems found, see round 4)."
           },
           {
             "where": "INFERENCE AND EVIDENCE QUIZ B q3",
             "kind": "JUDGMENT",
-            "what": "The key adds 'gently', a word the story doesn't use, and choice A adds 'Then'. Use the story's exact words ('she said quietly, moving his fingers') or accept the paraphrase."
+            "what": "The key adds 'gently', a word the story doesn't use, and choice A adds 'Then'. Use the story's exact words ('she said quietly, moving his fingers') or accept the paraphrase.",
+            "fixed": "Round 4: every B q3 choice is now in the story’s own words (no added “Then” or “gently”); confirmed by the round 4 recheck."
           },
           {
             "where": "INFERENCE AND EVIDENCE QUIZ A q3, B q3, A q4, B q4",
             "kind": "JUDGMENT",
-            "what": "Evidence choices are in present tense while the story is in past tense, so students can't find the exact words when they look back. Changing that touches the keys, so it is the teacher's call."
+            "what": "Evidence choices are in present tense while the story is in past tense, so students can't find the exact words when they look back. Changing that touches the keys, so it is the teacher's call.",
+            "fixed": "Round 4: every evidence choice is now in the past tense, in the passage’s words; confirmed by the round 4 recheck."
           },
           {
             "where": "Whole quiz (passage-free)",
@@ -1258,6 +1633,339 @@
             "reason": "With the passage, C is the only choice about how people see crows; A now backs Part A choice A and D backs choice D."
           }
         ]
+      },
+      {
+        "round": 4,
+        "agent": "🙈 Blind recheck (ELA)",
+        "matched": 20,
+        "of": 20,
+        "byLevel": {
+          "L1": {
+            "items": 4,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L2": {
+            "items": 12,
+            "accuracy": 1,
+            "meanConfidence": 4.5,
+            "tooEasy": 1
+          },
+          "L3": {
+            "items": 4,
+            "accuracy": 1,
+            "meanConfidence": 4.8,
+            "tooEasy": 2
+          }
+        },
+        "passageFree": {
+          "A": {
+            "matched": 10,
+            "of": 10,
+            "confident": 10
+          },
+          "B": {
+            "matched": 10,
+            "of": 10,
+            "confident": 8
+          },
+          "matched": 20,
+          "of": 20,
+          "confident": 18,
+          "note": "The probe showed both versions together, and many of my cues crossed versions (e.g. B q4 choice D answered A q5; B q9 choice D answered A q6). A student sees one version, so per-version leakage is somewhat lower than 10/10. But within-version cues remain: Part A/B pairs (A q7/q8), the hedged-key pattern (A q5, A q10, B q10), and keys that are the only stitched line (A q4, B q4, B q9). Passage-free confidence went up from 15 (round 3) to 18.",
+          "singleVersion": {
+            "A": {
+              "matched": 10,
+              "of": 10,
+              "confident": 6
+            },
+            "B": {
+              "matched": 10,
+              "of": 10,
+              "confident": 7
+            },
+            "note": "Two more fresh passage-free probes, each shown one version only (what a student gets): still 10 of 10 in each."
+          }
+        },
+        "findings": [
+          {
+            "where": "Whole quiz (passage-free)",
+            "kind": "FIX",
+            "what": "The owner made this a FIX for the extra rounds. Round 4 rewrote every stem and most wrong choices, but without the passages this tester still matched 20 of 20 (18 at confidence 4–5), and two more fresh probes that saw only one version each (as a student does) matched 10 of 10 in A (6 confident) and 10 of 10 in B (7 confident). Cues left: Part B quotes retell the story to the other items, the key is the only choice that fits the claim in the evidence items (A q4, B q9), the measured key against overstated wrong choices in the author-purpose items (A q5, A q10, B q10), stitched-together key quotes (A q4, B q4, B q9), and stems that still name the deciding fact (B q4, B q6)."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q8",
+            "kind": "FIX",
+            "what": "The key gives the cause (the researchers wore the mask while catching crows), but on its own it shows nothing about what the crows believed. That fails the quiz's own 'ONLY sentence' test and is the 'true but doesn't prove it' trap the teacher's notes warn about. The sentence that proves the Part A answer (paragraph 2: crows scolded loudly and dove toward the mask) isn't offered in version B. C and D are also two halves of one paragraph 2 sentence; D is reworded and C is cut short, yet both are shown as quotes. Direction: make the paragraph 2 scolding/diving sentence the key and keep the 'wore a mask while they caught' line as the cause-not-proof near-miss in place of D. This changes the key, so it needs the teacher's agreement.",
+            "fixed": "Round 5: the key is now the paragraph 2 sentence where the crows scolded loudly and dove toward the mask (a correctness fix to the key); the mask-while-catching sentence is now a near-miss. Confirmed by the round 5 recheck and the round 5 fact checker."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q4",
+            "kind": "FIX",
+            "what": "Too easy for level 3: the key is the only choice where Marisol does anything for Leo. A (the snap) already covers 'stress, not caring', so the gap is a caring-side near-miss that doesn't prove caring on its own. Direction: replace D (the Abuela photo, off-topic) with the paragraph 6 line 'Marisol did not say anything either for a long minute.' It belongs to Marisol, comes right after she hurts Leo and may hint at guilt, but alone it does not prove caring. Avoid any paragraph 7 kindness line, which made two right answers in round 2. Also, the key joins two paragraph 6 sentences into one and drops words, making it the only non-verbatim choice; quote the 'She slid them across the table to Leo' sentence as written, or mark the cut with an ellipsis."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q9",
+            "kind": "FIX",
+            "what": "Too easy for level 3, and a giveaway: the key is the only choice that describes a sequence, and it is a stitched paraphrase of three paragraph 4 sentences, shown as one quote, that drops the car-cracking step its own why line relies on. Direction: make the key the verbatim paragraph 4 sentence 'When a car rolls over a nut and cracks it, the crow waits for a break in traffic.' Replace A ('City crows have found their own tricks') with the first-step sentence 'Some have been seen dropping hard nuts onto busy roads.' That is a one-step near-miss (it is also A q9 choice B, which is fine across versions). Do not bring back the paragraph 3 wire-hook line (two right in round 2).",
+            "fixed": "Round 5: the key is now the exact paragraph 4 sentence and the one-step “dropping hard nuts” sentence is a near-miss, so it is no longer the only multi-step or stitched choice. The round 5 recheck then found two defensible readings (a JUDGMENT for the teacher, round 5)."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q4",
+            "kind": "FIX",
+            "what": "The key is a composite shown as one quote: it joins 'Then she looked at the photo on the fridge of Abuela...' and 'Under the table, Marisol's fingers drummed on her knee', which have two sentences between them in paragraph 5. It is the only choice built to cover both halves of the claim, which is why it can be found without the passage, and the why line's 'right then' overstates the timing. Direction: quote both sentences as written with an ellipsis between them, and change the why line from 'right then' to 'in the same paragraph'. The stem also states the deciding fact ('Abuela will hear her play for the first time'), which is choice D's content; that is part of open finding 1."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q7",
+            "kind": "FIX",
+            "what": "The round 3 twin problem is fixed, but now all three wrong choices are flatly contradicted by the scolding and diving, so it is easier than A q7 (which has two passage-based lures). Direction: replace A ('coming to feed them') with a lure drawn from the 'checked them, and let them go unharmed' clause in paragraph 2, e.g. 'That the person had once helped them'. Replace rather than add, so no two friendly choices return as twins."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q5, A q10, B q10",
+            "kind": "FIX",
+            "what": "In every 'why did the author…' item the key is the measured, hedged choice ('hint at a reason', 'help readers picture', 'tie the ideas to') and every wrong choice overstates ('prove', 'warn', 'smartest of all', 'all their lives'). A test-wise student who skipped the reading can pick the mild one; I did so at confidence 4–5 on all three. The bots can't see this cue. Direction: in each item, give one wrong choice the same measured voice but an idea the passage doesn't support, e.g. for A q10 'To suggest that crows grieve the way people do' (paragraph 5 goes on to say scientists think the crows are studying the scene)."
+          },
+          {
+            "where": "SHORT RESPONSE SELF-CHECK: C-E-E (rubric)",
+            "kind": "FIX",
+            "what": "Read as a student: (1) 'If you are not at a 4 yet, fix your answer first!' is ambiguous. A 4 in every row, or 4 points overall? The note gives 4 points for a total of 11, which allows a 3 in one row. Direction: say which, e.g. 'If any row is below 4…'. (2) Some answers fit two boxes. In Evidence, 'only one really proves' (3) plus 'forgot a paragraph' (3) has no stated result. In Explanation, one explained well and one only repeated fits both 3 and 2. Direction: add 'If two boxes fit, circle the lower one.' (3) Claim levels 2 ('repeats something the story says') and 1 ('only retold what happened') are hard for a 7th grader to tell apart. Direction: make level 1 'I did not write a claim, or I guessed with no clues.' (4) The 'ONLY sentence' reminder is tacked onto the end of the scoring steps; move it to the Evidence row or the directions.",
+            "fixed": "Round 5: “If any row is below 4, fix that part”; “If two boxes fit, circle the lower one”; Claim level 1 is now “I did not write a claim, or I guessed with no clues”; the ONLY-sentence check moved into the directions. Confirmed by the round 5 recheck (it found two new, smaller rubric problems)."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q11 / rubric",
+            "kind": "JUDGMENT",
+            "what": "A q11 asks for evidence about how Marisol acts before AND after she snaps, but the rubric (titled 'What can you infer about the character?', which is B's prompt) never checks that. Reading 1: fine, since the C-E-E rows are what get scored and the prompt only steers. Reading 2: add to the Evidence row, for version A only, 'one piece from before she snaps and one from after'."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q6 / A q9",
+            "kind": "JUDGMENT",
+            "what": "Version B asks for the 'crows learn from other crows' inference at level 1, pointing to the exact sentences, while version A tests the same inference at level 3 as an evidence choice. B q6 also tells B students what the 'had not even hatched' sentence means, which makes it an easy cut in B q8 (choice B). Reading 1: fine, since the item types differ (what a detail means vs which evidence proves it). Reading 2: aim B q6 at another paragraph 2 detail, e.g. what 'This kept happening for years' suggests about crow memory."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q2",
+            "kind": "JUDGMENT",
+            "what": "The key 'looks up to her' echoes the passage's 'He looked up at her', a word cue for a student skimming paragraph 3 (same words, different sense). Reading 1: harmless, the sense differs and it is the natural idiom. Reading 2: say 'He admires her and wants to be like her.'"
+          },
+          {
+            "where": "Whole quiz (levels)",
+            "kind": "JUDGMENT",
+            "what": "L3 is still not clearly harder than L2 (mean confidence 4.8 vs 4.5, both 100%). L3 is 3 of 11 rows per version (A/B q4, q9, q11), about 27%, short of the brief's ~40%. The A q4 and B q9 FIXes above would make L3 harder. Raising the share means turning one L2 pair into L3 (e.g. A q7/q8 as a 'which detail, if it were the ONLY one' item), which changes the quiz structure the teacher ordered, so it is her call."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q3",
+            "kind": "KEEP",
+            "what": "Flagged A and C (both bare spoon actions) as possible twins. Keep: the why line maps them to different Part A wrong choices (A to tease, C to bored), and only D ties Leo's beat to Marisol."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q2 B/D",
+            "kind": "KEEP",
+            "what": "Flagged 'tease her' and 'bored, wants a game' as near-twins. Keep: different motives (bothering her vs. wanting play), each rebutted separately, and both are tempting for different reasons."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q3",
+            "kind": "KEEP",
+            "what": "The key is from paragraph 7, after the 'quiet minute' that Part A limits to paragraphs 4–6. Keep: the why line rightly reads it as how she ends the minute, and each wrong choice is a well-built lure for a matching Part A wrong answer."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q11, B q11",
+            "kind": "KEEP",
+            "what": "Model answers checked against mine. A: same claim (caring, fixes her mistake) and same paragraphs (4, 6–7). B: I wrote 'nervous' (paragraphs 1–2); the model's note accepts other supported inferences, so both score 4. One small point: the A model's 'she notices how quiet he has gone' is itself an inference, not a stated detail, which is acceptable in a model answer."
+          }
+        ],
+        "note": "About 15 minutes across phases (a)–(c); tokens not measured by this agent."
+      },
+      {
+        "round": 5,
+        "agent": "🙈 Blind recheck (ELA)",
+        "matched": 20,
+        "of": 20,
+        "byLevel": {
+          "L1": {
+            "items": 4,
+            "matched": 4,
+            "accuracy": 1,
+            "meanConfidence": 4.5,
+            "tooEasy": 0
+          },
+          "L2": {
+            "items": 12,
+            "matched": 12,
+            "accuracy": 1,
+            "meanConfidence": 4.5,
+            "tooEasy": 2
+          },
+          "L3": {
+            "items": 4,
+            "matched": 4,
+            "accuracy": 1,
+            "meanConfidence": 4.3,
+            "tooEasy": 3,
+            "note": "MC only; plus 2 open q11 items (L3). L3 is 3 of 11 items per version (27%), short of about 40%. L3 confidence is no lower than L2, so L3 is not clearly harder."
+          }
+        },
+        "passageFree": {
+          "A": {
+            "matched": 10,
+            "of": 10,
+            "confident": 8
+          },
+          "B": {
+            "matched": 10,
+            "of": 10,
+            "confident": 8
+          },
+          "matched": 20,
+          "of": 20,
+          "confident": 16,
+          "note": "This tester saw BOTH versions with no passages, so some cues crossed versions (e.g. B q4 choices answered A q1/A q4/A q5; A q9 choice A answered B q6), which a real one-version student lacks. Same-version cues alone still answer A q2 (via A q3), A q7 (via A q8), B q7 (via B q8), B q4 (only choice with both halves of the claim), and the generic author's-purpose keys (B q5, B q10, A q10). Far above the 40% fail line in both versions.",
+          "singleVersion": {
+            "A": {
+              "matched": 9,
+              "of": 10,
+              "confident": 7
+            },
+            "B": {
+              "matched": 9,
+              "of": 10,
+              "confident": 6
+            },
+            "note": "Two more fresh passage-free probes, each shown one version only (what a student gets): 9 of 10 in A (missed A q6) and 9 of 10 in B (missed B q3). Round 4: 10 of 10 in each; before round 4: 10 of 10 in each."
+          }
+        },
+        "findings": [
+          {
+            "where": "Whole quiz (passage-free)",
+            "kind": "FIX",
+            "what": "Passage-free 10/10 in A and 10/10 in B (8 of 10 confident in each). Goal is near 25%, fail above about 40%. Main remaining cues: Part B choices that paraphrase the Part A key (A q7/q8, B q7/q8); the only choice holding both halves of the claim (B q4); generic author's-purpose keys against off-topic wrong choices (B q10, B q5, A q10); evidence items with only one choice on the claim's topic (A q4, A q9).",
+            "sameAs": {
+              "check": "blind",
+              "round": 4,
+              "where": "Whole quiz (passage-free)"
+            }
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q6",
+            "kind": "FIX",
+            "what": "Two right. Para 4: the crow flies down only after a car cracks the nut AND after traffic breaks. So wrong choice A (it must wait until a car has cracked the nut) is also true of 'when the crow flies down'. The why line's defense (it is waiting for traffic, not the nut) needs a reading the stem does not force. Direction: reword choice A into something para 4 does not support (e.g. that the crow knows which cars are driven by people it remembers), or narrow the stem to the wait for a break in traffic."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q4",
+            "kind": "FIX",
+            "what": "Too easy for L3: D is the only choice where Marisol does something for Leo. A and C show stress, B shows silence, so the only-sentence test is never needed. Direction: replace B (the long-minute silence, para 6) with a caring-adjacent detail that does not prove Marisol cares, e.g. Leo hugging the sticks to his chest (para 8), which shows Leo's feeling, not hers. Also see A q11: this stem states A q11's inference.",
+            "sameAs": {
+              "check": "blind",
+              "round": 4,
+              "where": "INFERENCE AND EVIDENCE QUIZ A q4"
+            }
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q11",
+            "kind": "FIX",
+            "what": "A q4's stem states, nearly word for word, the inference A q11 wants (caring about Leo while stressed), and A q4's key is the main A q11 evidence (para 6), so a student can copy claim + evidence. The 'before and after she snaps' scaffold also makes A q11 easier than B q11. Direction: change A q4's claim to a different idea (e.g. one about her nerves or about Abuela), or drop the scaffold so A q11 is as open as B q11."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q4",
+            "kind": "FIX",
+            "what": "Too easy and a word-match giveaway: key A is the only choice holding both halves of the claim (Abuela photo + drumming fingers). B has Abuela with no fidget, C has a fidget with no Abuela, D has neither. The key still joins two sentences of para 5 with two sentences cut between them. The claim is also weak: in para 5 the drumming follows both the clock glance and the snap at Leo, so the key shows sequence, not cause. Direction: add a lure that pairs the fidget with a different trigger in the same paragraph (the clock glance, para 5), so students must judge cause, or change the claim to one para 5 really proves.",
+            "sameAs": {
+              "check": "blind",
+              "round": 4,
+              "where": "INFERENCE AND EVIDENCE QUIZ B q4"
+            }
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q9",
+            "kind": "FIX",
+            "what": "Too easy for L3: only C (crows gathering at a dead crow, para 5) is a real lure; B and D are plainly off-claim. The same inference (learning from other crows) is L1 in version B (B q6), so the levels do not match. Direction: replace B (trash/power line, para 1) with the para 2 sentence about crows scolding and diving at the mask. It shows many crows reacting to the same thing but not knowledge being passed on, which makes students judge proof."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q7",
+            "kind": "FIX",
+            "what": "Part B gives away Part A, which the teacher's notes ask to avoid: A q8 choices A and B (para 1) together paraphrase key C, and key C repeats 'many people' from A q8 choice A. Direction: reword key C so it does not reuse Part B wording (e.g. 'smarter than their reputation suggests'), and replace A q8 choice A with a different, non-contrasting line (e.g. the para 1 trash/power line sentence or the para 6 'paying close attention' sentence)."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q8",
+            "kind": "FIX",
+            "what": "Same pair problem as A q7: with choices A and B side by side, the Part A answer can be read straight off Part B. Fix together with A q7 (direction there). Key B itself is right: 'But' sets the author's finding against the popular view."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q7",
+            "kind": "FIX",
+            "what": "Still too easy: B (someone they did not know) and C (afraid of them) are flatly contradicted by para 2. Only A (had once helped them, via 'unharmed') is a lure. Part B choice C (scolded and dove) also states the deciding behavior. Direction: replace C with a lure a skimmer could take from the passage but that para 2 does not support, e.g. that the crows thought the person was hurting a crow nearby (a mix-up with para 5's 'what to stay away from').",
+            "sameAs": {
+              "check": "blind",
+              "round": 4,
+              "where": "INFERENCE AND EVIDENCE QUIZ B q7"
+            }
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q10",
+            "kind": "FIX",
+            "what": "Too easy (L2): key D is the generic 'connect to readers' purpose, and A (feed crows) and C (city vs island) have no support, so it is solvable with no passage. Direction: replace A with a lure that para 6 and the mask study half-support, e.g. 'to warn readers that a crow may hold a grudge against them', and check it stays clearly weaker than D.",
+            "sameAs": {
+              "check": "blind",
+              "round": 4,
+              "where": "INFERENCE AND EVIDENCE QUIZ A q5, A q10, B q10"
+            }
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q3",
+            "kind": "FIX",
+            "what": "B q2's Part A says to read paragraphs 4-6 and asks about the long quiet minute, but key C comes from paragraph 7. The best proof, sliding her sticks to Leo (para 6), is not offered. A student who stays inside paragraphs 4-6 will pick A (Leo's grin disappeared), which only shows Leo is hurt. Direction: change B q2's stem to paragraphs 4-7, or offer the para 6 sticks sentence as the key. Key C is defensible once the range covers para 7."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q9",
+            "kind": "JUDGMENT",
+            "what": "Two readings. Key reading: B (car cracks the nut, crow waits for a break in traffic) shows one step, a wait, then the next, so it shows steps. Other reading: A (crows dropping hard nuts onto busy roads) is the plan itself, putting the nut where cars will crack it, which is exactly how the teacher's notes describe the trick, while B could describe a crow reacting to a nut it found. The why line says A 'shows only the first step'. If the teacher wants one clear key, replace A with a clearly reactive detail. The key is now a single sentence (the stitching from round 4 is gone)."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q5",
+            "kind": "FIX",
+            "what": "Why line: A is not refuted by 'Abuela is already here; she landed last night'. She does live far away (two years of phone calls, an airport photo). Choice A is wrong because nothing shows Marisol is sad about the distance. Direction: give that reason for A, and keep 'she landed last night' as the reason only for C (waiting for a call)."
+          },
+          {
+            "where": "Whole quiz (levels)",
+            "kind": "FIX",
+            "what": "L3 is 3 of 11 items per version (q4, q9, q11), about 27%, short of about 40%. L3 MC are no harder than L2 (L3 mean confidence 4.3 with 3 of 4 too-easy, vs L2 4.5). Fixing A q4, B q4 and A q9 per the directions above should make L3 harder; reaching about 40% needs about 1-2 more L3 items per version or relabelling an L2 that is truly harder.",
+            "sameAs": {
+              "check": "blind",
+              "round": 4,
+              "where": "Whole quiz (levels)"
+            }
+          },
+          {
+            "where": "SHORT RESPONSE SELF-CHECK: C-E-E (rubric)",
+            "kind": "FIX",
+            "what": "A blank or no-claim answer still scores 1 in every row = total 3 = 1 point, so nothing written earns 1 of 4. The teacher's notes define 1 as an inference with no real support or just retelling. Direction: add a 0 rule (no response, or no claim and no evidence = 0 points)."
+          },
+          {
+            "where": "SHORT RESPONSE SELF-CHECK: C-E-E (rubric)",
+            "kind": "FIX",
+            "what": "Explanation rows 3 and 2 overlap: explaining one piece well and only repeating the other fits row 3, but also fits row 2 ('mostly repeated'), and the 'circle the lower one' rule then drops it to 2. Direction: word row 2 so neither piece is explained well (e.g. 'I tried, but for both pieces I mostly repeated the evidence')."
+          },
+          {
+            "where": "SHORT RESPONSE SELF-CHECK: C-E-E (rubric)",
+            "kind": "JUDGMENT",
+            "what": "A total of 11 = 4 points, so a response with one row at 3 ('almost there') earns full credit. Reading 1: fine, a common holistic cut. Reading 2: the teacher's notes say 4 = all three strong, which would mean only 12 = 4 points. Teacher decides."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q3",
+            "kind": "KEEP",
+            "what": "Flagged ambiguous (choice A echoes 'looks up' from the key). It is a deliberate word-trap lure; alone, a grin could also fit showing off or bugging her, and the why line says so. D (her practiced beat) passes the only-sentence test."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ B q11",
+            "kind": "KEEP",
+            "what": "My model claim (nervous, paras 1-2) differs from the key's (caring, paras 4/6/7), but the key explicitly accepts other supported inferences, including the nervous one."
+          },
+          {
+            "where": "INFERENCE AND EVIDENCE QUIZ A q11",
+            "kind": "KEEP",
+            "what": "My model matches the key's claim (caring and fixes her mistakes after snapping; paras 4, 6, 7). The open finding here is the A q4 giveaway above, not the key."
+          }
+        ],
+        "note": "Recheck in three phases (no passages; with passages; then the key), 14 minutes by its own estimate; tokens about 70k across phases a-c by its own estimate (the log uses the session record)."
       }
     ]
   },
@@ -1387,18 +2095,158 @@
       "tokens": null,
       "cost": null,
       "round": 3
+    },
+    {
+      "at": "16:13",
+      "who": "🧭 Order lead",
+      "what": "Set up the extra round 4 (the owner, acting as the teacher, chose rounds 4–5 after round 3): wrote the FIX list (the passage-free problem plus the 5 open round 3 items) and gave the maker a folder that also holds the checks scripts. Not measured: the lead's session is a shared counter.",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 4
+    },
+    {
+      "at": "16:24",
+      "who": "📝 Maker",
+      "what": "Round 4 (fresh session, FIX list only): rewrote every question stem and most wrong choices, fixed the 5 open round 3 items (B q7, B q10, A q5, B q3, the rubric), put the evidence choices in the story's past tense. Ran the key and test-wise checks itself, with no lead relays (rounds 1–3 needed 8). Exact (session).",
+      "minutes": 9.2,
+      "tokens": 2295400,
+      "cost": 2.6087,
+      "round": 4
+    },
+    {
+      "at": "16:25",
+      "who": "🤖 Wilco",
+      "what": "Round 4: keys pass (22 rows, 0 errors); test-wise PASS, worst middleValue 31%, converge 30%, longest 28% against chance 25% (fail line 35%). Scripts, no AI cost.",
+      "minutes": null,
+      "tokens": null,
+      "cost": 0,
+      "round": 4
+    },
+    {
+      "at": "16:25",
+      "who": "🧭 Order lead",
+      "what": "Checked the round 4 pack against round 3: passages byte for byte the same; ids, skills, levels and types the same. Not measured.",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 4
+    },
+    {
+      "at": "16:27",
+      "who": "🙈 Passage-free probes",
+      "what": "Round 4, four fresh sessions run side by side (what a student gets: ONE version's 10 multiple-choice questions, no passages). Before round 4 (round 3 pack): A 10 of 10 (10 at confidence 4–5), B 10 of 10 (9 confident). After round 4: A 10 of 10 (6 confident), B 10 of 10 (7 confident). Exact (sessions, 4 summed).",
+      "minutes": 2.3,
+      "tokens": 554618,
+      "cost": 0.8379,
+      "round": 4
+    },
+    {
+      "at": "16:29",
+      "who": "🔎 Fact checker",
+      "what": "Round 4 (with web search): checked 131 claims, flagged 14: 5 FIX (why lines in B q5, B q6, A q9, A q10, A q4 that said more than the story or article says), 9 JUDGMENT, 5 KEEP. All 32 evidence choices sit in the paragraph they cite. Exact (session).",
+      "minutes": 4,
+      "tokens": 813284,
+      "cost": 1.2059,
+      "round": 4
+    },
+    {
+      "at": "16:30",
+      "who": "🙈 Blind recheck (ELA)",
+      "what": "Round 4 (fresh tester, three phases: no passages; with passages; the key): confirmed all 5 open round 3 items fixed (plus the B q3 words and the evidence tense). Passage-free 20 of 20 (18 at confidence 4–5, up from 15); with the passages 20 of 20. 8 FIX, 4 JUDGMENT, 4 KEEP. Exact (session, 3 phases summed).",
+      "minutes": 5.5,
+      "tokens": 1025448,
+      "cost": 2.6427,
+      "round": 4
+    },
+    {
+      "at": "16:31",
+      "who": "🧭 Order lead",
+      "what": "Merged the round 4 checks into the pack, marked the round 3 findings the recheck confirmed as fixed, and wrote the round 5 FIX list (blind FIX 2–7, fact FIX 8–12, and the probes' own cue for every item). Not measured.",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 4
+    },
+    {
+      "at": "16:42",
+      "who": "📝 Maker",
+      "what": "Round 5 (fresh session, FIX list only): changed the B q8 key to the story's exact scolding-and-diving sentence, made the B q9 key the exact paragraph 4 sentence, reworded the rubric (any row below 4, lower box if two fit, Claim level 1), and corrected five why lines. Ran the checks itself. Exact (session).",
+      "minutes": 9.5,
+      "tokens": 1995769,
+      "cost": 2.5819,
+      "round": 5
+    },
+    {
+      "at": "16:42",
+      "who": "🤖 Wilco",
+      "what": "Round 5: keys pass; test-wise PASS, worst middle 31%, notLongest 28%, notVote 28% against chance 25% (fail line 35%). Scripts, no AI cost.",
+      "minutes": null,
+      "tokens": null,
+      "cost": 0,
+      "round": 5
+    },
+    {
+      "at": "16:43",
+      "who": "🙈 Passage-free probes",
+      "what": "Round 5, two fresh sessions side by side (one version each, no passages): A 9 of 10 (7 confident; missed A q6), B 9 of 10 (6 confident; missed B q3). Round 4 was 10 of 10 in each. Exact (sessions, 2 summed).",
+      "minutes": 1,
+      "tokens": 254707,
+      "cost": 0.4009,
+      "round": 5
+    },
+    {
+      "at": "16:45",
+      "who": "🔎 Fact checker",
+      "what": "Round 5 (with web search): checked 203 claims, flagged 8: 4 FIX (B q6 choice D defensible, A q5 why line wrong for choice A, A q2 why line, B q1 why line), 4 JUDGMENT, 6 KEEP. Confirmed the 5 round 4 why-line fixes; no key is wrong. One of the 4 FIX (A q5) is the same as a blind finding. Exact (session).",
+      "minutes": 3.4,
+      "tokens": 1194010,
+      "cost": 1.1921,
+      "round": 5
+    },
+    {
+      "at": "16:48",
+      "who": "🙈 Blind recheck (ELA)",
+      "what": "Round 5 (fresh tester, three phases): confirmed the round 4 fixes to B q8, B q9 and the rubric. Passage-free 20 of 20 (16 at confidence 4–5); with the passages 20 of 20. 15 FIX entries (9 new, 6 repeats of round 4 findings), 2 JUDGMENT, 3 KEEP. Exact (session, 3 phases summed).",
+      "minutes": 5.9,
+      "tokens": 1201100,
+      "cost": 2.72,
+      "round": 5
+    },
+    {
+      "at": "16:49",
+      "who": "🧭 Order lead",
+      "what": "Merged the round 5 checks (marked confirmed round 4 findings fixed, linked repeats). Stopped: round 5 is the runbook's last round. Corrected one word in the fact checker's file at its request (\"waiting\" to \"waving\", a misquote of the story). Not measured.",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 5
+    },
+    {
+      "at": "16:50",
+      "who": "🧾 Reporter",
+      "what": "Wrote the rounds 4–5 log rows and the report notes (cheaper model tier). The lead filled this row from the session record and updated the totals lines to include it. Exact (session).",
+      "minutes": 2.6,
+      "tokens": 859433,
+      "cost": 0.5482,
+      "round": 5
     }
   ],
   "audit": {
     "notes": [
-      "Ms. Okafor (made-up sample) ordered a grade 7 ELA quiz with A/B versions on making inferences and citing text evidence, plus a rubric for its short response. The maker wrote two original passages from her lesson notes, a story and an article, and 22 question rows. Three rounds of checks followed, each by agents that had not written the work; every round caught something the round before had missed or created.",
+      "Open for the teacher: 17 FIX findings are still open after round 5 (blind and fact checks), and the goal for the passage-free problem was not met. Item (2) below, the level 3 share, is counted as a judgment because it first came up as one. (1) Whole quiz, no passages: still 9–10 of 10 right in each version when a tester sees one version. Causes left: Part B choices repeat the Part A key (A q7/q8, B q7/q8); the key is the only choice holding both halves of the claim (B q4); the key is the generic 'author's purpose' choice against off-topic wrong choices (B q10, B q5, A q10); evidence items with only one on-topic choice (A q4, A q9). Fix: change wrong choices and stems so each has a believable rival. (2) Levels: level 3 is 3 of 11 rows per version (27%, brief says about 40%) and is no harder than level 2; fix by making A q4, B q4 and A q9 harder or by adding 1–2 level 3 items per version (changes the quiz structure). (3) A q6: wrong choice A (the nut must be cracked first) is also true of when the crow flies down; reword A or narrow the stem. (4) A q4: key D is the only choice where Marisol does something for Leo; swap choice B for a caring-adjacent detail such as Leo hugging the sticks. (5) A q11: A q4's claim nearly equals A q11's inference, so students can copy claim and evidence; change A q4's claim or drop A q11's 'before and after she snaps' hint. (6) A q9: only choice C is a real lure; replace B with the paragraph 2 scolding sentence. (7) A q7 and A q8: Part B choices A and B together restate Part A's key and reuse 'many people'; reword key C and replace A q8 choice A. (8) B q4: key A is a two-sentence stitch with two sentences cut; add a lure that pairs the fidget with a different trigger or change the claim. (9) B q7: choices B and C are plainly contradicted by paragraph 2; replace C with a lure the passage does not support. (10) B q10: choice A has no support and key D is the generic purpose; make A half-supported by paragraph 6. (11) B q3: B q2 limits Part A to paragraphs 4–6 but key C is in paragraph 7; change the range to 4–7 or offer the paragraph 6 sticks sentence. (12) A q5 why line: choice A is not refuted by 'she landed last night'; give A its own reason (fact checker found the same). (13) B q6 choice D ('pick out a new face after seeing it once') can be defended from paragraph 2; swap it for a choice the paragraph rules out, for example 'forget a face after a few weeks', and fix the why line. (14) A q2 why line says 'she is eating breakfast' but she barely eats; say she is sitting at breakfast, not practicing. (15) B q1 why line for D does not rule out 'too busy getting ready'; use the three pocket checks as the reason. (16) Rubric: no rule for a blank or no-claim answer, which still scores 1 of 4; add a 0 rule. (17) Rubric: Explanation boxes 3 and 2 overlap; word box 2 so neither piece is explained well. Plain-word fixes for items 3–17 are in each checker's finding. JUDGMENT calls for the teacher (29 left to decide over five rounds; the ones still live): B q9 (is choice A or B the plan?), the rubric's 11 = 4 points against 'all three strong', the rubric Claim level 1 wording against the notes, whether B q4 'fingers drummed' means fidgeting, whether A q4's key works as an 'only sentence', and whether A q11 should be checked for 'before and after'.",
+      "Ms. Okafor (made-up sample) ordered a grade 7 ELA quiz with A/B versions on making inferences and citing text evidence, plus a rubric for its short response. The maker wrote two original passages from her lesson notes, a story and an article, and 22 question rows. Five rounds of checks followed (rounds 4 and 5 were extra rounds the owner, acting as the teacher, chose after round 3), each by agents that had not written the work; every round caught something the round before had missed or created.",
       "Round 1 (14:15–14:40). The maker needed four drafts to get past the lead's pre-checks: on the first draft one test-wise bot (oddOne) picked the key 55% of the time against 25% chance. The fact checker checked 47 claims and flagged 5: 3 to fix and 2 for the teacher. The blind tester first answered all 20 multiple-choice items WITHOUT the passages and matched 20 of 20 keys, 17 at high confidence: a student who skipped the reading could have aced it. Wilco's bots had passed the same quiz at 30%, because the cue was in the content (only the key sounded like a teacher's answer), which the bots can't see. The blind tester listed 11 FIX.",
       "Round 2 (14:44–14:57). A new maker session got only the FIX list and rewrote wrong choices on 18 items, using real details from the passages. Wilco failed it at once: the new wrong choices all borrowed the key's idea, so the 'converge' bot found the key 50% of the time. After a rewording it passed at 31%. A different fresh blind tester confirmed 7 fixes in full and 3 in part, and caught 2 new problems the fixes had created: A q4 and B q9 now had two right answers.",
       "Round 3 (15:00–15:16). A third maker session fixed both two-right items, rewrote one wrong choice on 10 items so a reader who skipped the passage has a believable trap, and rewrote the rubric's scoring note after the lead saw '4 pts' print on every row of a test render (reading as 12 points). Wilco failed twice more (a trained bot at 50% on version B, then the 'middle length' bot at 38%) and passed on the third try at 31%. A third fresh blind tester confirmed the fixes and was the first checker to read the rubric.",
-      "Wilco before and after (chance 25%, fail line 35%): maker's first draft oddOne 55% → round 1 pass, posA 30% → round 2 converge 50% → 31% pass → round 3 learnedCV 50% → middle 38% → 31% pass. Answer keys were never changed to pass a bot; one key (B q9) was reworded to match the passage, with the same answer.",
-      "Catches in all: 22 FIX findings (fact checker 3, blind testers 11 + 4 + 4). 13 were fully fixed, 4 partly, and 5 are left open for the teacher after the last round: twin wrong choices in B q7, B q10 and A q5, a wording slip in B q3, and a rubric note that contradicts itself. 14 JUDGMENT calls go to the teacher, including the biggest one: three separate blind testers still matched 20 of 20 keys without the passages (17, 17, then 15 at high confidence), mostly because five question stems quote the deciding detail. Fixing that means changing the questions themselves, which is the teacher's call.",
-      "This sample stops at the preview, rendered at 15:25 with a watermark. The teacher reads it next and either agrees or asks for changes; nothing final is made without her agreement.",
-      "Totals. Wall clock 14:13–15:28, 75 minutes. Agent minutes: 50, or 56 with the lead's logged steps (the lead's relay work between steps is not measured). Cost $7.74, exact, from each agent session's own bill (maker $5.36 over 3 rounds, checkers $1.94, reporter $0.44); the lead's own session is not counted. Tokens as reported: 5,256,800, mostly cache reads, and a floor for the round 3 maker. Per question row (22): about $0.35. Against the menu: 55 tokens = $5.50 of budget, so this first-of-its-kind order ran about $2.24 over at API prices."
+      "Round 4 (extra, 16:13–16:31). A fresh maker session (9.2 minutes) got the FIX list only: the passage-free problem plus the 5 open round 3 items. It rewrote every question stem and most wrong choices, and ran the key and test-wise checks itself (rounds 1–3 needed 8 lead relays). Wilco passed: worst middleValue 31%, converge 30%, longest 28%, chance 25%. The fresh blind recheck confirmed all 5 open round 3 items fixed, but still matched 20 of 20 without the passages (18 at confidence 4–5, up from 15) and found 8 new FIX: the passage-free problem again, B q8 (the key said the cause but did not prove what the crows believed), A q4 and B q9 (the key was the only choice that fit, or the only stitched quote), B q4, B q7, the 'why did the author' items A q5, A q10 and B q10 (the mild choice was always the key), and the rubric (four unclear scoring steps). It also gave 4 JUDGMENT and 4 KEEP. The fact checker checked 131 claims and flagged 14: 5 FIX (five why lines that said more than the text does) and 9 JUDGMENT; 32 of 32 evidence choices sit in the paragraph they cite. Wilco before and after: round 3 worst 31% (middleValue) → round 4 worst 31% (middleValue), all under the 35% line.",
+      "Round 5 (extra, 16:32–16:49). A second fresh maker session (9.5 minutes) got only the new FIX list. It made the B q8 key the exact paragraph 2 scolding-and-diving sentence (a key change), made the B q9 key the exact paragraph 4 sentence, reworded the rubric, and corrected the five why lines the fact checker flagged. The blind recheck confirmed the B q8, B q9 and rubric fixes, and the fact checker confirmed the five why-line fixes with no wrong key. The blind tester still matched 20 of 20 without the passages (16 confident) and found 15 FIX entries: 9 new and 6 repeats of round 4 findings (passage-free, A q4, B q4, B q7, B q10, levels). The new ones are A q6 (two right answers), A q11, A q9, A q7, A q8, B q3, A q5 (why line), and two rubric items (no 0 rule; boxes 3 and 2 overlap). It also gave 2 JUDGMENT and 3 KEEP. The fact checker checked 203 claims and flagged 8: 4 FIX (B q6 choice D, A q5 which matches the blind finding, A q2 and B q1 why lines) and 4 JUDGMENT. Wilco before and after: round 4 worst middleValue 31% → round 5 worst middle 31%, notLongest 28%, notVote 28%, chance 25%, all passes.",
+      "Passage-free probes (multiple choice only, 10 per version, chance 25%, the owner's fail line about 40%): version A before round 4 10 of 10 (10 at confidence 4–5) → after round 4 10 of 10 (6) → after round 5 9 of 10 (7). Version B before round 4 10 of 10 (9) → after round 4 10 of 10 (7) → after round 5 9 of 10 (6). The round's own blind tester, who sees both versions together, went 20 of 20 in every round: 17, 17, 15 confident in rounds 1–3, then 18 (round 4) and 16 (round 5). The goal was not met: a student who skips the reading would still get about 90% in either version, far above the 40% line. The two extra rounds changed which cues are left (fewer stems naming the answer, more Part A/Part B and author's-purpose cues) but did not remove them. With the passages the tester matched 20 of 20 in both rounds.",
+      "Catches in all (five rounds): 103 findings, 7 of them the same problem found again in a later round and counted once. 47 needed a fix: 30 were fixed and 17 are open after round 5 (listed first above). 27 were looked at and kept on purpose, and 29 are judgment calls left for the teacher. All 5 items left open after round 3 were confirmed fixed in round 4. Of the 13 round 4 FIX, 8 were confirmed fixed in round 5 (the 5 fact-checker why lines, B q8, B q9 and the rubric); the passage-free problem, A q4, B q4, B q7 and the author's-purpose keys stayed open. Round 5 also found new problems its own fixes made or exposed (A q6 two right answers, A q4 giving away A q11, B q3's paragraph range), as rounds 2 and 3 did.",
+      "This sample stops at the preview. The round 3 preview was rendered at 15:25; after round 5 the lead rendered a new watermarked preview of the round 5 pack. The teacher reads it next and either agrees or asks for changes; nothing final is made without her agreement.",
+      "Extra rounds 4–5 own time and cost (each session’s own record, exact; the lead is not counted): round 4 $7.2952 over 21.0 agent minutes (maker $2.61, blind recheck $2.64, fact checker $1.21, passage-free probes $0.84); round 5 $6.8949 over 19.8 agent minutes (maker $2.58, blind recheck $2.72, fact checker $1.19, probes $0.40). Together $14.19 for the makers and checkers, 40.8 agent minutes (several ran side by side), 9,334,336 reported tokens; with the rounds 4–5 reporter ($0.55, 2.6 minutes) $14.74. About 39 minutes of wall clock (16:13–16:52). Rounds 1–3 were $7.74 exact; with rounds 4–5 the order totals $22.48.",
+      "Totals for all five rounds. Wall clock 14:13–16:52 (the round 3 preview render at 15:25 is in the middle). Agent minutes: 50 in rounds 1–3 plus 43.4 in rounds 4–5 (the lead’s logged steps and relay work are not measured). Cost $22.48 exact, from each agent session’s own bill (rounds 1–3 $7.74, rounds 4–5 $14.74); the lead’s own session is not counted. Tokens as reported: 15,450,569, mostly cache reads, and a floor for the round 3 maker. Per question row (22): about $1.02. Against the menu: 55 tokens = $5.50 of budget, so this first-of-its-kind order with two extra rounds ran about $16.98 over at API prices."
     ]
-  }
+  },
+  "rounds": 5
 }
