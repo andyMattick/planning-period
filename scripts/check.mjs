@@ -191,5 +191,36 @@ else {
   } catch (e) { fail(`site/manifest.webmanifest: ${e.message}`); }
 }
 
+/* 8. review apps and interactive worksheets (docs/KINDS-APPS.md): content, hashes, no plain-text key, and a browser
+   smoke test of each generated page (checks/apps.mjs skips the browser part with a message when Playwright isn't here) */
+{
+  const APPS = join(ROOT, 'checks', 'apps.mjs'), CAP = join(ROOT, 'samples/_cap-apps/pack.json');
+  const appPacks = packs.filter((p) => { try { return readJSON(p).documents.some((d) => ['interactive', 'reviewapp'].includes(d.kind || d.item)); } catch { return false; } });
+  for (const p of appPacks) {
+    const r = spawnSync(process.execPath, [APPS, join(ROOT, p)], { cwd: ROOT, encoding: 'utf8', timeout: 300000 });
+    const skipped = /skipped/.test(r.stdout || '');
+    if (r.status === 0) (skipped ? skip : ok)(`${p} passes checks/apps.mjs${skipped ? ' (content only: ' + (r.stdout.match(/⏭️\s+(.*)/) || [, ''])[1] + ')' : ' (content and browser)'}`);
+    else fail(`${p} fails checks/apps.mjs:\n${r.stdout}${r.stderr}`);
+  }
+  if (existsSync(CAP)) {   // the check bites: broken copies of the capability fixture fail it
+    const tmp = mkdtempSync(join(tmpdir(), 'pp-apps-')), good = readJSON('samples/_cap-apps/pack.json');
+    const ia = (p) => p.documents.find((d) => d.item === 'interactive'), ra = (p) => p.documents.find((d) => d.item === 'reviewapp');
+    const breaks = [
+      ['a duplicate flashcard', (p) => ra(p).cards.push({ ...ra(p).cards[0], id: 'dup' })],
+      ['a typed answer with no accepted form', (p) => { const q = ia(p).sections[1].questions.find((x) => x.type === 'numeric'); q.answer = ''; delete q.accept; }],
+      ['a worksheet item with no hint', (p) => { delete ia(p).sections[0].questions[0].hint; }],
+      ['a wrong-answer message on a right answer', (p) => { const q = ia(p).sections[1].questions.find((x) => x.type === 'numeric'); q.miss = [{ answer: q.answer, why: 'no' }]; }],
+      ['a mode with nothing in it', (p) => { ra(p).passages = []; }],
+    ];
+    breaks.forEach(([what, f], i) => {
+      const p = structuredClone(good); f(p);
+      const file = join(tmp, `apps-broken-${i}.json`); writeFileSync(file, JSON.stringify(p));
+      const r = spawnSync(process.execPath, [APPS, file, '--no-browser'], { cwd: ROOT, encoding: 'utf8' });
+      if (r.status === 1) ok(`checks/apps.mjs catches ${what}`); else fail(`checks/apps.mjs did not catch ${what} (exit ${r.status}):\n${r.stdout}${r.stderr}`);
+    });
+    rmSync(tmp, { recursive: true, force: true });
+  }
+}
+
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');
 process.exit(problems.length ? 1 : 0);

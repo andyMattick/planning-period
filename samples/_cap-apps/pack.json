@@ -1,0 +1,541 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g6-science-cap-apps",
+  "date": "2026-11-05",
+  "capabilityTest": "apps",
+  "_note": "A capability test for the review app and the interactive worksheet (docs/KINDS-APPS.md), not a sample for the gallery. Made-up teacher; no blind tester or fact checker has run on it.",
+  "order": {
+    "teacher": "Ms. Okafor (made-up sample)",
+    "grade": "6",
+    "subject": "science",
+    "topic": "Weather and the atmosphere",
+    "items": [
+      "interactive",
+      "reviewapp"
+    ],
+    "requests": "Students use phones and Chromebooks. The review app should have the vocabulary and the Rossetti poem we read.",
+    "sources": [
+      "weather-unit-notes.pdf"
+    ],
+    "styleExamples": []
+  },
+  "style": {
+    "notes": [
+      "Numbered questions, bold directions",
+      "Short sentences",
+      "Students show their work on calculations"
+    ],
+    "accent": "#2f6f5e"
+  },
+  "documents": [
+    {
+      "item": "interactive",
+      "title": "Weather Data Practice",
+      "directions": "Answer each question. Show your work on the calculations.",
+      "sections": [
+        {
+          "heading": "Level 1: Weather words",
+          "questions": [
+            {
+              "id": "w1",
+              "level": 1,
+              "skill": "water cycle",
+              "type": "mc",
+              "prompt": "Water vapor cools and turns into tiny drops of liquid water. What is this change called?",
+              "choices": [
+                "evaporation",
+                "condensation",
+                "precipitation",
+                "transpiration"
+              ],
+              "answer": 1,
+              "hint": "Think of drops forming on the outside of a cold glass.",
+              "why": "Condensation is gas turning into liquid. Evaporation goes the other way, precipitation is water falling from clouds, and transpiration is water leaving plants.",
+              "miss": [
+                {
+                  "answer": 0,
+                  "why": "Evaporation is liquid turning into vapor: the opposite direction."
+                }
+              ]
+            },
+            {
+              "id": "w2",
+              "level": 1,
+              "skill": "water cycle",
+              "type": "short",
+              "prompt": "Rain, snow, sleet and hail are all kinds of what?",
+              "answer": "precipitation",
+              "accept": [
+                "precip"
+              ],
+              "hint": "It's the step of the water cycle when water falls from clouds to the ground.",
+              "why": "Precipitation is any water that falls from clouds: rain, snow, sleet or hail."
+            },
+            {
+              "id": "w3",
+              "level": 1,
+              "skill": "air and density",
+              "type": "tf",
+              "prompt": "Warm air is less dense than cold air, so warm air tends to rise.",
+              "answer": true,
+              "hint": "Think of a hot-air balloon.",
+              "why": "Heated air spreads out, so the same amount of air takes more space: it is less dense and rises above cooler air."
+            },
+            {
+              "id": "w4",
+              "level": 1,
+              "skill": "weather tools",
+              "type": "mc",
+              "prompt": "Which tool measures air pressure?",
+              "choices": [
+                "thermometer",
+                "anemometer",
+                "rain gauge",
+                "barometer"
+              ],
+              "answer": 3,
+              "hint": "The word comes from the Greek “baros”, which means weight.",
+              "why": "A barometer measures air pressure. A thermometer measures temperature, an anemometer measures wind speed, and a rain gauge measures rainfall.",
+              "miss": [
+                {
+                  "answer": 1,
+                  "why": "An anemometer spins in the wind: it measures wind speed."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Level 2: Using weather data",
+          "questions": [
+            {
+              "id": "w5",
+              "level": 2,
+              "skill": "temperature change",
+              "type": "numeric",
+              "unit": "°C",
+              "prompt": "At 6 a.m. the temperature was −4 °C. By 2 p.m. it was 9 °C. By how many degrees did the temperature rise?",
+              "answer": 13,
+              "accept": [
+                "13 degrees"
+              ],
+              "hint": "Count up from −4 to 0 first, then from 0 to 9.",
+              "why": "From −4 up to 0 is 4 degrees, and from 0 up to 9 is 9 more: 4 + 9 = 13 degrees. Or 9 − (−4) = 13.",
+              "miss": [
+                {
+                  "answer": 5,
+                  "why": "9 − 4 = 5 treats −4 as if it were 4. Start at −4 and count up to 9."
+                }
+              ]
+            },
+            {
+              "id": "w6",
+              "level": 2,
+              "skill": "mean",
+              "type": "numeric",
+              "unit": "mm",
+              "prompt": "A rain gauge collected 12 mm, 0 mm, 7 mm, 5 mm and 6 mm of rain on five days. What was the mean (average) rainfall per day?",
+              "answer": 6,
+              "accept": [
+                "6 mm"
+              ],
+              "hint": "Add all five amounts, then divide by the number of days.",
+              "why": "12 + 0 + 7 + 5 + 6 = 30 mm, and 30 ÷ 5 days = 6 mm a day. The 0-mm day still counts as a day.",
+              "miss": [
+                {
+                  "answer": 7.5,
+                  "why": "30 ÷ 4 leaves out the day with 0 mm. It was still one of the five days."
+                }
+              ]
+            },
+            {
+              "id": "w7",
+              "level": 2,
+              "skill": "fractions of data",
+              "type": "numeric",
+              "prompt": "On 20 school days in March, 15 days were cloudy. What fraction of the days were cloudy?",
+              "answer": "3/4",
+              "accept": [
+                "15/20",
+                "0.75"
+              ],
+              "hint": "Write cloudy days over all the days, then simplify.",
+              "why": "15 cloudy days out of 20 is 15/20, and dividing both by 5 gives 3/4.",
+              "miss": [
+                {
+                  "answer": "1/4",
+                  "why": "1/4 is the share of days that were not cloudy (5 of 20)."
+                }
+              ]
+            },
+            {
+              "id": "w8",
+              "level": 2,
+              "skill": "air pressure",
+              "type": "mc",
+              "prompt": "The barometer reading is falling quickly. Which weather is most likely on the way?",
+              "choices": [
+                "Clear and calm skies",
+                "Clouds and stormy weather",
+                "A long, dry, sunny spell",
+                "Cooler and sunnier air"
+              ],
+              "answer": 1,
+              "hint": "Falling pressure means a low-pressure system is coming. What does low pressure bring?",
+              "why": "Falling air pressure usually means a low-pressure system is arriving, and low pressure brings rising air, clouds and often rain or storms."
+            }
+          ]
+        },
+        {
+          "heading": "Level 3: Two steps",
+          "questions": [
+            {
+              "id": "w9",
+              "level": 3,
+              "skill": "temperature and height",
+              "type": "numeric",
+              "unit": "°C",
+              "prompt": "Air temperature drops about 6.5 °C for every 1 km you climb. It is 20 °C at the bottom of a 2 km tall mountain. About what is the temperature at the top?",
+              "answer": 7,
+              "accept": [
+                "7 degrees"
+              ],
+              "hint": "First find how much colder it gets over 2 km, then subtract that from 20.",
+              "why": "Over 2 km it gets 2 × 6.5 = 13 °C colder, and 20 − 13 = 7 °C.",
+              "miss": [
+                {
+                  "answer": 13.5,
+                  "why": "20 − 6.5 is the temperature after only 1 km. The mountain is 2 km tall."
+                },
+                {
+                  "answer": 33,
+                  "why": "It gets colder as you climb, so subtract the 13 degrees."
+                }
+              ]
+            },
+            {
+              "id": "w10",
+              "level": 3,
+              "skill": "fractions of data",
+              "type": "numeric",
+              "unit": "mm",
+              "prompt": "Town A had 840 mm of rain this year. Town B had 3/4 as much rain as Town A. How many millimeters of rain did Town B get?",
+              "answer": 630,
+              "accept": [
+                "630 mm"
+              ],
+              "hint": "Find 1/4 of 840 first, then 3 of those parts.",
+              "why": "840 ÷ 4 = 210, so 1/4 is 210 mm, and 3/4 is 3 × 210 = 630 mm.",
+              "miss": [
+                {
+                  "answer": 210,
+                  "why": "210 mm is 1/4 of 840. Town B had 3 of those quarters."
+                }
+              ]
+            },
+            {
+              "id": "w11",
+              "level": 3,
+              "skill": "evaporation",
+              "type": "open",
+              "minWords": 15,
+              "prompt": "Explain why a puddle dries up faster on a hot, windy day than on a cool, still day. Use the word evaporation.",
+              "answer": "Evaporation is liquid water turning into water vapor. On a hot day the water gets more energy, so it evaporates faster, and the wind carries the damp air away so more water can evaporate.",
+              "look": [
+                "names evaporation as liquid to vapor",
+                "heat gives the water energy",
+                "wind moves the moist air away"
+              ],
+              "why": "Heat speeds up evaporation, and wind replaces the damp air over the puddle with drier air."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "reviewapp",
+      "title": "Weather Words Review",
+      "app": {
+        "modes": [
+          "flashcards",
+          "memorize",
+          "practice",
+          "match"
+        ]
+      },
+      "cards": [
+        {
+          "id": "c1",
+          "front": "atmosphere",
+          "back": "The layer of gases that surrounds Earth"
+        },
+        {
+          "id": "c2",
+          "front": "troposphere",
+          "back": "The lowest layer of the atmosphere, where weather happens"
+        },
+        {
+          "id": "c3",
+          "front": "air pressure",
+          "back": "The push of the air's weight on a surface"
+        },
+        {
+          "id": "c4",
+          "front": "humidity",
+          "back": "The amount of water vapor in the air"
+        },
+        {
+          "id": "c5",
+          "front": "evaporation",
+          "back": "Liquid water turning into water vapor"
+        },
+        {
+          "id": "c6",
+          "front": "condensation",
+          "back": "Water vapor cooling into drops of liquid water"
+        },
+        {
+          "id": "c7",
+          "front": "precipitation",
+          "back": "Water falling from clouds as rain, snow, sleet or hail"
+        },
+        {
+          "id": "c8",
+          "front": "air mass",
+          "back": "A huge body of air with about the same temperature and humidity throughout"
+        },
+        {
+          "id": "c9",
+          "front": "front",
+          "back": "The boundary where two air masses meet"
+        },
+        {
+          "id": "c10",
+          "front": "wind",
+          "back": "Air moving from higher pressure toward lower pressure"
+        },
+        {
+          "id": "c11",
+          "front": "barometer",
+          "back": "A tool that measures air pressure"
+        },
+        {
+          "id": "c12",
+          "front": "anemometer",
+          "back": "A tool that measures wind speed"
+        }
+      ],
+      "passages": [
+        {
+          "id": "m1",
+          "title": "Who Has Seen the Wind?",
+          "source": "Christina Rossetti, Sing-Song (1872), public domain",
+          "text": "Who has seen the wind?\nNeither I nor you:\nBut when the leaves hang trembling,\nThe wind is passing through.\n\nWho has seen the wind?\nNeither you nor I:\nBut when the trees bow down their heads,\nThe wind is passing by."
+        }
+      ],
+      "sections": [
+        {
+          "heading": "Practice",
+          "questions": [
+            {
+              "id": "p1",
+              "level": 1,
+              "skill": "layers of the atmosphere",
+              "type": "mc",
+              "prompt": "In which layer of the atmosphere does almost all weather happen?",
+              "choices": [
+                "stratosphere",
+                "mesosphere",
+                "troposphere",
+                "thermosphere"
+              ],
+              "answer": 2,
+              "hint": "It is the lowest layer, the one we live in.",
+              "why": "The troposphere is the lowest layer. It holds almost all the water vapor, so clouds and weather form there."
+            },
+            {
+              "id": "p2",
+              "level": 1,
+              "skill": "weather tools",
+              "type": "short",
+              "prompt": "What is the name of the tool that measures wind speed?",
+              "answer": "anemometer",
+              "accept": [
+                "an anemometer",
+                "wind gauge"
+              ],
+              "hint": "It has little cups that spin in the wind. Its name starts with “anemo”, Greek for wind.",
+              "why": "An anemometer's cups spin faster when the wind is faster."
+            },
+            {
+              "id": "p3",
+              "level": 2,
+              "skill": "wind",
+              "type": "mc",
+              "prompt": "Which way does wind blow?",
+              "choices": [
+                "From low pressure toward high pressure",
+                "From high pressure toward low pressure",
+                "From warm water toward cold land",
+                "Straight up from the warm ground"
+              ],
+              "answer": 1,
+              "hint": "Air is pushed from where it is crowded to where it is less crowded.",
+              "why": "Air moves from higher pressure toward lower pressure, the way air rushes out of a balloon."
+            },
+            {
+              "id": "p4",
+              "level": 1,
+              "skill": "humidity",
+              "type": "tf",
+              "prompt": "Humidity is the amount of water vapor in the air.",
+              "answer": true,
+              "hint": "Think of a sticky, muggy summer day.",
+              "why": "Humidity measures water vapor, the gas form of water, in the air."
+            },
+            {
+              "id": "p5",
+              "level": 2,
+              "skill": "temperature change",
+              "type": "numeric",
+              "unit": "°C",
+              "prompt": "It is 3 °C in the evening. Overnight the temperature falls 8 degrees. What is the temperature in the morning?",
+              "answer": -5,
+              "accept": [
+                "-5 degrees"
+              ],
+              "hint": "Count down 3 degrees to 0, then keep going below zero.",
+              "why": "3 − 8 = −5. Falling 3 degrees reaches 0, and 5 more goes to −5 °C."
+            },
+            {
+              "id": "p6",
+              "level": 1,
+              "skill": "air masses",
+              "type": "mc",
+              "prompt": "What is the boundary where two air masses meet called?",
+              "choices": [
+                "a front",
+                "a jet stream",
+                "an eye wall",
+                "a trade wind"
+              ],
+              "answer": 0,
+              "hint": "Weather forecasters talk about a cold one and a warm one moving in.",
+              "why": "A front is the boundary between two air masses; cold fronts and warm fronts bring changes in weather."
+            },
+            {
+              "id": "p7",
+              "level": 2,
+              "skill": "water cycle",
+              "type": "mc",
+              "prompt": "Which of these is an example of condensation?",
+              "choices": [
+                "A puddle drying up in the hot sun",
+                "Snow melting into slush on a road",
+                "Water freezing into ice in a tray",
+                "Dew forming on cool grass at dawn"
+              ],
+              "answer": 3,
+              "hint": "Condensation turns a gas into a liquid. Which one makes liquid water appear out of the air?",
+              "why": "Dew is water vapor from the air condensing on cool grass. Drying is evaporation, melting and freezing are changes between solid and liquid."
+            },
+            {
+              "id": "p8",
+              "level": 1,
+              "skill": "water cycle",
+              "type": "short",
+              "prompt": "What do we call liquid water turning into water vapor?",
+              "answer": "evaporation",
+              "accept": [
+                "evaporating",
+                "evaporate"
+              ],
+              "hint": "It is how a puddle disappears on a sunny day.",
+              "why": "Evaporation turns liquid water into water vapor, a gas."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T16:30:29.655Z",
+        "rows": 19,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T16:30:29.717Z",
+        "questions": 7,
+        "chance": 0.25,
+        "worst": [
+          [
+            "alwaysTrue",
+            1
+          ],
+          [
+            "posB",
+            0.429
+          ],
+          [
+            "general",
+            0.393
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Weather Data Practice",
+            "n": 3,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Weather Words Review",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "log": [
+    {
+      "at": "16:20",
+      "who": "📝 Maker",
+      "what": "Wrote the capability-test content (an interactive worksheet and a review app); a capability test, not an order",
+      "minutes": null
+    },
+    {
+      "at": "16:40",
+      "who": "🧾 Reporter",
+      "what": "No blind tester, solver or fact checker ran on this capability test; only Wilco's scripts",
+      "minutes": null
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Capability test for review apps and interactive worksheets (docs/KINDS-APPS.md). Not a real order and not a gallery sample: no blind tester, solver or fact checker ran on it."
+    ]
+  }
+}
