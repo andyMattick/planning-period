@@ -47,3 +47,9 @@ From `records/<order>.json` (kept after delivery) and the blind tester's finding
 undercounts what a page of math supports (the agent reasoned its way to that in order 2). A separate
 `questionsPerPage` for math practice (worksheets, homework, bell ringers), keeping 6–10 for tests, would make the
 warnings less strict there. Also decide whether a smaller unit (fewer quizzes) costs fewer tokens.
+
+## Math practice (owner's call delegated to the coordinator, Nov 5, 2026)
+
+`mathPracticePerPage` (12–20 a page) applies to math worksheets, homework and bell ringers: in math the same skill with
+new numbers is a fair new practice question. Quizzes and tests keep `questionsPerPage` (6–10), so a test never repeats
+itself. The order page and the onboarding agent both use it.
