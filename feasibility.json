@@ -123,6 +123,9 @@
     },
     "interactive": {
       "questions": 15
+    },
+    "practicegame": {
+      "questions": 20
     }
   },
   "limits": {
@@ -326,6 +329,12 @@
       "questions": [
         5,
         40
+      ]
+    },
+    "practicegame": {
+      "questions": [
+        10,
+        60
       ]
     }
   },

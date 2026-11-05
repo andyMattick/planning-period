@@ -276,6 +276,17 @@
         "pdf"
       ],
       "versions": false
+    },
+    {
+      "id": "practicegame",
+      "label": "Practice game",
+      "detail": "A game students play on any device, built from your questions on one of our tested game templates (answer-shooter, grid battle, rush, detective case, fix-it desk) with your theme. Works offline; every question checked like a quiz.",
+      "tokens": 70,
+      "formats": [
+        "html",
+        "pdf"
+      ],
+      "versions": false
     }
   ],
   "extras": [
