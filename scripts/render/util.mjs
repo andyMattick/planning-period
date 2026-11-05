@@ -1,0 +1,147 @@
+// Shared helpers for the pack renderer. Nothing here knows the product's name:
+// the brand always comes from brand.config.json.
+
+export const esc = (s) =>
+  String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+export const letter = (i) => String.fromCharCode(65 + i);
+
+// A value that differs by version is an object keyed by version letters: {"A": …, "B": …}.
+export function isVersioned(x) {
+  if (!x || typeof x !== 'object' || Array.isArray(x)) return false;
+  const keys = Object.keys(x);
+  return keys.length > 0 && keys.every((k) => /^[A-Z]$/.test(k));
+}
+
+// Pick the value for one version (falls back to the first version given).
+export function vv(x, ver) {
+  if (!isVersioned(x)) return x;
+  if (ver && ver in x) return x[ver];
+  return x[Object.keys(x)[0]];
+}
+
+export function slug(s) {
+  return (
+    String(s || 'document')
+      .toLowerCase()
+      .normalize('NFKD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 50) || 'document'
+  );
+}
+
+// Strip anything active from an agent-written SVG before it is shown or rasterized.
+export function cleanSvg(svg) {
+  if (typeof svg !== 'string' || !/<svg[\s>]/i.test(svg)) return null;
+  let s = svg
+    .replace(/<script[\s\S]*?<\/script\s*>/gi, '')
+    .replace(/<foreignObject[\s\S]*?<\/foreignObject\s*>/gi, '')
+    .replace(/\son[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(/(href\s*=\s*["'])\s*javascript:[^"']*/gi, '$1#');
+  // Give it a size when it only has a viewBox, so it doesn't fall back to 300x150.
+  const open = s.match(/<svg[^>]*>/i)[0];
+  if (!/\swidth\s*=/.test(open)) {
+    const vb = open.match(/viewBox\s*=\s*["']\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)/i);
+    if (vb) s = s.replace(open, open.replace(/<svg/i, `<svg width="${vb[1]}" height="${vb[2]}"`));
+  }
+  if (!/xmlns=/.test(open)) s = s.replace(/<svg/i, '<svg xmlns="http://www.w3.org/2000/svg"');
+  return s;
+}
+
+// Every question, numbered straight through the document's sections.
+export function questionsOf(doc) {
+  const out = [];
+  let n = 0;
+  (doc.sections || []).forEach((sec, si) => {
+    (sec.questions || []).forEach((q) => out.push({ q, n: ++n, si, section: sec }));
+  });
+  return out;
+}
+
+export function tfValue(a) {
+  if (typeof a === 'boolean') return a;
+  return /^(t|true|yes|1)$/i.test(String(a).trim());
+}
+
+// The key, as text, for one version of one question.
+export function answerText(q, ver) {
+  const a = vv(q.answer, ver);
+  const type = q.type || 'short';
+  if (type === 'mc') {
+    const ch = vv(q.choices, ver) || [];
+    const i = Number(a);
+    return Number.isInteger(i) && ch[i] != null ? `${letter(i)}. ${ch[i]}` : String(a ?? '');
+  }
+  if (type === 'tf') return tfValue(a) ? 'True' : 'False';
+  if (type === 'match') {
+    const arr = Array.isArray(a) ? a : [];
+    return arr.map((ci, i) => `${i + 1}–${letter(Number(ci))}`).join(', ');
+  }
+  if (Array.isArray(a)) return a.join('; ');
+  return String(a ?? '');
+}
+
+export const money = (n) => `$${(Number(n) || 0).toFixed(2)}`;
+export const int = (n) => (Number(n) || 0).toLocaleString('en-US');
+
+// Safe font stack with the teacher's font first.
+export function fontStack(font) {
+  const clean = String(font || '').replace(/["';{}<>]/g, '').trim();
+  const serif = /serif|times|georgia|garamond|cambria|palatino|book|baskerville/i.test(clean) && !/sans/i.test(clean);
+  const tail = serif
+    ? '"Liberation Serif", "Times New Roman", Georgia, "DejaVu Serif", serif'
+    : '"Liberation Sans", Arial, "Helvetica Neue", Helvetica, "DejaVu Sans", sans-serif';
+  return clean ? `"${clean}", ${tail}` : tail;
+}
+
+// The teacher's accent, darkened until it reads as text on white and survives a grayscale printer.
+export function inkAccent(hex) {
+  let m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+  if (!m) return '#222222';
+  let [r, g, b] = [0, 2, 4].map((i) => parseInt(m[1].slice(i, i + 2), 16));
+  const lum = (r, g, b) => {
+    const f = (c) => ((c /= 255) <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  };
+  for (let i = 0; i < 40 && 1.05 / (lum(r, g, b) + 0.05) < 7; i++) {
+    r = Math.round(r * 0.9);
+    g = Math.round(g * 0.9);
+    b = Math.round(b * 0.9);
+  }
+  return '#' + [r, g, b].map((c) => c.toString(16).padStart(2, '0')).join('');
+}
+
+// Layout choices: explicit style.layout fields first, then what the notes say.
+export function layoutOf(style = {}) {
+  const notes = (style.notes || []).join(' ').toLowerCase();
+  const L = style.layout || {};
+  return {
+    nameBox: L.nameBox ?? (/box/.test(notes) && /name/.test(notes)),
+    boldDirections: L.boldDirections ?? (/bold direction/.test(notes) || !/plain direction/.test(notes)),
+    numbering: L.numbering || (/\d\)/.test(notes) ? '1)' : '1.'),
+    choiceStyle: L.choiceStyle || 'A.',
+    fields: Array.isArray(L.fields) && L.fields.length ? L.fields : ['Name', 'Date'],
+    fontSize: Number(L.fontSize) || 12,
+    workLines: L.workLines ?? (/show (your )?work/.test(notes) ? 3 : 2),
+  };
+}
+
+export function numLabel(n, layout) {
+  return layout.numbering === '1)' ? `${n})` : `${n}.`;
+}
+export function choiceLabel(i, layout) {
+  const L = letter(i);
+  return layout.choiceStyle === '(A)' ? `(${L})` : layout.choiceStyle === 'A)' ? `${L})` : `${L}.`;
+}
+
+// Fields removed from project.json: anything that looks like a secret or an internal note.
+const SECRET = /^(_|secret|private)|api.?key|password|passcode|access.?token|refresh.?token|bearer|^auth$|authorization|auth.?token|session.?id|cookie|card.?number|payment|stripe|signed.?url|upload.?url/i;
+export function scrubSecrets(x) {
+  if (Array.isArray(x)) return x.map(scrubSecrets);
+  if (!x || typeof x !== 'object') return x;
+  const out = {};
+  for (const [k, v] of Object.entries(x)) if (!SECRET.test(k)) out[k] = scrubSecrets(v);
+  return out;
+}

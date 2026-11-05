@@ -6,5 +6,9 @@
     "check": "node scripts/check.mjs",
     "render": "node scripts/render-pack.mjs",
     "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "docx": "^9.15.2",
+    "pptxgenjs": "^4.0.1"
   }
 }

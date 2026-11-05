@@ -59,16 +59,78 @@ Nothing else is hand-edited. Change the pack, then render again.
 }
 ```
 
+## Optional fields the renderer reads
+
+All optional; a pack without them renders the same as before.
+
+| Field | What |
+|---|---|
+| `date` | The order date shown on the audit report (else `order.date`, else the date in `id`, else today) |
+| `order.extras` | Extras from `menu.json` (`"tpt"` here or in `order.items` adds `SELL-IT-ON-TPT.pdf`) |
+| `style.layout` | Exact layout choices, when the notes aren't enough: `nameBox` (bool), `boldDirections` (bool), `fields` (`["Name","Date","Period"]`), `numbering` (`"1."` or `"1)"`), `choiceStyle` (`"A."`, `"A)"`, `"(A)"`), `fontSize` (pt), `workLines` (work lines under a numeric question). Without it the renderer reads the notes: "box" + "name" gives a name box, "show work" gives 3 work lines |
+| `style.font` | Used first; PDFs fall back to Liberation Sans / Arial / DejaVu Sans (or a serif stack for a serif font). Word files name the teacher's font |
+| `style.accent` | Darkened until it reads as text on white and prints well in grayscale; color is never the only signal |
+| `sections[].directions` | Directions for one part |
+| question `space` | Number of blank work lines on the student copy (defaults: open 6, numeric `workLines`, others 0) |
+| question `left` | For `type: "match"`: the numbered items; `choices` are the lettered matches and `answer` is one choice index per item, e.g. `[1, 0, 2]` |
+| question `why`, `figure`, `choices`, `answer`, `prompt` | Any of these may be `{ "A": …, "B": … }` |
+| `rubric.levelNames` | Column headings, e.g. `["4 Strong", "3 Solid", "2 Getting there", "1 Not yet"]` (default `4, 3, 2, 1`); `criteria[].points`; `rubric.title`, `rubric.note` |
+| `doc.notes` | Speaker notes for a deck's title slide |
+| `checks.*[].agent` | Which agent ran the check (defaults: 🙈 Blind tester, 🧮 Solver, 🤖 Wilco, 🔎 Fact checker) |
+| `checks.*[].findings` | Any check may list findings, not just the blind tester. Each finding may add `before` and `after` (the text before and after the fix) and, for `KEEP`, `reason` |
+| `checks.wilco[].line` | The most a bot may score to pass (default chance + 0.10); `bots` = how many bots ran |
+
+`project.json` drops any key that looks secret or internal: keys starting with `_`, `secret` or `private`, and keys
+like `apiKey`, `password`, `accessToken`, `auth`, `sessionId`, `payment`, `signedUrl`, `uploadUrl`.
+
+## Preview, sign-off, final (owner rule, Nov 5, 2026)
+
+The teacher must **agree to the content before the documents are released.** So the renderer has two modes:
+
+```
+node scripts/render-pack.mjs <folder>            # preview if <folder>/approval.json is missing, else final
+node scripts/render-pack.mjs <folder> --preview  # always the preview
+node scripts/render-pack.mjs <folder> --final    # only with a matching approval.json
+```
+
+**1. Preview** → `<folder>/out-preview/` and `<folder>/preview.zip`
+
+- PDFs only: student and teacher copies (A/B), handouts, cards and rubrics, and `AUDIT-REPORT.pdf` ("Preview: not
+  approved yet"). Every page has a diagonal "PREVIEW — not approved for use" mark and a header line with the order id.
+- `REVIEW.html`: an offline page (no network, nothing to install) with the sign-off checklist (I checked the answers;
+  the level fits my students; the wording and content are right for my class; nothing needs a change), a comments box
+  per document, and two buttons:
+  - **Request changes** saves `comments-<order id>.json`: `{orderId, name, date, packHash, checklist, comments:[{title, comment}]}`.
+  - **I agree — release my files** (only when every box is ticked and a name is typed) saves `approval-<order id>.json`:
+    `{orderId, name, date (ISO), statement (the exact agreement text), packHash, documents:[{file, title, sha256}]}`,
+    one entry per preview PDF with the SHA-256 of the file they saw.
+- No Word, PowerPoint, `project.json`, README or TPT guide: nothing editable leaves before sign-off.
+
+**2. Final** → `<folder>/out/` and `<folder>/out.zip`
+
+Save the teacher's approval file as `<folder>/approval.json`. The final is made only when its `orderId` is the pack's
+`id`, its `statement` is the review page's text, its `packHash` matches the current `pack.json` (SHA-256 of the
+parsed pack, so any content change counts), and every PDF in `out-preview/` is listed with a matching SHA-256.
+Otherwise the renderer refuses with the reason and makes nothing (`exit 1`); change the pack → new preview → new approval.
+The final has no watermark and has every file below; `README.txt` and the audit report say "Approved by <name> on <date>".
+
 ## What `render-pack.mjs` makes (one zip per order)
 
 | File | What |
 |---|---|
 | `<doc>-student[-A|-B].pdf` and `.docx` | Student copies, in the teacher's style |
 | `<doc>-teacher[-A|-B].pdf` and `.docx` | Teacher copies: the key in bold, `why` under each answer |
-| `<doc>.pptx` | Slides and review games |
+| `<doc>.pptx` | Slides and review games (title slide, one slide per entry, speaker notes; a review game puts the answer in the notes) |
+| `<doc>-handout.pdf` | Slides: a printable handout with room for notes |
+| `<doc>-cards.pdf`, `<doc>-teacher.pdf` | Review games: printable question cards (no answers) and the key |
+| `<doc>.pdf` and `.docx` | A document that is only a rubric: the rubric table |
 | `AUDIT-REPORT.pdf` | The reporter's report: what each agent did, every round, every catch and fix, time and cost |
 | `project.json` | The pack itself, so the teacher can upload it again to change, reprint or make new versions |
 | `README.txt` | What's inside, the AI notice, "check before students see it", and the delete notice |
-| `SELL-IT-ON-TPT.pdf` | Only if ordered |
+| `SELL-IT-ON-TPT.pdf` | Only if `order.items` or `order.extras` has `"tpt"` |
+
+`<doc>` is the document title in lowercase with dashes (`Ratios Quiz` → `ratios-quiz`). Every PDF is Letter size with
+page numbers and a footer: the brand short name and "Made with AI · check before use". A sample:
+`samples/_fixture/pack.json` (`npm run render samples/_fixture`).
 
 The brand name and notices come from `brand.config.json` only.
