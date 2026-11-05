@@ -47,3 +47,69 @@ There was no in-session subagent tool, so every role ran as its own fresh cloud 
 ## Cost against the menu
 
 $7.74 exact (agents only) against a 55-token budget of $5.50, so about 1.4× over. This was the first ELA order with passages and the first rubric. Most of the extra was maker relays (the maker was $5.36 over 3 sessions) and the third round. The rubric item (15 tokens) had no separate checker until round 3, so its true cost is hidden inside the maker and r3 recheck rows.
+
+## Rounds 4–5 (extra rounds the owner approved: "make the questions need the passage")
+
+The owner's problem: three fresh blind testers answered all 20 multiple-choice questions without the passages, though
+Wilco's bots passed. Plus the 5 round 3 open items. Same separation as rounds 1–3, but every role ran as a fresh local
+`claude -p` session in its own folder holding only the files its brief allows (so each session's cost, tokens and
+minutes come from its own record, exact). The maker's folder held a copy of `checks/`, so it ran `keys.mjs` and
+`test-wise.mjs --items` itself: **no lead relays** (rounds 1–3 needed 8).
+
+| Round | Session | Wall (UTC) | Minutes | Cost (exact) |
+|---|---|---|---|---|
+| 4 | 📝 Maker | 16:15–16:25 | 9.2 | $2.61 |
+| 4 | 🙈 Blind recheck, phases a/b/c (no passages, passages, key) | 16:25–16:31 | 5.5 | $2.64 |
+| 4 | 🙈 Passage-free probes ×4 (one version each, before and after round 4) | 16:26–16:27 | 2.3 | $0.84 |
+| 4 | 🔎 Fact checker (web) | 16:25–16:29 | 4.0 | $1.21 |
+| 5 | 📝 Maker | 16:32–16:42 | 9.5 | $2.58 |
+| 5 | 🙈 Blind recheck, phases a/b/c | 16:42–16:48 | 5.9 | $2.72 |
+| 5 | 🙈 Passage-free probes ×2 | 16:42–16:43 | 1.0 | $0.40 |
+| 5 | 🔎 Fact checker (web) | 16:42–16:46 | 3.4 | $1.19 |
+| 5 | 🧾 Reporter (cheaper tier) | 16:50–16:52 | 2.6 | $0.55 |
+| | **Rounds 4–5** | 16:13–16:52 | 43.4 | **$14.74** |
+
+Order total now $22.48 (rounds 1–3 $7.74), about 4× the 55-token menu price ($5.50). Wilco (scripts) passed both rounds:
+worst middleValue 31% (round 4), middle 31% (round 5), chance 25%, line 35%.
+
+### Passage-free accuracy (multiple choice, 10 per version; chance 25%, the owner's fail line about 40%)
+
+| | Version A | Version B |
+|---|---|---|
+| Before round 4 (round 3 pack, one version shown) | 10/10 (10 confident) | 10/10 (9 confident) |
+| After round 4 | 10/10 (6 confident) | 10/10 (7 confident) |
+| After round 5 | **9/10** (7 confident) | **9/10** (6 confident) |
+
+The round's own blind tester (both versions shown together, as in rounds 1–3) stayed 20/20 (18, then 16 confident).
+**The goal was not met.** Confidence fell and the cues moved (stems no longer name the deciding detail; keys are
+exact quotes; no stitched keys), but a test-wise non-reader still gets about 90%. 17 FIX are open after round 5 and are
+listed first in the audit report.
+
+### Why the limit was hit again, and what should change (for the auditor; agents/ not edited)
+
+1. **The passage is fixed, so most cues can't be written out.** For an inference quiz on a short, plainly-told story,
+   the key is the "most reasonable reading", and a test-wise reader finds it from the stem and the other items. The two
+   rounds removed the surface cues and the next layer showed through (Part B quotes retelling the story to Part A, the
+   only on-topic evidence choice, the generic author's-purpose key). **Suggestion for maker.md:** plan for passage
+   dependence when the passage is written (round 1): give the passage several details that point to rival readings
+   (a red herring per inference question), so wrong choices can be true-sounding and passage-contradicted. Fixing it
+   with choices alone after the passage is final costs a round per layer.
+2. **Maker's self-check:** add a step "read each version's 10 items without the passage and write down what you'd
+   answer". The round 5 maker was told to and still left A q7/A q8 and B q7/B q8 pairs that answer each other.
+3. **blind-ela.md:** make the passage-free probe a required phase with **one version per probe session** (what a student
+   sees). The combined view, used in rounds 1–5, overstates leakage (cross-version quotes answered items), but here the
+   single-version probe told the same story. Report `passageFree` per version; `score-blind.mjs` could score it.
+4. **Fixes keep making new problems:** round 5's evidence near-misses created A q6 two-right and B q9 two-readings, as
+   rounds 2–3 did. The recheck brief should keep "an edit made two answers right" as a named trap.
+5. **"Fix choices, never keys" vs a wrong key:** B q8's key (the cause, not the proof) was changed in round 5 as a
+   correctness fix and logged. maker.md rule 7 should say this exception plainly (the right answer must be the one the
+   text best supports; a key change is logged and rechecked).
+6. **Level 3 share** (3 of 11 rows, 27%) is below maker.md's ~40% "for tests"; for a quiz the teacher ordered with
+   q4/q9/q11 as L3, testers keep raising it. Decide whether the 40% rule applies to quizzes and say so in the brief.
+7. **Checkers' self-reported minutes were off again** (fact checker "about 25 minutes" for a 4-minute session): the log
+   uses each session's own record. reporter.md should say so (see the round 1–3 note).
+8. **Renderer (owner):** the audit report has a nearly empty page after "What your agents learned" (one orphan bullet,
+   page 6); `checks.blind[].passageFree` isn't shown anywhere in the report, so the per-version numbers live only in
+   the notes.
+9. **Tools in a sandboxed checker:** the round 5 fact checker could not edit or validate its own JSON (permission), so
+   the lead corrected one misquoted word at its request ("waiting" → "waving") and logged it.
