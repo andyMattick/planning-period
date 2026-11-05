@@ -1,3 +1,8 @@
 node_modules/
 out/
 *.log
+out-preview/
+out.zip
+preview.zip
+samples/*/approval.json
+samples/*/comments-*.json

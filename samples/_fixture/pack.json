@@ -1,0 +1,223 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g6-math-fixture",
+  "date": "2026-11-05",
+  "order": {
+    "teacher": "Mr. Delgado (made-up sample)",
+    "grade": "6",
+    "subject": "math",
+    "topic": "Ratios and rates",
+    "items": ["worksheet", "quiz"],
+    "extras": ["tpt"],
+    "requests": "Use pets in the stories. Level 3 should need two steps.",
+    "sources": ["unit-2-ratio-notes.pdf"],
+    "styleExamples": ["old-ratio-quiz.docx", "week-3-warmups.docx"]
+  },
+  "style": {
+    "notes": [
+      "Numbered questions, bold directions, a box for the name and date",
+      "Short sentences, a pet in every story",
+      "Parts named by level, easiest first; students show their work"
+    ],
+    "font": "Lexend",
+    "accent": "#2b6cb0"
+  },
+  "documents": [
+    {
+      "item": "worksheet",
+      "title": "Ratios and Rates Practice",
+      "directions": "Show your work. Circle your final answer.",
+      "sections": [
+        {
+          "heading": "Level 1: Ratio language",
+          "questions": [
+            {
+              "id": "w1", "level": 1, "skill": "ratio language", "type": "mc",
+              "prompt": "The shelter has 4 cats and 7 dogs. What is the ratio of dogs to cats?",
+              "choices": ["4 : 7", "7 : 4", "4 : 11", "7 : 11"],
+              "answer": 1,
+              "why": "Dogs come first, so it is 7 : 4. 4 : 7 is cats to dogs, and 11 is the total, not a part."
+            },
+            {
+              "id": "w2", "level": 1, "skill": "ratio language", "type": "match",
+              "prompt": "Match each sentence to its ratio.",
+              "left": ["3 hamsters for every 2 cages", "2 cages for every 3 hamsters", "3 hamsters out of 5 pets"],
+              "choices": ["2 : 3", "3 : 2", "3 : 5"],
+              "answer": [1, 0, 2],
+              "why": "The first thing named comes first in the ratio. \"Out of 5 pets\" compares a part to the whole."
+            }
+          ]
+        },
+        {
+          "heading": "Level 2: Tape diagrams and unit rates",
+          "questions": [
+            {
+              "id": "w3", "level": 2, "skill": "tape diagrams", "type": "numeric",
+              "prompt": "The tape diagram shows the ratio of cats to dogs at a pet show. There are 30 animals in all. How many dogs are at the show?",
+              "figure": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 116' width='400' height='116' font-family='Arial, sans-serif' font-size='15'><text x='8' y='39'>Cats</text><rect x='62' y='18' width='60' height='30' fill='none' stroke='#000' stroke-width='2'/><rect x='122' y='18' width='60' height='30' fill='none' stroke='#000' stroke-width='2'/><text x='8' y='89'>Dogs</text><rect x='62' y='68' width='60' height='30' fill='none' stroke='#000' stroke-width='2'/><rect x='122' y='68' width='60' height='30' fill='none' stroke='#000' stroke-width='2'/><rect x='182' y='68' width='60' height='30' fill='none' stroke='#000' stroke-width='2'/><path d='M256 18 q10 0 10 10 v20 q0 10 8 10 q-8 0 -8 10 v20 q0 10 -10 10' fill='none' stroke='#000' stroke-width='2'/><text x='284' y='63'>30 animals</text></svg>",
+              "answer": 18,
+              "accept": ["18 dogs"],
+              "why": "There are 5 equal parts in all, and 30 ÷ 5 = 6 animals in each part. Dogs have 3 parts: 3 × 6 = 18."
+            },
+            {
+              "id": "w4", "level": 2, "skill": "unit rates", "type": "numeric",
+              "prompt": "A pet store sells 3 bags of fish food for $12. At this rate, how much do 5 bags cost?",
+              "answer": "$20",
+              "accept": ["20", "$20.00", "20 dollars"],
+              "why": "$12 ÷ 3 = $4 for each bag. 5 × $4 = $20."
+            }
+          ]
+        },
+        {
+          "heading": "Level 3: Two steps",
+          "questions": [
+            {
+              "id": "w5", "level": 3, "skill": "compare rates", "type": "short",
+              "prompt": "Mia's dog eats 2 cups of food for every 5 miles they walk. Leo's dog eats 3 cups for every 8 miles. Find the cups of food for each mile for both dogs. Whose dog eats more food for each mile?",
+              "answer": "Mia's dog",
+              "accept": ["Mia", "Mia's"],
+              "why": "Mia's dog: 2 ÷ 5 = 0.4 cups for each mile. Leo's dog: 3 ÷ 8 = 0.375 cups for each mile. 0.4 is more than 0.375."
+            },
+            {
+              "id": "w6", "level": 3, "skill": "equivalent ratios", "type": "open",
+              "prompt": "A dog treat recipe uses 3 cups of oats for every 2 eggs. Jada has 9 cups of oats and 5 eggs. How many eggs does she need to use all 9 cups of oats? Does she have enough? Explain.",
+              "answer": "She needs 6 eggs. 9 cups is 3 times the 3 cups in the recipe, so she needs 3 × 2 = 6 eggs. She has only 5, so she does not have enough.",
+              "why": "Look for the scale factor (9 ÷ 3 = 3), then use it on the eggs. A strong answer names the 6 eggs and compares it with the 5 she has."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "quiz",
+      "title": "Ratios Quiz",
+      "directions": "Show your work. Circle your final answer.",
+      "versions": ["A", "B"],
+      "sections": [
+        {
+          "heading": "Part 1: Ratio language and equivalent ratios",
+          "questions": [
+            {
+              "id": "q1", "level": 1, "skill": "ratio language", "type": "mc",
+              "prompt": { "A": "A vet sees 5 rabbits and 8 birds. What is the ratio of rabbits to birds?", "B": "A groomer has 6 poodles and 7 beagles. What is the ratio of beagles to poodles?" },
+              "choices": { "A": ["5 : 8", "8 : 5", "5 : 13", "8 : 13"], "B": ["6 : 7", "6 : 13", "7 : 6", "7 : 13"] },
+              "answer": { "A": 0, "B": 2 },
+              "why": { "A": "Rabbits are named first, so 5 : 8. 13 is the total.", "B": "Beagles are named first, so 7 : 6. 13 is the total." }
+            },
+            {
+              "id": "q2", "level": 1, "skill": "equivalent ratios", "type": "tf",
+              "prompt": { "A": "The ratios 2 : 3 and 6 : 9 are equivalent.", "B": "The ratios 3 : 4 and 9 : 16 are equivalent." },
+              "answer": { "A": true, "B": false },
+              "why": { "A": "Both parts of 2 : 3 times 3 give 6 : 9.", "B": "3 × 3 = 9, but 4 × 3 = 12, not 16. Both parts must be multiplied by the same number." }
+            },
+            {
+              "id": "q3", "level": 2, "skill": "ratio tables", "type": "mc",
+              "prompt": { "A": "A ratio table for puppy formula shows 1 scoop : 2 cups of water, 2 scoops : 4 cups, 3 scoops : 6 cups. How many cups of water go with 5 scoops?", "B": "A ratio table for kitten formula shows 1 scoop : 3 cups of water, 2 scoops : 6 cups, 3 scoops : 9 cups. How many cups of water go with 4 scoops?" },
+              "choices": { "A": ["7", "8", "10", "12"], "B": ["10", "12", "13", "15"] },
+              "answer": { "A": 2, "B": 1 },
+              "why": { "A": "Each scoop needs 2 cups, so 5 × 2 = 10.", "B": "Each scoop needs 3 cups, so 4 × 3 = 12." }
+            }
+          ]
+        },
+        {
+          "heading": "Part 2: Rates",
+          "questions": [
+            {
+              "id": "q4", "level": 2, "skill": "unit rates", "type": "numeric",
+              "prompt": { "A": "A turtle walks 12 feet in 4 minutes. How many feet does it walk each minute?", "B": "A snail crawls 20 inches in 5 minutes. How many inches does it crawl each minute?" },
+              "answer": { "A": 3, "B": 4 },
+              "accept": ["3 feet", "4 inches"],
+              "why": { "A": "12 ÷ 4 = 3 feet each minute.", "B": "20 ÷ 5 = 4 inches each minute." }
+            },
+            {
+              "id": "q5", "level": 3, "skill": "rate problems", "type": "numeric",
+              "prompt": { "A": "A kennel uses 4 bags of food every 6 days. At this rate, how many bags does it use in 15 days?", "B": "A shelter uses 6 bags of litter every 9 days. At this rate, how many bags does it use in 21 days?" },
+              "answer": { "A": 10, "B": 14 },
+              "why": { "A": "4 bags in 6 days is 2 bags in 3 days. 15 days is 5 groups of 3 days, so 5 × 2 = 10 bags.", "B": "6 bags in 9 days is 2 bags in 3 days. 21 days is 7 groups of 3 days, so 7 × 2 = 14 bags." }
+            },
+            {
+              "id": "q6", "level": 3, "skill": "compare rates", "type": "short",
+              "prompt": { "A": "Store 1 sells 4 chew toys for $10. Store 2 sells 6 chew toys for $14. Which store has the lower price for each toy?", "B": "Shop 1 sells 3 leashes for $21. Shop 2 sells 5 leashes for $34. Which shop has the lower price for each leash?" },
+              "answer": { "A": "Store 2", "B": "Shop 2" },
+              "why": { "A": "Store 1: $10 ÷ 4 = $2.50 each. Store 2: $14 ÷ 6 ≈ $2.33 each. Store 2 is lower.", "B": "Shop 1: $21 ÷ 3 = $7.00 each. Shop 2: $34 ÷ 5 = $6.80 each. Shop 2 is lower." }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "blind": [
+      {
+        "round": 1, "agent": "🙈 Blind tester (math)", "matched": 16, "of": 18,
+        "findings": [
+          {
+            "where": "quiz B q3", "kind": "FIX",
+            "what": "Two answers fit. With only 1 : 3 and 2 : 6 shown and a jump to 4 scoops, the blind tester read the table as \"add 3 each row\" and picked 9.",
+            "before": "1 scoop : 3 cups, 2 scoops : 6 cups. How many cups go with 4 scoops?",
+            "fixed": "Added a third row so the pattern can only be read one way. The key (12) did not change.",
+            "after": "1 scoop : 3 cups, 2 scoops : 6 cups, 3 scoops : 9 cups. How many cups go with 4 scoops?"
+          },
+          {
+            "where": "worksheet q5", "kind": "FIX",
+            "what": "\"Eats more food per mile\" was read as more food in all, and the blind tester answered Leo's dog.",
+            "before": "Whose dog eats more food per mile?",
+            "fixed": "Reworded to ask for the cups of food for each mile first, then compare.",
+            "after": "Find the cups of food for each mile for both dogs. Whose dog eats more food for each mile?"
+          },
+          {
+            "where": "quiz A q2", "kind": "KEEP",
+            "what": "Flagged that a true/false question can be guessed half the time.",
+            "reason": "Kept on purpose: one true/false per version, and the same skill is tested again in q3."
+          }
+        ]
+      },
+      { "round": 2, "agent": "🙈 Blind tester (math)", "matched": 18, "of": 18, "findings": [] }
+    ],
+    "solver": [
+      { "round": 1, "agent": "🧮 Solver", "checked": 18, "disagree": 0 },
+      { "round": 2, "agent": "🧮 Solver", "checked": 18, "disagree": 0 }
+    ],
+    "wilco": [
+      {
+        "round": 1, "agent": "🤖 Wilco", "chance": 0.25, "line": 0.35, "bots": 12, "pass": false,
+        "worst": [["longest choice", 0.4], ["middle position", 0.2], ["odd one out", 0.2]],
+        "findings": [
+          {
+            "where": "worksheet q1", "kind": "FIX",
+            "what": "The right answer was the longest choice in 2 of 5 multiple-choice questions, so the longest-choice bot scored 40%, over the 35% line.",
+            "before": "B. 7 : 4 (dogs to cats)",
+            "fixed": "Took the extra words off the right choice so every choice is the same length.",
+            "after": "B. 7 : 4"
+          }
+        ]
+      },
+      { "round": 2, "agent": "🤖 Wilco", "chance": 0.25, "line": 0.35, "bots": 12, "pass": true, "worst": [["middle position", 0.2], ["longest choice", 0.2], ["odd one out", 0.2]] }
+    ],
+    "facts": []
+  },
+  "log": [
+    { "at": "14:02", "who": "🧾 Reporter", "what": "Opened the order: grade 6 math, ratios and rates; a worksheet and a quiz with A/B versions", "minutes": 1, "tokens": 4200, "cost": 0.03 },
+    { "at": "14:03", "who": "📝 Maker", "what": "Read 2 style examples and the 6-page source; wrote the style notes", "minutes": 4, "tokens": 61000, "cost": 0.48 },
+    { "at": "14:07", "who": "📝 Maker", "what": "Wrote the worksheet (6 questions, 3 levels) and quiz A and B (12 questions)", "minutes": 12, "tokens": 168000, "cost": 1.31 },
+    { "at": "14:19", "who": "🙈 Blind tester (math)", "what": "Round 1: solved the student copies with no key; matched 16 of 18", "minutes": 7, "tokens": 92000, "cost": 0.71 },
+    { "at": "14:19", "who": "🧮 Solver", "what": "Round 1: worked all 18 answers on its own; 0 disagreements", "minutes": 5, "tokens": 54000, "cost": 0.42 },
+    { "at": "14:26", "who": "🤖 Wilco", "what": "Round 1: ran 12 test-wise bots on 5 multiple-choice questions; longest-choice bot at 40% (line 35%)", "minutes": 2, "tokens": 9000, "cost": 0.05 },
+    { "at": "14:28", "who": "📝 Maker", "what": "Fixed the 3 catches: quiz B q3 table, worksheet q5 wording, worksheet q1 choice length", "minutes": 5, "tokens": 47000, "cost": 0.37 },
+    { "at": "14:33", "who": "🙈 Blind tester (math)", "what": "Round 2 (a fresh agent): solved again with no key; matched 18 of 18", "minutes": 6, "tokens": 88000, "cost": 0.68 },
+    { "at": "14:33", "who": "🧮 Solver", "what": "Round 2: rechecked all 18 answers; 0 disagreements", "minutes": 4, "tokens": 51000, "cost": 0.4 },
+    { "at": "14:39", "who": "🤖 Wilco", "what": "Round 2: all 12 bots at or under the line (highest 20%)", "minutes": 2, "tokens": 9000, "cost": 0.05 },
+    { "at": "14:41", "who": "🔎 Auditor", "what": "Read every finding; changed 2 agent briefs", "minutes": 3, "tokens": 26000, "cost": 0.2 },
+    { "at": "14:44", "who": "🧾 Reporter", "what": "Wrote the audit report", "minutes": 2, "tokens": 21000, "cost": 0.16 }
+  ],
+  "audit": {
+    "notes": [
+      "Two of the three catches were wording, not math: the solver agreed with every key both rounds.",
+      "Cheaper next time: Wilco only needs to rerun on the questions that changed."
+    ],
+    "briefChanges": [
+      "agents/blind-math.md v2: flag a ratio table that shows only two rows, since the pattern can be read two ways.",
+      "agents/maker.md v4: in a rate comparison, ask for the amount for each unit in words (\"cups for each mile\") instead of \"per mile\"."
+    ]
+  }
+}
