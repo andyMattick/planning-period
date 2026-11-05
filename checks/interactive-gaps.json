@@ -1,0 +1,6 @@
+{
+  "_note": "Known gaps against docs/INTERACTIVE-STANDARD.md, per sample document (<sample folder>#<document file name>). npm run check allows exactly these failing rules and no others. This list can only shrink: scripts/check.mjs refuses an entry that is not in the committed version (git HEAD) and refuses a listed rule that no longer fails (remove it). Fix the output; never add to this list to make a check pass. Measured Nov 5, 2026 (docs/audits/INTERACTIVE-GAP-2026-11-05.md).",
+  "gaps": {
+    "samples/_cap-apps#weather-data-practice": ["L2", "L7", "Q2", "Q4", "N1", "N2", "N3", "N4", "T1", "T2", "T3", "S1", "S3", "C2", "D1"]
+  }
+}

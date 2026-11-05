@@ -12,6 +12,8 @@
      5c. checks/puzzles.mjs catches broken copies of samples/_cap-games (a bad grid, a word twice, a non-unique puzzle…).
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
+     10. Interactive documents meet docs/INTERACTIVE-STANDARD.md (checks/interactive-standard.mjs), except the known gaps
+         in checks/interactive-gaps.json, a list that can only shrink.
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
@@ -286,6 +288,35 @@ else {
     const n = (r.stdout.match(/✓ catches/g) || []).length;
     if (r.status === 0) ok(`checks/practicegames.mjs catches all ${n} broken copies of samples/_cap-practicegame`); else fail(`checks/practicegames.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
   }
+}
+
+/* 10. the interactive assignment standard (docs/INTERACTIVE-STANDARD.md): every sample or capability fixture with an
+   `interactive` document (or any `interactive-*` kind) goes through checks/interactive-standard.mjs. A failing rule is
+   allowed only when checks/interactive-gaps.json lists it for that document; that list can only shrink: a listed rule
+   that now passes must be removed, and an entry not in the committed list (git HEAD) is refused. */
+{
+  const GATE = join(ROOT, 'checks', 'interactive-standard.mjs'), GAPS = join(ROOT, 'checks', 'interactive-gaps.json');
+  const iaPacks = packs.filter((p) => { try { return readJSON(p).documents.some((d) => /^interactive/.test(d.kind || d.item || '')); } catch { return false; } });
+  let gaps = {}, headGaps = null;
+  try { gaps = existsSync(GAPS) ? readJSON('checks/interactive-gaps.json').gaps || {} : {}; } catch (e) { fail(`checks/interactive-gaps.json: ${e.message}`); }
+  try { headGaps = JSON.parse(execFileSync('git', ['show', 'HEAD:checks/interactive-gaps.json'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })).gaps || {}; } catch { headGaps = null; }
+  if (headGaps) for (const [k, rules] of Object.entries(gaps)) for (const r of rules) if (!(headGaps[k] || []).includes(r)) fail(`checks/interactive-gaps.json adds ${k} ${r}: the gap list can only shrink (fix the output instead)`);
+  for (const p of iaPacks) {
+    const dir = dirname(join(ROOT, p)), out = join(tmpdir(), `pp-istd-${process.pid}-${Date.now()}.json`);
+    const r = spawnSync(process.execPath, [GATE, dir, '--json', out], { cwd: ROOT, encoding: 'utf8', timeout: 1800000 });
+    if (!existsSync(out)) { fail(`${p}: checks/interactive-standard.mjs did not finish (exit ${r.status}):\n${(r.stdout || '').slice(-1500)}${(r.stderr || '').slice(-1500)}`); continue; }
+    const res = JSON.parse(readFileSync(out, 'utf8')); rmSync(out, { force: true });
+    for (const d of res.docs) {
+      const key = `${dirname(p)}#${d.id}`, allowed = gaps[key] || [];
+      const failing = Object.entries(d.rules).filter(([, v]) => v.status === 'FAIL').map(([id]) => id);
+      if (Object.values(d.rules).every((v) => v.status !== 'PASS' && v.status !== 'FAIL')) { skip(`${key}: interactive standard not run (${(Object.values(d.rules)[1] || {}).evidence})`); continue; }
+      const unexpected = failing.filter((id) => !allowed.includes(id)), fixed = allowed.filter((id) => !failing.includes(id));
+      for (const id of unexpected) fail(`${key} fails interactive standard rule ${id}: ${(d.rules[id].evidence || []).join(' | ').slice(0, 400)}`);
+      for (const id of fixed) fail(`${key} now passes ${id} (or it no longer fails): remove it from checks/interactive-gaps.json`);
+      if (!unexpected.length && !fixed.length) (failing.length ? skip : ok)(`${key} meets the interactive standard${failing.length ? ` except ${failing.length} known gap(s) in checks/interactive-gaps.json: ${failing.join(', ')}` : ''}`);
+    }
+  }
+  for (const k of Object.keys(gaps)) if (!iaPacks.some((p) => k.startsWith(`${dirname(p)}#`))) fail(`checks/interactive-gaps.json lists ${k}, which is no longer a sample: remove it`);
 }
 
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');
