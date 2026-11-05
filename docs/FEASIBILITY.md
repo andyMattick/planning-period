@@ -25,6 +25,15 @@ follow-up says why. **All numbers are pilot estimates** (owner, Nov 5, 2026), to
 Example: 75 questions from 1 page. Supply 6–10, so the follow-up says "about 6–10 good questions", and offers: add
 material, lower the number, or let us use our judgment (we'd make 10). It never makes 75 thin questions.
 
+## Reading quizzes on passages (first audit, Nov 5, 2026)
+
+`readingquiz` (defaults and limits in `feasibility.json`): 10 questions on 2 passages by default, 6–16 questions, 1–3
+passages, always 4 choices (the round 1 no-passage gate's line, about 40%, assumes chance is 25%). A passage of about
+250–350 words supports about 4–6 inference and evidence questions; Part A and Part B count as two. The g7-ela sample
+(10 questions a version on 2 passages) sat at that top end and still needed the passage-first redesign, so the onboarding
+agent warns above 6 a passage. Pricing: `docs/PRICING.md` section 2b. The order page shows the item but has no spec
+fields for it yet (an owner change to `site/feasibility.js`).
+
 ## Recalibrate (after every 5 orders)
 
 From `records/<order>.json` (kept after delivery) and the blind tester's findings:

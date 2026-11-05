@@ -2,7 +2,8 @@
 
 **Pilot estimates.** Every number here comes from the owner's other project, Pet World, which runs the same team
 method (maker, fresh blind tester, solver, Wilco's bots, round 2, fresh recheck, reporter, auditor). No order has run
-here yet. **Recalibrate after the first 5 real orders** from their logs (`records/<order>.json`; the reporter's `log`
+here yet beyond the four made-up samples (measured Nov 5, 2026: `docs/audits/AUDIT-2026-11-05.md`; `readingquiz`
+is priced from them). **Recalibrate after the first 5 real orders** from their logs (`records/<order>.json`; the reporter's `log`
 has minutes, tokens and dollars per step), and again whenever the auditor changes how much work a step does.
 
 Dollars are API prices for the main model tier (Pet World `docs/builder/REPORTER.md`, "Cost assumptions": input $4,
@@ -43,6 +44,7 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
 | `worksheet` | 30 | $3.00 | $1.75–2.9 | one Pet World sheet all in (table above) |
 | `notes` | 25 | $2.50 | $1.5–2.0 | Pet World's note sheets are guided notes: $0.93–2.10 children a sheet, fewer scored items than a worksheet |
 | `quiz` | 40 | $4.00 | $2.5–3.0 | 8–12 questions × 2 versions ≈ 1.2–1.5 sheets of items, blind on both versions, two Wilco passes |
+| `readingquiz` | 150 | $15.00 | $9–13 | **measured** (g7-ela sample, the only ELA order): section 2b below. A quiz on passages costs 2–3 times a plain quiz to make right: passage-first design, a no-passage gate on each version, longer blind reads (added Nov 5, 2026, owner decision 4) |
 | `test` | 70 | $7.00 | $5–7 | 20–30 × 2 ≈ 3 sheets of items at $1.4–2.1, 40% L3 (longer items), a skills map, plus the order share. **Thin margin: watch it first** |
 | `studyguide` | 25 | $2.50 | $1.5–2.0 | like notes, with a short practice set |
 | `slides` | 50 | $5.00 | $2.5–4 (**guess**) | no slide deck was measured in Pet World; speaker notes are output-heavy, the checker reads every slide for facts |
@@ -68,6 +70,54 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
    300**, or say "up to 4 lessons" in its detail. Left unchanged in `menu.json` until the owner decides.
 2. **`test` at 70 is the next thinnest.** Keep it, and check its first three real orders.
 3. The `slides`, `rubric` and `project` numbers are guesses (no Pet World measurement): recalibrate them first.
+4. **First measured runs (the four samples, Nov 5, 2026; `docs/audits/AUDIT-2026-11-05.md`):** rounds 1–3 cost $5.48
+   (g4-math, 70 tokens), $7.74 (g7-ela, 55), $9.97 (g8-science, 115) and $9.85 (g11-history, 95): $33.04 against
+   $34.50 of budgets. `test` came in over its share again (about $8 of g11-history's $9.85), so the audit recommends
+   **about 90** after the first real tests confirm it; `quiz` on passages is now `readingquiz` (section 2b). Other
+   items unchanged until five real orders (section 3).
+
+## 2b. English reading quizzes and tests (owner, Nov 5, 2026; set by the first audit)
+
+The owner: English reading quizzes get their own, higher price, "since they cost more to do right". The numbers come
+from the only ELA order so far, the g7-ela sample (a 10-question A/B quiz on two passages the maker wrote, plus a
+rubric; 55 tokens = $5.50), every session's own `total_cost_usd` (`samples/g7-ela/pack.json` `log`):
+
+| Step (measured in g7-ela) | Cost |
+|---|---|
+| Maker, round 1 (two passages, 22 items, rubric, 3 relays for the bots) | $3.06 |
+| Maker, a full redesign of the stems and choices (rounds 4, 5) | $2.58–2.61 |
+| One no-passage probe, one version (fresh session) | $0.20–0.21 |
+| Blind tester with the passages (two phases r1; three phases r4–r5) | $0.71; $2.64–2.72 |
+| Fact checker on the article's claims (no web r1; with web r4–r5) | $0.27; $1.19–1.21 |
+| Maker round on a FIX list; a recheck | $1.11–1.19; $0.48 |
+| Reporter (cheaper tier) | $0.44–0.55 |
+| **Rounds 1–3** (no gate; 20 of 20 answered without the passages, not caught until round 4) | **$7.74** (1.4× the budget) |
+| **Rounds 1–5** (the owner's extra rounds to make the questions need the passage; still about 90% without it) | **$22.48** (4.1×) |
+
+With the new rules (passage-first design; the no-passage probe as a round 1 gate; Part B choices that are all real
+quotes; `agents/maker.md` v3, `agents/blind-ela.md` v2), a typical reading quiz is:
+- round 1: maker with passage-first planning and its own no-passage self-read $3.0–3.5, the gate's two probes $0.42;
+- one redesign when the gate fails (plan on it until the logs show otherwise): maker $2.6, probes again $0.42;
+- the blind tester with the passages $1.0–2.7 and the fact checker $0.3–1.2;
+- one FIX round: maker $1.1–1.2, recheck $0.5–2.7, probes on the changed items $0.2–0.4;
+- reporter $0.5.
+
+That is **about $9–13** (low $7.2 with no redesign, high about $15 with a heavy recheck). **`readingquiz` = 150
+tokens ($15.00)**: about 1.2–1.7× the typical cost, the menu's usual cushion, and it covers one redesign plus one FIX
+round. The plain `quiz` (40) stays for quizzes with no passage (math, science, history, grammar). The rubric is its own
+item, as before (`rubric` 15).
+
+**Reading test (a `test` built on passages):** no ELA test has run yet. Until one is measured, the 🧭 onboarding agent
+adds the same reading surcharge as the quiz, **+110 tokens** (`readingquiz` 150 − `quiz` 40), to the test's 70:
+**180 tokens** for a reading test with A/B versions. The surcharge pays for passage-first design, the round 1 gate on
+both versions and the longer blind reads; a test's longer item list is already in `test`'s 70. A guess: recalibrate
+from the first real reading test.
+
+**Who applies it:** the order page shows `readingquiz` as its own item. When a teacher picks `quiz` or `test` for
+English and the order builds the questions on passages (her passages, or passages written from her notes), the
+onboarding agent moves the quiz to `readingquiz` (or adds the surcharge to the test), says so in the follow-up and asks
+before charging more (`agents/onboarding.md` step 7). A grammar, vocabulary or writing quiz with no passage stays `quiz`.
+The order page doesn't apply the surcharge itself yet (an owner change to `site/`).
 
 ## 3. How to recalibrate (after each 5 orders)
 

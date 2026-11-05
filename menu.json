@@ -78,6 +78,17 @@
       "versions": true
     },
     {
+      "id": "readingquiz",
+      "label": "Reading quiz on passages (A/B)",
+      "detail": "English reading: 8–12 questions on one to three short passages (yours, or written from your notes), two versions. Every question needs the passage: a reader who skips it is tested before anything else is checked. Wrong choices are the misreadings of that passage; evidence choices are real quotes.",
+      "tokens": 150,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": true
+    },
+    {
       "id": "test",
       "label": "Unit test with A/B versions",
       "detail": "20–30 questions with about 40% harder questions, two versions, keys and a skills map.",
