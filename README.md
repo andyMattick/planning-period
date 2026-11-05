@@ -8,3 +8,4 @@ press Send. Agents make the pack, separate agents check it, and the teacher gets
 - The pack format: `docs/PACK-FORMAT.md`
 - The team and the rules: `CLAUDE.md`, `agents/`
 - Running an order by hand (the pilot): `docs/RUNBOOK.md`
+- World requests (a custom learning world, quoted): `docs/WORLD-REQUESTS.md`
