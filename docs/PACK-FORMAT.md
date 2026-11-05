@@ -13,7 +13,30 @@ Nothing else is hand-edited. Change the pack, then render again.
     "items": ["worksheet", "quiz"],
     "requests": "Use pets in the stories. Level 3 should need two steps.",
     "sources": ["source-ratios.pdf"],         // file names only; files are never kept after delivery
-    "styleExamples": ["my-old-quiz.docx"]
+    "styleExamples": ["my-old-quiz.docx"],
+    // From the order page (site/order.js). Only what the teacher typed; a missing field means "use the default"
+    // in feasibility.json `defaults` (the page told her so). Limits are in feasibility.json `limits`.
+    "itemRequests": { "quiz": "Level 3 needs two steps" },   // the free-text box under each item
+    "quantities": { "worksheet": 3, "quiz": 1 },
+    "itemSpecs": {
+      "quiz": { "questions": 12, "types": { "mc": 8, "short": 3, "open": 1 }, "choices": 4, "versions": 2 },
+      "versions": { "file": "my-unit-test.docx", "versions": 3 },   // which uploaded file is the test
+      "notes": { "pages": 3 }, "slides": { "slides": 15 },          // studyguide too: pages
+      "project": { "days": 5, "grouping": "groups", "turnIn": "a poster and a one-page reflection" },  // alone | groups | either
+      "unitfull": { "days": 10, "lessons": 4, "quizzes": 2, "tests": 1, "bellringers": 10 }
+    },
+    // The live "that's too much" check, measured on the teacher's device. Never blocks Send.
+    "feasibility": {
+      "pagesEstimated": 1.2,                    // about how many pages of source (null when unknown)
+      "method": "text-words+pdf-pages+asked",   // text-words | pdf-pages | docx-words | pptx-words | asked | standards
+      "files": [{ "name": "notes.txt", "pages": 1.2, "method": "text-words" }],
+      "askedPages": null,                       // her answer to "About how many pages is your source?"
+      "standards": null,                        // "My source is only standards": how many (questionsPerStandard)
+      "asked": 75,                              // questions asked across items × quantity (A/B versions don't double)
+      "low": 7, "high": 12,                     // pages × questionsPerPage (or standards × questionsPerStandard)
+      "tooMuch": true, "warned": true,          // over the high end now / the warning was shown at some point
+      "choice": "bestJudgment"                  // null | lowered | addMaterial | bestJudgment
+    }
   },
   "style": {                                 // what the agents learned from the teacher's examples
     "notes": ["Numbered questions, bold directions, a box for the name and date", "Short sentences"],

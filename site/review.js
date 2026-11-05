@@ -6,6 +6,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var brand = {}, menu = { items: [] };
   var docs = [];            // [{ name, comment }]
+  var reviewData = null;    // from the preview's REVIEW.html: { orderId, packHash, statement, documents, docTitles }
   var CHECKS = {
     answers: 'I checked the answers.',
     level: 'The level fits my students.',
@@ -41,6 +42,23 @@
     var list = Array.prototype.slice.call(fileList);
     var fileDocs = list.map(function (f) { return docNameFromFile(f.webkitRelativePath || f.name); }).filter(Boolean);
     var useFiles = function () { fileDocs.forEach(addDoc); };
+    var review = list.filter(function (f) { return /^REVIEW\.html$/i.test(f.name); })[0];
+    if (review) {
+      // The renderer's REVIEW.html holds the order id, the pack's hash, the agreement text and every preview PDF's SHA-256.
+      return review.text().then(function (t) {
+        var m = t.match(/var D = (\{.*\});/);
+        reviewData = m ? JSON.parse(m[1]) : null;
+        if (!reviewData || !reviewData.orderId) throw new Error('no data');
+        $('order-id').value = reviewData.orderId;
+        (reviewData.docTitles || []).forEach(addDoc);
+        if ((reviewData.documents || []).some(function (d) { return /AUDIT-REPORT/i.test(d.file); })) addDoc('Audit report');
+        if (!docs.length) useFiles();
+        renderDocs(); update();
+      }).catch(function () {
+        reviewData = null; useFiles(); renderDocs();
+        $('err-pick').textContent = 'We could not read REVIEW.html. Open it from your preview folder instead, or type the order id.';
+      });
+    }
     var json = list.filter(function (f) { return /^(order|project)\.json$/i.test(f.name); })
       .sort(function (a) { return /^order/i.test(a.name) ? -1 : 1; })[0];
     if (!json) { useFiles(); renderDocs(); if (!$('order-id').value) $('err-pick').textContent = 'No order.json in those files. Type the order id from your preview instead.'; return; }
@@ -74,7 +92,7 @@
     var o = {}; document.querySelectorAll('[data-check]').forEach(function (c) { o[c.getAttribute('data-check')] = c.checked; }); return o;
   }
   function comments() {
-    return docs.filter(function (d) { return d.comment.trim(); }).map(function (d) { return { document: d.name, comment: d.comment.trim() }; });
+    return docs.filter(function (d) { return d.comment.trim(); }).map(function (d) { return { title: d.name, comment: d.comment.trim() }; });
   }
   function hasComments() { return comments().length > 0 || $('c-general').value.trim().length > 0; }
   function update() {
@@ -97,14 +115,20 @@
     $('err-send').textContent = ''; $('done').innerHTML = '';
     var orderId = $('order-id').value.trim();
     if (!orderId) { $('err-send').textContent = 'Please add the order id in step 1 (it is in your preview’s order.json and README).'; $('order-id').focus(); return; }
+    var rd = reviewData && reviewData.orderId === orderId ? reviewData : null;
+    if (kind === 'approval' && !rd) {
+      $('err-send').textContent = 'To agree, pick REVIEW.html from your preview in step 1 (or open REVIEW.html itself). It tells us exactly which files you looked at, so we release those and nothing else.';
+      return;
+    }
     var c = checks();
-    var body = {
-      format: 1, kind: kind === 'approval' ? 'approval' : 'changes', orderId: orderId,
-      name: $('who').value.trim(), at: new Date().toISOString(),
-      checklist: Object.keys(CHECKS).map(function (k) { return { id: k, text: CHECKS[k], checked: !!c[k] }; }),
-      comments: comments(), general: $('c-general').value.trim()
-    };
-    if (kind === 'approval') body.agreement = 'I looked over the preview and the audit report, and nothing needs a change. Please release my final files.';
+    // Same shape as the preview's REVIEW.html (docs/PACK-FORMAT.md), so the renderer accepts it.
+    var body = { orderId: orderId, name: $('who').value.trim(), date: new Date().toISOString(), packHash: rd ? rd.packHash : null };
+    if (kind === 'approval') { body.statement = rd.statement; body.documents = rd.documents; }
+    else {
+      body.checklist = Object.keys(CHECKS).map(function (k) { return { item: CHECKS[k], checked: !!c[k] }; });
+      body.comments = comments();
+      var g = $('c-general').value.trim(); if (g) body.comments.push({ title: 'Whole pack', comment: g });
+    }
     var file = (kind === 'approval' ? 'approval-' : 'comments-') + safeId(orderId) + '.json';
     var url = URL.createObjectURL(new Blob([JSON.stringify(body, null, 2) + '\n'], { type: 'application/json' }));
     var a = document.createElement('a'); a.href = url; a.download = file; a.style.display = 'none';

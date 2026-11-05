@@ -10,7 +10,10 @@
 
   var brand = {}, menu = { grades: [], subjects: [], items: [], extras: [] };
   var files = { training: [], sources: [] };
-  var picked = {};      // item id -> { qty, req }
+  var picked = {};      // item id -> { qty, req, spec }
+  var feas = null;      // feasibility.json
+  var estimates = typeof WeakMap !== 'undefined' ? new WeakMap() : null;   // source File -> { pages, method, detail }
+  var feasChoice = null, feasWarned = false;
   var extras = {};      // extra id -> true
   var lastZip = null;
 
@@ -43,7 +46,133 @@
     }).join('');
     var n = files[list].length;
     $('meter-' + list).textContent = n ? n + ' file' + (n === 1 ? '' : 's') + ' · ' + fmtBytes(total(list)) + ' of ' + fmtBytes(LIMITS[list]) : '';
+    if (list === 'sources') estimateSources();
+    if (picked.versions) renderRequests();
   }
+
+  // ---------- how much source there is (read on the device, never sent anywhere) ----------
+  function estimateSources() {
+    var wpp = feas && feas.wordsPerPage;
+    var todo = files.sources.filter(function (f) { return !estimates || !estimates.has(f); });
+    Promise.all(todo.map(function (f) {
+      return PPFeas.estimate(f, wpp).catch(function () { return { name: f.name, pages: null, method: 'unknown' }; })
+        .then(function (r) { if (estimates) estimates.set(f, r); });
+    })).then(function () { showEstimates(); renderFeas(); });
+    showEstimates(); renderFeas();
+  }
+  function estOf(f) { return estimates && estimates.get(f); }
+  function showEstimates() {
+    var items = $('list-sources').querySelectorAll('li');
+    files.sources.forEach(function (f, i) {
+      var r = estOf(f), li = items[i]; if (!li) return;
+      var tag = li.querySelector('.fpages');
+      if (!tag) { tag = document.createElement('span'); tag.className = 'fpages'; li.insertBefore(tag, li.querySelector('.fsize')); }
+      tag.textContent = !r ? 'reading…' : r.pages != null ? 'about ' + pagesText(r.pages) : 'pages unknown';
+    });
+    var unknown = files.sources.filter(function (f) { var r = estOf(f); return r && r.pages == null; });
+    $('ask-pages-wrap').hidden = !unknown.length || $('standards-only').checked;
+    $('ask-pages-names').textContent = unknown.map(function (f) { return f.name; }).join(', ');
+  }
+  function pagesText(p) { var n = Math.max(1, Math.round(p)); return n + (n === 1 ? ' page' : ' pages'); }
+
+  // The questions asked across items (A/B versions don't double) and what the source supports.
+  function feasState() {
+    var d = (feas && feas.defaults) || {};
+    var asked = pickedIds().reduce(function (s, id) { return s + PPFeas.questionsFor(id, picked[id].spec, d[id]) * picked[id].qty; }, 0);
+    var st = { asked: asked, pages: null, low: null, high: null, method: [], askedPages: null };
+    if ($('standards-only').checked) {
+      var n = Number($('standards-count').value);
+      st.method.push('standards');
+      if (n > 0) {
+        var per = (feas && feas.fromStandardsOnly && feas.fromStandardsOnly.questionsPerStandard) || [4, 8];
+        st.standards = n; st.low = n * per[0]; st.high = n * per[1];
+      }
+      return st;
+    }
+    var known = 0, unknown = 0, pending = 0;
+    files.sources.forEach(function (f) {
+      var r = estOf(f);
+      if (!r) pending++;
+      else if (r.pages == null) unknown++;
+      else { known += r.pages; if (st.method.indexOf(r.method) < 0) st.method.push(r.method); }
+    });
+    var ask = Number($('ask-pages').value);
+    if (unknown && ask > 0) { known += ask; st.askedPages = ask; st.method.push('asked'); }
+    if (!files.sources.length || pending || (unknown && !(ask > 0))) { st.incomplete = true; if (!known) return st; }
+    var qpp = (feas && feas.questionsPerPage) || { low: 6, high: 10 };
+    st.pages = known;
+    st.low = Math.max(1, Math.round(known * qpp.low)); st.high = Math.max(1, Math.round(known * qpp.high));
+    return st;
+  }
+
+  function renderFeas() {
+    if (!feas) return;
+    var st = feasState(), box = $('feas'), mini = $('feas-send');
+    var over = st.high != null && st.asked > st.high && !st.incomplete;
+    if (over) feasWarned = true;
+    if (!over) {
+      box.innerHTML = st.high != null && st.asked && !st.incomplete
+        ? '<p class="small muted">About ' + (st.standards ? plural(st.standards, 'standard') : pagesText(st.pages)) + ' of material: room for about ' + st.low + '–' + st.high + ' good questions. You asked for ' + st.asked + '.</p>' : '';
+      mini.innerHTML = feasChoice === 'lowered' ? '<p class="small muted">Lowered to fit your material.</p>' : '';
+      return;
+    }
+    var msg = PPFeas.fill(feas.messages && feas.messages.tooMany, { asked: st.asked, pages: st.standards ? st.standards + ' standard(s)' : Math.max(1, Math.round(st.pages)), low: st.low, high: st.high });
+    if (st.standards) msg = msg.replace('page(s) of material', 'of material');
+    var chosen = { addMaterial: 'You said you will add more material.', bestJudgment: 'You asked us to use our best judgment. We will tell you what we chose in the follow-up.' }[feasChoice];
+    box.innerHTML = '<div class="warn" role="status"><p><b>That may be too much.</b> ' + esc(msg) + '</p>' +
+      '<div class="warn-actions">' +
+      '<button type="button" class="btn' + (feasChoice === 'lowered' ? ' primary' : '') + '" data-feas="lower">Lower it to ' + st.high + '</button>' +
+      '<button type="button" class="btn' + (feasChoice === 'addMaterial' ? ' primary' : '') + '" data-feas="addMaterial">I’ll add more material</button>' +
+      '<button type="button" class="btn' + (feasChoice === 'bestJudgment' ? ' primary' : '') + '" data-feas="bestJudgment">Use your best judgment</button></div>' +
+      (chosen ? '<p class="small" style="margin:.6em 0 0">' + esc(chosen) + '</p>' : '') + '</div>';
+    mini.innerHTML = '<p class="warn small">' + (chosen ? esc(chosen) : 'You asked for ' + st.asked + ' questions; your material supports about ' + st.low + '–' + st.high + '. See step 4. You can still send.') + '</p>';
+  }
+  function plural(n, one) { return n + ' ' + one + (n === 1 ? '' : 's'); }
+
+  // "Lower it to {high}": scale every question count down to fit, keeping the mix.
+  function lowerTo(high) {
+    var d = (feas && feas.defaults) || {}, st = feasState();
+    if (!st.asked) return;
+    // Share `high` out by each item's part of the total (largest remainder, so the new total is exactly `high`).
+    var rows = pickedIds().filter(function (id) { return PPFeas.COUNTS_QUESTIONS[id]; }).map(function (id) {
+      var each = PPFeas.questionsFor(id, picked[id].spec, d[id]), qty = picked[id].qty;
+      var share = high * each * qty / st.asked / qty;   // new questions per copy
+      return { id: id, each: each, qty: qty, n: Math.max(1, Math.floor(share)), frac: share - Math.floor(share) };
+    }).filter(function (r) { return r.each > 0; });
+    var left = high - rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
+    rows.slice().sort(function (a, b) { return b.frac - a.frac; }).forEach(function (r) { if (left >= r.qty) { r.n++; left -= r.qty; } });
+    rows.forEach(function (r) {
+      var spec = picked[r.id].spec = picked[r.id].spec || {};
+      var types = spec.types || {};
+      var keys = PPFeas.TYPE_KEYS.filter(function (k) { return types[k] !== '' && types[k] != null && Number(types[k]) > 0; });
+      if (keys.length) {   // keep the mix: scale the typed counts so they add up to the new number
+        var tot = keys.reduce(function (s, k) { return s + Number(types[k]); }, 0), given = 0;
+        keys.forEach(function (k, i) {
+          var v = i === keys.length - 1 ? r.n - given : Math.round(Number(types[k]) * r.n / tot);
+          v = Math.max(0, Math.min(v, r.n - given)); types[k] = String(v); given += v;
+        });
+      }
+      spec.questions = String(r.n);
+    });
+    renderRequests();
+  }
+  $('feas').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-feas]'); if (!b) return;
+    var what = b.getAttribute('data-feas');
+    if (what === 'lower') { lowerTo(feasState().high); feasChoice = 'lowered'; }
+    else feasChoice = what;
+    renderFeas();
+    if (what === 'addMaterial') {
+      if (document.body.classList.contains('wizard') && window.PPShowStep) window.PPShowStep(1);
+      else $('s2-h').scrollIntoView({ block: 'start' });
+    }
+  });
+  ['standards-only', 'standards-count', 'ask-pages'].forEach(function (id) {
+    $(id).addEventListener('input', function () {
+      $('standards-wrap').hidden = !$('standards-only').checked;
+      showEstimates(); renderFeas();
+    });
+  });
 
   function setupDrop(list) {
     var zone = document.querySelector('.drop[data-list="' + list + '"]');
@@ -103,7 +232,7 @@
       var card = e.target.closest('[data-item]'); if (!card) return;
       var id = card.getAttribute('data-item');
       if (e.target.type === 'checkbox') {
-        if (e.target.checked) picked[id] = picked[id] || { qty: 1, req: '' }; else delete picked[id];
+        if (e.target.checked) picked[id] = picked[id] || { qty: 1, req: '', spec: {} }; else delete picked[id];
         card.classList.toggle('on', e.target.checked);
         card.querySelector('.qty').hidden = !e.target.checked;
         $('err-menu').textContent = '';
@@ -113,6 +242,7 @@
         var q = Math.round(Number(e.target.value));
         if (!(q >= 1)) q = 1; if (q > 20) q = 20;
         e.target.value = q; picked[id].qty = q;
+        renderRequests();
       }
       renderCost();
     });
@@ -120,7 +250,7 @@
       if (e.target.type !== 'number') return;
       var id = e.target.closest('[data-item]').getAttribute('data-item');
       var q = Math.round(Number(e.target.value));
-      if (picked[id] && q >= 1 && q <= 20) { picked[id].qty = q; renderCost(); }
+      if (picked[id] && q >= 1 && q <= 20) { picked[id].qty = q; renderCost(); renderFeas(); }
     });
     $('extras').addEventListener('change', function (e) {
       var card = e.target.closest('[data-extra]'); if (!card) return;
@@ -139,21 +269,70 @@
   function pickedIds() { return menu.items.map(function (i) { return i.id; }).filter(function (id) { return picked[id]; }); }
 
   // ---------- requests ----------
+  function fieldHTML(id, f, spec, d) {
+    var key = id + ':' + f.key, idAttr = 'sp-' + id + '-' + f.key, v = spec[f.key];
+    var ph = d && d[f.key] != null ? String(d[f.key]) : '';
+    if (f.type === 'types') {
+      var t = spec.types || {}, dt = (d && d.types) || {};
+      return '<fieldset class="spec-types"><legend>' + esc(f.label) + '</legend>' + PPFeas.TYPE_KEYS.map(function (k) {
+        return '<label class="spec-mini"><span>' + esc(PPFeas.TYPE_NAMES[k]) + '</span><input type="number" min="0" max="99" inputmode="numeric" data-spec="' + esc(key + ':' + k) + '"' +
+          ' value="' + esc(t[k] || '') + '" placeholder="' + esc(dt[k] != null ? dt[k] : (d && d.types ? 0 : '')) + '"></label>';
+      }).join('') + '</fieldset>';
+    }
+    var input;
+    if (f.type === 'select') {
+      input = '<select id="' + idAttr + '" data-spec="' + esc(key) + '">' + f.options.map(function (o) {
+        var label = o[0] === '' && ph ? 'Choose (we’d pick: ' + ph + ')' : o[1];
+        return '<option value="' + esc(o[0]) + '"' + ((v || '') === o[0] ? ' selected' : '') + '>' + esc(label) + '</option>';
+      }).join('') + '</select>';
+    } else if (f.type === 'file') {
+      var names = files.sources.concat(files.training).map(function (x) { return x.name; });
+      input = '<select id="' + idAttr + '" data-spec="' + esc(key) + '"><option value="">' + (names.length ? 'Choose a file' : 'Upload your test in step 1 or 2 first') + '</option>' +
+        names.map(function (n) { return '<option' + (v === n ? ' selected' : '') + '>' + esc(n) + '</option>'; }).join('') + '</select>';
+    } else {
+      input = '<input id="' + idAttr + '" data-spec="' + esc(key) + '" type="' + (f.type === 'number' ? 'number' : 'text') + '"' +
+        (f.type === 'number' ? ' min="0" inputmode="numeric"' : '') + ' value="' + esc(v || '') + '" placeholder="' + esc(ph) + '">';
+    }
+    return '<div class="spec-field"><label for="' + idAttr + '">' + esc(f.label) + '</label>' + input + '</div>';
+  }
+
   function renderRequests() {
     var box = $('item-requests');
     var ids = pickedIds();
-    // Keep what was typed for items that stay picked.
-    box.querySelectorAll('textarea[data-req]').forEach(function (t) {
-      var id = t.getAttribute('data-req'); if (picked[id]) picked[id].req = t.value;
-    });
+    var defaults = (feas && feas.defaults) || {}, limits = (feas && feas.limits) || {};
+    var tmpl = (feas && feas.messages && feas.messages.defaultUsed) || 'If you leave this blank, we\'ll use: {default}.';
     box.innerHTML = ids.length ? ids.map(function (id) {
-      return '<div class="field req"><label for="req-' + esc(id) + '">' + esc(itemById(id).label) + '</label>' +
-        '<textarea data-req="' + esc(id) + '" id="req-' + esc(id) + '" rows="2" placeholder="Requests just for this item (optional)">' + esc(picked[id].req) + '</textarea></div>';
-    }).join('') : '<p class="muted small">Pick something in step 3 to add a request just for that item.</p>';
+      var spec = picked[id].spec = picked[id].spec || {}, d = defaults[id], fields = PPFeas.SPECS[id] || [];
+      var def = PPFeas.defaultText(id, d);
+      return '<div class="item-spec req" data-item-spec="' + esc(id) + '"><h3>' + esc(itemById(id).label) +
+        (picked[id].qty > 1 ? ' <span class="muted">× ' + picked[id].qty + '</span>' : '') + '</h3>' +
+        (fields.length ? '<div class="spec-grid">' + fields.map(function (f) { return fieldHTML(id, f, spec, d); }).join('') + '</div>' : '') +
+        (def ? '<p class="small muted spec-default">' + esc(PPFeas.fill(tmpl, { default: def })) + '</p>' : '') +
+        '<div class="spec-notes" data-notes="' + esc(id) + '">' + notesHTML(id, spec, limits[id]) + '</div>' +
+        '<div class="field"><label for="req-' + esc(id) + '">Anything else for this item</label>' +
+        '<textarea data-req="' + esc(id) + '" id="req-' + esc(id) + '" rows="2" placeholder="For example: level 3 needs two steps">' + esc(picked[id].req) + '</textarea></div></div>';
+    }).join('') : '<p class="muted small">Pick something in step 3 to tell us the details for that item.</p>';
+    renderFeas();
+  }
+  function notesHTML(id, spec, lim) {
+    var notes = PPFeas.limitNotes(id, spec, lim);
+    return notes.map(function (n) { return '<p class="warn small">' + esc(n) + '</p>'; }).join('');
   }
   $('item-requests').addEventListener('input', function (e) {
-    var id = e.target.getAttribute('data-req'); if (id && picked[id]) picked[id].req = e.target.value;
+    var id = e.target.getAttribute('data-req'); if (id && picked[id]) { picked[id].req = e.target.value; return; }
+    var sp = e.target.getAttribute('data-spec'); if (!sp) return;
+    var parts = sp.split(':'), item = parts[0], key = parts[1];
+    if (!picked[item]) return;
+    var spec = picked[item].spec = picked[item].spec || {};
+    if (key === 'types') { spec.types = spec.types || {}; spec.types[parts[2]] = e.target.value; }
+    else spec[key] = e.target.value;
+    if (feasChoice === 'lowered') feasChoice = null;
+    var lim = (feas && feas.limits) || {};
+    var notes = $('item-requests').querySelector('[data-notes="' + item + '"]');
+    if (notes) notes.innerHTML = notesHTML(item, spec, lim[item]);
+    renderFeas();
   });
+  $('item-requests').addEventListener('change', function (e) { if (e.target.tagName === 'SELECT') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
 
   // ---------- cost ----------
   function costLines() {
@@ -205,6 +384,36 @@
     });
   }
 
+  // Only what the teacher typed; a blank field means "use the default" (feasibility.json).
+  function cleanSpec(spec) {
+    var out = {}, any = false;
+    Object.keys(spec || {}).forEach(function (k) {
+      var v = spec[k];
+      if (k === 'types') {
+        var t = {}, anyT = false;
+        Object.keys(v || {}).forEach(function (tk) { if (v[tk] !== '' && v[tk] != null) { t[tk] = Number(v[tk]); anyT = true; } });
+        if (anyT) { out.types = t; any = true; }
+      } else if (v !== '' && v != null) {
+        out[k] = /^\d+$/.test(String(v)) && k !== 'file' && k !== 'turnIn' ? Number(v) : String(v).trim(); any = true;
+      }
+    });
+    return any ? out : null;
+  }
+  function feasRecord() {
+    var st = feasState();
+    return {
+      pagesEstimated: st.pages != null ? Math.round(st.pages * 10) / 10 : null,
+      method: st.method.join('+') || 'none',
+      files: files.sources.map(function (f) { var r = estOf(f) || {}; return { name: f.name, pages: r.pages != null ? Math.round(r.pages * 10) / 10 : null, method: r.method || 'pending' }; }),
+      askedPages: st.askedPages,
+      standards: st.standards || null,
+      asked: st.asked, low: st.low, high: st.high,
+      tooMuch: st.high != null && st.asked > st.high,
+      warned: feasWarned,
+      choice: feasChoice
+    };
+  }
+
   function validate() {
     var problems = [];
     var menuStep = [];
@@ -249,6 +458,8 @@
         requests: general,
         itemRequests: ids.reduce(function (o, id) { var r = (picked[id].req || '').trim(); if (r) o[id] = r; return o; }, {}),
         quantities: ids.reduce(function (o, id) { o[id] = picked[id].qty; return o; }, {}),
+        itemSpecs: ids.reduce(function (o, id) { var sp = cleanSpec(picked[id].spec); if (sp) o[id] = sp; return o; }, {}),
+        feasibility: feasRecord(),
         sources: srcNames,
         styleExamples: trainNames
       },
@@ -331,6 +542,7 @@
       var h = steps[current].querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
     }
   }
+  window.PPShowStep = function (i) { showStep(i, true); };
   dots.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) showStep(Number(b.getAttribute('data-go')), true); });
   wnav.addEventListener('click', function (e) {
     if (e.target.closest('[data-back]')) showStep(current - 1, true);
@@ -345,9 +557,9 @@
   setupDrop('training'); setupDrop('sources');
   $('limit-text').textContent = fmtBytes(LIMITS.sources);
   renderFiles('training'); renderFiles('sources');
-  Promise.all([PP.loadBrand(), PP.getJSON('../menu.json')]).then(function (r) {
-    brand = r[0]; menu = r[1];
-    fillMenu(); renderCost();
+  Promise.all([PP.loadBrand(), PP.getJSON('../menu.json'), PP.getJSON('../feasibility.json').catch(function () { return null; })]).then(function (r) {
+    brand = r[0]; menu = r[1]; feas = r[2];
+    fillMenu(); renderCost(); renderRequests(); estimateSources();
   }).catch(function (ex) {
     $('load-error').textContent = 'The menu could not load (' + ex.message + '). Open this page with npm run serve, not straight from the folder.';
     renderCost();
