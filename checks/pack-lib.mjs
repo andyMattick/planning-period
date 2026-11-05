@@ -7,7 +7,7 @@ export const TYPES = ['mc', 'short', 'numeric', 'open', 'match', 'tf'];
 // documents where the answers are handed back (practice) and where they are not (assessment)
 export const TEST_KINDS = ['test'];
 export const VERSIONED_KINDS = ['quiz', 'test'];
-export const SCORED_KINDS = ['worksheet', 'quiz', 'test', 'studyguide', 'reviewgame'];
+export const SCORED_KINDS = ['worksheet', 'quiz', 'test', 'studyguide', 'reviewgame', 'homework', 'bellringer'];
 
 export function loadPack(path) {
   let pack;

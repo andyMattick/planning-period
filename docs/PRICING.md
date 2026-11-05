@@ -49,6 +49,10 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
 | `rubric` | 15 | $1.50 | $0.8–1.2 (**guess**) | short; a blind read for student-friendly wording, no key to solve |
 | `project` | 60 | $6.00 | $3.5–5 (**guess**) | steps, checklist and rubric; a fact and safety check for labs |
 | `unitpack` | 220 | $22.00 | $20–27 | Pet World note-sheet units cost $10–18.7 (sheets only); add a quiz, a review and an A/B test (about $7–9). **Priced at about cost** |
+| `bellringer` | 20 | $2.00 | $1.2–1.8 | 10 short warm-ups, one version: about a sheet of items, blind and Wilco once (added Nov 5, 2026) |
+| `homework` | 20 | $2.00 | $1.2–1.8 | a shorter worksheet: about two-thirds of `worksheet`'s items (added Nov 5, 2026) |
+| `versions` | 30 | $3.00 | $1.8–2.5 | the teacher's test is the source, so the maker only rewrites; the checkers run on the original and on A and B (up to about 30 questions; longer tests cost more) (added Nov 5, 2026) |
+| `unitfull` | 420 | $42.00 | $30–42 | à la carte for 4 lessons: 4 × `notes` 25 + 4 × `homework` 20 + 2 × `bellringer` 20 + 2 × `quiz` 40 + `project` 60 + `rubric` 15 + `studyguide` 25 + `test` 70 = 470, about 10% off; plus the standards map. A first-of-its-kind run cost Pet World $33–54 a unit (7th grade units), so **watch the first orders** (added Nov 5, 2026) |
 | `tpt`, `styleSetup` (extras) | 0 | — | about $0.5–1.5 for style setup, once | the first order's style notes, carried by the order |
 
 **Owner decisions flagged by this table:**

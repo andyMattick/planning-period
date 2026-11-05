@@ -1,27 +1,219 @@
 {
   "_note": "The order menu. tokens = pilot estimate (see docs/PRICING.md); every item is made by a maker agent, checked by a fresh blind tester for its subject and by Wilco's test-wise bots, and logged by the reporter.",
-  "grades": ["K", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "Adult / college"],
+  "grades": [
+    "K",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "Adult / college"
+  ],
   "subjects": [
-    { "id": "math", "label": "Math", "checker": "math" },
-    { "id": "ela", "label": "English / Reading", "checker": "ela" },
-    { "id": "science", "label": "Science", "checker": "science" },
-    { "id": "social", "label": "History / Social studies", "checker": "social" },
-    { "id": "other", "label": "Other (say which)", "checker": "general" }
+    {
+      "id": "math",
+      "label": "Math",
+      "checker": "math"
+    },
+    {
+      "id": "ela",
+      "label": "English / Reading",
+      "checker": "ela"
+    },
+    {
+      "id": "science",
+      "label": "Science",
+      "checker": "science"
+    },
+    {
+      "id": "social",
+      "label": "History / Social studies",
+      "checker": "social"
+    },
+    {
+      "id": "other",
+      "label": "Other (say which)",
+      "checker": "general"
+    }
   ],
   "items": [
-    { "id": "worksheet", "label": "Worksheet with answer key", "detail": "Practice that gets harder (3 levels), a student copy and a teacher copy with the key.", "tokens": 30, "formats": ["pdf", "docx"], "versions": false },
-    { "id": "notes", "label": "Guided notes", "detail": "Fill-in notes that follow your source, with a teacher copy.", "tokens": 25, "formats": ["pdf", "docx"], "versions": false },
-    { "id": "quiz", "label": "Quiz with A/B versions", "detail": "8–12 questions, two versions with the same skills, keys for both.", "tokens": 40, "formats": ["pdf", "docx"], "versions": true },
-    { "id": "test", "label": "Unit test with A/B versions", "detail": "20–30 questions with about 40% harder questions, two versions, keys and a skills map.", "tokens": 70, "formats": ["pdf", "docx"], "versions": true },
-    { "id": "studyguide", "label": "Study guide / review sheet", "detail": "One or two pages of what to know, with practice and a key.", "tokens": 25, "formats": ["pdf", "docx"], "versions": false },
-    { "id": "slides", "label": "Lesson slides", "detail": "A slide deck that follows your source, with speaker notes.", "tokens": 50, "formats": ["pptx", "pdf"], "versions": false },
-    { "id": "reviewgame", "label": "Review game", "detail": "A printable or projector review game (question cards or a board) with answers.", "tokens": 35, "formats": ["pdf", "pptx"], "versions": false },
-    { "id": "rubric", "label": "Rubric", "detail": "A rubric for a task or project, with student-friendly wording.", "tokens": 15, "formats": ["pdf", "docx"], "versions": false },
-    { "id": "project", "label": "Project or lab packet", "detail": "Instructions, steps, a checklist and a rubric for a longer project or lab.", "tokens": 60, "formats": ["pdf", "docx"], "versions": false },
-    { "id": "unitpack", "label": "Whole unit pack", "detail": "Notes, a worksheet per lesson, a quiz, a review and a unit test with A/B versions.", "tokens": 220, "formats": ["pdf", "docx", "pptx"], "versions": true }
+    {
+      "id": "worksheet",
+      "label": "Worksheet with answer key",
+      "detail": "Practice that gets harder (3 levels), a student copy and a teacher copy with the key.",
+      "tokens": 30,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "notes",
+      "label": "Guided notes",
+      "detail": "Fill-in notes that follow your source, with a teacher copy.",
+      "tokens": 25,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "quiz",
+      "label": "Quiz with A/B versions",
+      "detail": "8–12 questions, two versions with the same skills, keys for both.",
+      "tokens": 40,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": true
+    },
+    {
+      "id": "test",
+      "label": "Unit test with A/B versions",
+      "detail": "20–30 questions with about 40% harder questions, two versions, keys and a skills map.",
+      "tokens": 70,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": true
+    },
+    {
+      "id": "studyguide",
+      "label": "Study guide / review sheet",
+      "detail": "One or two pages of what to know, with practice and a key.",
+      "tokens": 25,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "slides",
+      "label": "Lesson slides",
+      "detail": "A slide deck that follows your source, with speaker notes.",
+      "tokens": 50,
+      "formats": [
+        "pptx",
+        "pdf"
+      ],
+      "versions": false
+    },
+    {
+      "id": "reviewgame",
+      "label": "Review game",
+      "detail": "A printable or projector review game (question cards or a board) with answers.",
+      "tokens": 35,
+      "formats": [
+        "pdf",
+        "pptx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "rubric",
+      "label": "Rubric",
+      "detail": "A rubric for a task or project, with student-friendly wording.",
+      "tokens": 15,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "project",
+      "label": "Project or lab packet",
+      "detail": "Instructions, steps, a checklist and a rubric for a longer project or lab.",
+      "tokens": 60,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "unitpack",
+      "label": "Whole unit pack",
+      "detail": "Notes, a worksheet per lesson, a quiz, a review and a unit test with A/B versions.",
+      "tokens": 220,
+      "formats": [
+        "pdf",
+        "docx",
+        "pptx"
+      ],
+      "versions": true
+    },
+    {
+      "id": "bellringer",
+      "label": "Bell ringers",
+      "detail": "A set of 10 short warm-ups (one a day), each with a key, that review what came before and preview what's next.",
+      "tokens": 20,
+      "formats": [
+        "pdf",
+        "docx",
+        "pptx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "homework",
+      "label": "Homework",
+      "detail": "A short practice set for home (shorter than a worksheet), with a key and a teacher copy.",
+      "tokens": 20,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "versions",
+      "label": "Make versions of my test",
+      "detail": "Drop in a test you already have: we make A/B versions (or A/B/C) that test the same skills at the same level, with keys, and our checkers look over your original too and tell you anything they find.",
+      "tokens": 30,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": true
+    },
+    {
+      "id": "unitfull",
+      "label": "Full unit from standards",
+      "detail": "From a page of standards: a unit plan, guided notes and homework for each lesson (up to 4 lessons), bell ringers, two quizzes, a project with its rubric, a review and a unit test with A/B versions.",
+      "tokens": 420,
+      "formats": [
+        "pdf",
+        "docx",
+        "pptx"
+      ],
+      "versions": true
+    }
   ],
   "extras": [
-    { "id": "tpt", "label": "Sell-it-yourself guide (TPT)", "detail": "How to list your pack on Teachers Pay Teachers, with the AI note to include.", "tokens": 0 },
-    { "id": "styleSetup", "label": "Set up my agents with my examples", "detail": "Your agents read the examples you upload and follow your layout, wording and level. First time only.", "tokens": 0 }
+    {
+      "id": "tpt",
+      "label": "Sell-it-yourself guide (TPT)",
+      "detail": "How to list your pack on Teachers Pay Teachers, with the AI note to include.",
+      "tokens": 0
+    },
+    {
+      "id": "styleSetup",
+      "label": "Set up my agents with my examples",
+      "detail": "Your agents read the examples you upload and follow your layout, wording and level. First time only.",
+      "tokens": 0
+    }
   ]
 }
