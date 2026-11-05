@@ -71,7 +71,7 @@ Owner's rule, Nov 5, 2026 (g7-ela: three fresh testers answered 20 of 20 without
 For each version, a **fresh** session with `agents/blind-ela.md` (mode 1) and that version's questions only, no
 passages:
 ```
-node $REPO/checks/student-view.mjs "$WORK/pack.json" --only "<every where in version A, | between>" --out "$WORK/probe-A.md"
+node $REPO/checks/student-view.mjs "$WORK/pack.json" --no-passages --only "<every where in version A, | between>" --out "$WORK/probe-A.md"
 node $REPO/checks/score-blind.mjs "$WORK/pack.json" "$WORK/probe-A.jsonl"     # the same for B
 ```
 **Over about 40% right in either version fails the round** (chance 25% with 4 choices; 5 of 10 fails). A fail goes back
@@ -86,7 +86,8 @@ node $REPO/checks/student-view.mjs "$WORK/pack.json" --out "$WORK/view.md"
 ```
 Start a **fresh** agent (never the maker) with `agents/blind-<subject>.md` (`menu.json` maps the subject to its
 checker), `view.md` and the sources. ELA reading items: two phases, `view.md` alone first, then the passages as a
-separate file (`passages.md`; the student view doesn't print passages yet). Keep `pack.json` out of its folder until
+separate file: `student-view.mjs --no-passages` for phase a, then the full view, which prints the pack's `passages`
+(docs/PACK-FORMAT.md, "Passages"; older packs without the field need a `passages.md`). Keep `pack.json` out of its folder until
 it has answered (copy it in for scoring: g4-math and g8-science ran it this way). It answers into
 `$WORK/blind-r1.jsonl`, then:
 ```

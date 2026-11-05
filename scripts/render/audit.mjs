@@ -339,9 +339,12 @@ function checksSection(pack, st, ctx) {
   const blind = c.blind || [], solver = c.solver || [], wilco = c.wilco || [], facts = c.facts || [];
   let s = `<h2 class="pb">The checks, round by round</h2><p class="lead">Each check is run by a fresh agent that didn't write the work. Early rounds catch problems; the last round of each check is what this pack passed.</p>`;
   s += `<h3>🙈 Blind tester: solved the student copy with no key</h3>`;
+  // Reading items: how many a reader got right WITHOUT the passages (the no-passage probe, agents/blind-ela.md)
+  const pf = blind.some((r) => r.passageFree && Object.keys(r.passageFree).length);
+  const pfCell = (r) => (r.passageFree ? Object.entries(r.passageFree).map(([v, x]) => `${esc(v)}: ${esc(x.matched)} of ${esc(x.of)}`).join(' · ') + (r.gate ? ` (${r.gate === 'pass' ? 'passed' : 'failed'})` : '') : '—');
   s += blind.length
-    ? `<table><tr><th>Round</th><th>Agent</th><th class="n">Matched the key</th><th class="n">Findings</th></tr>${blind.map((r) => `<tr><td>${esc(r.round ?? 1)}</td><td>${esc(r.agent || CHECK_NAMES.blind)}</td><td class="n"><b>${esc(r.matched)} of ${esc(r.of)}</b></td><td class="n">${(r.findings || []).length}</td></tr>`).join('')}</table>
-      <p class="muted">Later rounds recheck only the questions that changed. Where the blind tester's answer didn't match the key, the question was looked at again (see the findings).</p>`
+    ? `<table><tr><th>Round</th><th>Agent</th><th class="n">Matched the key</th>${pf ? '<th class="n">Right without the passages</th>' : ''}<th class="n">Findings</th></tr>${blind.map((r) => `<tr><td>${esc(r.round ?? 1)}</td><td>${esc(r.agent || CHECK_NAMES.blind)}</td><td class="n"><b>${esc(r.matched)} of ${esc(r.of)}</b></td>${pf ? `<td class="n">${pfCell(r)}</td>` : ''}<td class="n">${(r.findings || []).length}</td></tr>`).join('')}</table>
+      <p class="muted">Later rounds recheck only the questions that changed. Where the blind tester's answer didn't match the key, the question was looked at again (see the findings).${pf ? ' "Right without the passages": answered from the questions alone, before reading; a reading question should need the passage, so about 40% or more right (chance is 25%) fails the round and the questions are redesigned.' : ''}</p>`
     : `<p class="muted">Not run for this pack.</p>`;
   s += `<h3>🧮 Solver: worked every answer on its own</h3>`;
   s += solver.length
