@@ -1,0 +1,364 @@
+{
+  "format": 1,
+  "id": "fixture-g6-ratios",
+  "order": {
+    "teacher": "Ms. Example (made-up sample)",
+    "grade": "6",
+    "subject": "math",
+    "topic": "Ratios and rates",
+    "items": [
+      "worksheet",
+      "quiz"
+    ],
+    "requests": "",
+    "sources": [
+      "made-up-source.pdf"
+    ],
+    "styleExamples": []
+  },
+  "style": {
+    "notes": [
+      "Numbered questions, bold directions"
+    ],
+    "font": "Lexend",
+    "accent": "#2b6cb0"
+  },
+  "documents": [
+    {
+      "item": "worksheet",
+      "title": "Ratios Practice",
+      "directions": "Show your work.",
+      "sections": [
+        {
+          "heading": "Practice",
+          "questions": [
+            {
+              "id": "w1",
+              "level": 1,
+              "skill": "ratio language",
+              "type": "short",
+              "prompt": "A barn has 2 goats and 7 hens. Write the ratio of goats to hens.",
+              "answer": "2:7",
+              "accept": [
+                "2 to 7",
+                "2/7"
+              ],
+              "why": "Goats come first: 2 to 7."
+            },
+            {
+              "id": "w2",
+              "level": 1,
+              "skill": "equivalent ratios",
+              "type": "numeric",
+              "prompt": "Fill in the blank: 3:4 = 9:__",
+              "answer": "12",
+              "why": "3 × 3 = 9, so 4 × 3 = 12."
+            },
+            {
+              "id": "w3",
+              "level": 2,
+              "skill": "rates",
+              "type": "numeric",
+              "prompt": "A dog walks 12 blocks in 4 minutes. How many blocks is that in one minute?",
+              "answer": "3",
+              "accept": [
+                "3 blocks"
+              ],
+              "why": "12 ÷ 4 = 3."
+            },
+            {
+              "id": "w4",
+              "level": 2,
+              "skill": "unit price",
+              "type": "numeric",
+              "prompt": "5 toys cost $20. What does 1 toy cost, in dollars?",
+              "answer": "4",
+              "accept": [
+                "$4",
+                "4.00"
+              ],
+              "why": "20 ÷ 5 = 4."
+            },
+            {
+              "id": "w5",
+              "level": 3,
+              "skill": "ratio tables",
+              "type": "numeric",
+              "prompt": "Lemonade uses 1 cup of syrup for every 5 cups of water. How many cups of lemonade do 4 cups of syrup make?",
+              "answer": "24",
+              "why": "4 cups of syrup need 20 cups of water: 4 + 20 = 24."
+            },
+            {
+              "id": "w6",
+              "level": 3,
+              "skill": "comparing ratios",
+              "type": "open",
+              "prompt": "Store P sells 3 pens for $2. Store Q sells 5 pens for $3. Which is the better buy? Explain.",
+              "answer": "Store Q: about $0.60 a pen, against about $0.67 at Store P.",
+              "why": "Compare the unit prices."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "quiz",
+      "title": "Ratios Quiz",
+      "directions": "Circle the best answer.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "sections": [
+        {
+          "heading": "Part 1",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "ratio language",
+              "type": "mc",
+              "prompt": {
+                "A": "A shelter has 3 cats and 5 dogs. What is the ratio of cats to dogs?",
+                "B": "A pet store has 4 rabbits and 7 hamsters. What is the ratio of rabbits to hamsters?"
+              },
+              "choices": {
+                "A": [
+                  "3:5",
+                  "5:3",
+                  "5:8",
+                  "8:3"
+                ],
+                "B": [
+                  "7:4",
+                  "11:7",
+                  "4:7",
+                  "7:11"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 2
+              },
+              "why": "See the worked steps."
+            },
+            {
+              "id": "q2",
+              "level": 1,
+              "skill": "ratio language",
+              "type": "mc",
+              "prompt": {
+                "A": "Which sentence describes the ratio 2:3 for a class's goldfish and turtles?",
+                "B": "Which sentence describes the ratio 4:1 for a club's parrots and finches?"
+              },
+              "choices": {
+                "A": [
+                  "There are 2 more turtles than goldfish in the class.",
+                  "For every 2 goldfish there are 3 turtles.",
+                  "For every 3 goldfish there are 2 turtles.",
+                  "There are 5 goldfish and turtles in all."
+                ],
+                "B": [
+                  "For every 1 parrot there are 4 finches.",
+                  "There are 4 more parrots than finches in the club.",
+                  "There are 5 parrots for every finch in all.",
+                  "For every 4 parrots there is 1 finch."
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 3
+              },
+              "why": "See the worked steps."
+            },
+            {
+              "id": "q3",
+              "level": 2,
+              "skill": "equivalent ratios",
+              "type": "mc",
+              "prompt": {
+                "A": "Which ratio is equivalent to 6:9?",
+                "B": "Which ratio is equivalent to 6:14?"
+              },
+              "choices": {
+                "A": [
+                  "4:9",
+                  "3:5",
+                  "2:3",
+                  "1:2"
+                ],
+                "B": [
+                  "3:7",
+                  "2:7",
+                  "1:3",
+                  "3:8"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 0
+              },
+              "why": "See the worked steps."
+            },
+            {
+              "id": "q4",
+              "level": 2,
+              "skill": "rates",
+              "type": "mc",
+              "prompt": {
+                "A": "A hose fills 24 bowls in 6 minutes. At that rate, how many bowls does it fill in 9 minutes?",
+                "B": "A printer makes 30 tags in 5 minutes. At that rate, how many tags does it make in 8 minutes?"
+              },
+              "choices": {
+                "A": [
+                  "39",
+                  "30",
+                  "4",
+                  "36"
+                ],
+                "B": [
+                  "43",
+                  "48",
+                  "6",
+                  "54"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 1
+              },
+              "why": "See the worked steps."
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "unit price",
+              "type": "mc",
+              "prompt": {
+                "A": "8 bags of treats cost $12. What do 3 bags cost?",
+                "B": "6 cans of food cost $9. What do 4 cans cost?"
+              },
+              "choices": {
+                "A": [
+                  "$4.50",
+                  "$3.00",
+                  "$1.50",
+                  "$36.00"
+                ],
+                "B": [
+                  "$13.50",
+                  "$1.50",
+                  "$6",
+                  "$5"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 2
+              },
+              "why": "See the worked steps."
+            },
+            {
+              "id": "q6",
+              "level": 3,
+              "skill": "ratio tables",
+              "type": "mc",
+              "prompt": {
+                "A": "A recipe uses 2 cups of oats for every 3 cups of water. With 6 cups of oats, how much water is needed, and how many cups is that in all?",
+                "B": "A paint mix uses 3 cans of blue for every 4 cans of white. With 12 cans of blue, how many cans of white are needed, and how many cans is that in all?"
+              },
+              "choices": {
+                "A": [
+                  "4 cups water, 10 cups in all",
+                  "9 cups water, 12 cups in all",
+                  "6 cups water, 12 cups in all",
+                  "9 cups water, 15 cups in all"
+                ],
+                "B": [
+                  "12 white, 24 in all",
+                  "16 white, 28 in all",
+                  "9 white, 21 in all",
+                  "12 white, 16 in all"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 1
+              },
+              "why": "See the worked steps."
+            },
+            {
+              "id": "q7",
+              "level": 3,
+              "skill": "equivalent ratios",
+              "type": "mc",
+              "prompt": {
+                "A": "Mia says 4:6 and 6:8 are equivalent because you add 2 to each part. Which is the best reply?",
+                "B": "Leo says 3:5 and 9:15 are not equivalent because 15 is not 5 + 6. Which is the best reply?"
+              },
+              "choices": {
+                "A": [
+                  "She is right: adding the same number, 2, keeps a ratio.",
+                  "She is right: 4 + 2 = 6 and 6 + 2 = 8, so they match.",
+                  "She is wrong: 4:6 is 2:3, but 6:8 is 3:4, so they differ.",
+                  "She is right: both ratios have a difference of 2."
+                ],
+                "B": [
+                  "He is wrong: multiplying each part by 3 gives 9:15.",
+                  "He is right: add the same to each part.",
+                  "He is wrong: 9:15 is bigger, so it can't be the same.",
+                  "He is right: 9:15 has a larger difference than 3:5."
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 0
+              },
+              "why": "See the worked steps."
+            },
+            {
+              "id": "q8",
+              "level": 3,
+              "skill": "comparing ratios",
+              "type": "mc",
+              "prompt": {
+                "A": "Tank A has 3 fish for every 4 plants. Tank B has 5 fish for every 8 plants. Which tank has more fish for each plant?",
+                "B": "Bowl A has 2 cups of rice for 5 cups of water. Bowl B has 3 cups of rice for 7 cups of water. Which bowl has more rice for each cup of water?"
+              },
+              "choices": {
+                "A": [
+                  "Tank B, because 5 fish and 8 plants beat 3 fish and 4 plants.",
+                  "Tank A, because 3/4 is more than 5/8.",
+                  "Tank B, because 5/8 is more than 3/4.",
+                  "Neither, because each adds 1 more fish."
+                ],
+                "B": [
+                  "Bowl A, because 5 cups of water is less than 7 cups.",
+                  "Bowl A, because 2/5 is more than 3/7.",
+                  "Neither: 2 + 5 = 7 and 3 + 7 = 10, each 1 apart.",
+                  "Bowl B, because 3/7 is more than 2/5."
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 3
+              },
+              "why": "See the worked steps."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "blind": [],
+    "wilco": [],
+    "solver": [],
+    "facts": []
+  },
+  "log": [],
+  "audit": {
+    "notes": [],
+    "briefChanges": []
+  }
+}
