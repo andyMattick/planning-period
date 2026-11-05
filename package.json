@@ -1,0 +1,10 @@
+{
+  "name": "planning-period",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "render": "node scripts/render-pack.mjs",
+    "serve": "node scripts/serve.mjs"
+  }
+}

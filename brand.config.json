@@ -1,0 +1,13 @@
+{
+  "_note": "Everything with the product's name or contact lives here. To rename the product, change this file only (npm run check fails if the name appears anywhere else).",
+  "name": "Planning Period",
+  "shortName": "Planning Period",
+  "tagline": "Your material, your style, checked by agents that didn't write it.",
+  "promise": "The time it gives back.",
+  "orderEmail": "orders@example.com",
+  "orderEmailIsPlaceholder": true,
+  "website": "",
+  "tokenNote": "Token prices are pilot estimates from real build costs; they will be recalibrated after the first orders.",
+  "aiNotice": "Made with AI from the source material you provided, then checked by separate AI agents. Please review everything before it goes in front of students.",
+  "deleteNotice": "Your uploads and our working copies are deleted after you receive your pack. Your style examples are kept only for your own agents, and you can delete them at any time. Nothing you send is used for anyone else."
+}
