@@ -26,7 +26,8 @@ What this says for one order here:
   **$4.6–5.5** when it is the first of its kind (a new subject or format run alone, where the lead does extra work).
 - **Checking is cheap and catches the real problems** (Pet World's pilot audit: every content problem came from the
   blind solve). It is about a third of the cost and is never cut to save money.
-- **Fixed cost per order** (not per item): reading the order and the style notes (first order: a style-notes agent,
+- **Fixed cost per order** (not per item): the 🧭 onboarding read-out and follow-up (measured: $0.33–0.34 and about a
+  minute each on two test orders, `docs/FEASIBILITY.md`), reading the order and the style notes (first order: a style-notes agent,
   guess $0.5–1.5), the reporter (about $0.55 in Pet World), the auditor (guess $0.5–1), the owner's preview round.
   About **$1.5–3 an order**. The menu spreads it over the items (about $1 an item) instead of charging it separately.
 

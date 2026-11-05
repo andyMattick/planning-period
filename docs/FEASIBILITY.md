@@ -35,3 +35,15 @@ From `records/<order>.json` (kept after delivery) and the blind tester's finding
 3. A default the teacher changes in more than half the follow-up answers is the wrong default: change it.
 4. A follow-up question teachers answer "go" to every time isn't needed: the auditor moves it to an assumption.
 5. Change `feasibility.json` and this file together, with a line in the auditor's notes; `npm run check` validates it.
+
+## First test (Nov 5, 2026, two made-up orders, fresh `claude -p` sessions)
+
+| Order | What it asked | What the onboarding agent said | Cost, time |
+|---|---|---|---|
+| 1 page of grade 7 science notes | a 75-question A/B test and a 10-day group project | 75 is over the 60 limit and the page supports about 6–10: recommends 10 (25–30 with more material); 10 days would run out of ideas: recommends 5, or 10 with research beyond the notes. 2 questions, "go" for the defaults | $0.33, 52 s |
+| A page of grade 5 math standards (2 standards) | a full unit, no specs | standards only, so we write the lessons; the full unit's ~95 questions against 8–16 distinct ones: recommends shorter quizzes (8) and test (16) with practice that repeats skills on new numbers. 1 question | $0.34, 56 s |
+
+**Open for the owner:** for math, a skill practised with new numbers is a fair new question, so "distinct questions"
+undercounts what a page of math supports (the agent reasoned its way to that in order 2). A separate
+`questionsPerPage` for math practice (worksheets, homework, bell ringers), keeping 6–10 for tests, would make the
+warnings less strict there. Also decide whether a smaller unit (fewer quizzes) costs fewer tokens.
