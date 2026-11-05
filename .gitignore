@@ -7,3 +7,5 @@ preview.zip
 samples/*/approval.json
 samples/*/comments-*.json
 site/manifest.webmanifest
+samples/*/*/approval.json
+samples/*/*/comments-*.json

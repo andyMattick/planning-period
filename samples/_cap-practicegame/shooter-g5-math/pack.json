@@ -1,0 +1,347 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g5-math-cap-practicegame-shooter",
+  "date": "2026-11-05",
+  "capabilityTest": "practicegame",
+  "_note": "A capability test for the practice game's answer shooter (docs/KINDS-PRACTICEGAMES.md), not a sample for the gallery. Made-up teacher; no blind tester or solver has run on it.",
+  "order": {
+    "teacher": "Mr. Delgado (made-up sample)",
+    "grade": "5",
+    "subject": "math",
+    "topic": "Adding, subtracting and multiplying fractions",
+    "items": [
+      "practicegame"
+    ],
+    "requests": "A space game for fraction practice. Some questions should make them type the answer, not just pick it.",
+    "sources": [
+      "fractions-unit-notes.pdf"
+    ],
+    "styleExamples": [],
+    "itemSpecs": {
+      "practicegame": {
+        "questions": 15
+      }
+    }
+  },
+  "style": {
+    "notes": [
+      "Short sentences",
+      "Fractions written as fractions, not slashes"
+    ],
+    "accent": "#3d4fb8"
+  },
+  "documents": [
+    {
+      "item": "practicegame",
+      "title": "Fraction Star Patrol",
+      "template": "shooter",
+      "theme": {
+        "preset": "space",
+        "title": "Fraction Star Patrol",
+        "story": "Comets are falling toward the space station, and each one carries a fraction. Blast the comet with the right answer before it lands!"
+      },
+      "settings": {
+        "perWave": 5,
+        "seconds": 18
+      },
+      "directions": "Show your work on scrap paper. Fractions can be typed like 3/4 or 1 1/2.",
+      "sections": [
+        {
+          "heading": "Equivalent fractions and common denominators",
+          "questions": [
+            {
+              "id": "s1",
+              "level": 1,
+              "skill": "equivalent fractions",
+              "type": "mc",
+              "prompt": "Which fraction is equal to $\\frac{2}{3}$?",
+              "choices": [
+                "$\\frac{3}{5}$",
+                "$\\frac{4}{6}$",
+                "$\\frac{4}{9}$",
+                "$\\frac{2}{6}$"
+              ],
+              "answer": 1,
+              "why": "Multiply the top and the bottom of $\\frac{2}{3}$ by 2 to get $\\frac{4}{6}$. The other fractions change only one part, or change the parts by adding."
+            },
+            {
+              "id": "s2",
+              "level": 1,
+              "skill": "common denominators",
+              "type": "mc",
+              "prompt": "What is the least common denominator for $\\frac{1}{4} + \\frac{1}{6}$?",
+              "choices": [
+                "10",
+                "24",
+                "12",
+                "4"
+              ],
+              "answer": 2,
+              "why": "12 is the smallest number that both 4 and 6 divide into evenly: $\\frac{1}{4} = \\frac{3}{12}$ and $\\frac{1}{6} = \\frac{2}{12}$. 24 also works but isn't the least, and 10 is just 4 + 6."
+            },
+            {
+              "id": "s3",
+              "level": 1,
+              "skill": "equivalent fractions",
+              "type": "tf",
+              "prompt": "True or false: $\\frac{2}{4}$ and $\\frac{3}{6}$ are equivalent fractions.",
+              "answer": true,
+              "why": "Both are equal to $\\frac{1}{2}$: 2 is half of 4, and 3 is half of 6."
+            }
+          ]
+        },
+        {
+          "heading": "Adding and subtracting fractions",
+          "questions": [
+            {
+              "id": "s4",
+              "level": 1,
+              "skill": "subtract unlike denominators",
+              "type": "mc",
+              "prompt": "$\\frac{3}{4} - \\frac{1}{2} = ?$",
+              "choices": [
+                "$\\frac{1}{8}$",
+                "$\\frac{5}{4}$",
+                "$1$",
+                "$\\frac{1}{4}$"
+              ],
+              "answer": 3,
+              "why": "$\\frac{1}{2} = \\frac{2}{4}$, so $\\frac{3}{4} - \\frac{2}{4} = \\frac{1}{4}$. Subtracting the tops and the bottoms gives $\\frac{2}{2} = 1$, which is wrong."
+            },
+            {
+              "id": "s5",
+              "level": 2,
+              "skill": "subtract unlike denominators",
+              "type": "mc",
+              "prompt": "$\\frac{5}{6} - \\frac{1}{3} = ?$",
+              "choices": [
+                "$\\frac{1}{2}$",
+                "$\\frac{4}{3}$",
+                "$\\frac{2}{3}$",
+                "$\\frac{1}{3}$"
+              ],
+              "answer": 0,
+              "why": "$\\frac{1}{3} = \\frac{2}{6}$, so $\\frac{5}{6} - \\frac{2}{6} = \\frac{3}{6} = \\frac{1}{2}$."
+            },
+            {
+              "id": "s6",
+              "level": 2,
+              "skill": "add unlike denominators",
+              "type": "numeric",
+              "prompt": "$\\frac{2}{5} + \\frac{1}{10} = ?$ Type the sum.",
+              "answer": "1/2",
+              "accept": [
+                "5/10",
+                "0.5"
+              ],
+              "why": "$\\frac{2}{5} = \\frac{4}{10}$, and $\\frac{4}{10} + \\frac{1}{10} = \\frac{5}{10} = \\frac{1}{2}$."
+            },
+            {
+              "id": "s7",
+              "level": 2,
+              "skill": "estimate sums",
+              "type": "mc",
+              "prompt": "Which is the best estimate of $\\frac{7}{8} + \\frac{4}{5}$?",
+              "choices": [
+                "$\\frac{1}{2}$",
+                "$1$",
+                "$3$",
+                "$2$"
+              ],
+              "answer": 3,
+              "why": "$\\frac{7}{8}$ is close to 1 and $\\frac{4}{5}$ is close to 1, so the sum is close to 2."
+            },
+            {
+              "id": "s8",
+              "level": 3,
+              "skill": "add mixed numbers",
+              "type": "mc",
+              "prompt": "$2\\frac{1}{2} + 1\\frac{3}{4} = ?$",
+              "choices": [
+                "$3\\frac{1}{4}$",
+                "$4\\frac{1}{4}$",
+                "$3\\frac{4}{6}$",
+                "$4\\frac{3}{4}$"
+              ],
+              "answer": 1,
+              "why": "$\\frac{1}{2} + \\frac{3}{4} = \\frac{2}{4} + \\frac{3}{4} = \\frac{5}{4} = 1\\frac{1}{4}$. Then $2 + 1 + 1\\frac{1}{4} = 4\\frac{1}{4}$."
+            },
+            {
+              "id": "s9",
+              "level": 3,
+              "skill": "fraction word problems",
+              "type": "numeric",
+              "prompt": "Maya ran $\\frac{5}{6}$ mile and walked $\\frac{1}{3}$ mile. How many miles did she go in all?",
+              "answer": "7/6",
+              "accept": [
+                "1 1/6"
+              ],
+              "unit": "miles",
+              "why": "$\\frac{1}{3} = \\frac{2}{6}$, so $\\frac{5}{6} + \\frac{2}{6} = \\frac{7}{6} = 1\\frac{1}{6}$ miles."
+            },
+            {
+              "id": "s10",
+              "level": 3,
+              "skill": "compare sums to 1",
+              "type": "mc",
+              "prompt": "Which sum is less than 1?",
+              "choices": [
+                "$\\frac{1}{2} + \\frac{2}{3}$",
+                "$\\frac{3}{4} + \\frac{1}{2}$",
+                "$\\frac{5}{6} + \\frac{1}{3}$",
+                "$\\frac{3}{8} + \\frac{1}{4}$"
+              ],
+              "answer": 3,
+              "why": "$\\frac{3}{8} + \\frac{1}{4} = \\frac{3}{8} + \\frac{2}{8} = \\frac{5}{8}$, less than 1. In each other sum, one fraction is at least $\\frac{1}{2}$ and the other is more than $\\frac{1}{2}$, so the sum is more than 1."
+            }
+          ]
+        },
+        {
+          "heading": "Multiplying a fraction and a whole number",
+          "questions": [
+            {
+              "id": "s11",
+              "level": 1,
+              "skill": "multiply fraction by whole",
+              "type": "mc",
+              "prompt": "$3 \\times \\frac{1}{4} = ?$",
+              "choices": [
+                "$\\frac{3}{4}$",
+                "$\\frac{3}{12}$",
+                "$\\frac{4}{3}$",
+                "$\\frac{1}{12}$"
+              ],
+              "answer": 0,
+              "why": "Three groups of one fourth is three fourths: $\\frac{3 \\times 1}{4} = \\frac{3}{4}$. Only the top is multiplied."
+            },
+            {
+              "id": "s12",
+              "level": 2,
+              "skill": "multiply fraction by whole",
+              "type": "numeric",
+              "prompt": "A recipe uses $\\frac{3}{4}$ cup of oats for one batch. How many cups of oats are needed for 4 batches?",
+              "answer": "3",
+              "unit": "cups",
+              "why": "$4 \\times \\frac{3}{4} = \\frac{12}{4} = 3$ cups."
+            },
+            {
+              "id": "s13",
+              "level": 2,
+              "skill": "fraction of a whole number",
+              "type": "mc",
+              "prompt": "A ribbon is 6 feet long. Lin uses $\\frac{2}{3}$ of it. How many feet does she use?",
+              "choices": [
+                "9 feet",
+                "2 feet",
+                "4 feet",
+                "3 feet"
+              ],
+              "answer": 2,
+              "why": "$\\frac{1}{3}$ of 6 is 2, so $\\frac{2}{3}$ of 6 is $2 \\times 2 = 4$ feet."
+            },
+            {
+              "id": "s14",
+              "level": 3,
+              "skill": "multiply fraction by whole",
+              "type": "numeric",
+              "prompt": "$5 \\times \\frac{2}{3} = ?$ Type a fraction or a mixed number.",
+              "answer": "10/3",
+              "accept": [
+                "3 1/3"
+              ],
+              "why": "$5 \\times \\frac{2}{3} = \\frac{10}{3} = 3\\frac{1}{3}$."
+            },
+            {
+              "id": "s15",
+              "level": 3,
+              "skill": "multiplying as scaling",
+              "type": "mc",
+              "prompt": "Without multiplying, which product is greater than 5?",
+              "choices": [
+                "$5 \\times \\frac{3}{4}$",
+                "$5 \\times \\frac{6}{5}$",
+                "$5 \\times \\frac{9}{10}$",
+                "$5 \\times \\frac{1}{2}$"
+              ],
+              "answer": 1,
+              "why": "Multiplying by a fraction greater than 1 ($\\frac{6}{5}$) makes the product greater than 5. Multiplying by a fraction less than 1 makes it less than 5."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T18:33:45.625Z",
+        "rows": 15,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T18:33:45.689Z",
+        "questions": 10,
+        "chance": 0.25,
+        "worst": [
+          [
+            "alwaysTrue",
+            1
+          ],
+          [
+            "difference",
+            0.625
+          ],
+          [
+            "middleValue",
+            0.5
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Fraction Star Patrol",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "log": [
+    {
+      "at": "17:10",
+      "who": "📝 Maker",
+      "what": "Wrote the capability-test content (15 fraction questions on the answer shooter); a capability test, not an order",
+      "minutes": null
+    },
+    {
+      "at": "17:40",
+      "who": "🧾 Reporter",
+      "what": "No blind tester or solver ran on this capability test; only Wilco's scripts and the practice-game checks",
+      "minutes": null
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Capability test for the practice game's answer shooter (docs/KINDS-PRACTICEGAMES.md). Not a real order and not a gallery sample: no blind tester or solver ran on it."
+    ]
+  }
+}

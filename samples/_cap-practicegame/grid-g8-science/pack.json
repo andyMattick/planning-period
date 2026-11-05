@@ -1,0 +1,352 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g8-science-cap-practicegame-grid",
+  "date": "2026-11-05",
+  "capabilityTest": "practicegame",
+  "_note": "A capability test for the practice game's grid battle (docs/KINDS-PRACTICEGAMES.md), not a sample for the gallery. Made-up teacher; no blind tester or fact checker has run on it.",
+  "order": {
+    "teacher": "Ms. Haddad (made-up sample)",
+    "grade": "8",
+    "subject": "science",
+    "topic": "Waves: vocabulary and properties",
+    "items": [
+      "practicegame"
+    ],
+    "requests": "A battleship-style game for the waves vocabulary before the quiz. Pirate theme.",
+    "sources": [
+      "waves-vocab-list.docx"
+    ],
+    "styleExamples": [],
+    "itemSpecs": {
+      "practicegame": {
+        "questions": 16
+      }
+    }
+  },
+  "style": {
+    "notes": [
+      "Short, plain questions",
+      "Vocabulary words in the answers, not hidden in the question"
+    ],
+    "accent": "#0b6a8a"
+  },
+  "documents": [
+    {
+      "item": "practicegame",
+      "title": "Wave Battle",
+      "template": "grid",
+      "theme": {
+        "preset": "ocean",
+        "title": "Wave Battle",
+        "story": "Pirates have hidden their fleet in the bay. Every wave word you know earns a cannon shot. Sink their ships before they sink yours!"
+      },
+      "settings": {
+        "mode": "letters",
+        "size": 6
+      },
+      "directions": "Use your waves vocabulary list if you get stuck, then try again without it.",
+      "sections": [
+        {
+          "heading": "Parts of a wave",
+          "questions": [
+            {
+              "id": "w1",
+              "level": 1,
+              "skill": "wavelength",
+              "type": "mc",
+              "prompt": "The distance from one crest of a wave to the next crest is its ___.",
+              "choices": [
+                "amplitude",
+                "wavelength",
+                "frequency",
+                "speed"
+              ],
+              "answer": 1,
+              "why": "Wavelength is the length of one full wave, crest to crest (or trough to trough)."
+            },
+            {
+              "id": "w2",
+              "level": 1,
+              "skill": "frequency",
+              "type": "mc",
+              "prompt": "The number of waves that pass a point each second is the wave’s ___.",
+              "choices": [
+                "frequency",
+                "wavelength",
+                "amplitude",
+                "medium"
+              ],
+              "answer": 0,
+              "why": "Frequency counts waves per second; it is measured in hertz (Hz)."
+            },
+            {
+              "id": "w3",
+              "level": 1,
+              "skill": "amplitude",
+              "type": "mc",
+              "prompt": "The height of a wave from its resting position to a crest is its ___.",
+              "choices": [
+                "wavelength",
+                "period",
+                "amplitude",
+                "frequency"
+              ],
+              "answer": 2,
+              "why": "Amplitude is how far the wave moves from rest. A bigger amplitude means more energy."
+            },
+            {
+              "id": "s1",
+              "level": 1,
+              "skill": "crest and trough",
+              "type": "short",
+              "prompt": "What is the lowest point of a transverse wave called?",
+              "answer": "trough",
+              "why": "The highest point is the crest; the lowest point is the trough."
+            },
+            {
+              "id": "w4",
+              "level": 1,
+              "skill": "medium",
+              "type": "mc",
+              "prompt": "The material a mechanical wave travels through is called the ___.",
+              "choices": [
+                "crest",
+                "trough",
+                "vacuum",
+                "medium"
+              ],
+              "answer": 3,
+              "why": "A medium is the matter a wave moves through, like air for sound or water for ocean waves. A vacuum has no matter at all."
+            },
+            {
+              "id": "t1",
+              "level": 1,
+              "skill": "mechanical waves",
+              "type": "tf",
+              "prompt": "True or false: sound waves can travel through a vacuum, like outer space.",
+              "answer": false,
+              "why": "Sound is a mechanical wave: it needs particles to pass the vibration along, and a vacuum has none."
+            }
+          ]
+        },
+        {
+          "heading": "Kinds of waves",
+          "questions": [
+            {
+              "id": "w5",
+              "level": 2,
+              "skill": "electromagnetic waves",
+              "type": "mc",
+              "prompt": "Which kind of wave can travel through empty space?",
+              "choices": [
+                "light waves",
+                "sound waves",
+                "ocean waves",
+                "waves on a rope"
+              ],
+              "answer": 0,
+              "why": "Light is an electromagnetic wave, which needs no medium. Sound, ocean and rope waves are mechanical waves."
+            },
+            {
+              "id": "w6",
+              "level": 2,
+              "skill": "longitudinal waves",
+              "type": "mc",
+              "prompt": "In a longitudinal wave, the particles of the medium move ___.",
+              "choices": [
+                "up and down, at right angles to the direction the wave travels",
+                "in circles, the way a floating cork bobs",
+                "back and forth along the direction the wave travels",
+                "forward with the wave, all the way to the end"
+              ],
+              "answer": 2,
+              "why": "In a longitudinal wave (like sound), particles push and pull back and forth in the same direction the wave moves. Up and down is a transverse wave."
+            },
+            {
+              "id": "s2",
+              "level": 2,
+              "skill": "mechanical waves",
+              "type": "short",
+              "prompt": "What do we call a wave that needs a medium to travel, like sound?",
+              "answer": "mechanical wave",
+              "accept": [
+                "mechanical",
+                "mechanical waves"
+              ],
+              "why": "Mechanical waves (sound, water waves, waves on a rope) need matter to travel through."
+            },
+            {
+              "id": "t2",
+              "level": 2,
+              "skill": "electromagnetic waves",
+              "type": "tf",
+              "prompt": "True or false: radio waves and visible light are both electromagnetic waves.",
+              "answer": true,
+              "why": "Radio waves, microwaves, infrared, visible light, ultraviolet, X-rays and gamma rays are all electromagnetic waves."
+            },
+            {
+              "id": "t3",
+              "level": 2,
+              "skill": "waves carry energy",
+              "type": "tf",
+              "prompt": "True or false: a wave carries energy from place to place, but it does not carry the medium along with it.",
+              "answer": true,
+              "why": "A floating leaf bobs up and down as a wave passes but stays in about the same place: the energy moves on, the water doesn’t."
+            },
+            {
+              "id": "w7",
+              "level": 2,
+              "skill": "reflection",
+              "type": "mc",
+              "prompt": "When a wave bounces off a surface, it is called ___.",
+              "choices": [
+                "refraction",
+                "absorption",
+                "reflection",
+                "transmission"
+              ],
+              "answer": 2,
+              "why": "Reflection is bouncing back, like an echo or a mirror image. Refraction is bending, absorption is soaking up, transmission is passing through."
+            }
+          ]
+        },
+        {
+          "heading": "Wave behavior",
+          "questions": [
+            {
+              "id": "w8",
+              "level": 3,
+              "skill": "amplitude and loudness",
+              "type": "mc",
+              "prompt": "A sound gets louder but its pitch stays the same. What changed?",
+              "choices": [
+                "its amplitude increased",
+                "its frequency increased",
+                "its wavelength got shorter",
+                "its speed in air doubled"
+              ],
+              "answer": 0,
+              "why": "Loudness depends on amplitude. Pitch depends on frequency, so if the pitch stays the same, the frequency and wavelength didn’t change."
+            },
+            {
+              "id": "w9",
+              "level": 3,
+              "skill": "refraction",
+              "type": "mc",
+              "prompt": "Light bends as it passes from air into water. Why?",
+              "choices": [
+                "water absorbs all colors except blue",
+                "the light reflects off the water’s surface",
+                "the light’s frequency doubles in water",
+                "the light’s speed changes in the new medium"
+              ],
+              "answer": 3,
+              "why": "Refraction happens because light slows down in water. The change in speed bends the light at the boundary."
+            },
+            {
+              "id": "w10",
+              "level": 3,
+              "skill": "frequency and wavelength",
+              "type": "mc",
+              "prompt": "Wave A and wave B travel at the same speed. Wave A has a higher frequency. Compared with wave B, wave A has a ___.",
+              "choices": [
+                "longer wavelength",
+                "shorter wavelength",
+                "lower amplitude",
+                "wavelength that is the same"
+              ],
+              "answer": 1,
+              "why": "Speed = frequency × wavelength. At the same speed, a higher frequency means a shorter wavelength."
+            },
+            {
+              "id": "s3",
+              "level": 3,
+              "skill": "electromagnetic spectrum",
+              "type": "short",
+              "prompt": "Light with a higher frequency than violet light, which can cause sunburn, is called ___ light.",
+              "answer": "ultraviolet",
+              "accept": [
+                "UV",
+                "ultraviolet light"
+              ],
+              "why": "Ultraviolet (UV) light is just past violet on the spectrum, with a higher frequency and more energy. It causes sunburn."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T18:34:11.144Z",
+        "rows": 16,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T18:34:11.203Z",
+        "questions": 10,
+        "chance": 0.25,
+        "worst": [
+          [
+            "alwaysTrue",
+            0.667
+          ],
+          [
+            "converge",
+            0.35
+          ],
+          [
+            "middle",
+            0.333
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Wave Battle",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "log": [
+    {
+      "at": "17:50",
+      "who": "📝 Maker",
+      "what": "Wrote the capability-test content (16 waves vocabulary questions on the grid battle); a capability test, not an order",
+      "minutes": null
+    },
+    {
+      "at": "18:20",
+      "who": "🧾 Reporter",
+      "what": "No blind tester or fact checker ran on this capability test; only Wilco’s scripts and the practice-game checks",
+      "minutes": null
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Capability test for the practice game’s grid battle (docs/KINDS-PRACTICEGAMES.md). Not a real order and not a gallery sample: no blind tester or fact checker ran on it."
+    ]
+  }
+}

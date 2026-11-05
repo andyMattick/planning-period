@@ -1,0 +1,266 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g6-ela-cap-practicegame-fixit",
+  "date": "2026-11-05",
+  "capabilityTest": "practicegame",
+  "_note": "A capability test for the practice game's fix-it desk (docs/KINDS-PRACTICEGAMES.md), not a sample for the gallery. Made-up teacher; no blind tester has run on it.",
+  "order": {
+    "teacher": "Mrs. Lindqvist (made-up sample)",
+    "grade": "6",
+    "subject": "ela",
+    "topic": "Grammar and usage: pronouns, agreement, punctuation",
+    "items": [
+      "practicegame"
+    ],
+    "requests": "Editing practice like the warm-ups we do in class: find the mistake, then fix it. Some should be typed.",
+    "sources": [
+      "grammar-warmups.docx"
+    ],
+    "styleExamples": [],
+    "itemSpecs": {
+      "practicegame": {
+        "questions": 12
+      }
+    }
+  },
+  "style": {
+    "notes": [
+      "Sentences about school life",
+      "Short explanations that name the rule"
+    ],
+    "accent": "#9a3f12"
+  },
+  "documents": [
+    {
+      "item": "practicegame",
+      "title": "Grammar Fix-It Desk",
+      "template": "fixit",
+      "theme": {
+        "preset": "classroom",
+        "title": "Grammar Fix-It Desk",
+        "story": "You’re the editor of the class newsletter. Your writers turned in their sentences, and every one has a single slip. Find it, fix it, and stamp it!",
+        "names": {
+          "helper": "writer",
+          "paper": "paper",
+          "desk": "the newsletter desk"
+        }
+      },
+      "directions": "Each paper has exactly one mistake. When you type a fix, capitals and punctuation count.",
+      "sections": [
+        {
+          "heading": "Pronouns",
+          "questions": [
+            {
+              "id": "f1",
+              "level": 1,
+              "skill": "pronoun case",
+              "type": "fixit",
+              "prompt": "Marco and [[me]] built the volcano for the science fair.",
+              "answer": "I",
+              "why": "“Marco and I” is the subject. Test it by dropping Marco: “I built the volcano,” not “me built the volcano.”"
+            },
+            {
+              "id": "f2",
+              "level": 1,
+              "skill": "its and it’s",
+              "type": "fixit",
+              "prompt": "The puppy wagged [[it’s]] tail at the mail carrier.",
+              "answer": "its",
+              "why": "“It’s” means “it is.” The tail belongs to the puppy, so use the possessive “its,” which has no apostrophe."
+            },
+            {
+              "id": "f3",
+              "level": 2,
+              "skill": "intensive pronouns",
+              "type": "fixit",
+              "prompt": "The twins built the whole treehouse [[themself]] over the summer.",
+              "answer": "themselves",
+              "why": "The twins are more than one, so the intensive pronoun is “themselves.” “Themself” doesn’t fit a plural subject."
+            },
+            {
+              "id": "f4",
+              "level": 3,
+              "skill": "vague pronouns",
+              "type": "fixit",
+              "prompt": "When Maya handed Jen the trophy, [[she]] smiled for the camera.",
+              "answer": "Jen",
+              "accept": [
+                "Maya"
+              ],
+              "why": "“She” could mean Maya or Jen, so the reader can’t tell who smiled. Naming the person fixes the vague pronoun."
+            }
+          ]
+        },
+        {
+          "heading": "Subject-verb agreement",
+          "questions": [
+            {
+              "id": "f5",
+              "level": 1,
+              "skill": "subject-verb agreement",
+              "type": "fixit",
+              "prompt": "The list of chores [[are]] taped to the fridge.",
+              "choices": [
+                "were",
+                "is",
+                "be"
+              ],
+              "answer": 1,
+              "choiceWhy": [
+                "“Were” is plural too, and it moves the sentence into the past.",
+                "",
+                "“Be” can’t be the main verb after a subject like “list.”"
+              ],
+              "why": "The subject is “list,” not “chores” (“of chores” only describes the list). One list is taped to the fridge."
+            },
+            {
+              "id": "f6",
+              "level": 2,
+              "skill": "subject-verb agreement",
+              "type": "fixit",
+              "prompt": "Each of the boys [[have]] a library card.",
+              "choices": [
+                "are having",
+                "having",
+                "has"
+              ],
+              "answer": 2,
+              "choiceWhy": [
+                "“Are” is plural, and the subject “each” is singular.",
+                "“Having” isn’t a complete verb, so the sentence would fall apart.",
+                ""
+              ],
+              "why": "“Each” is the subject, and each means one at a time, so the verb is singular: “Each of the boys has.”"
+            },
+            {
+              "id": "f7",
+              "level": 3,
+              "skill": "subject-verb agreement",
+              "type": "fixit",
+              "prompt": "Neither the coach nor the players [[was]] ready for the rain.",
+              "choices": [
+                "were",
+                "is",
+                "has been"
+              ],
+              "answer": 0,
+              "choiceWhy": [
+                "",
+                "“Is” is singular, and the nearer subject, “players,” is plural.",
+                "“Has been” is singular too."
+              ],
+              "why": "With “neither … nor,” the verb agrees with the subject closer to it. “Players” is plural, so the verb is “were.”"
+            }
+          ]
+        },
+        {
+          "heading": "Capitals, commas and apostrophes",
+          "questions": [
+            {
+              "id": "f8",
+              "level": 1,
+              "skill": "capitalization",
+              "type": "fixit",
+              "prompt": "Our class visited the art museum on [[friday]] morning.",
+              "answer": "Friday",
+              "why": "Days of the week are proper nouns, so they start with a capital letter."
+            },
+            {
+              "id": "f9",
+              "level": 2,
+              "skill": "commas after introductory clauses",
+              "type": "fixit",
+              "prompt": "After the game [[ended we]] walked home together.",
+              "answer": "ended, we",
+              "why": "A comma comes after an introductory clause (“After the game ended”) to show where the main sentence begins."
+            },
+            {
+              "id": "f10",
+              "level": 2,
+              "skill": "plural possessives",
+              "type": "fixit",
+              "prompt": "All of the [[student’s]] lockers were painted blue over the summer.",
+              "answer": "students’",
+              "accept": [
+                "students'"
+              ],
+              "why": "The lockers belong to many students. For a plural that ends in s, the apostrophe goes after the s: students’."
+            },
+            {
+              "id": "f11",
+              "level": 3,
+              "skill": "run-on sentences",
+              "type": "fixit",
+              "prompt": "The storm knocked out the [[power, we]] read by flashlight.",
+              "choices": [
+                "power so we",
+                "power; we",
+                "power we"
+              ],
+              "answer": 1,
+              "choiceWhy": [
+                "Joining two sentences with “so” needs a comma before “so.”",
+                "",
+                "Taking the comma out leaves a run-on: two sentences with nothing between them."
+              ],
+              "why": "Two complete sentences joined by only a comma make a comma splice. A semicolon can join them."
+            },
+            {
+              "id": "f12",
+              "level": 3,
+              "skill": "dangling modifiers",
+              "type": "fixit",
+              "prompt": "Running to catch the bus, [[my backpack fell open]].",
+              "choices": [
+                "the backpack fell open",
+                "my backpack was falling open",
+                "I watched my backpack fall open"
+              ],
+              "answer": 2,
+              "choiceWhy": [
+                "The backpack still seems to be the one running.",
+                "The backpack still seems to be the one running.",
+                ""
+              ],
+              "why": "The opening phrase describes whoever comes right after the comma. A backpack can’t run, so the runner (“I”) has to come next."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T18:34:30.452Z",
+        "rows": 12,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      }
+    ]
+  },
+  "log": [
+    {
+      "at": "18:30",
+      "who": "📝 Maker",
+      "what": "Wrote the capability-test content (12 one-mistake sentences on the fix-it desk); a capability test, not an order",
+      "minutes": null
+    },
+    {
+      "at": "19:00",
+      "who": "🧾 Reporter",
+      "what": "No blind tester ran on this capability test; only Wilco’s scripts and the practice-game checks",
+      "minutes": null
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Capability test for the practice game’s fix-it desk (docs/KINDS-PRACTICEGAMES.md). Not a real order and not a gallery sample: no blind tester ran on it."
+    ]
+  }
+}
