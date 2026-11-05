@@ -124,6 +124,10 @@
     "interactive": {
       "questions": 15
     },
+    "lesson": {
+      "lessons": 1,
+      "questions": 12
+    },
     "practicegame": {
       "questions": 20
     }
@@ -329,6 +333,16 @@
       "questions": [
         5,
         40
+      ]
+    },
+    "lesson": {
+      "lessons": [
+        1,
+        5
+      ],
+      "questions": [
+        8,
+        25
       ]
     },
     "practicegame": {

@@ -278,6 +278,17 @@
       "versions": false
     },
     {
+      "id": "lesson",
+      "label": "Interactive lesson",
+      "detail": "A 40-minute lesson students do on a device, in reverse order: a hook, labs where they discover the rule (simulations, sorts, slider hunts, an off-the-board activity), the rule card, check questions, then a printable My notes page. It checks answers as they go, saves on the device, and comes with a teacher copy and a private board for your teacher questions.",
+      "tokens": 90,
+      "formats": [
+        "html",
+        "pdf"
+      ],
+      "versions": false
+    },
+    {
       "id": "practicegame",
       "label": "Practice game",
       "detail": "A game students play on any device, built from your questions on one of our tested game templates (answer-shooter, grid battle, rush, detective case, fix-it desk) with your theme. Works offline; every question checked like a quiz.",
