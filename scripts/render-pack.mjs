@@ -10,8 +10,8 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { fileURLToPath } from 'node:url';
-import { slug, questionsOf, layoutOf, scrubSecrets, cleanSvg } from './render/util.mjs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { slug, questionsOf, layoutOf, scrubSecrets, cleanSvg, kindOf } from './render/util.mjs';
 import { copyHtml, rubricHtml, handoutHtml, cardsHtml, footerTemplate, headerTemplate, watermark, PREVIEW_MARK } from './render/html.mjs';
 import { copyDocx, rubricDocx } from './render/docx.mjs';
 import { deckPptx } from './render/pptx.mjs';
@@ -20,7 +20,7 @@ import { reviewHtml, STATEMENT } from './render/review.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
-const DECK_ITEMS = new Set(['slides', 'reviewgame']);
+const DECK_ITEMS = new Set(['slides', 'reviewgame', 'bellringer']);
 
 export class RenderError extends Error {}
 
@@ -146,24 +146,27 @@ export async function renderPack(folder, { mode } = {}) {
       for (let i = 2; used.has(base); i++) base = `${slug(doc.title || doc.item)}-${i}`;
       used.add(base);
       const hasQs = questionsOf(doc).length > 0;
-      const deck = DECK_ITEMS.has(doc.item) || (Array.isArray(doc.slides) && doc.slides.length > 0);
+      const kind = kindOf(doc);
+      const bell = kind === 'bellringer'; // one question a day: day cards for students, a slide a day
+      const deck = DECK_ITEMS.has(kind) || DECK_ITEMS.has(doc.item) || (Array.isArray(doc.slides) && doc.slides.length > 0);
+      ctx.dayLabels = bell;
 
       if (deck) {
         write(`${base}.pptx`, await later(() => deckPptx(doc, ctx)), `${doc.title}: slides with speaker notes`);
         if (doc.slides?.length) await pdf(`${base}-handout.pdf`, handoutHtml(doc, ctx), `${doc.title} · Handout`, `${doc.title}: printable handout with room for notes`, doc.title);
-        if (hasQs && !doc.slides?.length) await pdf(`${base}-cards.pdf`, cardsHtml(doc, ctx), `${doc.title} · Cards`, `${doc.title}: printable question cards (no answers)`, doc.title);
+        if (hasQs && !doc.slides?.length && !bell) await pdf(`${base}-cards.pdf`, cardsHtml(doc, ctx), `${doc.title} · Cards`, `${doc.title}: printable question cards (no answers)`, doc.title);
       }
       if (hasQs) {
         const versions = Array.isArray(doc.versions) && doc.versions.length ? doc.versions : [null];
-        const copies = deck ? [true] : [false, true]; // a review game's key is the teacher copy; the cards are the student side
+        const copies = deck && !bell ? [true] : [false, true]; // a review game's key is the teacher copy; the cards are the student side
         for (const ver of versions) {
           for (const teacher of copies) {
             const who = teacher ? 'teacher' : 'student';
             const name = `${base}-${who}${ver ? `-${ver}` : ''}`;
             const label = `${doc.title} · ${teacher ? 'Teacher' : 'Student'} copy${ver ? ` ${ver}` : ''}`;
             const what = `${doc.title}: ${who} copy${ver ? `, version ${ver}` : ''}${teacher ? ' (key, why, skills map)' : ''}`;
-            await pdf(`${name}.pdf`, copyHtml(doc, ver, ctx, teacher), label, what, doc.title);
-            if (!deck) write(`${name}.docx`, await later(() => copyDocx(doc, ver, ctx, teacher)), what + ' (Word)');
+            await pdf(`${name}.pdf`, bell && !teacher ? cardsHtml(doc, ctx, { days: true }) : copyHtml(doc, ver, ctx, teacher), label, what, doc.title);
+            if (!deck || bell) write(`${name}.docx`, await later(() => copyDocx(doc, ver, ctx, teacher)), what + ' (Word)');
           }
         }
       } else if (doc.rubric) {
@@ -174,6 +177,19 @@ export async function renderPack(folder, { mode } = {}) {
       }
     }
 
+    // Which of Wilco's bots the pack has enough questions to judge (checks/test-wise.mjs, the whole-pack group), for
+    // rounds that didn't record it: a bot that isn't judged is shown greyed, never as over the line.
+    const wise = path.join(ROOT, 'checks', 'test-wise.mjs');
+    if (fs.existsSync(wise)) {
+      try {
+        const { playPack } = await import(pathToFileURL(wise).href);
+        const res = playPack(pack);
+        const rows = res.groups[res.groups.length - 1]?.rows || [];
+        ctx.botJudged = (name) => rows.find((r) => r.name === name)?.counted;
+      } catch (e) {
+        console.warn(`render-pack: couldn't play Wilco's bots for the report (${e.message}); every bot is shown as judged`);
+      }
+    }
     const audit = auditHtml(pack, ctx);
     await pdf('AUDIT-REPORT.pdf', audit.html, 'Audit report', 'The audit report: every agent, every round, every catch and fix, time and cost', 'Audit report');
 

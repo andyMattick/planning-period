@@ -1,7 +1,7 @@
 // Slide decks and projector review games with pptxgenjs: a title slide, one slide per entry, speaker notes.
 
 import PptxGenJS from 'pptxgenjs';
-import { vv, questionsOf, answerText, letter, inkAccent } from './util.mjs';
+import { vv, questionsOf, keyText, letter, inkAccent, kindOf } from './util.mjs';
 
 function addFooter(slide, ctx) {
   slide.addText(`${ctx.brand.shortName || ctx.brand.name} · Made with AI · check before use`, {
@@ -43,11 +43,11 @@ export async function deckPptx(doc, ctx) {
     : questionsOf(doc).map(({ q, n }) => {
         const ch = q.type === 'mc' ? vv(q.choices) || [] : [];
         return {
-          title: `Question ${n}`,
+          title: kindOf(doc) === 'bellringer' ? `Day ${n}` : `Question ${n}`,
           tag: `Level ${q.level ?? ''} · ${q.skill || ''}`,
           prompt: vv(q.prompt),
           bullets: ch.map((c, i) => `${letter(i)}. ${c}`).concat(q.type === 'tf' ? ['True', 'False'] : []),
-          notes: `Answer: ${answerText(q)}${q.why ? `.  Why: ${vv(q.why)}` : ''}`,
+          notes: `Answer: ${keyText(q)}${q.why ? `.  Why: ${vv(q.why)}` : ''}`,
           figure: vv(q.figure),
         };
       });
