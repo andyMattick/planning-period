@@ -9,5 +9,11 @@
   "website": "",
   "tokenNote": "Token prices are pilot estimates from real build costs; they will be recalibrated after the first orders.",
   "aiNotice": "Made with AI from the source material you provided, then checked by separate AI agents. Please review everything before it goes in front of students.",
-  "deleteNotice": "Your uploads and our working copies are deleted after you receive your pack. Your style examples are kept only for your own agents, and you can delete them at any time. Nothing you send is used for anyone else."
+  "deleteNotice": "Your uploads and our working copies are deleted after you receive your pack. Your style examples are kept only for your own agents, and you can delete them at any time. Nothing you send is used for anyone else.",
+  "exampleWorld": {
+    "_note": "A live example of a learning world (the owner's own, Pet World), shown on the world request page. Its demo uses made-up students only.",
+    "name": "Pet World",
+    "studentDemo": "https://pet-world-2.vercel.app/?demo",
+    "teacherDemo": "https://pet-world-2.vercel.app/teacher.html?demo"
+  }
 }

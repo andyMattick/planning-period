@@ -244,3 +244,10 @@ details summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
 .checks .why { display: block; font-weight: 400; color: var(--muted); font-size: .88rem; }
 .summary dl.order { grid-template-columns: minmax(110px, max-content) 1fr; }
 .summary dd ul { margin: 0; padding-left: 1.1em; }
+/* the live example world box on the world request page */
+.demo-card { margin: 14px 0; display: block; }
+.demo-card h2 { margin: 0 0 6px; font-size: 1.15rem; }
+.demo-card ul { margin: 6px 0 10px; padding-left: 20px; }
+.demo-card li { margin: 4px 0; }
+.demo-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.demo-links .btn { text-decoration: none; display: inline-flex; align-items: center; }

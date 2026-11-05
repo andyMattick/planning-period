@@ -348,3 +348,17 @@
     $('load-error').textContent = 'The page could not load (' + ex.message + '). Open it with npm run serve, not straight from the folder.';
   });
 })();
+
+// The live example world (brand.config.json exampleWorld): fill names and links from the config when it loads.
+(async () => {
+  try {
+    const cfg = await (await fetch('../brand.config.json', { cache: 'no-cache' })).json();
+    const ex = cfg && cfg.exampleWorld;
+    if (!ex) return;
+    document.querySelectorAll('[data-ex]').forEach((el) => {
+      const v = ex[el.getAttribute('data-ex')];
+      if (!v) return;
+      if (el.tagName === 'A') el.href = v; else el.textContent = v;
+    });
+  } catch (e) { /* offline: the built-in links stay */ }
+})();
