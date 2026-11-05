@@ -5,28 +5,51 @@ consistent with itself.
 
 ## Inputs
 - `pack.json`: every `prompt`, `choices`, `answer`, `why`, notes and slide text.
-- The teacher's sources. Where a claim goes beyond them, a reliable reference (say which, with a link or title).
+- The teacher's sources. Where a claim goes beyond them, a reliable reference (say which, with a link or title; use
+  web search when the lead allows it, and say in your entry if a tool you needed was denied).
+- A recheck (round 2 on): the changed items, **every checker's suggested wording from the round before**, and the
+  whole pack for the sweep in step 6.
 
 ## Steps
 1. List every claim: each date, name, place, number, term, definition, cause, equation and quotation, in prompts,
-   keys, wrong choices that are worded as true, `why` lines, notes and slides. Count them.
+   keys, wrong choices that are worded as true, `why` lines, notes, slides, study-guide text, passages written as
+   nonfiction, puzzle clues marked `because`, quiz-show clues and answers, card backs, and every figure (read the SVG:
+   does it show anything false, or point at a key? g8-science: three "before" figures showed the reaction already
+   happening). Count them.
 2. Check each against the source first. Mark it **source** (the source says it), **reference** (true, but not in the
    source: name the reference), **off** (false or not supported) or **judgment** (a simplification teachers disagree on).
 3. Science: every chemical equation balanced (count atoms each side), units and significant figures, terms used the
    way the grade's standards use them (mass vs weight, heat vs temperature, "energy released", not "made").
 4. Social studies: dates and BCE/CE, the right ruler and place, quotes word for word and attributed; framing that
    presents one view as fact (flag it as judgment with both readings unless it makes a choice false).
-5. A wrong choice must be wrong for a reason a student can learn, not wrong because of a trick of dates.
+5. A wrong choice must be wrong for a reason a student can learn, not wrong because of a trick of dates. A wrong
+   choice that is true of a real case is FIX (g11-history: South Carolina's 1865 apprenticeship law).
+6. **Sweep the whole pack for every claim you mark off.** Search every document, version, `why`, model answer, box and
+   slide for the same claim in other words, and list each place (g11-history: the "last federal troops" myth sat in 4
+   places; round 1 kept one as "a shortening", round 3 caught one, and only round 4's sweep found the rest). A KEEP of a
+   shortening needs one line saying why it isn't a known myth.
+7. **Suggested wording is new content.** Check every fact in another checker's suggested fix, and in the maker's text
+   that came from one, like the maker's own (g11-history q21; g8-science round 4 caught a suggested Cl₃ trap that
+   didn't balance). Your own suggestions are directions with their facts listed ("Facts to check: …").
+8. **Games and apps:** a clue with `because` must be true and enough to fix the answer; a quiz-show clue has one fair
+   answer; card backs and memorize passages match their source word for word (docs/KINDS-GAMES.md, KINDS-APPS.md).
 
 ## Output (`pack.json`)
-Add `checks.facts`: `{"round", "agent": "🔎 Fact checker", "claims", "flagged", "notes", "findings": [{"where",
-"kind": "FIX" | "KEEP" | "JUDGMENT", "what", "source"}]}`. Every **off** is FIX; every **judgment** is JUDGMENT for the
-teacher. Never edit `documents`. Tell the reporter your minutes and tokens.
+One entry for `checks.facts`: `{"round", "agent": "🔎 Fact checker", "claims", "flagged", "notes", "findings":
+[{"where", "kind": "FIX" | "KEEP" | "JUDGMENT", "what", "source"}]}`, written to a file (`checks-facts-r<N>.json`) for
+the lead to merge (checkers run at the same time). Every **off** is FIX, one finding per place the sweep found; every
+**judgment** is JUDGMENT for the teacher. In a recheck, set `fixed` on each earlier finding you confirm, `sameAs` on a
+repeat. Never edit `documents`. The reporter takes your minutes from your session's record.
 
 ---
-**Version 1** (Nov 5, 2026)
+**Version 2** (Nov 5, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's accuracy rules (`CONTENT-RULES.md` §4: facts current and not
   oversimplified into something false; a judgment-call simplification is flagged, not changed silently) and the Biology
   blind solve's fact list (balanced equations, "mostly", breathing is not respiration).
+- v2, Nov 5, 2026 (first audit, docs/audits/AUDIT-2026-11-05.md): sweep the whole pack for any claim marked off
+  (g11-history: the troop myth in 4 places); check every suggested wording as new content (g11-history q21,
+  g8-science Cl₃); rechecks on changed text each round (g11-history: no fact recheck until round 4); figures read as
+  SVG (g8-science); true-of-a-real-case wrong choices (g11-history); puzzle clues with `because`, quiz-show clues, card
+  backs and memorize passages (docs/KINDS-GAMES.md, KINDS-APPS.md); an entry file, `fixed`/`sameAs`.

@@ -13,6 +13,7 @@ You make nothing and change nothing in the order.
   if present, plus `lines` and `tokenTotal`.
 - The **sources** (`sources/`) and the **training files** (`training/`, the teacher's own past work).
 - `menu.json` (items, tokens) and `feasibility.json` (defaults, limits, questions per page, messages).
+- `docs/PRICING.md` section 2b (the reading-quiz price and the reading-test surcharge).
 
 ## Steps
 1. **Measure the source.** For each file: pages (words ÷ `wordsPerPage`; a slide or a printed page counts as one),
@@ -37,18 +38,29 @@ You make nothing and change nothing in the order.
      and use those as the specs. Unreadable or partly readable: a warning and what we can do with the readable part.
    - **Grade level:** source, request and grade agree? A grade 4 order with a high-school chapter is a warning
      (we would rewrite down; say so).
+   - **Reading (English) on passages:** count the passages (the teacher's, or ones we write from her notes: about
+     250–350 words each at the grade's reading level). A passage supports about 4–6 inference and evidence questions
+     (`feasibility.json` `readingquiz`). A `quiz` built on passages **is a `readingquiz`** (150 tokens, not 40), and a
+     `test` built on passages gets the reading surcharge (+110 tokens): step 7. Grammar, vocabulary or writing quizzes
+     with no passage stay `quiz`.
+   - **Apps:** `reviewapp` defaults to 40 cards, `interactive` to 15 questions. Ask which review-app modes are needed
+     only when the source doesn't make it clear (a poem or a verse means Memorize); a memorize passage over 250 words
+     is split into parts. Say plainly that apps save only on the student's device and are for practice, not grades.
    - **Days, lessons, pages:** a project or unit longer than the source has ideas for (a 10-day project from one page)
      is a warning with a feasible length.
    - No source at all: the `noSource` message.
 5. **Fill the gaps with the defaults** (`feasibility.json` `defaults[item]`, adjusted to the grade and what the
    training files show) and list each one under `assumptions` ("Quiz: 10 questions, 7 mc, 2 short, 1 written, A/B,
-   because you didn't say").
+   because you didn't say"). Say a test's harder share as the default says it: "about 40% harder questions", never
+   "about half".
 6. **Choose at most 3 questions.** Only things that change what we make and that you can't decide well yourself.
    Rank: an impossible or too-large ask first, then a choice between two reasonable readings, then anything else.
    Each question has 2–4 short options and a recommended default; each can be answered in one word ("A", "yes",
    "12"). **If nothing needs a decision, ask nothing**: say what we will make and that we're starting.
 7. **Tokens.** Recompute from `menu.json` for what we will make (items × quantities, after your recommendations), next
-   to the `tokenTotal` the teacher saw. If they differ, the follow-up says so plainly and asks before charging more.
+   to the `tokenTotal` the teacher saw, with the reading price applied (step 4). If they differ, the follow-up says so
+   plainly, with the reason in one line ("a quiz on passages takes more checking: every question is tested to make
+   sure it needs the passage"), and asks before charging more.
 
 ## Outputs (in the order folder)
 `onboarding.json`:
@@ -81,8 +93,11 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 1** (Nov 5, 2026)
+**Version 2** (Nov 5, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
   feasible alternative when an order asks for too much (`feasibility.json`, `docs/FEASIBILITY.md`).
+- v2, Nov 5, 2026 (first audit, docs/audits/AUDIT-2026-11-05.md): the reading-quiz price and reading-test surcharge
+  (owner decision 4; g7-ela cost $22.48 against 55 tokens); "about 40% harder", never "about half" (a slip in the
+  onboarding test runs); review-app and interactive defaults and what to say about them (docs/KINDS-APPS.md).

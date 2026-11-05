@@ -58,8 +58,26 @@ The examples stay only for this teacher's agents; `rm -rf "$STYLE"` when they as
 ## 4. Maker
 
 Start a fresh agent with `agents/maker.md`, `$WORK/onboarding.json` and `$WORK/followup-answer.md` (read first),
-`$STYLE/style.md`, `in/order.json`, `in/sources/` and `docs/PACK-FORMAT.md`. It writes `$WORK/pack.json` and runs `node $REPO/checks/keys.mjs` and
-`node $REPO/checks/test-wise.mjs --items` until both exit 0. Log its minutes, tokens and cost.
+`$STYLE/style.md`, `in/order.json`, `in/sources/` and `docs/PACK-FORMAT.md`, in a folder that holds **a copy of
+`$REPO/checks/`** (and `scripts/` for puzzles), so it runs the checks itself: `node checks/keys.mjs pack.json` and
+`node checks/test-wise.mjs pack.json` until both exit 0 (`--items` only shows which bot picks each key: it always exits
+0), plus `checks/math.mjs` for math, `checks/puzzles.mjs` for puzzles, `checks/apps.mjs` for apps. (g7-ela: without
+them the lead relayed bot output 8 times.) It writes `$WORK/pack.json`. Log its minutes, tokens and cost from the
+session's own record.
+
+## 4a. ELA reading items: the no-passage gate (round 1, before any other checker)
+
+Owner's rule, Nov 5, 2026 (g7-ela: three fresh testers answered 20 of 20 without the passages; the bots passed it).
+For each version, a **fresh** session with `agents/blind-ela.md` (mode 1) and that version's questions only, no
+passages:
+```
+node $REPO/checks/student-view.mjs "$WORK/pack.json" --only "<every where in version A, | between>" --out "$WORK/probe-A.md"
+node $REPO/checks/score-blind.mjs "$WORK/pack.json" "$WORK/probe-A.jsonl"     # the same for B
+```
+**Over about 40% right in either version fails the round** (chance 25% with 4 choices; 5 of 10 fails). A fail goes back
+to a fresh maker session for a redesign of the passage and choices (`agents/maker.md`, "Reading items"), then the probe
+again on new fresh sessions. Steps 5–7 start only on a draft that passed. The probes run again on changed reading
+items in every later round. Log each probe (about $0.20 a version).
 
 ## 5. Fresh blind tester for the subject (at the same time as 6 and 7)
 
@@ -67,16 +85,23 @@ Start a fresh agent with `agents/maker.md`, `$WORK/onboarding.json` and `$WORK/f
 node $REPO/checks/student-view.mjs "$WORK/pack.json" --out "$WORK/view.md"
 ```
 Start a **fresh** agent (never the maker) with `agents/blind-<subject>.md` (`menu.json` maps the subject to its
-checker), `view.md` and the sources. It answers into `$WORK/blind-r1.jsonl`, then:
+checker), `view.md` and the sources. ELA reading items: two phases, `view.md` alone first, then the passages as a
+separate file (`passages.md`; the student view doesn't print passages yet). Keep `pack.json` out of its folder until
+it has answered (copy it in for scoring: g4-math and g8-science ran it this way). It answers into
+`$WORK/blind-r1.jsonl`, then:
 ```
 node $REPO/checks/score-blind.mjs "$WORK/pack.json" "$WORK/blind-r1.jsonl"
 ```
-and records `checks.blind` round 1 (FIX / KEEP / JUDGMENT, difficulty by level).
+and writes its `checks.blind` round 1 entry (FIX / KEEP / JUDGMENT, difficulty by level; ELA: `passageFree` from its
+no-passage phase) to `$WORK/checks-blind-r1.json`. The lead merges it into `pack.json` (checkers run at the same time,
+so none of them writes the pack).
 
 ## 6. Solver (math) or fact checker (science, social studies; ELA nonfiction)
 
 A fresh agent with `agents/solver-math.md` or `agents/facts.md`. It solves or checks from `view.md` and the sources
-before reading the key, and records `checks.solver` or `checks.facts`.
+before reading the key, and writes its entry file (`checks-solver-r1.json` or `checks-facts-r1.json`) for the lead to
+merge. The solver starts with `node $REPO/checks/math.mjs "$WORK/pack.json"` (and records it with `--write`). Give the
+fact checker web search, and check the session's allowed tools actually took (g11-history: a quoting slip denied them).
 
 ## 7. Wilco
 
@@ -84,13 +109,15 @@ before reading the key, and records `checks.solver` or `checks.facts`.
 node $REPO/checks/keys.mjs "$WORK/pack.json" --write
 node $REPO/checks/test-wise.mjs "$WORK/pack.json" --write          # add --pass 70 if the teacher gave a pass mark
 ```
-Both must exit 0. On a fail, `--items` lists which bot picks each key, for the maker.
+Both must exit 0 (plus `checks/apps.mjs` for apps and `checks/puzzles.mjs` for puzzles). On a fail, `--items` lists
+which bot picks each key, for the maker. The lead runs these scripts; no agent session is needed.
 
 ## 8. Round 2 on FIX
 
 A **new short session** of the maker gets only the FIX list (from `checks.blind`, `checks.solver`, `checks.facts`, and
-Wilco's `--items` lines). It changes wrong choices, never a right key, keeps ids, and reruns both checks. JUDGMENT
-items go to the teacher in the preview, not to the maker.
+Wilco's `--items` lines). Send a checker's suggested fix as a direction, with its facts marked to check. It changes
+wrong choices, never a right key to pass a check (a key that is wrong is corrected and logged), keeps ids, and reruns
+the checks in its folder. JUDGMENT items go to the teacher in the preview, not to the maker.
 
 ## 9. Fresh recheck
 
@@ -100,8 +127,16 @@ node $REPO/checks/student-view.mjs "$WORK/pack.json" --only "<where>|<where>" --
 node $REPO/checks/score-blind.mjs "$WORK/pack.json" "$WORK/blind-r2.jsonl"
 node $REPO/checks/keys.mjs "$WORK/pack.json" --write && node $REPO/checks/test-wise.mjs "$WORK/pack.json" --write
 ```
-It records round 2 and sets `fixed` on each finding it confirms. A new FIX: back to step 8. After round 3, stop and
-decide with the teacher (next section).
+It records round 2 and sets `fixed` on each earlier finding it confirms (no separate "confirmed" list); a problem
+found again is a new finding with `sameAs` naming the earlier one, so it is counted once. In the same round, a **fresh
+fact checker** (science, social studies, ELA nonfiction) or **solver** (math) checks the changed text, **every
+suggested wording** the maker used, and sweeps the whole pack for any claim it marks false; ELA reading items get the
+no-passage probe again (step 4a). A new FIX: back to step 8. After round 3, stop and decide with the teacher (next
+section).
+
+**Cost stop.** After every round the lead adds up the log. When the order passes **2× its token budget** (tokens ×
+$0.10), tell the owner before any more rounds, with what is open and what another round would cost (g7-ela reached
+4×: $22.48 against $5.50). The owner decides; the teacher is never charged more without asking.
 
 ## When round 3 ends with an open FIX
 
@@ -129,7 +164,8 @@ suggested wording had made false, and a review sheet twice the length the teache
 
 ## 10. Reporter
 
-A cheaper-tier agent with `agents/reporter.md` fills `log` (every row above, including your own steps, marked "not
+A cheaper-tier agent with `agents/reporter.md`, given a short hand-off (one line per session from its own record:
+minutes, tokens, dollars; and `pack.json` without `documents`), fills `log` (every row above, including your own steps, marked "not
 measured") and `audit.notes`: every round, every catch, every fix, Wilco before and after, time and cost.
 
 ## 11. Preview, then the teacher agrees or asks for changes (CLAUDE.md rule 7)
@@ -184,9 +220,10 @@ this teacher only.
 
 A fresh agent with `agents/auditor.md`, `records/$ORDER.json`, `comments/$ORDER.md` (if any) and `agents/`. It edits
 briefs (version bump and a change-log line naming the finding or comment), records the changes in the record's
-`audit.briefChanges`, lists cheaper-without-losing-quality ideas, and commits:
+`audit.briefChanges`, lists cheaper-without-losing-quality ideas, writes its report (`docs/audits/AUDIT-<date>.md`, a
+line in `docs/audits/README.md`), and commits:
 ```
-cd $REPO && npm run check && git add agents/ records/$ORDER.json comments/ && git commit -m "Audit $ORDER: <what changed in which brief>"
+cd $REPO && npm run check && git add agents/ records/$ORDER.json comments/ docs/audits/ && git commit -m "Audit $ORDER: <what changed in which brief>"
 ```
 If the teacher writes more comments after delivery, add them to `comments/$ORDER.md` and run the auditor again.
 
@@ -200,3 +237,4 @@ If the teacher writes more comments after delivery, add them to `comments/$ORDER
 | The onboarding read-out, the follow-up and the answer | `~/pp-work/<order>/onboarding.json`, `FOLLOW-UP.md`, `followup-answer.md` | deleted after delivery (the record keeps the counts) |
 | The teacher's agreement | `~/pp-work/<order>/approval.json`, logged in the pack and the record | the log line |
 | Checks, log and audit of the order | `records/<order>.json` (repo) | yes |
+| The auditor's reports | `docs/audits/` (repo) | yes |

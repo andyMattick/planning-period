@@ -12,18 +12,25 @@ keys, and log everything. How to run an order by hand: `docs/RUNBOOK.md`.
 | 0 | 🧾 Reporter | the order | `log` (first row), and keeps logging every step below |
 | 1 | 🧭 Onboarding (fresh) | `order.json`, the sources, the training files, `menu.json`, `feasibility.json` | `onboarding.json` and `FOLLOW-UP.md` in the order folder (not `pack.json`); the teacher's reply is saved as `followup-answer.md` |
 | 2 | 📝 Maker | `onboarding.json` and `followup-answer.md` first, then the style notes, the sources, the order | `style`, `documents` |
-| 3 | 🤖 Wilco | `pack.json` | `checks.wilco` (`checks/keys.mjs`, `checks/test-wise.mjs`, with `--write`) |
-| 3 | 🙈 Blind tester for the subject (fresh) | the student copy only, then the key | `checks.blind` (round 1) |
-| 3 | 🧮 Solver (math) or 🔎 Fact checker (science, social studies; ELA with nonfiction claims) | the student copy only, then the key and sources | `checks.solver` or `checks.facts` |
-| 4 | 📝 Maker, round 2 (a new short session) | the FIX list only | `documents` (FIX items only) |
-| 5 | 🙈 Recheck (a fresh blind tester, not the round 1 one) and 🤖 Wilco again | the changed items, then the key | `checks.blind` (round 2), `fixed` on each confirmed finding; `checks.wilco` |
+| 2a | 🙈 No-passage probe (ELA reading items only; one fresh session per version) | one version's questions, no passages, no key | `checks.blind` (round 1, `passageFree`, `gate`). **The round 1 gate:** over about 40% right (chance 25%) fails the round, and the maker redesigns (step 2) before any other checker runs |
+| 3 | 🤖 Wilco (scripts the lead runs; no agent session) | `pack.json` | `checks.wilco` (`checks/keys.mjs`, `checks/test-wise.mjs`, with `--write`; `checks/apps.mjs`, `checks/puzzles.mjs` for apps and puzzles) |
+| 3 | 🙈 Blind tester for the subject (fresh) | the student copy only (ELA: no passages, then the passages), then the key | an entry file the lead merges into `checks.blind` (round 1) |
+| 3 | 🧮 Solver (math: `checks/math.mjs` first) or 🔎 Fact checker (science, social studies; ELA with nonfiction claims; puzzle clues with `because`; quiz-show clues; card backs) | the student copy only, then the key and sources | an entry file for `checks.solver` or `checks.facts` |
+| 4 | 📝 Maker, round 2 (a new short session) | the FIX list only (suggested fixes are directions) | `documents` (FIX items only) |
+| 5 | 🙈 Recheck (a fresh blind tester, not the round 1 one), 🔎 a fresh fact checker or 🧮 solver on the changed text and every suggested wording (with a whole-pack sweep for any false claim), the ELA probe on changed reading items, and 🤖 Wilco again | the changed items, then the key | `checks.blind` / `facts` / `solver` (round 2), `fixed` on each confirmed finding, `sameAs` on a repeat; `checks.wilco` |
 | 6 | 🧾 Reporter | the log and the checks | `log` totals, `audit.notes` |
 | 7 | Preview to the teacher | the watermarked preview and `REVIEW.html` | the teacher's comments or approval |
 | 7a | If changes are asked: steps 4–6 again on them, then a new preview | `comments/<order>.md` | as above |
 | 8 | Final render and delivery, **only with `approval.json`** | — | — |
-| 9 | 🔎 Auditor | the findings, the log, `comments/<order>.md` | `agents/*.md` (version bump and change log), `audit.briefChanges` |
+| 9 | 🔎 Auditor | the findings, the log, `comments/<order>.md` | `agents/*.md` (version bump and change log), `audit.briefChanges`, a report in `docs/audits/` |
 
-Steps marked 3 run at the same time. Steps 4–5 repeat until no FIX is left (stop after round 3 and tell the owner).
+Steps marked 3 run at the same time, so each checker writes its entry to a file and the lead merges them (only Wilco's
+`--write` touches `pack.json` directly). Steps 4–5 repeat until no FIX is left (stop after round 3 and tell the owner).
+**Cost stop:** when an order's logged cost passes 2× its token budget (tokens × $0.10), the lead tells the owner before
+any more rounds (g7-ela reached 4×).
+Puzzles: the maker's content, then `scripts/make-puzzles.mjs --write` and `checks/puzzles.mjs`, then the blind tester
+(crossword from the clues alone; each logic puzzle solved without the key) and the fact checker (clues with
+`because`, quiz-show clues). Apps: checked like a worksheet (the printable copy) plus `checks/apps.mjs`'s browser test.
 These are the team's steps; `docs/RUNBOOK.md` numbers the owner's steps (receive, onboarding, style notes, …) its own way.
 
 ## Who never checks whose work
@@ -31,8 +38,8 @@ These are the team's steps; `docs/RUNBOOK.md` numbers the owner's steps (receive
 - The **onboarding agent** makes nothing and checks nothing: it measures the source, warns and asks. The maker
   follows its `whatWeWillMake` as the teacher answered it.
 
-- The **maker** never checks the pack and never writes `checks`. It may run `checks/keys.mjs` and
-  `checks/test-wise.mjs` while writing (no `--write`); only Wilco's run counts.
+- The **maker** never checks the pack and never writes `checks`. It runs the checks in its own folder while writing
+  (no `--write`; the plain `test-wise.mjs` exit code, since `--items` always exits 0); only Wilco's run counts.
 - The **blind tester** never sees the key or the maker's notes before it has answered every item, and never edits
   `documents`. The **recheck** is a different fresh agent from the round 1 blind tester and from the maker.
 - The **solver** and the **fact checker** work each answer out before reading the maker's `answer` and `why`.
@@ -46,3 +53,7 @@ These are the team's steps; `docs/RUNBOOK.md` numbers the owner's steps (receive
 `onboarding.md` · `maker.md` · `blind-math.md` · `blind-ela.md` · `blind-science.md` · `blind-social.md` · `solver-math.md` · `facts.md` ·
 `wilco.md` · `reporter.md` · `auditor.md`. Each ends with a `**Version N**` line and a change log; only the auditor
 bumps them, and `npm run check` fails if one is missing.
+
+Changed Nov 5, 2026 by the first audit (`docs/audits/AUDIT-2026-11-05.md`): the ELA round 1 no-passage gate (owner),
+checkers' entry files merged by the lead, Wilco run by the lead, a fact or solver recheck on changed text every round,
+the cost stop, and who runs when for puzzles and apps. The auditor's reports: `docs/audits/README.md`.
