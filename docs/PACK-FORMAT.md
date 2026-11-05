@@ -111,6 +111,27 @@ All optional; a pack without them renders the same as before.
 | `originalReview` | For a `versions` order: findings about the teacher's own uploaded test, shown on the audit report's "What we found in your original" page and not counted with the pack's findings. `{ "file": "my-test.docx", "summary": "…", "findings": [{ "where", "kind": "FIX" \| "KEEP" \| "JUDGMENT", "what", "before", "suggestion", "inVersions" }], "notes": ["…"] }` (`inVersions`: what the A/B versions do instead) |
 | `math`, `mathText`, `figure: {graph}`, `$…$` LaTeX in any text | Math typesetting, graphs as data and the SymPy math check: docs/KINDS-MATH.md |
 
+### Passages (reading items)
+
+A reading passage is its own field, not a section (g7-ela had to fake passages as question-less sections):
+
+```jsonc
+"passages": [ { "id": "p1", "title": "The Spare Key", "kind": "fiction",          // fiction | nonfiction | poem | drama
+                "paragraphs": ["…", "…"],                                         // printed numbered 1, 2, 3…
+                "source": "original" } ],                                         // or { "citation": "…" } (fence: CLAUDE.md rule 2)
+"sections": [ { "heading": "Questions 1–5", "passage": "p1", "questions": [ { "id": "q1", "passage": "p1", … } ] } ]
+```
+
+- `documents[].passages` (may be `{ "A": […], "B": […] }` when versions read different passages; `paragraphs` may be
+  per version too). A section or a question cites one with `passage` (an id or a list of ids).
+- The renderer prints each passage, numbered, just before the first section or question that cites it (one nothing
+  cites prints at the top), in student and teacher copies, PDF and Word. The title and byline ("Fiction · Written for
+  this quiz") stay with the first paragraph, and paragraphs are never split across pages.
+- `checks/student-view.mjs` prints them the same way; `--no-passages` leaves them out (the ELA no-passage probe,
+  `docs/RUNBOOK.md` step 4a). `checks/keys.mjs` checks ids and references; passages are never questions to the bots.
+- Older packs that put passages in sections render as before. A review app's memorize passages (`text`, no
+  `paragraphs`) are a different thing: docs/KINDS-APPS.md.
+
 ### How the audit report counts findings
 
 One count, used in the front-page sentence, the catches tile and the findings pages:

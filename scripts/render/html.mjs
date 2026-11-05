@@ -2,7 +2,7 @@
 // Letter size, black-and-white safe: color is only ever a second signal next to weight, borders or text.
 
 import { mathHtml as mh, withMathCss, plainMath } from './math.mjs';
-import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel } from './util.mjs';
+import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel, passagePlan, passageByline } from './util.mjs';
 
 const qLabel = (n, ctx) => (ctx.dayLabels ? `Day ${n}` : numLabel(n, ctx.layout));
 
@@ -60,6 +60,12 @@ export function baseCss(ctx) {
   .pb { break-before: page; }
   .keep { break-inside: avoid; page-break-inside: avoid; }
   .small { font-size: 9.5pt; color: #222; }
+  .passage { margin: 6pt 0 14pt; }
+  .passage h2 { margin-top: 10pt; }
+  .passage .byline { font-size: 9.5pt; color: #222; margin: -2pt 0 6pt; font-style: italic; }
+  .para { display: grid; grid-template-columns: 22pt 1fr; gap: 0 4pt; margin: 0 0 6pt; break-inside: avoid; line-height: 1.5; }
+  .para .pn { font-weight: 700; font-size: 9.5pt; text-align: right; padding-right: 4pt; padding-top: 1.5pt; }
+  .para p { margin: 0; }
   `;
 }
 
@@ -191,16 +197,33 @@ function headerHtml(doc, ver, ctx, teacher) {
   ${doc.directions ? `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${mh(vv(doc.directions, ver))}</p>` : ''}`;
 }
 
+// A reading passage: its title, a byline (kind, source) and numbered paragraphs. The title and byline travel with
+// the first paragraph, so a title is never left alone at the foot of a page; each paragraph stays whole.
+function passageHtml(p, ver) {
+  const paras = vv(p.paragraphs, ver) || [];
+  const para = (t, i) => `<div class="para"><span class="pn">${i + 1}</span><p>${mh(t)}</p></div>`;
+  const by = passageByline(p);
+  return `<div class="passage"><div class="keep"><h2>${esc(p.title || 'Passage')}</h2>${by ? `<p class="byline">${esc(by)}</p>` : ''}${para(paras[0], 0)}</div>${paras.slice(1).map((t, i) => para(t, i + 1)).join('')}</div>`;
+}
+
 export function copyHtml(doc, ver, ctx, teacher) {
   const items = questionsOf(doc);
+  const plan = passagePlan(doc, ver);
   let body = headerHtml(doc, ver, ctx, teacher);
+  body += plan.top.map((p) => passageHtml(p, ver)).join('');
   (doc.sections || []).forEach((sec, si) => {
+    body += (plan.before.get(si) || []).map((p) => passageHtml(p, ver)).join('');
     // The heading and its directions travel with the first question: never alone at the foot of a page.
     let head = '';
     if (sec.heading) head += `<h2>${esc(sec.heading)}</h2>`;
     if (sec.directions) head += `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${mh(vv(sec.directions, ver))}</p>`;
-    const qs = items.filter((it) => it.si === si).map((it) => questionHtml(it, ver, ctx, teacher));
-    body += head ? `<div class="keep">${head}${qs[0] || ''}</div>${qs.slice(1).join('')}` : qs.join('');
+    const secItems = items.filter((it) => it.si === si);
+    const qs = secItems.map((it) => questionHtml(it, ver, ctx, teacher));
+    // A passage a question cites (and no earlier one did) prints just before that question.
+    const pre = secItems.map((it) => (plan.beforeQ.get(it.q) || []).map((p) => passageHtml(p, ver)).join(''));
+    if (pre[0]) { body += pre[0]; pre[0] = ''; }
+    const q = qs.map((x, i) => pre[i] + x);
+    body += head ? `<div class="keep">${head}${q[0] || ''}</div>${q.slice(1).join('')}` : q.join('');
   });
   if (doc.rubric) body += `<h2>${esc(doc.rubric.title || 'Rubric')}</h2>${rubricTableHtml(doc.rubric)}`;
   if (teacher && items.length) body += skillsMapHtml(doc, ver);

@@ -39,6 +39,20 @@ export function checkKeys(pack) {
     if (!doc.sections || !Array.isArray(doc.sections)) { if (!doc.slides && !doc.rubric) warn(`${name}: no sections, slides or rubric`); }
     if (VERSIONED_KINDS.includes(kind) && (vers.length < 2 || vers[0] === null)) err(`${name}: a ${kind} needs versions ["A", "B"]`);
     if (new Set(vers).size !== vers.length) err(`${name}: a version is listed twice`);
+    // reading passages (docs/PACK-FORMAT.md, "Passages"): not questions; ids unique, paragraphs given, every reference found
+    const passages = (Array.isArray(doc.passages) ? doc.passages : []).filter((p) => p && p.paragraphs !== undefined);
+    const pids = new Set();
+    for (const p of passages) {
+      const pid = String(p.id ?? '');
+      if (!pid) err(`${name}: a passage has no id`);
+      else if (pids.has(pid)) err(`${name}: passage id ${pid} is used twice`);
+      pids.add(pid);
+      for (const v of vers) { const ps = pick(p.paragraphs, v); if (!Array.isArray(ps) || !ps.length || ps.some((t) => typeof t !== 'string' || !t.trim())) err(`${name} passage ${pid}: paragraphs must be a list of non-empty strings${v ? ` (version ${v})` : ''}`); }
+      if (!p.title) warn(`${name} passage ${pid}: no title`);
+      if (p.kind && !['fiction', 'nonfiction', 'poem', 'drama'].includes(p.kind)) warn(`${name} passage ${pid}: kind ${JSON.stringify(p.kind)} is not fiction, nonfiction, poem or drama`);
+    }
+    const refsOf = (x) => vers.flatMap((v) => { const r = pick(x.passage, v); return Array.isArray(r) ? r : r ? [r] : []; }).map(String);
+    for (const sec of doc.sections || []) for (const x of [sec, ...(sec.questions || [])]) for (const r of refsOf(x)) if (!pids.has(r)) err(`${name}${x.id ? ' ' + x.id : ''}: passage ${JSON.stringify(r)} is not in the document's passages`);
     const ids = new Set();
     for (const q of qs) {
       const id = q.id || '(no id)';

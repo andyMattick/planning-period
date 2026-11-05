@@ -5,7 +5,7 @@ import {
   PageNumber, BorderStyle, ShadingType, TabStopType,
 } from 'docx';
 import { docxRuns as mr, plainMath } from './math.mjs';
-import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel } from './util.mjs';
+import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel, passagePlan, passageByline } from './util.mjs';
 
 const PAGE = { size: { width: 12240, height: 15840 }, margin: { top: 1008, bottom: 1008, left: 1008, right: 1008, footer: 500 } };
 const TEXT_W = 12240 - 2 * 1008; // twips
@@ -216,6 +216,24 @@ function docShell(ctx, label, children) {
   });
 }
 
+// A reading passage: title and byline kept with the first paragraph, each paragraph numbered in the margin and kept whole.
+async function passageParas(p, ver, ctx, accent) {
+  const paras = vv(p.paragraphs, ver) || [];
+  const out = [heading(p.title || 'Passage', accent)];
+  const by = passageByline(p);
+  if (by) out.push(P(runs(by, { italics: true, size: 19 }), { keepNext: true, spacing: { after: 100 } }));
+  for (const [i, t] of paras.entries()) {
+    out.push(P([runs(`${i + 1}\t`, { bold: true, size: 19 }), ...(await mr(t, {}, ctx))], {
+      indent: { left: 480, hanging: 480 },
+      tabStops: [{ type: TabStopType.LEFT, position: 480 }],
+      spacing: { after: 120, line: 300 },
+      keepLines: true,
+    }));
+  }
+  out.push(P(runs(''), { spacing: { after: 80 } }));
+  return out;
+}
+
 export async function copyDocx(doc, ver, ctx, teacher) {
   const accent = inkAccent(ctx.style.accent);
   const kids = [];
@@ -241,10 +259,20 @@ export async function copyDocx(doc, ver, ctx, teacher) {
   }
   if (doc.directions) kids.push(P(await mr(vv(doc.directions, ver), { bold: ctx.layout.boldDirections }, ctx), { spacing: { before: 100, after: 120 } }));
   const items = questionsOf(doc);
+  const plan = passagePlan(doc, ver);
+  for (const p of plan.top) kids.push(...(await passageParas(p, ver, ctx, accent)));
   for (const [si, sec] of (doc.sections || []).entries()) {
+    for (const p of plan.before.get(si) || []) kids.push(...(await passageParas(p, ver, ctx, accent)));
+    // A passage a question cites (and no earlier one did) prints just before it, ahead of its section heading.
+    const secItems = items.filter((x) => x.si === si);
+    const qPassages = async (it) => { for (const p of plan.beforeQ.get(it.q) || []) kids.push(...(await passageParas(p, ver, ctx, accent))); };
+    if (secItems[0]) await qPassages(secItems[0]);
     if (sec.heading) kids.push(heading(sec.heading, accent));
     if (sec.directions) kids.push(P(await mr(vv(sec.directions, ver), { bold: ctx.layout.boldDirections }, ctx), { keepNext: (sec.questions || []).length > 0, keepLines: true }));
-    for (const it of items.filter((x) => x.si === si)) kids.push(...(await questionParas(it, ver, ctx, teacher)));
+    for (const [k, it] of secItems.entries()) {
+      if (k > 0) await qPassages(it);
+      kids.push(...(await questionParas(it, ver, ctx, teacher)));
+    }
   }
   if (doc.rubric) kids.push(heading(doc.rubric.title || 'Rubric', accent), ...rubricTable(doc.rubric));
   if (teacher && items.length) kids.push(...(await skillsMap(doc, ver, accent, ctx)));
