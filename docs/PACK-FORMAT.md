@@ -142,6 +142,7 @@ with no `minutes` shows a dash and counts as "not timed".
 | a document with only a `rubric` | `<doc>.pdf` and `<doc>.docx` |
 | `quizshow`, `crossword`, `wordsearch`, `logicpuzzle` | Games and puzzles: see [`docs/KINDS-GAMES.md`](KINDS-GAMES.md) |
 | `interactive`, `reviewapp` | One offline HTML app each (final only) plus content, solutions and screenshot PDFs: see [`docs/KINDS-APPS.md`](KINDS-APPS.md) |
+| `practicegame` | One offline HTML game each (final only: answer shooter, grid battle or fix-it desk, in the order's theme) plus a teacher sheet and screenshot PDFs: see [`docs/KINDS-PRACTICEGAMES.md`](KINDS-PRACTICEGAMES.md) |
 
 `project.json` drops any key that looks secret or internal: keys starting with `_`, `secret` or `private`, and keys
 like `apiKey`, `password`, `accessToken`, `auth`, `sessionId`, `payment`, `signedUrl`, `uploadUrl`.
