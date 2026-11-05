@@ -54,6 +54,12 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
 | `homework` | 20 | $2.00 | $1.2–1.8 | a shorter worksheet: about two-thirds of `worksheet`'s items (added Nov 5, 2026) |
 | `versions` | 30 | $3.00 | $1.8–2.5 | the teacher's test is the source, so the maker only rewrites; the checkers run on the original and on A and B (up to about 30 questions; longer tests cost more) (added Nov 5, 2026) |
 | `unitfull` | 420 | $42.00 | $30–42 | à la carte for 4 lessons: 4 × `notes` 25 + 4 × `homework` 20 + 2 × `bellringer` 20 + 2 × `quiz` 40 + `project` 60 + `rubric` 15 + `studyguide` 25 + `test` 70 = 470, about 10% off; plus the standards map. A first-of-its-kind run cost Pet World $33–54 a unit (7th grade units), so **watch the first orders** (added Nov 5, 2026) |
+| `quizshow` | 35 | $3.50 | $2.5–3.0 (**guess**) | like `reviewgame`: about 25 questions in categories, one version (added Nov 5, 2026) |
+| `crossword` | 15 | $1.50 | $0.8–1.2 (**guess**) | 10–20 clues; a generator fills the grid, a blind tester solves it from the clues alone (added Nov 5, 2026) |
+| `wordsearch` | 10 | $1.00 | $0.4–0.8 (**guess**) | the grid is made by code; the agent work is the word list and a spelling check (added Nov 5, 2026) |
+| `logicpuzzle` | 20 | $2.00 | $1.2–1.8 (**guess**) | written by the maker, proved to have exactly one solution by a solver script, then solved blind (added Nov 5, 2026) |
+| `reviewapp` | 60 | $6.00 | $3–5 (**guess**) | the content (cards, steps, practice) plus a tested offline app template; checked like a quiz and opened in a browser test (added Nov 5, 2026) |
+| `interactive` | 45 | $4.50 | $2.5–3.5 (**guess**) | a worksheet's content plus accepted answer forms and hints, built on the Pet World note-sheet engine; browser-tested (added Nov 5, 2026) |
 | `tpt`, `styleSetup` (extras) | 0 | — | about $0.5–1.5 for style setup, once | the first order's style notes, carried by the order |
 
 **Owner decisions flagged by this table:**
@@ -88,3 +94,11 @@ and review an order in the pilot, card fees of about 3% + $0.30 a sale, failed o
 orders), whether unused monthly tokens roll over, refunds when a pack can't pass its checks, and a minimum order to
 cover the fixed per-order cost. Pet World's marketer's notes (`docs/marketing/MONETIZATION-2026-11-04.md`) guess
 the owner's time at about 2 hours a unit; the pilot should time it.
+
+## Owner direction (Nov 5, 2026)
+
+"I think we will eventually make every test the same price, every worksheet the same price ... or just tell them how many
+of each they can get in a monthly subscription." So the token numbers here are our internal cost budgets; what teachers
+see can become flat prices per item kind, or a monthly plan that says "N tests, N worksheets, ..." a month. Decide after
+the first real orders. Until then the onboarding agent recomputes tokens for what will actually be made, so a smaller
+order costs less.

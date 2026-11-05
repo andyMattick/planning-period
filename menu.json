@@ -200,6 +200,71 @@
         "pptx"
       ],
       "versions": true
+    },
+    {
+      "id": "quizshow",
+      "label": "Quiz-show review game",
+      "detail": "A projector game with categories and point values (like the TV quiz shows), with answers in the presenter notes and a printable score sheet.",
+      "tokens": 35,
+      "formats": [
+        "pptx",
+        "pdf",
+        "html"
+      ],
+      "versions": false
+    },
+    {
+      "id": "crossword",
+      "label": "Crossword puzzle",
+      "detail": "A crossword built from your vocabulary or key ideas, with clues written for your grade and a key.",
+      "tokens": 15,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "wordsearch",
+      "label": "Word search",
+      "detail": "A word search from your vocabulary list, with a key.",
+      "tokens": 10,
+      "formats": [
+        "pdf"
+      ],
+      "versions": false
+    },
+    {
+      "id": "logicpuzzle",
+      "label": "Logic puzzles",
+      "detail": "Grid logic puzzles and other reasoning puzzles built on your topic, each checked to have exactly one solution.",
+      "tokens": 20,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false
+    },
+    {
+      "id": "reviewapp",
+      "label": "Review app",
+      "detail": "A small app students open on any device (flashcards, memorize-by-steps, practice quizzes that come back to what they miss). Works offline, no accounts.",
+      "tokens": 60,
+      "formats": [
+        "html"
+      ],
+      "versions": false
+    },
+    {
+      "id": "interactive",
+      "label": "Interactive worksheet",
+      "detail": "A worksheet students fill in on a device: it checks answers as they go, gives hints after two misses, saves on the device, and comes with a teacher solutions page.",
+      "tokens": 45,
+      "formats": [
+        "html",
+        "pdf"
+      ],
+      "versions": false
     }
   ],
   "extras": [
@@ -215,5 +280,14 @@
       "detail": "Your agents read the examples you upload and follow your layout, wording and level. First time only.",
       "tokens": 0
     }
+  ],
+  "mathCourses": [
+    "Pre-algebra",
+    "Algebra 1",
+    "Geometry",
+    "Algebra 2",
+    "Precalculus",
+    "Calculus (AB/BC level)",
+    "Statistics"
   ]
 }

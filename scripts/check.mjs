@@ -51,7 +51,7 @@ if (brand) {
 /* 2. the menu */
 try {
   const menu = readJSON('menu.json'), errs = [];
-  const FORMATS = ['pdf', 'docx', 'pptx'];
+  const FORMATS = ['pdf', 'docx', 'pptx', 'html'];   // html: review apps and interactive worksheets (offline, self-contained)
   if (!Array.isArray(menu.grades) || !menu.grades.length) errs.push('no grades');
   if (!Array.isArray(menu.subjects) || !menu.subjects.length) errs.push('no subjects');
   for (const s of menu.subjects || []) {
