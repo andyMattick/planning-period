@@ -76,17 +76,44 @@
   function pagesText(p) { var n = Math.max(1, Math.round(p)); return n + (n === 1 ? ' page' : ' pages'); }
 
   // The questions asked across items (A/B versions don't double) and what the source supports.
+  // Each item draws on the material at its own rate: math practice (worksheet, homework, bell ringers) at
+  // mathPracticePerPage when the subject is math, everything else at questionsPerPage (feasibility.json).
+  // The range shown is for the mix asked: units ÷ Σ(share ÷ rate), so "asked ≤ high" means the mix fits.
+  function rateFor(id, standards) {
+    if (standards) {
+      var per = (feas && feas.fromStandardsOnly && feas.fromStandardsOnly.questionsPerStandard) || [4, 8];
+      return { low: per[0], high: per[1] };
+    }
+    var mpp = feas && feas.mathPracticePerPage;
+    if (mpp && $('subject').value === 'math' && (mpp.appliesTo || []).indexOf(id) >= 0) return { low: mpp.low, high: mpp.high, math: true };
+    var qpp = (feas && feas.questionsPerPage) || { low: 6, high: 10 };
+    return { low: qpp.low, high: qpp.high };
+  }
+  function feasRows(standards) {
+    var d = (feas && feas.defaults) || {}, lim = (feas && feas.limits) || {};
+    return pickedIds().filter(function (id) { return PPFeas.COUNTS_QUESTIONS[id]; }).map(function (id) {
+      var r = rateFor(id, standards), q = PPFeas.questionsFor(id, picked[id].spec, d[id]);
+      var range = lim[id] && lim[id].questions;
+      return { id: id, label: itemById(id).label, n: q, qty: picked[id].qty, rlow: r.low, rhigh: r.high, math: !!r.math,
+        min: Math.min(q, range ? range[0] : 1) };
+    }).filter(function (r) { return r.n > 0; });
+  }
+  function useOf(rows, key) { return rows.reduce(function (s, r) { return s + r.n * r.qty / r[key]; }, 0); }
+  function supported(rows, units, key) {
+    var asked = rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
+    if (!asked) { var r0 = rateFor('quiz', false); return Math.max(1, Math.round(units * (key === 'rlow' ? r0.low : r0.high))); }
+    return Math.max(1, Math.round(asked * units / useOf(rows, key)));
+  }
   function feasState() {
-    var d = (feas && feas.defaults) || {};
-    var asked = pickedIds().reduce(function (s, id) { return s + PPFeas.questionsFor(id, picked[id].spec, d[id]) * picked[id].qty; }, 0);
-    var st = { asked: asked, pages: null, low: null, high: null, method: [], askedPages: null };
-    if ($('standards-only').checked) {
+    var standards = $('standards-only').checked;
+    var rows = feasRows(standards);
+    var asked = rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
+    var st = { asked: asked, pages: null, low: null, high: null, method: [], askedPages: null, rows: rows, units: null,
+      mathPractice: rows.some(function (r) { return r.math; }) };
+    if (standards) {
       var n = Number($('standards-count').value);
       st.method.push('standards');
-      if (n > 0) {
-        var per = (feas && feas.fromStandardsOnly && feas.fromStandardsOnly.questionsPerStandard) || [4, 8];
-        st.standards = n; st.low = n * per[0]; st.high = n * per[1];
-      }
+      if (n > 0) { st.standards = n; st.units = n; st.low = supported(rows, n, 'rlow'); st.high = supported(rows, n, 'rhigh'); }
       return st;
     }
     var known = 0, unknown = 0, pending = 0;
@@ -99,12 +126,36 @@
     var ask = Number($('ask-pages').value);
     if (unknown && ask > 0) { known += ask; st.askedPages = ask; st.method.push('asked'); }
     if (!files.sources.length || pending || (unknown && !(ask > 0))) { st.incomplete = true; if (!known) return st; }
-    var qpp = (feas && feas.questionsPerPage) || { low: 6, high: 10 };
-    st.pages = known;
-    st.low = Math.max(1, Math.round(known * qpp.low)); st.high = Math.max(1, Math.round(known * qpp.high));
+    st.pages = known; st.units = known;
+    st.low = supported(rows, known, 'rlow'); st.high = supported(rows, known, 'rhigh');
     return st;
   }
 
+  // "Lower it": cut the biggest item first (most questions, counting copies), never below its minimum in
+  // feasibility.limits, then the next biggest, until the mix fits. If every item at its minimum still doesn't fit,
+  // say so and name the biggest item to remove.
+  function lowerPlan(st) {
+    var rows = st.rows.map(function (r) { return Object.assign({ asked: r.n }, r); });
+    var biggest = rows.slice().sort(function (a, b) { return b.n * b.qty - a.n * a.qty; });
+    var units = st.units || 0, eps = 1e-9;
+    biggest.forEach(function (r) {
+      var excess = useOf(rows, 'rhigh') - units;
+      if (excess <= eps) return;
+      var cut = Math.ceil(excess * r.rhigh / r.qty - eps);
+      r.n = Math.max(r.min, r.n - cut);
+    });
+    var total = rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
+    return { rows: rows, total: total, fits: useOf(rows, 'rhigh') <= units + eps, biggest: biggest[0] || null };
+  }
+
+  // "1 page" / "3 pages" / "3 standards": the plural is done here, not in feasibility.json's "{pages} page(s)".
+  function amountText(st) { return st.standards ? plural(st.standards, 'standard') : pagesText(st.pages); }
+  function tooManyText(st) {
+    var tmpl = String((feas && feas.messages && feas.messages.tooMany) || '{asked} questions from about {pages} page(s) of material is more than it can support.');
+    tmpl = tmpl.indexOf('{pages} page(s)') >= 0 ? tmpl.replace('{pages} page(s)', '{amount}') : tmpl.replace('{pages}', '{amount}').replace(/ page\(s\)/g, '');
+    if (st.standards) tmpl = tmpl.replace('{amount} of material', '{amount}');
+    return PPFeas.fill(tmpl, { asked: st.asked, amount: amountText(st), low: st.low, high: st.high });
+  }
   function renderFeas() {
     if (!feas) return;
     var st = feasState(), box = $('feas'), mini = $('feas-send');
@@ -112,16 +163,23 @@
     if (over) feasWarned = true;
     if (!over) {
       box.innerHTML = st.high != null && st.asked && !st.incomplete
-        ? '<p class="small muted">About ' + (st.standards ? plural(st.standards, 'standard') : pagesText(st.pages)) + ' of material: room for about ' + st.low + '–' + st.high + ' good questions. You asked for ' + st.asked + '.</p>' : '';
+        ? '<p class="small muted">About ' + amountText(st) + ' of material: room for about ' + st.low + '–' + st.high + ' good questions' +
+          (st.mathPractice ? ' (math practice draws more from a page than quizzes and tests do)' : '') + '. You asked for ' + st.asked + '.</p>' : '';
       mini.innerHTML = feasChoice === 'lowered' ? '<p class="small muted">Lowered to fit your material.</p>' : '';
       return;
     }
-    var msg = PPFeas.fill(feas.messages && feas.messages.tooMany, { asked: st.asked, pages: st.standards ? st.standards + ' standard(s)' : Math.max(1, Math.round(st.pages)), low: st.low, high: st.high });
-    if (st.standards) msg = msg.replace('page(s) of material', 'of material');
+    var plan = lowerPlan(st);
+    var msg = tooManyText(st);
     var chosen = { addMaterial: 'You said you will add more material.', bestJudgment: 'You asked us to use our best judgment. We will tell you what we chose in the follow-up.' }[feasChoice];
-    box.innerHTML = '<div class="warn" role="status"><p><b>That may be too much.</b> ' + esc(msg) + '</p>' +
+    var minTotal = st.rows.reduce(function (s, r) { return s + r.min * r.qty; }, 0);
+    var big = plan.biggest;
+    var cantLower = !plan.fits && big
+      ? '<p class="small" style="margin:.6em 0 0" data-cant-lower>Even with every item at the smallest we make (' + plural(minTotal, 'question') + ' in all), that is more than ' +
+        esc(amountText(st)) + ' can support. Try removing an item: the biggest is <b>' + esc(big.label) + '</b> (' + plural(big.asked * big.qty, 'question') +
+        (big.qty > 1 ? ', ' + big.qty + ' copies' : '') + '). Or add more material.</p>' : '';
+    box.innerHTML = '<div class="warn" role="status"><p><b>That may be too much.</b> ' + esc(msg) + '</p>' + cantLower +
       '<div class="warn-actions">' +
-      '<button type="button" class="btn' + (feasChoice === 'lowered' ? ' primary' : '') + '" data-feas="lower">Lower it to ' + st.high + '</button>' +
+      (plan.fits ? '<button type="button" class="btn' + (feasChoice === 'lowered' ? ' primary' : '') + '" data-feas="lower">Lower it to ' + plan.total + '</button>' : '') +
       '<button type="button" class="btn' + (feasChoice === 'addMaterial' ? ' primary' : '') + '" data-feas="addMaterial">I’ll add more material</button>' +
       '<button type="button" class="btn' + (feasChoice === 'bestJudgment' ? ' primary' : '') + '" data-feas="bestJudgment">Use your best judgment</button></div>' +
       (chosen ? '<p class="small" style="margin:.6em 0 0">' + esc(chosen) + '</p>' : '') + '</div>';
@@ -129,19 +187,15 @@
   }
   function plural(n, one) { return n + ' ' + one + (n === 1 ? '' : 's'); }
 
-  // "Lower it to {high}": scale every question count down to fit, keeping the mix.
-  function lowerTo(high) {
-    var d = (feas && feas.defaults) || {}, st = feasState();
-    if (!st.asked) return;
-    // Share `high` out by each item's part of the total (largest remainder, so the new total is exactly `high`).
-    var rows = pickedIds().filter(function (id) { return PPFeas.COUNTS_QUESTIONS[id]; }).map(function (id) {
-      var each = PPFeas.questionsFor(id, picked[id].spec, d[id]), qty = picked[id].qty;
-      var share = high * each * qty / st.asked / qty;   // new questions per copy
-      return { id: id, each: each, qty: qty, n: Math.max(1, Math.floor(share)), frac: share - Math.floor(share) };
-    }).filter(function (r) { return r.each > 0; });
-    var left = high - rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
-    rows.slice().sort(function (a, b) { return b.frac - a.frac; }).forEach(function (r) { if (left >= r.qty) { r.n++; left -= r.qty; } });
-    rows.forEach(function (r) {
+  // Apply the plan: the new count for each item, keeping its mix of types.
+  function lowerTo() {
+    var st = feasState();
+    if (!st.asked) return false;
+    var plan = lowerPlan(st);
+    if (!plan.fits) return false;
+    plan.rows.forEach(function (r) {
+      var old = st.rows.filter(function (x) { return x.id === r.id; })[0];
+      if (old && old.n === r.n) return;
       var spec = picked[r.id].spec = picked[r.id].spec || {};
       var types = spec.types || {};
       var keys = PPFeas.TYPE_KEYS.filter(function (k) { return types[k] !== '' && types[k] != null && Number(types[k]) > 0; });
@@ -155,11 +209,12 @@
       spec.questions = String(r.n);
     });
     renderRequests();
+    return true;
   }
   $('feas').addEventListener('click', function (e) {
     var b = e.target.closest('[data-feas]'); if (!b) return;
     var what = b.getAttribute('data-feas');
-    if (what === 'lower') { lowerTo(feasState().high); feasChoice = 'lowered'; }
+    if (what === 'lower') { if (lowerTo()) feasChoice = 'lowered'; }
     else feasChoice = what;
     renderFeas();
     if (what === 'addMaterial') {
@@ -207,6 +262,7 @@
       var other = this.value === 'other';
       $('other-wrap').hidden = !other;
       if (other) $('subject-other').focus();
+      renderFeas();   // math practice draws more from a page
     });
 
     $('items').innerHTML = menu.items.map(function (it) {
@@ -408,6 +464,7 @@
       askedPages: st.askedPages,
       standards: st.standards || null,
       asked: st.asked, low: st.low, high: st.high,
+      mathPractice: st.mathPractice,
       tooMuch: st.high != null && st.asked > st.high,
       warned: feasWarned,
       choice: feasChoice

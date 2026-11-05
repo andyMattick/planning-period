@@ -3,7 +3,7 @@
 The order site in `site/` is a Progressive Web App (PWA). The same files are:
 
 - **a normal website on a computer:** a long page, with links at the top;
-- **an app on a phone (640 px wide or less):** a title bar, a bottom tab bar (Order · Review · Samples · About), one
+- **an app on a phone (640 px wide or less):** a title bar, a bottom tab bar (Order · Review · Samples · World · About), one
   order step per screen with progress dots and Back / Next, big tap targets, and room for the notch and home bar
   (`env(safe-area-inset-*)`);
 - **an installed app:** it has its own icon and opens full screen. After the first visit it opens with no internet.
@@ -21,6 +21,7 @@ App Store and Google Play (see below).
 | `site/common.js` | Registers the service worker, adds the phone tab bar, shows the install prompt, and sets the iPhone home-screen title from the config. |
 | `site/style.css` | The app layout lives in the `@media (max-width: 640px)` block at the end. |
 | `site/about.html` | The About tab: how it works, the team, installing, and your files. |
+| `site/world.html`, `site/world.js` | The World tab: the "Build a learning world" request form, one step per screen on phones (`docs/WORLD-REQUESTS.md`). |
 | Every page's `<head>` | `manifest`, `theme-color` (light and dark), `apple-touch-icon`, `apple-mobile-web-app-capable`, `mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`, and `viewport-fit=cover`. |
 
 ## Installing it

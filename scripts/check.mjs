@@ -195,6 +195,10 @@ else {
     for (const i of m.icons || []) if (!existsSync(join(ROOT, 'site', i.src))) errs.push(`icon ${i.src} is missing`);
     if (!(m.icons || []).some((i) => i.purpose === 'maskable')) errs.push('no maskable icon');
     if (!existsSync(join(ROOT, 'site', 'sw.js'))) errs.push('site/sw.js is missing');
+    else {   // every page and script is in the offline shell (a new page needs a VERSION bump too)
+      const sw = readFileSync(join(ROOT, 'site', 'sw.js'), 'utf8');
+      for (const f of readdirSync(join(ROOT, 'site')).filter((f) => /\.(html|js|css)$/.test(f) && f !== 'sw.js')) if (!sw.includes(`'${f}'`)) errs.push(`site/${f} is not in sw.js SHELL_FILES`);
+    }
     if (errs.length) errs.forEach((e) => fail(`site/manifest.webmanifest: ${e}`));
     else ok(`site/manifest.webmanifest generated from brand.config.json (${m.icons.length} icons, service worker present)`);
   } catch (e) { fail(`site/manifest.webmanifest: ${e.message}`); }
