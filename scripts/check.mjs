@@ -8,6 +8,7 @@
      4. The checks still bite: checks/fixtures/good.pack.json passes checks/keys.mjs and checks/test-wise.mjs, and
         broken copies of it (made here, in a temporary folder) fail them.
      5. Every samples/<name>/pack.json passes checks/keys.mjs and checks/test-wise.mjs.
+     5a. checks/puzzles.mjs catches broken copies of samples/_cap-games (a bad grid, a word twice, a non-unique puzzle…).
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
    Exit 1 on any problem. */
@@ -148,9 +149,17 @@ if (existsSync(FIX)) {
 const SAMPLES = join(ROOT, 'samples');
 const packs = existsSync(SAMPLES) ? readdirSync(SAMPLES).map((d) => join('samples', d, 'pack.json')).filter((p) => existsSync(join(ROOT, p))) : [];
 if (!packs.length) skip('no samples/*/pack.json yet: nothing to check');
-for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs']) {
+for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs', 'puzzles.mjs']) {   // puzzles.mjs: games and puzzles (docs/KINDS-GAMES.md)
   const r = run(s, join(ROOT, p));
   if (r.status === 0) ok(`${p} passes checks/${s}`); else fail(`${p} fails checks/${s}:\n${r.stdout}${r.stderr}`);
+}
+
+/* 5a. the puzzle checks still bite: break the games fixture one way at a time (checks/puzzles.mjs --self-test) */
+const GAMES = join(ROOT, 'samples/_cap-games/pack.json');
+if (existsSync(GAMES)) {
+  const r = spawnSync(process.execPath, [join(ROOT, 'checks', 'puzzles.mjs'), GAMES, '--self-test'], { cwd: ROOT, encoding: 'utf8' });
+  const n = (r.stdout.match(/✓ catches/g) || []).length;
+  if (r.status === 0) ok(`checks/puzzles.mjs catches all ${n} broken copies of samples/_cap-games`); else fail(`checks/puzzles.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
 }
 
 /* 5b. no release without the teacher's agreement (CLAUDE.md rule 7): a sample with rendered final files has an approval */

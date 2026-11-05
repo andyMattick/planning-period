@@ -1,0 +1,820 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g7-science-cap-games",
+  "capabilityTest": "Games and puzzles (quiz show, crossword, word search, logic puzzles). A test of the renderer and the puzzle checks, not a sample for the gallery: no agent rounds were run on it.",
+  "date": "2026-11-05",
+  "order": {
+    "teacher": "Ms. Okafor (made-up teacher, capability test)",
+    "grade": "7",
+    "subject": "science",
+    "topic": "Cells and their parts",
+    "items": [
+      "quizshow",
+      "crossword",
+      "wordsearch",
+      "logicpuzzle"
+    ],
+    "requests": "Review games for the end of the cells unit.",
+    "sources": [
+      "cells-unit-notes.pdf"
+    ],
+    "styleExamples": []
+  },
+  "style": {
+    "notes": [
+      "Bold directions",
+      "A box for the name and date"
+    ],
+    "font": "Arial",
+    "accent": "#2f6f4f"
+  },
+  "documents": [
+    {
+      "item": "quizshow",
+      "title": "Cells Quiz Show",
+      "directions": "Teams take turns picking a category and a value. Answer the clue to win the points.",
+      "teams": 4,
+      "board": {
+        "values": [
+          100,
+          200,
+          300,
+          400,
+          500
+        ],
+        "categories": [
+          {
+            "name": "Organelles",
+            "clues": [
+              {
+                "value": 100,
+                "clue": "This organelle holds the cell's DNA and controls the cell's activities.",
+                "answer": "The nucleus"
+              },
+              {
+                "value": 200,
+                "clue": "These organelles release energy from food (sugar) through cellular respiration.",
+                "answer": "Mitochondria",
+                "accept": [
+                  "mitochondrion"
+                ]
+              },
+              {
+                "value": 300,
+                "clue": "These tiny structures build proteins. Some float in the cytoplasm and some sit on the endoplasmic reticulum.",
+                "answer": "Ribosomes"
+              },
+              {
+                "value": 400,
+                "clue": "In plant cells, this organelle captures light energy and uses it to make sugar.",
+                "answer": "The chloroplast",
+                "why": "Photosynthesis happens in chloroplasts."
+              },
+              {
+                "value": 500,
+                "clue": "This organelle packages proteins and sends them where they are needed, inside or outside the cell.",
+                "answer": "The Golgi apparatus",
+                "accept": [
+                  "Golgi body",
+                  "Golgi complex"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Plant or Animal?",
+            "clues": [
+              {
+                "value": 100,
+                "clue": "A stiff wall made of cellulose surrounds this kind of cell.",
+                "answer": "A plant cell"
+              },
+              {
+                "value": 200,
+                "clue": "Do animal cells have a cell membrane?",
+                "answer": "Yes",
+                "why": "Every cell has a cell membrane; plant cells have a cell wall outside it too."
+              },
+              {
+                "value": 300,
+                "clue": "This kind of cell usually has one large central vacuole that stores water.",
+                "answer": "A plant cell"
+              },
+              {
+                "value": 400,
+                "clue": "Name one organelle that plant cells have and animal cells do not.",
+                "answer": "A cell wall or a chloroplast",
+                "accept": [
+                  "cell wall",
+                  "chloroplast"
+                ]
+              },
+              {
+                "value": 500,
+                "clue": "Name two parts that both plant and animal cells have.",
+                "answer": "Any two of: nucleus, cell membrane, cytoplasm, mitochondria, ribosomes"
+              }
+            ]
+          },
+          {
+            "name": "Cell Theory",
+            "clues": [
+              {
+                "value": 100,
+                "clue": "Cell theory says all living things are made of one or more of these.",
+                "answer": "Cells"
+              },
+              {
+                "value": 200,
+                "clue": "Cell theory says every new cell comes from this.",
+                "answer": "A cell that already exists",
+                "accept": [
+                  "an existing cell",
+                  "a pre-existing cell"
+                ]
+              },
+              {
+                "value": 300,
+                "clue": "Finish the idea: the cell is the basic unit of structure and ___ in living things.",
+                "answer": "Function"
+              },
+              {
+                "value": 400,
+                "clue": "In 1665 this scientist looked at thin slices of cork under a microscope and called the tiny boxes \"cells.\"",
+                "answer": "Robert Hooke"
+              },
+              {
+                "value": 500,
+                "clue": "A living thing made of just one cell is called this.",
+                "answer": "Unicellular",
+                "accept": [
+                  "single-celled",
+                  "a unicellular organism"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Levels of Organization",
+            "clues": [
+              {
+                "value": 100,
+                "clue": "A group of similar cells that work together forms this.",
+                "answer": "A tissue"
+              },
+              {
+                "value": 200,
+                "clue": "Different tissues working together form this, such as the heart or a leaf.",
+                "answer": "An organ"
+              },
+              {
+                "value": 300,
+                "clue": "Organs working together, such as the heart and the blood vessels, form this.",
+                "answer": "An organ system"
+              },
+              {
+                "value": 400,
+                "clue": "Put these in order from smallest to largest: organ, cell, organism, tissue.",
+                "answer": "Cell, tissue, organ, organism"
+              },
+              {
+                "value": 500,
+                "clue": "Why do we need a microscope to see most cells?",
+                "answer": "Most cells are too small to see with our eyes alone",
+                "why": "Most cells are about 1 to 100 micrometers across; the eye can see things down to about 100 micrometers."
+              }
+            ]
+          }
+        ],
+        "final": {
+          "category": "Inside the Cell",
+          "clue": "This jelly-like fluid fills the cell and surrounds the organelles.",
+          "answer": "Cytoplasm"
+        }
+      }
+    },
+    {
+      "item": "crossword",
+      "title": "Cells Crossword",
+      "directions": "Read each clue and write the answer in the squares. The number in brackets is how many letters.",
+      "crossword": {
+        "seed": 1,
+        "size": 15,
+        "wordBank": false,
+        "words": [
+          {
+            "answer": "nucleus",
+            "clue": "The control center of the cell; it holds the DNA."
+          },
+          {
+            "answer": "mitochondria",
+            "clue": "Organelles that release energy from food through cellular respiration."
+          },
+          {
+            "answer": "ribosome",
+            "clue": "A tiny structure that builds proteins."
+          },
+          {
+            "answer": "chloroplast",
+            "clue": "The organelle in plant cells where photosynthesis happens."
+          },
+          {
+            "answer": "vacuole",
+            "clue": "A storage sac; in a plant cell one large one holds water."
+          },
+          {
+            "answer": "cytoplasm",
+            "clue": "The jelly-like fluid that fills the cell around the organelles."
+          },
+          {
+            "answer": "cell membrane",
+            "clue": "The thin, flexible layer around every cell that controls what goes in and out."
+          },
+          {
+            "answer": "cell wall",
+            "clue": "The stiff outer layer that supports and protects a plant cell."
+          },
+          {
+            "answer": "tissue",
+            "clue": "A group of similar cells that work together."
+          },
+          {
+            "answer": "organ",
+            "clue": "Different tissues working together, like the heart or a leaf."
+          },
+          {
+            "answer": "organelle",
+            "clue": "Any small structure inside a cell that has its own job."
+          },
+          {
+            "answer": "microscope",
+            "clue": "A tool that makes small things look larger, so we can see cells."
+          },
+          {
+            "answer": "unicellular",
+            "clue": "Made of only one cell."
+          },
+          {
+            "answer": "Hooke",
+            "clue": "Last name of the scientist who named cells after looking at cork in 1665."
+          }
+        ],
+        "layout": {
+          "rows": 15,
+          "cols": 15,
+          "grid": [
+            ".T.......HOOKE.",
+            "RIBOSOME...R...",
+            ".S.........G...",
+            ".S.CHLOROPLAST.",
+            ".U.E.......N...",
+            "CELLWALL.V.....",
+            "Y..L.....A....O",
+            "T..MICROSCOPE.R",
+            "O..E.....U....G",
+            "P..MITOCHONDRIA",
+            "L..B.....L....N",
+            "A..R.NUCLEUS..E",
+            "S..A..........L",
+            "M.UNICELLULAR.L",
+            "...E..........E"
+          ],
+          "entries": [
+            {
+              "n": 2,
+              "row": 0,
+              "col": 9,
+              "dir": "across",
+              "answer": "HOOKE",
+              "display": "Hooke",
+              "clue": "Last name of the scientist who named cells after looking at cork in 1665."
+            },
+            {
+              "n": 4,
+              "row": 1,
+              "col": 0,
+              "dir": "across",
+              "answer": "RIBOSOME",
+              "display": "ribosome",
+              "clue": "A tiny structure that builds proteins."
+            },
+            {
+              "n": 5,
+              "row": 3,
+              "col": 3,
+              "dir": "across",
+              "answer": "CHLOROPLAST",
+              "display": "chloroplast",
+              "clue": "The organelle in plant cells where photosynthesis happens."
+            },
+            {
+              "n": 6,
+              "row": 5,
+              "col": 0,
+              "dir": "across",
+              "answer": "CELLWALL",
+              "display": "cell wall",
+              "clue": "The stiff outer layer that supports and protects a plant cell."
+            },
+            {
+              "n": 9,
+              "row": 7,
+              "col": 3,
+              "dir": "across",
+              "answer": "MICROSCOPE",
+              "display": "microscope",
+              "clue": "A tool that makes small things look larger, so we can see cells."
+            },
+            {
+              "n": 10,
+              "row": 9,
+              "col": 3,
+              "dir": "across",
+              "answer": "MITOCHONDRIA",
+              "display": "mitochondria",
+              "clue": "Organelles that release energy from food through cellular respiration."
+            },
+            {
+              "n": 11,
+              "row": 11,
+              "col": 5,
+              "dir": "across",
+              "answer": "NUCLEUS",
+              "display": "nucleus",
+              "clue": "The control center of the cell; it holds the DNA."
+            },
+            {
+              "n": 12,
+              "row": 13,
+              "col": 2,
+              "dir": "across",
+              "answer": "UNICELLULAR",
+              "display": "unicellular",
+              "clue": "Made of only one cell."
+            },
+            {
+              "n": 1,
+              "row": 0,
+              "col": 1,
+              "dir": "down",
+              "answer": "TISSUE",
+              "display": "tissue",
+              "clue": "A group of similar cells that work together."
+            },
+            {
+              "n": 3,
+              "row": 0,
+              "col": 11,
+              "dir": "down",
+              "answer": "ORGAN",
+              "display": "organ",
+              "clue": "Different tissues working together, like the heart or a leaf."
+            },
+            {
+              "n": 5,
+              "row": 3,
+              "col": 3,
+              "dir": "down",
+              "answer": "CELLMEMBRANE",
+              "display": "cell membrane",
+              "clue": "The thin, flexible layer around every cell that controls what goes in and out."
+            },
+            {
+              "n": 6,
+              "row": 5,
+              "col": 0,
+              "dir": "down",
+              "answer": "CYTOPLASM",
+              "display": "cytoplasm",
+              "clue": "The jelly-like fluid that fills the cell around the organelles."
+            },
+            {
+              "n": 7,
+              "row": 5,
+              "col": 9,
+              "dir": "down",
+              "answer": "VACUOLE",
+              "display": "vacuole",
+              "clue": "A storage sac; in a plant cell one large one holds water."
+            },
+            {
+              "n": 8,
+              "row": 6,
+              "col": 14,
+              "dir": "down",
+              "answer": "ORGANELLE",
+              "display": "organelle",
+              "clue": "Any small structure inside a cell that has its own job."
+            }
+          ],
+          "unplaced": [],
+          "symmetry": 0.67,
+          "seed": 1,
+          "size": 15
+        }
+      }
+    },
+    {
+      "item": "wordsearch",
+      "title": "Cells Word Search",
+      "directions": "Find each word in the grid and circle it.",
+      "wordsearch": {
+        "seed": 3,
+        "words": [
+          "cell",
+          "nucleus",
+          "membrane",
+          "cytoplasm",
+          "ribosome",
+          "vacuole",
+          "chloroplast",
+          "mitochondria",
+          "tissue",
+          "organ",
+          "organelle",
+          "microscope"
+        ],
+        "layout": {
+          "size": 15,
+          "grid": [
+            "VSTNYXEWRHCYCZB",
+            "VGMIUQQUSRHZMQG",
+            "SDMISSUELCUNEEC",
+            "OBHSTSHMEIKQMLE",
+            "TRVANOUMMOSKBOI",
+            "MCGEQKCEORNXRUQ",
+            "IYZAKDTHSGHHACT",
+            "CTUFNAGSOADLNAS",
+            "ROIUJEQXBNUOEVD",
+            "OPUDWCLCIXDIVQL",
+            "SLPZQEGLRCPREXV",
+            "CAWCNLLCEDMJIYM",
+            "OSGVYLAGDKFDJAM",
+            "PMHTSALPOROLHCZ",
+            "EAEPMAFWMTNFWJW"
+          ],
+          "placements": [
+            {
+              "word": "MITOCHONDRIA",
+              "display": "mitochondria",
+              "row": 1,
+              "col": 2,
+              "dir": "SE"
+            },
+            {
+              "word": "CHLOROPLAST",
+              "display": "chloroplast",
+              "row": 13,
+              "col": 13,
+              "dir": "W"
+            },
+            {
+              "word": "MICROSCOPE",
+              "display": "microscope",
+              "row": 5,
+              "col": 0,
+              "dir": "S"
+            },
+            {
+              "word": "CYTOPLASM",
+              "display": "cytoplasm",
+              "row": 5,
+              "col": 1,
+              "dir": "S"
+            },
+            {
+              "word": "ORGANELLE",
+              "display": "organelle",
+              "row": 3,
+              "col": 0,
+              "dir": "SE"
+            },
+            {
+              "word": "MEMBRANE",
+              "display": "membrane",
+              "row": 1,
+              "col": 12,
+              "dir": "S"
+            },
+            {
+              "word": "RIBOSOME",
+              "display": "ribosome",
+              "row": 10,
+              "col": 8,
+              "dir": "N"
+            },
+            {
+              "word": "NUCLEUS",
+              "display": "nucleus",
+              "row": 2,
+              "col": 11,
+              "dir": "W"
+            },
+            {
+              "word": "VACUOLE",
+              "display": "vacuole",
+              "row": 8,
+              "col": 13,
+              "dir": "N"
+            },
+            {
+              "word": "TISSUE",
+              "display": "tissue",
+              "row": 0,
+              "col": 2,
+              "dir": "SE"
+            },
+            {
+              "word": "ORGAN",
+              "display": "organ",
+              "row": 4,
+              "col": 9,
+              "dir": "S"
+            },
+            {
+              "word": "CELL",
+              "display": "cell",
+              "row": 9,
+              "col": 5,
+              "dir": "S"
+            }
+          ],
+          "directions": [
+            "E",
+            "S",
+            "SE",
+            "NE",
+            "W",
+            "N"
+          ],
+          "seed": 3,
+          "unplaced": [],
+          "attempt": 1
+        }
+      }
+    },
+    {
+      "item": "logicpuzzle",
+      "title": "Cells Logic Puzzles",
+      "directions": "Read every clue before you start. Each puzzle has exactly one answer.",
+      "puzzles": [
+        {
+          "type": "grid",
+          "title": "Microscope Week",
+          "story": "Four students each drew a different organelle for the class microscope display, and each presented on a different day from Monday to Thursday. Find who drew which organelle and on which day.",
+          "categories": [
+            {
+              "name": "Student",
+              "items": [
+                "Ava",
+                "Ben",
+                "Cruz",
+                "Dee"
+              ]
+            },
+            {
+              "name": "Organelle",
+              "items": [
+                "nucleus",
+                "mitochondria",
+                "ribosome",
+                "chloroplast"
+              ]
+            },
+            {
+              "name": "Day",
+              "items": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday"
+              ],
+              "ordered": true
+            }
+          ],
+          "clues": [
+            {
+              "text": "The student who drew the nucleus presented the day before Dee.",
+              "rule": {
+                "less": [
+                  "nucleus",
+                  "Dee"
+                ],
+                "cat": "Day",
+                "by": 1
+              }
+            },
+            {
+              "text": "Ava drew the organelle that is found in plant cells but not in animal cells, where photosynthesis happens.",
+              "rule": {
+                "same": [
+                  "Ava",
+                  "chloroplast"
+                ]
+              },
+              "because": "chloroplasts are where photosynthesis happens, in plant cells"
+            },
+            {
+              "text": "Cruz presented later in the week than the student who drew the mitochondria.",
+              "rule": {
+                "less": [
+                  "mitochondria",
+                  "Cruz"
+                ],
+                "cat": "Day"
+              }
+            },
+            {
+              "text": "Ben presented earlier in the week than Ava.",
+              "rule": {
+                "less": [
+                  "Ben",
+                  "Ava"
+                ],
+                "cat": "Day"
+              }
+            },
+            {
+              "text": "Cruz presented on Thursday.",
+              "rule": {
+                "same": [
+                  "Cruz",
+                  "Thursday"
+                ]
+              }
+            }
+          ],
+          "solution": [
+            [
+              "Ava",
+              "chloroplast",
+              "Wednesday"
+            ],
+            [
+              "Ben",
+              "nucleus",
+              "Monday"
+            ],
+            [
+              "Cruz",
+              "ribosome",
+              "Thursday"
+            ],
+            [
+              "Dee",
+              "mitochondria",
+              "Tuesday"
+            ]
+          ],
+          "path": [
+            "Clue 1: Dee ≠ nucleus; Dee ≠ Monday; nucleus ≠ Thursday.",
+            "Clue 2: Ava = chloroplast, and 6 ✗ in the grid.",
+            "Clue 3: Cruz ≠ mitochondria; Cruz ≠ Monday; mitochondria ≠ Thursday.",
+            "Clue 1 again, with what we know now: Ben ≠ Wednesday; ribosome ≠ Tuesday.",
+            "Clue 4: Ben = Monday, and 4 ✗ in the grid.",
+            "Clue 5: Ben = nucleus; Cruz = ribosome; Dee = mitochondria; Cruz = Thursday; nucleus = Monday; ribosome = Thursday, and 14 ✗ in the grid.",
+            "Clue 1 again, with what we know now: Ava = Wednesday; Dee = Tuesday; mitochondria = Tuesday; chloroplast = Wednesday, and 4 ✗ in the grid."
+          ]
+        },
+        {
+          "type": "cages",
+          "title": "Cell Count Cages",
+          "story": "A lab group counted cells in four samples, 1 to 4 groups per square. Use the cage clues to fill the grid.",
+          "size": 4,
+          "cages": [
+            {
+              "cells": [
+                "A1",
+                "B1"
+              ],
+              "op": "+",
+              "target": 4
+            },
+            {
+              "cells": [
+                "A2",
+                "A3"
+              ],
+              "op": "×",
+              "target": 6
+            },
+            {
+              "cells": [
+                "A4",
+                "B4"
+              ],
+              "op": "×",
+              "target": 8
+            },
+            {
+              "cells": [
+                "B2",
+                "B3"
+              ],
+              "op": "÷",
+              "target": 4
+            },
+            {
+              "cells": [
+                "C1",
+                "D1"
+              ],
+              "op": "×",
+              "target": 8
+            },
+            {
+              "cells": [
+                "C2",
+                "D2"
+              ],
+              "op": "-",
+              "target": 2
+            },
+            {
+              "cells": [
+                "C3",
+                "C4"
+              ],
+              "op": "-",
+              "target": 1
+            },
+            {
+              "cells": [
+                "D3",
+                "D4"
+              ],
+              "op": "÷",
+              "target": 2
+            }
+          ],
+          "solution": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              3,
+              4,
+              1,
+              2
+            ],
+            [
+              2,
+              1,
+              4,
+              3
+            ],
+            [
+              4,
+              3,
+              2,
+              1
+            ]
+          ],
+          "path": [
+            "The 4+ cage (A1, B1) can only use 1 and 3.",
+            "The 6× cage (A2, A3) can only use 2 and 3.",
+            "The 8× cage (A4, B4) can only use 2 and 4.",
+            "The 4÷ cage (B2, B3) can only use 1 and 4.",
+            "The 8× cage (C1, D1) can only use 2 and 4.",
+            "The 2÷ cage (D3, D4) can only use 1, 2 and 4.",
+            "A1 = 1 (the only square in row A that can be 1)",
+            "B4 = 2 (the only square in row B that can be 2)",
+            "B1 = 3 (the only square in column 1 that can be 3)",
+            "D2 = 3 (the only square in row D that can be 3)",
+            "C4 = 3 (the only square in column 4 that can be 3)",
+            "A4 = 4 (the only square in row A that can be 4)",
+            "The 2− cage (C2, D2) can only use 1 and 3.",
+            "The 1− cage (C3, C4) can only use 2, 3 and 4.",
+            "A2 = 2 (the 6× cage and the row and column leave only this)",
+            "A3 = 3 (the 6× cage and the row and column leave only this)",
+            "C2 = 1 (the 2− cage and the row and column leave only this)",
+            "D3 = 2 (the 2÷ cage and the row and column leave only this)",
+            "D4 = 1 (the 2÷ cage and the row and column leave only this)",
+            "B3 = 1 (the only square in row B that can be 1)",
+            "C1 = 2 (the only square in column 1 that can be 2)",
+            "D1 = 4 (the only square in column 1 that can be 4)",
+            "B2 = 4 (the only square in row B that can be 4)",
+            "C3 = 4 (the only square in row C that can be 4)"
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {},
+  "log": [
+    {
+      "at": "10:00",
+      "who": "📝 Maker",
+      "what": "Capability test: wrote the quiz-show board, the crossword words and clues, the word list and two logic puzzles (no agent rounds)",
+      "minutes": null
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Capability test of the games and puzzles renderer: not an order and not a gallery sample."
+    ]
+  }
+}
