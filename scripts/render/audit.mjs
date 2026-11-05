@@ -355,7 +355,7 @@ function checksSection(pack, st, ctx) {
   s += `<h3>🔎 Fact checker: every claim, date, name and term</h3>`;
   s += facts.length
     ? `<table><tr><th>Round</th><th class="n">Claims checked</th><th class="n">Flagged</th><th>Notes</th></tr>${facts.map((r) => `<tr><td>${esc(r.round ?? 1)}</td><td class="n">${esc(r.claims)}</td><td class="n">${esc(r.flagged)}</td><td>${esc(r.notes || '')}</td></tr>`).join('')}</table>`
-    : `<p class="muted">Not used for this subject${pack.order?.subject === 'math' ? ' (math answers are checked by the solver instead)' : ''}.</p>`;
+    : `<p class="muted">${['science', 'social', 'ela'].includes(pack.order?.subject) ? 'Not run for this pack.' : `Not used for this subject${pack.order?.subject === 'math' ? ' (math answers are checked by the solver instead)' : ''}.`}</p>`;
   return s;
 }
 
