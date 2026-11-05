@@ -1,0 +1,23 @@
+{
+  "id": "pp-2026-11-05-g7-ela",
+  "date": "2026-11-05",
+  "teacher": "Ms. Okafor (made-up sample)",
+  "grade": "7",
+  "subject": "ela",
+  "topic": "Making inferences and citing text evidence",
+  "items": ["quiz", "rubric"],
+  "extras": ["styleSetup"],
+  "lines": [
+    { "id": "quiz", "label": "Quiz with A/B versions", "quantity": 1, "tokensEach": 40, "tokens": 40 },
+    { "id": "rubric", "label": "Rubric", "quantity": 1, "tokensEach": 15, "tokens": 15 },
+    { "id": "styleSetup", "label": "Set up my agents with my examples", "quantity": 1, "tokensEach": 0, "tokens": 0, "extra": true }
+  ],
+  "tokens": 55,
+  "itemRequests": {
+    "quiz": "Please write two short passages of your own from my notes (about 250-350 words each): one story and one nonfiction article. Both versions read the same two passages but get different questions. 8-10 multiple choice questions, mostly inference and 'which evidence best supports' questions, then one short constructed response at the end: What can you infer about the character? Use two pieces of evidence.",
+    "rubric": "A 4-point rubric for the constructed response (claim, evidence, explanation), in kid-friendly words my students can use to self-check."
+  },
+  "requests": "My students are 7th graders, many reading a little below grade level, so keep sentences clear. Number the paragraphs in the passages so students can cite them.",
+  "sources": ["inference-lesson-notes.md"],
+  "styleExamples": ["old-quiz-theme-unit.md", "old-exit-ticket-evidence.md"]
+}
