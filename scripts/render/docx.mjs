@@ -4,7 +4,7 @@ import {
   Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, Footer,
   PageNumber, BorderStyle, ShadingType, TabStopType,
 } from 'docx';
-import { vv, questionsOf, answerText, tfValue, letter, inkAccent, numLabel, choiceLabel } from './util.mjs';
+import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel } from './util.mjs';
 
 const PAGE = { size: { width: 12240, height: 15840 }, margin: { top: 1008, bottom: 1008, left: 1008, right: 1008, footer: 500 } };
 const TEXT_W = 12240 - 2 * 1008; // twips
@@ -92,9 +92,9 @@ async function questionParas(item, ver, ctx, teacher) {
   const type = q.type || 'short';
   const ans = vv(q.answer, ver);
   const out = [];
-  const head = [runs(`${numLabel(n, L)}  `, { bold: true }), runs(vv(q.prompt, ver))];
+  const head = [runs(`${ctx.dayLabels ? `Day ${n}:` : numLabel(n, L)}  `, { bold: true }), runs(vv(q.prompt, ver))];
   if (teacher) head.push(runs(`   [L${q.level ?? '?'} · ${q.skill || 'skill'}]`, { size: 17, color: '444444' }));
-  out.push(P(head, { spacing: { before: 200, after: 60 }, keepNext: true, indent: { left: 360, hanging: 360 } }));
+  out.push(P(head, { spacing: { before: 200, after: 60 }, keepNext: true, indent: ctx.dayLabels ? { left: 800, hanging: 800 } : { left: 360, hanging: 360 } }));
   out.push(...(await figurePara(vv(q.figure, ver), ctx)));
   if (type === 'mc') {
     (vv(q.choices, ver) || []).forEach((c, i) => {
@@ -127,14 +127,16 @@ async function questionParas(item, ver, ctx, teacher) {
         rows: rows.map((r) => new TableRow({ children: r.map((c) => cell(c, { borders: { top: none, bottom: none, left: none, right: none } })) })),
       })
     );
-  } else if (!teacher) {
-    const lines = q.space ?? (type === 'open' ? 6 : type === 'numeric' ? L.workLines : 0);
+  }
+  if (!teacher) {
+    const lines = workLinesFor(q, ctx);
     // One dotted tab leader per line: bordered empty paragraphs would merge into a single line in Word.
     for (let i = 0; i < lines; i++) out.push(P(runs('\t', { color: '999999' }), { indent: { left: 360 }, spacing: { before: 200 }, tabStops: [{ type: TabStopType.RIGHT, position: TEXT_W, leader: 'dot' }] }));
-    if (type !== 'open') out.push(P([runs('Answer: '), runs('_'.repeat(30))], { indent: { left: 360 }, spacing: { before: 160 } }));
+    const unit = vv(q.unit, ver);
+    if (!['mc', 'tf', 'match', 'open'].includes(type)) out.push(P([runs('Answer: '), runs('_'.repeat(30)), ...(unit ? [runs(` ${unit}`)] : [])], { indent: { left: 360 }, spacing: { before: 160 } }));
   }
   if (teacher) {
-    const kp = [runs(type === 'open' ? 'A strong answer: ' : 'Answer: '), runs(answerText(q, ver), { bold: true })];
+    const kp = [runs(type === 'open' ? 'A strong answer: ' : 'Answer: '), runs(keyText(q, ver), { bold: true })];
     if ((q.accept || []).length) kp.push(runs(`  (also accept: ${q.accept.join('; ')})`, { size: 19 }));
     const keyOpts = { indent: { left: 360 }, border: { left: { style: BorderStyle.SINGLE, size: 18, color: '000000', space: 6 } }, shading: { type: ShadingType.CLEAR, fill: 'F4F4F4', color: 'auto' } };
     out.push(P(kp, { ...keyOpts, spacing: { before: 80 } }));
@@ -191,7 +193,7 @@ function skillsMap(doc, ver, accent) {
     table([['Skill', 'Questions', 'How many'], ...Object.entries(skills).map(([s, ns]) => [s, ns.join(', '), String(ns.length)])], [3, 2, 1]),
     P(runs(''), { spacing: { after: 120 } }),
     table(
-      [['#', 'Skill', 'Level', 'Type', `Key${ver ? ` (version ${ver})` : ''}`], ...items.map(({ q, n }) => [String(n), q.skill || '', String(q.level ?? ''), q.type || 'short', P(runs(answerText(q, ver), { bold: true }))])],
+      [['#', 'Skill', 'Level', 'Type', `Key${ver ? ` (version ${ver})` : ''}`], ...items.map(({ q, n }) => [String(n), q.skill || '', String(q.level ?? ''), q.type || 'short', P(runs(keyText(q, ver), { bold: true }))])],
       [0.5, 2.6, 0.7, 0.9, 3]
     ),
   ];

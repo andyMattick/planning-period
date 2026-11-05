@@ -71,7 +71,8 @@ All optional; a pack without them renders the same as before.
 | `style.font` | Used first; PDFs fall back to Liberation Sans / Arial / DejaVu Sans (or a serif stack for a serif font). Word files name the teacher's font |
 | `style.accent` | Darkened until it reads as text on white and prints well in grayscale; color is never the only signal |
 | `sections[].directions` | Directions for one part |
-| question `space` | Number of blank work lines on the student copy (defaults: open 6, numeric `workLines`, others 0) |
+| question `space` | Number of blank work lines on the student copy, for any type, multiple choice included (defaults: open 6, numeric `workLines`, a level 3 `mc` question in a math pack 3, others 0) |
+| question `unit` | A unit printed after the answer blank on the student copy (`Answer: ____ boxes`) and after the key on the teacher copy (`13 boxes`, not doubled when the key already says it). May be `{ "A": …, "B": … }` |
 | question `left` | For `type: "match"`: the numbered items; `choices` are the lettered matches and `answer` is one choice index per item, e.g. `[1, 0, 2]` |
 | question `why`, `figure`, `choices`, `answer`, `prompt` | Any of these may be `{ "A": …, "B": … }` |
 | `rubric.levelNames` | Column headings, e.g. `["4 Strong", "3 Solid", "2 Getting there", "1 Not yet"]` (default `4, 3, 2, 1`); `criteria[].points`; `rubric.title`, `rubric.note` |
@@ -79,6 +80,39 @@ All optional; a pack without them renders the same as before.
 | `checks.*[].agent` | Which agent ran the check (defaults: 🙈 Blind tester, 🧮 Solver, 🤖 Wilco, 🔎 Fact checker) |
 | `checks.*[].findings` | Any check may list findings, not just the blind tester. Each finding may add `before` and `after` (the text before and after the fix) and, for `KEEP`, `reason` |
 | `checks.wilco[].line` | The most a bot may score to pass (default chance + 0.10); `bots` = how many bots ran |
+| `checks.wilco[].check` | `"keys"` (shown as passed or not with `rows`, `errors`, `warnings`, `problems`; no chance or line) or `"test-wise"` (the bots, with `chance` and `worst`) |
+| `checks.wilco[].worst[]` | `[name, score]`, or `[name, score, {"judged": false}]` for a bot with too few questions of its kind to judge. Without the flag the renderer asks `checks/test-wise.mjs` about the current pack. A bot that isn't judged is drawn greyed, "not judged (too few questions)", and never as over the line |
+| finding `forTeacher` | `true` leaves a finding for the teacher to decide even when it has text in `fixed` |
+| `originalReview` | For a `versions` order: findings about the teacher's own uploaded test, shown on the audit report's "What we found in your original" page and not counted with the pack's findings. `{ "file": "my-test.docx", "summary": "…", "findings": [{ "where", "kind": "FIX" \| "KEEP" \| "JUDGMENT", "what", "before", "suggestion", "inVersions" }], "notes": ["…"] }` (`inVersions`: what the A/B versions do instead) |
+
+### How the audit report counts findings
+
+One count, used in the front-page sentence, the catches tile and the findings pages:
+
+| Count | Findings |
+|---|---|
+| needed a fix | every `FIX` |
+| fixed | a `FIX` with `fixed` |
+| not fixed yet | a `FIX` without `fixed` (left for the teacher) |
+| kept on purpose | every `KEEP`, and a `JUDGMENT` the agents settled (it has `fixed`) |
+| left for you to decide | a `JUDGMENT` without `fixed`, or any finding with `forTeacher: true` |
+
+needed a fix + kept + left for you = all findings. Minutes print to 1 decimal, money to 2, percents whole; a step
+with no `minutes` shows a dash and counts as "not timed".
+
+### Document kinds
+
+`kind` (or `item` when there is no `kind`) says what a document is. A whole unit pack, a `unitfull` order and a
+`versions` order give each document its `kind`.
+
+| Kind | What the renderer makes |
+|---|---|
+| `worksheet`, `homework`, `notes`, `studyguide`, `project`, `quiz`, `test` | Student and teacher copies, PDF and Word, per version |
+| `versions` order | Its documents have `kind` `quiz` or `test` with `versions` (A/B or A/B/C): rendered as a quiz or test. Add `originalReview` for the teacher's original |
+| `bellringer` | One short question a day, 10 to a set. Student copy: a PDF of day cards (Day 1 … Day 10, an answer line on each) and a Word copy; teacher copy: PDF and Word with the key, `why` and the skills map; `<doc>.pptx` with one slide per day and the answer in the notes |
+| `slides` | `<doc>.pptx` and `<doc>-handout.pdf` |
+| `reviewgame` | `<doc>.pptx`, `<doc>-cards.pdf`, `<doc>-teacher.pdf` |
+| a document with only a `rubric` | `<doc>.pdf` and `<doc>.docx` |
 
 `project.json` drops any key that looks secret or internal: keys starting with `_`, `secret` or `private`, and keys
 like `apiKey`, `password`, `accessToken`, `auth`, `sessionId`, `payment`, `signedUrl`, `uploadUrl`.
@@ -120,7 +154,7 @@ The final has no watermark and has every file below; `README.txt` and the audit 
 |---|---|
 | `<doc>-student[-A|-B].pdf` and `.docx` | Student copies, in the teacher's style |
 | `<doc>-teacher[-A|-B].pdf` and `.docx` | Teacher copies: the key in bold, `why` under each answer |
-| `<doc>.pptx` | Slides and review games (title slide, one slide per entry, speaker notes; a review game puts the answer in the notes) |
+| `<doc>.pptx` | Slides, review games and bell ringers (title slide, one slide per entry, speaker notes; a review game or bell ringer puts the answer in the notes) |
 | `<doc>-handout.pdf` | Slides: a printable handout with room for notes |
 | `<doc>-cards.pdf`, `<doc>-teacher.pdf` | Review games: printable question cards (no answers) and the key |
 | `<doc>.pdf` and `.docx` | A document that is only a rubric: the rubric table |

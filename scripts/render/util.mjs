@@ -145,3 +145,29 @@ export function scrubSecrets(x) {
   for (const [k, v] of Object.entries(x)) if (!SECRET.test(k)) out[k] = scrubSecrets(v);
   return out;
 }
+
+// Display formats, used everywhere a number is printed: minutes to 1 decimal, money to 2, percents whole.
+export const mins = (n) => (n == null || n === '' || Number.isNaN(Number(n)) ? '—' : Number(n).toFixed(1));
+export const pct = (x) => `${Math.round((Number(x) || 0) * 100)}%`;
+
+// What a document is: a whole unit pack's parts and a "versions" order say it with `kind`.
+export const kindOf = (doc) => doc.kind || doc.item;
+
+// The key with its unit ("13 boxes"), unless the key already says it.
+export function keyText(q, ver) {
+  const t = answerText(q, ver);
+  const unit = vv(q.unit, ver);
+  if (!unit || (q.type || 'short') === 'mc' || ['tf', 'match'].includes(q.type)) return t;
+  return new RegExp(`\\b${String(unit).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'i').test(t) ? t : `${t} ${unit}`;
+}
+
+// Blank work lines under a question on the student copy: `space` wins; else open 6, numeric the layout's work lines,
+// and a level 3 multiple-choice question in math 3.
+export function workLinesFor(q, ctx) {
+  if (q.space != null) return Number(q.space) || 0;
+  const type = q.type || 'short';
+  if (type === 'open') return 6;
+  if (type === 'numeric') return ctx.layout.workLines;
+  if (type === 'mc' && Number(q.level) === 3 && ctx.pack?.order?.subject === 'math') return 3;
+  return 0;
+}

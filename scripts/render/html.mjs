@@ -1,7 +1,9 @@
 // Print HTML for student copies, teacher copies, rubrics, slide handouts and review-game cards.
 // Letter size, black-and-white safe: color is only ever a second signal next to weight, borders or text.
 
-import { esc, vv, cleanSvg, questionsOf, answerText, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel } from './util.mjs';
+import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel } from './util.mjs';
+
+const qLabel = (n, ctx) => (ctx.dayLabels ? `Day ${n}` : numLabel(n, ctx.layout));
 
 export function baseCss(ctx) {
   const { style, layout } = ctx;
@@ -26,6 +28,7 @@ export function baseCss(ctx) {
   .directions.bold { font-weight: 700; }
   .q { display: grid; grid-template-columns: 22pt 1fr; gap: 0 4pt; margin: 0 0 12pt; break-inside: avoid; }
   .q .num { font-weight: 700; }
+  .q.day { grid-template-columns: 44pt 1fr; }
   .q .body > p { margin: 0 0 4pt; }
   .fig { margin: 4pt 0 6pt; }
   .fig svg { max-width: 100%; height: auto; max-height: 3.2in; }
@@ -124,17 +127,19 @@ function questionHtml(item, ver, ctx, teacher) {
     inner += `<div class="match"><div>${left
       .map((x, i) => `<div class="row"><span class="blank">${teacher && a[i] != null ? letter(Number(a[i])) : '&nbsp;'}</span><span>${i + 1}. ${esc(x)}</span></div>`)
       .join('')}</div><div>${right.map((x, i) => `<div class="row"><b>${letter(i)}.</b> <span>${esc(x)}</span></div>`).join('')}</div></div>`;
-  } else if (!teacher) {
-    const lines = q.space ?? (type === 'open' ? 6 : type === 'numeric' ? L.workLines : 0);
+  }
+  if (!teacher) {
+    const lines = workLinesFor(q, ctx);
     if (lines > 0) inner += `<div class="work">${'<div class="wl"></div>'.repeat(lines)}</div>`;
-    if (type !== 'open') inner += `<div class="ans"><span>Answer:</span><span class="ln"></span></div>`;
+    const unit = vv(q.unit, ver);
+    if (!['mc', 'tf', 'match', 'open'].includes(type)) inner += `<div class="ans"><span>Answer:</span><span class="ln"></span>${unit ? `<span>${esc(unit)}</span>` : ''}</div>`;
   }
   if (teacher) {
     const accept = (q.accept || []).length ? ` <span class="small">(also accept: ${esc(q.accept.join('; '))})</span>` : '';
     const label = type === 'open' ? 'A strong answer' : 'Answer';
-    inner += `<div class="key"><div>${label}: <b>${esc(answerText(q, ver))}</b>${accept}</div>${q.why ? `<div class="why">Why: ${esc(vv(q.why, ver))}</div>` : ''}</div>`;
+    inner += `<div class="key"><div>${label}: <b>${esc(keyText(q, ver))}</b>${accept}</div>${q.why ? `<div class="why">Why: ${esc(vv(q.why, ver))}</div>` : ''}</div>`;
   }
-  return `<div class="q"><div class="num">${numLabel(n, L)}</div><div class="body">${inner}</div></div>`;
+  return `<div class="q${ctx.dayLabels ? ' day' : ''}"><div class="num">${qLabel(n, ctx)}</div><div class="body">${inner}</div></div>`;
 }
 
 function skillsMapHtml(doc, ver) {
@@ -162,7 +167,7 @@ function skillsMapHtml(doc, ver) {
   <table><tr><th>#</th><th>Skill</th><th>Level</th><th>Type</th><th>Key${ver ? ` (version ${esc(ver)})` : ''}</th></tr>${items
     .map(
       ({ q, n }) =>
-        `<tr><td>${n}</td><td>${esc(q.skill || '')}</td><td>${esc(q.level ?? '')}</td><td>${esc(q.type || 'short')}</td><td><b>${esc(answerText(q, ver))}</b></td></tr>`
+        `<tr><td>${n}</td><td>${esc(q.skill || '')}</td><td>${esc(q.level ?? '')}</td><td>${esc(q.type || 'short')}</td><td><b>${esc(keyText(q, ver))}</b></td></tr>`
     )
     .join('')}</table>`;
 }
@@ -223,21 +228,29 @@ export function handoutHtml(doc, ctx) {
   return page(doc.title, css, body);
 }
 
-export function cardsHtml(doc, ctx) {
+// Review-game cards (no answers), or bell-ringer day cards: one short question a day, 10 to a set, with an answer line.
+export function cardsHtml(doc, ctx, { days = false } = {}) {
   const items = questionsOf(doc);
   const css =
     baseCss(ctx) +
     ` .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-      .card { border: 1pt dashed #000; min-height: 2.35in; padding: 10pt 12pt; break-inside: avoid; position: relative; }
-      .card .cn { font-weight: 800; font-size: 14pt; } .card .cl { position: absolute; right: 8pt; top: 6pt; font-size: 8.5pt; border: 1pt solid #000; border-radius: 6pt; padding: 0 5pt; }
-      .card .fig svg { max-height: 1.3in; } .card .choices { grid-template-columns: 1fr 1fr; }`;
-  const body = `<h1>${esc(doc.title)}</h1><p class="directions">Cut along the dashed lines. The answers are in the teacher copy and the slide notes.</p>
+      .card { border: 1pt dashed #000; min-height: ${days ? '1.5in' : '2.35in'}; padding: ${days ? '7pt 10pt' : '10pt 12pt'}; break-inside: avoid; position: relative; }
+      .card p { margin: 3pt 0; font-size: ${days ? '10.5pt' : 'inherit'}; }
+      .card .cn { font-weight: 800; font-size: ${days ? '12pt' : '14pt'}; } .card .cl { position: absolute; right: 8pt; top: 6pt; font-size: 8.5pt; border: 1pt solid #000; border-radius: 6pt; padding: 0 5pt; }
+      .card .fig svg { max-height: ${days ? '0.9in' : '1.3in'}; } .card .choices { grid-template-columns: 1fr 1fr; font-size: ${days ? '10.5pt' : 'inherit'}; }
+      .card .ans { margin-top: 5pt; font-size: 10.5pt; } .card .ans .ln { width: 1.4in; }${days ? ' h1 { font-size: 17pt; } .fields { margin-bottom: 8pt; } .directions { margin: 2pt 0 6pt; }' : ''}`;
+  const head = days
+    ? `${fieldsHtml(ctx.layout)}<h1>${esc(doc.title)}</h1><p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${esc(doc.directions || 'One a day. Answer in the box for today.')}</p>`
+    : `<h1>${esc(doc.title)}</h1><p class="directions">Cut along the dashed lines. The answers are in the teacher copy and the slide notes.</p>`;
+  const body = `${head}
   <div class="cards">${items
     .map(({ q, n }) => {
       const ch = q.type === 'mc' ? vv(q.choices) || [] : [];
-      return `<div class="card"><div class="cn">${n}</div><div class="cl">Level ${esc(q.level ?? '')}</div><p>${esc(vv(q.prompt))}</p>${figureHtml(vv(q.figure))}${
-        ch.length ? `<div class="choices">${ch.map((c, i) => `<div class="ch"><span class="l">${letter(i)}.</span><span>${esc(c)}</span></div>`).join('')}</div>` : ''
-      }${q.type === 'tf' ? '<div class="tf"><span>True</span><span>False</span></div>' : ''}</div>`;
+      const unit = vv(q.unit);
+      const line = days && !['mc', 'tf', 'match'].includes(q.type || 'short') ? `<div class="ans"><span>Answer:</span><span class="ln"></span>${unit ? `<span>${esc(unit)}</span>` : ''}</div>` : '';
+      return `<div class="card"><div class="cn">${days ? `Day ${n}` : n}</div><div class="cl">Level ${esc(q.level ?? '')}</div><p>${esc(vv(q.prompt))}</p>${figureHtml(vv(q.figure))}${
+        ch.length ? `<div class="choices">${ch.map((c, i) => `<div class="ch"><span class="l">${choiceLabel(i, ctx.layout)}</span><span>${esc(c)}</span></div>`).join('')}</div>` : ''
+      }${q.type === 'tf' ? '<div class="tf"><span>True</span><span>False</span></div>' : ''}${line}</div>`;
     })
     .join('')}</div>`;
   return page(doc.title, css, body);
