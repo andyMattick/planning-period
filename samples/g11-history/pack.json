@@ -1,0 +1,1686 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-4c19e7",
+  "date": "2026-11-05",
+  "order": {
+    "teacher": "Ms. Renée Castellanos (made-up sample)",
+    "grade": "11",
+    "subject": "social",
+    "topic": "Reconstruction, 1865–1877",
+    "items": [
+      "studyguide",
+      "test"
+    ],
+    "extras": [
+      "styleSetup"
+    ],
+    "requests": "U.S. History, 11th grade, regular and honors sections together. Cover the 13th, 14th and 15th Amendments, the Freedmen's Bureau, Black political participation, the Black Codes and the violence against Black citizens, and the Compromise of 1877. Keep the framing balanced and accurate: Black Southerners were actors in Reconstruction, not only people things happened to. Any quotation must be real and quoted word for word with its source, or clearly labeled as an excerpt written for this test.",
+    "itemRequests": {
+      "studyguide": "Two pages at most: what to know (terms, people, dates) and a short practice set in the same style as the test, with a key.",
+      "test": "About 40% harder questions. Include document-based questions: short public-domain primary-source quotations quoted accurately with their source, or short original excerpts labeled as written for the test. A and B versions with the same skills. One or two short written answers."
+    },
+    "sources": [
+      "reconstruction-unit-notes.md"
+    ],
+    "styleExamples": [
+      "civil-war-unit-test-2025.md",
+      "gilded-age-review-sheet.md"
+    ]
+  },
+  "style": {
+    "notes": [
+      "Name / Date / Period line at the top; title in capitals with the unit number (UNIT 5 TEST: …, REVIEW SHEET — Unit 5: …)",
+      "One bold directions line under the title; question stems use BEST in capitals",
+      "Tests in parts with Roman numerals and points: Part I — Multiple Choice (2 points each), Part II — Documents (3 points each), Part III — Short Answer (5 points)",
+      "Numbers with a parenthesis: 1); choices as (A) (B) (C) (D); choices are short phrases, often finishing the stem",
+      "Documents: a DOCUMENT n heading, then the source line (author, title, date), then the excerpt; invented sources are labeled in italics \"(written for this test; not a real …)\"",
+      "Short answer is Claim + Evidence + Reasoning: make a claim, give TWO pieces of evidence, explain; 4–6 sentences; scored claim 1, evidence 2, reasoning 2",
+      "Review sheets: KNOW IT COLD boxes (People; Terms and dates) with a bold name or term, a dash and a short fact with its date; BIG QUESTIONS (be ready to write about one) that ask students to admit what the other side gets right; PRACTICE in the same style as the test",
+      "Key: letters in a short line; each why is one sentence, the fact that settles it"
+    ],
+    "font": "Liberation Serif",
+    "accent": "#7a2e2e",
+    "layout": {
+      "fields": [
+        "Name",
+        "Date",
+        "Period"
+      ],
+      "nameBox": false,
+      "boldDirections": true,
+      "numbering": "1)",
+      "choiceStyle": "(A)"
+    }
+  },
+  "documents": [
+    {
+      "item": "studyguide",
+      "kind": "studyguide",
+      "title": "Unit 5 Review Sheet: Reconstruction, 1865–1877",
+      "directions": "Use this sheet to study. The test covers everything in the \"Know It Cold\" boxes. Practice questions at the end are in the same style as the test.",
+      "sections": [
+        {
+          "heading": "KNOW IT COLD: Presidents",
+          "directions": "Lincoln — Ten Percent Plan (1863); pocket-vetoed Wade-Davis (1864); shot April 14, 1865 (died April 15). • Andrew Johnson — pardons, fast rebuilding of state governments (1865); impeached 1868, one vote short. • Grant — elected 1868. • Hayes (R) vs. Tilden (D) — 1876."
+        },
+        {
+          "heading": "KNOW IT COLD: Leaders",
+          "directions": "Thaddeus Stevens, Charles Sumner — Radical Republicans. • Oliver O. Howard — Freedmen's Bureau head. • Frederick Douglass — the vote for Black men now (1865); backed the 15th."
+        },
+        {
+          "heading": "KNOW IT COLD: Black officeholders",
+          "directions": "Hiram Revels (Miss.) — first Black senator (1870). • Joseph Rainey (S.C.) — first Black House member (1870). • Blanche K. Bruce (Miss.) — full Senate term (1875–1881)."
+        },
+        {
+          "heading": "KNOW IT COLD: Freedom and the Black Codes, 1865–1866",
+          "directions": "Freedmen's Bureau (March 1865) — relief, labor contracts, schools. • Field Order No. 15 — 40-acre plots; pardons gave the land back; sharecropping grew. • Black Codes — yearly contracts, \"vagrancy\" fines, child apprenticeship."
+        },
+        {
+          "heading": "KNOW IT COLD: Congress takes over, 1866–1868",
+          "directions": "Civil Rights Act of 1866 — first major law passed over a veto. • Memphis, New Orleans massacres (1866) — Republicans win big. • Reconstruction Acts (1867) — five military districts; Black men vote; ratify the 14th."
+        },
+        {
+          "heading": "KNOW IT COLD: The three amendments",
+          "directions": "13th (1865) — ends slavery \"except as a punishment for crime.\" • 14th (1868) — citizenship (ends Dred Scott), due process, equal protection; \"No State shall.\" • 15th (1870) — no denying the vote by race, color or servitude; poll taxes not banned; silent on sex."
+        },
+        {
+          "heading": "KNOW IT COLD: Terms",
+          "directions": "Carpetbaggers (Northerners who moved South), scalawags (white Southern Republicans) — insults. • Redeemers — white Democrats who took the states back."
+        },
+        {
+          "heading": "KNOW IT COLD: Violence and retreat, 1870–1877",
+          "directions": "Klan; Enforcement Acts (1870–1871). • Colfax massacre (1873); Cruikshank (1876) — the 14th limits states, not private people. • Panic of 1873; Democrats win the House (1874). • Compromise of 1877 — troops leave; last Republican governments fall."
+        },
+        {
+          "heading": "BIG QUESTIONS (be ready to write about one)",
+          "directions": "1. A failure, or a real change that was overturned? Admit what the other side gets right. • 2. How did freedpeople shape Reconstruction themselves? • 3. Who ended it: Southern violence, the Court, or the North? Rank them."
+        },
+        {
+          "heading": "PRACTICE (same style as the test)",
+          "directions": "Circle the letter of the BEST answer. Number 10 is a short written answer, like Part III of the test.",
+          "questions": [
+            {
+              "id": "p1",
+              "level": 1,
+              "skill": "the three amendments",
+              "type": "mc",
+              "prompt": "Which amendment says that no state may deny any person \"the equal protection of the laws\"?",
+              "choices": [
+                "the 13th Amendment (1865)",
+                "the 14th Amendment (1868)",
+                "the 15th Amendment (1870)",
+                "the Civil Rights Act (1866)"
+              ],
+              "answer": 1,
+              "why": "Equal protection is in Section 1 of the 14th Amendment (ratified 1868)."
+            },
+            {
+              "id": "p2",
+              "level": 1,
+              "skill": "people of Reconstruction",
+              "type": "mc",
+              "prompt": "Thaddeus Stevens and Charles Sumner are best known as",
+              "choices": [
+                "Democratic governors who led the Redeemers in the South.",
+                "Supreme Court justices who wrote the Cruikshank ruling.",
+                "Union generals who ran two of the five military districts.",
+                "Republican leaders in Congress who pushed for Black rights."
+              ],
+              "answer": 3,
+              "why": "Stevens (House) and Sumner (Senate) led the Radical Republicans."
+            },
+            {
+              "id": "p3",
+              "level": 1,
+              "skill": "Freedmen's Bureau",
+              "type": "mc",
+              "prompt": "Which was one job of the Freedmen's Bureau?",
+              "choices": [
+                "supervising labor contracts and hearing complaints",
+                "collecting the poll tax in every Southern county",
+                "running the Electoral Commission that settled 1876",
+                "choosing the delegates for state party conventions"
+              ],
+              "answer": 0,
+              "why": "The Bureau supervised contracts and handled complaints between workers and employers."
+            },
+            {
+              "id": "p4",
+              "level": 2,
+              "skill": "Black Codes",
+              "type": "mc",
+              "prompt": "Under many Black Codes, a freedman without a yearly labor contract could be",
+              "choices": [
+                "sent North by the army to look for factory work in the cities.",
+                "given county land to farm until his next harvest came in.",
+                "fined as a \"vagrant\" and hired out to pay the fine.",
+                "barred from marrying, owning property or going to church."
+              ],
+              "answer": 2,
+              "why": "Vagrancy laws fined people with no job and let counties hire out anyone who could not pay; the Codes did allow marriage and some property."
+            },
+            {
+              "id": "p5",
+              "level": 2,
+              "skill": "Black political participation",
+              "type": "mc",
+              "prompt": "Which statement about South Carolina during Reconstruction is accurate?",
+              "choices": [
+                "It was the first state readmitted, in 1866, after it ratified the 14th Amendment.",
+                "Black members were a majority of its lower house for several years.",
+                "Its legislature sent Hiram Revels to the U.S. Senate in 1870 as the first Black senator.",
+                "It never had a Republican state government, even under army rule in 1868."
+              ],
+              "answer": 1,
+              "why": "Black legislators held a majority of the South Carolina lower house for several years; Tennessee was readmitted first and Revels was from Mississippi."
+            },
+            {
+              "id": "p6",
+              "level": 2,
+              "skill": "Johnson vs. Congress",
+              "type": "mc",
+              "prompt": "Why did Congress refuse to seat the men Southern states sent to Washington in late 1865?",
+              "choices": [
+                "Their states had not held elections yet.",
+                "Johnson asked Congress to keep them out.",
+                "Most had joined the Republicans.",
+                "Many of them were former Confederate leaders."
+              ],
+              "answer": 3,
+              "why": "Southern voters had elected many former Confederate leaders, and Congress would not seat them."
+            },
+            {
+              "id": "p7",
+              "level": 3,
+              "skill": "the Court and the 14th Amendment",
+              "type": "mc",
+              "prompt": "The 14th Amendment says \"No State shall\" abridge citizens' rights. How did the Supreme Court use those words in the 1870s?",
+              "choices": [
+                "It said the words did not reach attacks by private persons.",
+                "It said the words let Congress punish any private person who attacked a voter.",
+                "It said the words protected freedpeople but not white Republicans.",
+                "It said the words let women vote in federal elections."
+              ],
+              "answer": 0,
+              "why": "In Cruikshank (1876) the Court said the amendment limits states, not private people, so the Colfax convictions fell."
+            },
+            {
+              "id": "p8",
+              "level": 3,
+              "skill": "cause and effect",
+              "type": "mc",
+              "prompt": "Which chain of events is in the right order?",
+              "choices": [
+                "Reconstruction Acts → Black Codes → Civil Rights Act of 1866",
+                "Compromise of 1877 → Panic of 1873 → House goes Democratic",
+                "Black Codes → Northern anger → Congress takes over",
+                "Klan Act → Klan founded → Colfax massacre"
+              ],
+              "answer": 2,
+              "why": "The Black Codes (1865–66) angered the North, and Congress took control in 1866–67."
+            },
+            {
+              "id": "p9",
+              "level": 3,
+              "skill": "interpreting Reconstruction",
+              "type": "mc",
+              "prompt": "DOCUMENT (written for this sheet; not a real document) — A Black minister in Georgia, 1868: \"We built this church with our own hands, and on weekdays it is a schoolhouse. The Bureau sent us one teacher; we pay for the second.\" Which conclusion does this excerpt BEST support?",
+              "choices": [
+                "Freedpeople waited for the Bureau to build their schools for them.",
+                "The community built its school and helped pay its teachers.",
+                "Black churches were closed on weekdays by order of the Bureau.",
+                "The Bureau paid both of the town's teachers."
+              ],
+              "answer": 1,
+              "why": "The community built the building and pays a teacher; the Bureau helped but did not do it alone."
+            },
+            {
+              "id": "p10",
+              "level": 3,
+              "skill": "Claim + Evidence + Reasoning",
+              "type": "open",
+              "space": 8,
+              "prompt": "Claim + Evidence + Reasoning. Which did more to end Reconstruction: violence in the South or the North losing interest? Make a claim, give TWO pieces of evidence from the unit, and explain how they support your claim. (4–6 sentences)",
+              "answer": "Strong answer: Violence did more, because it made Black voting dangerous before the North ever left. The Klan raided and killed Black voters, officeholders and teachers, and the Colfax massacre (1873) killed dozens of Black men after a disputed election; after Cruikshank (1876) the federal government could not punish the killers. The White League and Red Shirts helped Democrats take back states. The North's retreat (Panic of 1873, the 1874 House, the Compromise of 1877) mattered, but it came after violence had already \"redeemed\" most of the South. (Either side earns full credit with evidence.)",
+              "accept": [],
+              "why": "5 points: claim 1, evidence 2 (two accurate, specific pieces), reasoning 2 (explains how the evidence proves the claim). Either claim can earn full credit."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "test",
+      "kind": "test",
+      "title": "Unit 5 Test: Reconstruction, 1865–1877",
+      "directions": "Read each question carefully. Circle the letter of the BEST answer. For the documents, read the source line before you read the excerpt.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "sections": [
+        {
+          "heading": "Part I — Multiple Choice (2 points each)",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "13th Amendment",
+              "type": "mc",
+              "prompt": {
+                "A": "What did the 13th Amendment, ratified in December 1865, do?",
+                "B": "After December 6, 1865, slavery was illegal everywhere in the United States because of"
+              },
+              "choices": {
+                "A": [
+                  "It made freedpeople citizens of their states.",
+                  "It gave Black men the vote, in every state.",
+                  "It ended slavery, except as punishment for a crime.",
+                  "It set up the Freedmen's Bureau."
+                ],
+                "B": [
+                  "the Emancipation Proclamation (1863).",
+                  "the ratification of the Thirteenth Amendment.",
+                  "the Civil Rights Act of 1866.",
+                  "Sherman's Field Order No. 15."
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 1
+              },
+              "why": {
+                "A": "The 13th abolished slavery and involuntary servitude except as punishment for a crime.",
+                "B": "The Proclamation freed people only in Confederate-held areas; ratifying the 13th ended slavery nationwide."
+              }
+            },
+            {
+              "id": "q2",
+              "level": 1,
+              "skill": "Freedmen's Bureau",
+              "type": "mc",
+              "prompt": {
+                "A": "Congress created the Freedmen's Bureau in March 1865 mainly to",
+                "B": "Who served as commissioner of the Freedmen's Bureau?"
+              },
+              "choices": {
+                "A": [
+                  "give relief, oversee work contracts and help start schools.",
+                  "pay former owners, state by state, for the people they had enslaved.",
+                  "train Black regiments, with Northern officers, for the last campaigns of the war.",
+                  "count voters, county by county, before the 1866 elections."
+                ],
+                "B": [
+                  "Thaddeus Stevens",
+                  "Edwin Stanton",
+                  "Blanche K. Bruce",
+                  "Oliver O. Howard"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 3
+              },
+              "why": {
+                "A": "The Bureau gave relief, oversaw labor contracts and helped start schools; it never paid owners.",
+                "B": "General Oliver O. Howard led the Bureau; Howard University is named for him."
+              }
+            },
+            {
+              "id": "q3",
+              "level": 1,
+              "skill": "Presidential Reconstruction",
+              "type": "mc",
+              "prompt": {
+                "A": "Which describes Andrew Johnson's plan for Reconstruction in 1865?",
+                "B": "Before a Southern state could rebuild its government under Andrew Johnson's plan of 1865, he required"
+              },
+              "choices": {
+                "A": [
+                  "He kept the South under army rule until the states gave Black men the vote.",
+                  "He gave land from large plantations to freed families.",
+                  "He required states to ratify the 15th Amendment first.",
+                  "He pardoned most Confederates and let states rebuild fast."
+                ],
+                "B": [
+                  "little beyond accepting the end of slavery.",
+                  "a vote of Black and white men on a new constitution.",
+                  "a majority of its 1860 voters to swear loyalty.",
+                  "federal troops to stay until Black men held office."
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 0
+              },
+              "why": {
+                "A": "Johnson pardoned most former Confederates and asked little beyond ending slavery.",
+                "B": "Johnson let the states rebuild fast and asked little more than that they accept the end of slavery."
+              }
+            },
+            {
+              "id": "q4",
+              "level": 1,
+              "skill": "Black officeholders",
+              "type": "mc",
+              "prompt": {
+                "A": "Hiram Revels of Mississippi is known as the",
+                "B": "Joseph Rainey of South Carolina was the first Black American to"
+              },
+              "choices": {
+                "A": [
+                  "founder of Fisk University in Nashville.",
+                  "first Black U.S. senator.",
+                  "author of Mississippi's Black Code.",
+                  "leader of the Red Shirts in Mississippi."
+                ],
+                "B": [
+                  "lead the Freedmen's Bureau in South Carolina.",
+                  "run for President.",
+                  "serve in the U.S. House of Representatives.",
+                  "sit on the Supreme Court."
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 2
+              },
+              "why": {
+                "A": "Revels took his Senate seat in 1870.",
+                "B": "Rainey entered the House of Representatives in 1870."
+              }
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "Black Codes",
+              "type": "mc",
+              "prompt": {
+                "A": "What was the main goal of the Black Codes passed in 1865 and 1866?",
+                "B": "Which law is an example of the apprenticeship rules in the Black Codes?"
+              },
+              "choices": {
+                "A": [
+                  "to give freedpeople the same legal rights as white citizens in court",
+                  "to move freed families onto federal land in the West",
+                  "to keep Black workers on plantations under white control",
+                  "to ready freedmen to vote"
+                ],
+                "B": [
+                  "Courts could bind Black children to employers, often former owners.",
+                  "Freed children had to attend a Bureau school until they turned twelve.",
+                  "Black parents needed a county license to hire a private teacher.",
+                  "Black children could be apprenticed only with their parents' written consent."
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 0
+              },
+              "why": {
+                "A": "Contracts, vagrancy fines and apprenticeship laws kept Black labor under white control.",
+                "B": "Apprenticeship laws let courts bind Black children to employers, often their former owners."
+              }
+            },
+            {
+              "id": "q6",
+              "level": 2,
+              "skill": "Congress vs. Johnson",
+              "type": "mc",
+              "prompt": {
+                "A": "Why is the Civil Rights Act of 1866 remembered as a turning point?",
+                "B": "In 1866 Johnson vetoed the bill to extend the Freedmen's Bureau. What happened next?"
+              },
+              "choices": {
+                "A": [
+                  "It was the first major law passed over a President's veto.",
+                  "It was the first civil rights law Andrew Johnson wrote and sent to Congress himself.",
+                  "It gave women, as well as Black men, the vote in federal elections.",
+                  "It ended military rule in the South and brought the troops home."
+                ],
+                "B": [
+                  "The Bureau shut down all of its offices that same summer.",
+                  "The Supreme Court struck down his veto.",
+                  "Congress passed the bill over his veto.",
+                  "Southern states took the Bureau over."
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 2
+              },
+              "why": {
+                "A": "Johnson vetoed it and Congress overrode him in April 1866.",
+                "B": "Congress overrode the veto in July 1866."
+              }
+            },
+            {
+              "id": "q7",
+              "level": 2,
+              "skill": "Reconstruction Acts of 1867",
+              "type": "mc",
+              "prompt": {
+                "A": "To be readmitted under the Reconstruction Acts of 1867, a Southern state had to",
+                "B": "How did the Reconstruction Acts of 1867 organize the unreconstructed South?"
+              },
+              "choices": {
+                "A": [
+                  "pay back part of the Union's war debt and disband its militia.",
+                  "adopt a constitution letting Black men vote and ratify the 14th.",
+                  "elect a Republican governor.",
+                  "hold a vote of all its white men on rejoining."
+                ],
+                "B": [
+                  "into five military districts",
+                  "into ten territories",
+                  "under Bureau agents in each county",
+                  "under the Ten Percent Plan's loyal governments"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 0
+              },
+              "why": {
+                "A": "New constitutions had to give Black men the vote, and the state had to ratify the 14th.",
+                "B": "Ten states were divided into five military districts under army commanders."
+              }
+            },
+            {
+              "id": "q8",
+              "level": 2,
+              "skill": "Johnson's impeachment",
+              "type": "mc",
+              "prompt": {
+                "A": "What was the result of Andrew Johnson's impeachment in 1868?",
+                "B": "Which act by Johnson led directly to his impeachment?"
+              },
+              "choices": {
+                "A": [
+                  "The House voted down every charge brought against him in 1868.",
+                  "He resigned before the Senate trial.",
+                  "The Senate removed him by a wide margin.",
+                  "The Senate came one vote short of removing him."
+                ],
+                "B": [
+                  "vetoing the Civil Rights Act of 1866",
+                  "firing War Secretary Edwin Stanton",
+                  "pardoning many former Confederate generals",
+                  "telling the South not to ratify the 14th Amendment"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 1
+              },
+              "why": {
+                "A": "The House impeached him; the Senate fell one vote short (May 1868).",
+                "B": "Firing Stanton broke the Tenure of Office Act, the charge the House used."
+              }
+            },
+            {
+              "id": "q9",
+              "level": 2,
+              "skill": "Klan violence and the federal answer",
+              "type": "mc",
+              "prompt": {
+                "A": "Who were the main targets of the Ku Klux Klan's night raids?",
+                "B": "What did Congress pass in 1870–1871 to fight the Klan?"
+              },
+              "choices": {
+                "A": [
+                  "Black voters, officeholders and teachers, and white Republicans",
+                  "Northern bankers, railroad owners and their agents working in the South",
+                  "Union officers who commanded the five military districts",
+                  "new immigrants arriving in Southern ports"
+                ],
+                "B": [
+                  "the Wade-Davis Bill",
+                  "the Tenure of Office Act",
+                  "the Enforcement Acts",
+                  "the Civil Rights Act of 1875"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 2
+              },
+              "why": {
+                "A": "The Klan attacked Black political and community leaders and their white Republican allies.",
+                "B": "The Enforcement Acts, including the Ku Klux Klan Act of 1871, let Grant prosecute Klansmen."
+              }
+            },
+            {
+              "id": "q10",
+              "level": 3,
+              "skill": "land and sharecropping",
+              "type": "mc",
+              "prompt": {
+                "A": "Most freed families never received \"forty acres.\" What happened to the land set aside by Field Order No. 15, and what grew instead?",
+                "B": "Why did sharecropping spread across the South after the war?"
+              },
+              "choices": {
+                "A": [
+                  "Congress sold it to the railroads in 1866; factory work in Southern cities grew.",
+                  "Johnson's pardons returned it to former owners; sharecropping grew.",
+                  "The Bureau kept it for schools; renting farms grew.",
+                  "The army used it for forts; cotton ended."
+                ],
+                "B": [
+                  "Freedpeople preferred wages and refused to farm.",
+                  "Northern banks made planters divide every plantation into rental farms by 1867.",
+                  "Most freedpeople had no land after pardons undid the land grants.",
+                  "The Black Codes required it in each state."
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 2
+              },
+              "why": {
+                "A": "Pardons gave land back to former owners, and landless freedpeople turned to sharecropping.",
+                "B": "With Field Order 15 land handed back, freedpeople needed land and owners needed labor, so shares replaced wages."
+              }
+            },
+            {
+              "id": "q11",
+              "level": 3,
+              "skill": "cause and effect, 1865–1867",
+              "type": "mc",
+              "prompt": {
+                "A": "How did the Memphis and New Orleans massacres of 1866 change Reconstruction?",
+                "B": "Which statement best explains why Congress, not the President, controlled Reconstruction after 1866?"
+              },
+              "choices": {
+                "A": [
+                  "They led Johnson to send troops to guard Black voters.",
+                  "They pushed Southern states, one by one, to ratify the 14th.",
+                  "They ended the Bureau's work in Louisiana and Tennessee.",
+                  "They helped Republicans win in 1866, so Congress took control."
+                ],
+                "B": [
+                  "Lincoln's Ten Percent Plan had given Congress the power to readmit states.",
+                  "Northern voters, angry at the Black Codes, elected big Republican majorities.",
+                  "The Supreme Court ruled only Congress could readmit states.",
+                  "Johnson asked Congress to take over."
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 1
+              },
+              "why": {
+                "A": "The violence helped Republicans win big in 1866; Congress then passed the Reconstruction Acts (1867).",
+                "B": "The Black Codes and the 1866 massacres turned Northern voters against Johnson's plan; Republicans won veto-proof majorities."
+              }
+            },
+            {
+              "id": "q12",
+              "level": 3,
+              "skill": "the North's retreat",
+              "type": "mc",
+              "prompt": {
+                "A": "Democrats won the U.S. House in 1874. Which earlier event best helps explain it?",
+                "B": "Which pair best explains why Northern support for Reconstruction faded in the mid-1870s?"
+              },
+              "choices": {
+                "A": [
+                  "the Ku Klux Klan Act of 1871",
+                  "the ratification of the 15th Amendment",
+                  "the Panic of 1873",
+                  "the pocket veto of the Wade-Davis Bill"
+                ],
+                "B": [
+                  "the Reconstruction Acts and Johnson's impeachment",
+                  "the 15th Amendment and Grant's 1868 win",
+                  "the Enforcement Acts and the Klan trials of 1871",
+                  "the 1873 depression and weariness with the South"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 3
+              },
+              "why": {
+                "A": "The 1873 depression turned Northern voters toward the economy and away from Reconstruction.",
+                "B": "The Panic of 1873 and Northern fatigue shifted attention to the economy; Democrats won the House in 1874."
+              }
+            },
+            {
+              "id": "q13",
+              "level": 3,
+              "skill": "Compromise of 1877",
+              "type": "mc",
+              "prompt": {
+                "A": "Why did the Compromise of 1877 mark the end of Reconstruction?",
+                "B": "In the election of 1876, Tilden won the popular vote. How did Hayes become President?"
+              },
+              "choices": {
+                "A": [
+                  "Hayes vetoed the civil rights bills Congress sent him in 1877 and 1878.",
+                  "Troops left, and the last Republican state governments fell.",
+                  "Southern states wrote new constitutions ending Black voting that year.",
+                  "The last Enforcement Act expired, so Grant's Klan trials stopped."
+                ],
+                "B": [
+                  "A party-line commission gave him all 20 disputed electoral votes.",
+                  "The House chose Hayes 185–184 after a tie in the Electoral College.",
+                  "Tilden withdrew after a recount in New York went against him.",
+                  "The Senate threw out Oregon's votes."
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 0
+              },
+              "why": {
+                "A": "With troops withdrawn from the South Carolina and Louisiana statehouses (April 1877), Democrats took the last Southern states.",
+                "B": "The 15-member Electoral Commission voted 8–7 to give all 20 disputed votes to Hayes, 185–184; Democrats accepted it in the Compromise."
+              }
+            },
+            {
+              "id": "q14",
+              "level": 3,
+              "skill": "interpreting Reconstruction",
+              "type": "mc",
+              "prompt": {
+                "A": "Which evidence best challenges the claim that Reconstruction \"failed\" and changed nothing?",
+                "B": "A newspaper run by Redeemers in 1880 calls the Reconstruction governments the most corrupt in history. What should a historian note FIRST?"
+              },
+              "choices": {
+                "A": [
+                  "Democrats ran most Southern states again by 1876.",
+                  "Sharecropping kept many freed families in debt for decades after 1877.",
+                  "The 14th and 15th Amendments stayed and were used in the 1950s–60s.",
+                  "Southern voters elected Confederate leaders to Congress in 1865."
+                ],
+                "B": [
+                  "Redeemer newspapers were the first to report on the new public schools.",
+                  "Newspapers in 1880 did not print political opinions.",
+                  "Reconstruction governments were mostly run by carpetbaggers from the North.",
+                  "The writer's party overthrew them, and Northern governments had scandals too."
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 3
+              },
+              "why": {
+                "A": "The amendments survived and powered the \"Second Reconstruction\"; the other choices support the \"failed\" side.",
+                "B": "The source has a motive, and Tweed-era New York shows corruption was not special to the South."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Part II — Documents (3 points each)",
+          "directions": "Each question gives its document first. Read the source line, then the excerpt.",
+          "questions": [
+            {
+              "id": "q15",
+              "level": 3,
+              "skill": "13th Amendment and the Black Codes",
+              "type": "mc",
+              "prompt": {
+                "A": "DOCUMENT 1 — Source: U.S. Constitution, 13th Amendment, Section 1 (ratified December 6, 1865). \"Neither slavery nor involuntary servitude, except as a punishment for crime whereof the party shall have been duly convicted, shall exist within the United States, or any place subject to their jurisdiction.\" Black Code lawmakers made \"vagrancy\" a crime. Why did the clause beginning \"except\" matter for those laws?",
+                "B": "DOCUMENT 1 — Source: a county law (written for this test; not a real document), 1866. \"Any freedman found without a labor contract on the first day of January shall be taken up as a vagrant, fined fifty dollars, and, if he cannot pay, hired out to whoever pays the fine.\" Lawmakers claimed laws like this did not break the 13th Amendment. What were they relying on?"
+              },
+              "choices": {
+                "A": [
+                  "It let states force people convicted of a crime to work.",
+                  "It let states keep slavery until 1870, if they paid owners.",
+                  "It let states pardon planters convicted of a crime against a worker.",
+                  "It let freedpeople, for the first time, sue employers."
+                ],
+                "B": [
+                  "the words that gave Congress the power to enforce the amendment",
+                  "the amendment's promise of equal protection of the laws",
+                  "the words allowing forced labor as punishment for a crime",
+                  "the amendment's silence about labor contracts"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 2
+              },
+              "why": {
+                "A": "Forced labor stayed legal as punishment for a crime, so a vagrancy conviction could lead to being hired out.",
+                "B": "The 13th allows involuntary servitude \"as a punishment for crime,\" so making joblessness a crime opened the door to forced labor."
+              }
+            },
+            {
+              "id": "q16",
+              "level": 2,
+              "skill": "14th Amendment text",
+              "type": "mc",
+              "prompt": {
+                "A": "DOCUMENT 2 — Source: U.S. Constitution, 14th Amendment, Section 1 (ratified July 9, 1868). \"All persons born or naturalized in the United States, and subject to the jurisdiction thereof, are citizens of the United States and of the State wherein they reside.\" Which earlier idea did this sentence overturn?",
+                "B": "DOCUMENT 2 — Source: U.S. Constitution, 14th Amendment, Section 1 (ratified July 9, 1868). \"…nor shall any State deprive any person of life, liberty, or property, without due process of law; nor deny to any person within its jurisdiction the equal protection of the laws.\" Which state law would most clearly conflict with this text?"
+              },
+              "choices": {
+                "A": [
+                  "that the President could pardon Confederates without Congress",
+                  "that states could tax goods from other states",
+                  "that only citizens who owned land could sit in Congress",
+                  "that Black Americans could not be U.S. citizens"
+                ],
+                "B": [
+                  "a law punishing Black workers more harshly than white ones for the same act",
+                  "a law requiring each county clerk to keep a written record of every land sale",
+                  "a law letting private railroads seat passengers as they choose",
+                  "a law requiring every worker to sign a yearly contract"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 0
+              },
+              "why": {
+                "A": "It reversed the Dred Scott claim that Black Americans could not be citizens.",
+                "B": "Different punishments by race for the same act deny equal protection."
+              }
+            },
+            {
+              "id": "q17",
+              "level": 3,
+              "skill": "14th Amendment and the Court",
+              "type": "mc",
+              "prompt": {
+                "A": "DOCUMENT 3 — Source: U.S. Constitution, 14th Amendment, Section 1 (ratified July 9, 1868). \"No State shall make or enforce any law which shall abridge the privileges or immunities of citizens of the United States…\" After the Colfax massacre (1873), the Supreme Court threw out the attackers' federal convictions in U.S. v. Cruikshank (1876). Which feature of this text did the Court rely on?",
+                "B": "DOCUMENT 3 — Source: U.S. Constitution, 14th Amendment, Section 1 (ratified July 9, 1868). \"…nor shall any State deprive any person of life, liberty, or property, without due process of law…\" In 1873 a white militia killed dozens of Black men at Colfax, Louisiana. Why did the Supreme Court decide in 1876 that the federal convictions could not stand?"
+              },
+              "choices": {
+                "A": [
+                  "It names the states as the ones limited, not private persons.",
+                  "It covers only crimes committed during the Civil War itself.",
+                  "It protects only people born in the United States, not immigrants.",
+                  "It gives the President, not Congress, the power to act."
+                ],
+                "B": [
+                  "Louisiana had not yet ratified the 14th Amendment in 1873.",
+                  "The victims were not U.S. citizens under the law of the time.",
+                  "The trial was held in a Northern court.",
+                  "The clause limits states, and the killers were private men."
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 3
+              },
+              "why": {
+                "A": "The Court read \"No State shall\" as limiting governments only, so a private militia's violence was left to the state.",
+                "B": "In Cruikshank the Court said the amendment restrains state action, not private people."
+              }
+            },
+            {
+              "id": "q18",
+              "level": 2,
+              "skill": "15th Amendment: what it left out",
+              "type": "mc",
+              "prompt": {
+                "A": "DOCUMENT 4 — Source: U.S. Constitution, 15th Amendment, Section 1 (ratified February 3, 1870). \"The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any State on account of race, color, or previous condition of servitude.\" Which later way of keeping Black men from voting does this text NOT forbid by its own words?",
+                "B": "DOCUMENT 4 — Source: a speaker at a women's rights meeting (written for this test; not a real document), 1869. \"The new amendment names race, and color, and servitude. We are told to wait our turn, and some of our own friends agree.\" Why did the amendment she describes split the suffrage movement?"
+              },
+              "choices": {
+                "A": [
+                  "a law barring former slaves from voting",
+                  "a state rule that only white men may vote",
+                  "a poll tax charged to every voter",
+                  "a federal law denying the vote by color"
+                ],
+                "B": [
+                  "It banned states from charging a poll tax.",
+                  "It said nothing about denying the vote by sex.",
+                  "It gave the vote to every person over twenty-one.",
+                  "It applied only in the former Confederate states."
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 1
+              },
+              "why": {
+                "A": "The text bans denial by race, color or past servitude, but a poll tax names none of them.",
+                "B": "The 15th did not cover sex, so leaders split (Stanton and Anthony against; Stone and Douglass for)."
+              }
+            },
+            {
+              "id": "q19",
+              "level": 3,
+              "skill": "Lincoln's plan vs. the Radicals",
+              "type": "mc",
+              "prompt": {
+                "A": "DOCUMENT 5 — Source: Abraham Lincoln, Second Inaugural Address, March 4, 1865. \"With malice toward none, with charity for all, with firmness in the right as God gives us to see the right, let us strive on to finish the work we are in, to bind up the nation's wounds…\" Which earlier action by Lincoln fits the attitude in this excerpt?",
+                "B": "DOCUMENT 5 — Source: a Radical Republican speech (written for this test; not a real document), 1864. \"The rebel states shall not walk back in because a handful of men say they are sorry. Let a majority swear loyalty first.\" Which plan would this speaker have voted for?"
+              },
+              "choices": {
+                "A": [
+                  "ordering the army to seize Confederate plantations",
+                  "signing a law that barred Confederates from office",
+                  "demanding that most Southern men swear an oath",
+                  "pocket-vetoing the stricter Wade-Davis Bill"
+                ],
+                "B": [
+                  "the Ten Percent Plan",
+                  "the Wade-Davis Bill",
+                  "seating Louisiana's members under its 1864 government",
+                  "a bill returning property to Confederates who accept emancipation"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 1
+              },
+              "why": {
+                "A": "His lenient tone matches his choice to block the Radicals' tougher Wade-Davis plan (1864).",
+                "B": "Wade-Davis required a majority of voters to take the oath, not 10%."
+              }
+            },
+            {
+              "id": "q20",
+              "level": 2,
+              "skill": "Black political action",
+              "type": "mc",
+              "prompt": {
+                "A": "DOCUMENT 6 — Source: Frederick Douglass, speech to the American Anti-Slavery Society, May 1865. \"Slavery is not abolished until the black man has the ballot.\" This quotation is BEST used as evidence that",
+                "B": "DOCUMENT 6 — Source: resolutions of a freedmen's convention (written for this test; not a real document), 1865. \"We ask no favors. We ask for the ballot, for schools for our children, and for the right to buy and hold land.\" This excerpt is BEST used as evidence that"
+              },
+              "choices": {
+                "A": [
+                  "Douglass thought the 13th Amendment had settled freedom.",
+                  "Black leaders pressed for the vote right away, not years later.",
+                  "Douglass wanted the army in the South for good.",
+                  "the Anti-Slavery Society opposed freedmen voting."
+                ],
+                "B": [
+                  "freedpeople left politics to Northern Republicans.",
+                  "Black Southerners were content with the Black Codes.",
+                  "freedpeople organized and made their own demands.",
+                  "the Freedmen's Bureau wrote the convention's speeches."
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 2
+              },
+              "why": {
+                "A": "Douglass argued that freedom was not complete without voting, as soon as the war ended.",
+                "B": "Freedpeople held conventions and stated their own goals: voting, schools and land."
+              }
+            },
+            {
+              "id": "q21",
+              "level": 2,
+              "skill": "Compromise of 1877 in sources",
+              "type": "mc",
+              "prompt": {
+                "A": "DOCUMENT 7 — Source: a letter from a Black Republican in New Orleans (written for this test; not a real document), April 1877. \"The soldiers marched out of the statehouse this week. Our governor has no one to stand behind him now, and the other side says the state is theirs.\" Which event does the letter describe?",
+                "B": "DOCUMENT 7 — Source: a Southern Democratic newspaper (written for this test; not a real document), March 1877. \"Let Mr. Hayes have his chair. We shall have our own governments back, a Southern man in the cabinet, and help for our railroads.\" Which deal is the writer describing?"
+              },
+              "choices": {
+                "A": [
+                  "the Reconstruction Acts setting up military districts in 1867",
+                  "the Redeemers taking back Mississippi in 1875",
+                  "the founding of the Freedmen's Bureau",
+                  "Hayes pulling the last federal troops out of the South"
+                ],
+                "B": [
+                  "the Ten Percent Plan",
+                  "the informal agreement that settled the 1876 election",
+                  "the Reconstruction Acts",
+                  "the Electoral Commission's 8–7 vote"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 1
+              },
+              "why": {
+                "A": "Hayes withdrew troops from the Louisiana and South Carolina statehouses in April 1877.",
+                "B": "Democrats accepted Hayes in return for home rule, a cabinet seat and internal improvements."
+              }
+            },
+            {
+              "id": "q22",
+              "level": 2,
+              "skill": "sources on violence and resistance",
+              "type": "mc",
+              "prompt": {
+                "A": "DOCUMENT 8 — Source: testimony of a Black farmer to a congressional committee (written for this test; not a real document), 1871. \"They came at night and told me if I voted the Republican ticket again, they would hang me. I voted anyway, and so did most of the men on my road.\" Which conclusion does this excerpt BEST support?",
+                "B": "DOCUMENT 8 — Source: a letter from a Black teacher in Alabama (written for this test; not a real document), 1870. \"They burned our schoolhouse in March. By May the parents had raised a new one, and I have forty pupils again.\" Which conclusion does this excerpt BEST support?"
+              },
+              "choices": {
+                "A": [
+                  "Night riders kept nearly all Black men from the polls.",
+                  "Klan threats aimed to stop Black voting, but many kept voting.",
+                  "Most Black voters had switched to the Democrats by 1871.",
+                  "Congress ignored reports of violence, as the farmer says."
+                ],
+                "B": [
+                  "Klan raids ended Black education in most of Alabama.",
+                  "Teachers left the South once the Klan appeared.",
+                  "Parents wanted the state to run schools.",
+                  "Black communities rebuilt schools despite attacks on them."
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 3
+              },
+              "why": {
+                "A": "The threat was about voting, and the speaker and his neighbors voted anyway.",
+                "B": "The school was burned and the parents rebuilt it within months."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Part III — Short Answer (5 points each)",
+          "directions": "Answer in 4–6 sentences. Use Claim + Evidence + Reasoning.",
+          "questions": [
+            {
+              "id": "q23",
+              "level": 3,
+              "skill": "Claim + Evidence + Reasoning: judging Reconstruction",
+              "type": "open",
+              "space": 8,
+              "prompt": {
+                "A": "Claim + Evidence + Reasoning. Was Reconstruction a failure, or a real change that was later overturned? Make a claim, give TWO pieces of evidence from the unit, and explain how they support your claim. (4–6 sentences)",
+                "B": "Claim + Evidence + Reasoning. Which did more to end Reconstruction: the Supreme Court or the North losing interest? Make a claim, give TWO pieces of evidence from the unit, and explain how they support your claim. (4–6 sentences)"
+              },
+              "answer": {
+                "A": "Strong answer: Reconstruction was a real change that was overturned. The 13th, 14th and 15th Amendments ended slavery, made freedpeople citizens and barred race as a reason to deny the vote; about 1,500 Black men held office and new state governments built the South's first public schools. Those gains were reversed by Klan and White League violence, by Cruikshank (1876), and by the Compromise of 1877. Because the amendments stayed in the Constitution and were used again in the 1950s–60s, \"failure\" misses what changed.",
+                "B": "Strong answer: The North losing interest did more. After the Panic of 1873, Northern voters turned to the economy and gave Democrats the House in 1874; in the Compromise of 1877 a Republican President pulled troops from the last Southern statehouses. The Court's rulings (Slaughterhouse 1873, Cruikshank 1876) weakened the 14th Amendment, but troops and Republican governments were still in place until the North chose to withdraw them."
+              },
+              "accept": [],
+              "why": {
+                "A": "5 points: claim 1, evidence 2 (two accurate, specific pieces), reasoning 2 (explains how the evidence proves the claim). Either claim can earn full credit; a strong answer admits what the other side gets right.",
+                "B": "5 points: claim 1, evidence 2 (two accurate, specific pieces), reasoning 2 (explains how the evidence proves the claim). Either claim can earn full credit."
+              }
+            },
+            {
+              "id": "q24",
+              "level": 3,
+              "skill": "Claim + Evidence + Reasoning: freedpeople as actors",
+              "type": "open",
+              "space": 8,
+              "prompt": {
+                "A": "Claim + Evidence + Reasoning. Historians say freedpeople shaped Reconstruction, not only lived through it. Do you agree? Make a claim, give TWO pieces of evidence from the unit, and explain how they support your claim. (4–6 sentences)",
+                "B": "Claim + Evidence + Reasoning. Choose ONE: Black officeholding OR the building of schools. How much did freedpeople themselves drive it? Make a claim, give TWO pieces of evidence from the unit, and explain how they support your claim. (4–6 sentences)"
+              },
+              "answer": {
+                "A": "Strong answer: Yes. Freedpeople reunited families, founded churches and helped start more than a thousand schools with the Bureau and missionary societies; they held conventions, negotiated contracts, voted, and about 1,500 Black men held office, including Senator Hiram Revels and Rep. Joseph Rainey. Black voters were part of Grant's 1868 margin. These were choices freedpeople made, often at risk of violence, so they were actors.",
+                "B": "Strong answer (schools): Freedpeople drove it. Black communities, with the Bureau and Northern missionary societies, started more than a thousand schools; new Reconstruction legislatures, where many Black men served (a majority of South Carolina's lower house for several years), built the South's first public school systems. The Bureau never had enough agents to do it alone, so the push came from the communities themselves. (Officeholding answers may cite about 1,500 Black officeholders, Revels, Bruce and Rainey.)"
+              },
+              "accept": [],
+              "why": {
+                "A": "5 points: claim 1, evidence 2 (two accurate, specific pieces), reasoning 2 (explains how the evidence proves the claim).",
+                "B": "5 points: claim 1, evidence 2 (two accurate, specific pieces), reasoning 2 (explains how the evidence proves the claim)."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco",
+        "at": "2026-11-05T14:26:50.670Z",
+        "rows": 58,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco",
+        "at": "2026-11-05T14:26:53.639Z",
+        "questions": 53,
+        "chance": 0.25,
+        "worst": [
+          [
+            "posB",
+            0.283
+          ],
+          [
+            "notVote",
+            0.277
+          ],
+          [
+            "converge",
+            0.274
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Unit 5 Review Sheet: Reconstruction, 1865–1877",
+            "n": 9,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 A",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 B",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 (all versions)",
+            "n": 44,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 53,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 2,
+        "agent": "🤖 Wilco",
+        "at": "2026-11-05T14:35:04.418Z",
+        "rows": 58,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 2,
+        "agent": "🤖 Wilco",
+        "at": "2026-11-05T14:35:07.804Z",
+        "questions": 53,
+        "chance": 0.25,
+        "worst": [
+          [
+            "posB",
+            0.283
+          ],
+          [
+            "notVote",
+            0.277
+          ],
+          [
+            "absolute",
+            0.264
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Unit 5 Review Sheet: Reconstruction, 1865–1877",
+            "n": 9,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 A",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 B",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 (all versions)",
+            "n": 44,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 53,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 3,
+        "agent": "🤖 Wilco",
+        "at": "2026-11-05T14:38:58.287Z",
+        "rows": 58,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 3,
+        "agent": "🤖 Wilco",
+        "at": "2026-11-05T14:39:01.570Z",
+        "questions": 53,
+        "chance": 0.25,
+        "worst": [
+          [
+            "posB",
+            0.283
+          ],
+          [
+            "notVote",
+            0.277
+          ],
+          [
+            "absolute",
+            0.264
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Unit 5 Review Sheet: Reconstruction, 1865–1877",
+            "n": 9,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 A",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 B",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 (all versions)",
+            "n": 44,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 53,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ],
+    "blind": [
+      {
+        "round": 1,
+        "agent": "🙈 Blind tester (social studies)",
+        "matched": 53,
+        "of": 53,
+        "byLevel": {
+          "1": {
+            "items": 11,
+            "matched": 11,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 1
+          },
+          "2": {
+            "items": 23,
+            "matched": 23,
+            "accuracy": 1,
+            "meanConfidence": 4.9,
+            "tooEasy": 3
+          },
+          "3": {
+            "items": 19,
+            "matched": 19,
+            "accuracy": 1,
+            "meanConfidence": 4.8,
+            "tooEasy": 3
+          },
+          "note": "Every key matched, and the facts, dates, amendment numbers and quotations check out against the source (I also checked the Douglass May 1865 line against the standard record: it is accurate). L3 is not clearly harder than L2 (100% at both levels, confidence 4.8 vs 4.9). The weak L3 items (B q12, A q13, B q19) each have two choices you can throw out on dates or because they are absurd; fixing those three should make the gap show. The tests are 10 of 24 L3 (42%), which is on target."
+        },
+        "findings": [
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q5",
+            "kind": "FIX",
+            "what": "Two defensible answers. Choice D (employers had to teach young workers a trade) was actually written into some codes: South Carolina's 1865 apprenticeship law had the master teach husbandry or another trade, and Mississippi's had him teach reading and writing. A student who knows the codes can defend D. Change D to something plainly false, e.g. 'Apprentices could leave once they turned fourteen if they found better pay.'",
+            "fixed": "D now says children could be apprenticed only with their parents' written consent, which is plainly false (courts bound children over parents' objections). Only A is right."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q19",
+            "kind": "FIX",
+            "what": "Anachronism makes it a two-choice item at L3. The speech is dated 1864, so C (the Compromise of 1877) and D (Johnson's 1865 pardons) did not exist yet and were never voted on. Replace C and D with 1864 options a Radical would vote against, e.g. 'seating Louisiana's members under its 1864 government' and 'a bill restoring property to Confederates who accept emancipation.'",
+            "fixed": "C and D are now 1864 options (seating Louisiana's 1864 government; returning property to Confederates who accept emancipation). No anachronism; all three wrong choices are lenient near misses."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q12",
+            "kind": "FIX",
+            "what": "Too easy for L3, and easier than A q12. Dates alone rule out A (a war with Spain, which came in 1898), B (Grant was never impeached) and C (Dred Scott was 1857), while A's version uses real Reconstruction events. Replace A, B and C with real pairs from the period that do not explain the mid-1870s fade, e.g. 'the Reconstruction Acts and Johnson's impeachment', 'the 15th Amendment and Grant's 1868 win', 'the Enforcement Acts and the Klan trials of 1871.'",
+            "fixed": "A–C are now real 1867–71 pairs (the Reconstruction Acts and impeachment; the 15th and Grant 1868; the Enforcement Acts and the Klan trials). Dates no longer rule them out by absurdity. Now as hard as A q12."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q13",
+            "kind": "FIX",
+            "what": "Too easy for L3: C (the Compromise repealed the 14th and 15th) and D (the Supreme Court closed the Bureau) are absurd, so only A and B are live. Replace C and D with plausible wrong ones, e.g. 'Southern states wrote new constitutions ending Black voting that year' (that came in the 1890s) and 'the last Enforcement Act expired, so Grant's Klan trials stopped.'",
+            "fixed": "C (1890s-style disfranchising constitutions) and D (the Enforcement Act expiring) replace the absurd repeal and Court-closes-Bureau choices. All four are live."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q21",
+            "kind": "FIX",
+            "what": "Too easy for L2 because of a content cue: the letter is dated April 1877, and the key is the only choice with '1877' in it. Take the year out of choice D (e.g. 'federal troops leaving the statehouses under Hayes'), and replace B (the end of the Wade-Davis plan) with a near miss from the same years, e.g. 'the Redeemers taking back Mississippi in 1875.'"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q21",
+            "kind": "FIX",
+            "what": "Too easy for L2: the paper is dated March 1877 and names Hayes, and the key is the only choice with '1877'; A and D are both from 1863–64 plans. Name the key without the year (e.g. 'the informal deal that settled the 1876 election'), and replace D with a near miss such as 'the Electoral Commission's 8–7 vote', which seated Hayes but was not the deal the writer lists.",
+            "fixed": "The key is now 'the informal agreement that settled the 1876 election' (no 1877 echo), and D is the Electoral Commission's 8–7 vote, a real near miss. One right answer."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q16",
+            "kind": "FIX",
+            "what": "Too easy for L2, and easier than A q16: B, C and D are race-neutral routine laws, so the one law that treats races differently stands out. Replace two of them with near misses, e.g. 'a law letting private railroads seat passengers as they choose' (private action) and 'a law requiring every worker to sign a yearly contract' (neutral on its face).",
+            "fixed": "C (private railroad seating) and D (a race-neutral yearly contract law) are now near misses. The race-based law no longer stands out by type. As hard as A q16."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q18",
+            "kind": "FIX",
+            "what": "B is easier than A. The invented excerpt spells out the answer ('It does not name us'), while A q18 makes students infer the poll tax gap from the text. Cut that sentence so students have to work out what the list of race, color and servitude leaves out, or ask a harder question about the excerpt, such as who the 'friends' who agree were (Stone, Douglass).",
+            "fixed": "'It does not name us' was cut. Students must infer the missing ground (sex) from the meeting and the three named grounds. Matches A q18's inference."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q3",
+            "kind": "FIX",
+            "what": "B is easier than A, and the key is cued. A q3 tests what Johnson's plan did, while B q3 only asks how he became President. Choice A repeats 'April 1865' from the stem and is the only full sentence, and C and D are absurd. Rewrite B q3 to test the same skill as A (e.g. what Johnson's 1865 plan asked of Southern states, with the key 'little beyond ending slavery'), or at least drop the repeated date from A and make C and D plausible.",
+            "fixed": "Rewritten to test the same skill as A q3 (what Johnson's 1865 plan required). The key is 'little beyond accepting the end of slavery', and the wrong choices are Wade-Davis's majority oath and two Radical-era terms. No repeated date. At least as hard as A q3."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q15",
+            "kind": "FIX",
+            "what": "Content cue: the key is the only choice that repeats 'vagrancy' from the stem. Remove ', like vagrancy,' from choice A. The item still tests the clause.",
+            "fixed": "', like vagrancy,' was removed from the key. No choice repeats the stem's 'vagrancy'."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p7",
+            "kind": "FIX",
+            "what": "Wording: in choice C, 'Congress had to pass it again', the 'it' has nothing clear to refer to. Change it to 'pass the amendment again.'",
+            "fixed": "C now says 'pass the amendment again'. The pronoun is clear. (A separate new finding: the item is still too easy for L3.)"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q5",
+            "kind": "JUDGMENT",
+            "what": "The key repeats the teacher's notes word for word ('keep Black workers on plantations under white control'). Reading 1: this is a content cue the brief warns about; paraphrase it (e.g. 'to hold freedpeople to plantation work on planters' terms'). Reading 2: it is the phrase the teacher teaches as the Codes' goal, and the other choices are false on content anyway, so the wording rewards students who learned it. Teacher's call."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q10",
+            "kind": "JUDGMENT",
+            "what": "The key (no land after the pardons) is right by the source, but this is a 'why' item with one cause where historians name several. Freedpeople rejected gang labor and wanted family farms, and planters had land but no cash, so sharecropping was partly a bargain that freedpeople pressed for. Distractor A ('preferred wages and refused to farm') also echoes the old idle-freedmen myth. Reading 1: keep it, since students should learn to reject that myth. Reading 2: change the stem to 'Which was one reason…' and make A a neutral wrong choice, so freedpeople are not shown only as people things happened to."
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 Blind tester (social studies), recheck",
+        "matched": 16,
+        "of": 16,
+        "byLevel": {
+          "L1": {
+            "items": 2,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L2": {
+            "items": 7,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L3": {
+            "items": 7,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 1
+          }
+        },
+        "findings": [
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q21",
+            "kind": "FIX",
+            "what": "The round 1 fix swapped one content cue for another. The letter says the soldiers 'marched out of the statehouse', and the key is now the only choice with 'statehouses' in it. Reword the key so it shares no distinctive word with the letter, e.g. 'Hayes pulling the last federal troops out of the South'. Keep B (Mississippi 1875); it is a good near miss.",
+            "fixed": "The key no longer repeats 'statehouse' from the letter, so the content cue is gone. But the new wording brings in a factual error (see the new FIX)."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p7",
+            "kind": "FIX",
+            "what": "Too easy for L3. Now that the wording is fixed, B (the words applied only to Northern states) and C (Congress had to pass it again) are not believable, so only D draws anyone. Replace B and C with readings a student could hold, e.g. 'It said the words let Congress punish any private person who attacked a voter' (the opposite of Cruikshank, which the Enforcement Acts assumed) and 'It said the words protected freedpeople but not white Republicans.' Keep the key at A. Avoid any choice about the 'privileges or immunities' of national citizenship, because Slaughterhouse makes that a second right answer.",
+            "fixed": "B and C were replaced as suggested. B (Congress could punish any private attacker) is now a believable near miss. No privileges-or-immunities choice was added, so there is no second right answer. The key is still A."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Presidents",
+            "kind": "FIX",
+            "what": "'Andrew Johnson — pardons, fast readmission (1865)' is misleading. No state was readmitted in 1865: Congress refused to seat the Southern members in late 1865, Tennessee came back in July 1866, and the rest came back from 1868 on. Say 'fast rebuilding of state governments (1865)', which matches the notes and the test keys (A q3, B q3)."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Presidents",
+            "kind": "FIX",
+            "what": "'Lincoln … killed April 14, 1865' is slightly off. He was shot April 14 and died the next morning (source, Day 1). Write 'shot April 14, 1865 (died April 15)' so the sheet a student memorizes is accurate."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Presidents / Violence and retreat",
+            "kind": "JUDGMENT",
+            "what": "The shortened boxes dropped the 1876 mechanics: 20 disputed electoral votes, and a 15-member Electoral Commission voting 8–7 along party lines to give Hayes a 185–184 win. B q13 tests exactly this, and B q21's wrong choice D relies on it. The sheet's directions say the test covers everything in the boxes. One reading: that sentence is not a promise that the boxes cover everything on the test, so leave it. The other reading: students treat the boxes as the full list, so add '20 disputed votes → Electoral Commission, 8–7 → Hayes 185–184' to the Presidents box. Nothing else in the boxes is false or dated wrong. I checked the 13th (1865), 14th (1868), 15th (1870), Bureau (March 1865), Revels and Rainey (1870), Bruce (1875–1881), Reconstruction Acts (1867), Enforcement Acts (1870–71), Colfax (1873), Cruikshank (1876), Panic of 1873 and the 1874 House, and the Terms."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q19",
+            "kind": "KEEP",
+            "what": "I flagged C (seating Louisiana's members under its 1864 government) as off-source because the notes never mention it. Keep it: it is historically accurate (Louisiana's Ten Percent government, which Congress would not seat), it is dated correctly for an 1864 speech, and a student can reject it as the lenient path without knowing the detail."
+          }
+        ],
+        "notes": "The view-r2.md I was given contained no items (the --only filter matched nothing). I rebuilt the full student copy with checks/student-view.mjs into my own scratchpad and diffed it against the round 1 view.md to find the 11 changed items: p7, A q13, A q15, A q21, B q3, B q5, B q12, B q16, B q18, B q19 and B q21. I answered those plus the twins A q3, A q12, A q16, A q18 and A q19 before opening the key. Note that the changed set includes A q13 and A q21; the brief's list of twins assumed B-side changes only."
+      },
+      {
+        "round": 3,
+        "agent": "🙈 Blind tester (social studies), recheck 2",
+        "matched": 2,
+        "of": 2,
+        "byLevel": {
+          "2": {
+            "items": 1,
+            "blindAccuracy": 1,
+            "meanConfidence": 4,
+            "tooEasy": 0
+          },
+          "3": {
+            "items": 1,
+            "blindAccuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 1
+          }
+        },
+        "findings": [
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q21",
+            "kind": "FIX",
+            "what": "The round 2 rewording made the key false. Saying Hayes pulled the 'last federal troops out of the South' is a well-known myth: he ordered the troops guarding the South Carolina and Louisiana statehouses back to their posts, and federal soldiers stayed in the South after 1877. The source (Day 8) and this item's own why line both say statehouses only, so the key and the why line now disagree. Reword the key so it is accurate and still shares no distinctive word with the letter. For example: 'Hayes ending federal military protection of the last Republican state governments' or 'Hayes withdrawing the troops that kept Republican governors in power'. Keep the wrong choices as they are."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p7",
+            "kind": "JUDGMENT",
+            "what": "Still easy for an L3 (answered blind with confidence 5). Reading 1: the stem quotes 'No State shall', and working out that those words leave out private attackers is the L3 skill the item means to test, so it stays as written. Reading 2: the quoted words act as a cue, so a student who doesn't know Cruikshank can still reach A, and the item plays like L2. If the teacher takes reading 2, relabel it level 2 rather than changing the choices (B is now a real near miss). The choices themselves are sound: one right answer, and D is false (Minor v. Happersett, 1875)."
+          }
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "round": 1,
+        "agent": "🔎 Fact checker",
+        "claims": 143,
+        "flagged": 9,
+        "notes": "143 claims: 123 source, 11 reference, 1 off, 8 judgment. The teacher's notes checked out against references on every date, amendment text, case and count (13th/14th/15th quotations match the National Archives transcriptions word for word; the Second Inaugural line matches the Library of Congress text). The Douglass line is real and correctly attributed (AASS annual meeting, New York, May 1865). Every invented excerpt is labeled and none is attributed to a real person. Framing is balanced and shows Black Southerners as actors. One wrong choice is actually true (B q5 D); the rest are judgment calls for the teacher. Web fetches of primary pages were blocked by the proxy, so the Douglass wording was confirmed through search results citing the Frederick Douglass Papers edition rather than by reading that page directly.",
+        "findings": [
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q5",
+            "kind": "FIX",
+            "what": "Wrong choice D, \"Employers had to teach young workers a trade,\" is true of a real Black Code: South Carolina's December 1865 code required the master to teach the apprentice husbandry or another useful trade (Mississippi's required teaching reading and writing for apprentices under 15). A student who knows the codes could defend D, so it's a second right answer. Replace D with something clearly false that a student can learn from, for example \"Black children could be apprenticed only with their parents' written consent.\" (The codes let courts bind children over their parents' objections.) Keep the key at A.",
+            "source": "South Carolina, \"An Act to establish and regulate the domestic relations of persons of color\" (Dec. 1865), apprentice sections; National Constitution Center, Historic Document Library, \"Mississippi and South Carolina Black Codes (1865)\" (constitutioncenter.org)",
+            "fixed": "D now says children could be apprenticed only with their parents' written consent, which is plainly false (courts bound children over parents' objections). Only A is right."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q6",
+            "kind": "JUDGMENT",
+            "what": "\"In 1866 Johnson vetoed the bill to extend the Freedmen's Bureau. What happened next?\" with the key \"Congress passed the bill over his veto.\" There were two bills. Johnson vetoed the first on Feb. 19, 1866, and the Senate sustained that veto the next day. He vetoed the second in July, and Congress overrode it on July 16, 1866. Reading 1: the key is true of the July bill, and the why line says July, so KEEP. Reading 2: a student who knows about the February veto would say nothing happened next. Suggest \"In July 1866 Johnson vetoed a second bill to extend the Freedmen's Bureau.\" The teacher's notes (Day 3) leave out the February veto too.",
+            "source": "U.S. Senate, Art & History, \"The Freedmen's Bureau\" (senate.gov/artandhistory/history/common/generic/FreedmensBureau.htm)"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q17",
+            "kind": "JUDGMENT",
+            "what": "The document quotes the privileges-or-immunities clause, and the key says the Court relied on its \"No State shall\" wording. In Cruikshank, the Court gave its state-action reasoning (the amendment adds nothing to one citizen's rights against another) for the due process and equal protection clauses. The assembly and arms counts failed because those weren't rights of national citizenship. Reading 1: \"No State shall\" opens all of Section 1, and the state-action rule is the standard classroom summary, so KEEP. Reading 2: quote the due process or equal protection clause instead, as B q17 does, so the excerpt matches the Court's reasoning. The key letter can stay the same either way.",
+            "source": "United States v. Cruikshank, 92 U.S. 542 (1876) (Library of Congress, U.S. Reports)"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q8",
+            "kind": "JUDGMENT",
+            "what": "The why line \"Firing Stanton broke the Tenure of Office Act\" states the House's charge as settled fact. The Senate acquitted, and it was disputed whether the Act covered Stanton, a Lincoln appointee (the Court later called such limits unconstitutional in Myers v. U.S., 1926). Suggest \"The House charged that firing Stanton broke the Tenure of Office Act.\" The key (B) is fine.",
+            "source": "U.S. Senate, \"The Impeachment of Andrew Johnson (1868)\" (senate.gov)"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q19",
+            "kind": "JUDGMENT",
+            "what": "The why line says Wade-Davis \"required a majority of voters to take the oath.\" The bill required a majority of the state's enrolled white male citizens, while the Ten Percent Plan counted 1860 voters. Reading 1: \"voters\" is the usual textbook shorthand. Reading 2: say \"a majority of the state's white men.\" The teacher's notes (Day 1) say \"majority of voters.\" The key (B) is fine.",
+            "source": "Wade-Davis Bill (H.R. 244, 1864), text via National Archives / Library of Congress, A Century of Lawmaking"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q10",
+            "kind": "JUDGMENT",
+            "what": "The why line explains sharecropping only by landlessness and owners' need for labor. Historians also stress that freedpeople refused gang labor and pushed for family plots without daily supervision, so sharecropping was partly their choice. Reading 1: the key (C) is the best single cause in the teacher's notes, so KEEP. Reading 2: since the order asks to show Black Southerners as actors, add a clause such as \"…and freedpeople wanted family plots instead of gang labor under overseers.\" Choice A (freedpeople refused to farm) stays wrong.",
+            "source": "Eric Foner, Reconstruction: America's Unfinished Revolution (Harper & Row, 1988), ch. 4; Ransom & Sutch, One Kind of Freedom (Cambridge University Press, 1977)"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q23",
+            "kind": "JUDGMENT",
+            "what": "The model answer (and B q24's) says the new governments \"built the South's first public school systems.\" They created the first statewide systems in most Southern states, but North Carolina had a state common-school system from 1839. Reading 1: this is the teacher's own wording (notes Day 6) and a common summary. Reading 2: say \"the first statewide public school systems in most Southern states.\" These are model answers, not keys.",
+            "source": "Eric Foner, Reconstruction (Harper & Row, 1988); NCpedia, \"Common Schools\" (N.C. Government & Heritage Library)"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q23",
+            "kind": "JUDGMENT",
+            "what": "The model answer says \"troops and Republican governments were still in place until the North chose to withdraw them.\" By 1876 only South Carolina, Louisiana and Florida still had Republican governments; the rest had been taken back by elections and violence. Reading 1: it's a one-sided model answer and either claim earns credit. Reading 2: say \"in the last three states\" so the model doesn't teach an overstatement.",
+            "source": "Teacher's notes Day 7 (\"by 1876 Democrats controlled every Southern state except South Carolina, Louisiana and Florida\"); Foner, Reconstruction"
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p10",
+            "kind": "JUDGMENT",
+            "what": "The model answer says the North's retreat \"came after violence had already 'redeemed' most of the South.\" Five states had been taken back before the Panic of 1873, but Alabama and Arkansas (1874) and Mississippi (1875) came after it. Reading 1: it's an arguable thesis in a model answer, and either side earns credit. Reading 2: soften it to \"came after violence had already redeemed much of the South.\"",
+            "source": "Eric Foner, Reconstruction (Harper & Row, 1988), redemption dates by state"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q20",
+            "kind": "KEEP",
+            "what": "The Douglass quotation \"Slavery is not abolished until the black man has the ballot.\" is real and word for word, and the attribution (speech to the American Anti-Slavery Society, May 1865) is correct. The Douglass Papers date the address May 10, 1865, in New York (\"In What New Skin Will the Old Snake Come Forth?\"); Foner's edition dates it May 9. \"May 1865\" is safe. Optional: add the place, New York.",
+            "source": "The Frederick Douglass Papers, Series One, vol. 4 (Yale University Press); Frederick Douglass Papers Project digital edition, item 17945"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q13",
+            "kind": "KEEP",
+            "what": "The key \"Troops left\" is a shortening: troops were pulled from the South Carolina and Louisiana statehouses, not from the whole South. The why line and the review sheet say exactly that, so KEEP.",
+            "source": "Teacher's notes Day 8"
+          }
+        ]
+      }
+    ]
+  },
+  "log": [
+    {
+      "at": "14:05",
+      "who": "🧭 Order lead",
+      "what": "Received the order and read the briefs",
+      "minutes": null,
+      "tokens": null,
+      "cost": null
+    },
+    {
+      "at": "14:14",
+      "who": "🧭 Order lead",
+      "what": "Order logged as opened (pp-2026-11-05-4c19e7: studyguide 25 + test 70 = 95 tokens)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null
+    },
+    {
+      "at": "14:16",
+      "who": "📝 Maker",
+      "what": "Wrote the pack: studyguide (10 questions) and test A and B (24 questions each, 58 total)",
+      "minutes": 10.1,
+      "tokens": 3272607,
+      "cost": 3.01,
+      "round": 1
+    },
+    {
+      "at": "14:26",
+      "who": "🧭 Order lead",
+      "what": "Made the student view for the blind tester and rendered a working preview",
+      "minutes": null,
+      "tokens": null,
+      "cost": null
+    },
+    {
+      "at": "14:26",
+      "who": "🤖 Wilco",
+      "what": "Round 1: key check (58 question rows, 0 errors) and the test-wise bots (worst posB 28%, chance 25%): both pass",
+      "minutes": 0.6,
+      "tokens": 184288,
+      "cost": 0.15,
+      "round": 1
+    },
+    {
+      "at": "14:26",
+      "who": "🙈 Blind tester (social studies)",
+      "what": "Answered 53 items without the key: 53 of 53 matched",
+      "minutes": 3.6,
+      "tokens": 785163,
+      "cost": 1.17,
+      "round": 1
+    },
+    {
+      "at": "14:26",
+      "who": "🔎 Fact checker",
+      "what": "Checked 143 claims: 123 source, 11 reference, 1 off, 8 judgment",
+      "minutes": 4.3,
+      "tokens": 1588919,
+      "cost": 1.61,
+      "round": 1
+    },
+    {
+      "at": "14:31",
+      "who": "🧭 Order lead",
+      "what": "Merged the blind and fact checks and sent the maker 12 FIX lines (11 items)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null
+    },
+    {
+      "at": "14:31",
+      "who": "📝 Maker",
+      "what": "Fixed all 11 items and shortened the review sheet boxes to 57% of the original length",
+      "minutes": 3,
+      "tokens": 1580763,
+      "cost": 1.2,
+      "round": 2
+    },
+    {
+      "at": "14:34",
+      "who": "🧭 Order lead",
+      "what": "Made the round 2 recheck view: the --only view came out empty (the titles contain a comma); the recheck agent rebuilt the full view itself",
+      "minutes": null,
+      "tokens": null,
+      "cost": null
+    },
+    {
+      "at": "14:34",
+      "who": "🤖 Wilco",
+      "what": "Round 2: key check (58 question rows, 0 errors) and the test-wise bots (worst posB 28%, chance 25%): both pass",
+      "minutes": 0.6,
+      "tokens": 184229,
+      "cost": 0.15,
+      "round": 2
+    },
+    {
+      "at": "14:34",
+      "who": "🙈 Blind tester (social studies), recheck",
+      "what": "Recheck, round 2: 16 of 16 matched; 10 of 11 round 1 fixes held",
+      "minutes": 2.6,
+      "tokens": 910595,
+      "cost": 0.96,
+      "round": 2
+    },
+    {
+      "at": "14:37",
+      "who": "📝 Maker",
+      "what": "Fixed all 4 round 2 findings",
+      "minutes": 0.6,
+      "tokens": 351187,
+      "cost": 0.36,
+      "round": 3
+    },
+    {
+      "at": "14:38",
+      "who": "🤖 Wilco",
+      "what": "Round 3: key check (58 question rows, 0 errors) and the test-wise bots (worst posB 28%, chance 25%): both pass",
+      "minutes": 0.5,
+      "tokens": 184209,
+      "cost": 0.15,
+      "round": 3
+    },
+    {
+      "at": "14:38",
+      "who": "🙈 Blind tester (social studies), recheck 2",
+      "what": "Recheck, round 3: 2 of 2 matched; all 4 round 2 fixes held",
+      "minutes": 1.3,
+      "tokens": 673540,
+      "cost": 0.56,
+      "round": 3
+    },
+    {
+      "at": "14:40",
+      "who": "🧭 Order lead",
+      "what": "Round 3 recheck found one fix had made a key false (A q21); left open for the teacher",
+      "minutes": null,
+      "tokens": null,
+      "cost": null
+    },
+    {
+      "at": "14:41",
+      "who": "🧾 Reporter",
+      "what": "Wrote the log and the audit notes from every hand-off and check",
+      "minutes": 2.6,
+      "tokens": 360687,
+      "cost": 0.53
+    }
+  ],
+  "audit": {
+    "notes": [
+      "The order: one studyguide (two pages at most, with a practice set) and one test (about 40% harder questions, A and B versions). Grade 11, U.S. History, Reconstruction 1865–1877. The maker wrote 10 practice questions and 24 test questions per version (58 scored items total). The tests are 42% level 3 (10 of 24), on target.",
+      "Round 1: The maker handed off at 14:26 (10.1 minutes, 3,272,607 tokens, $3.01). The blind tester answered all 53 items without the key and matched 53 of 53, but flagged 11 FIX findings and 2 JUDGMENT items. The fact checker verified 143 claims (123 backed by the teacher's notes, 11 needing a reference, 1 wrong, 8 judgment calls) and found the same wrong answer the blind tester caught: test B q5 choice D was actually true of a real Black Code. Wilco's keys check passed (58 rows, 0 errors), and the test-wise bots passed with the worst strategy (posB) scoring 28% against a 25% chance rate.",
+      "Round 1 FIX findings (11 items, all fixed in round 2): Test B q5 (two right answers: D was true of South Carolina's 1865 code). Test B q19 (anachronism: two choices were dated after the 1864 speech). Test B q12 and A q13 (too easy for L3: absurd choices). Test A q21 and B q21 (date cues: the key repeated '1877' from the document). Test B q16 (too easy: three race-neutral laws made the race-based one stand out). Test B q18 (the invented excerpt said the answer outright). Test B q3 (easier than A q3, and the key repeated 'April 1865' from the stem). Test A q15 (the key repeated 'vagrancy' from the stem). Review sheet p7 (wording: 'it' had no clear referent).",
+      "Round 1 JUDGMENT items for the teacher: Test A q5 (the key uses the source notes' exact words). Test B q10 (gives one cause where historians name several, and a wrong choice echoes the old 'freedpeople wouldn't work' myth).",
+      "Round 2: The maker fixed all 11 items (3.0 minutes, 1,580,763 tokens, $1.20) and shortened the review sheet's KNOW IT COLD boxes from 3,339 characters to 1,893 (57% of the original length), as the lead had asked after seeing the boxes render as 4 pages instead of 2. Wilco round 2 passed (worst strategy posB 28%). The blind tester rechecked 16 items (the 11 changed items plus 5 twins) and matched 16 of 16, confirming that 10 of the 11 round 1 fixes held. Three new FIX findings: A q21 (the date cue was gone, but the key now repeated 'statehouse' from the letter). Review sheet p7 (too easy for L3: two wrong choices were not believable). Two KNOW IT COLD box errors: Andrew Johnson's entry said 'fast readmission (1865)', but no state was readmitted in 1865; it should say 'fast rebuilding of state governments'. Lincoln's entry said 'killed April 14, 1865', but he was shot April 14 and died April 15. One JUDGMENT item: the shortened boxes dropped the Electoral Commission's 8–7 vote, but test B q13 tests it and B q21 relies on it.",
+      "Round 3: The maker fixed all 4 round 2 findings (0.6 minutes, 351,187 tokens, $0.36). Wilco round 3 passed (worst strategy posB 28%). The blind tester rechecked 2 items and matched 2 of 2, confirming that all 4 round 2 fixes held. One new FIX finding: test A q21, the round 2 fix had reworded the key to 'Hayes pulling the last federal troops out of the South', which is a well-known myth (he withdrew troops from the South Carolina and Louisiana statehouses, and federal soldiers stayed in the South after 1877; the source and the item's own why line both say statehouses only). The suggested wording: 'Hayes ending federal military protection of the last Republican state governments'. One JUDGMENT item: review sheet p7 is still easy for L3 (the stem quotes 'No State shall', so a student can work out the answer without knowing Cruikshank; the teacher may keep it as a L3 reasoning item or relabel it L2).",
+      "Open for the teacher in the preview: Test A q21 (the FIX above, with the blind tester's suggested wording). Review sheet p7 (the JUDGMENT above).",
+      "Wilco test-wise bots, before and after: Round 1, worst strategy posB scored 28% (3 points above the 25% chance rate). Round 2, posB still 28%. Round 3, posB still 28%. All three rounds passed (the fail line is 10 points above chance, 35%).",
+      "What was slow or redone: The lead made a round 2 recheck view with the --only flag, but it came out empty because the document titles contain a comma and --only splits on commas. The blind tester rebuilt the full view and diffed it against round 1 to find the changed items, which cost a few minutes. Round 3 got the whole view and a list of items instead. The round 2 fix to A q21 (removing the date cue) introduced a word cue, which the round 2 recheck caught. The round 3 fix to A q21 (removing the word cue) made the key false, which the round 3 recheck caught; the runbook stops after round 3, so this FIX is left open for the teacher.",
+      "Totals (exact, as reported by the sessions): Wall-clock time from first to last row: 35 minutes (14:05 to 14:40). Agent minutes: 27.2 (the maker's hand-off estimates were 2–5 times too high; these are measured from session duration_ms). Agent tokens: 9,715,500 (input + output + cache read + cache write). Agent cost: $9.32 (session total_cost_usd, API list prices). Cost per document: $4.66 (2 documents: studyguide and test). Cost per question: $0.16 (58 questions). The lead's own work (receiving the order, making views, merging checks, noting the round 3 finding) is not measured."
+    ],
+    "briefChanges": []
+  }
+}
