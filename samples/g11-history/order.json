@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-4c19e7",
+  "createdAt": "2026-11-05T14:14:00.000Z",
+  "order": {
+    "teacher": "Ms. Renée Castellanos (made-up sample)",
+    "grade": "11",
+    "subject": "social",
+    "topic": "Reconstruction, 1865–1877",
+    "items": ["studyguide", "test"],
+    "extras": ["styleSetup"],
+    "requests": "U.S. History, 11th grade, regular and honors sections together. Cover the 13th, 14th and 15th Amendments, the Freedmen's Bureau, Black political participation, the Black Codes and the violence against Black citizens, and the Compromise of 1877. Keep the framing balanced and accurate: Black Southerners were actors in Reconstruction, not only people things happened to. Any quotation must be real and quoted word for word with its source, or clearly labeled as an excerpt written for this test.",
+    "itemRequests": {
+      "studyguide": "Two pages at most: what to know (terms, people, dates) and a short practice set in the same style as the test, with a key.",
+      "test": "About 40% harder questions. Include document-based questions: short public-domain primary-source quotations quoted accurately with their source, or short original excerpts labeled as written for the test. A and B versions with the same skills. One or two short written answers."
+    },
+    "quantities": { "studyguide": 1, "test": 1 },
+    "sources": ["reconstruction-unit-notes.md"],
+    "styleExamples": ["civil-war-unit-test-2025.md", "gilded-age-review-sheet.md"]
+  },
+  "lines": [
+    { "id": "studyguide", "label": "Study guide / review sheet", "quantity": 1, "tokensEach": 25, "tokens": 25 },
+    { "id": "test", "label": "Unit test with A/B versions", "quantity": 1, "tokensEach": 70, "tokens": 70 },
+    { "id": "styleSetup", "label": "Set up my agents with my examples", "quantity": 1, "tokensEach": 0, "tokens": 0, "extra": true }
+  ],
+  "tokenTotal": 95,
+  "replyTo": "r.castellanos@example.org",
+  "notices": {
+    "tokenNote": "Token prices are pilot estimates from real build costs; they will be recalibrated after the first orders.",
+    "aiNotice": "Made with AI from the source material you provided, then checked by separate AI agents. Please review everything before it goes in front of students.",
+    "deleteNotice": "Your uploads and our working copies are deleted after you receive your pack. Your style examples are kept only for your own agents, and you can delete them at any time. Nothing you send is used for anyone else."
+  }
+}
