@@ -1,0 +1,1419 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-hs-math-cap-math",
+  "date": "2026-11-05",
+  "capabilityTest": "math typesetting, graphs as data and the SymPy math check (docs/KINDS-MATH.md). A test fixture, not a sample: made-up teacher, written by the builder of this capability, no blind round.",
+  "order": {
+    "teacher": "Ms. Halvorsen (made-up capability test)",
+    "grade": "10",
+    "subject": "math",
+    "course": "Algebra 1, Algebra 2 / Precalculus, Calculus",
+    "topic": "Algebra 1 to Calculus: equations, graphs, derivatives and integrals",
+    "items": [
+      "worksheet",
+      "quiz",
+      "slides"
+    ],
+    "quantities": {
+      "worksheet": 1,
+      "quiz": 2,
+      "slides": 1
+    },
+    "requests": "Typeset all math. Graphs drawn from data, with the asked answer never labeled.",
+    "sources": [
+      "made-up-notes.pdf"
+    ],
+    "styleExamples": []
+  },
+  "style": {
+    "notes": [
+      "Numbered questions, bold directions, a box for the name and date",
+      "Students show their work"
+    ],
+    "font": "Liberation Sans",
+    "accent": "#3b5b8c"
+  },
+  "documents": [
+    {
+      "item": "worksheet",
+      "kind": "worksheet",
+      "title": "Lines and Systems",
+      "course": "Algebra 1",
+      "directions": "Show your work. Write each answer in simplest form.",
+      "sections": [
+        {
+          "heading": "Level 1: Warm up",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "solve a two-step equation",
+              "type": "short",
+              "prompt": "Solve $3x - 7 = 11$.",
+              "answer": "$x = 6$",
+              "accept": [
+                "6"
+              ],
+              "why": "Add 7 to both sides: $3x = 18$. Divide by 3: $x = 6$.",
+              "math": {
+                "check": {
+                  "type": "solve",
+                  "expr": "3x - 7 = 11",
+                  "var": "x"
+                }
+              }
+            },
+            {
+              "id": "q2",
+              "level": 1,
+              "skill": "solve a two-step equation",
+              "type": "mc",
+              "prompt": "Solve $\\dfrac{x}{4} + 2 = 5$.",
+              "choices": [
+                "$x = 28$",
+                "$x = 12$",
+                "$x = \\dfrac{3}{4}$",
+                "$x = 18$"
+              ],
+              "answer": 1,
+              "why": "Subtract 2: $\\dfrac{x}{4} = 3$. Multiply by 4: $x = 12$. (28 adds the 2 instead of subtracting it; $\\dfrac{3}{4}$ divides by 4 instead of multiplying; 18 multiplies before subtracting.)",
+              "math": {
+                "check": {
+                  "type": "solve",
+                  "expr": "x/4 + 2 = 5"
+                }
+              }
+            },
+            {
+              "id": "q3",
+              "level": 1,
+              "skill": "read an inequality on a number line",
+              "type": "mc",
+              "prompt": "Which inequality does the number line show?",
+              "figure": {
+                "graph": {
+                  "kind": "numberLine",
+                  "from": -5,
+                  "to": 5,
+                  "step": 1,
+                  "rays": [
+                    {
+                      "from": 2,
+                      "dir": "right",
+                      "open": true
+                    }
+                  ]
+                }
+              },
+              "choices": [
+                "$x \\ge 2$",
+                "$x < 2$",
+                "$x > 2$",
+                "$x \\le 2$"
+              ],
+              "answer": 2,
+              "why": "The dot at 2 is open, so 2 is not included, and the ray points right, to the larger numbers: $x > 2$.",
+              "math": {
+                "check": {
+                  "type": "solve",
+                  "expr": "x > 2"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Level 2: On level",
+          "questions": [
+            {
+              "id": "q4",
+              "level": 2,
+              "skill": "solve with the distributive property",
+              "type": "short",
+              "prompt": "Solve $5(x - 2) = 3x + 4$.",
+              "answer": "$x = 7$",
+              "accept": [
+                "7"
+              ],
+              "why": "Distribute: $5x - 10 = 3x + 4$. Subtract $3x$: $2x - 10 = 4$. Add 10: $2x = 14$, so $x = 7$.",
+              "math": {
+                "check": {
+                  "type": "solve",
+                  "expr": "5(x - 2) = 3x + 4"
+                }
+              }
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "solve a system by graphing",
+              "type": "mc",
+              "prompt": "The graph shows $y = 2x + 1$ and $y = -x + 4$. At what point do the two lines cross?",
+              "figure": {
+                "graph": {
+                  "x": [
+                    -6,
+                    6
+                  ],
+                  "y": [
+                    -6,
+                    6
+                  ],
+                  "ticks": 1,
+                  "functions": [
+                    {
+                      "id": "l1",
+                      "expr": "2x + 1",
+                      "label": "$y = 2x + 1$",
+                      "labelAt": -2.5,
+                      "labelPos": "e"
+                    },
+                    {
+                      "id": "l2",
+                      "expr": "-x + 4",
+                      "style": "dashed",
+                      "label": "$y = -x + 4$",
+                      "labelAt": 4.6,
+                      "labelPos": "ne"
+                    }
+                  ],
+                  "points": [
+                    {
+                      "id": "meet",
+                      "at": [
+                        1,
+                        3
+                      ],
+                      "label": "(1, 3)"
+                    }
+                  ],
+                  "hide": [
+                    "meet"
+                  ]
+                }
+              },
+              "choices": [
+                "$(3, 1)$",
+                "$(0, 4)$",
+                "$(0, 1)$",
+                "$(1, 3)$"
+              ],
+              "answer": 3,
+              "why": "The lines cross at $(1, 3)$. Check: $2(1) + 1 = 3$ and $-1 + 4 = 3$. $(3, 1)$ swaps $x$ and $y$; $(0, 1)$ and $(0, 4)$ are the $y$-intercepts.",
+              "math": {
+                "check": {
+                  "type": "intersection",
+                  "exprs": [
+                    "2x + 1",
+                    "-x + 4"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "q6",
+              "level": 2,
+              "skill": "slope from two points",
+              "type": "short",
+              "prompt": "Find the slope of the line through $(-2, 5)$ and $(4, -7)$.",
+              "answer": "$-2$",
+              "accept": [
+                "-2"
+              ],
+              "why": "$m = \\dfrac{-7 - 5}{4 - (-2)} = \\dfrac{-12}{6} = -2$.",
+              "math": {
+                "check": {
+                  "type": "evaluate",
+                  "expr": "(-7 - 5)/(4 - (-2))"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Level 3: Two steps",
+          "questions": [
+            {
+              "id": "q7",
+              "level": 3,
+              "skill": "solve a system by substitution or elimination",
+              "type": "short",
+              "prompt": "Solve the system: $2x + 3y = 12$ and $x - y = 1$. Write the answer as a point $(x, y)$.",
+              "answer": "$(3, 2)$",
+              "accept": [
+                "x = 3, y = 2"
+              ],
+              "why": "From $x - y = 1$, $x = y + 1$. Then $2(y + 1) + 3y = 12$, so $5y = 10$ and $y = 2$; $x = 3$.",
+              "math": {
+                "check": {
+                  "type": "system",
+                  "exprs": [
+                    "2x + 3y = 12",
+                    "x - y = 1"
+                  ],
+                  "vars": [
+                    "x",
+                    "y"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "q8",
+              "level": 3,
+              "skill": "solve a linear inequality",
+              "type": "mc",
+              "prompt": "Solve $-3x + 5 \\le 17$.",
+              "choices": [
+                "$x \\le -4$",
+                "$x \\ge -\\dfrac{22}{3}$",
+                "$x \\le 4$",
+                "$x \\ge -4$"
+              ],
+              "answer": 3,
+              "why": "Subtract 5: $-3x \\le 12$. Divide by $-3$ and flip the sign: $x \\ge -4$. ($x \\le -4$ forgets to flip; $-\\dfrac{22}{3}$ adds the 5 instead of subtracting it.)",
+              "math": {
+                "check": {
+                  "type": "solve",
+                  "expr": "-3x + 5 <= 17"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "quiz",
+      "kind": "quiz",
+      "title": "Quadratic, Exponential and Rational Functions",
+      "course": "Algebra 2 / Precalculus",
+      "directions": "Show your work. Give exact answers unless a question says to round.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "sections": [
+        {
+          "heading": "Functions and their graphs",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "vertex of a parabola",
+              "type": "mc",
+              "prompt": {
+                "A": "The graph shows $f(x) = x^2 - 4x + 1$. What is its vertex?",
+                "B": "The graph shows $f(x) = x^2 + 6x + 5$. What is its vertex?"
+              },
+              "figure": {
+                "A": {
+                  "graph": {
+                    "x": [
+                      -2,
+                      6
+                    ],
+                    "y": [
+                      -4,
+                      6
+                    ],
+                    "ticks": 1,
+                    "functions": [
+                      {
+                        "expr": "x^2 - 4x + 1"
+                      }
+                    ],
+                    "points": [
+                      {
+                        "id": "v",
+                        "at": [
+                          2,
+                          -3
+                        ],
+                        "label": "vertex"
+                      }
+                    ]
+                  }
+                },
+                "B": {
+                  "graph": {
+                    "x": [
+                      -7,
+                      2
+                    ],
+                    "y": [
+                      -5,
+                      6
+                    ],
+                    "ticks": 1,
+                    "functions": [
+                      {
+                        "expr": "x^2 + 6x + 5"
+                      }
+                    ],
+                    "points": [
+                      {
+                        "id": "v",
+                        "at": [
+                          -3,
+                          -4
+                        ],
+                        "label": "vertex"
+                      }
+                    ]
+                  }
+                }
+              },
+              "choices": {
+                "A": [
+                  "$(-2, 13)$",
+                  "$(0, 1)$",
+                  "$(2, -3)$",
+                  "$(-3, 2)$"
+                ],
+                "B": [
+                  "$(0, 5)$",
+                  "$(-4, -3)$",
+                  "$(3, 32)$",
+                  "$(-3, -4)$"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 3
+              },
+              "why": {
+                "A": "$x = -\\dfrac{b}{2a} = \\dfrac{4}{2} = 2$ and $f(2) = 4 - 8 + 1 = -3$, so the vertex is $(2, -3)$.",
+                "B": "$x = -\\dfrac{b}{2a} = -\\dfrac{6}{2} = -3$ and $f(-3) = 9 - 18 + 5 = -4$, so the vertex is $(-3, -4)$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "vertex",
+                    "expr": "x^2 - 4x + 1"
+                  },
+                  "B": {
+                    "type": "vertex",
+                    "expr": "x^2 + 6x + 5"
+                  }
+                }
+              }
+            },
+            {
+              "id": "q2",
+              "level": 1,
+              "skill": "vertical asymptote of a rational function",
+              "type": "mc",
+              "prompt": {
+                "A": "The graph shows $f(x) = \\dfrac{x + 1}{x - 2}$ with its asymptotes dashed. What is its vertical asymptote?",
+                "B": "The graph shows $f(x) = \\dfrac{x - 3}{x + 1}$ with its asymptotes dashed. What is its vertical asymptote?"
+              },
+              "figure": {
+                "A": {
+                  "graph": {
+                    "x": [
+                      -6,
+                      8
+                    ],
+                    "y": [
+                      -6,
+                      6
+                    ],
+                    "ticks": 1,
+                    "labelEvery": 2,
+                    "functions": [
+                      {
+                        "expr": "(x + 1)/(x - 2)"
+                      }
+                    ],
+                    "asymptotes": [
+                      {
+                        "x": 2
+                      },
+                      {
+                        "y": 1
+                      }
+                    ]
+                  }
+                },
+                "B": {
+                  "graph": {
+                    "x": [
+                      -7,
+                      7
+                    ],
+                    "y": [
+                      -6,
+                      6
+                    ],
+                    "ticks": 1,
+                    "labelEvery": 2,
+                    "functions": [
+                      {
+                        "expr": "(x - 3)/(x + 1)"
+                      }
+                    ],
+                    "asymptotes": [
+                      {
+                        "x": -1
+                      },
+                      {
+                        "y": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "choices": {
+                "A": [
+                  "$x = 2$",
+                  "$y = 1$",
+                  "$x = -1$ and $x = 2$",
+                  "$x = -1$"
+                ],
+                "B": [
+                  "$y = 1$",
+                  "$x = -1$",
+                  "$x = 3$",
+                  "$x = -1$ and $x = 3$"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 1
+              },
+              "why": {
+                "A": "The denominator is 0 at $x = 2$ and the numerator isn't, so $x = 2$ is the vertical asymptote. $y = 1$ is the horizontal one; $x = -1$ is the zero.",
+                "B": "The denominator is 0 at $x = -1$ and the numerator isn't, so $x = -1$ is the vertical asymptote. $y = 1$ is the horizontal one; $x = 3$ is the zero."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "asymptote",
+                    "expr": "(x + 1)/(x - 2)",
+                    "kind": "vertical"
+                  },
+                  "B": {
+                    "type": "asymptote",
+                    "expr": "(x - 3)/(x + 1)",
+                    "kind": "vertical"
+                  }
+                }
+              }
+            },
+            {
+              "id": "q3",
+              "level": 2,
+              "skill": "write an exponential function from a graph",
+              "type": "mc",
+              "prompt": {
+                "A": "The graph of $y = a \\cdot b^x$ passes through the two points shown. Which equation is it?",
+                "B": "The graph of $y = a \\cdot b^x$ passes through the two points shown. Which equation is it?"
+              },
+              "figure": {
+                "A": {
+                  "graph": {
+                    "x": [
+                      -3,
+                      3
+                    ],
+                    "y": [
+                      -1,
+                      10
+                    ],
+                    "ticks": 1,
+                    "labelEvery": {
+                      "x": 1,
+                      "y": 2
+                    },
+                    "functions": [
+                      {
+                        "expr": "2*3^x"
+                      }
+                    ],
+                    "points": [
+                      {
+                        "at": [
+                          0,
+                          2
+                        ],
+                        "label": "(0, 2)",
+                        "labelPos": "w"
+                      },
+                      {
+                        "at": [
+                          1,
+                          6
+                        ],
+                        "label": "(1, 6)",
+                        "labelPos": "e"
+                      }
+                    ]
+                  }
+                },
+                "B": {
+                  "graph": {
+                    "x": [
+                      -3,
+                      3
+                    ],
+                    "y": [
+                      -1,
+                      10
+                    ],
+                    "ticks": 1,
+                    "labelEvery": {
+                      "x": 1,
+                      "y": 2
+                    },
+                    "functions": [
+                      {
+                        "expr": "3*2^x"
+                      }
+                    ],
+                    "points": [
+                      {
+                        "at": [
+                          0,
+                          3
+                        ],
+                        "label": "(0, 3)",
+                        "labelPos": "w"
+                      },
+                      {
+                        "at": [
+                          1,
+                          6
+                        ],
+                        "label": "(1, 6)",
+                        "labelPos": "e"
+                      }
+                    ]
+                  }
+                }
+              },
+              "choices": {
+                "A": [
+                  "$y = 3 \\cdot 2^x$",
+                  "$y = 2 \\cdot 3^x$",
+                  "$y = 6 \\cdot 2^x$",
+                  "$y = 2 \\cdot 6^x$"
+                ],
+                "B": [
+                  "$y = 2 \\cdot 3^x$",
+                  "$y = 6 \\cdot 3^x$",
+                  "$y = 3 \\cdot 6^x$",
+                  "$y = 3 \\cdot 2^x$"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 3
+              },
+              "why": {
+                "A": "At $x = 0$, $y = a = 2$. From $x = 0$ to $x = 1$ the $y$-value goes from 2 to 6, so $b = 3$: $y = 2 \\cdot 3^x$.",
+                "B": "At $x = 0$, $y = a = 3$. From $x = 0$ to $x = 1$ the $y$-value goes from 3 to 6, so $b = 2$: $y = 3 \\cdot 2^x$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "equivalent",
+                    "expr": "2*3^x"
+                  },
+                  "B": {
+                    "type": "equivalent",
+                    "expr": "3*2^x"
+                  }
+                }
+              }
+            },
+            {
+              "id": "q4",
+              "level": 2,
+              "skill": "exponential growth",
+              "type": "short",
+              "prompt": {
+                "A": "A shelter has 500 rabbits, and the number grows by 4% each year. How many rabbits will there be after 3 years? Round to the nearest whole rabbit.",
+                "B": "A shelter has 800 rabbits, and the number grows by 5% each year. How many rabbits will there be after 2 years? Round to the nearest whole rabbit."
+              },
+              "answer": {
+                "A": "562",
+                "B": "882"
+              },
+              "unit": "rabbits",
+              "why": {
+                "A": "$500(1.04)^3 = 562.432$, about 562 rabbits.",
+                "B": "$800(1.05)^2 = 882$ rabbits."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "evaluate",
+                    "expr": "500(1.04)^3",
+                    "tol": 0.5
+                  },
+                  "B": {
+                    "type": "evaluate",
+                    "expr": "800(1.05)^2",
+                    "tol": 0.5
+                  }
+                }
+              }
+            },
+            {
+              "id": "q5",
+              "level": 3,
+              "skill": "solve a rational equation",
+              "type": "short",
+              "prompt": {
+                "A": "Solve $\\dfrac{x + 1}{x - 2} = 3$.",
+                "B": "Solve $\\dfrac{x + 3}{x - 1} = 2$."
+              },
+              "answer": {
+                "A": "$x = \\dfrac{7}{2}$",
+                "B": "$x = 5$"
+              },
+              "why": {
+                "A": "Multiply by $x - 2$: $x + 1 = 3x - 6$, so $2x = 7$ and $x = \\dfrac{7}{2}$ (not 2, so it is allowed).",
+                "B": "Multiply by $x - 1$: $x + 3 = 2x - 2$, so $x = 5$ (not 1, so it is allowed)."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "solve",
+                    "expr": "(x + 1)/(x - 2) = 3"
+                  },
+                  "B": {
+                    "type": "solve",
+                    "expr": "(x + 3)/(x - 1) = 2"
+                  }
+                }
+              }
+            },
+            {
+              "id": "q6",
+              "level": 3,
+              "skill": "horizontal asymptote of a rational function",
+              "type": "short",
+              "prompt": {
+                "A": "Find the horizontal asymptote of $g(x) = \\dfrac{4x^2 - 1}{2x^2 + 3x}$.",
+                "B": "Find the horizontal asymptote of $g(x) = \\dfrac{9x^2 + 1}{3x^2 - x}$."
+              },
+              "answer": {
+                "A": "$y = 2$",
+                "B": "$y = 3$"
+              },
+              "why": {
+                "A": "The degrees match, so the asymptote is the ratio of the leading terms: $y = \\dfrac{4}{2} = 2$.",
+                "B": "The degrees match, so the asymptote is the ratio of the leading terms: $y = \\dfrac{9}{3} = 3$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "asymptote",
+                    "expr": "(4x^2 - 1)/(2x^2 + 3x)",
+                    "kind": "horizontal"
+                  },
+                  "B": {
+                    "type": "asymptote",
+                    "expr": "(9x^2 + 1)/(3x^2 - x)",
+                    "kind": "horizontal"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "quiz",
+      "kind": "quiz",
+      "title": "Derivatives, Integrals and Limits",
+      "course": "Calculus (AB/BC level)",
+      "directions": "Show your work. Give exact answers.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "sections": [
+        {
+          "heading": "Limits and derivatives",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "limit by factoring",
+              "type": "short",
+              "prompt": {
+                "A": "Find $\\displaystyle\\lim_{x \\to 2} \\dfrac{x^2 - 4}{x - 2}$.",
+                "B": "Find $\\displaystyle\\lim_{x \\to 3} \\dfrac{x^2 - 9}{x - 3}$."
+              },
+              "answer": {
+                "A": "$4$",
+                "B": "$6$"
+              },
+              "why": {
+                "A": "$\\dfrac{x^2 - 4}{x - 2} = x + 2$ for $x \\ne 2$, so the limit is $2 + 2 = 4$.",
+                "B": "$\\dfrac{x^2 - 9}{x - 3} = x + 3$ for $x \\ne 3$, so the limit is $3 + 3 = 6$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "limit",
+                    "expr": "(x^2 - 4)/(x - 2)",
+                    "to": 2
+                  },
+                  "B": {
+                    "type": "limit",
+                    "expr": "(x^2 - 9)/(x - 3)",
+                    "to": 3
+                  }
+                }
+              }
+            },
+            {
+              "id": "q2",
+              "level": 1,
+              "skill": "evaluate a piecewise function",
+              "type": "short",
+              "prompt": {
+                "A": "Let $$f(x) = \\begin{cases} x^2 & x < 1 \\\\ 3x - 2 & x \\ge 1 \\end{cases}$$ Find $f(3)$.",
+                "B": "Let $$f(x) = \\begin{cases} 2x + 1 & x < 2 \\\\ x^2 & x \\ge 2 \\end{cases}$$ Find $f(1)$."
+              },
+              "figure": {
+                "A": {
+                  "graph": {
+                    "x": [
+                      -3,
+                      4
+                    ],
+                    "y": [
+                      -1,
+                      10
+                    ],
+                    "ticks": 1,
+                    "labelEvery": {
+                      "x": 1,
+                      "y": 2
+                    },
+                    "functions": [
+                      {
+                        "expr": "x^2",
+                        "domain": [
+                          -3,
+                          1
+                        ],
+                        "ends": {
+                          "right": "open"
+                        }
+                      },
+                      {
+                        "expr": "3x - 2",
+                        "domain": [
+                          1,
+                          4
+                        ],
+                        "ends": {
+                          "left": "closed"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "B": {
+                  "graph": {
+                    "x": [
+                      -3,
+                      4
+                    ],
+                    "y": [
+                      -6,
+                      10
+                    ],
+                    "ticks": 1,
+                    "labelEvery": {
+                      "x": 1,
+                      "y": 2
+                    },
+                    "functions": [
+                      {
+                        "expr": "2x + 1",
+                        "domain": [
+                          -3,
+                          2
+                        ],
+                        "ends": {
+                          "right": "open"
+                        }
+                      },
+                      {
+                        "expr": "x^2",
+                        "domain": [
+                          2,
+                          4
+                        ],
+                        "ends": {
+                          "left": "closed"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "answer": {
+                "A": "$7$",
+                "B": "$3$"
+              },
+              "why": {
+                "A": "$3 \\ge 1$, so use $3x - 2$: $f(3) = 9 - 2 = 7$.",
+                "B": "$1 < 2$, so use $2x + 1$: $f(1) = 2 + 1 = 3$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "evaluate",
+                    "expr": "3*3 - 2"
+                  },
+                  "B": {
+                    "type": "evaluate",
+                    "expr": "2*1 + 1"
+                  }
+                }
+              }
+            },
+            {
+              "id": "q3",
+              "level": 2,
+              "skill": "product rule",
+              "type": "mc",
+              "prompt": {
+                "A": "Find $\\dfrac{d}{dx}\\left(x^3 \\sin x\\right)$.",
+                "B": "Find $\\dfrac{d}{dx}\\left(x^2 \\cos x\\right)$."
+              },
+              "choices": {
+                "A": [
+                  "$3x^2 \\cos x$",
+                  "$3x^2 \\cos x + x^3 \\sin x$",
+                  "$3x^2 \\sin x + x^3 \\cos x$",
+                  "$3x^2 \\sin x - x^3 \\cos x$"
+                ],
+                "B": [
+                  "$2x \\cos x - x^2 \\sin x$",
+                  "$-2x \\sin x$",
+                  "$2x \\cos x + x^2 \\sin x$",
+                  "$2x \\sin x - x^2 \\cos x$"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 0
+              },
+              "why": {
+                "A": "Product rule: $(x^3)'\\sin x + x^3(\\sin x)' = 3x^2 \\sin x + x^3 \\cos x$.",
+                "B": "Product rule: $(x^2)'\\cos x + x^2(\\cos x)' = 2x \\cos x - x^2 \\sin x$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "derivative",
+                    "expr": "x^3 sin(x)"
+                  },
+                  "B": {
+                    "type": "derivative",
+                    "expr": "x^2 cos(x)"
+                  }
+                }
+              }
+            },
+            {
+              "id": "q4",
+              "level": 2,
+              "skill": "chain rule",
+              "type": "short",
+              "prompt": {
+                "A": "Find $f'(x)$ for $f(x) = (3x^2 + 1)^4$.",
+                "B": "Find $f'(x)$ for $f(x) = (2x^3 - 5)^3$."
+              },
+              "answer": {
+                "A": "$f'(x) = 24x(3x^2 + 1)^3$",
+                "B": "$f'(x) = 18x^2(2x^3 - 5)^2$"
+              },
+              "why": {
+                "A": "Chain rule: $4(3x^2 + 1)^3 \\cdot 6x = 24x(3x^2 + 1)^3$.",
+                "B": "Chain rule: $3(2x^3 - 5)^2 \\cdot 6x^2 = 18x^2(2x^3 - 5)^2$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "derivative",
+                    "expr": "(3x^2 + 1)^4"
+                  },
+                  "B": {
+                    "type": "derivative",
+                    "expr": "(2x^3 - 5)^3"
+                  }
+                }
+              }
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "definite integral as area",
+              "type": "mc",
+              "prompt": {
+                "A": "The shaded region lies under $y = x^2$ from $x = 0$ to $x = 2$. Find its area, $\\int_0^2 x^2\\,dx$.",
+                "B": "The shaded region lies under $y = x^2$ from $x = 1$ to $x = 3$. Find its area, $\\int_1^3 x^2\\,dx$."
+              },
+              "figure": {
+                "A": {
+                  "graph": {
+                    "x": [
+                      -1,
+                      4
+                    ],
+                    "y": [
+                      -1,
+                      10
+                    ],
+                    "ticks": 1,
+                    "labelEvery": {
+                      "x": 1,
+                      "y": 2
+                    },
+                    "functions": [
+                      {
+                        "expr": "x^2",
+                        "label": "$y = x^2$",
+                        "labelAt": 2.6,
+                        "labelPos": "w"
+                      }
+                    ],
+                    "areas": [
+                      {
+                        "expr": "x^2",
+                        "from": 0,
+                        "to": 2
+                      }
+                    ]
+                  }
+                },
+                "B": {
+                  "graph": {
+                    "x": [
+                      -1,
+                      4
+                    ],
+                    "y": [
+                      -1,
+                      10
+                    ],
+                    "ticks": 1,
+                    "labelEvery": {
+                      "x": 1,
+                      "y": 2
+                    },
+                    "functions": [
+                      {
+                        "expr": "x^2",
+                        "label": "$y = x^2$",
+                        "labelAt": 2.6,
+                        "labelPos": "w"
+                      }
+                    ],
+                    "areas": [
+                      {
+                        "expr": "x^2",
+                        "from": 1,
+                        "to": 3
+                      }
+                    ]
+                  }
+                }
+              },
+              "choices": {
+                "A": [
+                  "$\\dfrac{8}{3}$",
+                  "$4$",
+                  "$\\dfrac{16}{3}$",
+                  "$\\dfrac{4}{3}$"
+                ],
+                "B": [
+                  "$9$",
+                  "$\\dfrac{28}{3}$",
+                  "$\\dfrac{26}{3}$",
+                  "$\\dfrac{8}{3}$"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 2
+              },
+              "why": {
+                "A": "$\\int_0^2 x^2\\,dx = \\left[\\dfrac{x^3}{3}\\right]_0^2 = \\dfrac{8}{3}$.",
+                "B": "$\\int_1^3 x^2\\,dx = \\left[\\dfrac{x^3}{3}\\right]_1^3 = \\dfrac{27}{3} - \\dfrac{1}{3} = \\dfrac{26}{3}$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "integral",
+                    "expr": "x^2",
+                    "from": 0,
+                    "to": 2
+                  },
+                  "B": {
+                    "type": "integral",
+                    "expr": "x^2",
+                    "from": 1,
+                    "to": 3
+                  }
+                }
+              }
+            },
+            {
+              "id": "q6",
+              "level": 3,
+              "skill": "equation of a tangent line",
+              "type": "short",
+              "prompt": {
+                "A": "Write the equation of the line tangent to $y = x^2$ at $x = 1$.",
+                "B": "Write the equation of the line tangent to $y = x^3$ at $x = 1$."
+              },
+              "figure": {
+                "A": {
+                  "graph": {
+                    "x": [
+                      -2,
+                      3
+                    ],
+                    "y": [
+                      -2,
+                      5
+                    ],
+                    "ticks": 1,
+                    "functions": [
+                      {
+                        "expr": "x^2"
+                      }
+                    ],
+                    "tangents": [
+                      {
+                        "expr": "x^2",
+                        "at": 1,
+                        "length": 3
+                      }
+                    ]
+                  }
+                },
+                "B": {
+                  "graph": {
+                    "x": [
+                      -2,
+                      3
+                    ],
+                    "y": [
+                      -3,
+                      5
+                    ],
+                    "ticks": 1,
+                    "functions": [
+                      {
+                        "expr": "x^3"
+                      }
+                    ],
+                    "tangents": [
+                      {
+                        "expr": "x^3",
+                        "at": 1,
+                        "length": 2.4
+                      }
+                    ]
+                  }
+                }
+              },
+              "answer": {
+                "A": "$y = 2x - 1$",
+                "B": "$y = 3x - 2$"
+              },
+              "why": {
+                "A": "$y' = 2x$, so the slope at $x = 1$ is 2 and the point is $(1, 1)$: $y - 1 = 2(x - 1)$, or $y = 2x - 1$.",
+                "B": "$y' = 3x^2$, so the slope at $x = 1$ is 3 and the point is $(1, 1)$: $y - 1 = 3(x - 1)$, or $y = 3x - 2$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "tangent",
+                    "expr": "x^2",
+                    "at": 1
+                  },
+                  "B": {
+                    "type": "tangent",
+                    "expr": "x^3",
+                    "at": 1
+                  }
+                }
+              }
+            },
+            {
+              "id": "q7",
+              "level": 3,
+              "skill": "indefinite integral",
+              "type": "short",
+              "prompt": {
+                "A": "Find $\\int (6x^2 - 4)\\,dx$.",
+                "B": "Find $\\int (12x^3 + 2x)\\,dx$."
+              },
+              "answer": {
+                "A": "$2x^3 - 4x + C$",
+                "B": "$3x^4 + x^2 + C$"
+              },
+              "why": {
+                "A": "Power rule for integrals: $\\dfrac{6x^3}{3} - 4x + C = 2x^3 - 4x + C$.",
+                "B": "Power rule for integrals: $\\dfrac{12x^4}{4} + \\dfrac{2x^2}{2} + C = 3x^4 + x^2 + C$."
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "integral",
+                    "expr": "6x^2 - 4"
+                  },
+                  "B": {
+                    "type": "integral",
+                    "expr": "12x^3 + 2x"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "slides",
+      "kind": "slides",
+      "title": "Derivative Rules",
+      "course": "Calculus (AB/BC level)",
+      "directions": "A short review before the quiz.",
+      "notes": "Three slides: the power rule, the product rule and the chain rule.",
+      "slides": [
+        {
+          "title": "The power rule",
+          "bullets": [
+            "$\\dfrac{d}{dx}\\left(x^n\\right) = n x^{n-1}$",
+            "Example: $\\dfrac{d}{dx}\\left(x^5\\right) = 5x^4$",
+            "It works for any real $n$: $\\dfrac{d}{dx}\\sqrt{x} = \\dfrac{1}{2\\sqrt{x}}$"
+          ],
+          "notes": "Ask for the derivative of x^5 before showing the example."
+        },
+        {
+          "title": "The product rule",
+          "bullets": [
+            "$(fg)' = f'g + fg'$",
+            "Example: $\\left(x^2 \\sin x\\right)' = 2x \\sin x + x^2 \\cos x$"
+          ],
+          "notes": "Stress that the derivative of a product is not the product of the derivatives."
+        },
+        {
+          "title": "Area under a curve",
+          "bullets": [
+            "$\\displaystyle\\int_a^b f(x)\\,dx = F(b) - F(a)$, where $F' = f$",
+            "$\\displaystyle\\int_0^2 x^2\\,dx = \\left[\\dfrac{x^3}{3}\\right]_0^2 = \\dfrac{8}{3}$"
+          ],
+          "notes": "The shaded area on the quiz is this integral.",
+          "figure": {
+            "graph": {
+              "x": [
+                -1,
+                3
+              ],
+              "y": [
+                -1,
+                5
+              ],
+              "ticks": 1,
+              "functions": [
+                {
+                  "expr": "x^2"
+                }
+              ],
+              "areas": [
+                {
+                  "expr": "x^2",
+                  "from": 0,
+                  "to": 2
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Slope of a tangent line",
+          "bullets": [
+            "The slope of the tangent at $x = a$ is $f'(a)$",
+            "For $y = x^2$ at $x = 1$: slope $2$, point $(1, 1)$"
+          ],
+          "notes": "Point to the dashed tangent line on the graph.",
+          "figure": {
+            "graph": {
+              "x": [
+                -2,
+                3
+              ],
+              "y": [
+                -2,
+                5
+              ],
+              "ticks": 1,
+              "functions": [
+                {
+                  "expr": "x^2",
+                  "label": "$y = x^2$",
+                  "labelAt": -1.6,
+                  "labelPos": "e"
+                }
+              ],
+              "tangents": [
+                {
+                  "expr": "x^2",
+                  "at": 1,
+                  "length": 3
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "solver": [
+      {
+        "check": "math",
+        "round": 1,
+        "agent": "🧮 Solver (checks/math.mjs, SymPy)",
+        "at": "2026-11-05T16:33:49.925Z",
+        "checked": 34,
+        "disagree": 0,
+        "pass": true,
+        "findings": [],
+        "problems": []
+      }
+    ],
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T16:33:49.993Z",
+        "rows": 34,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T16:33:50.084Z",
+        "questions": 14,
+        "chance": 0.25,
+        "worst": [
+          [
+            "middle",
+            0.345
+          ],
+          [
+            "learnedCV",
+            0.315
+          ],
+          [
+            "converge",
+            0.286
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Lines and Systems",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Quadratic, Exponential and Rational Functions A",
+            "n": 3,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Quadratic, Exponential and Rational Functions B",
+            "n": 3,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Quadratic, Exponential and Rational Functions (all versions)",
+            "n": 6,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Derivatives, Integrals and Limits A",
+            "n": 2,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Derivatives, Integrals and Limits B",
+            "n": 2,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Derivatives, Integrals and Limits (all versions)",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Derivative Rules",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "log": [
+    {
+      "at": "10:00",
+      "who": "📝 Maker (capability builder)",
+      "what": "Wrote the capability fixture: an Algebra 1 worksheet, an Algebra 2 / Precalculus quiz A/B and a Calculus quiz A/B",
+      "minutes": null,
+      "tokens": null,
+      "cost": null
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Capability test fixture, not a customer order: it proves math typesetting (KaTeX in PDF, Word equations in .docx, images in .pptx), graphs drawn from data, and the SymPy math check. No blind tester ran on it."
+    ]
+  }
+}
