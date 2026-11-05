@@ -1,0 +1,6 @@
+node_modules
+samples/*/out
+samples/*/out-preview
+samples/*/*.zip
+samples/*/approval.json
+samples/*/comments-*.json

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node scripts/build-manifest.mjs",
+  "installCommand": "echo 'no install needed for the site'",
+  "outputDirectory": ".",
+  "cleanUrls": false,
+  "redirects": [
+    { "source": "/", "destination": "/site/", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/site/sw.js", "headers": [ { "key": "Cache-Control", "value": "no-cache" }, { "key": "Service-Worker-Allowed", "value": "/site/" } ] },
+    { "source": "/site/manifest.webmanifest", "headers": [ { "key": "Content-Type", "value": "application/manifest+json" } ] }
+  ]
+}
