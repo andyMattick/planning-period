@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" data-page-title="Review your preview">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Review your preview</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" data-brand="shortName">&nbsp;</a>
+    <nav class="nav"><a href="./">Order</a><a href="review.html" aria-current="page">Review a preview</a><a href="samples.html">Sample packs</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <h1>Review your preview</h1>
+    <p class="tagline">Nothing is released until you agree to it.</p>
+    <div id="load-error" class="error" role="alert"></div>
+  </section>
+
+  <section class="how" aria-labelledby="why-h">
+    <h2 id="why-h">How the review works</h2>
+    <p>You get a preview (stamped PREVIEW) and the audit report → look it over → request changes or agree → then we release your final, editable files.</p>
+    <p class="small">Your preview zip also has a REVIEW.html you can open with no internet. This page does the same thing.</p>
+  </section>
+
+  <form id="review" novalidate>
+    <section class="step" aria-labelledby="r1-h">
+      <div class="step-head"><span class="num" aria-hidden="true">1</span><div>
+        <h2 id="r1-h">Which order?</h2>
+        <p>Pick the files from your unzipped preview (we only read order.json and the file names), or type the order id.</p>
+      </div></div>
+      <div class="drop" data-pick>
+        <p>Drag your preview files here, or</p>
+        <label class="btn" for="f-preview">Choose files</label>
+        <input class="sr-only" type="file" id="f-preview" multiple>
+        <p class="small muted" style="margin-top:.6em">Nothing is uploaded. The files stay on this device.</p>
+      </div>
+      <div class="error" id="err-pick" role="alert"></div>
+      <div class="field"><label for="order-id">Order id</label><input type="text" id="order-id" placeholder="pp-2026-11-05-a1b2c3" autocomplete="off" spellcheck="false"></div>
+    </section>
+
+    <section class="step" aria-labelledby="r2-h">
+      <div class="step-head"><span class="num" aria-hidden="true">2</span><div>
+        <h2 id="r2-h">Comments</h2>
+        <p>Tell us what to change in each document: the question number and what it should say.</p>
+      </div></div>
+      <div id="docs"></div>
+      <div class="row">
+        <div class="field"><label for="add-doc">Add a document to comment on</label><input type="text" id="add-doc" placeholder="For example: Ratios Quiz, version B"></div>
+      </div>
+      <button type="button" class="btn" id="add-doc-btn">Add</button>
+      <div class="field"><label for="c-general">For the whole pack</label><textarea id="c-general" placeholder="Anything else to change"></textarea></div>
+    </section>
+
+    <section class="step" aria-labelledby="r3-h">
+      <div class="step-head"><span class="num" aria-hidden="true">3</span><div>
+        <h2 id="r3-h">Request changes or agree</h2>
+        <p>Tick every box only when it's true. We release your final, editable files after you agree.</p>
+      </div></div>
+      <ul class="checks">
+        <li><label><input type="checkbox" data-check="answers"> I checked the answers.</label></li>
+        <li><label><input type="checkbox" data-check="level"> The level fits my students.</label></li>
+        <li><label><input type="checkbox" data-check="content"> The wording and content are right for my class.</label></li>
+        <li><label><input type="checkbox" data-check="noChanges"> Nothing needs a change.</label></li>
+      </ul>
+      <div class="field"><label for="who">Your name</label><input type="text" id="who" autocomplete="name" placeholder="Ms. Rivera"></div>
+      <div class="error" id="err-send" role="alert"></div>
+      <div class="actions">
+        <button type="button" class="btn" id="changes" disabled>Request changes</button>
+        <button type="button" class="btn primary" id="agree" disabled>I agree — release my files</button>
+      </div>
+      <p class="small muted" id="why-disabled"></p>
+      <div class="ok" id="done" role="status"></div>
+    </section>
+  </form>
+</main>
+<footer class="foot"><div class="wrap"><span data-brand="aiNotice"></span> · <a href="./">Order a pack</a></div></footer>
+<script src="common.js"></script>
+<script src="review.js"></script>
+</body>
+</html>
