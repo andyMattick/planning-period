@@ -60,36 +60,12 @@
       "directions": "Use this sheet to study. The test covers everything in the \"Know It Cold\" boxes. Practice questions at the end are in the same style as the test.",
       "sections": [
         {
-          "heading": "KNOW IT COLD: Presidents",
-          "directions": "Lincoln — Ten Percent Plan (1863); pocket-vetoed Wade-Davis (1864); shot April 14, 1865 (died April 15). • Andrew Johnson — pardons, fast rebuilding of state governments (1865); impeached 1868, one vote short. • Grant — elected 1868. • Hayes (R) vs. Tilden (D) — 1876."
+          "heading": "KNOW IT COLD: People",
+          "directions": "Lincoln — Ten Percent Plan (1863); pocket-vetoed Wade-Davis (1864); shot April 14, 1865 (died April 15). • Andrew Johnson — pardons, fast rebuilding of state governments (1865); impeached 1868, one vote short. • Grant — elected 1868. • Hayes (R) vs. Tilden (D) — 1876. • Thaddeus Stevens, Charles Sumner — Radical Republicans. • Oliver O. Howard — Freedmen's Bureau head. • Frederick Douglass — the vote for Black men now (1865); backed the 15th. • Hiram Revels (Miss.) — first Black senator (1870). • Joseph Rainey (S.C.) — first Black House member (1870). • Blanche K. Bruce (Miss.) — full Senate term (1875–1881)."
         },
         {
-          "heading": "KNOW IT COLD: Leaders",
-          "directions": "Thaddeus Stevens, Charles Sumner — Radical Republicans. • Oliver O. Howard — Freedmen's Bureau head. • Frederick Douglass — the vote for Black men now (1865); backed the 15th."
-        },
-        {
-          "heading": "KNOW IT COLD: Black officeholders",
-          "directions": "Hiram Revels (Miss.) — first Black senator (1870). • Joseph Rainey (S.C.) — first Black House member (1870). • Blanche K. Bruce (Miss.) — full Senate term (1875–1881)."
-        },
-        {
-          "heading": "KNOW IT COLD: Freedom and the Black Codes, 1865–1866",
-          "directions": "Freedmen's Bureau (March 1865) — relief, labor contracts, schools. • Field Order No. 15 — 40-acre plots; pardons gave the land back; sharecropping grew. • Black Codes — yearly contracts, \"vagrancy\" fines, child apprenticeship."
-        },
-        {
-          "heading": "KNOW IT COLD: Congress takes over, 1866–1868",
-          "directions": "Civil Rights Act of 1866 — first major law passed over a veto. • Memphis, New Orleans massacres (1866) — Republicans win big. • Reconstruction Acts (1867) — five military districts; Black men vote; ratify the 14th."
-        },
-        {
-          "heading": "KNOW IT COLD: The three amendments",
-          "directions": "13th (1865) — ends slavery \"except as a punishment for crime.\" • 14th (1868) — citizenship (ends Dred Scott), due process, equal protection; \"No State shall.\" • 15th (1870) — no denying the vote by race, color or servitude; poll taxes not banned; silent on sex."
-        },
-        {
-          "heading": "KNOW IT COLD: Terms",
-          "directions": "Carpetbaggers (Northerners who moved South), scalawags (white Southern Republicans) — insults. • Redeemers — white Democrats who took the states back."
-        },
-        {
-          "heading": "KNOW IT COLD: Violence and retreat, 1870–1877",
-          "directions": "Klan; Enforcement Acts (1870–1871). • Colfax massacre (1873); Cruikshank (1876) — the 14th limits states, not private people. • Panic of 1873; Democrats win the House (1874). • Compromise of 1877 — troops leave; last Republican governments fall."
+          "heading": "KNOW IT COLD: Terms and dates",
+          "directions": "Freedmen's Bureau (March 1865) — relief, labor contracts, schools. • Field Order No. 15 — 40-acre plots; pardons gave the land back; sharecropping grew. • Black Codes (1865–1866) — yearly contracts, \"vagrancy\" fines, child apprenticeship. • Civil Rights Act of 1866 — first major law passed over a veto. • Memphis, New Orleans massacres (1866) — Republicans win big. • Reconstruction Acts (1867) — five military districts; Black men vote; ratify the 14th. • 13th (1865) — ends slavery \"except as a punishment for crime.\" • 14th (1868) — citizenship (ends Dred Scott), due process, equal protection; \"No State shall.\" • 15th (1870) — no denying the vote by race, color or servitude; poll taxes not banned; silent on sex. • Carpetbaggers (Northerners who moved South), scalawags (white Southern Republicans) — insults. • Redeemers — white Democrats who took the states back. • Klan; Enforcement Acts (1870–1871). • Colfax massacre (1873); Cruikshank (1876) — the 14th limits states, not private people. • Panic of 1873; Democrats win the House (1874). • Electoral Commission (1877) — 15 members; 8–7 party-line vote gives Hayes all 20 disputed votes, 185–184. • Compromise of 1877 — informal deal: Democrats accept Hayes for a Southern cabinet member and railroad aid; troops leave the S.C. and La. statehouses (April); the last Republican state governments fall."
         },
         {
           "heading": "BIG QUESTIONS (be ready to write about one)",
@@ -97,7 +73,7 @@
         },
         {
           "heading": "PRACTICE (same style as the test)",
-          "directions": "Circle the letter of the BEST answer. Number 10 is a short written answer, like Part III of the test.",
+          "directions": "Circle the letter of the BEST answer. Number 7 is a short written answer, like Part III of the test.",
           "questions": [
             {
               "id": "p1",
@@ -121,28 +97,13 @@
               "type": "mc",
               "prompt": "Thaddeus Stevens and Charles Sumner are best known as",
               "choices": [
-                "Democratic governors who led the Redeemers in the South.",
-                "Supreme Court justices who wrote the Cruikshank ruling.",
-                "Union generals who ran two of the five military districts.",
-                "Republican leaders in Congress who pushed for Black rights."
+                "Redeemer governors in the South",
+                "justices who decided Cruikshank",
+                "generals over military districts",
+                "Radical Republicans in Congress"
               ],
               "answer": 3,
               "why": "Stevens (House) and Sumner (Senate) led the Radical Republicans."
-            },
-            {
-              "id": "p3",
-              "level": 1,
-              "skill": "Freedmen's Bureau",
-              "type": "mc",
-              "prompt": "Which was one job of the Freedmen's Bureau?",
-              "choices": [
-                "supervising labor contracts and hearing complaints",
-                "collecting the poll tax in every Southern county",
-                "running the Electoral Commission that settled 1876",
-                "choosing the delegates for state party conventions"
-              ],
-              "answer": 0,
-              "why": "The Bureau supervised contracts and handled complaints between workers and employers."
             },
             {
               "id": "p4",
@@ -151,28 +112,13 @@
               "type": "mc",
               "prompt": "Under many Black Codes, a freedman without a yearly labor contract could be",
               "choices": [
-                "sent North by the army to look for factory work in the cities.",
-                "given county land to farm until his next harvest came in.",
-                "fined as a \"vagrant\" and hired out to pay the fine.",
-                "barred from marrying, owning property or going to church."
+                "sent North by the army for work",
+                "given county land for a whole year",
+                "fined as a \"vagrant\" and hired out",
+                "barred from marrying in church"
               ],
               "answer": 2,
               "why": "Vagrancy laws fined people with no job and let counties hire out anyone who could not pay; the Codes did allow marriage and some property."
-            },
-            {
-              "id": "p5",
-              "level": 2,
-              "skill": "Black political participation",
-              "type": "mc",
-              "prompt": "Which statement about South Carolina during Reconstruction is accurate?",
-              "choices": [
-                "It was the first state readmitted, in 1866, after it ratified the 14th Amendment.",
-                "Black members were a majority of its lower house for several years.",
-                "Its legislature sent Hiram Revels to the U.S. Senate in 1870 as the first Black senator.",
-                "It never had a Republican state government, even under army rule in 1868."
-              ],
-              "answer": 1,
-              "why": "Black legislators held a majority of the South Carolina lower house for several years; Tennessee was readmitted first and Revels was from Mississippi."
             },
             {
               "id": "p6",
@@ -181,10 +127,10 @@
               "type": "mc",
               "prompt": "Why did Congress refuse to seat the men Southern states sent to Washington in late 1865?",
               "choices": [
-                "Their states had not held elections yet.",
-                "Johnson asked Congress to keep them out.",
+                "Their states still kept slavery.",
+                "Johnson asked to keep them out.",
                 "Most had joined the Republicans.",
-                "Many of them were former Confederate leaders."
+                "Many were Confederate leaders."
               ],
               "answer": 3,
               "why": "Southern voters had elected many former Confederate leaders, and Congress would not seat them."
@@ -194,12 +140,12 @@
               "level": 3,
               "skill": "the Court and the 14th Amendment",
               "type": "mc",
-              "prompt": "The 14th Amendment says \"No State shall\" abridge citizens' rights. How did the Supreme Court use those words in the 1870s?",
+              "prompt": "Why did the Court's 1876 reading of the 14th Amendment's \"No State shall\" free the men convicted for the Colfax massacre?",
               "choices": [
-                "It said the words did not reach attacks by private persons.",
-                "It said the words let Congress punish any private person who attacked a voter.",
-                "It said the words protected freedpeople but not white Republicans.",
-                "It said the words let women vote in federal elections."
+                "The killers were private people.",
+                "Johnson had pardoned them.",
+                "It covered only voting rights.",
+                "The victims were not citizens."
               ],
               "answer": 0,
               "why": "In Cruikshank (1876) the Court said the amendment limits states, not private people, so the Colfax convictions fell."
@@ -220,28 +166,13 @@
               "why": "The Black Codes (1865–66) angered the North, and Congress took control in 1866–67."
             },
             {
-              "id": "p9",
-              "level": 3,
-              "skill": "interpreting Reconstruction",
-              "type": "mc",
-              "prompt": "DOCUMENT (written for this sheet; not a real document) — A Black minister in Georgia, 1868: \"We built this church with our own hands, and on weekdays it is a schoolhouse. The Bureau sent us one teacher; we pay for the second.\" Which conclusion does this excerpt BEST support?",
-              "choices": [
-                "Freedpeople waited for the Bureau to build their schools for them.",
-                "The community built its school and helped pay its teachers.",
-                "Black churches were closed on weekdays by order of the Bureau.",
-                "The Bureau paid both of the town's teachers."
-              ],
-              "answer": 1,
-              "why": "The community built the building and pays a teacher; the Bureau helped but did not do it alone."
-            },
-            {
               "id": "p10",
               "level": 3,
               "skill": "Claim + Evidence + Reasoning",
               "type": "open",
-              "space": 8,
+              "space": 4,
               "prompt": "Claim + Evidence + Reasoning. Which did more to end Reconstruction: violence in the South or the North losing interest? Make a claim, give TWO pieces of evidence from the unit, and explain how they support your claim. (4–6 sentences)",
-              "answer": "Strong answer: Violence did more, because it made Black voting dangerous before the North ever left. The Klan raided and killed Black voters, officeholders and teachers, and the Colfax massacre (1873) killed dozens of Black men after a disputed election; after Cruikshank (1876) the federal government could not punish the killers. The White League and Red Shirts helped Democrats take back states. The North's retreat (Panic of 1873, the 1874 House, the Compromise of 1877) mattered, but it came after violence had already \"redeemed\" most of the South. (Either side earns full credit with evidence.)",
+              "answer": "Strong answer: Violence did more, because it made Black voting dangerous before the North ever left. The Klan raided and killed Black voters, officeholders and teachers, and the Colfax massacre (1873) killed dozens of Black men after a disputed election; after Cruikshank (1876) the federal government could not punish the killers. The White League and Red Shirts helped Democrats take back states. The North's retreat (Panic of 1873, the 1874 House, the Compromise of 1877) mattered, but by 1876, before the Compromise, Democrats already held every Southern state except South Carolina, Louisiana and Florida. (Either side earns full credit with evidence.)",
               "accept": [],
               "why": "5 points: claim 1, evidence 2 (two accurate, specific pieces), reasoning 2 (explains how the evidence proves the claim). Either claim can earn full credit."
             }
@@ -658,7 +589,7 @@
               "choices": {
                 "A": [
                   "Hayes vetoed the civil rights bills Congress sent him in 1877 and 1878.",
-                  "Troops left, and the last Republican state governments fell.",
+                  "Federal troops left two statehouses; the last Republican governments fell.",
                   "Southern states wrote new constitutions ending Black voting that year.",
                   "The last Enforcement Act expired, so Grant's Klan trials stopped."
                 ],
@@ -922,7 +853,7 @@
                   "the Reconstruction Acts setting up military districts in 1867",
                   "the Redeemers taking back Mississippi in 1875",
                   "the founding of the Freedmen's Bureau",
-                  "Hayes pulling the last federal troops out of the South"
+                  "Hayes ending army protection for the last Republican governments"
                 ],
                 "B": [
                   "the Ten Percent Plan",
@@ -936,7 +867,7 @@
                 "B": 1
               },
               "why": {
-                "A": "Hayes withdrew troops from the Louisiana and South Carolina statehouses in April 1877.",
+                "A": "In April 1877 Hayes withdrew federal troops from the Louisiana and South Carolina statehouses, ending army protection for the last Republican state governments.",
                 "B": "Democrats accepted Hayes in return for home rule, a cabinet seat and internal improvements."
               }
             },
@@ -990,7 +921,7 @@
               },
               "answer": {
                 "A": "Strong answer: Reconstruction was a real change that was overturned. The 13th, 14th and 15th Amendments ended slavery, made freedpeople citizens and barred race as a reason to deny the vote; about 1,500 Black men held office and new state governments built the South's first public schools. Those gains were reversed by Klan and White League violence, by Cruikshank (1876), and by the Compromise of 1877. Because the amendments stayed in the Constitution and were used again in the 1950s–60s, \"failure\" misses what changed.",
-                "B": "Strong answer: The North losing interest did more. After the Panic of 1873, Northern voters turned to the economy and gave Democrats the House in 1874; in the Compromise of 1877 a Republican President pulled troops from the last Southern statehouses. The Court's rulings (Slaughterhouse 1873, Cruikshank 1876) weakened the 14th Amendment, but troops and Republican governments were still in place until the North chose to withdraw them."
+                "B": "Strong answer: The North losing interest did more. After the Panic of 1873, Northern voters turned to the economy and gave Democrats the House in 1874; in the Compromise of 1877 a Republican President pulled troops from the last Southern statehouses. The Court's rulings (Slaughterhouse 1873, Cruikshank 1876) weakened the 14th Amendment, but in South Carolina and Louisiana the last Republican governments held on until the North chose to pull the troops guarding their statehouses."
               },
               "accept": [],
               "why": {
@@ -1237,6 +1168,148 @@
           }
         ],
         "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 4,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T15:03:55.442Z",
+        "rows": 55,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 4,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T15:03:59.645Z",
+        "questions": 50,
+        "chance": 0.25,
+        "worst": [
+          [
+            "converge",
+            0.27
+          ],
+          [
+            "notVote",
+            0.267
+          ],
+          [
+            "absolute",
+            0.26
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Unit 5 Review Sheet: Reconstruction, 1865–1877",
+            "n": 6,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 A",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 B",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 (all versions)",
+            "n": 44,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 50,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 5,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T15:11:01.616Z",
+        "rows": 55,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 5,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T15:11:04.978Z",
+        "questions": 50,
+        "chance": 0.25,
+        "worst": [
+          [
+            "longest",
+            0.277
+          ],
+          [
+            "notVote",
+            0.27
+          ],
+          [
+            "absolute",
+            0.262
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Unit 5 Review Sheet: Reconstruction, 1865–1877",
+            "n": 6,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 A",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 B",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 (all versions)",
+            "n": 44,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 50,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
       }
     ],
     "blind": [
@@ -1297,7 +1370,8 @@
           {
             "where": "Unit 5 Test: Reconstruction, 1865–1877 A q21",
             "kind": "FIX",
-            "what": "Too easy for L2 because of a content cue: the letter is dated April 1877, and the key is the only choice with '1877' in it. Take the year out of choice D (e.g. 'federal troops leaving the statehouses under Hayes'), and replace B (the end of the Wade-Davis plan) with a near miss from the same years, e.g. 'the Redeemers taking back Mississippi in 1875.'"
+            "what": "Too easy for L2 because of a content cue: the letter is dated April 1877, and the key is the only choice with '1877' in it. Take the year out of choice D (e.g. 'federal troops leaving the statehouses under Hayes'), and replace B (the end of the Wade-Davis plan) with a near miss from the same years, e.g. 'the Redeemers taking back Mississippi in 1875.'",
+            "fixed": "Round 2 removed the 1877 date cue; rounds 3 and 4 removed the word cue and then the myth. Recheck 3 (round 4) confirmed: no choice has 1877 and the key shares no distinctive word with the letter."
           },
           {
             "where": "Unit 5 Test: Reconstruction, 1865–1877 B q21",
@@ -1388,17 +1462,20 @@
           {
             "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Presidents",
             "kind": "FIX",
-            "what": "'Andrew Johnson — pardons, fast readmission (1865)' is misleading. No state was readmitted in 1865: Congress refused to seat the Southern members in late 1865, Tennessee came back in July 1866, and the rest came back from 1868 on. Say 'fast rebuilding of state governments (1865)', which matches the notes and the test keys (A q3, B q3)."
+            "what": "'Andrew Johnson — pardons, fast readmission (1865)' is misleading. No state was readmitted in 1865: Congress refused to seat the Southern members in late 1865, Tennessee came back in July 1866, and the rest came back from 1868 on. Say 'fast rebuilding of state governments (1865)', which matches the notes and the test keys (A q3, B q3).",
+            "fixed": "Now reads 'fast rebuilding of state governments (1865)'."
           },
           {
             "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Presidents",
             "kind": "FIX",
-            "what": "'Lincoln … killed April 14, 1865' is slightly off. He was shot April 14 and died the next morning (source, Day 1). Write 'shot April 14, 1865 (died April 15)' so the sheet a student memorizes is accurate."
+            "what": "'Lincoln … killed April 14, 1865' is slightly off. He was shot April 14 and died the next morning (source, Day 1). Write 'shot April 14, 1865 (died April 15)' so the sheet a student memorizes is accurate.",
+            "fixed": "Now reads 'shot April 14, 1865 (died April 15)'."
           },
           {
             "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Presidents / Violence and retreat",
             "kind": "JUDGMENT",
-            "what": "The shortened boxes dropped the 1876 mechanics: 20 disputed electoral votes, and a 15-member Electoral Commission voting 8–7 along party lines to give Hayes a 185–184 win. B q13 tests exactly this, and B q21's wrong choice D relies on it. The sheet's directions say the test covers everything in the boxes. One reading: that sentence is not a promise that the boxes cover everything on the test, so leave it. The other reading: students treat the boxes as the full list, so add '20 disputed votes → Electoral Commission, 8–7 → Hayes 185–184' to the Presidents box. Nothing else in the boxes is false or dated wrong. I checked the 13th (1865), 14th (1868), 15th (1870), Bureau (March 1865), Revels and Rainey (1870), Bruce (1875–1881), Reconstruction Acts (1867), Enforcement Acts (1870–71), Colfax (1873), Cruikshank (1876), Panic of 1873 and the 1874 House, and the Terms."
+            "what": "The shortened boxes dropped the 1876 mechanics: 20 disputed electoral votes, and a 15-member Electoral Commission voting 8–7 along party lines to give Hayes a 185–184 win. B q13 tests exactly this, and B q21's wrong choice D relies on it. The sheet's directions say the test covers everything in the boxes. One reading: that sentence is not a promise that the boxes cover everything on the test, so leave it. The other reading: students treat the boxes as the full list, so add '20 disputed votes → Electoral Commission, 8–7 → Hayes 185–184' to the Presidents box. Nothing else in the boxes is false or dated wrong. I checked the 13th (1865), 14th (1868), 15th (1870), Bureau (March 1865), Revels and Rainey (1870), Bruce (1875–1881), Reconstruction Acts (1867), Enforcement Acts (1870–71), Colfax (1873), Cruikshank (1876), Panic of 1873 and the 1874 House, and the Terms.",
+            "fixed": "Round 4 added an Electoral Commission line to the boxes (15 members; 8–7 party-line vote; all 20 disputed votes to Hayes, 185–184), and round 5 added the deal's terms to the Compromise line; the round 5 fact checker confirmed both."
           },
           {
             "where": "Unit 5 Test: Reconstruction, 1865–1877 B q19",
@@ -1431,12 +1508,111 @@
           {
             "where": "Unit 5 Test: Reconstruction, 1865–1877 A q21",
             "kind": "FIX",
-            "what": "The round 2 rewording made the key false. Saying Hayes pulled the 'last federal troops out of the South' is a well-known myth: he ordered the troops guarding the South Carolina and Louisiana statehouses back to their posts, and federal soldiers stayed in the South after 1877. The source (Day 8) and this item's own why line both say statehouses only, so the key and the why line now disagree. Reword the key so it is accurate and still shares no distinctive word with the letter. For example: 'Hayes ending federal military protection of the last Republican state governments' or 'Hayes withdrawing the troops that kept Republican governors in power'. Keep the wrong choices as they are."
+            "what": "The round 2 rewording made the key false. Saying Hayes pulled the 'last federal troops out of the South' is a well-known myth: he ordered the troops guarding the South Carolina and Louisiana statehouses back to their posts, and federal soldiers stayed in the South after 1877. The source (Day 8) and this item's own why line both say statehouses only, so the key and the why line now disagree. Reword the key so it is accurate and still shares no distinctive word with the letter. For example: 'Hayes ending federal military protection of the last Republican state governments' or 'Hayes withdrawing the troops that kept Republican governors in power'. Keep the wrong choices as they are.",
+            "fixed": "Round 4: The key now reads 'Hayes ending army protection for the last Republican governments' instead of the 'last federal troops' myth. It matches the source (Day 8: troops withdrawn from the South Carolina and Louisiana statehouses; the last Republican state governments fell) and the why line, and it shares no distinctive word with the letter ('statehouse' and 'soldiers' don't appear in it). No choice contains 1877, and the wrong choices are unchanged and still wrong. Blind solve: D, confidence 5, keyed D."
           },
           {
             "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p7",
             "kind": "JUDGMENT",
             "what": "Still easy for an L3 (answered blind with confidence 5). Reading 1: the stem quotes 'No State shall', and working out that those words leave out private attackers is the L3 skill the item means to test, so it stays as written. Reading 2: the quoted words act as a cue, so a student who doesn't know Cruikshank can still reach A, and the item plays like L2. If the teacher takes reading 2, relabel it level 2 rather than changing the choices (B is now a real near miss). The choices themselves are sound: one right answer, and D is false (Minor v. Happersett, 1875)."
+          }
+        ]
+      },
+      {
+        "round": 4,
+        "agent": "🙈 Blind tester (social studies), recheck 3",
+        "matched": 6,
+        "of": 6,
+        "byLevel": {
+          "L1": {
+            "items": 1,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L2": {
+            "items": 4,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L3": {
+            "items": 1,
+            "accuracy": 1,
+            "meanConfidence": 4,
+            "tooEasy": 0
+          },
+          "note": "6 MC items keyed (A q21, B q21, p2, p4, p6, p7); p10 is open and judged by hand. My answer matches the model's claim and evidence. The one L3 item (p7) had the lowest confidence, but only because a wrong choice is partly true, not because it is harder."
+        },
+        "findings": [
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p7",
+            "kind": "FIX",
+            "what": "Choice C (the words 'applied to Southern states') is partly true. In the 1870s the Court did read 'No State shall' as binding the states, and the Southern states are states, so a strong student can defend C next to the key. Replace C with a wrong choice that is clearly false about how the Court read those words, without being a twin of B (B already says the reverse of the ruling). Change the wrong choice, not the key. Also, because the stem quotes 'No State shall', a student can reach the key from the wording alone, which is light for level 3. Consider asking about the effect (what happened to the Colfax convictions) rather than the reading of the words. This is a direction only; it contains no new facts.",
+            "fixed": "Round 5: The partly true C ('They applied to Southern states') is gone. The item is reworded around the Colfax convictions, and the new C ('covered only voting rights') is plainly false and not a twin of any other choice. (Round 4's secondary point, that the item is light for level 3, is not fixed; see notConfirmed and the new FIX.) The level 3 part was not fixed and is carried forward as round 5 FIX (recheck 4)."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p6",
+            "kind": "FIX",
+            "what": "Wrong choice A ('no elections had been held yet') is ruled out by the stem itself, since the states 'sent' men to Washington, so it draws no one and the item is really three choices. Replace A with a plausible but wrong reason a student might believe, for example one tied to the Black Codes or to Johnson's pardons that is false as stated. Do not make it a reason that is also true; the source (Day 1–2) says the Black Codes' Northern reaction helped Congress take control, so a Black Codes choice must be worded so it is clearly not why the members were refused seats. This is a direction only; the facts mentioned come from the source notes.",
+            "fixed": "Round 5: The self-refuting choice A ('No elections had been held yet') is replaced by 'Their states still kept slavery.' The new A is false, plausible and not a twin; the key and why line are unchanged."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p4",
+            "kind": "JUDGMENT",
+            "what": "The key is the only choice with a quoted word, and that word ('vagrant') is the source's and the KNOW IT COLD box's term, so a test-wise student can spot it. Reading 1: keep it, because on a review sheet practicing the box's exact term is the point. Reading 2: drop the quotation marks, or give one wrong choice a quoted term too, so the test-style practice doesn't teach a cue. Wrong choices A and B are weak but not twins."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p10",
+            "kind": "JUDGMENT",
+            "what": "The prompt asks students to pick one of two causes, violence or the North losing interest. But the source's closing section names three (violence, court rulings, the North), and the sheet's own BIG QUESTIONS #3 asks students to rank all three. A student won't know where Cruikshank and Slaughterhouse count (the model answer files Cruikshank under violence; B q23's model files the rulings as a separate weakening). It is also unclear whether a 'both, but X more' claim earns the claim point, and whether the Compromise of 1877 counts as evidence of 'the North losing interest'. Reading 1: keep two causes and add one line to the rubric saying court rulings may be used as evidence for either side. Reading 2: match BIG QUESTIONS #3 and allow all three. The rubric's 'either claim can earn full credit' already helps. This is a direction only."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q21",
+            "kind": "KEEP",
+            "what": "A and B still test the same skill (identify the 1877 settlement from an invented document) at the same level, and B is not easier: A needs the date and the statehouse detail, and B needs the terms of the deal. Small form cue: B's key is the only description among three proper names. It isn't enough to change, and the Electoral Commission choice (D) is a good near-miss."
+          }
+        ]
+      },
+      {
+        "round": 5,
+        "agent": "🙈 Blind tester (social studies), recheck 4",
+        "matched": 4,
+        "of": 4,
+        "byLevel": {
+          "2": {
+            "items": 1,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "3": {
+            "items": 3,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 2
+          }
+        },
+        "findings": [
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p7",
+            "kind": "FIX",
+            "what": "Too easy for level 3, and has a cue. The new stem still quotes the amendment's 'No State shall' words, so a student can match 'State' against the key's 'private people' without knowing Cruikshank or Colfax. Wrong choice B (Johnson's pardon) is impossible on dates, so it draws no one. With D also weak, the item is a one-step reading item. Direction: take the quoted words out of the stem (for example, ask why the Court threw out the Colfax convictions in 1876), and replace B with a reason a student could believe that is false as stated. Warning for whoever writes it: in Cruikshank the Court also said some counts did not charge a racial motive, so a wrong choice about race or voting in the charges could be partly true. Avoid that. Facts to check: Johnson left office in March 1869; the Cruikshank reasoning about the indictment (reference: United States v. Cruikshank, 92 U.S. 542 (1876)). Keep A as the key."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q13",
+            "kind": "FIX",
+            "what": "A and B don't match, and B is easier. A q13 asks why the Compromise ended Reconstruction (its effect, level 3). B q13 asks how the 1876 dispute was settled (recall of a process). B's D ('The Senate threw out Oregon's votes') is much shorter and vaguer than the other choices and draws few, so B is effectively three choices. A student who knows the Electoral Commission gets B in one step. Direction: make B ask about the significance of the 1876–77 settlement at the same depth as A, or keep the stem but raise the level. For example, replace D with a near miss of about the same length that is false as stated, and make the stem require linking the commission to what the Compromise gave each side. Leave A as it is. No new facts are proposed; anything new must come from Day 8 of the notes."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Terms and dates",
+            "kind": "JUDGMENT",
+            "what": "'Democrats accept Hayes for a Southern cabinet member and railroad aid' reads as though the aid was delivered. The notes say the South was 'promised' both. One reading: the box is shorthand and fine as it is. Other reading: add 'promised' (a word from Day 8) so students don't learn that railroad aid was actually given. Fact to check if the teacher wants it: the cabinet seat was filled, but the federal railroad help largely never came (reference: C. Vann Woodward, Reunion and Reaction, 1951). Either way the sheet stays at 2 pages."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p6",
+            "kind": "KEEP",
+            "what": "New A ('still kept slavery') is false and plausible: Johnson's terms required ending slavery, and it is not a Black Codes choice, so it avoids round 4's warning. C ('joined the Republicans') is weak because a Republican Congress would not refuse Republicans, but it can still draw a student who mixes up the parties. That is acceptable at level 2."
           }
         ]
       }
@@ -1496,13 +1672,15 @@
             "where": "Unit 5 Test: Reconstruction, 1865–1877 B q23",
             "kind": "JUDGMENT",
             "what": "The model answer says \"troops and Republican governments were still in place until the North chose to withdraw them.\" By 1876 only South Carolina, Louisiana and Florida still had Republican governments; the rest had been taken back by elections and violence. Reading 1: it's a one-sided model answer and either claim earns credit. Reading 2: say \"in the last three states\" so the model doesn't teach an overstatement.",
-            "source": "Teacher's notes Day 7 (\"by 1876 Democrats controlled every Southern state except South Carolina, Louisiana and Florida\"); Foner, Reconstruction"
+            "source": "Teacher's notes Day 7 (\"by 1876 Democrats controlled every Southern state except South Carolina, Louisiana and Florida\"); Foner, Reconstruction",
+            "fixed": "Round 4's fact checker made this a FIX; round 5 limited the sentence to South Carolina and Louisiana and the troops guarding their statehouses, confirmed by the round 5 fact checker."
           },
           {
             "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p10",
             "kind": "JUDGMENT",
             "what": "The model answer says the North's retreat \"came after violence had already 'redeemed' most of the South.\" Five states had been taken back before the Panic of 1873, but Alabama and Arkansas (1874) and Mississippi (1875) came after it. Reading 1: it's an arguable thesis in a model answer, and either side earns credit. Reading 2: soften it to \"came after violence had already redeemed much of the South.\"",
-            "source": "Eric Foner, Reconstruction (Harper & Row, 1988), redemption dates by state"
+            "source": "Eric Foner, Reconstruction (Harper & Row, 1988), redemption dates by state",
+            "fixed": "Round 4's fact checker made this a FIX; round 5 tied the timing to 1876 (\"by 1876, before the Compromise, Democrats already held every Southern state except South Carolina, Louisiana and Florida\"), confirmed by the round 5 fact checker."
           },
           {
             "where": "Unit 5 Test: Reconstruction, 1865–1877 A q20",
@@ -1514,9 +1692,82 @@
             "where": "Unit 5 Test: Reconstruction, 1865–1877 A q13",
             "kind": "KEEP",
             "what": "The key \"Troops left\" is a shortening: troops were pulled from the South Carolina and Louisiana statehouses, not from the whole South. The why line and the review sheet say exactly that, so KEEP.",
-            "source": "Teacher's notes Day 8"
+            "source": "Teacher's notes Day 8",
+            "fixed": "Later overturned: round 4's fact checker called the key \"Troops left\" the same 1877 troop myth (a FIX); round 5 reworded it to \"Federal troops left two statehouses; the last Republican governments fell.\""
           }
         ]
+      },
+      {
+        "round": 4,
+        "agent": "🔎 Fact checker",
+        "claims": 96,
+        "flagged": 5,
+        "notes": "Fresh agent, round 4 (the owner asked for this extra round). I checked every claim in the round 4 changes (the 2 condensed KNOW IT COLD boxes, BIG QUESTIONS, p2, p4, p6, p7, p10, and q21 in both versions), and I searched the whole pack for what it says about federal troops in 1877. I worked each claim out from Ms. Castellanos's notes before reading the key. Counts: 96 claims. 85 match the source, 6 are true but need an outside reference, 4 are off and 1 is a judgment. Flagged counts claims, as in round 1 (4 off + 1 judgment). The coverage check is not a claim, but it adds 1 FIX and 1 JUDGMENT, so there are 7 findings in all: 5 FIX and 2 JUDGMENT. WebSearch and WebFetch were denied in this session, so every outside reference is a standard print or official work named by title. None of them was fetched online this round. Troop-withdrawal sweep: the box's Compromise line, the A q21 key and why line, the A q13 why line and the first troop sentence of the B q23 model are now accurate. In April 1877 Hayes ordered the troops guarding the South Carolina statehouse (April 10) and the Louisiana statehouse (April 24) back to their barracks. Federal soldiers stayed in the South, and Congress limited their use with the Posse Comitatus Act of 1878 (Coakley, CMH). Two places still read as the myth: the A q13 key ('Troops left') and the end of the B q23 model ('until the North chose to withdraw them'). Round 3 marked A q13 KEEP. I disagree, because the order lead called the box's matching 'troops leave' line a myth and that line was fixed. The other troop and army mentions are wrong choices that are plainly wrong for a learnable reason (A q3 B-choice, A q6 D, A q7 B why, q9, q10, q11, q19, q20, p2 C, p4 A). Round 4 dropped nothing from the boxes: everything in the old 8 boxes is still in the 2 new ones, and the Electoral Commission line and the Black Codes dates were added. The coverage gaps listed below were already there before round 4.",
+        "findings": [
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p7",
+            "kind": "FIX",
+            "what": "Wrong choice C, 'They applied to Southern states.', is literally true. The 14th Amendment's 'No State shall' binds every state, Southern ones included, and Cruikshank applied it to Louisiana. A careful student can defend C, so the item may have two right answers. Reword C so it is plainly false, and false for a reason the student can learn. Direction: make it claim the words reached only part of the country, or that the Court read them as reaching private people. Keep A as the key.",
+            "source": "Teacher notes Day 4 (text of Section 1) and Day 7 (Cruikshank: the amendment limits states, not private people)",
+            "fixed": "Round 5: The partly true C ('They applied to Southern states') is gone. The item is reworded around the Colfax convictions, and the new C ('covered only voting rights') is plainly false and not a twin of any other choice. (Round 4's secondary point, that the item is light for level 3, is not fixed; see notConfirmed and the new FIX.)"
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 p10",
+            "kind": "FIX",
+            "what": "The model answer says the North's retreat '(Panic of 1873, the 1874 House, the Compromise of 1877) ... came after violence had already \"redeemed\" most of the South.' The Compromise part is supported: by 1876 Democrats held every Southern state except South Carolina, Louisiana and Florida. The Panic of 1873 part is off. In September 1873 only about four of the eleven states (Tennessee, Virginia, North Carolina, Georgia) had Democratic control, and in Tennessee and Virginia that came mostly through elections and ex-Confederates regaining the vote, not mainly through violence. Direction: tie the timing claim to the Compromise of 1877, or to 'by 1876', instead of to all three Northern events. Alternatively, say 'much of' instead of 'most of'. These dates are facts from the reference, not suggested key text, and they must be checked.",
+            "source": "Teacher notes Day 7 ('by 1876 Democrats controlled every Southern state except South Carolina, Louisiana and Florida'); reference for the earlier redemption dates: Eric Foner, Reconstruction: America's Unfinished Revolution, 1863–1877 (Harper & Row, 1988), chs. 9 and 12",
+            "fixed": "Round 5: The timing claim is now tied to 1876: 'by 1876, before the Compromise, Democrats already held every Southern state except South Carolina, Louisiana and Florida', which matches the notes for Day 7. The overstated claim about the Panic of 1873 is gone."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q13",
+            "kind": "FIX",
+            "what": "The key 'Troops left, and the last Republican state governments fell.' still reads as the myth that federal troops left the South in 1877. It is the same phrase as the review sheet's old 'troops leave' line, which round 3 called the A q21 myth and which round 4 fixed. The why line (statehouses only) and the review sheet are accurate now, so this key disagrees with both. Round 3 marked this KEEP as a shortening; I disagree. Direction: say what the troops stopped doing or which places they left (the statehouses, or protection of the last Republican governors), keep it about as long as the other choices, and avoid words that also appear in the prompt. Federal soldiers stayed in the South after 1877.",
+            "source": "Teacher notes Day 8 (troops withdrawn from the South Carolina and Louisiana statehouses, April 1877); reference: Robert W. Coakley, The Role of Federal Military Forces in Domestic Disorders, 1789–1878 (U.S. Army Center of Military History, 1988), on the April 1877 withdrawals to barracks and the troops that stayed in the South",
+            "fixed": "Round 5: The key now says 'Federal troops left two statehouses', not 'Troops left', so the myth is gone. It agrees with the why line and the review sheet, its length is in line with the other choices, and no word repeats from the stem."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q23",
+            "kind": "FIX",
+            "what": "The model answer ends: 'but troops and Republican governments were still in place until the North chose to withdraw them.' Two problems. (1) The North did not withdraw federal troops from the South in 1877. Only the statehouse guards in South Carolina and Louisiana were sent back to barracks, and soldiers stayed in the region. (2) Republican governments were 'still in place' in only the last few states, which round 3 noted as a JUDGMENT. By April 1877 they were left only in South Carolina and Louisiana, because Florida's Democratic governor took office in January 1877. The first sentence ('pulled troops from the last Southern statehouses') is accurate. Direction: limit the last sentence to the troops at the last statehouses and the governments they protected. The Florida date is a fact from the reference and must be checked.",
+            "source": "Teacher notes Day 7 and Day 8; reference: Coakley, The Role of Federal Military Forces in Domestic Disorders, 1789–1878 (CMH, 1988); Foner, Reconstruction (1988), ch. 12 (Florida, January 1877)",
+            "fixed": "Round 5: The last sentence now limits the claim to South Carolina and Louisiana, where the last Republican governments held on until the troops guarding their statehouses were pulled. It no longer says the troops left the South, and it no longer counts Florida among the states still in place."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Terms and dates",
+            "kind": "FIX",
+            "what": "Coverage. The Compromise of 1877 line gives only the troop withdrawal and the fall of the last governments. Test B q21 depends on the rest of the deal: Democrats accepted Hayes, and the South was promised a Southern cabinet member and federal help for railroads. Round 4 also added the Electoral Commission's 8–7 vote to the box, and that vote is B q21's near-miss choice. A student who studied only the box knows the near miss but not what makes the key right. Direction: add the deal's terms from Day 8 of the notes in a few words (that it was informal, that Democrats accepted Hayes, a cabinet seat, internal improvements) without going over two pages. All of it is in the teacher's source.",
+            "source": "Teacher notes Day 8; pack.json documents[1] q21 B why line",
+            "fixed": "Round 5: The Compromise line now has the deal's terms: it was informal, Democrats accepted Hayes, and there was a Southern cabinet member and railroad aid, along with the statehouse withdrawals. That covers B q21. The student PDF is 2 pages (pdfinfo)."
+          },
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: People / Terms and dates",
+            "kind": "JUDGMENT",
+            "what": "Coverage gaps, all already there before round 4 (the old 8 boxes had the same gaps). The test's keys rely on these facts, which the boxes do not state: Johnson asked little beyond accepting the end of slavery (q3 B); the Black Codes' goal of keeping Black workers on plantations (q5 A); Congress overrode the Bureau veto in July 1866 (q6 B); the firing of Stanton and the Tenure of Office Act (q8 B); the Klan's targets (q9 A); the amendments used in the 1950s–60s and the 'corrupt Reconstruction' story and Tweed (q14); Stanton and Anthony against the 15th, Stone and Douglass for it (q18 B); Wade-Davis required a majority oath (q19); about 1,500 Black officeholders, the first public schools, Slaughterhouse (1873) and South Carolina's lower house (q23, q24). Reading 1: the sheet says the test covers everything in the boxes, not that the boxes list everything on the test, and a two-page limit means a review sheet cannot hold every fact, so leave it. Reading 2: add a few words each for the gaps most likely to cost points: Wade-Davis majority, Stanton firing, Klan targets, Slaughterhouse 1873, about 1,500 officeholders. Teacher's call.",
+            "source": "Teacher notes Days 1–8; pack.json documents[1] keys"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q21",
+            "kind": "JUDGMENT",
+            "what": "The key 'the informal agreement that settled the 1876 election' and its why line ('Democrats accepted Hayes in return for home rule, a cabinet seat and internal improvements') present the Compromise of 1877 as a bargain. That follows the teacher's notes and C. Vann Woodward's classic account. Reading 1: keep it, since it is the source's framing and the standard textbook account. Reading 2: some historians argue there was no real bargain, because Hayes already planned to withdraw the troops and the railroad promises came to little, and an honors section could be told so. This does not make any choice false, and the item has one right answer either way.",
+            "source": "Teacher notes Day 8; references: C. Vann Woodward, Reunion and Reaction (Little, Brown, 1951); Allan Peskin, 'Was There a Compromise of 1877?', Journal of American History 60 (1973)"
+          }
+        ]
+      },
+      {
+        "round": 5,
+        "agent": "🔎 Fact checker",
+        "claims": 39,
+        "flagged": 1,
+        "notes": "Fresh agent, round 5. I worked out every changed claim from the source first. Results: 36 source, 2 reference, 0 off, 1 judgment (full list in facts-r5-claims.txt). Federal troops: nothing in the changed text says federal troops left the South. Every troop line is limited to the South Carolina and Louisiana statehouses in April 1877. Order of events: Johnson's term ended March 4, 1869, so he could not have pardoned the 1873 Colfax killers. That makes p7 B false for a reason a student can learn (Grant was President by then). Colfax (1873) came before Cruikshank (1876). 'By 1876' Democrats held every Southern state except S.C., La. and Fla., all before the Compromise. Florida's government was gone before April 1877, so q13 A's key ('two statehouses') is right. Not facts, for the other checkers: p7's stem says the Court's ruling freed the men, and that rules out B ('Johnson had pardoned them') by itself. p6's new A is false but may draw few students. Not a FIX: Georgia's 1877 constitution made its poll tax cumulative (New Georgia Encyclopedia, 'Constitutional Convention of 1877'). It did not end Black voting, so q13 A choice C stays false. Detail: in Cruikshank, Justice Bradley's 1874 circuit-court ruling set the verdict aside first, and the Supreme Court upheld it in 1876. 'The Court's 1876 reading ... free the men' matches the teacher's notes ('threw out the federal convictions'). I did not edit pack.json.",
+        "findings": [
+          {
+            "where": "Unit 5 Review Sheet: Reconstruction, 1865–1877 · KNOW IT COLD: Terms and dates (Compromise of 1877)",
+            "kind": "JUDGMENT",
+            "what": "'Democrats accept Hayes for a Southern cabinet member and railroad aid' drops the source's 'were promised', and it puts the troop withdrawal outside the trade. Reading 1 (keep): 'accept Hayes for X' names what Democrats bargained for, not what they got, so the line still matches Day 8 and the box stays short. Reading 2 (change): a student can read it as aid that was actually delivered. The cabinet seat was filled (David M. Key, Postmaster General, 1877), but the railroad aid (the Texas & Pacific subsidy) never passed. Historians also debate how much of a deal there was (Woodward 1951; Peskin 1973). Direction, if the teacher wants it: add 'promises of' before the cabinet seat and railroad aid. If there is room, also make the statehouse troop withdrawal part of Hayes's side of the deal. The facts in this direction come from references, not the source, and must be checked: Key as Postmaster General in 1877, and the subsidy never passing.",
+            "source": "Teacher notes Day 8 ('were promised'); C. Vann Woodward, Reunion and Reaction (Little, Brown, 1951); Allan Peskin, 'Was There a Compromise of 1877?', Journal of American History 60:1 (1973)"
+          }
+        ],
+        "confirmed": 7
       }
     ]
   },
@@ -1666,20 +1917,166 @@
       "minutes": 2.6,
       "tokens": 360687,
       "cost": 0.53
+    },
+    {
+      "at": "14:47",
+      "who": "🧭 Order lead",
+      "what": "The owner, as the teacher, chose an extra round on the two open items (A q21 false key; review sheet 4 pages, 2 asked)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 4
+    },
+    {
+      "at": "14:50",
+      "who": "🧭 Order lead",
+      "what": "Fixed the --only filter in checks/student-view.mjs (\"|\" separator, error on no match); rendered the preview: review sheet 4 pages",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 4
+    },
+    {
+      "at": "14:54",
+      "who": "📝 Maker",
+      "what": "Fixed both round 3 open items: A q21's key and the review sheet from 4 pages to 2",
+      "minutes": 2.8,
+      "tokens": 1383624,
+      "cost": 1.01,
+      "round": 4
+    },
+    {
+      "at": "14:54",
+      "who": "🧭 Order lead",
+      "what": "Sent the round 4 maker 2 FIX lines, plus a lead FIX: the box line \"Compromise of 1877 — troops leave\" is the same myth",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 4
+    },
+    {
+      "at": "14:58",
+      "who": "🧭 Order lead",
+      "what": "Made the round 4 views (7 items, --only) and a before/after list of changed text; started the blind recheck and the fact checker together",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 4
+    },
+    {
+      "at": "14:59",
+      "who": "🙈 Blind tester (social studies), recheck 3",
+      "what": "Recheck, round 4: 6 of 6 matched; both round 3 fixes held",
+      "minutes": 1.8,
+      "tokens": 605296,
+      "cost": 0.66,
+      "round": 4
+    },
+    {
+      "at": "14:59",
+      "who": "🔎 Fact checker",
+      "what": "Checked 96 claims in the round 4 changes and swept the whole pack for troop wording: 85 source, 6 reference, 4 off, 1 judgment",
+      "minutes": 4.2,
+      "tokens": 1447258,
+      "cost": 1.4,
+      "round": 4
+    },
+    {
+      "at": "15:03",
+      "who": "🤖 Wilco",
+      "what": "Round 4: key check (55 question rows, 0 errors) and the test-wise bots (worst converge 27%, chance 25%): both pass",
+      "minutes": 0.6,
+      "tokens": 183994,
+      "cost": 0.15,
+      "round": 4
+    },
+    {
+      "at": "15:03",
+      "who": "🧭 Order lead",
+      "what": "Merged the round 4 entries and set fixed on confirmed findings; 7 FIX left, so round 5 (the last allowed)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 5
+    },
+    {
+      "at": "15:05",
+      "who": "📝 Maker",
+      "what": "Fixed all 6 round 4 findings",
+      "minutes": 2.1,
+      "tokens": 1055170,
+      "cost": 0.79,
+      "round": 5
+    },
+    {
+      "at": "15:07",
+      "who": "🙈 Blind tester (social studies), recheck 4",
+      "what": "Recheck, round 5: 4 of 4 matched; all 6 round 4 fixes held except one (p7 still light for level 3)",
+      "minutes": 1.6,
+      "tokens": 404532,
+      "cost": 0.58,
+      "round": 5
+    },
+    {
+      "at": "15:07",
+      "who": "🔎 Fact checker",
+      "what": "Checked 39 claims: 36 source, 2 reference, 0 off, 1 judgment; confirmed all 7 round 4 fixes held",
+      "minutes": 2.9,
+      "tokens": 659701,
+      "cost": 0.94,
+      "round": 5
+    },
+    {
+      "at": "15:10",
+      "who": "🤖 Wilco",
+      "what": "Round 5: key check (55 question rows, 0 errors) and the test-wise bots (worst longest 28%, chance 25%): both pass",
+      "minutes": 0.6,
+      "tokens": 183954,
+      "cost": 0.15,
+      "round": 5
+    },
+    {
+      "at": "15:11",
+      "who": "🧭 Order lead",
+      "what": "Merged the round 5 entries and set fixed on confirmed findings; 2 new FIX left open for the teacher and listed first in the report",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 5
+    },
+    {
+      "at": "15:12",
+      "who": "🧾 Reporter",
+      "what": "Added rounds 4–5 to the log and the audit notes",
+      "minutes": 3.4,
+      "tokens": 729653,
+      "cost": 0.77,
+      "round": 5
+    },
+    {
+      "at": "15:20",
+      "who": "🧭 Order lead",
+      "what": "Rendered the preview and looked at every page; review sheet student copy 2 pages (pdfinfo)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null
     }
   ],
   "audit": {
     "notes": [
+      "Open for the teacher after round 5: Review sheet p7 is still light for level 3 (the stem quotes 'No State shall' and a wrong choice is impossible on dates, so a student can reach the key without knowing Cruikshank). Test B q13 doesn't match A q13 and is easier (A asks about the Compromise's effect; B asks how the dispute was settled, and choice D is much shorter and draws few). Also for the teacher: review sheet p4 has the only choice with a quoted word ('vagrant'). Review sheet p10 asks students to pick between two causes (violence or the North losing interest), but the source's closing section and the sheet's BIG QUESTIONS #3 name three (violence, court rulings, the North); the rubric should say where court rulings count. The KNOW IT COLD boxes have coverage gaps: Wade-Davis's majority oath, the Stanton firing, the Klan's targets, Slaughterhouse (1873) and the 1,500 Black officeholders are tested but not in the boxes. Test B q21 presents the Compromise of 1877 as a bargain (Woodward); Peskin (1973) argues there wasn't one. The review sheet's Compromise line could say 'promised' before 'railroad aid', since the source says it was promised and the aid never came.",
+      "The two round 3 open items fixed in round 4: Test A q21's key changed from 'Hayes pulling the last federal troops out of the South' (the myth) to 'Hayes ending army protection for the last Republican governments' (accurate and shares no distinctive word with the letter). The review sheet changed from 4 pages to 2 pages: the 8 KNOW IT COLD boxes became 2 (People and Terms and dates), the practice set went from 10 questions to 7 (p3, p5 and p9 cut), the 'troops leave' box line was fixed to say troops left the South Carolina and Louisiana statehouses (April), and the Electoral Commission line was added.",
       "The order: one studyguide (two pages at most, with a practice set) and one test (about 40% harder questions, A and B versions). Grade 11, U.S. History, Reconstruction 1865–1877. The maker wrote 10 practice questions and 24 test questions per version (58 scored items total). The tests are 42% level 3 (10 of 24), on target.",
       "Round 1: The maker handed off at 14:26 (10.1 minutes, 3,272,607 tokens, $3.01). The blind tester answered all 53 items without the key and matched 53 of 53, but flagged 11 FIX findings and 2 JUDGMENT items. The fact checker verified 143 claims (123 backed by the teacher's notes, 11 needing a reference, 1 wrong, 8 judgment calls) and found the same wrong answer the blind tester caught: test B q5 choice D was actually true of a real Black Code. Wilco's keys check passed (58 rows, 0 errors), and the test-wise bots passed with the worst strategy (posB) scoring 28% against a 25% chance rate.",
       "Round 1 FIX findings (11 items, all fixed in round 2): Test B q5 (two right answers: D was true of South Carolina's 1865 code). Test B q19 (anachronism: two choices were dated after the 1864 speech). Test B q12 and A q13 (too easy for L3: absurd choices). Test A q21 and B q21 (date cues: the key repeated '1877' from the document). Test B q16 (too easy: three race-neutral laws made the race-based one stand out). Test B q18 (the invented excerpt said the answer outright). Test B q3 (easier than A q3, and the key repeated 'April 1865' from the stem). Test A q15 (the key repeated 'vagrancy' from the stem). Review sheet p7 (wording: 'it' had no clear referent).",
       "Round 1 JUDGMENT items for the teacher: Test A q5 (the key uses the source notes' exact words). Test B q10 (gives one cause where historians name several, and a wrong choice echoes the old 'freedpeople wouldn't work' myth).",
       "Round 2: The maker fixed all 11 items (3.0 minutes, 1,580,763 tokens, $1.20) and shortened the review sheet's KNOW IT COLD boxes from 3,339 characters to 1,893 (57% of the original length), as the lead had asked after seeing the boxes render as 4 pages instead of 2. Wilco round 2 passed (worst strategy posB 28%). The blind tester rechecked 16 items (the 11 changed items plus 5 twins) and matched 16 of 16, confirming that 10 of the 11 round 1 fixes held. Three new FIX findings: A q21 (the date cue was gone, but the key now repeated 'statehouse' from the letter). Review sheet p7 (too easy for L3: two wrong choices were not believable). Two KNOW IT COLD box errors: Andrew Johnson's entry said 'fast readmission (1865)', but no state was readmitted in 1865; it should say 'fast rebuilding of state governments'. Lincoln's entry said 'killed April 14, 1865', but he was shot April 14 and died April 15. One JUDGMENT item: the shortened boxes dropped the Electoral Commission's 8–7 vote, but test B q13 tests it and B q21 relies on it.",
       "Round 3: The maker fixed all 4 round 2 findings (0.6 minutes, 351,187 tokens, $0.36). Wilco round 3 passed (worst strategy posB 28%). The blind tester rechecked 2 items and matched 2 of 2, confirming that all 4 round 2 fixes held. One new FIX finding: test A q21, the round 2 fix had reworded the key to 'Hayes pulling the last federal troops out of the South', which is a well-known myth (he withdrew troops from the South Carolina and Louisiana statehouses, and federal soldiers stayed in the South after 1877; the source and the item's own why line both say statehouses only). The suggested wording: 'Hayes ending federal military protection of the last Republican state governments'. One JUDGMENT item: review sheet p7 is still easy for L3 (the stem quotes 'No State shall', so a student can work out the answer without knowing Cruikshank; the teacher may keep it as a L3 reasoning item or relabel it L2).",
-      "Open for the teacher in the preview: Test A q21 (the FIX above, with the blind tester's suggested wording). Review sheet p7 (the JUDGMENT above).",
-      "Wilco test-wise bots, before and after: Round 1, worst strategy posB scored 28% (3 points above the 25% chance rate). Round 2, posB still 28%. Round 3, posB still 28%. All three rounds passed (the fail line is 10 points above chance, 35%).",
-      "What was slow or redone: The lead made a round 2 recheck view with the --only flag, but it came out empty because the document titles contain a comma and --only splits on commas. The blind tester rebuilt the full view and diffed it against round 1 to find the changed items, which cost a few minutes. Round 3 got the whole view and a list of items instead. The round 2 fix to A q21 (removing the date cue) introduced a word cue, which the round 2 recheck caught. The round 3 fix to A q21 (removing the word cue) made the key false, which the round 3 recheck caught; the runbook stops after round 3, so this FIX is left open for the teacher.",
-      "Totals (exact, as reported by the sessions): Wall-clock time from first to last row: 35 minutes (14:05 to 14:40). Agent minutes: 27.2 (the maker's hand-off estimates were 2–5 times too high; these are measured from session duration_ms). Agent tokens: 9,715,500 (input + output + cache read + cache write). Agent cost: $9.32 (session total_cost_usd, API list prices). Cost per document: $4.66 (2 documents: studyguide and test). Cost per question: $0.16 (58 questions). The lead's own work (receiving the order, making views, merging checks, noting the round 3 finding) is not measured."
+      "Round 4 (extra round): The owner, as the teacher, asked for an extra round after round 3 ended with an open FIX on test A q21 (the false key). The maker fixed A q21's key from 'Hayes pulling the last federal troops out of the South' to 'Hayes ending army protection for the last Republican governments', and fixed the review sheet from 4 pages to 2: the 8 KNOW IT COLD boxes became 2 (People; Terms and dates), using the teacher's own headings, with unchanged wording except for three lines (the Compromise of 1877 'troops leave' line became 'Hayes withdraws federal troops from the South Carolina and Louisiana statehouses (April); the last Republican state governments fall', the Electoral Commission line was added, and Black Codes became 'Black Codes (1865–1866)' with the date moved from the heading). BIG QUESTIONS unchanged. Practice went from 10 questions to 7: p3, p5 and p9 cut; p2, p4, p6, p7 and p10 changed (shorter choices, now two per line; p10 went from 8 to 4 lines). Student copy 2 pages. The blind tester matched all 6 items and confirmed both round 3 fixes held. New round 4 FIX findings (7): review sheet p7 wrong choice C is partly true (the Court read 'No State shall' as binding the states, so 'applied to Southern states' is literally true); p7 is also too easy for L3 (the quoted words cue the key). Review sheet p6 wrong choice A is ruled out by the stem itself. Review sheet p10 model answer 'came after violence had already \"redeemed\" most of the South' is off for the Panic of 1873 (only about 4 of 11 states had Democratic control then). Test A q13 key 'Troops left' still reads as the myth. Test B q23 model 'troops and Republican governments were still in place until the North chose to withdraw them' is wrong twice (troops stayed in the South, and governments were left in only two states by April 1877). Review sheet KNOW IT COLD box left out the Compromise deal's terms (Democrats accepted Hayes for a cabinet seat and railroad aid), which B q21 tests. Round 4 JUDGMENT findings (2): the boxes' coverage gaps (Wade-Davis majority, Stanton firing, Klan targets, Slaughterhouse, 1,500 officeholders) were already there before round 4. Test B q21 presents the Compromise as a bargain; Peskin (1973) argues there wasn't one. The fact checker also caught A q13's troop myth and B q23's troop myth in a whole-pack sweep of the troop wording. Wilco round 4 passed (worst strategy converge 27%).",
+      "Round 5 (extra round): The maker fixed all 6 round 4 FIX findings (2.1 minutes, 1,055,170 tokens, $0.79). Review sheet p7 stem changed from quoting 'No State shall' to asking why the Court's 1876 reading freed the men convicted for the Colfax massacre; the key ('The killers were private people') has the same meaning as the old A; the three wrong choices are new and each is false for a reason a student can learn (Johnson pardoned them, covered only voting rights, victims were not citizens). Review sheet p6 wrong choice A changed from 'No elections had been held yet' to 'Their states still kept slavery' (false because Johnson's plan required ending slavery). Review sheet p10 model changed from 'came after violence had already \"redeemed\" most of the South' to 'by 1876, before the Compromise, Democrats already held every Southern state except South Carolina, Louisiana and Florida.' Test A q13 key changed from 'Troops left' to 'Federal troops left two statehouses; the last Republican governments fell.' Test B q23 model changed from 'troops and Republican governments were still in place until the North chose to withdraw them' to 'in South Carolina and Louisiana the last Republican governments held on until the North chose to pull the troops guarding their statehouses.' Review sheet KNOW IT COLD Compromise line changed from the troop withdrawal alone to 'informal deal: Democrats accept Hayes for a Southern cabinet member and railroad aid; troops leave the S.C. and La. statehouses (April); the last Republican state governments fall.' Student copy 2 pages. The blind tester matched all 4 items and confirmed 7 of 7 round 4 FIX findings fixed, except one part (p7 still light for level 3, now for a different reason). New round 5 FIX findings (2): review sheet p7 is still too easy for level 3 (the stem quotes 'No State shall' and wrong choice B is impossible on dates). Test B q13 doesn't match A q13 and is easier (A asks about the Compromise's effect, B asks how the dispute was settled, and B's choice D is much shorter). Round 5 JUDGMENT finding (1): the Compromise line could say 'promised' before 'railroad aid', since the source says it was promised and the aid never came. The fact checker confirmed all 7 round 4 fixes held and found no new FIX findings (39 claims: 36 source, 2 reference, 0 off, 1 judgment). Wilco round 5 passed (worst strategy longest 28%).",
+      "Wilco test-wise bots, before and after: Round 1, worst strategy posB scored 28% (3 points above the 25% chance rate). Round 2, posB still 28%. Round 3, posB still 28%. Round 4, converge 27%. Round 5, longest 28%. All five rounds passed (the fail line is 10 points above chance, 35%).",
+      "What was slow or redone: The lead made a round 2 recheck view with the --only flag, but it came out empty because the document titles contain a comma and --only splits on commas. The blind tester rebuilt the full view and diffed it against round 1 to find the changed items, which cost a few minutes. Round 3 got the whole view and a list of items instead. The round 2 fix to A q21 (removing the date cue) introduced a word cue, which the round 2 recheck caught. The round 3 fix to A q21 (removing the word cue) made the key false, which the round 3 recheck caught. Round 4 runner bug: the lead's script passed the extra tools (WebSearch, WebFetch, pdfinfo) with literal quote marks, so they were denied in round 4; the round 4 fact checker named print references by title instead of looking them up. Fixed before round 5; the round 5 fact checker used the web. The --only bug was fixed in round 4 (items now separated by '|'). The q21 lesson: a checker's suggested wording is new content and gets checked like the maker's.",
+      "Totals (exact, as reported by the sessions): wall-clock time from the first row to the last: 75 minutes (14:05 to 15:20; rounds 1–3 14:05–14:45, the extra rounds 14:47–15:20). Agent minutes: 49.9 over 20 sessions (rounds 1–5 and both reporter sessions). Agent tokens: 16,729,369 (input + output + cache read + cache write; mostly cache reads). Agent cost: $16.28 exact (each session's own total_cost_usd, API list prices; the step table adds the rows rounded to cents, $16.30). Cost per document: $8.14 (2 documents). Cost per question: $0.30 (55 questions now: 7 practice and 24 per test version). Rounds 4–5 alone (the extra rounds): 8 maker and checker sessions, 16.7 agent minutes, 5,923,529 tokens, $5.66; with this reporter session, 20.1 minutes and $6.43. Rounds 1–3 with their reporter: $9.85. The order lead's own work (receiving the order, making views, merging checks, fixing the --only filter and the runner) is not measured."
     ],
     "briefChanges": []
   }

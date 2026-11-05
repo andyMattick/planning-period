@@ -96,12 +96,36 @@ items go to the teacher in the preview, not to the maker.
 
 A **different fresh** blind tester (not round 1's, not the maker) on the changed items only:
 ```
-node $REPO/checks/student-view.mjs "$WORK/pack.json" --only "<where>,<where>" --out "$WORK/view-r2.md"
+node $REPO/checks/student-view.mjs "$WORK/pack.json" --only "<where>|<where>" --out "$WORK/view-r2.md"   # "|" between items (titles can hold commas); a where that matches nothing is an error
 node $REPO/checks/score-blind.mjs "$WORK/pack.json" "$WORK/blind-r2.jsonl"
 node $REPO/checks/keys.mjs "$WORK/pack.json" --write && node $REPO/checks/test-wise.mjs "$WORK/pack.json" --write
 ```
 It records round 2 and sets `fixed` on each finding it confirms. A new FIX: back to step 8. After round 3, stop and
-decide with the teacher.
+decide with the teacher (next section).
+
+## When round 3 ends with an open FIX
+
+Round 3 is the limit, so a FIX can still be open when it ends (the g11-history sample: a key that a round 2 checker's
+suggested wording had made false, and a review sheet twice the length the teacher asked for).
+
+- **The order lead never sends a preview with a known FIX without telling the owner** (later, when orders are live: the
+  teacher). Say what the open FIX is, where, and what it would take to fix it.
+- **The owner (later: the teacher) decides** one of two things:
+  1. **An extra round:** rounds 4 and 5 at most, with the same separation of roles as rounds 1–3. A **fresh** maker
+     session gets only the open FIX list (step 8); a **fresh** blind tester rechecks the changed items (step 9); a
+     **fresh** fact checker (or solver) checks every claim in the changed text, **including any wording a checker
+     suggested**: a checker's suggested wording is new content and gets checked like the maker's (the q21 lesson: a
+     recheck suggested "Hayes pulling the last federal troops out of the South", the maker used it word for word, and it
+     was a myth). Wilco runs again (step 7). A new FIX in round 4 gets one more maker round and recheck (round 5); then
+     stop, even if a FIX is still open, and send the preview as in 2.
+  2. **Send the preview as it is**, with every open FIX **listed first** in the audit report (`audit.notes`' first line:
+     "Open for the teacher: …", what is wrong and what would fix it) and in the message that goes with the preview.
+- **The extra rounds are logged and priced like the others:** every session's own minutes, tokens and dollars in `log`
+  with its `round` (4 or 5), the lead's steps as "not measured", `fixed` set on each finding the round 4–5 rechecks
+  confirm, and the totals give the extra rounds on their own as well as in the order's total.
+- **The auditor reviews why the limit was hit** (step 14): which finding kept coming back, which brief let it through,
+  and whether a check or a brief should change so the next order finishes in three rounds.
+
 
 ## 10. Reporter
 
