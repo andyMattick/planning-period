@@ -12,6 +12,7 @@
      5c. checks/puzzles.mjs catches broken copies of samples/_cap-games (a bad grid, a word twice, a non-unique puzzle…).
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
+     9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -259,6 +260,31 @@ else {
       if (r.status === 1) ok(`checks/apps.mjs catches ${what}`); else fail(`checks/apps.mjs did not catch ${what} (exit ${r.status}):\n${r.stdout}${r.stderr}`);
     });
     rmSync(tmp, { recursive: true, force: true });
+  }
+}
+
+/* 9. practice games (docs/KINDS-PRACTICEGAMES.md): each fixture under samples/_cap-practicegame/ passes the key and
+   test-wise checks and checks/practicegames.mjs (content and a browser smoke test, plus a plane-grid variant), and
+   broken copies of them fail it (--self-test) */
+{
+  const PG = join(ROOT, 'checks', 'practicegames.mjs'), CAPG = join(ROOT, 'samples/_cap-practicegame');
+  const nested = existsSync(CAPG) ? readdirSync(CAPG).map((d) => join('samples/_cap-practicegame', d, 'pack.json')).filter((p) => existsSync(join(ROOT, p))) : [];
+  const gamePacks = [...packs, ...nested].filter((p) => { try { return readJSON(p).documents.some((d) => (d.kind || d.item) === 'practicegame'); } catch { return false; } });
+  for (const p of nested) for (const s of ['keys.mjs', 'test-wise.mjs']) { const r = run(s, join(ROOT, p)); if (r.status === 0) ok(`${p} passes checks/${s}`); else fail(`${p} fails checks/${s}:\n${r.stdout}${r.stderr}`); }
+  const tmp = mkdtempSync(join(tmpdir(), 'pp-pg-'));
+  const grid = nested.find((p) => p.includes('grid'));
+  if (grid) { const p = readJSON(grid); p.documents[0].settings = { mode: 'plane', range: 4 }; const f = join(tmp, 'plane-grid.json'); writeFileSync(f, JSON.stringify(p)); gamePacks.push(f); }
+  for (const p of gamePacks) {
+    const r = spawnSync(process.execPath, [PG, p.startsWith('/') ? p : join(ROOT, p)], { cwd: ROOT, encoding: 'utf8', timeout: 600000 });
+    const skipped = /⏭️/.test(r.stdout || ''), label = p.startsWith('/') ? `${grid} as a coordinate-plane grid` : p;
+    if (r.status === 0) (skipped ? skip : ok)(`${label} passes checks/practicegames.mjs${skipped ? ' (content only: Playwright not here)' : ' (content and browser)'}`);
+    else fail(`${label} fails checks/practicegames.mjs:\n${r.stdout}${r.stderr}`);
+  }
+  rmSync(tmp, { recursive: true, force: true });
+  if (nested.length) {
+    const r = spawnSync(process.execPath, [PG, '--self-test'], { cwd: ROOT, encoding: 'utf8' });
+    const n = (r.stdout.match(/✓ catches/g) || []).length;
+    if (r.status === 0) ok(`checks/practicegames.mjs catches all ${n} broken copies of samples/_cap-practicegame`); else fail(`checks/practicegames.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
   }
 }
 
