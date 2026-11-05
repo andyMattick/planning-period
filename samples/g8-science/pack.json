@@ -1,0 +1,2137 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g8-science",
+  "date": "2026-11-05",
+  "order": {
+    "teacher": "Mr. Okafor (made-up sample)",
+    "grade": "8",
+    "subject": "science",
+    "topic": "Chemical reactions and conservation of mass",
+    "items": [
+      "notes",
+      "slides",
+      "quiz"
+    ],
+    "extras": [
+      "styleSetup"
+    ],
+    "requests": "Follow my lesson notes. I never want a key or explanation that says mass disappears or that gas has no mass. Use the counting table I use for atoms.",
+    "itemRequests": {
+      "notes": "Fill-in blanks like my old notes, with a word bank and a Stop and think box per section.",
+      "slides": "One slide per big idea, plus a closed vs. open flask slide. Speaker notes should tell me what to ask the class.",
+      "quiz": "10 questions, my Know it / Use it / Explain it parts. At least one balancing question and one open vs. closed mass problem. Include a picture with no answer labels."
+    },
+    "quantities": {
+      "notes": 1,
+      "slides": 1,
+      "quiz": 1
+    },
+    "sources": [
+      "unit4-lesson3-notes.md"
+    ],
+    "styleExamples": [
+      "unit3-density-quiz-A.md",
+      "unit3-guided-notes-states.md"
+    ]
+  },
+  "style": {
+    "notes": [
+      "Name, Date and Period lines across the top, then the title and a \"Science 8 · Mr. Okafor\" line",
+      "Bold directions in one or two short sentences right under the title",
+      "Questions numbered 1), 2), 3) straight through the whole document, across parts",
+      "Multiple-choice letters in parentheses: (A) (B) (C) (D); circle the letter",
+      "Quizzes split into three parts: Part 1 · Know it, Part 2 · Use it, Part 3 · Explain it; Explain it asks for complete sentences and names the words to use in bold",
+      "Guided notes: ⭐ Key idea headings, short fill-in sentences with one blank each, a 🤔 Stop and think question, and a word bank used \"only if you get stuck\"",
+      "Plain, short grade 8 sentences; everyday contexts (a rubber duck, popcorn, a named student who makes a claim to check)",
+      "Teacher key: the letter, a short reason in parentheses for math steps, and \"Look for:\" points for written answers"
+    ],
+    "font": "Arial",
+    "accent": "#2b6cb0",
+    "layout": {
+      "nameBox": false,
+      "boldDirections": true,
+      "fields": [
+        "Name",
+        "Date",
+        "Period"
+      ],
+      "numbering": "1)",
+      "choiceStyle": "(A)",
+      "workLines": 3
+    }
+  },
+  "documents": [
+    {
+      "item": "notes",
+      "title": "Guided Notes: Chemical Reactions and Conservation of Mass",
+      "directions": "Fill in each blank as we go. Use the word bank only if you get stuck.",
+      "sections": [
+        {
+          "heading": "⭐ Key idea 1: Atoms are rearranged",
+          "directions": "Word bank: rearranged · created · destroyed · after · somewhere",
+          "questions": [
+            {
+              "id": "n1",
+              "level": 1,
+              "skill": "conservation of mass",
+              "type": "short",
+              "prompt": "In a chemical reaction, atoms are ______________ into new substances.",
+              "answer": "rearranged",
+              "accept": [
+                "rearranged",
+                "re-arranged",
+                "rearrange"
+              ],
+              "why": "Atoms trade partners to make new substances."
+            },
+            {
+              "id": "n2",
+              "level": 1,
+              "skill": "conservation of mass",
+              "type": "short",
+              "prompt": "No atoms are ______________ and none are ______________.",
+              "answer": "created; destroyed",
+              "accept": [
+                "created, destroyed",
+                "created and destroyed",
+                "created / destroyed",
+                "made; destroyed",
+                "created; lost",
+                "destroyed; created",
+                "destroyed, created",
+                "destroyed and created",
+                "destroyed / created",
+                "destroyed; made",
+                "lost; created"
+              ],
+              "why": "Either order of the two words is fine: \"created ... destroyed\" or \"destroyed ... created\"."
+            },
+            {
+              "id": "n3",
+              "level": 1,
+              "skill": "conservation of mass",
+              "type": "short",
+              "prompt": "So the total mass before a reaction equals the total mass ______________ it.",
+              "answer": "after",
+              "accept": [
+                "after"
+              ],
+              "why": "Same atoms before and after, so the same mass."
+            },
+            {
+              "id": "n4",
+              "level": 1,
+              "skill": "conservation of mass",
+              "type": "short",
+              "prompt": "When it looks like mass changed, the atoms went ______________: something got in or got out (usually a gas).",
+              "answer": "somewhere",
+              "accept": [
+                "somewhere",
+                "somewhere else"
+              ],
+              "why": "Mr. Okafor's rule: we say \"the atoms went somewhere.\""
+            },
+            {
+              "id": "n5",
+              "level": 2,
+              "skill": "conservation of mass",
+              "type": "open",
+              "prompt": "🤔 Stop and think: A friend says, \"When the candle burned, some of the mass just disappeared.\" How would you fix that sentence? Use the word atoms.",
+              "answer": "The atoms did not disappear; they went somewhere. They joined into new substances, like gases that went into the air, so the mass is still there, just not on the table.",
+              "why": "Look for: atoms named, the idea that they went somewhere (into the air as gas), never \"the mass disappeared.\"",
+              "space": 3
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 2: Reactants and products",
+          "directions": "Word bank: reactants · products · left · right · yields",
+          "questions": [
+            {
+              "id": "n6",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "short",
+              "prompt": "______________ are the substances you start with.",
+              "answer": "reactants",
+              "accept": [
+                "reactants",
+                "reactant",
+                "the reactants"
+              ],
+              "why": "Reactants go in."
+            },
+            {
+              "id": "n7",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "short",
+              "prompt": "They are written on the ______________ side of a chemical equation.",
+              "answer": "left",
+              "accept": [
+                "left",
+                "left side",
+                "the left"
+              ],
+              "why": "\"Left is what we start with.\""
+            },
+            {
+              "id": "n8",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "short",
+              "prompt": "______________ are the new substances that form. They are written on the ______________ side.",
+              "answer": "products; right",
+              "accept": [
+                "products, right",
+                "products and right",
+                "product; right",
+                "products / right"
+              ],
+              "why": "Products come out, on the right of the arrow."
+            },
+            {
+              "id": "n9",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "short",
+              "prompt": "The arrow (→) means \"react to form\" or \"______________.\"",
+              "answer": "yields",
+              "accept": [
+                "yields",
+                "yield",
+                "makes",
+                "produces"
+              ],
+              "why": "A plus sign separates two reactants or two products."
+            },
+            {
+              "id": "n10",
+              "level": 2,
+              "skill": "reactants and products",
+              "type": "open",
+              "prompt": "🤔 Stop and think: In 2H₂ + O₂ → 2H₂O, name the reactants and the product. How do you know which is which?",
+              "answer": "Reactants: H₂ (hydrogen) and O₂ (oxygen). Product: H₂O (water). The reactants are on the left of the arrow and the product is on the right.",
+              "why": "Look for: H₂ and O₂ as reactants, H₂O as the product, and \"left / right of the arrow\" as the reason.",
+              "space": 3
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 3: Signs of a chemical change",
+          "directions": "Word bank: new · precipitate · color · temperature · proof · physical",
+          "questions": [
+            {
+              "id": "n11",
+              "level": 1,
+              "skill": "signs of a chemical change",
+              "type": "short",
+              "prompt": "A chemical change makes a ______________ substance.",
+              "answer": "new",
+              "accept": [
+                "new",
+                "different"
+              ],
+              "why": "That is the test for every example: is there a new substance?"
+            },
+            {
+              "id": "n12",
+              "level": 1,
+              "skill": "signs of a chemical change",
+              "type": "short",
+              "prompt": "A solid that forms when two clear liquids are mixed is called a ______________.",
+              "answer": "precipitate",
+              "accept": [
+                "precipitate",
+                "a precipitate"
+              ],
+              "why": "Clue 2 on the list."
+            },
+            {
+              "id": "n13",
+              "level": 1,
+              "skill": "signs of a chemical change",
+              "type": "short",
+              "prompt": "Other clues: a gas forms, an unexpected ______________ change, a ______________ change without outside heating or cooling, or light or a new odor.",
+              "answer": "color; temperature",
+              "accept": [
+                "color, temperature",
+                "colour; temperature",
+                "color and temperature",
+                "color / temperature"
+              ],
+              "why": "The five clues: gas, precipitate, color, temperature, light or odor."
+            },
+            {
+              "id": "n14",
+              "level": 1,
+              "skill": "signs of a chemical change",
+              "type": "short",
+              "prompt": "One clue alone is not ______________.",
+              "answer": "proof",
+              "accept": [
+                "proof",
+                "enough",
+                "enough proof"
+              ],
+              "why": "Bubbles from boiling water are a clue, but no new substance forms."
+            },
+            {
+              "id": "n15",
+              "level": 1,
+              "skill": "physical vs. chemical change",
+              "type": "short",
+              "prompt": "Boiling water, melting ice and crushing a can are ______________ changes, because no new substance forms.",
+              "answer": "physical",
+              "accept": [
+                "physical"
+              ],
+              "why": "Changes of state and changes of shape are physical."
+            },
+            {
+              "id": "n16",
+              "level": 2,
+              "skill": "physical vs. chemical change",
+              "type": "open",
+              "prompt": "🤔 Stop and think: Water boiling on the stove makes bubbles. Is it a chemical change? Explain.",
+              "answer": "No. It is a physical change (a change of state). The bubbles are still water, just as a gas; no new substance forms.",
+              "why": "Look for: \"physical\", \"no new substance\", and that bubbles alone are not proof.",
+              "space": 3
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 4: Reading a formula and counting atoms",
+          "directions": "Word bank: subscript · coefficient · one · everything · table",
+          "questions": [
+            {
+              "id": "n17",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "The ______________ is the small number after a symbol. It tells how many atoms of that element are in one molecule.",
+              "answer": "subscript",
+              "accept": [
+                "subscript",
+                "a subscript",
+                "the subscript"
+              ],
+              "why": "H₂O: the small 2 means 2 hydrogen atoms."
+            },
+            {
+              "id": "n18",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "No subscript means ______________ atom.",
+              "answer": "one",
+              "accept": [
+                "one",
+                "1"
+              ],
+              "why": "The O in H₂O has no subscript, so there is 1 oxygen atom."
+            },
+            {
+              "id": "n19",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "The ______________ is the big number in front. It tells how many molecules.",
+              "answer": "coefficient",
+              "accept": [
+                "coefficient",
+                "a coefficient",
+                "the coefficient"
+              ],
+              "why": "3H₂O means 3 molecules of water."
+            },
+            {
+              "id": "n20",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "In Ca(OH)₂, the 2 after the parentheses applies to ______________ inside them.",
+              "answer": "everything",
+              "accept": [
+                "everything",
+                "all",
+                "all of it",
+                "each atom",
+                "all the atoms",
+                "all atoms",
+                "all of the atoms"
+              ],
+              "why": "Ca(OH)₂: 1 Ca, 2 O, 2 H."
+            },
+            {
+              "id": "n21",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "We always count atoms with a ______________: element, reactant side, product side.",
+              "answer": "table",
+              "accept": [
+                "table",
+                "counting table",
+                "a table",
+                "chart"
+              ],
+              "why": "Mr. Okafor's counting table."
+            },
+            {
+              "id": "n22",
+              "level": 2,
+              "skill": "counting atoms",
+              "type": "open",
+              "prompt": "🤔 Stop and think: Fill in the counting table for 3H₂O (just this one formula, in the \"Reactant side\" column). Show the multiplying.",
+              "answer": "H: 3 × 2 = 6 hydrogen atoms. O: 3 × 1 = 3 oxygen atoms.",
+              "why": "Look for: coefficient times subscript for each element; 6 H and 3 O.",
+              "space": 3,
+              "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 126\" width=\"360\" height=\"126\" role=\"img\" aria-label=\"Empty atom counting table: H, O\" font-family=\"Arial, sans-serif\"><text x=\"180\" y=\"22\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">3H₂O</text><rect x=\"0.5\" y=\"34\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"64\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"84\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">H</text><rect x=\"0.5\" y=\"94\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"114\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">O</text><line x1=\"100\" y1=\"34\" x2=\"100\" y2=\"124\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"124\" stroke=\"#1f2933\"/></svg>"
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 5: Balancing simple equations",
+          "directions": "Word bank: same · coefficients · subscript · recount · conservation",
+          "questions": [
+            {
+              "id": "n23",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "A balanced equation has the ______________ number of atoms of each element on both sides.",
+              "answer": "same",
+              "accept": [
+                "same",
+                "equal"
+              ],
+              "why": "Atoms, not molecules: every row of the table matches."
+            },
+            {
+              "id": "n24",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "A balanced equation is ______________ of mass written in symbols.",
+              "answer": "conservation",
+              "accept": [
+                "conservation"
+              ],
+              "why": "Same atoms on both sides means the same mass."
+            },
+            {
+              "id": "n25",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "Balance by changing ______________ only.",
+              "answer": "coefficients",
+              "accept": [
+                "coefficients",
+                "coefficient",
+                "the coefficients",
+                "big numbers in front"
+              ],
+              "why": "Coefficients change how many molecules, not what the substance is."
+            },
+            {
+              "id": "n26",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "Never change a ______________: that changes the substance (H₂O₂ is hydrogen peroxide, not water).",
+              "answer": "subscript",
+              "accept": [
+                "subscript",
+                "subscripts",
+                "small number"
+              ],
+              "why": "The most common balancing mistake."
+            },
+            {
+              "id": "n27",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "Steps: count atoms in a table → pick an element that doesn't match → change a coefficient → ______________ everything → repeat until every row matches.",
+              "answer": "recount",
+              "accept": [
+                "recount",
+                "re-count",
+                "count again",
+                "count"
+              ],
+              "why": "Changing one coefficient can change more than one row, so recount all of them."
+            },
+            {
+              "id": "n28",
+              "level": 2,
+              "skill": "balancing equations",
+              "type": "open",
+              "prompt": "🤔 Stop and think: Balance N₂ + H₂ → NH₃ by writing coefficients. Use the counting table to check it.",
+              "answer": "N₂ + 3H₂ → 2NH₃. N: 2 on the reactant side, 2 on the product side. H: 6 on the reactant side, 6 on the product side.",
+              "why": "Look for: coefficients only (no subscripts changed), 1, 3, 2, and a table where both rows match.",
+              "space": 3,
+              "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 126\" width=\"360\" height=\"126\" role=\"img\" aria-label=\"Empty atom counting table: N, H\" font-family=\"Arial, sans-serif\"><text x=\"180\" y=\"22\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">N₂ + H₂ → NH₃</text><rect x=\"0.5\" y=\"34\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"64\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"84\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">N</text><rect x=\"0.5\" y=\"94\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"114\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">H</text><line x1=\"100\" y1=\"34\" x2=\"100\" y2=\"124\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"124\" stroke=\"#1f2933\"/></svg>"
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 6: Closed and open systems",
+          "directions": "Word bank: closed · open · escape · more · same",
+          "questions": [
+            {
+              "id": "n29",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "A ______________ system lets nothing in or out, like a sealed flask or a zip bag.",
+              "answer": "closed",
+              "accept": [
+                "closed"
+              ],
+              "why": "Nothing in, nothing out: the balance reading stays the same."
+            },
+            {
+              "id": "n30",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "In a closed system, the mass on the balance stays the ______________ before and after the reaction.",
+              "answer": "same",
+              "accept": [
+                "same",
+                "equal",
+                "the same"
+              ],
+              "why": "Zip bag lab: 150.0 g before, 150.0 g after."
+            },
+            {
+              "id": "n31",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "An ______________ system lets matter in or out, like an open cup.",
+              "answer": "open",
+              "accept": [
+                "open"
+              ],
+              "why": "Gas can leave, or a gas from the air can join in."
+            },
+            {
+              "id": "n32",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "In an open cup, a gas product can ______________, so the balance shows less mass after.",
+              "answer": "escape",
+              "accept": [
+                "escape",
+                "leave",
+                "get out"
+              ],
+              "why": "Open cup lab: the CO₂ gas left the cup."
+            },
+            {
+              "id": "n33",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "When steel wool burns on a balance, iron atoms join with oxygen atoms from the air. The balance shows ______________ mass after the burning than before.",
+              "answer": "more",
+              "accept": [
+                "more",
+                "greater",
+                "a greater",
+                "larger",
+                "a larger",
+                "bigger",
+                "a bigger",
+                "higher"
+              ],
+              "why": "Mass of steel wool + mass of oxygen used = mass of the iron oxide made."
+            },
+            {
+              "id": "n34",
+              "level": 2,
+              "skill": "closed and open systems",
+              "type": "open",
+              "prompt": "🤔 Stop and think: Baking soda and vinegar in an open cup: 150.0 g before, 148.9 g after. What mass of gas escaped, and where did it go?",
+              "answer": "150.0 g − 148.9 g = 1.1 g of carbon dioxide gas. It left the cup and went into the air. The atoms went somewhere; the mass did not disappear.",
+              "why": "Look for: 1.1 g, CO₂ (a gas) leaving the open cup, and gas having mass.",
+              "space": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "slides",
+      "title": "Chemical Reactions and Conservation of Mass",
+      "notes": "Ask: \"If you burn a piece of paper, where does it go?\" Take three answers and write them on the board without judging. We come back to them at the end. Today's goal: be able to say where the atoms went.",
+      "slides": [
+        {
+          "title": "Big idea: atoms are rearranged",
+          "bullets": [
+            "A chemical reaction rearranges atoms into new substances",
+            "No atoms are created and none are destroyed",
+            "Total mass before = total mass after",
+            "If the mass seems to change, something got in or got out (usually a gas)"
+          ],
+          "notes": "Ask: \"If no atoms are made or lost, what should happen to the mass?\" Push for \"it stays the same.\" Then ask: \"So when a balance shows a different number, what must have happened?\" Listen for \"something got in or out.\" Model the sentence: \"The atoms went somewhere.\" Correct any \"the mass disappeared\" on the spot.",
+          "figure": null
+        },
+        {
+          "title": "Reactants and products",
+          "bullets": [
+            "Reactants: what you start with (left side)",
+            "Products: the new substances that form (right side)",
+            "The arrow → means \"react to form\" or \"yields\"",
+            "A plus sign separates two reactants or two products",
+            "Board example: 2H₂ + O₂ → 2H₂O"
+          ],
+          "notes": "Point at 2H₂ + O₂ → 2H₂O. Ask: \"Which side is what we start with?\" (left). \"Name the reactants.\" (H₂ and O₂.) \"Name the product.\" (H₂O.) Then say it in words: \"Hydrogen gas and oxygen gas react to form water,\" and ask a student to point to each substance. Students mix these up in word equations, so have the class say \"left is what we start with\" together.",
+          "figure": null
+        },
+        {
+          "title": "Signs of a chemical change",
+          "bullets": [
+            "A chemical change makes a new substance",
+            "Clues: a new gas (bubbles), a precipitate, an unexpected color change, a temperature change on its own, light or a new odor",
+            "One clue alone is not proof",
+            "Physical changes: ice melting, sugar dissolving, cutting paper, crushing a can",
+            "Chemical changes: rusting iron, baking a cake, burning wood, a glow stick lighting up"
+          ],
+          "notes": "Ask: \"Boiling water makes bubbles. Is that a chemical change?\" Let them argue, then ask: \"Is there a new substance?\" (No, it is still water: a change of state.) Then go down the lists: \"Thumbs up for chemical, thumbs down for physical: sugar dissolving... a glow stick lighting up...\" Ask a student to name which clue a glow stick shows (light).",
+          "figure": null
+        },
+        {
+          "title": "Reading a formula and counting atoms",
+          "bullets": [
+            "Subscript (small number after a symbol): atoms of that element in one molecule",
+            "No subscript means 1",
+            "Coefficient (big number in front): how many molecules",
+            "Parentheses: Ca(OH)₂ has 1 Ca, 2 O, 2 H",
+            "Always count with the table"
+          ],
+          "notes": "Write H₂O and ask: \"How many hydrogen atoms? How many oxygen?\" (2 and 1.) Then write 3H₂O and ask: \"Now how many of each?\" Have them fill in the table on their notes before you show 6 H and 3 O. Then ask: \"In Ca(OH)₂, what does the 2 apply to?\" (everything inside the parentheses).",
+          "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 100\" width=\"360\" height=\"100\" role=\"img\" aria-label=\"Empty atom counting table: H, O\" font-family=\"Arial, sans-serif\"><rect x=\"0.5\" y=\"8\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"28\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"28\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"28\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"38\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"58\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">H</text><rect x=\"0.5\" y=\"68\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"88\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">O</text><line x1=\"100\" y1=\"8\" x2=\"100\" y2=\"98\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"8\" x2=\"230\" y2=\"98\" stroke=\"#1f2933\"/></svg>"
+        },
+        {
+          "title": "Balancing simple equations",
+          "bullets": [
+            "Balanced: the same number of atoms of each element on both sides",
+            "That is conservation of mass in symbols",
+            "Change coefficients only, never subscripts",
+            "Steps: table → find a row that doesn't match → change a coefficient → recount everything → repeat",
+            "Practice: 2Mg + O₂ → 2MgO, CH₄ + 2O₂ → CO₂ + 2H₂O, N₂ + 3H₂ → 2NH₃, challenge: 4Fe + 3O₂ → 2Fe₂O₃"
+          ],
+          "notes": "Start with H₂ + O₂ → H₂O unbalanced. Ask: \"Which row of the table doesn't match?\" (O.) \"Someone wants to write H₂O₂. Why can't we?\" (That is hydrogen peroxide, a different substance.) Then ask: \"2H₂ + O₂ → 2H₂O has 3 molecules on the left and 2 on the right. Is it balanced?\" (Yes: count atoms, not molecules.) Watch for anyone writing a 2 as a subscript and catch it every time.",
+          "figure": null
+        },
+        {
+          "title": "Closed vs. open systems",
+          "bullets": [
+            "Closed system: nothing gets in or out (sealed flask, zip bag, balloon over a bottle); the mass stays the same",
+            "Open system: matter can get in or out (open cup or beaker)",
+            "A gas product can escape, so the balance can show less",
+            "A gas from the air can join a product, so the balance can show more",
+            "Steel wool burning gets heavier: iron joins with oxygen from the air"
+          ],
+          "notes": "Ask: \"In our lab, the zip bag puffed up. What is inside it?\" (The CO₂ gas.) \"Why did the open cup lose mass but the bag didn't?\" (The gas left the cup; it was trapped in the bag.) Then ask: \"Steel wool gets heavier when it burns. Where did the extra mass come from?\" (Oxygen atoms from the air.) Ask a student to say the steel wool sentence: steel wool + oxygen used = iron oxide made.",
+          "figure": null
+        },
+        {
+          "title": "Closed vs. open flask",
+          "bullets": [
+            "Both flasks start at the same mass and hold the same reaction, which makes a gas",
+            "Flask 1 is open; Flask 2 has a balloon stretched over the top",
+            "Predict each balance reading after the reaction",
+            "Explain where the gas went in each flask"
+          ],
+          "notes": "Ask: \"Predict: after the reaction, will Flask 1 read more, less or the same? Flask 2?\" Have them write the prediction first, then share with a partner. Ask: \"What will the balloon on Flask 2 do?\" (Puff up, because the gas is trapped.) Then: \"How could we find the mass of the gas that left Flask 1?\" (mass before − mass after). Listen for \"the gas went into the air,\" and correct \"the gas has no mass\" right away: gas has mass.",
+          "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 256\" width=\"400\" height=\"256\" role=\"img\" aria-label=\"Two flasks on balances before a reaction, both reading 150.0 g: flask 1 is open, flask 2 has a flat balloon stretched over the top\" font-family=\"Arial, sans-serif\"><rect x=\"20\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"65\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"100\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">150.0 g</text><rect x=\"40\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 88 70 L 88 112 L 55 180 L 145 180 L 112 112 L 112 70\" fill=\"none\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><path d=\"M 70 150 L 57 178 L 143 178 L 130 150 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"100\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Flask 1: open</text><rect x=\"220\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"265\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"300\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">150.0 g</text><rect x=\"240\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 288 70 L 288 112 L 255 180 L 345 180 L 312 112 L 312 70\" fill=\"none\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><path d=\"M 270 150 L 257 178 L 343 178 L 330 150 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><path d=\"M 286 72 Q 286 60 300 58 Q 314 60 314 72 Z\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><text x=\"300\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Flask 2: balloon on top</text></svg>"
+        },
+        {
+          "title": "Mass problems",
+          "bullets": [
+            "Mass of reactants = mass of products",
+            "10.0 g of A + 6.0 g of B, one product: 16.0 g of product",
+            "Gas escaping an open container: mass of gas = mass before − mass after",
+            "We measure mass in grams on a balance (mass, not weight)"
+          ],
+          "notes": "Ask: \"If 10.0 g of A reacts with 6.0 g of B and only one product forms, how much product?\" (16.0 g.) Then: \"In the open cup, 150.0 g became 148.9 g. How much CO₂ left?\" (1.1 g.) Ask: \"What do we measure on a balance: mass or weight?\" (Mass, in grams.) Close by going back to the paper question from the start: \"Where did the burned paper go?\"",
+          "figure": null
+        },
+        {
+          "title": "Watch out for these mistakes",
+          "bullets": [
+            "\"The mass disappeared\": no, the atoms went somewhere. Gas has mass.",
+            "Changing a subscript to balance changes the substance",
+            "Balanced means the same atoms on each side, not the same number of molecules",
+            "Not all bubbles mean a chemical change",
+            "In this unit we say mass, measured in grams"
+          ],
+          "notes": "Read each mistake and ask: \"What would you say to a friend who wrote this?\" Call on a different student for each one. For the molecules one, ask: \"2H₂ + O₂ → 2H₂O: 3 molecules become 2. Balanced or not? Prove it with the table.\"",
+          "figure": null
+        }
+      ]
+    },
+    {
+      "item": "quiz",
+      "title": "Chemical Reactions Quiz",
+      "directions": "Read each question all the way through. Circle the letter of the best answer. For the last part, write in complete sentences.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "sections": [
+        {
+          "heading": "Part 1 · Know it",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "mc",
+              "prompt": {
+                "A": "In the equation CH₄ + 2O₂ → CO₂ + 2H₂O, which substances are the products?",
+                "B": "Magnesium reacts with oxygen to form magnesium oxide. Which list names the reactants?"
+              },
+              "choices": {
+                "A": [
+                  "CH₄ and O₂",
+                  "O₂ only",
+                  "CO₂ and H₂O",
+                  "all four substances"
+                ],
+                "B": [
+                  "magnesium and oxygen",
+                  "oxygen and magnesium oxide",
+                  "only the magnesium oxide",
+                  "magnesium and magnesium oxide"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 0
+              },
+              "why": {
+                "A": "Products are the new substances, written on the right of the arrow: CO₂ and H₂O.",
+                "B": "Reactants are what you start with: magnesium and oxygen. Magnesium oxide is the product."
+              }
+            },
+            {
+              "id": "q2",
+              "level": 1,
+              "skill": "subscripts and coefficients",
+              "type": "mc",
+              "prompt": {
+                "A": "In 3H₂O, what does the 3 tell you?",
+                "B": "In CO₂, what does the small 2 tell you?"
+              },
+              "choices": {
+                "A": [
+                  "There are 3 molecules of water.",
+                  "Each molecule has 3 hydrogen atoms.",
+                  "Each molecule has 3 oxygen atoms.",
+                  "The water has a mass of 3 grams."
+                ],
+                "B": [
+                  "There are 2 molecules of carbon dioxide in all.",
+                  "The carbon atom is counted two times.",
+                  "It took 2 grams of oxygen.",
+                  "One molecule holds 2 oxygen atoms."
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 3
+              },
+              "why": {
+                "A": "The big number in front is a coefficient: it tells how many molecules (3 water molecules).",
+                "B": "The small number after a symbol is a subscript: 2 oxygen atoms in one molecule of CO₂."
+              }
+            },
+            {
+              "id": "q3",
+              "level": 1,
+              "skill": "physical vs. chemical change",
+              "type": "mc",
+              "prompt": {
+                "A": "Which of these is a chemical change?",
+                "B": "Which of these is a physical change?"
+              },
+              "choices": {
+                "A": [
+                  "Ice melting into water",
+                  "Sugar dissolving in tea",
+                  "A glow stick lighting up",
+                  "Crushing an empty can"
+                ],
+                "B": [
+                  "Iron rusting on a bike",
+                  "Cutting paper into strips",
+                  "A cake baking in the oven",
+                  "Wood burning in a fire"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 1
+              },
+              "why": {
+                "A": "A glow stick gives off light because a new substance forms. Melting, dissolving and crushing make no new substance.",
+                "B": "Cutting paper only changes its shape; it is still paper. Rusting, baking and burning make new substances."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Part 2 · Use it",
+          "questions": [
+            {
+              "id": "q4",
+              "level": 2,
+              "skill": "counting atoms",
+              "type": "mc",
+              "prompt": {
+                "A": "Use the counting table. How many atoms of each element are in 2Ca(OH)₂? Each answer lists Ca, O, H in that order.",
+                "B": "Use the counting table. How many atoms of each element are in 2Fe₂O₃? Each answer lists Fe, O in that order."
+              },
+              "figure": {
+                "A": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 156\" width=\"360\" height=\"156\" role=\"img\" aria-label=\"Empty atom counting table: Ca, O, H\" font-family=\"Arial, sans-serif\"><text x=\"180\" y=\"22\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">2Ca(OH)₂</text><rect x=\"0.5\" y=\"34\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"64\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"84\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Ca</text><rect x=\"0.5\" y=\"94\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"114\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">O</text><rect x=\"0.5\" y=\"124\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"144\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">H</text><line x1=\"100\" y1=\"34\" x2=\"100\" y2=\"154\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"154\" stroke=\"#1f2933\"/></svg>",
+                "B": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 126\" width=\"360\" height=\"126\" role=\"img\" aria-label=\"Empty atom counting table: Fe, O\" font-family=\"Arial, sans-serif\"><text x=\"180\" y=\"22\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">2Fe₂O₃</text><rect x=\"0.5\" y=\"34\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"64\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"84\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Fe</text><rect x=\"0.5\" y=\"94\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"114\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">O</text><line x1=\"100\" y1=\"34\" x2=\"100\" y2=\"124\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"124\" stroke=\"#1f2933\"/></svg>"
+              },
+              "choices": {
+                "A": [
+                  "1, 2, 2",
+                  "2, 2, 2",
+                  "4, 8, 8",
+                  "2, 4, 4"
+                ],
+                "B": [
+                  "4, 6",
+                  "2, 3",
+                  "4, 3",
+                  "4, 12"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 0
+              },
+              "why": {
+                "A": "The coefficient 2 multiplies everything: Ca 2 × 1 = 2; the parentheses hold O and H, each 2 × 2 = 4.",
+                "B": "Fe: 2 × 2 = 4. O: 2 × 3 = 6."
+              }
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "balancing equations",
+              "type": "mc",
+              "prompt": {
+                "A": "Which equation is balanced?",
+                "B": "Which equation for rust is balanced?"
+              },
+              "choices": {
+                "A": [
+                  "Mg + O₂ → MgO",
+                  "2Mg + O₂ → 2MgO",
+                  "2Mg + 2O₂ → 4MgO",
+                  "Mg + 2O₂ → MgO"
+                ],
+                "B": [
+                  "2Fe + 3O₂ → 2Fe₂O₃",
+                  "4Fe + O₂ → 2Fe₂O₃",
+                  "4Fe + 3O₂ → 2Fe₂O₃",
+                  "2Fe + 3O₂ → Fe₂O₃"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 2
+              },
+              "why": {
+                "A": "2Mg + O₂ → 2MgO: Mg 2 and 2, O 2 and 2. Every row of the table matches.",
+                "B": "4Fe + 3O₂ → 2Fe₂O₃: Fe 4 and 4, O 6 and 6. Every row of the table matches."
+              }
+            },
+            {
+              "id": "q6",
+              "level": 2,
+              "skill": "mass problems",
+              "type": "numeric",
+              "prompt": {
+                "A": "In a sealed flask, 12.0 g of substance A reacts with 5.0 g of substance B. Only one product forms. What is the mass of the product, in grams?",
+                "B": "In a sealed zip bag, 25.0 g of substance C reacts with 9.5 g of substance D. Only one product forms. What is the mass of the product, in grams?"
+              },
+              "answer": {
+                "A": "17.0",
+                "B": "34.5"
+              },
+              "accept": {
+                "A": [
+                  "17",
+                  "17 g",
+                  "17.0 g"
+                ],
+                "B": [
+                  "34.5 g"
+                ]
+              },
+              "why": {
+                "A": "Mass of reactants = mass of products: 12.0 g + 5.0 g = 17.0 g.",
+                "B": "Mass of reactants = mass of products: 25.0 g + 9.5 g = 34.5 g."
+              },
+              "space": 2
+            },
+            {
+              "id": "q7",
+              "level": 3,
+              "skill": "closed and open systems",
+              "type": "mc",
+              "prompt": {
+                "A": "Baking soda and vinegar react in the open cup in the picture. Predict the balance reading after the fizzing stops. Then choose a change to the setup that would make the after reading match the before reading.",
+                "B": "Baking soda and vinegar react in the sealed zip bag in the picture. Predict the balance reading after the fizzing stops. Then choose a change to the setup that would make the after reading lower than the before reading."
+              },
+              "figure": {
+                "A": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 256\" width=\"400\" height=\"256\" role=\"img\" aria-label=\"An open cup of baking soda and vinegar on a balance: 150.0 g before mixing, an unknown reading after the fizzing stops\" font-family=\"Arial, sans-serif\"><rect x=\"20\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"65\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"100\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">150.0 g</text><rect x=\"40\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 62 95 L 70 182 L 130 182 L 138 95\" fill=\"none\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><path d=\"M 67 140 L 71 180 L 129 180 L 133 140 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"100\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Before mixing</text><rect x=\"220\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"265\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"300\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">? g</text><rect x=\"240\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 262 95 L 270 182 L 330 182 L 338 95\" fill=\"none\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><path d=\"M 267 140 L 271 180 L 329 180 L 333 140 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"300\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">After the fizzing stops</text></svg>",
+                "B": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 256\" width=\"400\" height=\"256\" role=\"img\" aria-label=\"A sealed zip bag of baking soda and vinegar on a balance: flat at 150.0 g before mixing, puffed up with an unknown reading after the fizzing stops\" font-family=\"Arial, sans-serif\"><rect x=\"20\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"65\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"100\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">150.0 g</text><rect x=\"40\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 50 180 Q 46 160 54 146 L 146 146 Q 154 160 150 180 Z\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><rect x=\"52\" y=\"140\" width=\"96\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 60 178 Q 100 160 140 178 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"100\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Before mixing</text><rect x=\"220\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"265\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"300\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">? g</text><rect x=\"240\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 250 180 Q 234 120 254 78 L 346 78 Q 366 120 350 180 Z\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><rect x=\"252\" y=\"72\" width=\"96\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 260 178 Q 300 150 340 178 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"300\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">After the fizzing stops</text></svg>"
+              },
+              "choices": {
+                "A": [
+                  "150.0 g; no change, since the cup keeps every atom",
+                  "Less than 150.0 g; add the vinegar slowly",
+                  "More than 150.0 g; set a loose lid with holes on top",
+                  "Less than 150.0 g; stretch a balloon over the cup"
+                ],
+                "B": [
+                  "Less than 150.0 g; squeeze the air out",
+                  "More than 150.0 g; use a bigger sealed bag",
+                  "150.0 g; leave the bag open while it reacts",
+                  "150.0 g; add more vinegar to the bag"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 2
+              },
+              "why": {
+                "A": "Open system: the CO₂ gas escapes into the air, so the reading drops below 150.0 g. A balloon over the cup traps the gas (a closed system), so the after reading stays 150.0 g. The atoms went somewhere; gas has mass.",
+                "B": "Closed system: the CO₂ is trapped in the bag (that is why it puffs up), so the reading stays 150.0 g. Leaving the bag open lets the gas escape into the air, so the after reading would be lower. Gas has mass."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Part 3 · Explain it",
+          "directions": "Write in complete sentences.",
+          "questions": [
+            {
+              "id": "q8",
+              "level": 3,
+              "skill": "balancing: coefficients, not subscripts",
+              "type": "mc",
+              "prompt": {
+                "A": "Dev starts balancing Na + Cl₂ → NaCl by writing a 2 in front of NaCl. He counts atoms and finds one row that still doesn't match. Which change correctly finishes balancing it?",
+                "B": "Rosa starts balancing Cu + O₂ → CuO by writing a 2 in front of CuO. She counts atoms and finds one row that still doesn't match. Which change correctly finishes balancing it?"
+              },
+              "choices": {
+                "A": [
+                  "Change the Cl₂ on the left to Cl",
+                  "Write a 2 in front of Na",
+                  "Remove the 2 from NaCl",
+                  "Put a 2 in front of Cl₂"
+                ],
+                "B": [
+                  "Change the O₂ on the left to O",
+                  "Take the 2 off CuO",
+                  "Write a 2 in front of O₂",
+                  "Put a 2 in front of Cu"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 3
+              },
+              "why": {
+                "A": "After the 2 on NaCl: Na 1 on the left, 2 on the right; Cl 2 and 2. A 2 in front of Na makes 2Na + Cl₂ → 2NaCl: Na 2 and 2, Cl 2 and 2. Changing Cl₂ to Cl is a subscript change and leaves Na (1 vs 2) and Cl (1 vs 2) unmatched. Removing the 2 from NaCl leaves Cl unmatched (2 vs 1). A 2 in front of Cl₂ leaves Na (1 vs 2) and Cl (4 vs 2) unmatched.",
+                "B": "After the 2 on CuO: Cu 1 on the left, 2 on the right; O 2 and 2. A 2 in front of Cu makes 2Cu + O₂ → 2CuO: Cu 2 and 2, O 2 and 2. Changing O₂ to O is a subscript change and leaves Cu (1 vs 2) and O (1 vs 2) unmatched. Taking the 2 off CuO leaves O unmatched (2 vs 1). A 2 in front of O₂ leaves Cu (1 vs 2) and O (4 vs 2) unmatched."
+              }
+            },
+            {
+              "id": "q9",
+              "level": 3,
+              "skill": "open-system mass problem",
+              "type": "open",
+              "prompt": {
+                "A": "A class does the baking soda and vinegar lab in an open cup. The balance reads 120.0 g before and 118.6 g after. (a) What mass of gas left the cup? (b) Explain why the same reaction in a sealed zip bag would read 120.0 g after. Use the words mass and gas.",
+                "B": "A pad of steel wool on a balance reads 5.0 g. It burns in open air, and afterward the balance reads 6.2 g. (a) What mass of oxygen joined the iron? (b) Kayla says the extra mass was created by the fire. Explain why she is wrong. Use the words mass and atoms."
+              },
+              "answer": {
+                "A": "(a) 120.0 g − 118.6 g = 1.4 g of carbon dioxide gas. (b) In the open cup the gas escaped into the air, so the balance no longer measured its mass; the 1.4 g of gas is now in the air. In a sealed bag the gas is trapped, so all of the mass stays on the balance and it reads 120.0 g.",
+                "B": "(a) 6.2 g − 5.0 g = 1.2 g of oxygen. (b) No mass was created. Iron atoms joined with oxygen atoms from the air, and those oxygen atoms have mass, so the iron oxide has more mass than the steel wool: 5.0 g of steel wool + 1.2 g of oxygen = 6.2 g of iron oxide."
+              },
+              "why": {
+                "A": "Look for: 1.4 g; the gas left the open cup; the gas has mass and stays in the closed bag. A full answer never says the mass disappeared.",
+                "B": "Look for: 1.2 g; oxygen atoms from the air joined the iron; atoms are not created. Steel wool + oxygen used = iron oxide made."
+              },
+              "space": 5
+            },
+            {
+              "id": "q10",
+              "level": 3,
+              "skill": "balanced means atoms, not molecules",
+              "type": "open",
+              "prompt": {
+                "A": "2H₂ + O₂ → 2H₂O has 3 molecules on the left and 2 on the right. Marcus says it can't be balanced. Is he right? Use a counting table to explain.",
+                "B": "N₂ + 3H₂ → 2NH₃ has 4 molecules on the left and 2 on the right. Lena says it can't be balanced. Is she right? Use a counting table to explain."
+              },
+              "answer": {
+                "A": "No. Balanced means the same number of atoms of each element, not the same number of molecules. H: 4 on the reactant side, 4 on the product side. O: 2 and 2. Every row matches, so it is balanced.",
+                "B": "No. Balanced means the same number of atoms of each element, not the same number of molecules. N: 2 on the reactant side, 2 on the product side. H: 6 and 6. Every row matches, so it is balanced."
+              },
+              "why": {
+                "A": "Look for: \"No\", a table with H 4/4 and O 2/2, and atoms (not molecules) as the reason.",
+                "B": "Look for: \"No\", a table with N 2/2 and H 6/6, and atoms (not molecules) as the reason."
+              },
+              "space": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T14:21:29.974Z",
+        "rows": 54,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T14:21:30.056Z",
+        "questions": 14,
+        "chance": 0.25,
+        "worst": [
+          [
+            "middle",
+            0.321
+          ],
+          [
+            "notVote",
+            0.298
+          ],
+          [
+            "absolute",
+            0.292
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Guided Notes: Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz A",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz B",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz (all versions)",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 2,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T14:28:31.937Z",
+        "rows": 54,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 2,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T14:28:32.009Z",
+        "questions": 14,
+        "chance": 0.25,
+        "worst": [
+          [
+            "middle",
+            0.357
+          ],
+          [
+            "notVote",
+            0.298
+          ],
+          [
+            "absolute",
+            0.286
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Guided Notes: Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz A",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz B",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz (all versions)",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": [
+              [
+                "middle",
+                0.357
+              ]
+            ]
+          },
+          {
+            "group": "whole pack",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": [
+              [
+                "middle",
+                0.357
+              ]
+            ]
+          }
+        ],
+        "pass": false,
+        "findings": [
+          {
+            "where": "Chemical Reactions Quiz (all versions)",
+            "kind": "FIX",
+            "what": "Middle-length bot scored 36% against a line of 35% (chance 25%): picking the middle-length choice beat the line across the full quiz, meaning too many keys were middle-length.",
+            "fixed": "Changed wrong choices in 4 items (B q1, A q8, B q7, B q8) to shorten or lengthen them so the key was no longer predominantly middle-length; middle bot dropped from 36% to 21%."
+          }
+        ]
+      },
+      {
+        "check": "keys",
+        "round": 3,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T14:30:20.619Z",
+        "rows": 54,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 3,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T14:30:20.687Z",
+        "questions": 14,
+        "chance": 0.25,
+        "worst": [
+          [
+            "longest",
+            0.321
+          ],
+          [
+            "specific",
+            0.321
+          ],
+          [
+            "absolute",
+            0.286
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Guided Notes: Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz A",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz B",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz (all versions)",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 4,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T14:34:49.764Z",
+        "rows": 54,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 4,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T14:34:49.840Z",
+        "questions": 14,
+        "chance": 0.25,
+        "worst": [
+          [
+            "specific",
+            0.321
+          ],
+          [
+            "middle",
+            0.292
+          ],
+          [
+            "absolute",
+            0.286
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Guided Notes: Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz A",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz B",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz (all versions)",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ],
+    "blind": [
+      {
+        "round": 1,
+        "agent": "🙈 Blind tester (science)",
+        "matched": 44,
+        "of": 44,
+        "byLevel": {
+          "L1": {
+            "items": 34,
+            "accuracy": 1,
+            "meanConfidence": 4.9,
+            "tooEasy": 1
+          },
+          "L2": {
+            "items": 8,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L3": {
+            "items": 2,
+            "accuracy": 1,
+            "meanConfidence": 4.5,
+            "tooEasy": 1
+          },
+          "note": "Auto-scored items only (44). The 10 open items (n5, n10, n16, n22, n28, n34, A/B q9, A/B q10) were judged by hand: all 10 agree with the model answers, so 54 of 54 overall. L3 is not clearly harder than L2: the one auto-scored L3 pair (q8) had the lowest confidence only because A q8 is a recall item (see below)."
+        },
+        "findings": [
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n33",
+            "kind": "FIX",
+            "what": "Giveaway: the sentence says the steel wool 'gets heavier' just before the blank asks whether the balance shows more or less mass, so the blank only repeats the cue. 'Heavier' is also the weight word that the unit tells students not to use. Fix: remove 'gets heavier' (e.g. 'When steel wool burns on a balance, the balance shows ___ mass after, because…'), or keep the clause and blank 'oxygen' instead.",
+            "fixed": "Sentence rewritten: 'gets heavier' and the weight word removed; stem now gives the reason (iron atoms join oxygen atoms from the air) without the giveaway.",
+            "before": "gets heavier, so the balance shows ___ mass after",
+            "after": "iron atoms join with oxygen atoms from the air. The balance shows ___ mass after the burning than before"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "kind": "FIX",
+            "what": "Too easy for L3: the key is almost the notes' own line about hydrogen peroxide, so students recall it and don't need to analyze. It is also not parallel to B q8, which makes students count atoms and then choose a fix. Fix: make A q8 match B q8. Give the unbalanced H₂ + O₂ → H₂O and ask which change balances it. Choices: put 2 in front of H₂ and H₂O (key); change H₂O to H₂O₂ (subscript trap); put 2 in front of O₂; put 2 in front of H₂O only. Distractors B and D in the current version do check out as wrong.",
+            "fixed": "Rewritten to match B q8 shape: H₂ + O₂ → 2H₂O with one mismatched row (H); count atoms, find the bad row, pick the coefficient fix, with a subscript trap.",
+            "before": "key echoed notes' H₂O₂ line word for word",
+            "after": "H₂ + O₂ → 2H₂O shape, count-and-fix item with subscript trap"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q10",
+            "kind": "FIX",
+            "what": "Level mix: each quiz version has 3 L3 items out of 10 (q8–q10), which is 30%, below the brief's target of about 40%. Fix: raise one L2 item per version to L3 with a real extra reasoning step. For example, q7 could ask students to predict the open-cup reading and also say how to change the setup so the reading stays the same. Make the same change in A and B.",
+            "fixed": "q7 raised to L3 in both versions with a second step (predict the balance reading, then choose a setup change); each version now 4 of 10 L3 (40%).",
+            "before": "3 of 10 L3 (30%)",
+            "after": "q7 raised to L3; 4 of 10 (40%)"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q9",
+            "kind": "FIX",
+            "what": "The model answer says the iron oxide 'is heavier'. That is weight language, which the unit's common-mistakes list tells students to avoid. Fix: say 'has more mass'. The numbers are fine: a 1.2 g gain is realistic for partly burned steel wool. There is no safety problem, because students are not given steps to follow.",
+            "fixed": "Model answer changed from 'is heavier' to 'has more mass than the steel wool'.",
+            "before": "is heavier",
+            "after": "has more mass than the steel wool"
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n2",
+            "kind": "FIX",
+            "what": "The key's 'why' says the two words can go in either order, but the accept list has only created-first forms, so 'destroyed; created' would be marked wrong unless the checker ignores order. Fix: add the reversed forms. JUDGMENT for the teacher: the list also accepts 'created; lost'. 'Lost' is close to the 'mass disappeared' wording the teacher wants students to stop using, so consider removing it.",
+            "fixed": "Reversed-order accept forms added (destroyed; created, destroyed, created, destroyed and created, destroyed / created, destroyed; made, lost; created).",
+            "before": "no reversed-order forms in accept list",
+            "after": "reversed forms added for both orders"
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n20",
+            "kind": "FIX",
+            "what": "Missing typed forms. Students reading '___ inside them' will naturally write 'all the atoms', 'all atoms' or 'both atoms', and none of these is accepted (only everything / all / all of it / each atom). Fix: add those forms.",
+            "fixed": "Added 'all the atoms', 'all atoms' and 'all of the atoms' to the accept list.",
+            "before": "did not accept 'all the atoms' or 'all atoms'",
+            "after": "'all the atoms', 'all atoms', 'all of the atoms' added"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q7",
+            "kind": "JUDGMENT",
+            "what": "Possible content cue: the key is the only choice that names the gas, and it uses the notes' exact wording about the gas leaving the cup. Reading 1: this is fine, because the reasoning is what's tested and C is a strong 'less than' twin with a wrong reason. Reading 2: a test-wise student picks the choice that sounds like the notes. Fix if you want: have choice C name carbon dioxide too (e.g. the CO₂ atoms were destroyed), so both 'less than' choices are equally specific. B q7's key also echoes 'trapped inside', which is the same kind of mild cue."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q1",
+            "kind": "KEEP",
+            "what": "The key lists the two substances in the same order as the stem. That is a mild cue, but it is unavoidable in an L1 item that asks students to name the reactants, and the distractors mix in the product correctly."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n4",
+            "kind": "KEEP",
+            "what": "My worry that students would write other words isn't a real problem: 'somewhere' is the teacher's own catchphrase, it was taught directly, and 'somewhere else' is accepted."
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 Blind tester (science), recheck",
+        "matched": 11,
+        "of": 12,
+        "byLevel": {
+          "L1": {
+            "items": 4,
+            "accuracy": 0.75,
+            "meanConfidence": 5,
+            "tooEasy": 0,
+            "note": "The 1 miss is a scorer string mismatch, not a wrong answer (see n20 KEEP)"
+          },
+          "L2": {
+            "items": 4,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L3": {
+            "items": 4,
+            "accuracy": 1,
+            "meanConfidence": 4.8,
+            "tooEasy": 2,
+            "note": "On the scored changed items, L3 is not clearly harder than L2. The q7 items now do the job; the q8 items don't. The level mix is now 4 of 10 L3 per version (q7–q10), which is 40%."
+          }
+        },
+        "findings": [
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n20",
+            "kind": "KEEP",
+            "what": "My typed answer added a note in brackets; the core word 'everything' is the key and 'all the atoms' is now accepted. Not a pack problem."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "kind": "FIX",
+            "what": "Too easy for L3. Without its first coefficient, the equation is the notes' first board example and first practice line, and the stem already does the first step, so students can recall 2H₂ + O₂ → 2H₂O instead of reasoning. Use an equation the notes don't practice (e.g. Cu + O₂ → CuO, or Na + Cl₂ → NaCl, first step given), with the same four kinds of choices: subscript trap, undo the step, wrong coefficient, key."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q8",
+            "kind": "FIX",
+            "what": "Same issue as A q8: methane burning is a practice equation in the notes, word for word, so the key can be recalled. Swap in an unpracticed equation of the same shape (one mismatched row, a subscript trap that balances the count), and change A and B together so they stay parallel."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q4",
+            "kind": "FIX",
+            "what": "Wrong choice D (3, 4) matches no likely student error, so B q4 is effectively a 3-choice item and easier than A q4, whose wrong choices are all real errors. Replace D with a real error, e.g. 4, 12 (coefficient times subscript applied twice to O) or 2, 6.",
+            "fixed": "Wrong choice D changed from 3, 4 (no real student error) to 4, 12 (coefficient applied twice to O); all three distractors are now real errors.",
+            "before": "D was 3, 4 (no real error)",
+            "after": "D is 4, 12 (coefficient applied twice)"
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n33",
+            "kind": "FIX",
+            "what": "Minor typed-forms gap: the list accepts only more / greater / a greater. Add 'larger', 'a larger', 'bigger', 'a bigger', 'higher' (as in 'higher mass reading').",
+            "fixed": "Accept list extended: larger, a larger, bigger, a bigger and higher added.",
+            "before": "only more / greater / a greater",
+            "after": "larger, a larger, bigger, a bigger, higher added"
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n2",
+            "kind": "JUDGMENT",
+            "what": "Carried over from round 1: 'created; lost' is still accepted. Reading 1: keep it, since 'no atoms are lost' is true. Reading 2: drop it, because the teacher wants students off 'mass disappeared' language and 'lost' is close to it. Teacher decides."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q7",
+            "kind": "JUDGMENT",
+            "what": "Simplification shared with A q9 and slide 7: a puffed-up sealed bag really reads slightly less on a 0.1 g balance, because the air holds it up a little more. Reading 1: keep 150.0 g as the teacher's notes and lab state, the standard grade 8 model. Reading 2: say 'about 150.0 g' in the why line. The key is right either way."
+          }
+        ],
+        "confirmed": [
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n33",
+            "fixed": "'Gets heavier' is gone; the stem now gives the reason (iron atoms join oxygen atoms from the air) without the giveaway or the weight word."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "fixed": "Now parallel to B q8 (count, find the one bad row, pick the coefficient fix, with a subscript trap). The distractors check out. The L3 difficulty is still open, see findings."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q10",
+            "fixed": "q7 was raised to L3 in both versions with a real second step (predict the reading, then choose a setup change), so each version is 4 of 10 L3, which is 40%."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q9",
+            "fixed": "The model answer now says the iron oxide 'has more mass', not 'heavier'."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n2",
+            "fixed": "Reversed-order forms added (destroyed; created, destroyed, created, destroyed and created, destroyed / created, destroyed; made). Both round 1 n2 findings on order are covered."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n20",
+            "fixed": "Added 'all the atoms', 'all atoms', 'all of the atoms' ('both atoms' is still missing, but it is rare and loose wording)."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q6",
+            "fixed": "Key is now 17.0, with 17 / 17 g / 17.0 g accepted; B's '34.50' was dropped from accept."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q7 (figure)",
+            "fixed": "The before cup is still: no bubbles, no gas arrows. The after cup shows only '? g', so nothing points to the key."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q7 (figure)",
+            "fixed": "The before bag is flat and the after bag is puffed; there are no bubbles in either, and the aria-label matches."
+          },
+          {
+            "where": "Chemical Reactions and Conservation of Mass slide 7",
+            "fixed": "Both flasks are still before the reaction, with a flat balloon and no bubbles or arrows, which fits the 'before a reaction' label and no longer answers the slide's prompt."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q9 (key)",
+            "fixed": "(b) now says the balance no longer measured the gas's mass and the 1.4 g of gas is in the air; no 'lost its mass' wording."
+          }
+        ],
+        "notFixed": []
+      },
+      {
+        "round": 3,
+        "agent": "🙈 Blind tester (science), recheck",
+        "matched": 4,
+        "of": 4,
+        "byLevel": {
+          "L1": {
+            "items": 1,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L2": {
+            "items": 1,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L3": {
+            "items": 2,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 2
+          }
+        },
+        "findings": [
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "kind": "FIX",
+            "what": "Still too easy for L3, though the key and all three wrong choices check out (no twins, no two-right). The stem does the first step, so only one row is left: a 1-vs-2 metal count with an obvious fix. The equation has the same shape as the practiced 2Mg + O₂ → 2MgO with new symbols, so a strong student answers in seconds. Fix: use an equation where the first step leaves two rows unmatched and both coefficients must be found, e.g. Al + Cl₂ → AlCl₃ with a 2 already in front of AlCl₃ (key: 2 in front of Al and 3 in front of Cl₂). Keep the same choice types: a subscript trap (Cl₂ to Cl₃), Al only, Cl₂ only. Update the stem's 'one row' wording to match."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q8",
+            "kind": "FIX",
+            "what": "Same problem as A q8, and closer to recall: Cu + O₂ → 2CuO is the practiced 2Mg + O₂ → 2MgO with Cu in place of Mg (same O₂, same metal-oxide product). Change it with A q8 to the same two-unknown shape, e.g. Fe + Cl₂ → FeCl₃ with a 2 already in front of FeCl₃ (key: 2Fe and 3Cl₂). Avoid an iron oxide, because 4Fe + 3O₂ → 2Fe₂O₃ is a practice line. A and B stay parallel: same choice types, the key at a different letter."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q4",
+            "kind": "JUDGMENT",
+            "what": "The round 2 distractor fix holds: B's wrong choices now mirror A's (no coefficient, coefficient on the first element only, coefficient applied twice). But A counts 2Ca(OH)₂, which needs the parentheses rule, while B's 2Fe₂O₃ needs only coefficient times subscript, so B is a step easier. Reading 1: keep it, since both test the coefficient rule at L2. Reading 2: make B use parentheses too, e.g. 2Mg(OH)₂ (Mg, O, H = 2, 4, 4) with the same three error types, so B is no easier than A."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n33",
+            "kind": "KEEP",
+            "what": "No problem. 'more' matched, the sentence says mass and not weight, and the accept list now covers the forms I would expect."
+          }
+        ],
+        "confirmed": [
+          {
+            "where": "Chemical Reactions Quiz B q4",
+            "fixed": "Wrong choice D changed from 3, 4 (no real error) to 4, 12 (coefficient applied twice to O), so all three distractors are real errors."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n33",
+            "fixed": "Accept list now adds larger, a larger, bigger, a bigger and higher."
+          }
+        ],
+        "notFixed": [
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "what": "The equation was swapped for one the notes don't practice (Na + Cl₂ → NaCl), so direct recall is gone. But it has the same one-step shape as the practiced 2Mg + O₂ → 2MgO, and the stem still does the first step, so it remains too easy for L3. See the FIX above."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q8",
+            "what": "Methane was replaced by Cu + O₂ → CuO, but that is the practiced Mg line with one symbol changed, so the recall problem is mostly still there and the item is too easy for L3. See the FIX above."
+          }
+        ],
+        "minutes": 6,
+        "tokens": "about 30k"
+      }
+    ],
+    "facts": [
+      {
+        "round": 1,
+        "agent": "🔎 Fact checker",
+        "claims": 280,
+        "flagged": 15,
+        "tally": {
+          "source": 259,
+          "reference": 6,
+          "off": 7,
+          "judgment": 8
+        },
+        "notes": "Counted 280 claims: notes 104 (28 short items x prompt/key, accept list, why; 6 open items x prompt, answer, why; 2 figures), slides 54 (deck note, 42 bullets, 9 speaker notes, 2 figures), quiz 122 (A and B: 7 MC x prompt, 4 choices, key, why; q6 prompt/key/accept/why; q9, q10 prompt/answer/why; 2 figures). Worked every item blind first (facts-own.md); every key matches my answer (A: C, A, C, D, B, 17.0, D, A, 1.4 g, No; B: A, D, B, A, C, 34.5, C, D, 1.2 g, No; notes n1-n34 all match). EQUATION COUNTS, all balanced where the pack says balanced: 2H2 + O2 -> 2H2O H 4|4, O 2|2; CH4 + 2O2 -> CO2 + 2H2O C 1|1, H 4|4, O 4|4; N2 + 3H2 -> 2NH3 N 2|2, H 6|6; 2Mg + O2 -> 2MgO Mg 2|2, O 2|2; 4Fe + 3O2 -> 2Fe2O3 Fe 4|4, O 6|6. Unbalanced ones are correctly unbalanced: H2 + O2 -> H2O (slide 5 note: only O off, 2|1, correct); q5A wrong choices Mg + O2 -> MgO (O 2|1), 2Mg + 2O2 -> 4MgO (Mg 2|4), Mg + 2O2 -> MgO (O 4|1); q5B wrong choices 2Fe + 3O2 -> 2Fe2O3 (Fe 2|4), 4Fe + O2 -> 2Fe2O3 (O 2|6), 2Fe + 3O2 -> Fe2O3 (O 6|3); q8A H2 + O2 -> H2O2 counts match (H 2|2, O 2|2) so choice B is rightly false and the why's 'his atoms now match' is true; q8B CH4 + O2 -> CO2 + 2H2O has exactly one bad row (O 2|4) as the prompt says; choice A 2CH4 gives C 2|1. Source lab equation NaHCO3 + HC2H3O2 -> NaC2H3O2 + H2O + CO2: Na 1|1, H 5|5, C 3|3, O 5|5 (not used in the pack). ATOM COUNTS: 3H2O 6 H, 3 O; Ca(OH)2 1 Ca, 2 O, 2 H; 2Ca(OH)2 2 Ca, 4 O, 4 H; 2Fe2O3 4 Fe, 6 O; CO2 subscript 2 = 2 O atoms; all right. Coefficient/subscript definitions right everywhere. Mass arithmetic: 12.0+5.0=17.0, 25.0+9.5=34.5, 150.0-148.9=1.1, 120.0-118.6=1.4, 6.2-5.0=1.2, 10.0+6.0=16.0; all right. MISCONCEPTION SWEEP: no key, why line, slide bullet or speaker note says mass disappears, gas has no mass or mass is lost; the misconceptions appear only as wrong choices (q7A C, q7B B and D, q8A C) or as statements to correct (n5 prompt, slide 7 and 9). One near-miss wording in q9A key (finding below). Terms: reactant/product, physical/chemical, closed/open, precipitate used as the source does; 'mass, not weight' kept except the source's own 'heavier' (judgment). Not a fact issue but worth passing on: n33's prompt says 'gets heavier, so the balance shows ___ mass after', which hands over the answer 'more'. Time ~15 min.",
+        "findings": [
+          {
+            "where": "Chemical Reactions Quiz A q6",
+            "kind": "FIX",
+            "what": "Key is \"17\" but the data are 12.0 g and 5.0 g, so the answer to report is 17.0 (the why line already says 17.0 g). Make \"17.0\" the key and keep \"17\" in accept. Minor, same item version B: accept \"34.50\" adds a digit the data don't support; harmless but could be dropped.",
+            "source": "unit4-lesson3-notes.md §5 mass word problem (\"10.0 g ... 6.0 g ... 16.0 g\", one decimal kept)",
+            "fixed": "Key changed from '17' to '17.0'; '17', '17 g', '17.0 g' kept in accept. B q6 accept no longer has '34.50'.",
+            "before": "key was '17'",
+            "after": "key is '17.0', '17' moved to accept"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q7 (figure)",
+            "kind": "FIX",
+            "what": "The 'Before mixing' panel already shows bubbles in the cup and two arrows of gas rising out, yet reads 150.0 g. Before mixing there is no reaction and no gas, so the picture is false and muddles the before/after comparison. Draw the before cup still, with no bubbles and no arrows. The 'after' panel's arrows showing gas leaving also point straight at key D. The prompt already says it is an open cup, so think about keeping only the open top and dropping the arrows.",
+            "source": "unit4-lesson3-notes.md §5 lab (gas forms when they react; 150.0 g before)",
+            "fixed": "Before panel redrawn still: no bubbles, no gas arrows. After panel has no gas arrows pointing to the key.",
+            "before": "before-mixing cup showed bubbles and gas arrows",
+            "after": "before cup still, no bubbles or arrows"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q7 (figure)",
+            "kind": "FIX",
+            "what": "The 'Before mixing' bag is drawn exactly like the 'after' bag: puffed up and full of bubbles (the aria-label says 'the bag is puffed up' for both). Before mixing the bag should be flat, with no gas. As drawn, both panels look identical, which is false and takes away the visible change the question is about.",
+            "source": "unit4-lesson3-notes.md §5 (\"The bag puffs up because the CO₂ is trapped inside\", i.e. after the reaction)",
+            "fixed": "Before-mixing bag redrawn flat with no bubbles; after bag still puffed; aria-label updated.",
+            "before": "before bag puffed with bubbles like after bag",
+            "after": "before bag flat, after bag puffed"
+          },
+          {
+            "where": "Chemical Reactions and Conservation of Mass slide 7",
+            "kind": "FIX",
+            "what": "Figure's aria-label says 'before a reaction' with both balances at 150.0 g, but Flask 1 shows bubbles and gas arrows rising out, and both flasks show bubbles. Gas leaving 'before the reaction' is inconsistent. The arrows also answer the slide's own prompt ('Explain where the gas went'). Show both flasks still, before the reaction, or label the picture 'during the reaction' and remove the balance numbers.",
+            "source": "unit4-lesson3-notes.md §5",
+            "fixed": "Both flasks redrawn still before the reaction with a flat balloon on Flask 2; no bubbles or arrows; picture no longer answers its own prompt.",
+            "before": "Flask 1 showed bubbles and gas arrows before reaction",
+            "after": "both flasks still, flat balloon, no arrows"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q9 (key)",
+            "kind": "FIX",
+            "what": "Key (b) says \"the gas escaped into the air, so the balance lost its mass.\" 'The balance lost its mass' can be read as mass being lost, the very phrasing Mr. Okafor bans, and 'its' is unclear (the balance's own mass?). Suggest: \"so the balance no longer measured the gas's mass; the 1.4 g of gas is in the air.\"",
+            "source": "unit4-lesson3-notes.md Big idea + Common mistakes (\"never 'the mass disappeared'\"); order.requests",
+            "fixed": "Part (b) reworded: 'the balance lost its mass' replaced by 'the balance no longer measured its mass; the 1.4 g of gas is now in the air'.",
+            "before": "'the balance lost its mass'",
+            "after": "'the balance no longer measured its mass'"
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n2",
+            "kind": "FIX",
+            "what": "The why line says either order is fine ('destroyed ... created'), but the accept list has no reversed-order entry (no \"destroyed; created\" / \"destroyed, created\"), so a key-checker would mark a right answer wrong. Add the reversed forms. (Accepting \"lost\" for atoms is fine: no atoms are lost.)",
+            "source": "unit4-lesson3-notes.md Big idea",
+            "fixed": "Reversed-order accept forms added (destroyed; created, destroyed, created, destroyed and created, destroyed / created, destroyed; made, lost; created).",
+            "before": "no reversed-order forms",
+            "after": "reversed forms added for both orders"
+          },
+          {
+            "where": "Guided Notes n33; Chemical Reactions and Conservation of Mass slide 6 (bullet 5 and speaker notes); Chemical Reactions Quiz B q9 (key: 'the iron oxide is heavier')",
+            "kind": "JUDGMENT",
+            "what": "'Gets heavier' / 'is heavier' is everyday weight language in a unit that says 'mass, not weight' (slide 8, slide 9). The source itself says 'gets heavier', so this is not wrong, but the teacher may want 'gains mass' / 'has more mass' for consistency. 4 claims.",
+            "source": "unit4-lesson3-notes.md §5 demo (\"gets heavier\") vs Common mistakes (weight vs mass)"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q7 (key C)",
+            "kind": "JUDGMENT",
+            "what": "Key '150.0 g' matches the source and is the right grade 8 answer. In a real lab, a bag that puffs up pushes aside air, and buoyancy can make the reading drop by a few tenths of a gram (about 1.2 mg per mL of air displaced). Keep the key ('most likely' covers it); just be aware a class balance may show a small drop, so this isn't a reason to doubt conservation.",
+            "source": "Reference: air density ≈ 1.2 g/L at room conditions (any physics text, e.g. OpenStax College Physics 2e §11.7 Archimedes' principle)"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q9 (key)",
+            "kind": "JUDGMENT",
+            "what": "'5.0 g of steel wool + 1.2 g of oxygen = 6.2 g of iron oxide' assumes all the iron burned and nothing (sparks, bits) left the balance. Really the 6.2 g is leftover iron plus iron oxide. The source uses the same idealized sentence, so keep it, maybe as 'the mass of the burned steel wool (iron + oxygen) is 6.2 g'.",
+            "source": "unit4-lesson3-notes.md §5 demo (same idealization)"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q3 (why)",
+            "kind": "JUDGMENT",
+            "what": "'A glow stick gives off light because a new substance forms' gets the cause slightly backwards: a chemical reaction inside makes new substances and gives off light (chemiluminescence). Suggest: 'Chemicals inside react to make new substances and give off light.'",
+            "source": "unit4-lesson3-notes.md §2 (glow stick = chemical change; light is a clue); reference: chemiluminescence, e.g. Encyclopaedia Britannica 'chemiluminescence'"
+          },
+          {
+            "where": "Guided Notes n17 / n19; Chemical Reactions and Conservation of Mass slide 4; Chemical Reactions Quiz A q4, q5, Quiz B q4, q5",
+            "kind": "JUDGMENT",
+            "what": "'Molecule' is used for every formula, including ionic compounds (MgO, Fe₂O₃, Ca(OH)₂), which chemists call formula units, and for Mg/Fe atoms counted by coefficients. This is the source's own grade 8 simplification and is standard at this level. Keep it; flagged only so the teacher knows.",
+            "source": "unit4-lesson3-notes.md §3; reference: OpenStax Chemistry 2e §2.6 (ionic compounds as formula units)"
+          },
+          {
+            "where": "All equations, atom counts and mass arithmetic (notes, slides, quiz A and B)",
+            "kind": "KEEP",
+            "what": "Every equation the pack calls balanced is balanced and every one it calls unbalanced is unbalanced (element counts in notes). All atom counts, coefficient/subscript statements and mass subtractions and additions are right. All 14 quiz keys and 34 note keys match my blind answers.",
+            "source": "unit4-lesson3-notes.md §3–§5; facts-own.md"
+          },
+          {
+            "where": "Guided Notes n5, n16; Guided Notes n9 accept; slide 3 notes",
+            "kind": "KEEP",
+            "what": "Beyond the source but true: a candle's mass leaves as gases (CO₂, water vapor) into the air; bubbles in boiling water are water as a gas; 'makes'/'produces' accepted for the arrow; a glow stick's clue is light.",
+            "source": "Reference: OpenStax Chemistry 2e §4.1 (combustion products), §10.3 (phase changes)"
+          },
+          {
+            "where": "Whole pack: misconception sweep",
+            "kind": "KEEP",
+            "what": "No key, why line, slide bullet or speaker note says mass disappears, gas has no mass or mass is lost (apart from the q9A wording above). Misconceptions appear only as wrong choices (q7A C, q7B B/D, q8A C) or as statements students correct (n5, slides 7 and 9). Wrong choices are wrong for reasons students can learn.",
+            "source": "unit4-lesson3-notes.md Common mistakes"
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🔎 Fact checker, recheck",
+        "claims": 87,
+        "flagged": 2,
+        "notes": "Scope: the 14 changed items (n2, n20, n33; B q1; A/B q4, q6, q7, q8, q9), the q7 A/B figures and the slide 7 figure, and the round 1 FIX findings about facts. Counted 87 claims: notes 3 items x prompt/key/accept/why (12); B q1 (7); A/B q4 prompt, 4 choices, key, why, table figure (16); A/B q6 prompt/key/accept/why (8); A/B q7 prompt, 4 choices, key, why, figure (16); A/B q8 (14); A/B q9 prompt, (a), (b), why (8); slide 7 bullets, notes, figure (6). BLIND FIRST (from view-r2.md + source): n2 created/destroyed, n20 everything/all the atoms, n33 more, B q1 A, A q4 D (2,4,4), B q4 A (4,6), A q6 17.0, B q6 34.5, A q7 D, B q7 C, A q8 B, B q8 D, A q9 1.4 g, B q9 1.2 g. All 14 pack keys match. EQUATIONS (atoms each side): A q8 start H2 + O2 -> 2H2O: H 2|4, O 2|2, so exactly one bad row (H) as the prompt says; key 2H2 + O2 -> 2H2O: H 4|4, O 2|2 balanced; choice A H4 is a subscript change (wrong, as why says); choice C back to H2 + O2 -> H2O: H 2|2, O 2|1 (wrong); choice D H2 + 2O2 -> 2H2O: H 2|4, O 4|2 (wrong). B q8 CH4 + O2 -> CO2 + 2H2O: C 1|1, H 4|4, O 2|4, one bad row (O); key CH4 + 2O2 -> CO2 + 2H2O: C 1|1, H 4|4, O 4|4 balanced; choice A 2CH4: C 2|1, H 8|4 (wrong); B/C subscript changes (wrong). B q1 magnesium + oxygen -> magnesium oxide: reactants Mg, O2 (source 2Mg + O2 -> 2MgO, Mg 2|2, O 2|2). ATOM COUNTS: 2Ca(OH)2 = Ca 2, O 4, H 4 (why's 2x1, 2x2 right); 2Fe2O3 = Fe 4, O 6. Distractors A q4 (1,2,2 = one unit; 2,2,2 = coefficient not carried into parentheses; 4,8,8 = doubled twice) and B q4 (2,3 one unit; 4,3; 3,4) are wrong for learnable reasons. ARITHMETIC: 12.0+5.0=17.0; 25.0+9.5=34.5; 120.0-118.6=1.4; 6.2-5.0=1.2; 5.0+1.2=6.2. q7: open cup -> less than 150.0 g, balloon closes the system -> stays 150.0 g; sealed bag -> 150.0 g, leaving it open -> lower; distractors (cup 'keeps every atom', loose lid with holes, squeeze air out, bigger bag, more vinegar) are each wrong for a reason in the notes. FIGURES: A q7 before panel is now a still cup (no bubbles, no arrows), after panel has only '? g' and no gas arrows, aria-label matches; B q7 before bag flat, after bag puffed, aria-label 'flat ... puffed up' matches the source ('The bag puffs up because the CO2 is trapped inside'); slide 7 both flasks still, no bubbles or arrows, flat balloon on Flask 2, aria-label 'before a reaction' with 150.0 g on both now true, and nothing in the picture answers 'where did the gas go'. MISCONCEPTION SWEEP of changed items: no key, why, accept, bullet or speaker note says or implies mass disappears, gas has no mass or mass is lost. A q9 key now 'the balance no longer measured its mass; the 1.4 g of gas is now in the air' ('its' = the gas, clear from the clause); A q7/B q7 why lines end 'gas has mass'; B q9 key 'No mass was created ... has more mass'. n2 still accepts 'created; lost' / 'lost; created': 'none are lost' is a true negated statement about atoms, not a claim that mass is lost, so KEEP (round 1 fact checker agreed; blind tester's judgment stands for the teacher). Out of scope but unchanged: slide 6 bullet 5 and its speaker notes still say steel wool 'gets heavier' (round 1 JUDGMENT; the source uses the same words). Remaining judgments carried from round 1 are listed in findings. No FIX found. Time ~10 min.",
+        "findings": [
+          {
+            "where": "Chemical Reactions Quiz A q7 (key D, why) and B q7 (key C, why)",
+            "kind": "JUDGMENT",
+            "what": "A q7 now has the same real-lab caveat round 1 noted for B q7: a balloon or a bag that puffs up pushes aside air, and buoyancy can make a class balance read a few tenths of a gram lower even though no mass left. The 150.0 g keys are the right grade 8 answers and match the source; keep them, and be ready if a class balance shows a small drop.",
+            "source": "unit4-lesson3-notes.md §5 (sealed bag 150.0 g before and after; balloon over a bottle is a closed system); reference: air density ≈ 1.2 g/L (OpenStax College Physics 2e §11.7 Archimedes' principle)"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q9 (key)",
+            "kind": "JUDGMENT",
+            "what": "Still idealized: '5.0 g of steel wool + 1.2 g of oxygen = 6.2 g of iron oxide' assumes all the iron burned; really 6.2 g is iron oxide plus leftover iron. The source uses the same sentence, so keep it unless the teacher wants 'the burned steel wool (iron + oxygen) has a mass of 6.2 g'.",
+            "source": "unit4-lesson3-notes.md §5 demo"
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n2 (accept)",
+            "kind": "KEEP",
+            "what": "'created; lost' and 'lost; created' are still accepted. 'No atoms are ... lost' is true and does not say mass is lost, so it does not break the teacher's request. Reversed orders are now accepted, matching the why line.",
+            "source": "unit4-lesson3-notes.md Big idea"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q4, B q4 (figures)",
+            "kind": "KEEP",
+            "what": "The tables carry the teacher's Element / Reactant side / Product side headings for a single formula, so only one column gets used. Not false, and it is the teacher's requested counting table; the formula labels (2Ca(OH)₂; 2Fe₂O₃) and element rows (Ca, O, H; Fe, O) are right and give no answers.",
+            "source": "unit4-lesson3-notes.md §3 counting table; order.requests"
+          },
+          {
+            "where": "All changed items: equations, atom counts, arithmetic, keys",
+            "kind": "KEEP",
+            "what": "Every equation, atom count and mass sum in the 14 changed items is right, every key matches my blind answer, and every wrong choice is wrong for a reason taught in the notes (counts in notes).",
+            "source": "unit4-lesson3-notes.md §1, §3–§5"
+          }
+        ],
+        "confirmed": [
+          {
+            "where": "Chemical Reactions Quiz A q6",
+            "fixed": "Key is now \"17.0\"; \"17\", \"17 g\", \"17.0 g\" accepted. B q6 accept no longer has \"34.50\"."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q7 (figure)",
+            "fixed": "Before panel is a still cup with no bubbles or arrows; after panel has no gas arrows, so it no longer points to the key."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q7 (figure)",
+            "fixed": "Before bag is flat, after bag is puffed up; aria-label matches."
+          },
+          {
+            "where": "Chemical Reactions and Conservation of Mass slide 7",
+            "fixed": "Both flasks drawn still before the reaction with a flat balloon on Flask 2; no bubbles or arrows; 'before a reaction' label and 150.0 g readings now consistent, and the picture no longer answers 'where did the gas go'."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q9 (key)",
+            "fixed": "'the balance lost its mass' replaced by 'the balance no longer measured its mass; the 1.4 g of gas is now in the air'. No mass-lost wording left."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n2",
+            "fixed": "Reversed forms added (destroyed; created / , / and / / , destroyed; made, lost; created), matching the 'either order' why line."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n20",
+            "fixed": "'all the atoms', 'all atoms', 'all of the atoms' added to accept."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n33",
+            "fixed": "'gets heavier' removed; the prompt now gives the reason (iron atoms join oxygen atoms from the air) and asks for 'more' mass; key and why right."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q9 (key)",
+            "fixed": "'is heavier' replaced by 'has more mass'; numbers 6.2 − 5.0 = 1.2 g right."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "fixed": "Now a count-then-fix item parallel to B q8: H₂ + O₂ → 2H₂O has one bad row (H 2|4); key 'Write a 2 in front of H₂' gives 2H₂ + O₂ → 2H₂O, balanced; all three distractors checked wrong."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q10 (level mix → q7 raised to L3)",
+            "fixed": "q7 A and B are now L3 with a second step (choose a setup change); both two-step keys are scientifically right."
+          }
+        ],
+        "notFixed": []
+      },
+      {
+        "round": 3,
+        "agent": "🔎 Fact checker, recheck",
+        "claims": 31,
+        "flagged": 0,
+        "notes": "I checked only the 4 items in view-r3.md. Before opening pack.json I solved each one myself: n33 'more', B q4 A (4, 6), A q8 B (2Na), B q8 D (2Cu). All four keys match. I counted atoms on both sides of every equation in the prompts, keys, wrong choices and why lines. Every count stated in the why lines is correct. Claim count: n33 4 (prompt 2, answer/accept 1, why 1); B q4 7 (formula is real, key Fe 4 and O 6, 3 wrong choices each wrong for a real error, why 2 products); A q8 10 and B q8 10 (reaction is real, state after the first step, exactly one mismatched row, key balances, 3 wrong choices each counted, subscript-trap label). Source vs reference: n33 and all of B q4 are source (notes §3 coefficient × subscript, §4 rust Fe₂O₃, §5 steel-wool demo; the n33 why is the notes' sentence word for word). The q8 equations are not in sources/. They are marked reference: 2Na + Cl₂ → 2NaCl (sodium + chlorine → sodium chloride) and 2Cu + O₂ → 2CuO (copper heated in air → black copper(II) oxide). References: OpenStax Chemistry 2e, §4.1 'Writing and Balancing Chemical Equations' (openstax.org/books/chemistry-2e/pages/4-1-writing-and-balancing-chemical-equations) for balancing and the diatomic Cl₂/O₂ forms, and RSC Education, 'Heating copper in air' (edu.rsc.org) for Cu + O₂ → CuO. The q8 rules (coefficients only; a subscript change makes a different substance) are source (§4). Nothing in any key or why says or implies that mass disappears: n33 says the mass goes up because oxygen joins, and the q8 why lines only count atoms. Not a fact issue: the B q4 figure has Reactant/Product columns for a single formula. It is the notes' standard table, so I'm leaving it.",
+        "findings": [
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n33",
+            "kind": "KEEP",
+            "what": "Prompt (iron atoms join with oxygen atoms from the air), key 'more', and why (mass of steel wool + mass of oxygen used = mass of the iron oxide made) are all correct. The accept forms (more, greater, a greater, larger, a larger, bigger, a bigger, higher) all mean the same and none is a weight word. The round-2 'gets heavier' cue is gone.",
+            "source": "source: unit4-lesson3-notes.md §5 (steel-wool demo; open system can show more mass after)"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q4",
+            "kind": "KEEP",
+            "what": "2Fe₂O₃ has Fe 2 × 2 = 4 and O 2 × 3 = 6, so the key A (4, 6) is correct. Each wrong choice is a real error. B (2, 3) ignores the coefficient. C (4, 3) applies the coefficient to Fe only. D (4, 12) multiplies O by 2 twice. Fe₂O₃ (iron oxide, rust) is a real substance written correctly.",
+            "source": "source: unit4-lesson3-notes.md §3 (coefficient × subscript), §4 (4Fe + 3O₂ → 2Fe₂O₃)"
+          },
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "kind": "KEEP",
+            "what": "Na + Cl₂ → 2NaCl gives Na 1 vs 2 and Cl 2 vs 2: exactly one row mismatched, as the stem says. Key B, 2Na + Cl₂ → 2NaCl, balances: Na 2/2, Cl 2/2. Wrong choices, each counted: A, Na + Cl → 2NaCl, is a subscript change, Na 1/2, Cl 1/2. C, Na + Cl₂ → NaCl, gives Na 1/1, Cl 2/1. D, Na + 2Cl₂ → 2NaCl, gives Na 1/2, Cl 4/2. The why gives these same counts. The reaction is real and Cl₂ is correctly written as diatomic.",
+            "source": "reference: OpenStax Chemistry 2e §4.1 (balancing; diatomic Cl₂); the coefficients-only rule is source, notes §4"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q8",
+            "kind": "KEEP",
+            "what": "Cu + O₂ → 2CuO gives Cu 1 vs 2 and O 2 vs 2: exactly one row mismatched. Key D, 2Cu + O₂ → 2CuO, balances: Cu 2/2, O 2/2. Wrong choices, each counted: A, Cu + O → 2CuO, is a subscript change, Cu 1/2, O 1/2. B, Cu + O₂ → CuO, gives Cu 1/1, O 2/1. C, Cu + 2O₂ → 2CuO, gives Cu 1/2, O 4/2. The why gives these same counts. The reaction is real (copper heated in air forms black copper(II) oxide). The item is parallel to A q8: same four kinds of choices, key in a different position.",
+            "source": "reference: RSC Education 'Heating copper in air'; OpenStax Chemistry 2e §4.1; the coefficients-only rule is source, notes §4"
+          }
+        ],
+        "confirmed": [
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "fixed": "The recall equation (2H₂ + O₂ → 2H₂O) is replaced by Na + Cl₂ → NaCl, which the notes don't practice, with the first step given. It keeps the four kinds of choices (subscript trap, undo the step, wrong coefficient, key) and is factually correct."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q8",
+            "fixed": "Methane is replaced by Cu + O₂ → CuO, which has the same shape as the new A q8 and is changed together with it, so the two stay parallel. It is factually correct."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q4",
+            "fixed": "Wrong choice D is now 4, 12 (O multiplied by 2 twice), a real student error. The key is still A (4, 6)."
+          },
+          {
+            "where": "Guided Notes: Chemical Reactions and Conservation of Mass n33",
+            "fixed": "The accept list now includes larger, a larger, bigger, a bigger and higher. The prompt no longer gives away the answer with 'gets heavier'."
+          }
+        ],
+        "notFixed": []
+      }
+    ]
+  },
+  "log": [
+    {
+      "at": "14:13",
+      "who": "Order lead",
+      "what": "Order received; sample order, sources and style examples written (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": "setup"
+    },
+    {
+      "at": "14:15",
+      "who": "📝 Maker",
+      "what": "Read 2 style examples and lesson notes; wrote style notes and all three documents: guided notes (34 items in 6 sections), slides (9 + title), quiz A and B (10 questions each)",
+      "minutes": 6,
+      "tokens": 2244567,
+      "cost": 2.024,
+      "round": "maker"
+    },
+    {
+      "at": "14:21",
+      "who": "🤖 Wilco (keys)",
+      "what": "script; no model tokens — keys round 1: 54 rows, 0 errors, 0 warnings, pass",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 1"
+    },
+    {
+      "at": "14:21",
+      "who": "🤖 Wilco (test-wise bots)",
+      "what": "script; no model tokens — test-wise round 1: 14 MC items, chance 25%, worst middle 32%, pass",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 1"
+    },
+    {
+      "at": "14:21",
+      "who": "Order lead",
+      "what": "Noted quiz q4 layout problem from preview render (choices wrapped mid-choice in 4-column row); flagged for round 2 maker (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": "round 1"
+    },
+    {
+      "at": "14:21",
+      "who": "🙈 Blind tester (science)",
+      "what": "Answered all 54 student-copy items without the key (phase 1)",
+      "minutes": 2,
+      "tokens": 393764,
+      "cost": 0.66,
+      "round": "round 1"
+    },
+    {
+      "at": "14:21",
+      "who": "🔎 Fact checker",
+      "what": "Worked every answer blind; checked 280 claims across notes, slides and quiz; found 6 FIX, 5 JUDGMENT, 2 KEEP",
+      "minutes": 3,
+      "tokens": 524521,
+      "cost": 0.925,
+      "round": "round 1"
+    },
+    {
+      "at": "14:24",
+      "who": "🙈 Blind tester (science)",
+      "what": "Scored 44 auto-scored items and 10 open items against the key (phase 2); 54 of 54 matched; found 6 FIX, 1 JUDGMENT, 2 KEEP",
+      "minutes": 1,
+      "tokens": 285027,
+      "cost": 0.206,
+      "round": "round 1"
+    },
+    {
+      "at": "14:25",
+      "who": "📝 Maker",
+      "what": "New session: fixed 12 FIX items from round 1 blind tester, fact checker and lead layout catch",
+      "minutes": 3,
+      "tokens": 919666,
+      "cost": 0.918,
+      "round": "round 2"
+    },
+    {
+      "at": "14:28",
+      "who": "🤖 Wilco (keys)",
+      "what": "script; no model tokens — keys round 2: 54 rows, 0 errors, 0 warnings, pass",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 2"
+    },
+    {
+      "at": "14:28",
+      "who": "🤖 Wilco (test-wise bots)",
+      "what": "script; no model tokens — test-wise round 2: 14 MC items, chance 25%, worst middle 36% vs line 35%, FAIL (Chemical Reactions Quiz all versions); back to maker",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 2"
+    },
+    {
+      "at": "14:28",
+      "who": "📝 Maker",
+      "what": "New session: changed wrong choices in 4 items (B q1, A q8, B q7, B q8) to pass Wilco middle-length bot; middle bot dropped to 21%",
+      "minutes": 1,
+      "tokens": 632763,
+      "cost": 0.551,
+      "round": "round 2"
+    },
+    {
+      "at": "14:30",
+      "who": "🤖 Wilco (keys)",
+      "what": "script; no model tokens — keys round 3: 54 rows, 0 errors, 0 warnings, pass",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 2"
+    },
+    {
+      "at": "14:30",
+      "who": "🤖 Wilco (test-wise bots)",
+      "what": "script; no model tokens — test-wise round 3: 14 MC items, chance 25%, worst longest 32%, pass",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 2"
+    },
+    {
+      "at": "14:30",
+      "who": "🙈 Blind tester (science), recheck",
+      "what": "Fresh agent: answered 14 changed items without the key (phase 1, recheck round 2)",
+      "minutes": 1,
+      "tokens": 329287,
+      "cost": 0.48,
+      "round": "round 2"
+    },
+    {
+      "at": "14:30",
+      "who": "🔎 Fact checker, recheck",
+      "what": "Fresh agent: rechecked 14 changed items and 3 figures; checked 87 claims, 0 FIX, 2 JUDGMENT",
+      "minutes": 2,
+      "tokens": 704546,
+      "cost": 0.793,
+      "round": "round 2"
+    },
+    {
+      "at": "14:32",
+      "who": "🙈 Blind tester (science), recheck",
+      "what": "Scored 12 items against the key (phase 2, recheck round 2); 11 of 12 matched; confirmed 11 round 1 FIX findings fixed; found 3 new FIX, 1 accept-gap FIX, 2 new JUDGMENT",
+      "minutes": 1,
+      "tokens": 444667,
+      "cost": 0.35,
+      "round": "round 2"
+    },
+    {
+      "at": "14:33",
+      "who": "📝 Maker",
+      "what": "New session: fixed 4 round 2 FIX items (A q8 and B q8 equations, B q4 wrong choice D, n33 accept list)",
+      "minutes": 1,
+      "tokens": 538400,
+      "cost": 0.488,
+      "round": "round 3"
+    },
+    {
+      "at": "14:34",
+      "who": "🤖 Wilco (keys)",
+      "what": "script; no model tokens — keys round 4: 54 rows, 0 errors, 0 warnings, pass",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 3"
+    },
+    {
+      "at": "14:34",
+      "who": "🤖 Wilco (test-wise bots)",
+      "what": "script; no model tokens — test-wise round 4: 14 MC items, chance 25%, worst specific 32%, pass",
+      "minutes": 0,
+      "tokens": null,
+      "cost": null,
+      "round": "round 3"
+    },
+    {
+      "at": "14:34",
+      "who": "🙈 Blind tester (science), recheck",
+      "what": "Fresh agent: answered 4 changed items without the key (phase 1, recheck round 3)",
+      "minutes": 1,
+      "tokens": 233176,
+      "cost": 0.275,
+      "round": "round 3"
+    },
+    {
+      "at": "14:34",
+      "who": "🔎 Fact checker, recheck",
+      "what": "Fresh agent: rechecked 4 changed items; checked 31 claims, 0 flagged; all 4 round 2 FIX items confirmed correct",
+      "minutes": 1,
+      "tokens": 291967,
+      "cost": 0.369,
+      "round": "round 3"
+    },
+    {
+      "at": "14:35",
+      "who": "🙈 Blind tester (science), recheck",
+      "what": "Scored 4 items against the key (phase 2, recheck round 3); 4 of 4 matched; B q4 and n33 confirmed fixed; A q8 and B q8 still too easy for L3 (open for teacher)",
+      "minutes": 1,
+      "tokens": 292205,
+      "cost": 0.236,
+      "round": "round 3"
+    },
+    {
+      "at": "14:35",
+      "who": "🧾 Reporter",
+      "what": "Wrote the log, the fixed/before/after lines on confirmed findings and the audit notes (two passes: the lead sent back the 6 round 1 fact findings it had missed); cheaper model tier; numbers filled in by the lead from the session record (exact)",
+      "minutes": 11,
+      "tokens": 1257876,
+      "cost": 1.692,
+      "round": "report"
+    },
+    {
+      "at": "14:48",
+      "who": "Order lead",
+      "what": "Rendered the watermarked preview and looked at every page (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": "preview"
+    },
+    {
+      "at": "14:52",
+      "who": "Order lead",
+      "what": "Preview fixes through the pack after looking at every page: removed literal ** marks from 3 prompts (notes n5, quiz A and B q9), set 2 work lines on quiz q6 so Part 3's heading no longer sits alone at the foot of page 2 in version A, matched log names to the checkers' names, rounded log minutes; re-rendered the preview (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": "preview"
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Pack: guided notes (34 items in 6 sections), lesson slides (9 + title, no student items), quiz (10 questions each in versions A and B). Total student-copy items: 54 (notes 34, quiz A 10, quiz B 10). MC items in the quiz: 14 (7 per version, q1–q5, q7, q8).",
+      "Round 1 — Maker (6.1 min, 2,244,567 tokens, $2.024 exact): wrote all three documents. The lead ran Wilco on the 14 MC items: keys passed (54 rows, 0 errors), test-wise passed (worst middle bot 32% vs chance 25%, line 35%). The lead also noticed from a preview render that quiz q4 choices like '2 Ca, 4 O, 4 H' wrapped mid-choice in the 4-column layout and flagged it as a layout fix (not measured).",
+      "Round 1 — Blind tester (1.9 + 0.7 = 2.6 min, 678,791 tokens, $0.866 exact): answered all 54 items without the key, then scored; matched 54 of 54 (all 10 open items agreed by hand). Findings: 6 FIX, 1 JUDGMENT, 2 KEEP. FIX: n33 giveaway/weight word ('gets heavier'); A q8 too easy for L3, not parallel to B q8; L3 share only 30% (3 of 10); B q9 weight language ('is heavier'); n2 missing reversed accept forms; n20 missing 'all the atoms'. JUDGMENT: A q7 key may cue test-wise student. KEEP: B q1 order cue unavoidable at L1; n4 'somewhere' is teacher's own phrase.",
+      "Round 1 — Fact checker (2.6 min, 524,521 tokens, $0.925 exact): worked all 54 items blind, then checked 280 claims (notes 104, slides 54, quiz 122); 259 source, 6 reference, 7 off, 8 judgment = 15 flagged. 6 FIX: q6 key precision (17 → 17.0); A q7 figure showed bubbles and gas arrows before mixing; B q7 figure showed puffed-up bag before mixing; slide 7 showed gas leaving before the reaction; A q9 key said 'balance lost its mass'; n2 missing reversed accept forms. 5 JUDGMENT: weight language in 4 places; sealed-bag buoyancy; steel-wool idealization; glow-stick causation reversed; 'molecule' for ionic compounds. 2 KEEP: equations and counts all correct; beyond-source claims true.",
+      "Round 2 — Maker (2.6 min, 919,666 tokens, $0.918 exact): new session fixed all 12 FIX items: n33 (sentence rewritten, giveaway gone); A q8 (shape matched B q8 with H₂ + O₂ → 2H₂O); q7 raised to L3 in both versions (40%); B q9 'has more mass'; n2 reversed forms added; n20 'all the atoms' added; A q6 key 17.0; three figures corrected (A q7 cup, B q7 bag, slide 7 flasks); A q9 key reworded; q4 choices shortened. After the fix, the lead ran Wilco: keys passed but test-wise FAILED (middle bot 36% vs line 35%, chance 25%) in Chemical Reactions Quiz (all versions).",
+      "Round 2 second pass — Maker (1.3 min, 632,763 tokens, $0.551 exact): new session changed wrong choices in 4 items (B q1, A q8, B q7, B q8) to shorten or lengthen them so the key was no longer predominantly middle-length; middle bot dropped from 36% to 21%. Lead ran Wilco again (round 3): pass, worst longest 32%.",
+      "Round 2 — Blind tester (1.3 + 0.8 = 2.1 min, 773,954 tokens, $0.830 exact): fresh agent rechecked 14 changed items; 11 of 12 matched the key (1 scorer-mismatch on n20, not a wrong answer). Confirmed all 11 round 1 FIX findings as fixed. Found 3 new FIX and 1 accept-gap FIX: A q8 and B q8 still too easy for L3 (equations are still near the practiced 2Mg + O₂ → 2MgO shape); B q4 wrong choice D (3, 4) matches no real error; n33 accept list missing larger/bigger/higher. 2 new JUDGMENT: n2 'created; lost' near banned language; sealed-bag buoyancy (now applies to A q7 too).",
+      "Round 2 — Fact checker (1.6 min, 704,546 tokens, $0.793 exact): fresh agent rechecked 14 changed items and 3 figures; 87 claims checked, 0 new FIX. Confirmed all 11 round 1 fact fixes, including all three corrected figures, the A q9 key rewording and B q9 'has more mass'. 2 JUDGMENT carried forward (buoyancy, steel-wool idealization). 3 KEEP: n2 'created; lost' is true about atoms; q4 tables fine; all changed equations and counts correct.",
+      "Round 3 — Maker (1.3 min, 538,400 tokens, $0.488 exact): new session fixed all 4 round 2 FIX items: A q8 and B q8 changed to Na + Cl₂ → NaCl and Cu + O₂ → CuO (not in the teacher's notes); B q4 wrong choice D replaced with 4, 12 (coefficient applied twice); n33 accept list extended with larger, a larger, bigger, a bigger and higher. Lead ran Wilco (round 4): pass, worst specific 32%.",
+      "Round 3 — Blind tester (0.6 + 0.8 = 1.4 min, 525,381 tokens, $0.511 exact): fresh agent rechecked 4 items; 4 of 4 matched. B q4 and n33 confirmed fixed. A q8 and B q8 still too easy for L3: the equations were swapped for unpracticed ones, but the one-step shape (stem does the first step, one mismatched row left) echoes the practiced 2Mg + O₂ → 2MgO pattern. After round 3 the runbook says stop.",
+      "Round 3 — Fact checker (0.9 min, 291,967 tokens, $0.369 exact): fresh agent rechecked 4 items; 31 claims, 0 flagged. All 4 fixes confirmed factually correct. A q8 and B q8 equations are real and from published references (OpenStax Chemistry 2e, RSC Education). No key or why line says mass disappears.",
+      "Wilco history (all test-wise runs on the 14 MC quiz items; chance 25%, line 35%): round 1 worst middle 32% — pass; round 2 worst middle 36% — FAIL; round 3 (after second pass) worst longest 32% — pass; round 4 (after round 3 maker) worst specific 32% — pass. The one fail sent the pack back to the maker for a second pass on wrong-choice lengths.",
+      "Open after round 3 — goes to teacher with JUDGMENT calls: (1) FIX: A q8 and B q8 remain too easy for L3; tester's suggested fix is equations where two rows are unmatched after the first step (e.g. Al + Cl₂ → AlCl₃ and Fe + Cl₂ → FeCl₃), forcing the student to find two coefficients. (2) JUDGMENT B q4: easier than A q4 because it does not need the parentheses rule; teacher can keep both at L2 or change B to also use parentheses (e.g. 2Mg(OH)₂). (3) JUDGMENT n2: 'created; lost' accepted — close to the 'mass disappeared' language the teacher wants students to drop. (4) JUDGMENT sealed-bag buoyancy: 150.0 g keys are correct at grade 8, but a class balance may read a few tenths lower; consider 'about 150.0 g' in why lines for B q7, A q7, A q9 and slide 7. (5) JUDGMENT B q9: steel-wool simplification (all iron assumed burned; source uses same). (6) JUDGMENT A q3 why: glow-stick causation slightly backwards; source says clue is light. (7) JUDGMENT 'molecule' for ionic compounds throughout — grade 8 simplification from source. (8) JUDGMENT slide 6: 'gets heavier' in bullet 5 and speaker notes — source uses same phrase, so round 1 left it as a judgment.",
+      "Totals (all numbers exact from each session's own total_cost_usd and wall-clock minutes, as reported in handoffs.md): agent minutes 22.5 (Maker 11.3, Blind tester 6.1, Fact checker 5.1); order lead not measured; Wilco ~1 s per run (8 runs ≈ 8 s), not counted. Total agent tokens 7,834,556 (Maker 4,335,396, Blind tester 1,978,126, Fact checker 1,521,034). Total agent cost $8.275 (Maker $3.981, Blind tester $2.207, Fact checker $2.087). Reporter cost added by the lead after session ends. Per document and per question: the maker wrote all three documents in one session, so costs cannot be split by document. Per question: guided notes 34 items, slides 9 (no student items), quiz 10 questions × 2 versions = 20 quiz items. Cost preferred source: each session's own total_cost_usd (API list prices), as the brief recommends, since token counts can understate billed use in sessions that re-read context.",
+      "Minutes in the log are each session's wall-clock time rounded to whole minutes (at least 1); the exact times to a tenth of a minute are in the order lead's notes. Tokens and dollars are exact from each session's record.",
+      "With the reporter (11 minutes, 1,257,876 tokens, $1.69, cheaper model tier) the logged agent total is $9.97 for 54 questions (about $0.18 a question) and 9.09 million tokens; the order lead's own work (writing the sample order, setting up each fresh agent, running Wilco, merging entries, rendering and fixing the preview) was not measured."
+    ]
+  }
+}

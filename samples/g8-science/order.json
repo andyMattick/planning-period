@@ -1,0 +1,35 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g8-science",
+  "createdAt": "2026-11-05T14:13:00.000Z",
+  "order": {
+    "teacher": "Mr. Okafor (made-up sample)",
+    "grade": "8",
+    "subject": "science",
+    "topic": "Chemical reactions and conservation of mass",
+    "items": ["notes", "slides", "quiz"],
+    "extras": ["styleSetup"],
+    "requests": "Follow my lesson notes. I never want a key or explanation that says mass disappears or that gas has no mass. Use the counting table I use for atoms.",
+    "itemRequests": {
+      "notes": "Fill-in blanks like my old notes, with a word bank and a Stop and think box per section.",
+      "slides": "One slide per big idea, plus a closed vs. open flask slide. Speaker notes should tell me what to ask the class.",
+      "quiz": "10 questions, my Know it / Use it / Explain it parts. At least one balancing question and one open vs. closed mass problem. Include a picture with no answer labels."
+    },
+    "quantities": { "notes": 1, "slides": 1, "quiz": 1 },
+    "sources": ["unit4-lesson3-notes.md"],
+    "styleExamples": ["unit3-density-quiz-A.md", "unit3-guided-notes-states.md"]
+  },
+  "lines": [
+    { "id": "notes", "label": "Guided notes", "quantity": 1, "tokensEach": 25, "tokens": 25 },
+    { "id": "slides", "label": "Lesson slides", "quantity": 1, "tokensEach": 50, "tokens": 50 },
+    { "id": "quiz", "label": "Quiz with A/B versions", "quantity": 1, "tokensEach": 40, "tokens": 40 },
+    { "id": "styleSetup", "label": "Set up my agents with my examples", "quantity": 1, "tokensEach": 0, "tokens": 0, "extra": true }
+  ],
+  "tokenTotal": 115,
+  "replyTo": "okafor@example.com",
+  "notices": {
+    "tokenNote": "Token prices are pilot estimates from real build costs; they will be recalibrated after the first orders.",
+    "aiNotice": "Made with AI from the source material you provided, then checked by separate AI agents. Please review everything before it goes in front of students.",
+    "deleteNotice": "Your uploads and our working copies are deleted after you receive your pack. Your style examples are kept only for your own agents, and you can delete them at any time. Nothing you send is used for anyone else."
+  }
+}
