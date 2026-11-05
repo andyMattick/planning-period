@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-page-title="Order a pack">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Order a pack</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" data-brand="shortName">&nbsp;</a>
+    <nav class="nav"><a href="./" aria-current="page">Order</a><a href="samples.html">Sample packs</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Order a classroom pack</h1>
+    <p class="tagline" data-brand="tagline"></p>
+    <div id="load-error" class="error" role="alert"></div>
+  </section>
+
+  <section class="how" aria-labelledby="how-h">
+    <h2 id="how-h">How it works</h2>
+    <p class="sell">Agents taught by teachers, checked by agents that didn't write the work.</p>
+    <p class="small">You send your own examples and your source. One agent makes the pack in your style. Fresh agents that never saw it being made check every question. A reporter logs every step, so you get a report that shows the work.</p>
+    <ul class="team">
+      <li><b>📝 Maker</b>Writes the pack from your source, in your style.</li>
+      <li><b>🙈 Blind testers</b>One per subject. They solve the student copy with no key.</li>
+      <li><b>🧮 Solver</b>Works every math answer on its own.</li>
+      <li><b>🔎 Fact checker</b>Checks every claim, date, name and term (science, social studies).</li>
+      <li><b>🤖 Wilco</b>Test-wise bots: can a student guess the answer without knowing it?</li>
+      <li><b>🧾 Reporter</b>Logs every step and writes your audit report.</li>
+      <li><b>🔎 Auditor</b>Learns from each order and your comments, and keeps it affordable.</li>
+    </ul>
+  </section>
+
+  <form id="order" novalidate>
+    <!-- 1. Training documents -->
+    <section class="step" aria-labelledby="s1-h">
+      <div class="step-head"><span class="num" aria-hidden="true">1</span><div>
+        <h2 id="s1-h">Drop in your training documents</h2>
+        <p>Your own past worksheets, quizzes or notes, so your agents learn your style: layout, wording and level.</p>
+      </div></div>
+      <div class="drop" data-list="training">
+        <p>Drag files here, or</p>
+        <label class="btn" for="f-training">Choose files</label>
+        <input class="sr-only" type="file" id="f-training" multiple>
+        <p class="small muted" style="margin-top:.6em">Any file type: PDF, Word, PowerPoint, photos of paper copies.</p>
+      </div>
+      <ul class="files" id="list-training"></ul>
+      <div class="meter" id="meter-training"></div>
+      <div class="error" id="err-training" role="alert"></div>
+    </section>
+
+    <!-- 2. Source material -->
+    <section class="step" aria-labelledby="s2-h">
+      <div class="step-head"><span class="num" aria-hidden="true">2</span><div>
+        <h2 id="s2-h">Drop in your source material</h2>
+        <p>What the pack should teach: your notes, a chapter, the standards, your slides.</p>
+      </div></div>
+      <p class="notice" id="fence">Only upload material you have the right to use. A limited amount of copyrighted material (for example a chapter or a few pages) is OK for your own classroom. Please keep it to <b id="limit-text">25 MB</b> in total.</p>
+      <div class="drop" data-list="sources">
+        <p>Drag files here, or</p>
+        <label class="btn" for="f-sources">Choose files</label>
+        <input class="sr-only" type="file" id="f-sources" multiple>
+      </div>
+      <ul class="files" id="list-sources"></ul>
+      <div class="meter" id="meter-sources"></div>
+      <div class="error" id="err-sources" role="alert"></div>
+    </section>
+
+    <!-- 3. Menu -->
+    <section class="step" aria-labelledby="s3-h">
+      <div class="step-head"><span class="num" aria-hidden="true">3</span><div>
+        <h2 id="s3-h">Pick from the menu</h2>
+        <p>Tell us the class and topic, then choose what you'd like made.</p>
+      </div></div>
+      <div class="row">
+        <div class="field"><label for="grade">Grade</label><select id="grade" required><option value="">Choose a grade</option></select></div>
+        <div class="field"><label for="subject">Subject</label><select id="subject" required><option value="">Choose a subject</option></select></div>
+      </div>
+      <div class="field" id="other-wrap" hidden><label for="subject-other">Which subject?</label><input type="text" id="subject-other" placeholder="For example: Spanish, Art, Health"></div>
+      <div class="field"><label for="topic">Topic</label><input type="text" id="topic" placeholder="For example: Ratios and rates, The water cycle, The American Revolution"></div>
+      <h3 style="margin-top:16px">What to make</h3>
+      <div class="cards" id="items"></div>
+      <h3 style="margin-top:18px">Extras</h3>
+      <div class="cards" id="extras"></div>
+      <div class="error" id="err-menu" role="alert"></div>
+    </section>
+
+    <!-- 4. Requests -->
+    <section class="step" aria-labelledby="s4-h">
+      <div class="step-head"><span class="num" aria-hidden="true">4</span><div>
+        <h2 id="s4-h">Specific requests</h2>
+        <p>Anything your agents should know. For example: “use pets in the stories” or “level 3 needs two steps”.</p>
+      </div></div>
+      <div id="item-requests"><p class="muted small" id="no-items-note">Pick something in step 3 to add a request just for that item.</p></div>
+      <div class="field"><label for="req-general">For the whole order</label><textarea id="req-general" placeholder="Reading level, vocabulary to use, things to avoid, how long it should be…"></textarea></div>
+    </section>
+
+    <!-- 5. Cost and send -->
+    <section class="step" aria-labelledby="s5-h">
+      <div class="step-head"><span class="num" aria-hidden="true">5</span><div>
+        <h2 id="s5-h">Token cost</h2>
+        <p>The total updates as you choose.</p>
+      </div></div>
+      <table class="cost-table" aria-live="polite"><tbody id="cost-lines"></tbody></table>
+      <p class="small muted" data-brand="tokenNote"></p>
+      <div class="row">
+        <div class="field"><label for="teacher">Your name <span class="hint">(how the pack should address you)</span></label><input type="text" id="teacher" autocomplete="name" placeholder="Ms. Rivera"></div>
+        <div class="field"><label for="reply">Your email <span class="hint">(where to send the pack)</span></label><input type="email" id="reply" autocomplete="email" placeholder="you@school.org"></div>
+      </div>
+      <div class="error" id="err-send" role="alert"></div>
+      <div class="send-row">
+        <button type="submit" class="btn primary big" id="send">Send</button>
+        <p class="small muted" style="margin-top:.6em">Nothing is uploaded. Send makes one zip file on this device for you to email.</p>
+      </div>
+    </section>
+  </form>
+
+  <section class="step done" id="done" hidden tabindex="-1" aria-labelledby="done-h">
+    <h2 id="done-h">Your order file is ready</h2>
+    <p>We saved <b id="zip-name"></b> to your downloads (<span id="zip-size"></span>). <a id="zip-again" href="#">Download it again</a></p>
+    <p>Email this file to <span class="email" id="order-email"></span> <span class="ph" id="ph-tag" hidden>(placeholder address)</span></p>
+    <p id="turnaround"></p>
+    <p class="notice" data-brand="aiNotice"></p>
+    <p class="small" data-brand="deleteNotice"></p>
+    <button type="button" class="btn" id="new-order">Start a new order</button>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><span data-brand="promise"></span> · <a href="samples.html">See sample packs</a></div></footer>
+
+<script src="common.js"></script>
+<script src="zip.js"></script>
+<script src="order.js"></script>
+</body>
+</html>
