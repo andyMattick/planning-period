@@ -1,0 +1,1105 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-4b9e2d",
+  "date": "2026-11-05",
+  "order": {
+    "teacher": "Mr. Lindqvist (made-up sample, homeschool co-op)",
+    "grade": "4",
+    "subject": "math",
+    "topic": "Multi-step word problems with multiplication and division (remainders)",
+    "items": [
+      "worksheet",
+      "quiz"
+    ],
+    "extras": [
+      "tpt"
+    ],
+    "requests": "Real-world stories, please (our farm stand, the co-op, trips). Level 3 needs two steps. In each level, put one problem where the remainder changes the answer: round up, drop it, or the remainder is the answer.",
+    "itemRequests": {
+      "worksheet": "About 12 problems, easiest first. Leave room to show work.",
+      "quiz": "10 questions. Version B should be just as hard as A."
+    },
+    "sources": [
+      "remainders-lesson-notes.md"
+    ],
+    "styleExamples": [
+      "farm-stand-check-in.md",
+      "co-op-field-trip-quiz.md"
+    ]
+  },
+  "style": {
+    "notes": [
+      "Name and Date on one line in a box; bold directions that start with \"Your job:\"",
+      "Questions numbered 1) with a closing parenthesis; choices as (A) (B) (C) (D)",
+      "Short, friendly stories from the farm stand, co-op, library, garden and trips",
+      "Answer blanks carry the unit; students show their thinking",
+      "Parts go Warm-Up, On Your Own, Two-Step Challenge ★; star problems have a \"Think:\" planning line",
+      "Key: each answer on its own line, the answer, a dash, then the short calculation; remainders and estimates noted"
+    ],
+    "font": "Lexend",
+    "accent": "#2f6b3a",
+    "layout": {
+      "nameBox": true,
+      "boldDirections": true,
+      "fields": [
+        "Name",
+        "Date"
+      ],
+      "numbering": "1)",
+      "choiceStyle": "(A)",
+      "workLines": 3
+    }
+  },
+  "documents": [
+    {
+      "item": "worksheet",
+      "kind": "worksheet",
+      "title": "Farm Stand and Co-op: Remainders in Stories (Week 9)",
+      "directions": "Your job: Read each story twice. Show your thinking in the space. Picture the last group: does the leftover still need a place? Write your answer with its unit.",
+      "sections": [
+        {
+          "heading": "Warm-Up (one step)",
+          "questions": [
+            {
+              "id": "w1",
+              "level": 1,
+              "skill": "multiply in a story",
+              "type": "numeric",
+              "prompt": "The farm stand has 7 crates of corn. Each crate holds 24 ears of corn. How many ears of corn is that? Think: 7 groups of 24.",
+              "answer": 168,
+              "accept": [
+                "168",
+                "168 ears"
+              ],
+              "why": "168 ears — 7 × 24 = 168"
+            },
+            {
+              "id": "w2",
+              "level": 1,
+              "skill": "remainder: round up",
+              "type": "numeric",
+              "prompt": "29 kids are going to the pumpkin patch. Each car holds 4 kids. How many cars do we need so every kid gets a ride? Hint: 29 ÷ 4 = 7 R1. Does the leftover kid still need a car?",
+              "answer": 8,
+              "accept": [
+                "8",
+                "8 cars"
+              ],
+              "why": "8 cars — 29 ÷ 4 = 7 R1; round up, the 1 kid left still needs a car"
+            },
+            {
+              "id": "w3",
+              "level": 1,
+              "skill": "remainder: drop it",
+              "type": "numeric",
+              "prompt": "Our hens laid 45 eggs. We sell eggs in cartons of 6. How many full cartons can we sell? Hint: 45 ÷ 6 = 7 R3. Can 3 eggs fill a carton?",
+              "answer": 7,
+              "accept": [
+                "7",
+                "7 cartons"
+              ],
+              "why": "7 cartons — 45 ÷ 6 = 7 R3; drop the 3, they can't fill a carton"
+            },
+            {
+              "id": "w4",
+              "level": 1,
+              "skill": "remainder is the answer",
+              "type": "numeric",
+              "prompt": "The library gives 39 bookmarks to 5 kids to share equally. How many bookmarks are left over? Hint: 39 ÷ 5 = 7 R4. What is the question asking about?",
+              "answer": 4,
+              "accept": [
+                "4",
+                "4 bookmarks"
+              ],
+              "why": "4 bookmarks — 39 ÷ 5 = 7 R4; the question asks what is left, so the remainder is the answer"
+            }
+          ]
+        },
+        {
+          "heading": "On Your Own",
+          "questions": [
+            {
+              "id": "w5",
+              "level": 2,
+              "skill": "multiply in a story",
+              "type": "numeric",
+              "prompt": "The co-op garden has 23 rows of carrots. There are 18 carrots in each row. How many carrots are in the garden?",
+              "answer": 414,
+              "accept": [
+                "414",
+                "414 carrots"
+              ],
+              "why": "414 carrots — 23 × 18 = 414"
+            },
+            {
+              "id": "w6",
+              "level": 2,
+              "skill": "remainder: round up",
+              "type": "numeric",
+              "prompt": "52 people are going on the co-op trip to the science museum. Each van holds 8 people. How many vans do we need so everyone can go?",
+              "answer": 7,
+              "accept": [
+                "7",
+                "7 vans"
+              ],
+              "why": "7 vans — 52 ÷ 8 = 6 R4; round up, the 4 people left still need a seat"
+            },
+            {
+              "id": "w7",
+              "level": 2,
+              "skill": "remainder: drop it",
+              "type": "numeric",
+              "prompt": "Mom baked 158 muffins for the farm stand. She puts 6 muffins in each box. How many full boxes can she sell?",
+              "answer": 26,
+              "accept": [
+                "26",
+                "26 boxes"
+              ],
+              "why": "26 boxes — 158 ÷ 6 = 26 R2; drop the 2, they can't make a full box"
+            },
+            {
+              "id": "w8",
+              "level": 2,
+              "skill": "remainder is the answer",
+              "type": "numeric",
+              "prompt": "The library has 250 stickers. 7 classes share them equally. How many stickers are left over?",
+              "answer": 5,
+              "accept": [
+                "5",
+                "5 stickers"
+              ],
+              "why": "5 stickers — 250 ÷ 7 = 35 R5; the question asks what is left, so the answer is the remainder"
+            }
+          ]
+        },
+        {
+          "heading": "Two-Step Challenge ★",
+          "questions": [
+            {
+              "id": "w9",
+              "level": 3,
+              "skill": "two steps: times as many, then add",
+              "type": "numeric",
+              "prompt": "On Friday the farm stand sold 145 ears of corn. On Saturday it sold 3 times as many. How many ears of corn did it sell on both days? Think: What do I find first? Then estimate to check.",
+              "answer": 580,
+              "accept": [
+                "580",
+                "580 ears"
+              ],
+              "why": "580 ears — 3 × 145 = 435, then 435 + 145 = 580; estimate: 3 × 150 = 450, plus 150 is 600, close to 580",
+              "space": 4
+            },
+            {
+              "id": "w10",
+              "level": 3,
+              "skill": "two steps: multiply, then divide (drop it)",
+              "type": "numeric",
+              "prompt": "The garden club picked 6 buckets of 47 tomatoes. They put 8 tomatoes in each bag to sell. How many full bags can they sell? Think: What do I find first? Then estimate to check.",
+              "answer": 35,
+              "accept": [
+                "35",
+                "35 bags"
+              ],
+              "why": "35 bags — 6 × 47 = 282, then 282 ÷ 8 = 35 R2; drop the 2; estimate: 6 × 50 = 300, 300 ÷ 8 is about 37, close to 35",
+              "space": 4
+            },
+            {
+              "id": "w11",
+              "level": 3,
+              "skill": "two steps: divide (round up), then multiply",
+              "type": "numeric",
+              "prompt": "75 people are coming to the co-op harvest supper. Each table seats 6. We set up enough tables so everyone has a seat. Each table gets a jar with 3 sunflowers. How many sunflowers do we need? Think: What do I find first? Then estimate to check.",
+              "answer": 39,
+              "accept": [
+                "39",
+                "39 sunflowers"
+              ],
+              "why": "39 sunflowers — 75 ÷ 6 = 12 R3, round up to 13 tables (the 3 people still need a seat), then 13 × 3 = 39; estimate: 75 is close to 72, 72 ÷ 6 = 12 tables, plus 1 for the leftover people is about 13, and 13 × 3 is about 40, close to 39",
+              "space": 4
+            },
+            {
+              "id": "w12",
+              "level": 3,
+              "skill": "two steps: multiply, then divide (remainder is the answer)",
+              "type": "numeric",
+              "prompt": "The library got 4 boxes of 65 new books. They put 9 books on each cart and fill as many carts as they can. How many books are left over? Think: What do I find first? Then estimate to check.",
+              "answer": 8,
+              "accept": [
+                "8",
+                "8 books"
+              ],
+              "why": "8 books — 4 × 65 = 260, then 260 ÷ 9 = 28 R8; the answer is the remainder; check: 9 × 28 = 252, 252 + 8 = 260; estimate: 270 ÷ 9 = 30 carts, so about 28 carts makes sense",
+              "space": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "quiz",
+      "kind": "quiz",
+      "title": "Co-op Quiz: Remainders in Stories (Week 9)",
+      "directions": "Your job: Read each story twice. Show your thinking. Circle the letter or write the answer with its unit.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "sections": [
+        {
+          "heading": "Warm-Up (one step)",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "multiply in a story",
+              "type": "numeric",
+              "prompt": {
+                "A": "The co-op orders 6 cases of jam. Each case has 24 jars. How many jars is that?",
+                "B": "The garden has 7 rows of beans. Each row has 32 bean plants. How many bean plants is that?"
+              },
+              "answer": {
+                "A": 144,
+                "B": 224
+              },
+              "accept": {
+                "A": [
+                  "144",
+                  "144 jars"
+                ],
+                "B": [
+                  "224",
+                  "224 plants"
+                ]
+              },
+              "why": {
+                "A": "144 jars — 6 × 24 = 144",
+                "B": "224 plants — 7 × 32 = 224"
+              }
+            },
+            {
+              "id": "q2",
+              "level": 1,
+              "skill": "choose the equation",
+              "type": "mc",
+              "prompt": {
+                "A": "The co-op has 96 seed packets. 8 families share them equally. Let p be the number of packets each family gets. Which equation fits the story?",
+                "B": "The farm stand has 84 jars of jam. Dad puts them on 7 shelves, the same number on each. Let j be the number of jars on each shelf. Which equation fits the story?"
+              },
+              "choices": {
+                "A": [
+                  "8 × 96 = p",
+                  "96 ÷ 8 = p",
+                  "p ÷ 8 = 96",
+                  "8 ÷ 96 = p"
+                ],
+                "B": [
+                  "j + 7 = 84",
+                  "7 ÷ 84 = j",
+                  "84 ÷ 7 = j",
+                  "j ÷ 7 = 84"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 2
+              },
+              "why": {
+                "A": "(B) 96 ÷ 8 = p — sharing equally is dividing: 96 packets ÷ 8 families",
+                "B": "(C) 84 ÷ 7 = j — putting the same number on each shelf is dividing: 84 jars ÷ 7 shelves"
+              }
+            },
+            {
+              "id": "q3",
+              "level": 1,
+              "skill": "remainder: round up",
+              "type": "numeric",
+              "prompt": {
+                "A": "34 kids are going to the library story day. Each car holds 4 kids. How many cars do we need so every kid gets a ride? Picture the last group.",
+                "B": "57 people are coming to the co-op picnic. Each table seats 6. How many tables do we need so everyone has a seat? Picture the last group."
+              },
+              "answer": {
+                "A": 9,
+                "B": 10
+              },
+              "accept": {
+                "A": [
+                  "9",
+                  "9 cars"
+                ],
+                "B": [
+                  "10",
+                  "10 tables"
+                ]
+              },
+              "why": {
+                "A": "9 cars — 34 ÷ 4 = 8 R2; round up, the 2 kids left still need a car",
+                "B": "10 tables — 57 ÷ 6 = 9 R3; round up, the 3 people left still need a seat"
+              }
+            }
+          ]
+        },
+        {
+          "heading": "On Your Own",
+          "questions": [
+            {
+              "id": "q4",
+              "level": 2,
+              "skill": "remainder: drop it",
+              "type": "numeric",
+              "prompt": {
+                "A": "Our hens laid 125 eggs this week. We sell eggs in cartons of 6. How many full cartons can we sell?",
+                "B": "Mom baked 142 muffins. She puts 4 muffins in each box. How many full boxes can she sell at the farm stand?"
+              },
+              "answer": {
+                "A": 20,
+                "B": 35
+              },
+              "accept": {
+                "A": [
+                  "20",
+                  "20 cartons"
+                ],
+                "B": [
+                  "35",
+                  "35 boxes"
+                ]
+              },
+              "why": {
+                "A": "20 cartons — 125 ÷ 6 = 20 R5; drop the 5, they can't fill a carton",
+                "B": "35 boxes — 142 ÷ 4 = 35 R2; drop the 2, they can't fill a box"
+              }
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "decide what the remainder means",
+              "type": "mc",
+              "prompt": {
+                "A": "47 kids from the co-op are going canoeing. Each canoe holds 3 kids. 47 ÷ 3 = 15 R2. How many canoes do we need so every kid can go?",
+                "B": "The farm stand has 82 eggs. Eggs go in cartons of 6. 82 ÷ 6 = 13 R4. How many full cartons can we sell?"
+              },
+              "choices": {
+                "A": [
+                  "15 canoes",
+                  "15 R2 canoes",
+                  "2 canoes",
+                  "16 canoes"
+                ],
+                "B": [
+                  "13 cartons",
+                  "14 cartons",
+                  "13 R4 cartons",
+                  "4 cartons"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 0
+              },
+              "why": {
+                "A": "(D) 16 canoes — round up, the 2 kids left still need a canoe",
+                "B": "(A) 13 cartons — drop the 4, they can't fill a carton"
+              }
+            },
+            {
+              "id": "q6",
+              "level": 2,
+              "skill": "remainder is the answer",
+              "type": "numeric",
+              "prompt": {
+                "A": "The library has 200 bookmarks. 6 classes share them equally. How many bookmarks are left over?",
+                "B": "The garden club has 150 bean seeds. 8 kids share them equally. How many seeds are left over?"
+              },
+              "answer": {
+                "A": 2,
+                "B": 6
+              },
+              "accept": {
+                "A": [
+                  "2",
+                  "2 bookmarks"
+                ],
+                "B": [
+                  "6",
+                  "6 seeds"
+                ]
+              },
+              "why": {
+                "A": "2 bookmarks — 200 ÷ 6 = 33 R2; the question asks what is left, so the answer is the remainder",
+                "B": "6 seeds — 150 ÷ 8 = 18 R6; the question asks what is left, so the answer is the remainder"
+              }
+            },
+            {
+              "id": "q7",
+              "level": 2,
+              "skill": "divide with a remainder",
+              "type": "mc",
+              "prompt": {
+                "A": "What is 347 ÷ 6?",
+                "B": "What is 529 ÷ 7?"
+              },
+              "choices": {
+                "A": [
+                  "57 R5",
+                  "59 R3",
+                  "58 R1",
+                  "51 R1"
+                ],
+                "B": [
+                  "71 R2",
+                  "76 R3",
+                  "74 R1",
+                  "75 R4"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 3
+              },
+              "why": {
+                "A": "(A) 57 R5 — 6 × 57 = 342, 347 − 342 = 5",
+                "B": "(D) 75 R4 — 7 × 75 = 525, 529 − 525 = 4"
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Two-Step Challenge ★",
+          "questions": [
+            {
+              "id": "q8",
+              "level": 3,
+              "skill": "two steps: multiply, then divide (drop it)",
+              "type": "numeric",
+              "prompt": {
+                "A": "The farm stand picked 5 crates of 38 apples. We put 6 apples in each bag. How many full bags can we sell? Think: What do I find first? Then estimate to check.",
+                "B": "The garden grew 6 rows of 43 carrots. Dad ties 8 carrots in each bunch. How many full bunches can he sell? Think: What do I find first? Then estimate to check."
+              },
+              "answer": {
+                "A": 31,
+                "B": 32
+              },
+              "accept": {
+                "A": [
+                  "31",
+                  "31 bags"
+                ],
+                "B": [
+                  "32",
+                  "32 bunches"
+                ]
+              },
+              "why": {
+                "A": "31 bags — 5 × 38 = 190, then 190 ÷ 6 = 31 R4; drop the 4; estimate: 5 × 40 = 200, 200 ÷ 6 is about 33, close to 31",
+                "B": "32 bunches — 6 × 43 = 258, then 258 ÷ 8 = 32 R2; drop the 2; estimate: 6 × 40 = 240, 240 ÷ 8 = 30, close to 32"
+              },
+              "space": 4
+            },
+            {
+              "id": "q9",
+              "level": 3,
+              "skill": "two steps: divide (round up), then multiply",
+              "type": "mc",
+              "prompt": {
+                "A": "58 people are going on the co-op trip to the apple orchard. Each van holds 8 people. Each van costs $40 for the day. What will the vans cost in all? Think: What do I find first? Then estimate to check.",
+                "B": "45 kids are going to the county fair. Each car holds 4 kids. Gas for each car costs $9. What will the gas cost in all? Think: What do I find first? Then estimate to check."
+              },
+              "choices": {
+                "A": [
+                  "$280",
+                  "$48",
+                  "$320",
+                  "$98"
+                ],
+                "B": [
+                  "$405",
+                  "$108",
+                  "$54",
+                  "$99"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 1
+              },
+              "why": {
+                "A": "(C) $320 — 58 ÷ 8 = 7 R2, round up to 8 vans, then 8 × $40 = $320; check: 7 × 8 = 56 is just under 58, so 7 vans are not enough; estimate: 58 is about 60 people, 60 ÷ 8 is about 8 vans, 8 × $40 = $320",
+                "B": "(B) $108 — 45 ÷ 4 = 11 R1, round up to 12 cars, then 12 × $9 = $108; estimate: 12 × 10 = 120, close to 108"
+              }
+            },
+            {
+              "id": "q10",
+              "level": 3,
+              "skill": "two steps: multiply, then divide (remainder is the answer)",
+              "type": "numeric",
+              "prompt": {
+                "A": "The library got 3 boxes of 85 new books. They put 9 books in each crate for the school visit and fill as many crates as they can. How many books are left over? Think: What do I find first? Then estimate to check.",
+                "B": "The garden club has 4 packs of 75 seeds. They plant 7 seeds in each pot and fill as many pots as they can. How many seeds are left over? Think: What do I find first? Then estimate to check."
+              },
+              "answer": {
+                "A": 3,
+                "B": 6
+              },
+              "accept": {
+                "A": [
+                  "3",
+                  "3 books"
+                ],
+                "B": [
+                  "6",
+                  "6 seeds"
+                ]
+              },
+              "why": {
+                "A": "3 books — 3 × 85 = 255, then 255 ÷ 9 = 28 R3; the answer is the remainder; check: 9 × 28 = 252, 252 + 3 = 255; estimate: 3 × 90 = 270, 270 ÷ 9 = 30 crates, so about 28 makes sense",
+                "B": "6 seeds — 4 × 75 = 300, then 300 ÷ 7 = 42 R6; the answer is the remainder; check: 7 × 42 = 294, 294 + 6 = 300; estimate: 280 ÷ 7 = 40 pots, so about 42 makes sense"
+              },
+              "space": 4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "log": [
+    {
+      "at": "14:13",
+      "who": "🧭 Order lead (owner's steps)",
+      "what": "Received the order: worksheet + quiz A/B + TPT guide, 70 tokens; checked it against menu.json; wrote the made-up teacher's sources and two style examples for this sample",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 1
+    },
+    {
+      "at": "14:15",
+      "who": "🎨 Style notes",
+      "what": "Read the 2 style examples and wrote 33 bullet style notes plus layout settings (1) numbering, (A) choices, bold 'Your job:' directions, ★ two-step with a Think: line)",
+      "minutes": 0.7,
+      "tokens": 138940,
+      "cost": 0.27,
+      "round": 1
+    },
+    {
+      "at": "14:20",
+      "who": "📝 Maker",
+      "what": "Wrote the worksheet (12 typed problems, L1–L3, each level with a round-up, a drop-it and a remainder-is-the-answer story) and quiz A/B (10 each: 4 mc, 6 typed); fixed one converge-bot fail on its own check before hand-off",
+      "minutes": 4.3,
+      "tokens": 1168535,
+      "cost": 1.38,
+      "round": 1
+    },
+    {
+      "at": "14:20",
+      "who": "🤖 Wilco",
+      "what": "Round 1: keys check passed (32 question rows, 0 errors, 0 warnings); test-wise bots passed on the 8 quiz choice questions (chance 25%; worst counted bots under the line; the largest-number cue read 50% on only 2 all-number questions, below the 3 it needs to be judged)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 1
+    },
+    {
+      "at": "14:23",
+      "who": "🙈 Blind tester (math)",
+      "what": "Round 1: solved all 32 items from the student copy with no key, matched 32 of 32; then read the key and decided: 6 FIX (q7 A and B remainder-too-big choices, w11 round-up not forced, w4 wording, A q9 estimate in the key, quiz Level 3 share), 2 JUDGMENT for the teacher (q5 A/B use different remainder moves, A q9 lacks B's multiply-everything trap), 1 KEEP",
+      "minutes": 1.9,
+      "tokens": 395795,
+      "cost": 1,
+      "round": 1
+    },
+    {
+      "at": "14:23",
+      "who": "🧮 Solver",
+      "what": "Round 1: worked all 32 answers on its own with node scripts before reading the key, every step of every two-step story: 0 disagreements; 2 JUDGMENT (q7 choices that multiply back to the dividend, B q10 friendlier first step), 2 KEEP",
+      "minutes": 1.8,
+      "tokens": 512940,
+      "cost": 0.99,
+      "round": 1
+    },
+    {
+      "at": "14:24",
+      "who": "🧭 Order lead (owner's steps)",
+      "what": "Merged the FIX list for the maker (5 items: A q7, B q7, w11, w4, A q9 why); sent the quiz Level 3 share finding back as KEEP (the 40% rule is for tests); 3 JUDGMENT items held for the teacher's preview",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 1
+    },
+    {
+      "at": "14:24",
+      "who": "📝 Maker",
+      "what": "Round 2 (new short session, FIX list only): new wrong choices in q7 A and B (remainders under the divisor, from long-division slips), added 'enough tables so everyone has a seat' to w11, reworded w4, wrote a real estimate in A q9's key; all ids and keys kept",
+      "minutes": 0.5,
+      "tokens": 181834,
+      "cost": 0.25,
+      "round": 2
+    },
+    {
+      "at": "14:24",
+      "who": "🤖 Wilco",
+      "what": "Round 2: keys check passed (0 errors, 0 warnings); test-wise bots passed (chance 25%, same worst bots as round 1: the q7 changes moved no bot)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 2
+    },
+    {
+      "at": "14:26",
+      "who": "🙈 Blind tester (math), recheck",
+      "what": "Round 2 recheck (a different fresh agent): solved the 5 changed items blind, matched 5 of 5, confirmed all 5 fixes; found 1 new FIX in the teacher copy (w11's estimate repeats the exact numbers, the same flaw fixed on A q9)",
+      "minutes": 1.1,
+      "tokens": 451325,
+      "cost": 0.68,
+      "round": 2
+    },
+    {
+      "at": "14:26",
+      "who": "📝 Maker",
+      "what": "Round 3 (new short session): rewrote w11's teacher-copy estimate so it rounds first (75 is close to 72, 72 ÷ 6 = 12, plus 1 is about 13, 13 × 3 is about 40); student copy and key unchanged",
+      "minutes": 0.2,
+      "tokens": 169842,
+      "cost": 0.17,
+      "round": 3
+    },
+    {
+      "at": "14:26",
+      "who": "🤖 Wilco",
+      "what": "Round 3: keys check passed (0 errors, 0 warnings); test-wise bots passed (chance 25%)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    },
+    {
+      "at": "14:28",
+      "who": "🙈 Blind tester (math), recheck",
+      "what": "Round 3 recheck (a third fresh agent, cheaper tier): solved w11 blind (39, matched), confirmed the estimate fix, found nothing new",
+      "minutes": 1.8,
+      "tokens": 793860,
+      "cost": 0.43,
+      "round": 3
+    },
+    {
+      "at": "14:31",
+      "who": "🧾 Reporter",
+      "what": "Wrote the log (one row per step) and the audit notes: every round, every catch and fix, Wilco before and after, totals (cheaper model tier)",
+      "minutes": 2.3,
+      "tokens": 200737,
+      "cost": 0.31,
+      "round": 3
+    },
+    {
+      "at": "14:33",
+      "who": "🧭 Order lead (owner's steps)",
+      "what": "Looked at every preview page: the renderer prints its own 'Answer: ____' line, so the maker's inline 'Answer: ________ <unit>' blank showed twice on 24 typed questions. Removed the inline blank from those prompts in pack.json (no other text, key or choice changed; keys and test-wise re-run, both pass) and re-rendered",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    },
+    {
+      "at": "14:36",
+      "who": "🧭 Order lead (owner's steps)",
+      "what": "Rendered the watermarked preview (PDFs, AUDIT-REPORT, REVIEW.html) and looked at every page; the preview goes to the teacher for agreement or changes",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Round 1: Style agent read 2 examples and wrote 33 style notes. Maker wrote 12 worksheet problems (4 per level, every level with round-up, drop-it and remainder-is-the-answer stories) and quiz A/B (10 each: 4 mc, 6 typed, L1 3, L2 4, L3 3). Before hand-off the maker's self-check caught one converge-bot fail at 53% vs 25% chance; the maker fixed wrong choices in q2 both versions, q5 B, q7 both versions, and A q9, and the bots then passed.",
+      "Round 1 Wilco: keys check passed (32 rows, 0 errors). Test-wise bots passed on the 8 quiz choice questions (chance 25%; worst was largest 50%, round 37.5%, middle 31.3%). The pack has only 2 all-number choice questions (q9 A and B), below the 3 needed to judge the largest-number cue, so it was shown but not judged. Most items are typed answers which the bots don't play.",
+      "Round 1 blind tester: solved all 32 items from the student copy with no key, matched 32 of 32. Then read the key and decided 6 FIX, 2 JUDGMENT for the teacher, 1 KEEP.",
+      "FIX A q7 and B q7: two wrong choices in each had remainders bigger than the divisor (A: 56 R11 and 50 R47; B: 74 R11 and 70 R39) and multiplied back to the dividend, leaving test-wise students with a 50/50. Fixed round 2: all wrong choices now have remainders under the divisor and none rebuild to the dividend.",
+      "FIX w11: story said 'we set up' tables but never said everyone must be seated, so a student could defend 12 full tables. Fixed round 2: added 'enough tables so everyone has a seat' so rounding up is the only reading.",
+      "FIX w4: opening sentence put the 5 kids before the 39 bookmarks and read clumsily. Fixed round 2: reworded to 'The library gives 39 bookmarks to 5 kids to share equally.'",
+      "FIX A q9 why: estimate step was 8 × 40 = 320, the exact calculation, not a real estimate. Fixed round 2: estimate now rounds 58 to about 60, so 60 ÷ 8 is about 8 vans and 8 × $40 = $320, plus a check that 7 vans are too few.",
+      "KEEP quiz Level 3 share (raised as FIX by blind tester): each version has 10 items with only 3 Level 3 (30%), below the 40% target. Order lead decision: the 40% rule is for unit tests; the menu quiz has no Level 3 share, and the teacher asked only that Level 3 need two steps, which all three do in both versions.",
+      "KEEP w9: it's a two-step problem with no remainder. The notes review 'times as many' this week, and w10–w12 cover all three remainder types at Level 3.",
+      "JUDGMENT for teacher q5 A/B: A rounds up (canoes) and B drops the remainder (full cartons), so the two versions test different remainder moves at the same spot. Both are fair Level 2 items with the division given, and each version covers all three remainder types.",
+      "JUDGMENT for teacher A q9 choices: B q9 has a multiply-everything trap ($405 = 45 × 9) but A has none. The matching A trap would be 58 × $40 = $2,320. Both versions already have the dropped-remainder trap ($280 and $99).",
+      "Round 1 solver: worked all 32 answers on its own with node scripts, every step: 0 disagreements. Found 2 JUDGMENT (q7 choices that multiply back, same as blind's finding; B q10 friendlier first step with 4 × 75 = 300 vs A's 3 × 85 = 255) and 2 KEEP (B q5 key shown in prompt, intentional; w12 estimate uses compatible numbers).",
+      "Round 2 recheck: blind tester solved the 5 changed items, matched 5 of 5, confirmed all 5 round 2 fixes. Found 1 new FIX in teacher copy: w11's estimate started from the exact 13 tables instead of rounding, the same flaw fixed on A q9. Wilco passed (0 errors, same worst bots).",
+      "Round 3: maker rewrote w11's teacher estimate to round first (75 ≈ 72, 72 ÷ 6 = 12, plus 1 ≈ 13, 13 × 3 ≈ 40). Wilco passed. Recheck solved w11 blind (39, matched), confirmed the fix, found nothing new.",
+      "Preview check by the order lead: the worksheet and quiz printed each typed question's answer blank twice (the maker had written 'Answer: ____ <unit>' into 24 prompts, and the page adds its own Answer line). The inline blanks were removed; the directions still ask for the unit. Nothing else changed.",
+      "Three judgment calls wait for the teacher: quiz q5 (A rounds up, B drops the remainder), A q9 (no 'multiply the two numbers' wrong choice like B q9's $405), and B q10 (its first step, 4 × 75 = 300, is friendlier than A's 3 × 85 = 255).",
+      "How to read Wilco's charts: the 'keys' rounds have no chance line (they check keys, not guessing), and the 'largest' bar at 50% is drawn over the line but was not judged: it needs 3 all-number choice questions and this pack has 2 (A q9's key is the largest choice, B q9's is not).",
+      "Totals: wall clock 18 minutes (14:13 to 14:31 UTC, first to last agent row). Agent minutes 14.6: style notes 0.7, maker 5.0 over 3 rounds (4.3 + 0.5 + 0.2), blind testers 4.8 over 3 rounds, solver 1.8, reporter 2.3. Tokens 4,013,808 and cost $5.48, both exact as each session reported them (its own dollars, at list API prices); most tokens are cache reads of the briefs and the pack. Wilco's scripts and the order lead's steps use no model tokens and are not measured. Per question: 32 question rows (12 worksheet, 10 in each quiz version), about $0.17 each."
+    ],
+    "briefChanges": []
+  },
+  "checks": {
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T14:20:55.507Z",
+        "rows": 32,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T14:20:55.581Z",
+        "questions": 8,
+        "chance": 0.25,
+        "worst": [
+          [
+            "largest",
+            0.5
+          ],
+          [
+            "round",
+            0.375
+          ],
+          [
+            "middle",
+            0.313
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Farm Stand and Co-op: Remainders in Stories (Week 9)",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) A",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) B",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) (all versions)",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 2,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T14:24:48.394Z",
+        "rows": 32,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 2,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T14:24:48.511Z",
+        "questions": 8,
+        "chance": 0.25,
+        "worst": [
+          [
+            "largest",
+            0.5
+          ],
+          [
+            "round",
+            0.375
+          ],
+          [
+            "middle",
+            0.313
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Farm Stand and Co-op: Remainders in Stories (Week 9)",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) A",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) B",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) (all versions)",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 3,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T14:26:51.616Z",
+        "rows": 32,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 3,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T14:26:51.679Z",
+        "questions": 8,
+        "chance": 0.25,
+        "worst": [
+          [
+            "largest",
+            0.5
+          ],
+          [
+            "round",
+            0.375
+          ],
+          [
+            "middle",
+            0.313
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Farm Stand and Co-op: Remainders in Stories (Week 9)",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) A",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) B",
+            "n": 4,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Co-op Quiz: Remainders in Stories (Week 9) (all versions)",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ],
+    "blind": [
+      {
+        "round": 1,
+        "agent": "🙈 Blind tester (math)",
+        "matched": 32,
+        "of": 32,
+        "byLevel": {
+          "1": {
+            "items": 10,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "2": {
+            "items": 12,
+            "accuracy": 1,
+            "meanConfidence": 4.8,
+            "tooEasy": 0
+          },
+          "3": {
+            "items": 10,
+            "accuracy": 1,
+            "meanConfidence": 4.8,
+            "tooEasy": 0
+          }
+        },
+        "findings": [
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) A q7",
+            "kind": "FIX",
+            "what": "Two wrong choices (B 56 R11, D 50 R47) are true number sentences (6×56+11 and 6×50+47 both make 347) with remainders bigger than the divisor. A student who checks by multiplying finds three choices that work, and a test-wise student crosses out both and is left with a 50/50 against C. Key A is right. Change B to 56 R5 and D to 57 R1: each remainder is under 6 and each is wrong. Optional: give it a short story so it fits the word-problem quiz.",
+            "fixed": "Wrong choices now 59 R3, 58 R1, 51 R1: none multiplies back to 347 and every remainder is under 6; key A (57 R5) stays. (confirmed by the round 2 recheck)"
+          },
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) B q7",
+            "kind": "FIX",
+            "what": "Same flaw as A q7: choices A (74 R11) and C (70 R39) multiply back to 529 but have remainders of 7 or more, so a test-wise student can drop them. Key D is right. Change A to 74 R4 and C to 75 R6: each remainder is under 7 and each is wrong.",
+            "fixed": "Wrong choices now 71 R2, 76 R3, 74 R1: none multiplies back to 529 and every remainder is under 7; key D (75 R4) stays. (confirmed by the round 2 recheck)"
+          },
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) A q8",
+            "kind": "KEEP",
+            "what": "Raised as FIX by the blind tester: Quiz balance: each version has 10 items and only 3 are Level 3 (q8–q10), which is 30% against the brief's target of about 40%. Turn one Level 2 item into a two-step Level 3 story. q7, the bare division item, is the natural one to change (for example a multiply-then-divide story with a remainder), in both A and B. That also fixes the q7 test-wise problem.",
+            "reason": "Order lead decision, not sent to the maker: the about-40% Level 3 rule is for unit tests (maker.md rule 3, checks/keys.mjs); the menu quiz has no Level 3 share, and the teacher asked only that Level 3 need two steps, which all three do in both versions."
+          },
+          {
+            "where": "Farm Stand and Co-op: Remainders in Stories (Week 9) w11",
+            "kind": "FIX",
+            "what": "The why says the leftover 3 people still need a seat, but the story never says everyone must be seated at a table. A student could defend 12 full tables × 3 = 36. Add a few words such as 'We set up enough tables so everyone has a seat' so that rounding up is the only reading. Key 39 stays.",
+            "fixed": "Added 'enough tables so everyone has a seat', so rounding up to 13 tables is the only reading; key 39 stays. (confirmed by the round 2 recheck)"
+          },
+          {
+            "where": "Farm Stand and Co-op: Remainders in Stories (Week 9) w4",
+            "kind": "FIX",
+            "what": "The opening sentence puts the 5 kids before the 39 bookmarks and reads clumsily. Reword it to 'The library gives 39 bookmarks to 5 kids to share equally.' Key 4 stays.",
+            "fixed": "Opening reworded to put the 39 bookmarks first; reads cleanly; key 4 stays. (confirmed by the round 2 recheck)"
+          },
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) A q9",
+            "kind": "FIX",
+            "what": "The why line's estimate step (8 × 40 = 320) is just the exact calculation again, so it shows no real estimating. The teacher's notes want a real estimate check on Level 3, for example 58 is about 60 people, 60 ÷ 8 is about 8 vans, and 8 × $40 = $320. Key C is right.",
+            "fixed": "The why's estimate now rounds 58 to about 60, so 60 ÷ 8 is about 8 vans and 8 × $40 = $320 (a real estimate); it also adds a check that 7 × 8 = 56 is too few. Key C stays. (confirmed by the round 2 recheck)"
+          },
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) A q9",
+            "kind": "JUDGMENT",
+            "what": "Choices don't match across versions: B q9 has a 'multiply the two numbers you see' wrong choice ($405 = 45 × 9), but A has none. The matching A choice would be 58 × $40 = $2,320. Reading 1: add $2,320 in place of $48 so the trap is the same in A and B. Reading 2: leave it, since both versions already have the dropped-remainder trap ($280 and $99), which is the one that matters.",
+            "reason": "Not changed by the agents: left for the teacher to decide in the preview (REVIEW.html), as the runbook says for a judgment call."
+          },
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) A q5",
+            "kind": "JUDGMENT",
+            "what": "A asks students to round up (canoes) and B asks them to drop the remainder (full cartons). Both are fair Level 2 items with the division given, but the two versions test different remainder moves at the same spot. Reading 1: keep, because round-up is no harder than drop-it and each version still covers all three remainder types somewhere. Reading 2: make B a round-up story so the pair matches item for item.",
+            "reason": "Not changed by the agents: left for the teacher to decide in the preview (REVIEW.html), as the runbook says for a judgment call."
+          },
+          {
+            "where": "Farm Stand and Co-op: Remainders in Stories (Week 9) w9",
+            "kind": "KEEP",
+            "what": "It's a real two-step problem ('times as many', then 'both days') with no remainder. That's fine: the notes review 'times as many' this week, and w10–w12 cover all three remainder types at Level 3."
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 Blind tester (math), recheck",
+        "matched": 5,
+        "of": 5,
+        "byLevel": {
+          "L1": {
+            "items": 1,
+            "matched": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L2": {
+            "items": 2,
+            "matched": 2,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L3": {
+            "items": 2,
+            "matched": 2,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          }
+        },
+        "findings": [
+          {
+            "where": "Farm Stand and Co-op: Remainders in Stories (Week 9) w11",
+            "kind": "FIX",
+            "what": "Teacher copy only: the why's estimate ('about 13 tables × 3 is about 40') starts from the exact 13 tables, so it repeats the calculation instead of estimating. This is the same flaw round 1 fixed on A q9. Use a real rounding instead, e.g. 75 is close to 72, 72 ÷ 6 = 12 tables plus 1 for the leftover people is 13, and 13 × 3 is about 40. Key 39 and the student copy stay.",
+            "fixed": "The why's estimate now rounds 75 to 72 first (72 ÷ 6 = 12, plus 1 for leftover = about 13), then estimates 13 × 3 ≈ 40. This is a real estimate check, not a repetition of the exact calculation. The round 2 finding is fixed. (confirmed by the round 3 recheck)"
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 Blind tester (math), recheck",
+        "matched": 1,
+        "of": 1,
+        "findings": []
+      }
+    ],
+    "solver": [
+      {
+        "round": 1,
+        "agent": "🧮 Solver",
+        "checked": 32,
+        "disagree": 0,
+        "findings": [
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) A q7",
+            "kind": "JUDGMENT",
+            "what": "Key A (57 R5) is right and the only choice with remainder < 6. Distractors B 56 R11 and D 50 R47 also rebuild to 347 (6×56+11, 6×50+47), so they are unfinished divisions, not false statements; fair only if 'remainder must be less than the divisor' has been taught. Same design in B q7 (A 74 R11, C 70 R39 rebuild to 529); A/B parallel.",
+            "fixed": "Settled by the blind tester's round 1 FIX: the wrong choices that multiplied back to the dividend were replaced in A and B (confirmed by the round 2 recheck)."
+          },
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) B q10",
+            "kind": "JUDGMENT",
+            "what": "Step 1 product is 4×75 = 300, a round hundred, vs A q10's 3×85 = 255; B's first step is slightly friendlier. Optional: e.g. 4 packs of 74 seeds (296; 296÷7 = 42 R2) to match A's difficulty.",
+            "reason": "Not changed by the agents: left for the teacher to decide in the preview (REVIEW.html), as the runbook says for a judgment call."
+          },
+          {
+            "where": "Co-op Quiz: Remainders in Stories (Week 9) B q5",
+            "kind": "KEEP",
+            "what": "Key 13 is shown in the prompt ('82 ÷ 6 = 13 R4'), and A q5's 15/16 and B q5's 13/14 are one step apart; both intentional, since the skill tested is interpreting a given remainder. Key positions across the quiz's mc (B,C,D,A,A,D,C,B) are balanced; key is the largest choice only in A q5 and A q9."
+          },
+          {
+            "where": "Farm Stand and Co-op: Remainders in Stories (Week 9) w12",
+            "kind": "KEEP",
+            "what": "why estimate uses 270 ÷ 9 = 30 (compatible number) though 4×65 = 260 and 4×70 = 280; valid estimate, just not the rounding the notes model. All other why lines: every intermediate value checked by node and correct, method matches the notes (multiply first, then interpret remainder; estimate on level 3)."
+          }
+        ]
+      }
+    ]
+  }
+}
