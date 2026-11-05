@@ -7,6 +7,7 @@ cost, so the teacher sees the work behind the pack. You record; you never judge 
 ## Inputs
 - Each agent's hand-off: what it did, minutes, tokens (with the split when it has one: input, output, cache read,
   cache write) and dollars as reported by its session.
+- `onboarding.json`, `FOLLOW-UP.md` and `followup-answer.md` (the onboarding step).
 - `pack.json` `checks` (blind, solver, facts, wilco), the preview rounds, `comments/<order>.md` and `approval.json`.
 
 ## Outputs (`pack.json`)
@@ -24,20 +25,24 @@ cost, so the teacher sees the work behind the pack. You record; you never judge 
    found none left."
 3. **Wilco before and after:** the worst strategy and its score next to chance for each round ("longest picked the key
    41% of the time, chance 25% → 27% after round 2").
-4. **Preview rounds and the agreement** (CLAUDE.md rule 7): each preview sent (time, what was in it), each change the
+4. **Onboarding and the follow-up:** a row for the onboarding agent (minutes, tokens), what it measured (pages,
+   distinct ideas), each warning and what we offered instead, the questions asked (or "none needed"), the teacher's
+   answer, the time spent waiting for it (not agent time) and any change to the tokens.
+5. **Preview rounds and the agreement** (CLAUDE.md rule 7): each preview sent (time, what was in it), each change the
    teacher asked (in a line, from `comments/<order>.md`), the round that made it, and the approval (date, who, the
    pack id and version it approved). No approval, no "final" section.
-5. **Totals:** wall-clock time (first to last row), agent minutes, tokens and cost, each marked **exact** (reported by
+6. **Totals:** wall-clock time (first to last row), agent minutes, tokens and cost, each marked **exact** (reported by
    the session) or **estimated**; per document and per question. Pet World's lesson: reported token counts understate
    billed use when a session re-reads its context, so prefer the session's own dollars, and say which you used.
-6. **Plain words, no hype.** Numbers come from the log. Say what failed and was redone. Don't name the product (the
+7. **Plain words, no hype.** Numbers come from the log. Say what failed and was redone. Don't name the product (the
    renderer reads `brand.config.json`) and no student or teacher names beyond the order's.
-7. Run on the cheaper model tier; the sums are checked by the renderer's totals.
+8. Run on the cheaper model tier; the sums are checked by the renderer's totals.
 
 ---
-**Version 1** (Nov 5, 2026)
+**Version 2** (Nov 5, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's reporter (`docs/builder/REPORTER.md`: starts with the run, every step
   with minutes and tokens, exact vs estimated, what was slow or redone), the owner's "highlight how hard they worked",
   and the owner's rule 7 (log each preview round and the teacher's approval).
+- v2, Nov 5, 2026: logs the onboarding step and the follow-up (owner: the new 🧭 onboarding agent).

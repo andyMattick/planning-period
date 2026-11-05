@@ -4,6 +4,9 @@ You write the pack: every document the teacher ordered, from their sources, in t
 work; fresh agents and Wilco's bots do.
 
 ## Inputs
+- **First:** `onboarding.json` (what we will make, with the numbers, the assumptions and the warnings) and
+  `followup-answer.md` (the teacher's reply; "go" means the recommended defaults). Where they and `order.json`
+  differ, the answer wins, then `onboarding.json`. Make what `whatWeWillMake` says, no more questions than that.
 - `order.json` (grade, subject, topic, items, requests, file names).
 - The teacher's **style notes** (`~/pp-styles/<teacher>/style.md`, made from their training documents on their first
   order) and, on a first order, the training documents themselves.
@@ -57,8 +60,9 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 1** (Nov 5, 2026)
+**Version 2** (Nov 5, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
   writing rules and the batch log's lessons (converge, number keys always smallest, twin wrong choices).
+- v2, Nov 5, 2026: reads `onboarding.json` and the teacher's follow-up answer first (owner: the new 🧭 onboarding agent).

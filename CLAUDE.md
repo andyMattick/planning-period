@@ -15,6 +15,7 @@ the work.
 ## The team (`agents/`)
 | Agent | Brief | Job |
 |---|---|---|
+| 🧭 Onboarding | `agents/onboarding.md` | First after Send: measures the source, checks the order against `feasibility.json`, warns when it asks too much and sends a short follow-up (at most 3 questions) |
 | 📝 Maker | `agents/maker.md` | Writes the pack from the source, in the teacher's style |
 | 🙈 Blind tester (one per subject) | `agents/blind-<subject>.md` | Solves the student copy with no key; FIX / KEEP / JUDGMENT |
 | 🧮 Solver (math) | `agents/solver-math.md` | Works every math answer independently |
@@ -37,7 +38,7 @@ the work.
 6. Samples use made-up teachers and students only.
 7. **No release without the teacher's agreement.** The teacher gets a watermarked preview first and either asks for
    changes (a maker round, a fresh recheck, a new preview) or agrees; only then are the final files rendered and sent
-   (`approval.json` in the order folder; `docs/RUNBOOK.md` step 10).
+   (`approval.json` in the order folder; `docs/RUNBOOK.md` step 11).
 
 ## Before every commit
 `npm run check` (brand name in one place, menu and pack files valid, the renderer builds the samples, Wilco's bots pass

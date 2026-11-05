@@ -10,21 +10,26 @@ keys, and log everything. How to run an order by hand: `docs/RUNBOOK.md`.
 | Step | Who | Reads | Writes (in `pack.json`) |
 |---|---|---|---|
 | 0 | 🧾 Reporter | the order | `log` (first row), and keeps logging every step below |
-| 1 | 📝 Maker | the teacher's style notes, the sources, the order | `style`, `documents` |
-| 2 | 🤖 Wilco | `pack.json` | `checks.wilco` (`checks/keys.mjs`, `checks/test-wise.mjs`, with `--write`) |
-| 2 | 🙈 Blind tester for the subject (fresh) | the student copy only, then the key | `checks.blind` (round 1) |
-| 2 | 🧮 Solver (math) or 🔎 Fact checker (science, social studies; ELA with nonfiction claims) | the student copy only, then the key and sources | `checks.solver` or `checks.facts` |
-| 3 | 📝 Maker, round 2 (a new short session) | the FIX list only | `documents` (FIX items only) |
-| 4 | 🙈 Recheck (a fresh blind tester, not the round 1 one) and 🤖 Wilco again | the changed items, then the key | `checks.blind` (round 2), `fixed` on each confirmed finding; `checks.wilco` |
-| 5 | 🧾 Reporter | the log and the checks | `log` totals, `audit.notes` |
-| 6 | Preview to the teacher | the watermarked preview and `REVIEW.html` | the teacher's comments or approval |
-| 6a | If changes are asked: steps 3–5 again on them, then a new preview | `comments/<order>.md` | as above |
-| 7 | Final render and delivery, **only with `approval.json`** | — | — |
-| 8 | 🔎 Auditor | the findings, the log, `comments/<order>.md` | `agents/*.md` (version bump and change log), `audit.briefChanges` |
+| 1 | 🧭 Onboarding (fresh) | `order.json`, the sources, the training files, `menu.json`, `feasibility.json` | `onboarding.json` and `FOLLOW-UP.md` in the order folder (not `pack.json`); the teacher's reply is saved as `followup-answer.md` |
+| 2 | 📝 Maker | `onboarding.json` and `followup-answer.md` first, then the style notes, the sources, the order | `style`, `documents` |
+| 3 | 🤖 Wilco | `pack.json` | `checks.wilco` (`checks/keys.mjs`, `checks/test-wise.mjs`, with `--write`) |
+| 3 | 🙈 Blind tester for the subject (fresh) | the student copy only, then the key | `checks.blind` (round 1) |
+| 3 | 🧮 Solver (math) or 🔎 Fact checker (science, social studies; ELA with nonfiction claims) | the student copy only, then the key and sources | `checks.solver` or `checks.facts` |
+| 4 | 📝 Maker, round 2 (a new short session) | the FIX list only | `documents` (FIX items only) |
+| 5 | 🙈 Recheck (a fresh blind tester, not the round 1 one) and 🤖 Wilco again | the changed items, then the key | `checks.blind` (round 2), `fixed` on each confirmed finding; `checks.wilco` |
+| 6 | 🧾 Reporter | the log and the checks | `log` totals, `audit.notes` |
+| 7 | Preview to the teacher | the watermarked preview and `REVIEW.html` | the teacher's comments or approval |
+| 7a | If changes are asked: steps 4–6 again on them, then a new preview | `comments/<order>.md` | as above |
+| 8 | Final render and delivery, **only with `approval.json`** | — | — |
+| 9 | 🔎 Auditor | the findings, the log, `comments/<order>.md` | `agents/*.md` (version bump and change log), `audit.briefChanges` |
 
-Steps marked 2 run at the same time. Steps 3–4 repeat until no FIX is left (stop after round 3 and tell the owner).
+Steps marked 3 run at the same time. Steps 4–5 repeat until no FIX is left (stop after round 3 and tell the owner).
+These are the team's steps; `docs/RUNBOOK.md` numbers the owner's steps (receive, onboarding, style notes, …) its own way.
 
 ## Who never checks whose work
+
+- The **onboarding agent** makes nothing and checks nothing: it measures the source, warns and asks. The maker
+  follows its `whatWeWillMake` as the teacher answered it.
 
 - The **maker** never checks the pack and never writes `checks`. It may run `checks/keys.mjs` and
   `checks/test-wise.mjs` while writing (no `--write`); only Wilco's run counts.
@@ -38,6 +43,6 @@ Steps marked 2 run at the same time. Steps 3–4 repeat until no FIX is left (st
 
 ## The briefs
 
-`maker.md` · `blind-math.md` · `blind-ela.md` · `blind-science.md` · `blind-social.md` · `solver-math.md` · `facts.md` ·
+`onboarding.md` · `maker.md` · `blind-math.md` · `blind-ela.md` · `blind-science.md` · `blind-social.md` · `solver-math.md` · `facts.md` ·
 `wilco.md` · `reporter.md` · `auditor.md`. Each ends with a `**Version N**` line and a change log; only the auditor
 bumps them, and `npm run check` fails if one is missing.

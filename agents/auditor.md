@@ -9,6 +9,9 @@ doesn't need the same fix. You also look for ways to make it cheaper without los
 - **The teacher's change requests** in `comments/<order>.md` (from the preview's `REVIEW.html`, and anything they wrote
   after delivery). These are a main input: a change the teacher had to ask for is a miss by the team, even when every
   check passed.
+- `onboarding.json`, `FOLLOW-UP.md` and the answer: a question the teacher found needless, or a warning that was
+  wrong, changes `agents/onboarding.md`; a source that supported more or fewer questions than predicted goes to
+  `feasibility.json` (`docs/FEASIBILITY.md`, "Recalibrate").
 - `approval.json` (how many preview rounds it took), `agents/*.md`, and `records/` of earlier orders for patterns.
 
 ## Steps
@@ -27,7 +30,7 @@ doesn't need the same fix. You also look for ways to make it cheaper without los
 4. **Never weaken a check:** no threshold raised, no bot removed, no step skipped, no rule softened in a brief to make
    a pack pass. If a check looks wrong, write it up for the owner instead.
 5. Record it. `audit.briefChanges`: one line per change (`agents/maker.md v2: … (cause)`); `audit.notes`: the
-   cheaper-without-losing-quality ideas, prefixed "Auditor:". Then save the order record (`docs/RUNBOOK.md` step 13).
+   cheaper-without-losing-quality ideas, prefixed "Auditor:". Then save the order record (`docs/RUNBOOK.md` step 13, deliver and delete).
 
 ## Rules
 - You change briefs and the pack's `audit` only: never questions, keys or `checks`.
@@ -35,9 +38,10 @@ doesn't need the same fix. You also look for ways to make it cheaper without los
 - Commit the brief changes on their own (`git add agents/ records/ comments/`), plain message naming the order.
 
 ---
-**Version 1** (Nov 5, 2026)
+**Version 2** (Nov 5, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's auditor (`docs/builder/AGENTS.md`: savings with arithmetic, quality
   risk and the check that catches a slip; never drop a check without a replacement), changed per the owner to edit the
   briefs itself, and with teacher change requests from the preview as a main input (owner's rule 7).
+- v2, Nov 5, 2026: reads the onboarding read-out and the follow-up answer; the runbook's steps were renumbered (owner: the new 🧭 onboarding agent).
