@@ -1,0 +1,27 @@
+{
+  "id": "pp-2026-11-05-g7-ela2",
+  "date": "2026-11-05",
+  "teacher": "Mr. Haverford (made-up sample)",
+  "grade": "7",
+  "subject": "ela",
+  "topic": "Making inferences and citing text evidence (fiction and nonfiction)",
+  "items": ["readingquiz", "rubric"],
+  "extras": ["styleSetup"],
+  "lines": [
+    { "id": "readingquiz", "label": "Reading quiz on passages (A/B)", "quantity": 1, "tokensEach": 150, "tokens": 150 },
+    { "id": "rubric", "label": "Rubric", "quantity": 1, "tokensEach": 15, "tokens": 15 },
+    { "id": "styleSetup", "label": "Set up my agents with my examples", "quantity": 1, "tokensEach": 0, "tokens": 0, "extra": true }
+  ],
+  "tokens": 165,
+  "itemRequests": {
+    "readingquiz": "Write two ORIGINAL passages from my notes, about 300 words each: one short story and one nonfiction article. Both versions read the same two passages. 10 multiple choice per version, inference and text evidence, with Part A / Part B pairs where Part B asks for the quotation that best supports Part A. Then one short constructed response (RACE). The questions should really need the passage: last year my kids could guess half of a store-bought quiz without reading.",
+    "rubric": "A 4-point RACE rubric (Restate, Answer, Cite, Explain) for the constructed response, in words my 7th graders can use to check their own answer."
+  },
+  "itemSpecs": {
+    "readingquiz": { "questions": 11, "passages": 2, "types": { "mc": 10, "short": 0, "open": 1 }, "choices": 4, "versions": 2 }
+  },
+  "requests": "Mixed class: some readers are a year below grade level, so keep sentences clear but don't make the passages babyish. Number the paragraphs; my students cite them in brackets like [3].",
+  "sources": ["inference-unit-notes.md"],
+  "styleExamples": ["old-reading-check-character.md", "old-race-response-and-rubric.md"],
+  "tokenTotal": 165
+}

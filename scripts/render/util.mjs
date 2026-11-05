@@ -53,6 +53,39 @@ export function cleanSvg(svg) {
   return s;
 }
 
+// Reading passages (docs/PACK-FORMAT.md, "Passages"): documents[].passages = [{id, title, kind, paragraphs, source}].
+// Only passages with a paragraphs list are reading passages (a review app's memorize passages use `text`).
+export function readingPassages(doc, ver) {
+  const list = vv(doc.passages, ver);
+  return (Array.isArray(list) ? list : []).filter((p) => p && Array.isArray(vv(p.paragraphs, ver)) && vv(p.paragraphs, ver).length);
+}
+// The passage ids a section or a question points at (`passage`: an id or a list of ids, maybe per version).
+export function passageRefs(x, ver) {
+  const r = vv(x?.passage, ver);
+  return (Array.isArray(r) ? r : r ? [r] : []).map(String);
+}
+// What the line under a passage's title says: its kind and where it is from.
+export function passageByline(p) {
+  const kind = { fiction: 'Fiction', nonfiction: 'Nonfiction', poem: 'Poem', drama: 'Drama' }[p.kind] || '';
+  const src = p.source;
+  const from = !src || src === 'original' ? 'Written for this quiz' : typeof src === 'string' ? src : src.citation ? `From ${src.citation}` : '';
+  return [kind, from].filter(Boolean).join(' · ');
+}
+// The order passages print in: each one just before the first section or question that cites it; a passage nothing
+// cites prints at the top of the document. Returns {top: [passages], before: Map(sectionIndex -> [passages]),
+// beforeQ: Map(question -> [passages])}.
+export function passagePlan(doc, ver) {
+  const ps = readingPassages(doc, ver), byId = new Map(ps.map((p) => [String(p.id), p]));
+  const done = new Set(), before = new Map(), beforeQ = new Map();
+  const take = (ids) => ids.filter((id) => byId.has(id) && !done.has(id)).map((id) => (done.add(id), byId.get(id)));
+  (doc.sections || []).forEach((sec, si) => {
+    const s = take(passageRefs(sec, ver));
+    if (s.length) before.set(si, s);
+    for (const q of sec.questions || []) { const t = take(passageRefs(q, ver)); if (t.length) beforeQ.set(q, t); }
+  });
+  return { top: ps.filter((p) => !done.has(String(p.id))), before, beforeQ };
+}
+
 // Every question, numbered straight through the document's sections.
 export function questionsOf(doc) {
   const out = [];

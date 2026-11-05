@@ -1,0 +1,1340 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g7-ela2",
+  "order": {
+    "id": "pp-2026-11-05-g7-ela2",
+    "date": "2026-11-05",
+    "teacher": "Mr. Haverford (made-up sample)",
+    "grade": "7",
+    "subject": "ela",
+    "topic": "Making inferences and citing text evidence (fiction and nonfiction)",
+    "items": [
+      "readingquiz",
+      "rubric"
+    ],
+    "extras": [
+      "styleSetup"
+    ],
+    "lines": [
+      {
+        "id": "readingquiz",
+        "label": "Reading quiz on passages (A/B)",
+        "quantity": 1,
+        "tokensEach": 150,
+        "tokens": 150
+      },
+      {
+        "id": "rubric",
+        "label": "Rubric",
+        "quantity": 1,
+        "tokensEach": 15,
+        "tokens": 15
+      },
+      {
+        "id": "styleSetup",
+        "label": "Set up my agents with my examples",
+        "quantity": 1,
+        "tokensEach": 0,
+        "tokens": 0,
+        "extra": true
+      }
+    ],
+    "tokens": 165,
+    "itemRequests": {
+      "readingquiz": "Write two ORIGINAL passages from my notes, about 300 words each: one short story and one nonfiction article. Both versions read the same two passages. 10 multiple choice per version, inference and text evidence, with Part A / Part B pairs where Part B asks for the quotation that best supports Part A. Then one short constructed response (RACE). The questions should really need the passage: last year my kids could guess half of a store-bought quiz without reading.",
+      "rubric": "A 4-point RACE rubric (Restate, Answer, Cite, Explain) for the constructed response, in words my 7th graders can use to check their own answer."
+    },
+    "itemSpecs": {
+      "readingquiz": {
+        "questions": 11,
+        "passages": 2,
+        "types": {
+          "mc": 10,
+          "short": 0,
+          "open": 1
+        },
+        "choices": 4,
+        "versions": 2
+      }
+    },
+    "requests": "Mixed class: some readers are a year below grade level, so keep sentences clear but don't make the passages babyish. Number the paragraphs; my students cite them in brackets like [3].",
+    "sources": [
+      "inference-unit-notes.md"
+    ],
+    "styleExamples": [
+      "old-reading-check-character.md",
+      "old-race-response-and-rubric.md"
+    ],
+    "tokenTotal": 165
+  },
+  "style": {
+    "notes": [
+      "First line: Name ____ Class ____ Date ____.",
+      "Title in ALL CAPS: READING CHECK: \"STORY TITLE\" with (Form A) or (Form B) on the same line.",
+      "Plain text, no boxes; answer lines are long underscores.",
+      "Questions numbered 1. 2. …; choices A.–D. indented, one per line; one-word choices lowercase.",
+      "Part A and Part B each get their own number. Part B: \"Which quotation from the text BEST supports the answer to Part A?\" Evidence choices are short quotes ending with the paragraph in brackets, like [6].",
+      "Short, plain directions: \"Read the story. Then answer each question. Fill in the circle next to the best answer.\"",
+      "Questions cite paragraphs: \"In paragraph 2, …\"; vocab: \"What does the word … mean in paragraph 5?\"",
+      "Constructed response header CONSTRUCTED RESPONSE (4 points), on the back; a \"How does [character] change\" question with Use RACE spelled out; Cite asks for two pieces of evidence with [paragraph numbers]; four blank lines.",
+      "RACE CHECKLIST: rows Restate, Answer, Cite, Explain; columns 4 = Got it!, 3 = Almost, 2 = Started, 1 = Not yet; student \"I…\" statements; \"Add the four rows and divide by 4. I round up.\"",
+      "About grade 7 reading level: short sentences, everyday words. American spelling."
+    ],
+    "font": "Arial",
+    "accent": "#1f4e79",
+    "layout": {
+      "fields": [
+        "Name",
+        "Class",
+        "Date"
+      ],
+      "numbering": "1.",
+      "choiceStyle": "A.",
+      "nameBox": false,
+      "boldDirections": false
+    }
+  },
+  "documents": [
+    {
+      "item": "readingquiz",
+      "kind": "quiz",
+      "title": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\"",
+      "directions": "Read the story and the article. Then answer each question. Fill in the circle next to the best answer.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "passages": [
+        {
+          "id": "p1",
+          "title": "The Bench by the Library",
+          "kind": "fiction",
+          "paragraphs": [
+            "The text came during science: \"Bench by the library after school. We need to talk.\" Marisol always put smiley faces in her texts. This one was plain.",
+            "All afternoon, Ellie went over the week. Tuesday at lunch, she had sat with Dana's group. Marisol, who was late, had ended up eating alone. When Ellie waved, Marisol hadn't waved back.",
+            "Marisol was already on the bench. Her little brother, Teo, sat beside her, eating crackers. He wore a green sweatshirt that fit him perfectly. Marisol kept peeking into a paper bag on her lap. She did not look up.",
+            "Ellie spoke first. \"Sorry about lunch. Dana took the seat I saved for you.\"",
+            "Marisol blinked. \"Lunch? You think I'm mad about lunch?\"",
+            "She took a long, slow breath, then another one. \"Mom's been packing up our hall closet this week.\" She swallowed. \"Bags of stuff to give away. She washed everything in hot water first.\"",
+            "Marisol's eyes went to Teo, and so did Ellie's. There was a small ink stain on one cuff of his sweatshirt. Back in fifth grade, Ellie had made that stain.",
+            "\"I'm so sorry,\" Marisol said in a rush. \"You lent it to me, and I never gave it back. Now it's tiny. My birthday money paid for a new one.\" Inside the bag was a sweatshirt in the same green, stiff and new. The new one had a hood, too, and two deep pockets.",
+            "Teo tugged on Marisol's sleeve and held out his arms. \"Look! It's mine now! Marisol made me wear it.\" That sweatshirt had been Ellie's favorite for three winters.",
+            "For a long second, Ellie didn't say a word. She thought of all the cold mornings she had pulled those soft old sleeves down over her hands.",
+            "Then she saw Marisol gripping the bench so hard her knuckles were pale.",
+            "Suddenly Ellie laughed so hard she had to hold on to the bench. \"Honestly? It looks better on him.\"",
+            "That night, Ellie sent Marisol a text. It was just three smiley faces."
+          ],
+          "source": "original"
+        },
+        {
+          "id": "p2",
+          "title": "What Happened to the Kelp?",
+          "kind": "nonfiction",
+          "paragraphs": [
+            "Divers off the Pacific coast found something strange. Where tall kelp forests should have stood, the sea floor was almost bare. Purple urchins covered the rocks. Storms can rip whole kelp plants loose. Dirty water can block the sunlight kelp needs. People blamed both.",
+            "Kelp is a giant brown seaweed. Gas-filled floats hold its long blades up toward the light. Young fish and crabs hide among its long blades. It can grow as much as two feet in a single day. Winter storms pound this coast every year, tearing plants loose from the rocks. But a healthy forest usually grows back within a year or two. Yet these bare places stayed bare for many years.",
+            "Sea otters eat sea urchins. Unlike seals and whales, otters have no blubber. They stay warm with the thickest fur of any animal. An otter also eats about a quarter of its weight each day. Even a few otters can keep urchin numbers down.",
+            "That fur nearly wiped otters out. In the 1700s and 1800s, hunters killed hundreds of thousands of them for their fur. By the early 1900s, otters were gone from most of the coast.",
+            "Urchins acted differently once the otters were gone. When otters hunt nearby, urchins tend to stay tucked into cracks, eating bits of drifting kelp. With no otters around, they crept out into the open. They spread across the sea floor in huge numbers, chewing through living plants. Urchins are able to live for years on almost nothing. Once the kelp was gone, they stayed.",
+            "Once laws protected otters, some places got them back. The otters did not have to eat every single urchin. Many urchins that were left went back into hiding, and kelp grew back over the rock. A wide range of fish, crabs, and snails returned with it.",
+            "Scientists call the otter a keystone species. They have since found a whole raft of animals like it. The divers had looked for something harmful that had arrived. The real answer was not something new but something that had gone missing from the coast."
+          ],
+          "source": "original"
+        }
+      ],
+      "sections": [
+        {
+          "heading": "Read \"The Bench by the Library.\" Then answer questions 1–5.",
+          "passage": "p1",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 2,
+              "skill": "infer what a character feels or wants",
+              "type": "mc",
+              "passage": "p1",
+              "prompt": {
+                "A": "Part A: How does Marisol most likely feel at the start of her talk with Ellie?",
+                "B": "Part A: Why did Marisol most likely send Ellie the text?"
+              },
+              "choices": {
+                "A": [
+                  "hurt, because Ellie left her to eat lunch by herself",
+                  "afraid, because she has to admit to a mistake",
+                  "sad, because her family is getting ready to move away",
+                  "eager, because she has a surprise to give Ellie"
+                ],
+                "B": [
+                  "to tell Ellie she was angry about lunch",
+                  "to tell Ellie her family was moving to another town",
+                  "to admit that she ruined something Ellie had lent her",
+                  "to ask for help with her brother"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 2
+              },
+              "why": {
+                "A": "Marisol takes 'a long, slow breath, then another one' and swallows [6], then says 'I'm so sorry' and admits the borrowed sweatshirt shrank [8]: she is afraid of how Ellie will take it. 'You think I'm mad about lunch?' [5] shows she isn't hurt about lunch; the closet is packed to give things away, not to move [6]; the bag holds a replacement she is nervous about, not a happy surprise.",
+                "B": "Teo is wearing Ellie's sweatshirt (it has the stain she made in fifth grade [7]), and it now fits him 'perfectly' [3]; Marisol confesses it shrank after she never gave it back [8]. She is surprised Ellie thinks she is mad about lunch [5]; the bags are things to give away [6]; and Teo is there to show Ellie the sweatshirt, not to be looked after ('Marisol made me wear it' [9])."
+              }
+            },
+            {
+              "id": "q2",
+              "level": 2,
+              "skill": "choose the best evidence",
+              "type": "mc",
+              "passage": "p1",
+              "prompt": "Part B: Which quotation from the text BEST supports the answer to Part A?",
+              "choices": {
+                "A": [
+                  "\"When Ellie waved, Marisol hadn't waved back.\" [2]",
+                  "\"Marisol kept peeking into a paper bag on her lap.\" [3]",
+                  "\"Mom's been packing up our hall closet this week.\" [6]",
+                  "\"She took a long, slow breath, then another one.\" [6]"
+                ],
+                "B": [
+                  "\"Marisol's eyes went to Teo, and so did Ellie's.\" [7]",
+                  "\"Teo tugged on Marisol's sleeve and held out his arms.\" [9]",
+                  "\"Bags of stuff to give away.\" [6]",
+                  "\"Sorry about lunch.\" [4]"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 0
+              },
+              "why": {
+                "A": "The slow breaths come just before she gives the bad news. The waving [2] fits the hurt reading, the peeking [3] the surprise reading and the packing [6] the moving reading, but the story shows each of those is wrong.",
+                "B": "Marisol turns Ellie's eyes to Teo [7], who is wearing the sweatshirt Ellie lent her, now shrunk: that is what she has to own up to. Ellie's apology [4] fits 'angry', the bags [6] fit 'moving' and Teo tugging on Marisol's sleeve [9] fits 'help with her brother', but the story shows each of those is wrong (Marisol: 'You think I'm mad about lunch?' [5])."
+              }
+            },
+            {
+              "id": "q3",
+              "level": 2,
+              "skill": "word meaning from context",
+              "type": "mc",
+              "passage": "p1",
+              "prompt": {
+                "A": "What does the word \"stiff\" mean in paragraph 8?",
+                "B": "What does the phrase \"went over\" mean in paragraph 2?"
+              },
+              "choices": {
+                "A": [
+                  "awkward and cold toward others",
+                  "sore and achy after hard work",
+                  "firm and quite hard to bend",
+                  "strict and harsh with people"
+                ],
+                "B": [
+                  "walked across the room",
+                  "was liked by the others",
+                  "got past it and let it go",
+                  "thought back through it"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 3
+              },
+              "why": {
+                "A": "The new sweatshirt is 'stiff and new' [8], unlike the old one's 'soft old sleeves' [10]: firm, not yet soft. Nobody in the paragraph is unfriendly, sore or strict.",
+                "B": "'All afternoon, Ellie went over the week' [2], and the next sentences replay Tuesday's lunch: she thought back through it. She is not walking anywhere that afternoon, nobody is judging her week, and she has not let it go: she is still worried when she gets to the bench [4]."
+              }
+            },
+            {
+              "id": "q4",
+              "level": 3,
+              "skill": "infer what a character's words or actions mean, using clues across the story",
+              "type": "mc",
+              "passage": "p1",
+              "prompt": {
+                "A": "Part A: Why did Marisol most likely bring Teo to the bench?",
+                "B": "Part A: What does Ellie's text at the end of the story most likely tell Marisol?"
+              },
+              "choices": {
+                "A": [
+                  "She meant for Ellie to spot the problem herself.",
+                  "She had to look after him while their mom was busy.",
+                  "She wanted Teo to thank Ellie for a gift.",
+                  "She hoped Ellie would not get angry in front of a little kid."
+                ],
+                "B": [
+                  "that she is sorry for leaving Marisol alone at lunch",
+                  "that everything between them is back to normal now",
+                  "that she thinks Marisol's serious text was funny",
+                  "that she is still upset but doesn't want to say so"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 1
+              },
+              "why": {
+                "A": "Teo says 'Marisol made me wear it' [9], and when Marisol can't get the words out, she looks at Teo so Ellie does too [7]: she wanted Ellie to see the shrunken sweatshirt for herself. Nothing says she had to babysit; 'It's mine now!' is about the sweatshirt, not a thank-you; and Ellie never gets angry [11]-[12].",
+                "B": "Marisol always put smiley faces in her texts; her worried one was plain [1]. Ellie answers with nothing but smiley faces [13], Marisol's own way of texting, so things are normal again. Lunch was never the problem ('You think I'm mad about lunch?' [5]); Ellie laughs and jokes [12], so she isn't hiding anger; and nothing shows she found the text funny."
+              }
+            },
+            {
+              "id": "q5",
+              "level": 3,
+              "skill": "choose the best evidence",
+              "type": "mc",
+              "passage": "p1",
+              "prompt": "Part B: Which quotation from the text BEST supports the answer to Part A?",
+              "choices": {
+                "A": [
+                  "\"She did not look up.\" [3]",
+                  "\"Her little brother, Teo, sat beside her, eating crackers.\" [3]",
+                  "\"Marisol made me wear it.\" [9]",
+                  "\"Look! It's mine now!\" [9]"
+                ],
+                "B": [
+                  "\"Dana took the seat I saved for you.\" [4]",
+                  "\"Bench by the library after school. We need to talk.\" [1]",
+                  "\"Then she saw Marisol gripping the bench so hard her knuckles were pale.\" [11]",
+                  "\"This one was plain.\" [1]"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 3
+              },
+              "why": {
+                "A": "Teo says Marisol made him wear the sweatshirt [9], and Marisol turns Ellie's eyes to him [7] instead of explaining: she set it up so Ellie would see the shrunken sweatshirt for herself. The crackers [3] fit 'babysitting', 'It's mine now!' [9] fits 'a gift', and Marisol not looking up [3] fits 'afraid Ellie would get angry', but the story shows each of those is wrong (Ellie never gets angry [12]).",
+                "B": "Marisol always put smiley faces in her texts, so a plain one was the sign something was wrong, so a text of only smiley faces means 'we're back to normal.' The saved seat [4] fits 'sorry about lunch', the serious text [1] fits 'funny', and Marisol's tight grip on the bench [11] fits 'still upset' (but it is Marisol who is tense, and Ellie laughs [12])."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Read \"What Happened to the Kelp?\" Then answer questions 6–10.",
+          "passage": "p2",
+          "questions": [
+            {
+              "id": "q6",
+              "level": 3,
+              "skill": "infer a cause and effect the article doesn't spell out",
+              "type": "mc",
+              "passage": "p2",
+              "prompt": {
+                "A": "Part A: Based on the article, how did the otters' return help the kelp grow back?",
+                "B": "Part A: Based on the article, why did the bare places stay bare for so many years?"
+              },
+              "choices": {
+                "A": [
+                  "Many of the urchins the otters missed stopped chewing on living plants.",
+                  "The otters ate so many urchins each day that very few of the urchins were left.",
+                  "Storms that kept tearing up the young kelp plants finally stopped.",
+                  "The harmful thing that was killing the kelp plants finally went away."
+                ],
+                "B": [
+                  "So many urchins covered the rocks that young kelp had no room to take hold.",
+                  "Winter storms kept tearing out each young plant before it grew.",
+                  "The urchins could outlast the hungry times and eat each new plant.",
+                  "Dirty water kept blocking the sunlight that young kelp needed."
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 2
+              },
+              "why": {
+                "A": "The otters 'did not have to eat every single urchin' [6]: when otters hunt nearby, urchins stay in cracks eating drifting kelp [5], so many went back into hiding and the kelp grew back [6]. An otter eats a lot each day [3], but the article never says almost all urchins were eaten; storms are only a wrong guess (forests grow back after them [2]); and nothing harmful 'arrived' [7].",
+                "B": "Urchins 'are able to live for years on almost nothing' [5], so after the kelp was gone they did not starve or leave ('they stayed' [5]) and kept chewing each new plant [5]. The article never says urchins left no room for kelp; a healthy forest grows back within a year or two after storms [2]; and dirty water was only what people blamed [1], while the real answer was something that had gone missing [7]."
+              }
+            },
+            {
+              "id": "q7",
+              "level": 2,
+              "skill": "choose the best evidence",
+              "type": "mc",
+              "passage": "p2",
+              "prompt": "Part B: Which quotation from the text BEST supports the answer to Part A?",
+              "choices": {
+                "A": [
+                  "\"Storms can rip whole kelp plants loose.\" [1]",
+                  "\"When otters hunt nearby, urchins tend to stay tucked into cracks, eating bits of drifting kelp.\" [5]",
+                  "\"The divers had looked for something harmful that had arrived.\" [7]",
+                  "\"Even a few otters can keep urchin numbers down.\" [3]"
+                ],
+                "B": [
+                  "\"Urchins are able to live for years on almost nothing.\" [5]",
+                  "\"Purple urchins covered the rocks.\" [1]",
+                  "\"Winter storms pound this coast every year, tearing plants loose from the rocks.\" [2]",
+                  "\"Dirty water can block the sunlight kelp needs.\" [1]"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 0
+              },
+              "why": {
+                "A": "With otters nearby, urchins hide and eat drifting kelp instead of living plants, so the kelp can grow back even though many urchins are left [6]. The storms [1] and 'something harmful that had arrived' [7] are wrong ideas the article sets aside, and 'Even a few otters can keep urchin numbers down' [3] fits 'very few were left', but the article says the otters 'did not have to eat every single urchin' [6].",
+                "B": "Urchins that can live for years on almost nothing can wait out the time with no kelp and eat each new plant. The urchins covering the rocks [1] fit the 'no room' reading, the storms [2] fit the storm reading, and the dirty water [1] fits the sunlight reading, but the article sets each of those aside."
+              }
+            },
+            {
+              "id": "q8",
+              "level": 2,
+              "skill": "word meaning from context",
+              "type": "mc",
+              "passage": "p2",
+              "prompt": {
+                "A": "What does the word \"raft\" mean in paragraph 7?",
+                "B": "What does the word \"range\" mean in paragraph 6?"
+              },
+              "choices": {
+                "A": [
+                  "a group of otters floating together",
+                  "a floating mat of loose kelp",
+                  "a flat, floating platform",
+                  "a large group of similar things"
+                ],
+                "B": [
+                  "the area where an animal lives",
+                  "a mix of many different kinds",
+                  "a line of mountains under the sea",
+                  "how far an animal can travel in a day"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 1
+              },
+              "why": {
+                "A": "Scientists 'have since found a whole raft of animals like it' [7]: many such keystone animals. Otters, kelp and boats are other things called rafts, but the sentence is about how many animals like the otter were found.",
+                "B": "'A wide range of fish, crabs, and snails returned' [6]: many different kinds of animals came back. The sentence is about kinds of animals, not an area, mountains or how far animals travel."
+              }
+            },
+            {
+              "id": "q9",
+              "level": 2,
+              "skill": "explain why the author includes a detail",
+              "type": "mc",
+              "passage": "p2",
+              "prompt": {
+                "A": "Part A: Why does the author tell how fast kelp can grow?",
+                "B": "Part A: Why does the author tell how much an otter eats each day?"
+              },
+              "choices": {
+                "A": [
+                  "to show that the forest gives young fish a lot of shelter",
+                  "to show that the bare places would soon fill in again on their own",
+                  "to show that something was keeping the forest from growing back",
+                  "to show that the forest needs a lot of sunlight to keep growing"
+                ],
+                "B": [
+                  "to show how much energy staying warm with fur takes",
+                  "to show why hunters wanted otters so badly",
+                  "to show why urchins hide in cracks whenever otters are near",
+                  "to show how even a few otters are enough to keep a whole forest safe"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 3
+              },
+              "why": {
+                "A": "Right after the growth fact, the author says a forest usually grows back within a year or two after storms, 'Yet these bare places stayed bare for many years' [2]: fast growth makes the bare rock a puzzle, so something was stopping it. The article does not use it to talk about shelter or light, and the bare places did not fill in on their own; they stayed bare for years.",
+                "B": "The sentences are 'An otter also eats about a quarter of its weight each day. Even a few otters can keep urchin numbers down' [3]. The article ties the fur to warmth and to hunting [3]-[4], but never ties the amount an otter eats to staying warm, to hunters, or to urchins hiding."
+              }
+            },
+            {
+              "id": "q10",
+              "level": 2,
+              "skill": "choose the best evidence",
+              "type": "mc",
+              "passage": "p2",
+              "prompt": "Part B: Which quotation from the text BEST supports the answer to Part A?",
+              "choices": {
+                "A": [
+                  "\"Yet these bare places stayed bare for many years.\" [2]",
+                  "\"Gas-filled floats hold its long blades up toward the light.\" [2]",
+                  "\"But a healthy forest usually grows back within a year or two.\" [2]",
+                  "\"Young fish and crabs hide among its long blades.\" [2]"
+                ],
+                "B": [
+                  "\"In the 1700s and 1800s, hunters killed hundreds of thousands of them for their fur.\" [4]",
+                  "\"The otters did not have to eat every single urchin.\" [6]",
+                  "\"With no otters around, they crept out into the open.\" [5]",
+                  "\"Unlike seals and whales, otters have no blubber.\" [3]"
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 1
+              },
+              "why": {
+                "A": "It shows the puzzle the growth fact sets up: a fast-growing forest stayed bare. The floats [2] fit the sunlight reading, the usual regrowth [2] fits 'would soon fill in on their own' (but that is a healthy forest, not these bare places), and the fish and crabs [2] fit the shelter reading.",
+                "B": "The otters 'did not have to eat every single urchin' [6]: a few otters were enough to protect the kelp. 'No blubber' [3] fits the warmth reading, the hunters [4] fit the hunters reading, and the urchins creeping out [5] fit the hiding reading."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "CONSTRUCTED RESPONSE (4 points)",
+          "directions": "Answer on the back. Use the story \"The Bench by the Library.\"",
+          "passage": "p1",
+          "questions": [
+            {
+              "id": "q11",
+              "level": 3,
+              "skill": "RACE constructed response: how a character changes",
+              "type": "open",
+              "passage": "p1",
+              "prompt": {
+                "A": "How does Ellie change from the beginning of the story to the end? Use RACE: Restate the question. Answer it. Cite two pieces of evidence from the story with [paragraph numbers]. Explain how each piece of evidence proves your answer.",
+                "B": "How do Ellie's feelings about her talk with Marisol change from the beginning of the story to the end? Use RACE: Restate the question. Answer it. Cite two pieces of evidence from the story with [paragraph numbers]. Explain how each piece of evidence proves your answer."
+              },
+              "answer": {
+                "A": "Ellie changes from worried and guilty, sure she is in trouble, to calm and kind, comforting a friend who is the one in trouble. At the start she goes over the week 'all afternoon' [2] and says 'Sorry about lunch' before Marisol says a word [4]. This shows she expects Marisol to be angry with her. At the end she laughs and says, 'Honestly? It looks better on him' [12], and that night she sends 'just three smiley faces' [13]. This shows she lets go of her favorite sweatshirt and makes sure Marisol knows they are fine.",
+                "B": "Ellie starts out worried and guilty, sure she is in trouble, and ends up relieved and kind, putting her friend at ease. At the start she spends 'all afternoon' going over the week [2] and says 'Sorry about lunch' before Marisol can speak [4]. This shows she expects Marisol to be angry with her. At the end she laughs and says, 'Honestly? It looks better on him' [12], and that night she sends 'just three smiley faces' [13]. This shows the worry is gone and she wants Marisol to know they are fine."
+              },
+              "space": 4,
+              "why": "Full credit: says how Ellie changes (A) or how her feelings about the talk change (B), gives two quotations with [paragraph numbers] from early and late in the story, and explains each one. Score with the RACE checklist."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "rubric",
+      "kind": "rubric",
+      "title": "RACE CHECKLIST",
+      "directions": "Check your constructed response. Circle one box in each row.",
+      "rubric": {
+        "title": "RACE CHECKLIST",
+        "levelNames": [
+          "4 = Got it!",
+          "3 = Almost",
+          "2 = Started",
+          "1 = Not yet"
+        ],
+        "criteria": [
+          {
+            "name": "Restate",
+            "levels": [
+              "I turned the question into my first sentence, in my own words.",
+              "I restated most of the question.",
+              "I used a few words from the question, but not a full sentence.",
+              "I did not restate the question."
+            ]
+          },
+          {
+            "name": "Answer",
+            "levels": [
+              "I answered every part of the question clearly, and my answer fits the story.",
+              "I answered the question, but part of my answer is unclear.",
+              "My answer is only partly right, or it is hard to find.",
+              "I did not answer the question, or my answer does not fit the story."
+            ]
+          },
+          {
+            "name": "Cite",
+            "levels": [
+              "I quoted two pieces of evidence that prove my answer, each with its [paragraph number].",
+              "I gave two pieces of evidence, but one doesn't fit well or is missing its [paragraph number].",
+              "I gave only one piece of evidence, or my evidence only mentions the topic.",
+              "I did not use evidence from the text."
+            ]
+          },
+          {
+            "name": "Explain",
+            "levels": [
+              "I explained in my own words how each piece of evidence proves my answer.",
+              "I explained one piece of evidence well, or I explained both only a little.",
+              "I mostly repeated my quotes instead of explaining them.",
+              "I did not explain my evidence."
+            ]
+          }
+        ],
+        "note": "Add the four rows and divide by 4. I round up."
+      }
+    }
+  ],
+  "checks": {
+    "blind": [
+      {
+        "round": 1,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 10,
+        "of": 10,
+        "passageFree": {
+          "A": {
+            "matched": 10,
+            "of": 10,
+            "confident": 9
+          }
+        },
+        "gate": "fail",
+        "notes": "q3 ('settle') was also right but at confidence 3 (lean: a meeting to sort things out, with 'calm down' as runner-up), so it has no FIX here; it still adds to the fail. Each Part A/B pair gives itself away: whoever solves one half gets the other.",
+        "findings": [
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q1",
+            "kind": "FIX",
+            "what": "Part B's quiet-porch quote, plus the faded-leash quote in q5's choices, tells the student her own dog is gone, and only the key mentions a dog that is gone. Choice A (her dog Pepper) is also contradicted by those quotes. Direction: don't put the deciding detail in the evidence choices. Give the wrong answers misreadings the story supports, each with its own matching Part B quote, so the Part B list doesn't point to one feeling.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q2",
+            "kind": "FIX",
+            "what": "Only one quote is about loneliness or company. The others are about treats, ownership and digging, so the student can match it to Part A's key without reading. Direction: each wrong quote should be a real passage line that plausibly backs one of Part A's wrong choices.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q4",
+            "kind": "FIX",
+            "what": "Part B's school-until-four quote is the only quote about schedules and lines up with the key's 'days Leo is at school'. 'Didn't take the money' rules out buying Biscuit, and the dog-is-gone cue from q1/q2 rules out meeting Pepper. Direction: the wrong choices should be requests the story supports in part (for example, ones that involve timing or Leo's schedule), and the story-side items shouldn't share cues.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q5",
+            "kind": "FIX",
+            "what": "It is the only quote that mentions school, so it matches the q4 key straight from the wording. Direction: replace the wrong quotes with lines that plausibly support the other q4 choices, so the student must read to choose.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q6",
+            "kind": "FIX",
+            "what": "The key restates Part B's 'live for years on almost nothing' quote nearly word for word. Direction: reword the key so it isn't an echo of a listed quote, and give each wrong cause (fish leaving, floats, holdfasts) a real supporting line among the Part B choices. Facts to check: whether the article actually supports the holdfast and float ideas.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q7",
+            "kind": "FIX",
+            "what": "It is the only quote about urchins surviving on bare rock. The others are about shelter, floats and blubber, so the right one stands out. Direction: wrong quotes about urchins and kelp regrowth that back q6's wrong choices.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q8",
+            "kind": "FIX",
+            "what": "The key is the only choice in a sea-floor or kelp sense, in an article about kelp. 'Otters sleep' is silly and 'garden rows' is the land sense. Direction: put in at least two wrong choices that are also ocean or kelp meanings, so only the context in paragraph 5 decides.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q9",
+            "kind": "FIX",
+            "what": "Two of Part B's quotes ('whole forest can depend on it' and the keystone line) point to the key, which is also the broadest choice. Direction: give one wrong choice the same breadth, and make sure the Part B list has a strong quote for each wrong main idea, so two quotes don't vote for the key.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q10",
+            "kind": "FIX",
+            "what": "'Whole forest can depend on it' shares the key's wording ('whole underwater forest'), so the student can match it without reading. Direction: don't let the key quote repeat Part A's key phrase. Use a quote that supports the idea without echoing it.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          }
+        ]
+      },
+      {
+        "round": 1,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 9,
+        "of": 10,
+        "passageFree": {
+          "B": {
+            "matched": 9,
+            "of": 10,
+            "confident": 10
+          }
+        },
+        "gate": "fail",
+        "note": "9 of 10 right without the passages (chance is about 2.5); all 10 answered at confidence 4-5. q3 was the only miss: I took 'square' as 'all even' (money owed), the key is the calendar box. The three Part A/Part B pairs give each other away: one Part B quote per pair is the only one that fits any Part A choice.",
+        "findings": [
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q1",
+            "kind": "FIX",
+            "what": "The other items give it away. The q4/q5 choices show that she wants walks with the dog rather than money, so the 'about to ask a favor' feeling is the one to pick. The q2 throat-clearing choice also points to uneasy. Direction: make the wrong feelings real misreadings tied to details in the story (e.g. a 'touched' reading that a line about his savings supports), and stop q5 from naming the favor.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q2",
+            "kind": "FIX",
+            "what": "Only one choice shows a feeling (a nervous action). The other three are plain actions or descriptions (holding out bills, a tag, the note's tone) that support no feeling about the money. Direction: give each wrong choice a quote that plausibly shows a feeling, such as signs that she is touched or embarrassed.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q4",
+            "kind": "FIX",
+            "what": "q5's choice A quotes her asking to walk with the dog, which states this answer. The wrong reasons (buying the dog, asking his parents, a leash fund) have no support in the other items and read as made up. Direction: wrong choices that a student could reach by misreading this story's details, and a Part B pair that doesn't restate the key.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q5",
+            "kind": "FIX",
+            "what": "It is the only quote about her wanting time with the dog, so it mirrors the q4 key word for word. The others (treats, the leash, his stomach sank) fit no q4 choice. Direction: make each wrong quote fit a q4 wrong choice (e.g. the leash line goes with the leash choice, but only loosely), so that matching the pairs doesn't solve both.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q6",
+            "kind": "FIX",
+            "what": "q7 choice C (a quarter of its own weight each day) matches this key. General knowledge also rules out D (otters don't eat kelp), and A and C sound invented. Direction: wrong reasons the article half-supports (e.g. a detail about rocks or urchins hiding), and a Part B whose numbers don't restate the key. Facts to check: whatever the article says about urchin behavior.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q7",
+            "kind": "FIX",
+            "what": "It is the only quote about how much an otter eats, which matches the q6 key one to one. Each wrong quote fits no q6 choice, except that A loosely fits the rocks choice. Direction: give each q6 wrong choice a quote that seems to support it, so that the pair can't be solved by matching.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q8",
+            "kind": "FIX",
+            "what": "The topic gives it away: in a kelp article, only the 'groups of plants' sense fits; opinions, stalls and racks are off-topic. Direction: choose a word whose wrong senses could also fit a sea or science context, or use wrong choices that are other plausible meanings in this article.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q9",
+            "kind": "FIX",
+            "what": "The key is the only choice that links all three things in the title (otters, urchins, kelp), and it is the broadest. C is an opinion a student can rule out. Direction: make the wrong choices as broad and as tied to the title, e.g. a three-part claim the article does not make.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          },
+          {
+            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q10",
+            "kind": "FIX",
+            "what": "It is the only quote that ties the otters' return to the kelp, so it restates the q9 key. Fur, hunting and divers each fit a single narrower q9 choice. Direction: wrong quotes that look central (cause and effect, about kelp or urchins) but support only part of the idea.",
+            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 8,
+        "of": 10,
+        "passageFree": {
+          "A": {
+            "matched": 8,
+            "of": 10,
+            "confident": 5
+          }
+        },
+        "gate": "fail",
+        "findings": [
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q6",
+            "kind": "FIX",
+            "what": "The Part B choice \"Urchins acted differently once the otters were gone\" (q7 B) points straight to a change in how urchins behaved, so A is the only Part A choice that fits it. B ('ate so many') reads as the obvious trap, and C/D are clearly the same ideas as the storm and harmful-thing quotes in q7. Direction: make at least one wrong choice a real misreading about urchin behavior or otter feeding that a detail in the article supports, so the behavior idea isn't unique to the key. Also give q7 a second plausible quote about urchins or otters (see q7)."
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q7",
+            "kind": "FIX",
+            "what": "B is the only quote about urchin behavior. A (storms) and C (something harmful arriving) are clearly the matches for the wrong Part A choices C and D, and D ('Sea otters eat sea urchins') is too general, so the pair can be solved as a set without reading. Direction: replace A or C with a second exact quote about urchins or otters that is plausible for the claim but doesn't show the behavior change."
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q9",
+            "kind": "FIX",
+            "what": "q10 A, \"Yet these bare places stayed bare for many years,\" sits right next to 'how fast kelp can grow' and gives away the contrast in C. A and D (shelter for fish, sunlight) are clearly matches for the quotes in q10 D and B, and B ('strong enough to heal from anything') is too absolute. Direction: make a wrong choice a real misreading of the fast-growth detail, for example 'to show that the bare places should have filled in on their own', if the passage supports it. Or move the 'Yet ... stayed bare' line out of the Part B choices."
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q10",
+            "kind": "FIX",
+            "what": "'Yet' marks the only contrast quote, and each other choice clearly matches one wrong Part A choice (B = sunlight, D = fish shelter, C = 'grows back' fits the wrong 'heal from anything'). Any Part B where every distractor is a match for a Part A distractor can be solved by elimination. Direction: give at least one wrong quote that also mentions the bare places or slow recovery but doesn't show that something was blocking regrowth."
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 5,
+        "of": 10,
+        "passageFree": {
+          "B": {
+            "matched": 5,
+            "of": 10,
+            "confident": 3
+          }
+        },
+        "gate": "fail",
+        "findings": [
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q3",
+            "kind": "FIX",
+            "what": "Answered at confidence 4 with no passage. q2's choice D quotes paragraph 2 (Ellie thinking about Tuesday's lunch), which tells a reader that paragraph 2 is her replaying events, so 'thought back through it' is the only sense that fits. The other senses (crossing over, exceeding a limit) don't fit a girl thinking about her week. Direction: make the wrong choices senses a student could really believe from the context of paragraph 2 (for example, one tied to how her lunch choice was received), and avoid quoting paragraph 2 in a nearby Part B choice in a way that shows what the paragraph is doing."
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q6",
+            "kind": "FIX",
+            "what": "Answered at confidence 5. Part B (q7) choice A restates the key almost word for word (urchins live on almost nothing and stay once the kelp is gone), so Part B gives away Part A. The other Part B choices match the wrong Part A choices one by one (hiding in cracks, winter storms, fast growth), so the pairs show which answer is which. Direction: the key should be an inference the reader has to build from two parts of the article, not a paraphrase of one sentence. Wrong choices should be real misreadings that a detail in the article supports. Facts to check: whether the article really supports the storm and hiding choices as tempting misreadings."
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q7",
+            "kind": "FIX",
+            "what": "Answered at confidence 5. It is the only quote with a 'so … they stayed' cause-and-effect that answers 'why did the bare places stay bare'; the others describe storms, hiding or growth rate, not staying bare. It also repeats the q6 key. Direction: make at least two choices plausible evidence for staying bare (exact quotes about the barrens lasting), so the student has to match the specific claim in Part A. Check each against the passage."
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 9,
+        "of": 10,
+        "passageFree": {
+          "A": {
+            "matched": 9,
+            "of": 10,
+            "confident": 4
+          }
+        },
+        "gate": "fail",
+        "notes": "Fresh session, version A only, no passages (answers and cues in the session’s own words). Scored by the lead with checks/score-blind.mjs; this entry was assembled by the lead from the probe’s answer file, with no second scoring session, to save cost near the cost stop. Also right at lower confidence: q1 (confidence 3), q2 (confidence 3), q3 (confidence 2), q4 (confidence 3), q5 (confidence 3).",
+        "findings": [
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q6",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4. The probe’s cue: q7 B (urchins hide in cracks eating drifting kelp) restates choice A; A is the oddly specific choice",
+            "sameAs": {
+              "check": "blind",
+              "round": 2,
+              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q6"
+            }
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4. The probe’s cue: the only quote matching A's 'stopped chewing on living plants'",
+            "sameAs": {
+              "check": "blind",
+              "round": 2,
+              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q7"
+            }
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4. The probe’s cue: q10 A 'bare places stayed bare' contrasts with fast growth, so something was stopping regrowth",
+            "sameAs": {
+              "check": "blind",
+              "round": 2,
+              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q9"
+            }
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q10",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4. The probe’s cue: the 'Yet ... stayed bare' contrast supports C in q9",
+            "sameAs": {
+              "check": "blind",
+              "round": 2,
+              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q10"
+            }
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 5,
+        "of": 10,
+        "passageFree": {
+          "B": {
+            "matched": 5,
+            "of": 10,
+            "confident": 2
+          }
+        },
+        "gate": "fail",
+        "notes": "Fresh session, version B only, no passages (answers and cues in the session’s own words). Scored by the lead with checks/score-blind.mjs; this entry was assembled by the lead from the probe’s answer file, with no second scoring session, to save cost near the cost stop. Also right at lower confidence: q3 (confidence 3), q4 (confidence 3), q5 (confidence 3).",
+        "findings": [
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q6",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4. The probe’s cue: stem 'for so many years' echoes q7 A 'live for years on almost nothing' = outlast hungry times",
+            "sameAs": {
+              "check": "blind",
+              "round": 2,
+              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q6"
+            }
+          },
+          {
+            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4. The probe’s cue: 'for years' word match with q6 stem; pairs with q6 C",
+            "sameAs": {
+              "check": "blind",
+              "round": 2,
+              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q7"
+            }
+          }
+        ]
+      }
+    ],
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T19:08:18.338Z",
+        "rows": 22,
+        "errors": 0,
+        "warnings": 4,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T19:08:18.419Z",
+        "questions": 20,
+        "chance": 0.25,
+        "worst": [
+          [
+            "largest",
+            0.333
+          ],
+          [
+            "middleValue",
+            0.333
+          ],
+          [
+            "converge",
+            0.3
+          ]
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" (all versions)",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "RACE CHECKLIST",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 2,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T19:08:18.469Z",
+        "rows": 22,
+        "errors": 0,
+        "warnings": 4,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 2,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T19:08:18.544Z",
+        "questions": 20,
+        "chance": 0.25,
+        "worst": [
+          [
+            "notVote",
+            0.292
+          ],
+          [
+            "middle",
+            0.287
+          ],
+          [
+            "notLongest",
+            0.267
+          ]
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" (all versions)",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "RACE CHECKLIST",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 3,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-05T19:08:18.596Z",
+        "rows": 22,
+        "errors": 0,
+        "warnings": 4,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 3,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-05T19:08:18.669Z",
+        "questions": 20,
+        "chance": 0.25,
+        "worst": [
+          [
+            "largest",
+            0.321
+          ],
+          [
+            "middle",
+            0.317
+          ],
+          [
+            "learnedCV",
+            0.3
+          ]
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" (all versions)",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "RACE CHECKLIST",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "rounds": 3,
+  "log": [
+    {
+      "at": "17:20",
+      "who": "🧭 Order lead",
+      "what": "Opened the order: folder, order.json, teacher's notes, 2 style examples; added the passage field to the pack format first",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 0
+    },
+    {
+      "at": "17:24",
+      "who": "🧭 Onboarding",
+      "what": "Measured the notes and 2 style examples: 2 questions (story idea; number of Part A/B pairs), no warnings, 165 tokens recomputed (same); FOLLOW-UP.md 217 words",
+      "minutes": 1.3,
+      "tokens": 448872,
+      "cost": 0.49,
+      "round": 0
+    },
+    {
+      "at": "17:27",
+      "who": "🧭 Order lead",
+      "what": "Teacher's reply \"go\" saved (story idea A, 4 pairs)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 0
+    },
+    {
+      "at": "17:25",
+      "who": "🎨 Style notes",
+      "what": "Wrote style.md from the 2 training files (294 words)",
+      "minutes": 0.5,
+      "tokens": 259260,
+      "cost": 0.23,
+      "round": 0
+    },
+    {
+      "at": "17:26",
+      "who": "📝 Maker",
+      "what": "Round 1 session cut off at the 10-minute runner limit mid-turn, nothing saved (cost recorded before the cut)",
+      "minutes": 10.0,
+      "tokens": 274669,
+      "cost": 0.43,
+      "round": 1
+    },
+    {
+      "at": "17:37",
+      "who": "📝 Maker",
+      "what": "Round 1, same session resumed: plan, 2 passages (350 and 346 words), 22 rows plus rubric, 4 drafts; keys and test-wise checks passed",
+      "minutes": 29.2,
+      "tokens": 7904983,
+      "cost": 6.89,
+      "round": 1
+    },
+    {
+      "at": "18:07",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 1, version A, no passages: answered 10 multiple-choice",
+      "minutes": 0.5,
+      "tokens": 190133,
+      "cost": 0.27,
+      "round": 1
+    },
+    {
+      "at": "18:07",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 1, version B, no passages: answered 10 multiple-choice",
+      "minutes": 0.5,
+      "tokens": 189266,
+      "cost": 0.26,
+      "round": 1
+    },
+    {
+      "at": "18:08",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 1, version A scored and entry written: 10 of 10 right (9 sure), gate FAIL",
+      "minutes": 0.5,
+      "tokens": 159959,
+      "cost": 0.39,
+      "round": 1
+    },
+    {
+      "at": "18:08",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 1, version B scored and entry written: 9 of 10 right (10 sure), gate FAIL",
+      "minutes": 0.5,
+      "tokens": 159487,
+      "cost": 0.39,
+      "round": 1
+    },
+    {
+      "at": "18:08",
+      "who": "🤖 Wilco",
+      "what": "Round 1: keys pass; test-wise pass, worst largest 33%, middleValue 33%, converge 30% (chance 25%, line 35%)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 1
+    },
+    {
+      "at": "18:09",
+      "who": "📝 Maker",
+      "what": "Round 2, fresh session, redesign after the failed gate: new passages (333 and 348 words), every item rewritten with one rival quote per Part A choice, 3 drafts",
+      "minutes": 47.2,
+      "tokens": 19500754,
+      "cost": 12.21,
+      "round": 2
+    },
+    {
+      "at": "18:56",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 2, version A, no passages, fresh session",
+      "minutes": 0.6,
+      "tokens": 278767,
+      "cost": 0.29,
+      "round": 2
+    },
+    {
+      "at": "18:56",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 2, version B, no passages, fresh session",
+      "minutes": 0.6,
+      "tokens": 190533,
+      "cost": 0.27,
+      "round": 2
+    },
+    {
+      "at": "18:57",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 2, version A scored and entry written: 8 of 10 right (5 sure), gate FAIL",
+      "minutes": 0.4,
+      "tokens": 156966,
+      "cost": 0.4,
+      "round": 2
+    },
+    {
+      "at": "18:57",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 2, version B scored and entry written: 5 of 10 right (3 sure), gate FAIL",
+      "minutes": 0.4,
+      "tokens": 160298,
+      "cost": 0.38,
+      "round": 2
+    },
+    {
+      "at": "18:58",
+      "who": "🤖 Wilco",
+      "what": "Round 2: keys pass; test-wise pass, worst notVote 29%, middle 29%, notLongest 27% (chance 25%)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 2
+    },
+    {
+      "at": "18:58",
+      "who": "📝 Maker",
+      "what": "Round 3, fresh short session on the FIX list only (A q1/q2, q4/q5, q6/q7, q9/q10; B q3, q6/q7), hard limit $5.50; passages 338 and 346 words",
+      "minutes": 8.3,
+      "tokens": 2938419,
+      "cost": 2.42,
+      "round": 3
+    },
+    {
+      "at": "19:07",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 3, version A, no passages, fresh session: 9 of 10 right (4 sure), gate FAIL (scored and entered by the lead from the probe's answers, no second session)",
+      "minutes": 0.6,
+      "tokens": 190874,
+      "cost": 0.27,
+      "round": 3
+    },
+    {
+      "at": "19:07",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 3, version B, no passages, fresh session: 5 of 10 right (2 sure), gate FAIL (scored and entered by the lead, as above)",
+      "minutes": 0.6,
+      "tokens": 190939,
+      "cost": 0.27,
+      "round": 3
+    },
+    {
+      "at": "19:08",
+      "who": "🤖 Wilco",
+      "what": "Round 3: keys pass; test-wise pass, worst largest 32%, middle 32%, learnedCV 30% (chance 25%)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    },
+    {
+      "at": "19:10",
+      "who": "🧭 Order lead",
+      "what": "Stopped at round 3, the limit without the owner; order at $25.86, 1.7x the $15 budget. Blind tester (with passages) and fact checker did not run.",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    },
+    {
+      "at": "19:09",
+      "who": "🧾 Reporter",
+      "what": "Wrote the log (22 rows) and the audit notes from a short hand-off (cheaper tier). Exact (session).",
+      "minutes": 1.5,
+      "tokens": 438343,
+      "cost": 0.35,
+      "round": 3
+    },
+    {
+      "at": "19:12",
+      "who": "🧭 Order lead",
+      "what": "Corrected the hand-off's agent-minute total (99.1 was a slip; the rows add to 101.7, as the reporter found) and added the reporter's own row: the order total is $26.21 and 103.2 agent minutes.",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    },
+    {
+      "at": "19:14",
+      "who": "🧭 Order lead",
+      "what": "Rendered the watermarked preview for the owner (made-up sample: no teacher to send it to) and looked at every page. No approval. Noted one possible two-right item (A q8, 'raft') for the owner.",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Open for the teacher: the reading quiz did not pass the no-passage check in any of 3 rounds (readers who never saw the passages still got 9 of 10 right on version A and 5 of 10 on version B in round 3; chance is about 2.5, the line is 4); the blind solve with the passages and the fact check never ran, so the article's claims are unchecked; a watermarked preview was made for the owner only and nothing is approved, so there is no final version.",
+      "Also open, from the lead's look at the preview (not a checker's finding): in version A q8 ('raft'), choice A (a group of otters floating together) and the key D (a large group of similar things) may both be right, since paragraph 7's raft is a group of animals; the blind tester who would check this never ran.",
+      "Order: grade 7 ELA for Mr. Haverford, reading quiz (150 tokens) plus rubric (15) = 165 tokens; the budget is the reading-quiz price, 150 tokens = $15.00, and the cost stop (2x) is $30.00.",
+      "Onboarding (1.3 minutes, 448,872 tokens, $0.49): read one and a half pages of notes and 2 past pieces, found 0 warnings, recomputed 165 tokens (same as asked), and asked 2 questions (which story idea; how many Part A/Part B pairs). FOLLOW-UP.md ran 217 words against a target of about 200.",
+      "The teacher's answer was \"go\" at 17:27 UTC (story idea A, 4 pairs), simulated by the lead, so there was no waiting time and no change to the tokens. A style-notes step then wrote a 294-word style sheet from the 2 examples (0.5 minutes, $0.23).",
+      "Round 1: the maker's first session was cut off at the 10-minute runner limit with nothing saved ($0.43 spent), then resumed and finished 2 passages, 22 rows and the rubric in 29.2 minutes ($6.89) after 4 drafts. Its own read was about 9 of 10 guessable per version.",
+      "Round 1 gate (no-passage probe; chance 2.5 of 10, line 4): version A 10 of 10 right (9 sure), FAIL; version B 9 of 10 right (10 sure), FAIL. Running total after round 1: $9.35, 0.62x the budget.",
+      "Round 1 catches: 9 FIX on version A (q1, q2, q4, q5, q6, q7, q8, q9, q10) and 9 on version B (q1, q2, q4, q5, q6, q7, q8, q9, q10), 18 in all. Each Part B quote fit only one Part A choice, so solving one half gave away the other, and the word-meaning items had only one choice that fit the topic. All 18 were fixed by the round 2 redesign.",
+      "Wilco round 1: keys pass (22 rows, 0 errors, 4 warnings); test-wise pass, worst strategies largest 33% and middleValue 33% against chance 25% and a line of 35%.",
+      "Round 2: a fresh maker session redesigned both passages and rewrote every item with one rival quote per Part A choice (47.2 minutes, $12.21, the longest step). Gate: version A 8 of 10 right (5 sure), FAIL; version B 5 of 10 right (3 sure), FAIL. Running total $22.90, 1.53x the budget.",
+      "Round 2 catches: 4 FIX on version A (q6, q7, q9, q10) and 3 on version B (q3, q6, q7). The leaks were Part B quotes that restate the key, a lone 'Yet ... stayed bare' contrast quote, and a quote of paragraph 2 that showed which meaning of a word fit. The round 3 maker worked from this list.",
+      "Wilco round 2: keys pass; test-wise pass, worst notVote 29% and middle 29% against chance 25%, down from 33% in round 1.",
+      "Round 3: a fresh short maker session (8.3 minutes, $2.42, hard limit $5.50) worked the FIX list. Gate: version A 9 of 10 right (4 sure), FAIL; version B 5 of 10 right (2 sure), FAIL. The lead assembled these two entries from the probes' answers with no second scoring session, to save cost. Running total $25.86, 1.72x the budget.",
+      "Round 3 catches: 4 FIX on version A (q6, q7, q9, q10) and 2 on version B (q6, q7), the same items as round 2, so none of these 6 were fixed. The cues are still in the Part A/Part B pairs (for example A q6 is restated by q7 B; B q6 and q7 share 'for years'). The article pairs (A q6/q7, A q9/q10, B q6/q7) leaked in every round.",
+      "Wilco round 3: keys pass; test-wise pass, worst largest 32% and middle 32%, learnedCV 30%, chance 25%. Wilco's worst score was 33% in round 1, 29% in round 2 and 32% in round 3, so its bots passed every round while the no-passage reader did not.",
+      "No-passage results per version and round, as right of 10 (answered at high confidence): version A 10 (9), 8 (5), 9 (4); version B 9 (10), 5 (3), 5 (2). The high-confidence count fell each round, but the right count stayed well above chance.",
+      "No KEEP or JUDGMENT items were recorded, and there are no fact-check findings because the fact checker did not run.",
+      "Did not run: the blind tester with the passages and the fact checker. The runbook starts them only on a draft that passed the gate, and none did. Unchecked claims: an otter eats about a quarter of its weight a day, a few otters can keep urchin numbers down, fur hunting in the 1700s and 1800s, and urchins living for years on almost nothing.",
+      "Preview rounds and agreement: a watermarked preview was rendered for the owner only (this is a made-up sample, so no teacher saw it); no changes were asked and nothing was approved.",
+      "Why work stopped: round 3 is the limit without the owner, and another redesign plus the first blind solve and fact check would have passed $30. The $30.00 cost stop was not crossed ($25.86, 1.72x the $15.00 budget).",
+      "Totals (exact, from each session's own record; session dollars are used, not token counts): agent time 103.2 minutes with the reporter (101.7 before it), 33,632,522 tokens, $26.21 with the reporter ($25.86 before it), 1.75x the $15.00 budget. The lead's hand-off line said 99.1 minutes; the rows add to 101.7, which is used here. Wall clock 17:20 to 19:10 UTC, 110 minutes. Wilco scripts and the lead's own steps were not measured.",
+      "Per document and question: the pack is one reading quiz (A and B) plus the rubric, with no separate cost per document; over its 22 rows (20 multiple-choice, 2 constructed response) that is about $1.18 per row. The makers cost $21.95 (cut-off session included), the probes $3.19, onboarding and style notes $0.72."
+    ],
+    "briefChanges": []
+  }
+}

@@ -133,6 +133,7 @@ if (existsSync(FIX)) {
   { const [p, q] = quiz(); const x = q.sections[0].questions[3]; x.prompt.B = x.prompt.A; x.choices.B = [...x.choices.A].reverse(); x.answer.B = 3 - x.answer.A; breaks.push(['keys.mjs', 'B repeating A word for word', p]); }
   { const [p, q] = quiz(); q.sections[0].questions[4].level = { A: 2, B: 3 }; breaks.push(['keys.mjs', 'A and B at different levels', p]); }
   { const [p, q] = quiz(); delete q.versions; breaks.push(['keys.mjs', 'a quiz without versions', p]); }
+  { const [p, q] = quiz(); q.sections[0].questions[0].passage = 'p9'; breaks.push(['keys.mjs', 'a question citing a passage that is not there', p]); }
   { const [p, q] = quiz(); q.item = 'test'; breaks.push(['keys.mjs', 'a test with too little or too much level 3', p]); q.sections[0].questions.forEach((x) => { x.level = 3; }); }
   { const [p, q] = quiz(); // every key moved to A and made the longest
     for (const x of q.sections[0].questions) for (const v of ['A', 'B']) { const c = x.choices[v], k = c.splice(x.answer[v], 1)[0]; c.unshift(`${k} (shown in the work)`); x.answer[v] = 0; }
