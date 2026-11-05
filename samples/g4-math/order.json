@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-4b9e2d",
+  "createdAt": "2026-11-05T14:13:00.000Z",
+  "order": {
+    "teacher": "Mr. Lindqvist (made-up sample, homeschool co-op)",
+    "grade": "4",
+    "subject": "math",
+    "topic": "Multi-step word problems with multiplication and division (remainders)",
+    "items": ["worksheet", "quiz"],
+    "extras": ["tpt"],
+    "requests": "Real-world stories, please (our farm stand, the co-op, trips). Level 3 needs two steps. In each level, put one problem where the remainder changes the answer: round up, drop it, or the remainder is the answer.",
+    "itemRequests": {
+      "worksheet": "About 12 problems, easiest first. Leave room to show work.",
+      "quiz": "10 questions. Version B should be just as hard as A."
+    },
+    "quantities": { "worksheet": 1, "quiz": 1 },
+    "sources": ["remainders-lesson-notes.md"],
+    "styleExamples": ["farm-stand-check-in.md", "co-op-field-trip-quiz.md"]
+  },
+  "lines": [
+    { "id": "worksheet", "label": "Worksheet with answer key", "quantity": 1, "tokensEach": 30, "tokens": 30 },
+    { "id": "quiz", "label": "Quiz with A/B versions", "quantity": 1, "tokensEach": 40, "tokens": 40 },
+    { "id": "tpt", "label": "Sell-it-yourself guide (TPT)", "quantity": 1, "tokensEach": 0, "tokens": 0, "extra": true }
+  ],
+  "tokenTotal": 70,
+  "replyTo": "lindqvist.homeschool@example.com",
+  "notices": {
+    "tokenNote": "Token prices are pilot estimates from real build costs; they will be recalibrated after the first orders.",
+    "aiNotice": "Made with AI from the source material you provided, then checked by separate AI agents. Please review everything before it goes in front of students.",
+    "deleteNotice": "Your uploads and our working copies are deleted after you receive your pack. Your style examples are kept only for your own agents, and you can delete them at any time. Nothing you send is used for anyone else."
+  }
+}
