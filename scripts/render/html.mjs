@@ -57,6 +57,7 @@ export function baseCss(ctx) {
   th, td { border: 1pt solid #000; padding: 4pt 6pt; text-align: left; vertical-align: top; }
   th { background: #e6e6e6; }
   .pb { break-before: page; }
+  .keep { break-inside: avoid; page-break-inside: avoid; }
   .small { font-size: 9.5pt; color: #222; }
   `;
 }
@@ -193,9 +194,12 @@ export function copyHtml(doc, ver, ctx, teacher) {
   const items = questionsOf(doc);
   let body = headerHtml(doc, ver, ctx, teacher);
   (doc.sections || []).forEach((sec, si) => {
-    if (sec.heading) body += `<h2>${esc(sec.heading)}</h2>`;
-    if (sec.directions) body += `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${esc(vv(sec.directions, ver))}</p>`;
-    body += items.filter((it) => it.si === si).map((it) => questionHtml(it, ver, ctx, teacher)).join('');
+    // The heading and its directions travel with the first question: never alone at the foot of a page.
+    let head = '';
+    if (sec.heading) head += `<h2>${esc(sec.heading)}</h2>`;
+    if (sec.directions) head += `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${esc(vv(sec.directions, ver))}</p>`;
+    const qs = items.filter((it) => it.si === si).map((it) => questionHtml(it, ver, ctx, teacher));
+    body += head ? `<div class="keep">${head}${qs[0] || ''}</div>${qs.slice(1).join('')}` : qs.join('');
   });
   if (doc.rubric) body += `<h2>${esc(doc.rubric.title || 'Rubric')}</h2>${rubricTableHtml(doc.rubric)}`;
   if (teacher && items.length) body += skillsMapHtml(doc, ver);

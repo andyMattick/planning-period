@@ -105,6 +105,8 @@ All optional; a pack without them renders the same as before.
 | `checks.wilco[].line` | The most a bot may score to pass (default chance + 0.10); `bots` = how many bots ran |
 | `checks.wilco[].check` | `"keys"` (shown as passed or not with `rows`, `errors`, `warnings`, `problems`; no chance or line) or `"test-wise"` (the bots, with `chance` and `worst`) |
 | `checks.wilco[].worst[]` | `[name, score]`, or `[name, score, {"judged": false}]` for a bot with too few questions of its kind to judge. Without the flag the renderer asks `checks/test-wise.mjs` about the current pack. A bot that isn't judged is drawn greyed, "not judged (too few questions)", and never as over the line |
+| finding `sameAs` | `{ "check": "blind", "round": 2, "where": "Quiz A q8" }`: this finding is the same real problem as that earlier one (found again in a later round). It is counted once everywhere and shown under the earlier finding as "found again in round N". If the earlier one has no `fixed`, this one's `fixed` counts for it. `check` and `where` default to this finding's own |
+| `rounds` | The order's number of rounds, when it should be stated outright. Otherwise the audit report uses the highest `round` across the blind, fact and solver checks; Wilco reruns after every change, so its runs are counted on their own ("N Wilco runs") and never set the rounds |
 | finding `forTeacher` | `true` leaves a finding for the teacher to decide even when it has text in `fixed` |
 | `originalReview` | For a `versions` order: findings about the teacher's own uploaded test, shown on the audit report's "What we found in your original" page and not counted with the pack's findings. `{ "file": "my-test.docx", "summary": "…", "findings": [{ "where", "kind": "FIX" \| "KEEP" \| "JUDGMENT", "what", "before", "suggestion", "inVersions" }], "notes": ["…"] }` (`inVersions`: what the A/B versions do instead) |
 
@@ -120,7 +122,8 @@ One count, used in the front-page sentence, the catches tile and the findings pa
 | kept on purpose | every `KEEP`, and a `JUDGMENT` the agents settled (it has `fixed`) |
 | left for you to decide | a `JUDGMENT` without `fixed`, or any finding with `forTeacher: true` |
 
-needed a fix + kept + left for you = all findings. Minutes print to 1 decimal, money to 2, percents whole; a step
+needed a fix + kept + left for you = all findings, after duplicates (`sameAs`) are folded into the finding they repeat.
+The findings pages list them in this order: not fixed yet, left for you to decide, fixed, kept. Minutes print to 1 decimal, money to 2, percents whole; a step
 with no `minutes` shows a dash and counts as "not timed".
 
 ### Document kinds

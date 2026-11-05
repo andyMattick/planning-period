@@ -47,7 +47,28 @@ export function auditStats(pack) {
     const who = r.agent || CHECK_NAMES[r.kind];
     if (!logBases.has(baseName(who)) && !agents.has(norm(who))) agents.set(norm(who), who);
   }
+  // A finding with sameAs {check, round, where} is an earlier finding found again: it is counted once, under the
+  // earlier one ("found again in round N"). If the earlier one has no fix text, the later one's counts for it.
+  const all = findings.splice(0);
+  for (const f of all) {
+    const ref = f.sameAs;
+    const orig = ref && all.find((o) => o !== f && !o.sameAs && o.check === (ref.check || f.check) && Number(o.round) === Number(ref.round) && o.where === (ref.where || f.where));
+    if (!orig) {
+      findings.push(f);
+      continue;
+    }
+    (orig.again ||= []).push(f);
+    if (!orig.fixed && f.fixed) {
+      orig.fixed = f.fixed;
+      orig.bucket = bucketOf(orig);
+    }
+  }
   const count = (b) => findings.filter((f) => f.bucket === b).length;
+  // The order's rounds: an explicit pack.rounds, or the highest round of the blind, fact and solver checks.
+  // Wilco's runs are counted on their own (it reruns after every change, so its round counter runs ahead).
+  const roundOf = (r) => Number(r.round) || 1;
+  const orderRuns = runs.filter((r) => r.kind !== 'wilco');
+  const rounds = Number(pack.rounds) || (orderRuns.length ? Math.max(...orderRuns.map(roundOf)) : runs.length ? Math.max(...runs.map(roundOf)) : 0);
   const questionsInPack = (pack.documents || []).reduce((s, d) => s + questionsOf(d).length * Math.max(1, (d.versions || []).length), 0);
   const checkedCounts = runs.map((r) => Number(r.of ?? r.checked ?? 0)).filter(Boolean);
   const fixed = count('fixed'), open = count('open');
@@ -56,8 +77,10 @@ export function auditStats(pack) {
     runs,
     findings,
     agents: [...agents.values()],
-    rounds: runs.length ? Math.max(...runs.map((r) => Number(r.round) || 1)) : 0,
-    checkRuns: runs.length,
+    rounds,
+    checkRuns: orderRuns.length,
+    wilcoRuns: runs.length - orderRuns.length,
+    duplicates: all.length - findings.length,
     questionsInPack,
     questionsChecked: checkedCounts.length ? Math.max(...checkedCounts) : 0,
     fixFound: fixed + open,
@@ -133,6 +156,8 @@ function css(ctx) {
   .front h3 { margin-top: 8pt; }
   .pill.open { border-width: 2pt; }
   .unjudged { color: #666; }
+  .finding .again { border-top: 1pt dashed #000; padding: 4pt 8pt; font-size: 9pt; }
+  .keep { break-inside: avoid; }
   .styleNotes { columns: 2; column-gap: 18pt; font-size: 9.5pt; }
   .styleNotes li { break-inside: avoid; }
   `;
@@ -142,9 +167,24 @@ function tile(big, lab, how) {
   return `<div class="tile"><div class="big">${big}</div><div class="lab">${esc(lab)}</div><div class="how">${esc(how)}</div></div>`;
 }
 
-function barChart(rows, { width = 640, max, line, chance, unit = (v) => v } = {}) {
+// Split a label into lines of at most n characters, at spaces.
+function wrap(text, n) {
+  const out = [];
+  let cur = '';
+  for (const w of String(text).split(/\s+/)) {
+    if (cur && (cur + ' ' + w).length > n) { out.push(cur); cur = w; } else cur = cur ? `${cur} ${w}` : w;
+  }
+  if (cur) out.push(cur);
+  return out;
+}
+
+function barChart(rows, { width = 640, max, line, chance, unit = (v) => v, right = 200 } = {}) {
   // rows: [{label, value, over?, unjudged?}]; grayscale bars, hatched when over the line, outlined when not judged.
-  const rowH = 22, labelW = 170, right = 200, top = chance != null || line != null ? 18 : 4;
+  // Labels show in full: the label column grows to fit (up to 230 px) and longer names wrap onto a second line.
+  const labelW = Math.min(230, Math.max(110, ...rows.map((r) => String(r.label).length * 6.2 + 12)));
+  const perLine = Math.floor((labelW - 12) / 6.2);
+  const lines = rows.map((r) => wrap(r.label, perLine));
+  const rowH = Math.max(22, ...lines.map((l) => l.length * 13 + 8)), top = chance != null || line != null ? 18 : 4;
   const h = top + rows.length * rowH + 6;
   const M = max || Math.max(1e-9, ...rows.map((r) => r.value), line || 0, chance || 0);
   const X = (v) => labelW + (v / M) * (width - labelW - right);
@@ -158,9 +198,11 @@ function barChart(rows, { width = 640, max, line, chance, unit = (v) => v } = {}
     // keep the value clear of the line and the chance mark
     let tx = X(r.value) + 5;
     for (const m of [chance, line]) if (m != null && tx > X(m) - 30 && tx < X(m) + 6) tx = X(m) + 6;
-    s += `<text x="${labelW - 6}" y="${y + 14}" text-anchor="end" fill="${ink}">${esc(r.label)}</text>
-    <rect x="${labelW}" y="${y + 3}" width="${Math.max(1, X(r.value) - labelW)}" height="${rowH - 8}" fill="${fill}" stroke="${ink}" stroke-width="1"${r.unjudged ? ' stroke-dasharray="3 2"' : ''}/>
-    <text x="${tx}" y="${y + 14}" font-weight="${r.unjudged ? 400 : 700}" fill="${ink}">${esc(unit(r.value))}${esc(note)}</text>`;
+    const ls = lines[i];
+    const ly = y + rowH / 2 - ((ls.length - 1) * 13) / 2 + 4;
+    s += `<text x="${labelW - 6}" y="${ly}" text-anchor="end" fill="${ink}">${ls.map((t, k) => `<tspan x="${labelW - 6}" dy="${k ? 13 : 0}">${esc(t)}</tspan>`).join('')}</text>
+    <rect x="${labelW}" y="${y + rowH / 2 - 7}" width="${Math.max(1, X(r.value) - labelW)}" height="14" fill="${fill}" stroke="${ink}" stroke-width="1"${r.unjudged ? ' stroke-dasharray="3 2"' : ''}/>
+    <text x="${tx}" y="${y + rowH / 2 + 4}" font-weight="${r.unjudged ? 400 : 700}" fill="${ink}">${esc(unit(r.value))}${esc(note)}</text>`;
   });
   const bottom = top + rows.length * rowH;
   if (chance != null) s += `<line x1="${X(chance)}" y1="${top - 4}" x2="${X(chance)}" y2="${bottom}" stroke="#000" stroke-dasharray="3 3"/><text x="${X(chance)}" y="${top - 6}" text-anchor="middle" font-size="10">chance ${pct(chance)}</text>`;
@@ -192,7 +234,7 @@ function frontPage(pack, ctx, st) {
   <div class="summary">${esc(summary)}</div>
   <div class="tiles">
     ${tile(int(st.agents.length), 'agents involved', `${plural(st.log.length, 'logged step')}. The agent that writes never checks its own work.`)}
-    ${tile(int(st.rounds), st.rounds === 1 ? 'round of checks' : 'rounds of checks', `${plural(st.checkRuns, 'check run')} in all; each round rechecks the fixes.`)}
+    ${tile(int(st.rounds), st.rounds === 1 ? 'round of checks' : 'rounds of checks', `${plural(st.checkRuns, 'check run')} by fresh agents${st.wilcoRuns ? `, plus ${plural(st.wilcoRuns, 'Wilco run')}` : ''}; each round rechecks the fixes.`)}
     ${tile(int(st.questionsChecked || st.questionsInPack), 'questions checked', `${st.questionsInPack} in the pack, each version counted.`)}
     ${tile(`${int(st.fixFound)}<small> → ${int(st.fixed)} fixed</small>`, 'catches found and fixed', tileHow || 'Every catch is listed with before and after.')}
     ${tile(mins(st.minutes), 'minutes of agent work', `${st.first ? `Logged from ${st.first} to ${st.last}` : 'Added up from the log'}${st.unlogged ? `; ${plural(st.unlogged, 'step')} not timed` : ''}.`)}
@@ -217,11 +259,11 @@ function timeline(pack, st) {
   <table><tr><th>Agent</th><th class="n">Steps</th><th class="n">Minutes</th><th class="n">Cost</th></tr>${st.agents
     .map((a) => {
       const mine = st.log.filter((l) => norm(l.who) === norm(a));
-      return `<tr><td>${esc(a)}</td><td class="n">${mine.length}</td><td class="n">${mins(mine.reduce((s, l) => s + (Number(l.minutes) || 0), 0))}</td><td class="n">${money(mine.reduce((s, l) => s + (Number(l.cost) || 0), 0))}</td></tr>`;
+      return `<tr><td>${esc(a)}</td><td class="n">${mine.length}</td><td class="n">${mine.some((l) => l.minutes != null) ? mins(mine.reduce((s, l) => s + (Number(l.minutes) || 0), 0)) : '—'}</td><td class="n">${money(mine.reduce((s, l) => s + (Number(l.cost) || 0), 0))}</td></tr>`;
     })
     .join('')}</table>
   <h3>Where the time went</h3>
-  ${Object.keys(byWho).length ? barChart(Object.entries(byWho).map(([label, value]) => ({ label, value })), { unit: (v) => `${mins(v)} min` }) : ''}
+  ${Object.keys(byWho).length ? barChart(Object.entries(byWho).map(([label, value]) => ({ label, value })), { unit: (v) => `${mins(v)} min`, right: 70 }) : ''}
   ${untimed.length ? `<p class="muted">Not timed: ${esc(untimed.join(', '))}.</p>` : ''}
   ${notes.length ? `<h3>What your agents learned from your examples</h3><ul class="styleNotes">${notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}`;
 }
@@ -231,19 +273,22 @@ function findingCard(f) {
   const right = f.bucket === 'fixed' ? f.fixed : f.bucket === 'kept' ? f.reason || f.fixed || '' : f.reason || f.fixed || (f.bucket === 'open' ? 'Not fixed yet: please look at it before you approve.' : 'Left for you to decide.');
   return `<div class="finding"><div class="fh"><span><b>${esc(f.where || '')}</b> · round ${esc(f.round)} · ${esc(f.agent)}</span><span class="pill${b.dark ? ' dark' : ''}${b.open ? ' open' : ''}">${esc(b.pill)}</span></div>
     <div class="ba"><div><div class="k">Before · what the checker caught</div>${esc(f.what || '')}${f.before ? `<q>${esc(f.before)}</q>` : ''}</div>
-    <div><div class="k">${esc(b.right)}</div>${esc(right)}${f.after ? `<q>${esc(f.after)}</q>` : ''}</div></div></div>`;
+    <div><div class="k">${esc(b.right)}</div>${esc(right)}${f.after ? `<q>${esc(f.after)}</q>` : ''}</div></div>${(f.again || [])
+      .map((g) => `<div class="again"><b>Found again in round ${esc(g.round)}</b> by ${esc(g.agent)} (counted once): ${esc(g.what || '')}</div>`)
+      .join('')}</div>`;
 }
 
 function findingsSection(st) {
   if (!st.findings.length) return `<h2 class="pb">What the checkers caught</h2><p class="lead">The checkers found nothing that needed a change.</p>`;
-  const order = ['teacher', 'open', 'fixed', 'kept'];
+  // An open FIX comes first (docs/RUNBOOK.md, "When round 3 ends with an open FIX"), then the teacher's calls.
+  const order = ['open', 'teacher', 'fixed', 'kept'];
   const heads = { teacher: 'Left for you to decide', open: 'Not fixed yet', fixed: 'Fixed', kept: 'Looked at and kept on purpose' };
   return `<h2 class="pb">What the checkers caught, and how it was fixed</h2>
-  <p class="lead">${plural(st.findings.length, 'finding')} in all. ${esc(findingWords(st))} Wrong choices and wording were fixed; answer keys were never changed just to pass a check.</p>
+  <p class="lead">${plural(st.findings.length, 'finding')} in all${st.duplicates ? ` (${st.duplicates} more ${st.duplicates === 1 ? 'was the same problem' : 'were the same problems'} found again in a later round, shown under the first and counted once)` : ''}. ${esc(findingWords(st))} Wrong choices and wording were fixed; answer keys were never changed just to pass a check.</p>
   ${order
     .map((b) => {
       const list = st.findings.filter((f) => f.bucket === b);
-      return list.length ? `<h3>${heads[b]} (${list.length})</h3>${list.map(findingCard).join('')}` : '';
+      return list.length ? `<div class="keep"><h3>${heads[b]} (${list.length})</h3>${findingCard(list[0])}</div>${list.slice(1).map(findingCard).join('')}` : '';
     })
     .join('')}`;
 }

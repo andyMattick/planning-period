@@ -69,6 +69,7 @@ async function figurePara(fig, ctx) {
     P(new ImageRun({ type: 'png', data: png.data, transformation: { width: Math.round(png.width * scale), height: Math.round(png.height * scale) } }), {
       spacing: { before: 80, after: 80 },
       indent: { left: 360 },
+      keepNext: true,
     }),
   ];
 }
@@ -94,16 +95,20 @@ async function questionParas(item, ver, ctx, teacher) {
   const out = [];
   const head = [runs(`${ctx.dayLabels ? `Day ${n}:` : numLabel(n, L)}  `, { bold: true }), runs(vv(q.prompt, ver))];
   if (teacher) head.push(runs(`   [L${q.level ?? '?'} · ${q.skill || 'skill'}]`, { size: 17, color: '444444' }));
-  out.push(P(head, { spacing: { before: 200, after: 60 }, keepNext: true, indent: ctx.dayLabels ? { left: 800, hanging: 800 } : { left: 360, hanging: 360 } }));
+  out.push(P(head, { spacing: { before: 200, after: 60 }, keepNext: true, keepLines: true, indent: ctx.dayLabels ? { left: 800, hanging: 800 } : { left: 360, hanging: 360 } }));
   out.push(...(await figurePara(vv(q.figure, ver), ctx)));
   if (type === 'mc') {
-    (vv(q.choices, ver) || []).forEach((c, i) => {
+    const chs = vv(q.choices, ver) || [];
+    // Keep a question's lines together, but end the chain at its last line: a chain that runs into the next
+    // question links the whole page and Word breaks it anywhere (a heading left alone at the foot of a page).
+    const tail = !teacher && workLinesFor(q, ctx) === 0;
+    chs.forEach((c, i) => {
       const right = teacher && Number(ans) === i;
       out.push(
         P([runs(`${choiceLabel(i, L)}  `, { bold: true }), runs(c, { bold: right }), ...(right ? [runs('   ◀ answer', { bold: true })] : [])], {
           indent: { left: 720 },
           spacing: { after: 30 },
-          keepNext: true,
+          keepNext: !(tail && i === chs.length - 1),
         })
       );
     });
@@ -149,6 +154,7 @@ function heading(text, accent, opts = {}) {
   return P(runs(text, { bold: true, size: 26 }), {
     spacing: { before: 280, after: 100 },
     keepNext: true,
+    keepLines: true,
     border: { bottom: { style: BorderStyle.SINGLE, size: 12, color: accent.slice(1), space: 2 } },
     ...opts,
   });
@@ -236,7 +242,7 @@ export async function copyDocx(doc, ver, ctx, teacher) {
   const items = questionsOf(doc);
   for (const [si, sec] of (doc.sections || []).entries()) {
     if (sec.heading) kids.push(heading(sec.heading, accent));
-    if (sec.directions) kids.push(P(runs(vv(sec.directions, ver), { bold: ctx.layout.boldDirections })));
+    if (sec.directions) kids.push(P(runs(vv(sec.directions, ver), { bold: ctx.layout.boldDirections }), { keepNext: (sec.questions || []).length > 0, keepLines: true }));
     for (const it of items.filter((x) => x.si === si)) kids.push(...(await questionParas(it, ver, ctx, teacher)));
   }
   if (doc.rubric) kids.push(heading(doc.rubric.title || 'Rubric', accent), ...rubricTable(doc.rubric));
