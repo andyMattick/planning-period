@@ -2,7 +2,16 @@
 <html lang="en" data-page-title="Order a pack">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2f6f5e" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15181c" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="color-scheme" content="light dark">
 <title>Order a pack</title>
 <link rel="stylesheet" href="style.css">
@@ -11,7 +20,7 @@
 <header class="top">
   <div class="wrap">
     <a class="brand" href="./" data-brand="shortName">&nbsp;</a>
-    <nav class="nav"><a href="./" aria-current="page">Order</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a></nav>
+    <nav class="nav"><a href="./" aria-current="page">Order</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html">About</a></nav>
   </div>
 </header>
 
@@ -19,6 +28,7 @@
   <section class="hero">
     <h1>Order a classroom pack</h1>
     <p class="tagline" data-brand="tagline"></p>
+    <p class="phone-only small">Five quick steps, then you look over a preview before anything is final. <a href="about.html">How it works</a></p>
     <div id="load-error" class="error" role="alert"></div>
   </section>
 

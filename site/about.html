@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-page-title="About">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2f6f5e" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15181c" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="color-scheme" content="light dark">
+<title>About</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" data-brand="shortName">&nbsp;</a>
+    <nav class="nav"><a href="./">Order</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html" aria-current="page">About</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <h1>About</h1>
+    <p class="tagline" data-brand="tagline"></p>
+  </section>
+
+  <section class="how" aria-labelledby="how-h">
+    <h2 id="how-h">How it works</h2>
+    <p class="sell">Agents taught by teachers, checked by agents that didn't write the work.</p>
+    <ol class="flow">
+      <li>Drop in your training documents: your own past worksheets and quizzes, so your agents learn your style.</li>
+      <li>Drop in your source material: notes, a chapter, the standards, slides.</li>
+      <li>Pick from the menu.</li>
+      <li>Add any specific requests.</li>
+      <li>See the token cost and press Send.</li>
+      <li>You get a preview (stamped PREVIEW) and the audit report → look it over → request changes or agree → then we release your final, editable files.</li>
+    </ol>
+    <ul class="team">
+      <li><b>📝 Maker</b>Writes the pack from your source, in your style.</li>
+      <li><b>🙈 Blind testers</b>One per subject. They solve the student copy with no key.</li>
+      <li><b>🧮 Solver</b>Works every math answer on its own.</li>
+      <li><b>🔎 Fact checker</b>Checks every claim, date, name and term (science, social studies).</li>
+      <li><b>🤖 Wilco</b>Test-wise bots: can a student guess the answer without knowing it?</li>
+      <li><b>🧾 Reporter</b>Logs every step and writes your audit report.</li>
+      <li><b>🔎 Auditor</b>Learns from each order and your comments, and keeps it affordable.</li>
+    </ul>
+  </section>
+
+  <section class="step" aria-labelledby="app-h">
+    <h2 id="app-h">Use it like an app</h2>
+    <p>This site works on a phone like an app, and it opens without internet once you've visited it.</p>
+    <p><button type="button" class="btn primary" data-install-here hidden>Install the app</button></p>
+    <p id="ios-tip" hidden><b>iPhone or iPad:</b> in Safari, tap Share, then “Add to Home Screen”.</p>
+    <p><b>Android:</b> in Chrome, tap the menu (⋮), then “Install app” or “Add to Home screen”.</p>
+    <p class="muted small" id="installed" hidden>You're using the installed app.</p>
+  </section>
+
+  <section class="step" aria-labelledby="data-h">
+    <h2 id="data-h">Your files and your work</h2>
+    <p data-brand="deleteNotice"></p>
+    <p class="notice" data-brand="aiNotice"></p>
+    <p class="small muted">Files you pick stay on your device: Send makes one zip file for you to email. Nothing is uploaded from this site.</p>
+    <p class="small muted" data-brand="tokenNote"></p>
+    <p>Questions? Email <b id="about-email"></b> <span class="ph" id="about-ph" hidden>(placeholder address)</span></p>
+  </section>
+</main>
+<footer class="foot"><div class="wrap"><span data-brand="promise"></span> · <a href="./">Order a pack</a></div></footer>
+<script src="common.js"></script>
+<script>
+  (function () {
+    document.querySelector('[data-install-here]').addEventListener('click', function () { PP.install(); });
+    if (PP.isIOS) document.getElementById('ios-tip').hidden = false;
+    if (PP.standalone) document.getElementById('installed').hidden = false;
+    PP.loadBrand().then(function (b) {
+      document.getElementById('about-email').textContent = b.orderEmail || '';
+      document.getElementById('about-ph').hidden = !b.orderEmailIsPlaceholder;
+    }).catch(function () {});
+  })();
+</script>
+</body>
+</html>

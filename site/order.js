@@ -207,11 +207,13 @@
 
   function validate() {
     var problems = [];
-    if (!$('grade').value) problems.push('a grade');
-    if (!$('subject').value) problems.push('a subject');
-    else if ($('subject').value === 'other' && !$('subject-other').value.trim()) problems.push('which subject');
-    if (!$('topic').value.trim()) problems.push('a topic');
-    if (!pickedIds().length) problems.push('at least one thing to make');
+    var menuStep = [];
+    if (!$('grade').value) menuStep.push('a grade');
+    if (!$('subject').value) menuStep.push('a subject');
+    else if ($('subject').value === 'other' && !$('subject-other').value.trim()) menuStep.push('which subject');
+    if (!$('topic').value.trim()) menuStep.push('a topic');
+    if (!pickedIds().length) menuStep.push('at least one thing to make');
+    if (menuStep.length) problems.push(menuStep.join(', ') + ' (step 3)');
     if (!files.sources.length) problems.push('your source material (step 2)');
     return problems;
   }
@@ -298,6 +300,46 @@
     if (!confirm('Start a new order? This clears the files and choices on this page.')) return;
     location.reload();
   });
+
+  // ---------- phones: one step per screen, with progress dots and Back / Next (desktop keeps the long page) ----------
+  var STEP_NAMES = ['Examples', 'Sources', 'Menu', 'Requests', 'Send'];
+  var steps = Array.prototype.slice.call(document.querySelectorAll('#order > .step'));
+  var current = 0;
+  var dots = document.createElement('ol');
+  dots.className = 'wizard-dots'; dots.setAttribute('aria-label', 'Order steps');
+  dots.innerHTML = steps.map(function (s, i) {
+    return '<li style="display:contents"><button type="button" data-go="' + i + '"><span class="dot" aria-hidden="true"></span>' +
+      '<span>' + (i + 1) + '. ' + STEP_NAMES[i] + '</span></button></li>';
+  }).join('');
+  $('order').insertBefore(dots, steps[0]);
+  var wnav = document.createElement('div');
+  wnav.className = 'wizard-nav';
+  wnav.innerHTML = '<button type="button" class="btn" data-back>Back</button><button type="button" class="btn primary" data-next>Next</button>';
+  $('order').appendChild(wnav);
+
+  function showStep(i, focus) {
+    current = Math.max(0, Math.min(steps.length - 1, i));
+    steps.forEach(function (s, k) { s.classList.toggle('current', k === current); });
+    dots.querySelectorAll('button').forEach(function (b, k) {
+      if (k === current) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+      b.classList.toggle('done', k < current);
+    });
+    wnav.querySelector('[data-back]').disabled = current === 0;
+    wnav.querySelector('[data-next]').hidden = current === steps.length - 1;
+    if (focus && document.body.classList.contains('wizard')) {
+      window.scrollTo(0, 0);
+      var h = steps[current].querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    }
+  }
+  dots.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) showStep(Number(b.getAttribute('data-go')), true); });
+  wnav.addEventListener('click', function (e) {
+    if (e.target.closest('[data-back]')) showStep(current - 1, true);
+    if (e.target.closest('[data-next]')) showStep(current + 1, true);
+  });
+  var phoneQuery = window.matchMedia ? matchMedia('(max-width: 640px)') : null;
+  function applyLayout() { document.body.classList.toggle('wizard', !!(phoneQuery && phoneQuery.matches)); }
+  if (phoneQuery) (phoneQuery.addEventListener ? phoneQuery.addEventListener('change', applyLayout) : phoneQuery.addListener(applyLayout));
+  applyLayout(); showStep(0, false);
 
   // ---------- start ----------
   setupDrop('training'); setupDrop('sources');

@@ -4,6 +4,7 @@ import { createServer } from 'node:http';
 import { readFile, stat, readdir } from 'node:fs/promises';
 import { join, normalize, extname, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildManifest, writeManifest } from './build-manifest.mjs';
 
 const ROOT = normalize(join(dirname(fileURLToPath(import.meta.url)), '..'));
 const PORT = Number(process.env.PORT) || 4321;
@@ -12,16 +13,21 @@ const TYPES = {
   '.mjs': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.webp': 'image/webp',
   '.ico': 'image/x-icon', '.txt': 'text/plain; charset=utf-8', '.md': 'text/plain; charset=utf-8',
-  '.pdf': 'application/pdf', '.zip': 'application/zip',
+  '.webmanifest': 'application/manifest+json; charset=utf-8', '.pdf': 'application/pdf', '.zip': 'application/zip',
   '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 };
+try { writeManifest(); } catch (e) { console.warn('manifest: ' + e.message); }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://x');
     if (url.pathname === '/') { res.writeHead(302, { Location: '/site/' }); return res.end(); }
+    if (url.pathname === '/site/manifest.webmanifest') {   // always fresh from brand.config.json
+      res.writeHead(200, { 'Content-Type': TYPES['.webmanifest'], 'Cache-Control': 'no-store' });
+      return res.end(JSON.stringify(buildManifest(), null, 2));
+    }
     let rel = decodeURIComponent(url.pathname);
     const file = normalize(join(ROOT, rel));
     if (file !== ROOT && !file.startsWith(ROOT + sep)) { res.writeHead(403); return res.end('Forbidden'); }

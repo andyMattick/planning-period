@@ -148,5 +148,22 @@ else {
   else fail(`render-pack.mjs could not render samples/_fixture (exit ${r.status}, ${made} files):\n${(r.stdout || '').slice(-2000)}${(r.stderr || '').slice(-2000)}`);
 }
 
+/* 7. the app: the manifest is generated from brand.config.json (never typed), and its icons and the service worker exist */
+const BUILD_MANIFEST = join(ROOT, 'scripts', 'build-manifest.mjs');
+if (!existsSync(BUILD_MANIFEST)) skip('scripts/build-manifest.mjs is not here yet: app check skipped');
+else {
+  try {
+    const { writeManifest } = await import(BUILD_MANIFEST);
+    const m = JSON.parse(writeManifest()), errs = [];
+    if (brand && m.name !== brand.name) errs.push('name does not match brand.config.json');
+    if (m.display !== 'standalone') errs.push('display is not standalone');
+    for (const i of m.icons || []) if (!existsSync(join(ROOT, 'site', i.src))) errs.push(`icon ${i.src} is missing`);
+    if (!(m.icons || []).some((i) => i.purpose === 'maskable')) errs.push('no maskable icon');
+    if (!existsSync(join(ROOT, 'site', 'sw.js'))) errs.push('site/sw.js is missing');
+    if (errs.length) errs.forEach((e) => fail(`site/manifest.webmanifest: ${e}`));
+    else ok(`site/manifest.webmanifest generated from brand.config.json (${m.icons.length} icons, service worker present)`);
+  } catch (e) { fail(`site/manifest.webmanifest: ${e.message}`); }
+}
+
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');
 process.exit(problems.length ? 1 : 0);
