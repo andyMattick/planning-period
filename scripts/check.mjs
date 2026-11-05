@@ -3,6 +3,7 @@
      1. The product's name (name and shortName from brand.config.json) appears in no file git tracks or would add,
         except brand.config.json and, in CLAUDE.md and README.md, lines that call it a working name.
      2. menu.json is valid, and docs/PRICING.md explains every item's tokens.
+     2b. feasibility.json: every menu item has defaults and limits; limits are [min, max] with min ≤ default ≤ max.
      3. Every agents/*.md brief (not README.md) has a version line and a change log (the auditor bumps them).
      4. The checks still bite: checks/fixtures/good.pack.json passes checks/keys.mjs and checks/test-wise.mjs, and
         broken copies of it (made here, in a temporary folder) fail them.
@@ -74,6 +75,31 @@ try {
   else for (const it of menu.items || []) if (!pricing.includes(`\`${it.id}\``)) errs.push(`docs/PRICING.md doesn't explain \`${it.id}\``);
   if (errs.length) errs.forEach((e) => fail(`menu.json: ${e}`)); else ok(`menu.json: ${menu.items.length} items, ${(menu.extras || []).length} extras, every item priced in docs/PRICING.md`);
 } catch (e) { fail(`menu.json: ${e.message}`); }
+
+/* 2b. feasibility.json (docs/FEASIBILITY.md): shared by the order page and the onboarding agent */
+try {
+  const fz = readJSON('feasibility.json'), menu = readJSON('menu.json'), errs = [];
+  const ids = (menu.items || []).map((i) => i.id);
+  const qpp = fz.questionsPerPage || {};
+  if (!(fz.wordsPerPage > 0)) errs.push('wordsPerPage must be more than 0');
+  if (!(qpp.low > 0 && qpp.low <= qpp.high)) errs.push('questionsPerPage needs low > 0 and low ≤ high');
+  const qps = fz.fromStandardsOnly && fz.fromStandardsOnly.questionsPerStandard;
+  if (!(Array.isArray(qps) && qps.length === 2 && qps[0] > 0 && qps[0] <= qps[1])) errs.push('fromStandardsOnly.questionsPerStandard must be [min, max] with 0 < min ≤ max');
+  for (const m of ['tooMany', 'noSource', 'defaultUsed']) if (!fz.messages || typeof fz.messages[m] !== 'string') errs.push(`messages.${m} is missing`);
+  for (const id of ids) {
+    const d = fz.defaults && fz.defaults[id], l = fz.limits && fz.limits[id];
+    if (!d) errs.push(`${id}: no defaults`);
+    if (!l) errs.push(`${id}: no limits`);
+    if (!d || !l) continue;
+    for (const [k, r] of Object.entries(l)) {
+      if (!(Array.isArray(r) && r.length === 2 && r.every(Number.isFinite) && r[0] <= r[1])) { errs.push(`${id}.${k}: limits must be [min, max] with min ≤ max`); continue; }
+      if (typeof d[k] === 'number' && !(r[0] <= d[k] && d[k] <= r[1])) errs.push(`${id}.${k}: default ${d[k]} is outside [${r[0]}, ${r[1]}]`);
+    }
+    for (const [k, v] of Object.entries(d)) if (typeof v === 'number' && !l[k] && !['choices'].includes(k)) errs.push(`${id}.${k}: a default (${v}) with no limits`);
+  }
+  for (const k of [...Object.keys(fz.defaults || {}), ...Object.keys(fz.limits || {})]) if (!ids.includes(k)) errs.push(`${k} is in feasibility.json but not in menu.json`);
+  if (errs.length) errs.forEach((e) => fail(`feasibility.json: ${e}`)); else ok(`feasibility.json: defaults and limits for all ${ids.length} menu items, min ≤ default ≤ max`);
+} catch (e) { fail(`feasibility.json: ${e.message}`); }
 
 /* 3. the briefs */
 const AGENTS = join(ROOT, 'agents');

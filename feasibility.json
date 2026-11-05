@@ -14,21 +14,25 @@
     "slides":     { "slides": 12 },
     "reviewgame": { "questions": 24 },
     "project":    { "days": 5, "grouping": "either", "turnIn": "a product plus a short reflection" },
-    "unitfull":   { "days": 10, "lessons": 4, "quizzes": 2, "tests": 1, "bellringers": 10 }
+    "unitfull":   { "days": 10, "lessons": 4, "quizzes": 2, "tests": 1, "bellringers": 10 },
+    "rubric":     { "criteria": 4, "levels": 4 },
+    "unitpack":   { "lessons": 4, "quizzes": 1, "tests": 1 }
   },
   "limits": {
     "worksheet":  { "questions": [4, 30] },
     "homework":   { "questions": [3, 20] },
     "bellringer": { "questions": [5, 20] },
     "quiz":       { "questions": [5, 20], "versions": [1, 3], "choices": [3, 5] },
-    "test":       { "questions": [10, 60], "versions": [1, 3], "choices": [3, 5] },
+    "test":       { "questions": [10, 60], "versions": [1, 3], "choices": [3, 5], "harder": [0.3, 0.5] },
     "versions":   { "versions": [2, 3], "questions": [1, 60] },
-    "studyguide": { "pages": [1, 4] },
+    "studyguide": { "pages": [1, 4], "questions": [4, 20] },
     "notes":      { "pages": [1, 6] },
     "slides":     { "slides": [5, 30] },
     "reviewgame": { "questions": [10, 40] },
     "project":    { "days": [1, 30] },
-    "unitfull":   { "days": [3, 20], "lessons": [1, 4], "quizzes": [0, 3], "tests": [0, 1] }
+    "unitfull":   { "days": [3, 20], "lessons": [1, 4], "quizzes": [0, 3], "tests": [0, 1], "bellringers": [0, 20] },
+    "rubric":     { "criteria": [2, 8], "levels": [3, 5] },
+    "unitpack":   { "lessons": [1, 4], "quizzes": [1, 2], "tests": [1, 1] }
   },
   "fromStandardsOnly": { "_why": "when the source is only standards, the maker writes the lessons itself, so we can make more, but the fact checker and blind tester carry more weight", "questionsPerStandard": [4, 8] },
   "messages": {
