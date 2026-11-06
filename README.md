@@ -9,7 +9,7 @@ press Send. Agents make the pack, separate agents check it, and the teacher gets
 - The team and the rules: `CLAUDE.md`, `agents/`
 - Running an order by hand (the pilot): `docs/RUNBOOK.md`
 - The auditor's reports (one per audit, newest first): `docs/audits/README.md`
-- World requests (a custom learning world, quoted): `docs/WORLD-REQUESTS.md`
+- The world request form moved out (owner, Nov 6, 2026); its last version is kept in `archive/world-request/`
 
 ## Setup for running orders and checks
 - `npm ci` (renderer: docx, pptxgenjs, katex, mathjs)

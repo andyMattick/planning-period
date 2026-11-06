@@ -49,7 +49,6 @@
     { href: './', file: 'index.html', label: 'Order', icon: '<path d="M6 3.5h8.5L19 8v12.5H6z"/><path d="M14 3.5V8h5"/><path d="M9 13h7M9 17h5"/>' },
     { href: 'review.html', file: 'review.html', label: 'Review', icon: '<path d="M4.5 12.5l4.5 4.5L19.5 6.5"/>' },
     { href: 'samples.html', file: 'samples.html', label: 'Samples', icon: '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>' },
-    { href: 'world.html', file: 'world.html', label: 'World', icon: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.8 5.2 3.8 8.5s-1.2 6.1-3.8 8.5c-2.6-2.4-3.8-5.2-3.8-8.5s1.2-6.1 3.8-8.5z"/>' },
     { href: 'about.html', file: 'about.html', label: 'About', icon: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.4"/>' }
   ];
   function tabBar() {

@@ -21,7 +21,6 @@ App Store and Google Play (see below).
 | `site/common.js` | Registers the service worker, adds the phone tab bar, shows the install prompt, and sets the iPhone home-screen title from the config. |
 | `site/style.css` | The app layout lives in the `@media (max-width: 640px)` block at the end. |
 | `site/about.html` | The About tab: how it works, the team, installing, and your files. |
-| `site/world.html`, `site/world.js` | The World tab: the "Build a learning world" request form, one step per screen on phones (`docs/WORLD-REQUESTS.md`). |
 | Every page's `<head>` | `manifest`, `theme-color` (light and dark), `apple-touch-icon`, `apple-mobile-web-app-capable`, `mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`, and `viewport-fit=cover`. |
 
 ## Installing it

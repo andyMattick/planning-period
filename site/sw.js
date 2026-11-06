@@ -6,13 +6,13 @@
 //   so they are never cached; the zips and JSON files the pages make are blob: downloads, also never cached.
 // Bump VERSION when the shell changes; old caches are deleted on activate.
 'use strict';
-var VERSION = 'v4';
+var VERSION = 'v5';
 var SHELL = 'shell-' + VERSION;
 var DATA = 'data-' + VERSION;
 
 var SHELL_FILES = [
-  './', 'index.html', 'review.html', 'samples.html', 'about.html', 'world.html', 'feasibility.js',
-  'style.css', 'common.js', 'zip.js', 'order.js', 'review.js', 'samples.js', 'world.js',
+  './', 'index.html', 'review.html', 'samples.html', 'about.html', 'feasibility.js',
+  'style.css', 'common.js', 'zip.js', 'order.js', 'review.js', 'samples.js',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-192.png',
   'icons/maskable-512.png', 'icons/apple-touch-icon.png'
 ];
