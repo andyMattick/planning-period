@@ -1,0 +1,5 @@
+{
+  "_note": "Copy to backend.config.json (git-ignored) for local testing, or set PP_SUPABASE_URL and PP_SUPABASE_ANON_KEY in Vercel (docs/BACKEND.md). Without it the site runs in local mode.",
+  "supabaseUrl": "https://YOUR-PROJECT.supabase.co",
+  "supabaseAnonKey": "YOUR-ANON-OR-PUBLISHABLE-KEY"
+}
