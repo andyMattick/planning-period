@@ -1,6 +1,6 @@
 # Research collection
 
-Every report, log and audit from building Pet World and Planning Period, gathered in one place to share later (owner, Nov 6, 2026).
+Every report, log and audit from building Pet World and the teacher studio (this repo), gathered in one place to share later (owner, Nov 6, 2026).
 These are **copies** (snapshots); the originals stay in each repo. Re-run the gather step to refresh them.
 
 ## Before anything here is shared publicly
@@ -78,11 +78,11 @@ These are **copies** (snapshots); the originals stay in each repo. Re-run the ga
 - [AGENTS.md](pet-world/AGENTS.md): The Pet World builder team ⚠️ mentions the student by name
 - [REPORTER.md](pet-world/REPORTER.md): 🧾 The reporter: the build report and the process video
 
-### Planning Period: auditor reports
+### Teacher studio: auditor reports
 
 - [AUDIT-2026-11-05.md](planning-period/audits/AUDIT-2026-11-05.md): Audit, Nov 5, 2026: the four samples, the capability docs and the onboarding test runs
 
-### Planning Period: sample orders, lead notes (what each checker caught, what failed)
+### Teacher studio: sample orders, lead notes (what each checker caught, what failed)
 
 - [g11-history-AUDIT-NOTES.md](planning-period/samples/g11-history-AUDIT-NOTES.md): Audit notes: sample g11-history (for the auditor)
 - [g4-math-AUDIT-NOTES.md](planning-period/samples/g4-math-AUDIT-NOTES.md): Audit notes: sample g4-math (for the auditor)
@@ -90,18 +90,18 @@ These are **copies** (snapshots); the originals stay in each repo. Re-run the ga
 - [g7-ela2-AUDIT-NOTES.md](planning-period/samples/g7-ela2-AUDIT-NOTES.md): Audit notes: sample g7-ela2 (pp-2026-11-05-g7-ela2)
 - [g8-science-AUDIT-NOTES.md](planning-period/samples/g8-science-AUDIT-NOTES.md): Audit notes: sample g8-science (for the auditor)
 
-### Planning Period: standards and pricing
+### Teacher studio: standards and pricing
 
 - [INTERACTIVE-STANDARD.md](planning-period/INTERACTIVE-STANDARD.md): The interactive assignment standard (owner, Nov 5, 2026)
 - [PRICING.md](planning-period/PRICING.md): Pricing: what a token is and where the menu's numbers come from
 
 ## Still to add
 
-- The promo video and the process video (Pet World docs/builder/media, Planning Period docs/marketing/media).
+- The promo video and the process video (Pet World docs/builder/media, this repo's docs/marketing/media).
 - The interactive-standard gap report, when the independent checker finishes.
 - The weekly-note cost and quality data, once real notes run.
 - The independent evaluation, if the grant funds one.
 
 ## How to refresh
 
-Copy the latest `docs/builder/*-REPORT.md`, `*-LOG.md`, `AUDIT-*.md`, `BLIND*`, `RECHECK*`, `EYES*` from Pet World and `docs/audits/` and `samples/*/AUDIT-NOTES.md` from Planning Period into the matching folders, then update this list.
+Copy the latest `docs/builder/*-REPORT.md`, `*-LOG.md`, `AUDIT-*.md`, `BLIND*`, `RECHECK*`, `EYES*` from Pet World and `docs/audits/` and `samples/*/AUDIT-NOTES.md` from this repo into the matching folders, then update this list.
