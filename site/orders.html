@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-page-title="My orders">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2f6f5e" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15181c" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="color-scheme" content="light dark">
+<title>My orders</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" data-brand="shortName">&nbsp;</a>
+    <nav class="nav"><a href="./">Order</a><a href="orders.html" aria-current="page">My orders</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html">About</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <h1>My orders</h1>
+    <p class="tagline">Follow each order, answer our questions, review your preview and get your files.</p>
+    <div id="load-error" class="error" role="alert"></div>
+  </section>
+
+  <section class="step" id="local" hidden>
+    <h2>Online orders aren't switched on here yet</h2>
+    <p>For now, Send on the <a href="./">order page</a> makes a zip on your device to email us, and you review your preview with <a href="review.html">Review a preview</a> (or the REVIEW.html in your preview zip).</p>
+  </section>
+
+  <section class="account" id="account" hidden aria-label="Sign in">
+    <div id="acct-out">
+      <h2 class="h3">Sign in to see your orders</h2>
+      <p class="small">We email you a link. Open it on this device and you're signed in: no password.</p>
+      <div class="signin-row">
+        <label class="sr-only" for="signin-email">Your email</label>
+        <input type="email" id="signin-email" autocomplete="email" placeholder="you@school.org">
+        <button type="button" class="btn primary" id="signin-btn">Email me a sign-in link</button>
+      </div>
+      <div class="ok small" id="signin-sent" role="status"></div>
+      <div class="error" id="signin-err" role="alert"></div>
+    </div>
+    <div id="acct-in" hidden>
+      <p class="small"><b>Signed in</b> as <span id="acct-email"></span> · <a href="./">New order</a> · <button type="button" class="btn link" id="signout-btn">Sign out</button></p>
+    </div>
+  </section>
+
+  <div id="list" aria-live="polite"></div>
+</main>
+<footer class="foot"><div class="wrap"><span data-brand="aiNotice"></span> · <span data-brand="deleteNotice"></span></div></footer>
+<script src="common.js"></script>
+<script src="backend.js"></script>
+<script src="orders.js"></script>
+</body>
+</html>

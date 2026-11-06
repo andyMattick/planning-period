@@ -47,6 +47,7 @@
   // The bottom tab bar (CSS shows it on phones only; desktop keeps the top links).
   var TABS = [
     { href: './', file: 'index.html', label: 'Order', icon: '<path d="M6 3.5h8.5L19 8v12.5H6z"/><path d="M14 3.5V8h5"/><path d="M9 13h7M9 17h5"/>' },
+    { href: 'orders.html', file: 'orders.html', label: 'Orders', icon: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M8 14h3M8 17h6"/>' },
     { href: 'review.html', file: 'review.html', label: 'Review', icon: '<path d="M4.5 12.5l4.5 4.5L19.5 6.5"/>' },
     { href: 'samples.html', file: 'samples.html', label: 'Samples', icon: '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>' },
     { href: 'about.html', file: 'about.html', label: 'About', icon: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.4"/>' }

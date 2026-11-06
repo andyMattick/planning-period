@@ -2,21 +2,23 @@
 // - The shell (pages, styles, scripts, icons) is precached and served cache-first, refreshed in the background.
 // - Settings and data (brand.config.json, menu.json, samples/*.json, the manifest) are network-first,
 //   falling back to the cached copy when offline.
+// - backend.config.json (online orders on or off) is network-first like the other settings. Supabase is another origin,
+//   so sign-in, uploads, orders and signed file links are never touched or cached here.
 // - Only same-origin GET requests are touched. Files a teacher picks are read on the device and never fetched,
 //   so they are never cached; the zips and JSON files the pages make are blob: downloads, also never cached.
 // Bump VERSION when the shell changes; old caches are deleted on activate.
 'use strict';
-var VERSION = 'v6';
+var VERSION = 'v7';
 var SHELL = 'shell-' + VERSION;
 var DATA = 'data-' + VERSION;
 
 var SHELL_FILES = [
-  './', 'index.html', 'review.html', 'samples.html', 'about.html', 'feasibility.js',
-  'style.css', 'common.js', 'zip.js', 'order.js', 'review.js', 'samples.js',
+  './', 'index.html', 'review.html', 'samples.html', 'about.html', 'orders.html', 'feasibility.js',
+  'style.css', 'common.js', 'zip.js', 'order.js', 'review.js', 'samples.js', 'backend.js', 'orders.js',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-192.png',
   'icons/maskable-512.png', 'icons/apple-touch-icon.png'
 ];
-var DATA_FILES = ['../brand.config.json', '../menu.json', '../feasibility.json', 'manifest.webmanifest'];
+var DATA_FILES = ['../brand.config.json', '../menu.json', '../feasibility.json', 'manifest.webmanifest'];   // ../backend.config.json is cached when fetched (it may not exist)
 
 self.addEventListener('install', function (e) {
   e.waitUntil(Promise.all([
