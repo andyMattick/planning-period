@@ -34,4 +34,5 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
 - **Later: paste a link.** A box for a web address instead of a saved page. It needs the server (C): the page is
   fetched there, text only, never run, with the same source fence and size limit; the browser can't fetch other
   sites itself. Until then: File → Save page as, and drop in the .html file.
-- **Status:** web-page upload, A and B being built Nov 6, 2026; B2, C, C2, D next.
+- **Status:** web-page upload, A and B built Nov 6, 2026 (docs/BACKEND.md; needs the owner's new Supabase project,
+  steps there); B2, C, C2, D next.
