@@ -14,7 +14,7 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
 - **Status:** next session, first.
 
 ## Streamline the order loop (owner, Nov 6, 2026)
-- **Owner:** "planning period feels very clunky... teachers make it, it zips, they email it, i claude it, i send back the doc
+- **Owner:** "[the product] feels very clunky... teachers make it, it zips, they email it, i claude it, i send back the doc
   for reviews they approve / disapprove, i remake, they approve or we just cancel it... how can we streamline this?"
 - **The plan:** the teacher's clicks drive the loop; the owner steps in only for exceptions.
   - **A.** Sign-in (email link), direct upload to private storage, an orders dashboard with status. No zips or email.
