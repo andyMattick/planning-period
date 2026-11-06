@@ -29,6 +29,10 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
     with credit and a license (e.g. CC BY); one more review before it's public; others use it as is or "make this mine"
     (remix through the team in their style, fewer tokens); a name scan keeps student information out; sharing earns tokens.
   - **D.** Tokens and payment (Stripe) once real teachers pay.
-- **Also:** upload a web page (a saved .html file, text only, scripts ignored) alongside PDF and Word; paste a link later
-  (needs the server).
-- **Status:** web-page upload, A and B being built Nov 6, 2026; B2, C, C2, D next.
+- **Also:** upload a web page (a saved .html file, text only, scripts ignored) alongside PDF and Word (built Nov 6, 2026:
+  both drop zones, the page count reads the page's text, `scripts/html-text.mjs` for the agents).
+- **Later: paste a link.** A box for a web address instead of a saved page. It needs the server (C): the page is
+  fetched there, text only, never run, with the same source fence and size limit; the browser can't fetch other
+  sites itself. Until then: File → Save page as, and drop in the .html file.
+- **Status:** web-page upload, A and B built Nov 6, 2026 (docs/BACKEND.md; needs the owner's new Supabase project,
+  steps there); B2, C, C2, D next.

@@ -3,7 +3,7 @@
 The order site in `site/` is a Progressive Web App (PWA). The same files are:
 
 - **a normal website on a computer:** a long page, with links at the top;
-- **an app on a phone (640 px wide or less):** a title bar, a bottom tab bar (Order · Review · Samples · World · About), one
+- **an app on a phone (640 px wide or less):** a title bar, a bottom tab bar (Order · Orders · Review · Samples · About), one
   order step per screen with progress dots and Back / Next, big tap targets, and room for the notch and home bar
   (`env(safe-area-inset-*)`);
 - **an installed app:** it has its own icon and opens full screen. After the first visit it opens with no internet.
@@ -21,6 +21,7 @@ App Store and Google Play (see below).
 | `site/common.js` | Registers the service worker, adds the phone tab bar, shows the install prompt, and sets the iPhone home-screen title from the config. |
 | `site/style.css` | The app layout lives in the `@media (max-width: 640px)` block at the end. |
 | `site/about.html` | The About tab: how it works, the team, installing, and your files. |
+| `site/orders.html`, `orders.js`, `backend.js` | My orders (the Orders tab) and the online backend client: docs/BACKEND.md |
 | Every page's `<head>` | `manifest`, `theme-color` (light and dark), `apple-touch-icon`, `apple-mobile-web-app-capable`, `mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`, and `viewport-fit=cover`. |
 
 ## Installing it
@@ -80,7 +81,17 @@ What's needed:
 Apple rejects apps that are "just a website", so the store version should arrive with the backend below (real sending
 and status), not before.
 
-## When there's a real backend
+## The backend (built Nov 6, 2026)
+
+Online orders are in: sign-in by email link, Send uploads, **My orders** (`site/orders.html`, the Orders tab) with the
+follow-up, the online review and the final files. Setup, rules and tests: **docs/BACKEND.md**. With no
+`backend.config.json` (local mode) everything below "Offline" still holds: Send makes the zip. `site/backend.js` is a
+small fetch client, so nothing loads from a CDN; Supabase is another origin, so the service worker never touches or
+caches sign-in, uploads, orders or signed file links.
+
+Still to come from the plan below: Background Sync for an order sent offline (today: the zip), push notifications.
+
+## When there's a real backend (the plan, Nov 5, 2026)
 
 Only Send and the review page change:
 

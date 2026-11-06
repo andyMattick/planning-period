@@ -20,7 +20,7 @@
 <header class="top">
   <div class="wrap">
     <a class="brand" href="./" data-brand="shortName">&nbsp;</a>
-    <nav class="nav"><a href="./" aria-current="page">Order</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html">About</a></nav>
+    <nav class="nav"><a href="./" aria-current="page">Order</a><a href="orders.html">My orders</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html">About</a></nav>
   </div>
 </header>
 
@@ -30,6 +30,24 @@
     <p class="tagline" data-brand="tagline"></p>
     <p class="phone-only small">Five quick steps, then you look over a preview before anything is final. <a href="about.html">How it works</a></p>
     <div id="load-error" class="error" role="alert"></div>
+  </section>
+
+  <section class="account" id="account" hidden aria-label="Sign in">
+    <div id="acct-out">
+      <h2 class="h3">Send it online</h2>
+      <p class="small">Sign in with your email and your files go straight to us: no zip to email. You follow the order, answer our questions and approve your preview in <a href="orders.html">My orders</a>.</p>
+      <div class="signin-row">
+        <label class="sr-only" for="signin-email">Your email</label>
+        <input type="email" id="signin-email" autocomplete="email" placeholder="you@school.org">
+        <button type="button" class="btn" id="signin-btn">Email me a sign-in link</button>
+      </div>
+      <div class="ok small" id="signin-sent" role="status"></div>
+      <div class="error" id="signin-err" role="alert"></div>
+      <p class="small muted">Sign in first: the link opens this page again, and files you picked before don't carry over. Not signing in? Send still works: it makes a zip on this device for you to email.</p>
+    </div>
+    <div id="acct-in" hidden>
+      <p class="small"><b>Signed in</b> as <span id="acct-email"></span> · <a href="orders.html">My orders</a> · <button type="button" class="btn link" id="signout-btn">Sign out</button></p>
+    </div>
   </section>
 
   <section class="how" aria-labelledby="how-h">
@@ -67,7 +85,7 @@
         <p>Drag files here, or</p>
         <label class="btn" for="f-training">Choose files</label>
         <input class="sr-only" type="file" id="f-training" multiple>
-        <p class="small muted" style="margin-top:.6em">Any file type: PDF, Word, PowerPoint, photos of paper copies.</p>
+        <p class="small muted" style="margin-top:.6em">Any file type: PDF, Word, PowerPoint, photos of paper copies, or a saved web page (File → Save page as).</p>
       </div>
       <p class="notice small">What you upload is sent to AI to make your pack.</p>
       <ul class="files" id="list-training"></ul>
@@ -86,6 +104,7 @@
         <p>Drag files here, or</p>
         <label class="btn" for="f-sources">Choose files</label>
         <input class="sr-only" type="file" id="f-sources" multiple>
+        <p class="small muted" style="margin-top:.6em">PDF, Word, PowerPoint, text, or a saved web page (File → Save page as: .html or .htm). We read a web page as text only.</p>
       </div>
       <ul class="files" id="list-sources"></ul>
       <p class="small muted" style="margin:.5em 0 0">Up to <b id="limit-text">25 MB</b> in total.</p>
@@ -150,10 +169,22 @@
       <div class="error" id="err-send" role="alert"></div>
       <div class="send-row">
         <button type="submit" class="btn primary big" id="send">Send</button>
-        <p class="small muted" style="margin-top:.6em">Nothing is uploaded. Send makes one zip file on this device for you to email.</p>
+        <p class="small muted" style="margin-top:.6em" id="send-note">Nothing is uploaded. Send makes one zip file on this device for you to email.</p>
+        <p class="small" id="send-progress" role="status" aria-live="polite"></p>
       </div>
     </section>
   </form>
+
+  <section class="step done" id="done-online" hidden tabindex="-1" aria-labelledby="done-online-h">
+    <h2 id="done-online-h">Your order is in</h2>
+    <p>We have your order <b id="online-id"></b> and your files (<span id="online-count"></span>). Nothing to email.</p>
+    <p id="online-turnaround"></p>
+    <p><b>Next:</b> our onboarding agent reads your material and your order. If anything needs a decision, the questions show up in <a href="orders.html">My orders</a> with one-tap answers. We start building when you answer.</p>
+    <p><b>Then:</b> your preview (stamped PREVIEW) and the audit report open in My orders → look them over → request changes or approve → your final, editable files are released there.</p>
+    <p class="notice" data-brand="aiNotice"></p>
+    <p class="small" data-brand="deleteNotice"></p>
+    <p><a class="btn primary" id="online-link" href="orders.html">See it in My orders</a> <button type="button" class="btn" data-new-order>Start a new order</button></p>
+  </section>
 
   <section class="step done" id="done" hidden tabindex="-1" aria-labelledby="done-h">
     <h2 id="done-h">Your order file is ready</h2>
@@ -171,6 +202,7 @@
 <footer class="foot"><div class="wrap"><span data-brand="promise"></span> · <a href="review.html">Review a preview</a> · <a href="samples.html">See sample packs</a></div></footer>
 
 <script src="common.js"></script>
+<script src="backend.js"></script>
 <script src="zip.js"></script>
 <script src="feasibility.js"></script>
 <script src="order.js"></script>

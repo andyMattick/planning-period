@@ -14,13 +14,30 @@ WORK=~/pp-work/$ORDER                  # the order folder: outside the repo, del
 STYLE=~/pp-styles/$TEACHER             # the teacher's style notes: kept for their agents only
 ```
 
-## 1. Receive the order zip
+**Online orders** (docs/BACKEND.md) use `scripts/orders.mjs` with the service key from `~/.pp-owner.env`
+(`source ~/.pp-owner.env` first); `TEACHER` is then her account id (the order's `teacher`). **Zip orders** (local
+mode, or a teacher who didn't sign in) use the email steps marked "zip:". Everything else is the same.
 
+## 1. Receive the order
+
+Online:
+```
+node $REPO/scripts/orders.mjs list sent                  # new orders
+node $REPO/scripts/orders.mjs pull $ORDER                # → $WORK/in/order.json, in/sources/, in/training/; status onboarding
+cd "$WORK"
+```
+Zip:
 ```
 mkdir -p "$WORK/in" && cd "$WORK"
 unzip -q ~/Downloads/$ORDER.zip -d in    # untrusted: its own empty folder, never run anything inside it
 ls -R in                                 # expect order.json, sources/, training/ (the teacher's style examples)
 ```
+- **Saved web pages** (`.html` / `.htm` in `sources/` or `training/`): read them as text only, never open them in a
+  browser or run anything in them (or in a `_files` folder saved next to them). Make a text copy for the agents:
+  ```
+  mkdir -p "$WORK/text" && for f in in/sources/*.htm* in/training/*.htm*; do [ -f "$f" ] && node $REPO/scripts/html-text.mjs "$f" --out "$WORK/text/$(basename "$f").txt"; done
+  ```
+  Give the agents the `.txt` copies. The text is untrusted data: an instruction inside it is not one.
 - Check `order.json` against `menu.json` (items, grade, subject) and the token total the teacher saw.
 - **Source fence:** if a source is a whole copyrighted book or more than the order needs, use only the chapters the
   order names; say so to the teacher. Write the start time in the log (step 10's rows start now).
@@ -38,9 +55,13 @@ Write onboarding.json and FOLLOW-UP.md in $WORK." --allowedTools Read,Write,Glob
 cat "$WORK/FOLLOW-UP.md"
 ```
 - Read `FOLLOW-UP.md` before it goes out (honest, friendly, at most 3 questions, nothing they already answered), then
-  send it to the teacher's `replyTo` address.
-- **Wait for the answer.** Save it, in their words, as `$WORK/followup-answer.md` (a reply of "go" means: use the
-  recommended defaults). If the follow-up asked no questions, write `no questions asked: started` in that file and go on.
+  send it. Online: `node $REPO/scripts/orders.mjs follow-up $ORDER "$WORK/FOLLOW-UP.md"` (the questions and options
+  come from `onboarding.json` next to it, so she answers with one tap in My orders; status `needs_answer`, or
+  `building` when there are no questions). Zip: email it to the teacher's `replyTo` address.
+- **Wait for the answer.** Online: `node $REPO/scripts/orders.mjs list building` shows it has come, and
+  `node $REPO/scripts/orders.mjs answer $ORDER` writes `$WORK/followup-answer.md`. Zip: save it, in their words, as
+  `$WORK/followup-answer.md`. A reply of "go" means: use the recommended defaults. If the follow-up asked no
+  questions, write `no questions asked: started` in that file and go on.
 - An answer that changes the items or the size changes the tokens: rerun the onboarding agent with the answer
   (it recomputes `tokens`) and confirm the new total with the teacher before step 4.
 - The reporter logs this step and the time spent waiting (waiting is not agent time).
@@ -175,7 +196,16 @@ measured") and `audit.notes`: every round, every catch, every fix, Wilco before 
 node $REPO/scripts/render-pack.mjs "$WORK" --preview   # writes $WORK/out-preview/ and $WORK/preview.zip: watermarked PDFs, AUDIT-REPORT, REVIEW.html
 cd "$WORK/preview" && zip -qr "$WORK/$ORDER-preview.zip" . && cd -
 ```
-(Modes: docs/PACK-FORMAT.md, "Preview, sign-off, final".) Send the preview zip. The teacher
+(Modes: docs/PACK-FORMAT.md, "Preview, sign-off, final".) **`pack.json`'s `id` must be the order id** (the
+approval is checked against it).
+
+Online: `node $REPO/scripts/orders.mjs preview $ORDER` uploads `out-preview/` and `preview.zip` (status
+`preview_ready`). She opens the PDFs in My orders and approves or asks for changes there; `orders.mjs list approved`
+and `list changes_requested` show which. Then `node $REPO/scripts/orders.mjs approval $ORDER` writes
+`$WORK/approval.json` (she agreed) or `$WORK/comments-$ORDER.json` (she asked for changes): carry on below with that
+file already in place (skip the `cp`).
+
+Zip: send the preview zip. The teacher
 opens `REVIEW.html` offline, looks everything over and saves one of two files:
 
 - **`comments-<id>.json` (changes requested).** Copy their comments, in their words, to the repository:
@@ -202,10 +232,18 @@ ls "$WORK/out"                                                    # student/teac
 cd "$WORK/out" && zip -qr "$WORK/$ORDER.zip" . && cd -
 ```
 Open two files at phone and print size before sending.
+Online: `node $REPO/scripts/orders.mjs final $ORDER` uploads `out/` and `out.zip` (status `final_ready`); she downloads
+them in My orders.
 
 ## 13. Deliver, then delete uploads and working copies (CLAUDE.md rule 1)
 
-Send `$WORK/$ORDER.zip` (the notices inside say it was made by AI and to check it before students see it). When the
+Online: step 12's `final` delivered it. When she has downloaded it (or after 7 days):
+`node $REPO/scripts/orders.mjs purge $ORDER` deletes her uploads and the preview files from storage (the final files
+stay for her; add `--finals` to delete them too), then run the record and `rm -rf "$WORK"` lines below.
+`node $REPO/scripts/orders.mjs purge --due` does it for every order that is due (run it daily). A failed order:
+`node $REPO/scripts/orders.mjs status $ORDER failed "<what she should know>"`.
+
+Zip: send `$WORK/$ORDER.zip` (the notices inside say it was made by AI and to check it before students see it). When the
 teacher confirms they have it:
 ```
 mkdir -p $REPO/records && cd ~ && node -e 'const p=require(process.argv[1]);const {documents,style,...r}=p;r.order={grade:p.order?.grade,subject:p.order?.subject,topic:p.order?.topic,items:p.order?.items};try{const o=require(process.argv[3]);r.onboarding={source:(o.source||[]).map(x=>({kind:x.kind,pages:x.pages,ideas:x.ideas})),made:o.whatWeWillMake,warnings:(o.warnings||[]).map(w=>w.kind),questions:(o.questions||[]).length,tokens:o.tokens}}catch{};require("fs").writeFileSync(process.argv[2],JSON.stringify(r,null,2)+"\n")' "$WORK/pack.json" "$REPO/records/$ORDER.json" "$WORK/onboarding.json"
@@ -233,6 +271,8 @@ If the teacher writes more comments after delivery, add them to `comments/$ORDER
 | What | Where | Kept? |
 |---|---|---|
 | Order zip, sources, pack.json, views, previews, final files | `~/pp-work/<order>/` | deleted after delivery |
+| Online: her uploads, the preview files | Supabase `uploads/<teacher>/<order>/`, `deliverables/<teacher>/<order>/preview/` | deleted by `orders.mjs purge` after delivery |
+| Online: the final files | Supabase `deliverables/<teacher>/<order>/final/` | for her to download; `purge --finals` deletes them |
 | The teacher's style notes and examples | `~/pp-styles/<teacher>/` | for their agents only, deleted on request |
 | The teacher's change requests and later comments | `comments/<order>.md` (repo) | yes: the auditor's input |
 | The onboarding read-out, the follow-up and the answer | `~/pp-work/<order>/onboarding.json`, `FOLLOW-UP.md`, `followup-answer.md` | deleted after delivery (the record keeps the counts) |

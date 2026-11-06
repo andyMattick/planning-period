@@ -13,7 +13,7 @@ follow-up says why. **All numbers are pilot estimates** (owner, Nov 5, 2026), to
 
 | Key | Value | Why |
 |---|---|---|
-| `wordsPerPage` | 300 | a typed page of notes or a textbook page with pictures; a slide or a scanned page counts as one page |
+| `wordsPerPage` | 300 | a typed page of notes or a textbook page with pictures; a slide or a scanned page counts as one page (a saved web page: its text only, scripts, styles and tags dropped, `html-words`) |
 | `questionsPerPage` | 6–10 | how many **distinct, fair** questions one page supports before they repeat each other. A page of notes holds about 3–6 ideas (a rule, a method, two worked examples, a few terms); each supports one or two questions at different levels. Past that, questions test the same idea twice or need facts the source doesn't have, which the blind tester flags and the fact checker has nothing to check against. Pet World's note sheets, each built on one lesson's video and key ideas, carry about 14–15 checked items (batch 1: 60 items on 4 Market sheets, 43 on 3 Clock sheets; `WORKSHEETS-BATCH-LOG.md`), and a lesson there is more than one page of source |
 | A/B versions | not doubled | B tests the **same** ideas with new numbers, contexts or passages (`agents/maker.md` rule 4), so a 10-question quiz with A and B needs 10 questions' worth of material, not 20 |
 | Several items | added together | a worksheet, a quiz and a test from one page all draw on the same 6–10; the test needs new questions, not new ideas, but a test of 25 still needs about 3 pages |

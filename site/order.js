@@ -1,5 +1,7 @@
-// The order page: files, menu, requests, live token total, and Send (builds a zip on this device).
-// Nothing is uploaded. Name, email and notices come from brand.config.json; the menu from menu.json.
+// The order page: files, menu, requests, live token total, and Send.
+// Signed in (online orders on, docs/BACKEND.md): Send uploads the files to the private uploads bucket and adds the
+// order (status sent). Otherwise (local mode, signed out or offline): Send builds a zip on this device to email.
+// Name, email and notices come from brand.config.json; the menu from menu.json.
 (function () {
   'use strict';
   var esc = PP.esc, fmtBytes = PP.fmtBytes;
@@ -16,6 +18,7 @@
   var feasChoice = null, feasWarned = false;
   var extras = {};      // extra id -> true
   var lastZip = null;
+  var backend = null;   // PPBackend client, or null in local mode
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -422,10 +425,10 @@
     return Array.prototype.map.call(a, function (b) { return b.toString(16).padStart(2, '0'); }).join('');
   }
   function safeName(name) { return String(name).replace(/[\/\\:*?"<>|\u0000-\u001f]/g, '_').replace(/^\.+/, '_') || 'file'; }
-  function uniqueNames(list) {
+  function uniqueNames(list, namer) {
     var used = {};
     return list.map(function (f) {
-      var n = safeName(f.name), base = n, ext = '', k = 2;
+      var n = (namer || safeName)(f.name), base = n, ext = '', k = 2;
       var dot = n.lastIndexOf('.'); if (dot > 0) { base = n.slice(0, dot); ext = n.slice(dot); }
       while (used[n.toLowerCase()]) n = base + ' (' + (k++) + ')' + ext;
       used[n.toLowerCase()] = true;
@@ -492,10 +495,12 @@
       err.textContent = 'Almost there. Please add ' + problems.join(', ').replace(/, ([^,]*)$/, ' and $1') + '.';
       return;
     }
-    var btn = $('send'); btn.disabled = true; btn.textContent = 'Making your order file…';
+    var online = sendsOnline();
+    var btn = $('send'); btn.disabled = true; btn.textContent = online ? 'Sending…' : 'Making your order file…';
     var date = today(), rid = randId();
     var subj = $('subject').value;
-    var trainNames = uniqueNames(files.training), srcNames = uniqueNames(files.sources);
+    var namer = online ? PPBackend.safeKey : null;
+    var trainNames = uniqueNames(files.training, namer), srcNames = uniqueNames(files.sources, namer);
     var lines = costLines();
     var tokenTotal = lines.reduce(function (s, l) { return s + l.tokens; }, 0);
     var ids = pickedIds();
@@ -525,10 +530,39 @@
       replyTo: $('reply').value.trim(),
       notices: { tokenNote: brand.tokenNote || '', aiNotice: brand.aiNotice || '', deleteNotice: brand.deleteNotice || '' }
     };
+    renameSpecFile(orderJson, trainNames, srcNames);
     var all = files.training.map(function (f, i) { return { f: f, name: 'training/' + trainNames[i] }; })
       .concat(files.sources.map(function (f, i) { return { f: f, name: 'sources/' + srcNames[i] }; }));
 
-    Promise.all(all.map(function (x) { return readBytes(x.f).then(function (b) { return { name: x.name, data: b }; }); }))
+    var job = online ? sendOnline(orderJson, all) : makeZipOrder(orderJson, all, date, rid);
+    job.catch(function (ex) {
+        if (online) {
+          err.innerHTML = esc('Sorry, your order did not go through (' + (ex && ex.message || ex) + '). Nothing was sent. Press Send to try again, or ') +
+            '<button type="button" class="btn link" id="send-zip">make a zip to email instead</button>.';
+          $('send-zip').addEventListener('click', function () {
+            err.textContent = '';
+            var n2 = uniqueNames(files.training), s2 = uniqueNames(files.sources);
+            orderJson.order.styleExamples = n2; orderJson.order.sources = s2; delete orderJson.delivery;
+            renameSpecFile(orderJson, n2, s2);
+            var all2 = files.training.map(function (f, i) { return { f: f, name: 'training/' + n2[i] }; })
+              .concat(files.sources.map(function (f, i) { return { f: f, name: 'sources/' + s2[i] }; }));
+            makeZipOrder(orderJson, all2, date, rid).catch(function (e2) { err.textContent = 'We could not make the zip either (' + (e2.message || e2) + ').'; });
+          });
+        } else err.textContent = 'Sorry, we could not make the order file (' + (ex && ex.message || ex) + '). Try removing very large files and press Send again.';
+      })
+      .then(function () { btn.disabled = false; btn.textContent = 'Send'; $('send-progress').textContent = ''; });
+  });
+
+  // "Which uploaded file is the test" (itemSpecs.versions.file) names the file as it is saved in the order.
+  function renameSpecFile(orderJson, trainNames, srcNames) {
+    var v = orderJson.order.itemSpecs && orderJson.order.itemSpecs.versions, picked = v && (v.original || v.file);
+    if (!picked) return;
+    var i = files.sources.map(function (f) { return f.name; }).indexOf(picked), j = files.training.map(function (f) { return f.name; }).indexOf(picked);
+    var saved = i >= 0 ? srcNames[i] : j >= 0 ? trainNames[j] : picked;
+    if (saved !== picked) { v.original = picked; v.file = saved; } else { delete v.original; v.file = picked; }
+  }
+  function makeZipOrder(orderJson, all, date, rid) {
+    return Promise.all(all.map(function (x) { return readBytes(x.f).then(function (b) { return { name: x.name, data: b }; }); }))
       .then(function (entries) {
         entries.unshift({ name: 'order.json', data: JSON.stringify(orderJson, null, 2) + '\n' });
         var bytes = PPZip.makeZip(entries);
@@ -537,12 +571,47 @@
         lastZip = { name: name, url: URL.createObjectURL(new Blob([bytes], { type: 'application/zip' })), size: bytes.length };
         download();
         showDone();
-      })
-      .catch(function (ex) {
-        err.textContent = 'Sorry, we could not make the order file (' + (ex && ex.message || ex) + '). Try removing very large files and press Send again.';
-      })
-      .then(function () { btn.disabled = false; btn.textContent = 'Send'; });
-  });
+      });
+  }
+
+  // ---------- online: upload to uploads/<teacher>/<order>/, then add the order (docs/BACKEND.md) ----------
+  function sendsOnline() { return !!(backend && backend.user() && navigator.onLine !== false); }
+  function sendOnline(orderJson, all) {
+    var user = backend.user(), base = user.id + '/' + orderJson.id + '/', done = [];
+    orderJson.delivery = 'online';
+    var prog = $('send-progress');
+    var chain = Promise.resolve();
+    all.forEach(function (x, i) {
+      chain = chain.then(function () {
+        prog.textContent = 'Uploading ' + (i + 1) + ' of ' + all.length + ': ' + x.f.name + '…';
+        return backend.upload('uploads', base + x.name, x.f).then(function () { done.push(base + x.name); });
+      });
+    });
+    return chain.then(function () {
+      prog.textContent = 'Sending your order…';
+      return backend.insert('orders', { id: orderJson.id, teacher: user.id, status: 'sent', order_json: orderJson,
+        token_total: orderJson.tokenTotal, upload_files: done });
+    }).then(function () { showDoneOnline(orderJson, done.length); }, function (e) {
+      if (done.length) backend.remove('uploads', done).catch(function () {});   // nothing half-sent stays behind
+      throw e;
+    });
+  }
+  function showDoneOnline(orderJson, n) {
+    $('online-id').textContent = orderJson.id;
+    $('online-count').textContent = n + ' file' + (n === 1 ? '' : 's');
+    $('online-turnaround').textContent = brand.turnaround || DEFAULT_TURNAROUND;
+    $('online-link').href = 'orders.html?order=' + encodeURIComponent(orderJson.id);
+    $('order').hidden = true;
+    $('done-online').hidden = false;
+    $('done-online').focus();
+    $('done-online').scrollIntoView({ block: 'start' });
+  }
+  function onUser(u) {
+    $('send-note').textContent = u
+      ? 'Send uploads your files and your order to us, privately: only you and our team can see them.'
+      : 'Nothing is uploaded. Send makes one zip file on this device for you to email' + (backend ? ' (or sign in at the top to send it online).' : '.');
+    if (u && u.email && !$('reply').value.trim()) $('reply').value = u.email;
+  }
 
   function download() {
     var a = document.createElement('a');
@@ -564,9 +633,11 @@
     $('done').scrollIntoView({ block: 'start' });
   }
   $('zip-again').addEventListener('click', function (e) { e.preventDefault(); if (lastZip) download(); });
-  $('new-order').addEventListener('click', function () {
-    if (!confirm('Start a new order? This clears the files and choices on this page.')) return;
-    location.reload();
+  document.querySelectorAll('#new-order, [data-new-order]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (!confirm('Start a new order? This clears the files and choices on this page.')) return;
+      location.reload();
+    });
   });
 
   // ---------- phones: one step per screen, with progress dots and Back / Next (desktop keeps the long page) ----------
@@ -611,6 +682,7 @@
   applyLayout(); showStep(0, false);
 
   // ---------- start ----------
+  PPBackend.load().then(function (b) { backend = b; if (b) PPBackend.wireSignIn(b, onUser); });
   setupDrop('training'); setupDrop('sources');
   $('limit-text').textContent = fmtBytes(LIMITS.sources);
   renderFiles('training'); renderFiles('sources');

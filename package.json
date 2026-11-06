@@ -5,7 +5,9 @@
   "scripts": {
     "check": "node scripts/check.mjs",
     "render": "node scripts/render-pack.mjs",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "test:orders": "node scripts/test-orders.mjs",
+    "orders": "node scripts/orders.mjs"
   },
   "dependencies": {
     "docx": "^9.15.2",

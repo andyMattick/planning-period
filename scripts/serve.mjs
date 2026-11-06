@@ -1,10 +1,12 @@
 // A tiny static server for the repo root. Run: npm run serve (PORT env, default 4321).
 // Open http://localhost:4321/ for the order page. Directories list their files (JSON when asked for JSON).
+// PP_SUPABASE_URL and PP_SUPABASE_ANON_KEY switch on online orders (else a backend.config.json file, else local mode).
 import { createServer } from 'node:http';
 import { readFile, stat, readdir } from 'node:fs/promises';
 import { join, normalize, extname, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildManifest, writeManifest } from './build-manifest.mjs';
+import { backendConfig } from './build-backend-config.mjs';
 
 const ROOT = normalize(join(dirname(fileURLToPath(import.meta.url)), '..'));
 const PORT = Number(process.env.PORT) || 4321;
@@ -27,6 +29,10 @@ createServer(async (req, res) => {
     if (url.pathname === '/site/manifest.webmanifest') {   // always fresh from brand.config.json
       res.writeHead(200, { 'Content-Type': TYPES['.webmanifest'], 'Cache-Control': 'no-store' });
       return res.end(JSON.stringify(buildManifest(), null, 2));
+    }
+    if (url.pathname === '/backend.config.json') {   // online orders: from PP_SUPABASE_URL / PP_SUPABASE_ANON_KEY when set (docs/BACKEND.md)
+      const cfg = backendConfig();
+      if (cfg) { res.writeHead(200, { 'Content-Type': TYPES['.json'], 'Cache-Control': 'no-store' }); return res.end(JSON.stringify(cfg)); }
     }
     let rel = decodeURIComponent(url.pathname);
     const file = normalize(join(ROOT, rel));

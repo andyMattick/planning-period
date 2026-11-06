@@ -28,7 +28,7 @@ Nothing else is hand-edited. Change the pack, then render again.
     // The live "that's too much" check, measured on the teacher's device. Never blocks Send.
     "feasibility": {
       "pagesEstimated": 1.2,                    // about how many pages of source (null when unknown)
-      "method": "text-words+pdf-pages+asked",   // text-words | pdf-pages | docx-words | pptx-words | asked | standards
+      "method": "text-words+pdf-pages+asked",   // text-words | html-words | pdf-pages | docx-words | pptx-words | asked | standards
       "files": [{ "name": "notes.txt", "pages": 1.2, "method": "text-words" }],
       "askedPages": null,                       // her answer to "About how many pages is your source?"
       "standards": null,                        // "My source is only standards": how many (questionsPerStandard)

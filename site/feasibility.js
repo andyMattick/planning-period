@@ -104,6 +104,15 @@
   // ---------- reading the source on the device ----------
   var TEXT_EXT = /\.(txt|md|markdown|csv|tsv|html?|json|xml)$/i;
   function words(text) { var m = String(text).match(/[A-Za-z0-9À-ɏͰ-ϿЀ-ӿ]+(?:['’][A-Za-z]+)?/g); return m ? m.length : 0; }
+  // A saved web page (File → Save page as), read as text only: its scripts never run (it is never opened as a page).
+  // Scripts, styles, comments, templates, inline SVG and the <head> are dropped, then every tag; entities become spaces.
+  function htmlText(t) {
+    return String(t)
+      .replace(/<!--[\s\S]*?-->/g, ' ')
+      .replace(/<(script|style|noscript|template|svg|head|iframe|object)\b[\s\S]*?<\/\1\s*>/gi, ' ')
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/&(nbsp|#160|#xa0);/gi, ' ').replace(/&[a-z#0-9]+;/gi, ' ');
+  }
   function bytesOf(file) { return file.arrayBuffer ? file.arrayBuffer().then(function (b) { return new Uint8Array(b); }) : Promise.reject(new Error('no reader')); }
 
   function pdfPages(bytes) {
@@ -151,8 +160,9 @@
     var result = function (pages, method, detail) { return { name: name, pages: pages, method: method, detail: detail || '' }; };
     if (TEXT_EXT.test(name) || /^text\//.test(file.type || '')) {
       return file.text().then(function (t) {
-        if (/\.html?$/i.test(name)) t = t.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ');
-        var w = words(t); return result(w / wpp, 'text-words', plural(w, 'word'));
+        var html = /\.html?$/i.test(name) || /^text\/html/.test(file.type || '');
+        if (html) t = htmlText(t);
+        var w = words(t); return result(w / wpp, html ? 'html-words' : 'text-words', plural(w, 'word') + (html ? ' of web page text' : ''));
       });
     }
     if (/\.pdf$/i.test(name) || file.type === 'application/pdf') {
@@ -181,6 +191,6 @@
   root.PPFeas = {
     SPECS: SPECS, TYPE_KEYS: TYPE_KEYS, TYPE_NAMES: TYPE_NAMES, COUNTS_QUESTIONS: COUNTS_QUESTIONS,
     defaultText: defaultText, questionsFor: questionsFor, limitNotes: limitNotes, estimate: estimate, fill: fill,
-    _test: { pdfPages: pdfPages, zipEntries: zipEntries, words: words }
+    _test: { pdfPages: pdfPages, zipEntries: zipEntries, words: words, htmlText: htmlText }
   };
 })(typeof window !== 'undefined' ? window : globalThis);
