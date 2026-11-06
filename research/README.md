@@ -75,7 +75,7 @@ These are **copies** (snapshots); the originals stay in each repo. Re-run the ga
 
 ### Pet World: the agent team and the reporter
 
-- [AGENTS.md](pet-world/AGENTS.md): The Pet World builder team ⚠️ mentions the student by name
+- [AGENTS.md](pet-world/AGENTS.md): The Pet World builder team
 - [REPORTER.md](pet-world/REPORTER.md): 🧾 The reporter: the build report and the process video
 
 ### Teacher studio: auditor reports

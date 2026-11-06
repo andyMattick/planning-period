@@ -73,7 +73,7 @@ so those rows have exact token counts.
 - Knows how to make money from a project like Pet World: who buys, what they pay for, how much, and how to reach them.
 - Turns the team's real work into campaigns: "send your standards, get your own world", with the agents as the cast.
 - Backs every price and claim with the logs (time and cost per unit) and real comparables; marks guesses as guesses.
-- Never uses Abi in an ad; uses the demo class. Discloses AI. No fake reviews or numbers. Full brief: `docs/builder/MARKETER.md`.
+- Never uses the owner's child in an ad; uses the demo class. Discloses AI. No fake reviews or numbers. Full brief: `docs/builder/MARKETER.md`.
 - Writes plans and scripts only (`docs/marketing/`); product changes go to the 🗃️ feature keeper.
 
 ## 🗃️ Feature keeper
