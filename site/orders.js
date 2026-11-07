@@ -56,7 +56,7 @@
     if (o.status === 'preview_ready' && mine) return '<a class="btn primary next" href="#rv-' + id + '">Review preview</a>';
     if (o.status === 'final_ready') {
       var zip = (o.final_files || []).filter(function (f) { return /\.zip$/i.test(f); })[0];
-      if (zip) return '<a class="btn primary next" data-sign="deliverables:' + esc(base(o) + zip) + '" data-name="' + esc(o.id + '.zip') + '" href="#">Download</a>';
+      if (zip) return '<a class="btn primary next" data-sign="deliverables:' + esc(base(o) + zip) + '" data-name="' + esc(o.id + '.zip') + '" href="#">Download everything (zip)</a>';
     }
     return '';
   }
@@ -262,9 +262,8 @@
     var list = (o.final_files || []).slice();
     var zip = list.filter(function (f) { return /\.zip$/i.test(f); });
     var rest = list.filter(function (f) { return !/\.zip$/i.test(f); });
-    return (zip.length ? '<p>' + zip.map(function (f) {
-      return '<a class="btn primary big" data-sign="deliverables:' + esc(base(o) + f) + '" data-name="' + esc(o.id + '.zip') + '" href="#">Download everything (zip)</a>';
-    }).join(' ') + '</p>' : '') +
+    // The zip is the row's own button (nextAction); here, each file on its own.
+    return (zip.length ? '<p class="small muted">Everything is in one zip: the button above. Or download each file:</p>' : '') +
       (rest.length ? '<details><summary>Each file (' + rest.length + ')</summary>' + filesHTML(o, rest, 'Files') + '</details>' : '') +
       '<p class="notice small" data-brand-ai></p>';
   }

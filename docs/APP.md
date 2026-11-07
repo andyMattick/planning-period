@@ -2,7 +2,7 @@
 
 The order site in `site/` is a Progressive Web App (PWA). The same files are:
 
-- **a normal website on a computer:** a long page, with links at the top;
+- **a teacher's app on a computer:** a top bar with the product name and the signed-in teacher, a left sidebar (New order, My orders, Review a preview, Sample packs, Help and about) at 960 px and wider, and the order page's token total in a sticky summary card beside the form (1100 px and wider); between 641 and 959 px the links sit in the top bar;
 - **an app on a phone (640 px wide or less):** a title bar, a bottom tab bar (Order · Orders · Review · Samples · About), one
   order step per screen with progress dots and Back / Next, big tap targets, and room for the notch and home bar
   (`env(safe-area-inset-*)`);
@@ -18,8 +18,8 @@ App Store and Google Play (see below).
 | `site/manifest.webmanifest` | The app's name, icons, colors and `display: standalone`. It is **generated** from `brand.config.json` by `scripts/build-manifest.mjs` and git-ignored, so the product's name is never typed anywhere else. `npm run serve` writes it at start and serves it fresh on every request, and `npm run check` writes and checks it. A static host or a Capacitor build runs `node scripts/build-manifest.mjs` first. |
 | `site/icons/` | An open planner with a check mark. It has no text, so it survives a rename. `icon.svg` is the drawing; `icon-192/512.png`, `maskable-192/512.png` (Android's shaped icons, with the art inside the safe zone) and `apple-touch-icon.png` (180 px) are rendered from it by `node scripts/build-icons.mjs` (Playwright). The PNGs are committed. |
 | `site/sw.js` | The service worker. See "Offline" below. |
-| `site/common.js` | Registers the service worker, adds the phone tab bar, shows the install prompt, and sets the iPhone home-screen title from the config. |
-| `site/style.css` | The app layout lives in the `@media (max-width: 640px)` block at the end. |
+| `site/common.js` | Registers the service worker, adds the sidebar, the phone tab bar and the signed-in teacher in the top bar (`PP.setWho`), shows the install prompt, and sets the iPhone home-screen title from the config. |
+| `site/style.css` | "Bright classroom" tokens on `:root` (light and dark), status folder colors (`--st-*`), the sidebar shell (960 px+), and the phone layout in the `@media (max-width: 640px)` block. |
 | `site/about.html` | The About tab: how it works, the team, installing, and your files. |
 | `site/orders.html`, `orders.js`, `backend.js` | My orders (the Orders tab) and the online backend client: docs/BACKEND.md |
 | Every page's `<head>` | `manifest`, `theme-color` (light and dark), `apple-touch-icon`, `apple-mobile-web-app-capable`, `mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`, and `viewport-fit=cover`. |
