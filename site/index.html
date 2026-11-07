@@ -89,6 +89,17 @@
         <input class="sr-only" type="file" id="f-training" multiple>
         <p class="small muted" style="margin-top:.6em">Any file type: PDF, Word, PowerPoint, photos of paper copies, or a saved web page (File → Save page as).</p>
       </div>
+      <div class="linkbox" data-link="training">
+        <label for="link-training">🔗 Paste a link</label>
+        <div class="signin-row">
+          <input type="url" id="link-training" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://… a web page" disabled>
+          <button type="button" class="btn" data-link-get="training" disabled>Get the page</button>
+        </div>
+        <p class="small muted" data-link-hint>Sign in to add links, or save the page (File → Save page as) and upload it.</p>
+        <div class="ok small" data-link-status role="status"></div>
+        <div class="error" data-link-err role="alert"></div>
+        <div class="link-card" data-link-card hidden></div>
+      </div>
       <p class="notice small">What you upload is sent to AI to make your pack.</p>
       <ul class="files" id="list-training"></ul>
       <div class="meter" id="meter-training"></div>
@@ -108,6 +119,17 @@
         <input class="sr-only" type="file" id="f-sources" multiple>
         <p class="small muted" style="margin-top:.6em">PDF, Word, PowerPoint, text, or a saved web page (File → Save page as: .html or .htm). We read a web page as text only.</p>
       </div>
+      <div class="linkbox" data-link="sources">
+        <label for="link-sources">🔗 Paste a link</label>
+        <div class="signin-row">
+          <input type="url" id="link-sources" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://… a web page" disabled>
+          <button type="button" class="btn" data-link-get="sources" disabled>Get the page</button>
+        </div>
+        <p class="small muted" data-link-hint>Sign in to add links, or save the page (File → Save page as) and upload it.</p>
+        <div class="ok small" data-link-status role="status"></div>
+        <div class="error" data-link-err role="alert"></div>
+        <div class="link-card" data-link-card hidden></div>
+      </div>
       <ul class="files" id="list-sources"></ul>
       <p class="small muted" style="margin:.5em 0 0">Up to <b id="limit-text">25 MB</b> in total.</p>
       <div class="meter" id="meter-sources"></div>
@@ -115,13 +137,6 @@
       <div class="field" id="ask-pages-wrap" hidden>
         <label for="ask-pages">About how many pages is your source? <span class="hint">(we couldn't count these on your device: <span id="ask-pages-names"></span>)</span></label>
         <input type="number" id="ask-pages" min="1" max="500" inputmode="numeric" placeholder="Pages" style="max-width:140px">
-      </div>
-      <div class="field">
-        <label class="inline-check"><input type="checkbox" id="standards-only"> My source is only standards (no notes or chapter)</label>
-        <div id="standards-wrap" hidden style="margin-top:8px">
-          <label for="standards-count">How many standards?</label>
-          <input type="number" id="standards-count" min="1" max="60" inputmode="numeric" placeholder="For example: 3" style="max-width:140px">
-        </div>
       </div>
     </section>
 

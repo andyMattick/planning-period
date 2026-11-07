@@ -44,7 +44,7 @@
   function renderFiles(list) {
     var ul = $('list-' + list);
     ul.innerHTML = files[list].map(function (f, i) {
-      return '<li><span class="fname">' + esc(f.name) + '</span><span class="fsize">' + fmtBytes(f.size) + '</span>' +
+      return '<li><span class="fname">' + esc(f.name) + '</span>' + (f.ppLink ? '<span class="flink" title="' + esc(f.ppLink.url) + '">🔗 ' + esc(f.ppLink.site) + '</span>' : '') + '<span class="fsize">' + fmtBytes(f.size) + '</span>' +
         '<button type="button" class="btn link" data-remove="' + list + ':' + i + '" aria-label="Remove ' + esc(f.name) + '">Remove</button></li>';
     }).join('');
     var n = files[list].length;
@@ -73,7 +73,7 @@
       tag.textContent = !r ? 'reading…' : r.pages != null ? 'about ' + pagesText(r.pages) : 'pages unknown';
     });
     var unknown = files.sources.filter(function (f) { var r = estOf(f); return r && r.pages == null; });
-    $('ask-pages-wrap').hidden = !unknown.length || $('standards-only').checked;
+    $('ask-pages-wrap').hidden = !unknown.length;
     $('ask-pages-names').textContent = unknown.map(function (f) { return f.name; }).join(', ');
   }
   function pagesText(p) { var n = Math.max(1, Math.round(p)); return n + (n === 1 ? ' page' : ' pages'); }
@@ -82,20 +82,18 @@
   // Each item draws on the material at its own rate: math practice (worksheet, homework, bell ringers) at
   // mathPracticePerPage when the subject is math, everything else at questionsPerPage (feasibility.json).
   // The range shown is for the mix asked: units ÷ Σ(share ÷ rate), so "asked ≤ high" means the mix fits.
-  function rateFor(id, standards) {
-    if (standards) {
-      var per = (feas && feas.fromStandardsOnly && feas.fromStandardsOnly.questionsPerStandard) || [4, 8];
-      return { low: per[0], high: per[1] };
-    }
+  // A source that is only standards is counted in pages here like any other; the onboarding agent spots it, counts the
+  // standards (feasibility.fromStandardsOnly) and its follow-up explains (owner, Nov 7, 2026: no checkbox on the page).
+  function rateFor(id) {
     var mpp = feas && feas.mathPracticePerPage;
     if (mpp && $('subject').value === 'math' && (mpp.appliesTo || []).indexOf(id) >= 0) return { low: mpp.low, high: mpp.high, math: true };
     var qpp = (feas && feas.questionsPerPage) || { low: 6, high: 10 };
     return { low: qpp.low, high: qpp.high };
   }
-  function feasRows(standards) {
+  function feasRows() {
     var d = (feas && feas.defaults) || {}, lim = (feas && feas.limits) || {};
     return pickedIds().filter(function (id) { return PPFeas.COUNTS_QUESTIONS[id]; }).map(function (id) {
-      var r = rateFor(id, standards), q = PPFeas.questionsFor(id, picked[id].spec, d[id]);
+      var r = rateFor(id), q = PPFeas.questionsFor(id, picked[id].spec, d[id]);
       var range = lim[id] && lim[id].questions;
       return { id: id, label: itemById(id).label, n: q, qty: picked[id].qty, rlow: r.low, rhigh: r.high, math: !!r.math,
         min: Math.min(q, range ? range[0] : 1) };
@@ -104,21 +102,14 @@
   function useOf(rows, key) { return rows.reduce(function (s, r) { return s + r.n * r.qty / r[key]; }, 0); }
   function supported(rows, units, key) {
     var asked = rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
-    if (!asked) { var r0 = rateFor('quiz', false); return Math.max(1, Math.round(units * (key === 'rlow' ? r0.low : r0.high))); }
+    if (!asked) { var r0 = rateFor('quiz'); return Math.max(1, Math.round(units * (key === 'rlow' ? r0.low : r0.high))); }
     return Math.max(1, Math.round(asked * units / useOf(rows, key)));
   }
   function feasState() {
-    var standards = $('standards-only').checked;
-    var rows = feasRows(standards);
+    var rows = feasRows();
     var asked = rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
     var st = { asked: asked, pages: null, low: null, high: null, method: [], askedPages: null, rows: rows, units: null,
       mathPractice: rows.some(function (r) { return r.math; }) };
-    if (standards) {
-      var n = Number($('standards-count').value);
-      st.method.push('standards');
-      if (n > 0) { st.standards = n; st.units = n; st.low = supported(rows, n, 'rlow'); st.high = supported(rows, n, 'rhigh'); }
-      return st;
-    }
     var known = 0, unknown = 0, pending = 0;
     files.sources.forEach(function (f) {
       var r = estOf(f);
@@ -151,12 +142,11 @@
     return { rows: rows, total: total, fits: useOf(rows, 'rhigh') <= units + eps, biggest: biggest[0] || null };
   }
 
-  // "1 page" / "3 pages" / "3 standards": the plural is done here, not in feasibility.json's "{pages} page(s)".
-  function amountText(st) { return st.standards ? plural(st.standards, 'standard') : pagesText(st.pages); }
+  // "1 page" / "3 pages": the plural is done here, not in feasibility.json's "{pages} page(s)".
+  function amountText(st) { return pagesText(st.pages); }
   function tooManyText(st) {
     var tmpl = String((feas && feas.messages && feas.messages.tooMany) || '{asked} questions from about {pages} page(s) of material is more than it can support.');
     tmpl = tmpl.indexOf('{pages} page(s)') >= 0 ? tmpl.replace('{pages} page(s)', '{amount}') : tmpl.replace('{pages}', '{amount}').replace(/ page\(s\)/g, '');
-    if (st.standards) tmpl = tmpl.replace('{amount} of material', '{amount}');
     return PPFeas.fill(tmpl, { asked: st.asked, amount: amountText(st), low: st.low, high: st.high });
   }
   function renderFeas() {
@@ -225,12 +215,7 @@
       else $('s2-h').scrollIntoView({ block: 'start' });
     }
   });
-  ['standards-only', 'standards-count', 'ask-pages'].forEach(function (id) {
-    $(id).addEventListener('input', function () {
-      $('standards-wrap').hidden = !$('standards-only').checked;
-      showEstimates(); renderFeas();
-    });
-  });
+  $('ask-pages').addEventListener('input', function () { showEstimates(); renderFeas(); });
 
   function setupDrop(list) {
     var zone = document.querySelector('.drop[data-list="' + list + '"]');
@@ -254,6 +239,80 @@
   // A dropped file outside a zone should not open in the tab.
   window.addEventListener('dragover', function (e) { e.preventDefault(); });
   window.addEventListener('drop', function (e) { e.preventDefault(); });
+
+  // ---------- paste a link (signed in only: our server reads the page as text, docs/BACKEND.md) ----------
+  // The page comes back as text only; "Use this" turns it into a .txt file in this step's list, so it is counted,
+  // size-limited, uploaded and pulled exactly like an uploaded file (a header names the address, title and date).
+  var linkPending = { training: null, sources: null };
+  function linkBox(list) { return document.querySelector('.linkbox[data-link="' + list + '"]'); }
+  function renderLinkAccess() {
+    var on = !!(backend && backend.user());
+    ['training', 'sources'].forEach(function (list) {
+      var b = linkBox(list); if (!b) return;
+      b.querySelector('input').disabled = !on;
+      b.querySelector('[data-link-get]').disabled = !on;
+      var hint = b.querySelector('[data-link-hint]');
+      hint.hidden = on;
+      hint.textContent = backend ? 'Sign in to add links, or save the page (File → Save page as) and upload it.'
+        : 'Links work when orders are sent online. For now, save the page (File → Save page as) and upload it.';
+      if (!on) { linkPending[list] = null; renderLinkCard(list); }
+    });
+  }
+  function firstWords(text, n) {
+    var m = String(text).match(/\S+\s*/g) || [];
+    return m.slice(0, n).join('').trim() + (m.length > n ? ' …' : '');
+  }
+  function renderLinkCard(list) {
+    var card = linkBox(list).querySelector('[data-link-card]'), p = linkPending[list];
+    card.hidden = !p;
+    if (!p) { card.innerHTML = ''; return; }
+    var wpp = (feas && feas.wordsPerPage) || 300;
+    card.innerHTML = '<h3>' + esc(p.title) + '</h3>' +
+      '<p class="link-meta">' + esc(p.site) + ' · ' + p.words.toLocaleString() + ' words · ' +
+      (list === 'sources' ? 'adds about ' + pagesText(p.words / wpp) + ' of source' : 'about ' + pagesText(p.words / wpp)) + '</p>' +
+      '<p class="small muted" style="margin:0 0 4px">The start of what we read (text only):</p>' +
+      '<div class="link-text" tabindex="0" aria-label="The page text">' + esc(firstWords(p.text, 300)) + '</div>' +
+      '<div class="link-actions"><button type="button" class="btn primary" data-link-use>Use this</button>' +
+      '<button type="button" class="btn link" data-link-drop>Remove</button></div>';
+  }
+  function linkFile(p) {
+    var header = 'Web page (pasted link, read as text only): ' + p.title + '\n' +
+      'Address: ' + p.finalUrl + '\n' + (p.finalUrl !== p.url ? 'Pasted address: ' + p.url + '\n' : '') +
+      'Site: ' + p.site + '\n' + 'Read on: ' + new Date().toISOString().slice(0, 10) + '\n\n---\n\n';
+    var name = safeName('link - ' + String(p.title).replace(/\s+/g, ' ').slice(0, 80)).replace(/\.+$/, '') + '.txt';
+    var f = new File([header + p.text + '\n'], name, { type: 'text/plain', lastModified: Date.now() });
+    f.ppLink = { url: p.finalUrl, pasted: p.url, site: p.site, title: p.title };
+    return f;
+  }
+  function setupLink(list) {
+    var b = linkBox(list); if (!b) return;
+    var input = b.querySelector('input'), btn = b.querySelector('[data-link-get]');
+    var err = b.querySelector('[data-link-err]'), status = b.querySelector('[data-link-status]');
+    function get() {
+      err.textContent = ''; status.textContent = '';
+      var v = input.value.trim();
+      if (!v) { err.textContent = 'Paste a web address first.'; input.focus(); return; }
+      if (!backend || !backend.user()) { renderLinkAccess(); return; }
+      btn.disabled = true; status.textContent = 'Getting the page…';
+      backend.fetchPage(v).then(function (p) {
+        linkPending[list] = p; status.textContent = ''; renderLinkCard(list);
+      }, function (e) { status.textContent = ''; err.textContent = e.message || String(e); })
+        .then(function () { btn.disabled = !(backend && backend.user()); });
+    }
+    btn.addEventListener('click', get);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); get(); } });
+    b.addEventListener('click', function (e) {
+      var p = linkPending[list];
+      if (e.target.closest('[data-link-drop]')) { linkPending[list] = null; renderLinkCard(list); input.focus(); return; }
+      if (!p || !e.target.closest('[data-link-use]')) return;
+      if (files[list].some(function (g) { return g.ppLink && g.ppLink.url === p.finalUrl; })) { err.textContent = 'That page is already in your list.'; return; }
+      var f = linkFile(p);
+      addFiles(list, [f]);
+      if (files[list].indexOf(f) < 0) return;   // over the size limit: addFiles said so
+      linkPending[list] = null; renderLinkCard(list);
+      input.value = ''; status.textContent = 'Added "' + f.name + '".';
+    });
+  }
 
   // ---------- menu ----------
   function fillMenu() {
@@ -493,7 +552,7 @@
       method: st.method.join('+') || 'none',
       files: files.sources.map(function (f) { var r = estOf(f) || {}; return { name: f.name, pages: r.pages != null ? Math.round(r.pages * 10) / 10 : null, method: r.method || 'pending' }; }),
       askedPages: st.askedPages,
-      standards: st.standards || null,
+      standards: null,   // filled by the onboarding agent when the source is only standards (docs/PACK-FORMAT.md)
       asked: st.asked, low: st.low, high: st.high,
       mathPractice: st.mathPractice,
       tooMuch: st.high != null && st.asked > st.high,
@@ -551,7 +610,8 @@
         itemSpecs: ids.reduce(function (o, id) { var sp = cleanSpec(picked[id].spec); if (sp) o[id] = sp; return o; }, {}),
         feasibility: feasRecord(),
         sources: srcNames,
-        styleExamples: trainNames
+        styleExamples: trainNames,
+        links: linkRecords(trainNames, srcNames)
       },
       lines: lines,
       tokenTotal: tokenTotal,
@@ -570,7 +630,7 @@
           $('send-zip').addEventListener('click', function () {
             err.textContent = '';
             var n2 = uniqueNames(files.training), s2 = uniqueNames(files.sources);
-            orderJson.order.styleExamples = n2; orderJson.order.sources = s2; delete orderJson.delivery;
+            orderJson.order.styleExamples = n2; orderJson.order.sources = s2; orderJson.order.links = linkRecords(n2, s2); delete orderJson.delivery;
             renameSpecFile(orderJson, n2, s2);
             var all2 = files.training.map(function (f, i) { return { f: f, name: 'training/' + n2[i] }; })
               .concat(files.sources.map(function (f, i) { return { f: f, name: 'sources/' + s2[i] }; }));
@@ -580,6 +640,17 @@
       })
       .then(function () { btn.disabled = false; btn.textContent = 'Send'; $('send-progress').textContent = ''; });
   });
+
+  // Pasted links (saved as .txt sources): where each came from, for the onboarding agent and the audit report.
+  function linkRecords(trainNames, srcNames) {
+    var out = [];
+    [['training', trainNames], ['sources', srcNames]].forEach(function (x) {
+      files[x[0]].forEach(function (f, i) {
+        if (f.ppLink) out.push({ file: x[0] + '/' + x[1][i], url: f.ppLink.url, pasted: f.ppLink.pasted !== f.ppLink.url ? f.ppLink.pasted : undefined, site: f.ppLink.site, title: f.ppLink.title, read: today() });
+      });
+    });
+    return out.length ? out : undefined;
+  }
 
   // "Which uploaded file is the test" (itemSpecs.versions.file) names the file as it is saved in the order.
   function renameSpecFile(orderJson, trainNames, srcNames) {
@@ -639,6 +710,7 @@
       ? 'Send uploads your files and your order to us, privately: only you and our team can see them.'
       : 'Nothing is uploaded. Send makes one zip file on this device for you to email' + (backend ? ' (or sign in at the top to send it online).' : '.');
     if (u && u.email && !$('reply').value.trim()) $('reply').value = u.email;
+    renderLinkAccess();
   }
 
   function download() {
@@ -718,8 +790,8 @@
   applyLayout(); showStep(0, false);
 
   // ---------- start ----------
-  PPBackend.load().then(function (b) { backend = b; if (b) PPBackend.wireSignIn(b, onUser); });
-  setupDrop('training'); setupDrop('sources');
+  PPBackend.load().then(function (b) { backend = b; if (b) PPBackend.wireSignIn(b, onUser); renderLinkAccess(); });
+  setupDrop('training'); setupDrop('sources'); setupLink('training'); setupLink('sources');
   $('limit-text').textContent = fmtBytes(LIMITS.sources);
   renderFiles('training'); renderFiles('sources');
   Promise.all([PP.loadBrand(), PP.getJSON('../menu.json'), PP.getJSON('../feasibility.json').catch(function () { return null; })]).then(function (r) {

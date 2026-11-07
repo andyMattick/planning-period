@@ -149,6 +149,22 @@
           return downloadName ? full + (full.indexOf('?') >= 0 ? '&' : '?') + 'download=' + encodeURIComponent(downloadName) : full;
         });
       },
+      // "Paste a link": our own server reads the page (api/fetch-page.js; docs/BACKEND.md) for a signed-in teacher and
+      // sends back { url, finalUrl, title, site, text, words }: text only, never the page itself.
+      fetchPage: function (pageUrl) {
+        var SAVE = 'We couldn\'t read that page. Save it from your browser (File → Save page as) and upload it instead.';
+        return fresh().then(function () {
+          if (!session || !session.access_token) { var e = new Error('Please sign in again to add links.'); e.status = 401; throw e; }
+          return fetch('../api/fetch-page', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+            body: JSON.stringify({ url: pageUrl }) }).catch(function () { throw new Error(SAVE); });
+        }).then(function (res) {
+          return res.text().then(function (t) {
+            var j = null; try { j = JSON.parse(t); } catch (e) {}
+            if (!res.ok || !j || typeof j.text !== 'string') { var err = new Error((j && j.message) || SAVE); err.status = res.status; err.code = j && j.error; throw err; }
+            return j;
+          });
+        });
+      },
       fetchBytes: function (signed) {
         return fetch(signed).then(function (res) { if (!res.ok) return fail(res); return res.arrayBuffer(); });
       }

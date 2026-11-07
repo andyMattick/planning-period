@@ -4,11 +4,11 @@
 //   falling back to the cached copy when offline.
 // - backend.config.json (online orders on or off) is network-first like the other settings. Supabase is another origin,
 //   so sign-in, uploads, orders and signed file links are never touched or cached here.
-// - Only same-origin GET requests are touched. Files a teacher picks are read on the device and never fetched,
+// - Only same-origin GET requests are touched (so "Paste a link", a POST to ../api/fetch-page, never is). Files a teacher picks are read on the device and never fetched,
 //   so they are never cached; the zips and JSON files the pages make are blob: downloads, also never cached.
 // Bump VERSION when the shell changes; old caches are deleted on activate.
 'use strict';
-var VERSION = 'v8';
+var VERSION = 'v9';
 var SHELL = 'shell-' + VERSION;
 var DATA = 'data-' + VERSION;
 

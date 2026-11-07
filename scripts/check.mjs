@@ -13,6 +13,7 @@
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
+     10. "Paste a link": scripts/test-fetch-page.mjs (the server's address guard, limits and text extraction).
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -287,6 +288,13 @@ else {
     const n = (r.stdout.match(/✓ catches/g) || []).length;
     if (r.status === 0) ok(`checks/practicegames.mjs catches all ${n} broken copies of samples/_cap-practicegame`); else fail(`checks/practicegames.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
   }
+}
+
+/* 10. "Paste a link" (scripts/fetch-page.mjs): the address guard, redirects, size/time/type limits, the sign-in check and
+   the text extraction, against a local test server (a few seconds, no outside network) */
+{
+  const r = spawnSync(process.execPath, [join(ROOT, 'scripts/test-fetch-page.mjs')], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
+  if (r.status === 0) ok(r.stdout.trim().split('\n').pop() + ' (scripts/test-fetch-page.mjs)'); else fail(`scripts/test-fetch-page.mjs failed:\n${r.stdout}${r.stderr}`);
 }
 
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');
