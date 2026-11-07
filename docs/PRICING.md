@@ -81,7 +81,7 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
 
 The owner: English reading quizzes get their own, higher price, "since they cost more to do right". The numbers come
 from the only ELA order so far, the g7-ela sample (a 10-question A/B quiz on two passages the maker wrote, plus a
-rubric; 55 tokens = $5.50), every session's own `total_cost_usd` (`samples/g7-ela/pack.json` `log`):
+rubric; 55 tokens = $5.50), every session's own `total_cost_usd` (`archive/samples/g7-ela/pack.json` `log`; retired Nov 7, 2026):
 
 | Step (measured in g7-ela) | Cost |
 |---|---|
