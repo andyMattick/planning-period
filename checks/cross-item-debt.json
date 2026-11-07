@@ -1,0 +1,6 @@
+{
+  "_note": "Samples known to fail checks/cross-item.mjs when it came in (Nov 7, 2026; docs/audits/AUDIT-2026-11-07-ela-try-c.md, proposal 2). Listed for the owner, not fixed here: each hit is a key printed in another item of the same version. The list can only shrink: npm run check fails when a pack here passes (take it off) and when a pack not here fails. The ceiling is CROSS_ITEM_DEBT_MAX in scripts/check.mjs; never add to it to make a pack pass.",
+  "samples/g11-history/pack.json": "11 hits (e.g. A q7's key 'ratify the 14th' in A q11; A q13's 'the last Republican' in A q21)",
+  "samples/g7-ela2/pack.json": "2 hits (B q4's key words in B q3; B q10's key phrase in B q9); the hidden remake, replaced if a later attempt passes",
+  "samples/g8-science/pack.json": "1 hit (B q8's key words 'left, right' in B q10)"
+}

@@ -57,3 +57,22 @@ The cue tags on the right answers, per round (pack.json `checks`):
 - **Stop rule:** if a version's probe score rises after a fix round (A 8 to 9), escalate to the owner and do not run another full round. This would have saved about $4.28 here. Risk: none to quality, because the pack is not delivered either way.
 - **Fact recheck in round 3 ($0.68):** limit it to the changed items, with the full recheck kept at delivery. Saves about $0.30 to $0.40. Risk: an unchanged item that a change affects. The blind solve with passages still catches a wrong key.
 - **Price:** this attempt fit the $16.50 budget ($13.50), but it did not deliver a passing quiz; no price change until a reading quiz passes the gate.
+
+## 6. Owner decision (Nov 7, 2026): "D and 1-4. Leave 5 alone." (added by the order lead)
+Relayed as: adopt the pairs, the cross-item check, wrong choices ruled out by the passage and whole-version fix lists;
+keep maker v6's "at least 8 mc a version" (8–10 is fine), so the 8-mc cap is not adopted. In this report's numbering:
+- **1. No mc Part A/Part B pairs: ADOPTED** (`agents/maker.md` v7 reading rule 4, `agents/onboarding.md` v8,
+  `agents/blind-ela.md` v5, `feasibility.json` `readingquiz.pairs` 0).
+- **2. Scripted cross-item check: ADOPTED** (`checks/cross-item.mjs` with a self-test; `npm run check` 5e with a
+  shrink-only known-failing list `checks/cross-item-debt.json`; `agents/wilco.md` v4 step 2b; `docs/RUNBOOK.md` steps 4,
+  4a and 7; maker v7 rule 6). When it came in it flagged g11-history (11 hits), g7-ela2 (2) and g8-science (1); those
+  are on the list for the owner, not fixed. (`samples/_cap-practicegame/shooter-g5-math` has 1 LaTeX hit; nested
+  practice-game fixtures are not in that section of the check.) Its limit: words, not meaning (try c version A: 0 hits,
+  probe 9 of 10).
+- **3. Cap mc at 8: NOT adopted** (at least 8 stays, maker v6).
+- **4. Fix lists for the whole version: ADOPTED** (`docs/RUNBOOK.md` step 8; maker v7 rule 7).
+- **5. Wrong choices ruled out by the passage: ADOPTED** as the relayed list's item 3 (maker v7 reading rule 8,
+  blind-ela v5). Note: the owner's words "leave 5 alone" read against this report's numbering would leave this one out
+  and adopt 3 instead; the lead followed the relayed instruction and flags it for the owner.
+- **6. Story's turn not the type default: ADOPTED** (cheap; maker v7 reading rule 1). **7. Pair leaks recorded
+  apart:** moot without pairs, not adopted.

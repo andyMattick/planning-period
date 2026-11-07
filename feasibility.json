@@ -46,7 +46,7 @@
     "readingquiz": {
       "questions": 11,
       "passages": 2,
-      "pairs": 2,
+      "pairs": 0,
       "types": {
         "mc": 8,
         "short": 2,
@@ -54,7 +54,7 @@
       },
       "choices": 4,
       "versions": 2,
-      "note": "a passage of about 250–350 words supports about 4–6 inference and evidence questions; at most one Part A/Part B pair a passage (each counts as two mc); at least 8 mc a version so the no-passage line (chance + 15 points) is fair; the 2 short answers quote the passage (owner option 1, Nov 6, 2026)"
+      "note": "a passage of about 250–350 words supports about 4–6 inference and evidence questions; no multiple-choice Part A/Part B pairs (owner, Nov 7, 2026: they leaked in every probe round; evidence goes in the short answers and the RACE); at least 8 mc a version so the no-passage line (chance + 15 points) is fair; the 2 short answers quote the passage (owner option 1, Nov 6, 2026)"
     },
     "test": {
       "questions": 25,

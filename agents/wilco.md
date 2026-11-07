@@ -24,6 +24,11 @@ copied unchanged to `checks/test-wise-cues.mjs`, the notes bots, and the course 
    pairMatch (Part B quotes lined up with Part A choices by shared words), echo (the choice whose words come back in
    the version's other items), quoteEcho (a three-word run printed in another item) and their vote. Same FAIL rule (more
    than 10 points above chance, groups of 8 or more). It runs before the fresh no-passage probe and never replaces it.
+2b. Every pack, **before any paid probe**: `node checks/cross-item.mjs pack.json --write` names every item whose key (the
+   right choice, or a line a short answer quotes) is printed in another item of the same version: a 3-word key phrase,
+   or most of the key's distinctive words. **FAIL: any hit.** The maker changes the other item's stem or wrong choices,
+   never the key (owner, Nov 7, 2026, docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 2: try c's probes got 12 of 14 right answers from
+   other items).
 3. Apps: `node checks/apps.mjs pack.json` (content, hashed answers and the browser test). Puzzles:
    `node checks/puzzles.mjs pack.json` (grids and exactly one solution). Both must exit 0; a fail is fixed in the pack
    (forms, hints, choices, clues), never by weakening the check.
@@ -38,6 +43,8 @@ copied unchanged to `checks/test-wise-cues.mjs`, the notes bots, and the course 
 reporter each run's result and the worst strategy before and after (the audit report shows them).
 
 ## Known limits (say them in the report when they apply)
+- `checks/cross-item.mjs` reads words, not meaning: an item that gives another away in other words passes it (g7-ela2
+  try c version A: 0 hits, while the fresh probe got 9 of 10). The fresh no-passage probe still decides.
 - The bots read text, not pictures: a picture-only choice is at chance for them.
 - They pass content cues: twin wrong choices, a key that's the only one in the source's words. The blind tester
   catches those (Pet World's Pet Fair batch: the bots passed all five of the blind solve's FIX items).
@@ -59,7 +66,7 @@ reporter each run's result and the worst strategy before and after (the audit re
 - `keys` rows have no chance and no line: report them as passed or not, never as a percentage.
 
 ---
-**Version 3** (Nov 7, 2026)
+**Version 4** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's `docs/FAIRNESS.md` (the rule, the cues, converge counted on printed
@@ -73,3 +80,6 @@ reporter each run's result and the worst strategy before and after (the audit re
   for reading items (pairMatch, echo, quoteEcho, vote; Wilco's 10-point rule; a self-test in `npm run check`), because
   the per-question bots passed both ELA samples a non-reader beat (g7-ela 20/20, g7-ela2 A 9/10); the two old samples on
   a shrink-only known-failing list until the remake.
+- v4, Nov 7, 2026 (owner decision "D and 1-4", adopting docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 2): `checks/cross-item.mjs` on
+  every pack before any paid probe (a key printed in another item of the version; self-test and a shrink-only known-
+  failing list in `npm run check`: g11-history, g7-ela2, g8-science when it came in); its limit (words, not meaning).

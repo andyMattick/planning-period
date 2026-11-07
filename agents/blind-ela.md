@@ -82,7 +82,8 @@ item again, then score and decide as below. Report both.
   quote. A wrong choice may be an **unmatched quote** (owner, option 1: the passage's words changed so they no longer say
   what it says, or a line it doesn't contain) only when the passage contradicts it, its `why` says "unmatched" and it
   is not a variation of the key's own line; any other paraphrase or invented quote, or the only on-topic quote, is FIX.
-  More than one Part A/Part B pair on a passage is FIX (`agents/maker.md`, reading rule 4).
+  Any multiple-choice Part A/Part B pair is FIX unless the plan records the teacher's choice (`agents/maker.md`,
+  reading rule 4, v7). A wrong choice the passage leaves open (not ruled out by a paragraph) is FIX (reading rule 8).
 - **Short answers that cite:** the `accept` and `why` must name the lines that earn credit; one a reader could answer
   well without the passage is FIX.
 - **Two defensible answers.** The most common English finding: a main idea, a tone word, an inference or a
@@ -136,7 +137,7 @@ one version, `"gate": "pass" | "fail"`, and a FIX per item it got right at confi
 reporter takes your minutes from your session's record, not from your estimate.
 
 ---
-**Version 4** (Nov 7, 2026)
+**Version 5** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's blind review (`docs/BLIND-REVIEW.md` steps 2–4) and the traps its
@@ -157,3 +158,6 @@ reporter takes your minutes from your session's record, not from your estimate.
 - v4, Nov 7, 2026 (remake audit, docs/audits/AUDIT-2026-11-07-ela-remake.md, adopted by the owner): probes tag each
   answer's cue (topic, word, item, type, sounds, guess) so the lead can log the split; traps for an everyday-sense
   word-in-context key and a key that is the story type's default (g7-ela2 remake: probes 5–8 of 8 through round 3).
+- v5, Nov 7, 2026 (owner decision "D and 1-4", adopting docs/audits/AUDIT-2026-11-07-ela-try-c.md proposals 1 and 5): a multiple-choice
+  Part A/Part B pair is FIX unless the plan records the teacher's choice; a wrong choice the passage doesn't rule out
+  is FIX (g7-ela2 try c: pairs right without the passage every round; fact FIX on unrefuted choices every round).
