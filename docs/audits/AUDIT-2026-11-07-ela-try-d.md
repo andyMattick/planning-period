@@ -2,6 +2,11 @@
 
 No brief was edited in this run. Everything below is a proposal for the owner.
 
+**Owner decision, Nov 7, 2026:** proposals 1, 2, 3, 4 and 6 are **ADOPTED** (`agents/blind-ela.md` v6, `agents/maker.md`
+v8, `docs/RUNBOOK.md` steps 4a and 9), and reading quizzes are sold as citing short answers plus a RACE, with multiple
+choice on passages "in testing" (`menu.json`, `feasibility.json`, `agents/onboarding.md` v9, `docs/ROADMAP.md`).
+Proposal 5 and the FIX-cap change in section 5 are not adopted.
+
 ## 1. Result and cost
 - **Gate: FAIL, both versions, after 3 rounds.** The final no-passage probes got A 4 of 8 and B 7 of 8. A version fails at 4 or more.
 - The keyless blind solve matched 16 of 16 mc keys. It still listed 8 FIX: A q4, A q8 and B q8 can be guessed; A q9 and B q9 are labelled level 3 but take one step; B q3 has two right answers; B q6 has its years out of order; B q5's action is printed in B q2 choice C. The fact recheck found 3 more FIX in round 3, and nobody rechecked them.
@@ -31,12 +36,12 @@ Cue tags on right answers, by round (try c had 10 mc per version, try d has 8):
 - **Is 4 of 8 the right line?** With 4 choices, a blind guesser gets 2 of 8 on average and reaches 4 or more about **11%** of the time. If the guesser can drop one weak choice per item, that rises to about **26%**. So one probe run cannot tell a clean version at 3 from an unlucky one at 4. A's "4 with none confident" fits chance plus about one cue. The line itself is not proposed for change.
 
 ## 4. Proposals for the owner (ranked)
-1. **Name every item the probe got right, with its cue tag, whatever its confidence** (`agents/blind-ela.md`). Cause: three failing probes gave the maker no named items to fix.
-2. **When a passage is reused and the probe tags a "type" cue, rewrite the story's turn, not only the items** (`agents/maker.md` reading rule 1, `docs/RUNBOOK.md`). Cause: B's type cues came back with the same shy-pet story as try c.
-3. **Run the keyless blind solve after round 1 instead of round 3** (`docs/RUNBOOK.md`). Cause: its 8 FIX (two right answers, guessable keys, wrong levels) arrived when there was no round left to fix them. The total cost stays the same.
-4. **At the final round, run the probe twice per version and fail if either run is at the line or over it** (`agents/blind-ela.md`, `docs/RUNBOOK.md`). Cause: at 8 items, chance alone hits 4 or more 11 to 26% of the time, so one run is a noisy reading. This is stricter, not looser, and costs about $0.62.
+1. **ADOPTED (blind-ela v6, RUNBOOK 4a).** **Name every item the probe got right, with its cue tag, whatever its confidence** (`agents/blind-ela.md`). Cause: three failing probes gave the maker no named items to fix.
+2. **ADOPTED (maker v8 reading rule 1, RUNBOOK 4a).** **When a passage is reused and the probe tags a "type" cue, rewrite the story's turn, not only the items** (`agents/maker.md` reading rule 1, `docs/RUNBOOK.md`). Cause: B's type cues came back with the same shy-pet story as try c.
+3. **ADOPTED (RUNBOOK 4a).** **Run the keyless blind solve after round 1 instead of round 3** (`docs/RUNBOOK.md`). Cause: its 8 FIX (two right answers, guessable keys, wrong levels) arrived when there was no round left to fix them. The total cost stays the same.
+4. **ADOPTED (blind-ela v6, RUNBOOK 4a; a version fails if either run fails, never averaged).** **At the final round, run the probe twice per version and fail if either run is at the line or over it** (`agents/blind-ela.md`, `docs/RUNBOOK.md`). Cause: at 8 items, chance alone hits 4 or more 11 to 26% of the time, so one run is a noisy reading. This is stricter, not looser, and costs about $0.62.
 5. **Before probing, the maker answers each item the way a reader who knows only the story type would, and replaces any key that matches** (`agents/maker.md`). Cause: the maker's self-read guessed 3 and 3, but the probes got 4 and 7.
-6. **Recheck the final round's fact FIXes before a sample is shown** (`docs/RUNBOOK.md`). Cause: 3 fact FIXes from round 3 were never rechecked.
+6. **ADOPTED (RUNBOOK step 9).** **Recheck the final round's fact FIXes before a sample is shown** (`docs/RUNBOOK.md`). Cause: 3 fact FIXes from round 3 were never rechecked.
 
 ## 5. Cheaper without losing quality
 - **Move the blind solve to round 1** (proposal 3). Expected saving: one FIX round on later orders, about $2.3 to $3.4, if its findings get fixed early. Quality risk: none, since it still runs. A final probe and a fact recheck would catch any slip later.
