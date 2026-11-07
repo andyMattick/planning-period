@@ -3,10 +3,12 @@
 // PP_SUPABASE_URL and PP_SUPABASE_ANON_KEY switch on online orders (else a backend.config.json file, else local mode).
 import { createServer } from 'node:http';
 import { readFile, stat, readdir } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { join, normalize, extname, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildManifest, writeManifest } from './build-manifest.mjs';
-import { backendConfig } from './build-backend-config.mjs';
+import { backendConfig, CONFIG_FILE } from './build-backend-config.mjs';
+import { createHandler } from './fetch-page.mjs';
 
 const ROOT = normalize(join(dirname(fileURLToPath(import.meta.url)), '..'));
 const PORT = Number(process.env.PORT) || 4321;
@@ -19,6 +21,13 @@ const TYPES = {
   '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 };
+// "Paste a link": the same handler as the Vercel function api/fetch-page.js. PP_FETCH_TEST_ALLOW=127.0.0.1:<port> lets the
+// end-to-end test reach its own local page server (one exact host and port; never set on the real site).
+const testAllow = (process.env.PP_FETCH_TEST_ALLOW || '').trim();
+const fetchPageHandler = createHandler({
+  config: () => backendConfig() || (() => { try { const c = JSON.parse(readFileSync(CONFIG_FILE, 'utf8')); return c.supabaseUrl && c.supabaseAnonKey ? c : null; } catch { return null; } })(),
+  allowAddress: testAllow ? (host, port) => `${host}:${port}` === testAllow : undefined,
+});
 try { writeManifest(); } catch (e) { console.warn('manifest: ' + e.message); }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -30,6 +39,7 @@ createServer(async (req, res) => {
       res.writeHead(200, { 'Content-Type': TYPES['.webmanifest'], 'Cache-Control': 'no-store' });
       return res.end(JSON.stringify(buildManifest(), null, 2));
     }
+    if (url.pathname === '/api/fetch-page') return fetchPageHandler(req, res);
     if (url.pathname === '/backend.config.json') {   // online orders: from PP_SUPABASE_URL / PP_SUPABASE_ANON_KEY when set (docs/BACKEND.md)
       const cfg = backendConfig();
       if (cfg) { res.writeHead(200, { 'Content-Type': TYPES['.json'], 'Cache-Control': 'no-store' }); return res.end(JSON.stringify(cfg)); }

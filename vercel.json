@@ -4,6 +4,9 @@
   "installCommand": "echo 'no install needed for the site'",
   "outputDirectory": ".",
   "cleanUrls": false,
+  "functions": {
+    "api/fetch-page.js": { "maxDuration": 20, "memory": 512, "includeFiles": "{brand.config.json,scripts/html-text.mjs}" }
+  },
   "redirects": [
     { "source": "/", "destination": "/site/", "permanent": false }
   ],

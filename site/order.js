@@ -44,7 +44,7 @@
   function renderFiles(list) {
     var ul = $('list-' + list);
     ul.innerHTML = files[list].map(function (f, i) {
-      return '<li><span class="fname">' + esc(f.name) + '</span><span class="fsize">' + fmtBytes(f.size) + '</span>' +
+      return '<li><span class="fname">' + esc(f.name) + '</span>' + (f.ppLink ? '<span class="flink" title="' + esc(f.ppLink.url) + '">🔗 ' + esc(f.ppLink.site) + '</span>' : '') + '<span class="fsize">' + fmtBytes(f.size) + '</span>' +
         '<button type="button" class="btn link" data-remove="' + list + ':' + i + '" aria-label="Remove ' + esc(f.name) + '">Remove</button></li>';
     }).join('');
     var n = files[list].length;
@@ -254,6 +254,80 @@
   // A dropped file outside a zone should not open in the tab.
   window.addEventListener('dragover', function (e) { e.preventDefault(); });
   window.addEventListener('drop', function (e) { e.preventDefault(); });
+
+  // ---------- paste a link (signed in only: our server reads the page as text, docs/BACKEND.md) ----------
+  // The page comes back as text only; "Use this" turns it into a .txt file in this step's list, so it is counted,
+  // size-limited, uploaded and pulled exactly like an uploaded file (a header names the address, title and date).
+  var linkPending = { training: null, sources: null };
+  function linkBox(list) { return document.querySelector('.linkbox[data-link="' + list + '"]'); }
+  function renderLinkAccess() {
+    var on = !!(backend && backend.user());
+    ['training', 'sources'].forEach(function (list) {
+      var b = linkBox(list); if (!b) return;
+      b.querySelector('input').disabled = !on;
+      b.querySelector('[data-link-get]').disabled = !on;
+      var hint = b.querySelector('[data-link-hint]');
+      hint.hidden = on;
+      hint.textContent = backend ? 'Sign in to add links, or save the page (File → Save page as) and upload it.'
+        : 'Links work when orders are sent online. For now, save the page (File → Save page as) and upload it.';
+      if (!on) { linkPending[list] = null; renderLinkCard(list); }
+    });
+  }
+  function firstWords(text, n) {
+    var m = String(text).match(/\S+\s*/g) || [];
+    return m.slice(0, n).join('').trim() + (m.length > n ? ' …' : '');
+  }
+  function renderLinkCard(list) {
+    var card = linkBox(list).querySelector('[data-link-card]'), p = linkPending[list];
+    card.hidden = !p;
+    if (!p) { card.innerHTML = ''; return; }
+    var wpp = (feas && feas.wordsPerPage) || 300;
+    card.innerHTML = '<h3>' + esc(p.title) + '</h3>' +
+      '<p class="link-meta">' + esc(p.site) + ' · ' + p.words.toLocaleString() + ' words · ' +
+      (list === 'sources' ? 'adds about ' + pagesText(p.words / wpp) + ' of source' : 'about ' + pagesText(p.words / wpp)) + '</p>' +
+      '<p class="small muted" style="margin:0 0 4px">The start of what we read (text only):</p>' +
+      '<div class="link-text" tabindex="0" aria-label="The page text">' + esc(firstWords(p.text, 300)) + '</div>' +
+      '<div class="link-actions"><button type="button" class="btn primary" data-link-use>Use this</button>' +
+      '<button type="button" class="btn link" data-link-drop>Remove</button></div>';
+  }
+  function linkFile(p) {
+    var header = 'Web page (pasted link, read as text only): ' + p.title + '\n' +
+      'Address: ' + p.finalUrl + '\n' + (p.finalUrl !== p.url ? 'Pasted address: ' + p.url + '\n' : '') +
+      'Site: ' + p.site + '\n' + 'Read on: ' + new Date().toISOString().slice(0, 10) + '\n\n---\n\n';
+    var name = safeName('link - ' + String(p.title).replace(/\s+/g, ' ').slice(0, 80)).replace(/\.+$/, '') + '.txt';
+    var f = new File([header + p.text + '\n'], name, { type: 'text/plain', lastModified: Date.now() });
+    f.ppLink = { url: p.finalUrl, pasted: p.url, site: p.site, title: p.title };
+    return f;
+  }
+  function setupLink(list) {
+    var b = linkBox(list); if (!b) return;
+    var input = b.querySelector('input'), btn = b.querySelector('[data-link-get]');
+    var err = b.querySelector('[data-link-err]'), status = b.querySelector('[data-link-status]');
+    function get() {
+      err.textContent = ''; status.textContent = '';
+      var v = input.value.trim();
+      if (!v) { err.textContent = 'Paste a web address first.'; input.focus(); return; }
+      if (!backend || !backend.user()) { renderLinkAccess(); return; }
+      btn.disabled = true; status.textContent = 'Getting the page…';
+      backend.fetchPage(v).then(function (p) {
+        linkPending[list] = p; status.textContent = ''; renderLinkCard(list);
+      }, function (e) { status.textContent = ''; err.textContent = e.message || String(e); })
+        .then(function () { btn.disabled = !(backend && backend.user()); });
+    }
+    btn.addEventListener('click', get);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); get(); } });
+    b.addEventListener('click', function (e) {
+      var p = linkPending[list];
+      if (e.target.closest('[data-link-drop]')) { linkPending[list] = null; renderLinkCard(list); input.focus(); return; }
+      if (!p || !e.target.closest('[data-link-use]')) return;
+      if (files[list].some(function (g) { return g.ppLink && g.ppLink.url === p.finalUrl; })) { err.textContent = 'That page is already in your list.'; return; }
+      var f = linkFile(p);
+      addFiles(list, [f]);
+      if (files[list].indexOf(f) < 0) return;   // over the size limit: addFiles said so
+      linkPending[list] = null; renderLinkCard(list);
+      input.value = ''; status.textContent = 'Added "' + f.name + '".';
+    });
+  }
 
   // ---------- menu ----------
   function fillMenu() {
@@ -551,7 +625,8 @@
         itemSpecs: ids.reduce(function (o, id) { var sp = cleanSpec(picked[id].spec); if (sp) o[id] = sp; return o; }, {}),
         feasibility: feasRecord(),
         sources: srcNames,
-        styleExamples: trainNames
+        styleExamples: trainNames,
+        links: linkRecords(trainNames, srcNames)
       },
       lines: lines,
       tokenTotal: tokenTotal,
@@ -570,7 +645,7 @@
           $('send-zip').addEventListener('click', function () {
             err.textContent = '';
             var n2 = uniqueNames(files.training), s2 = uniqueNames(files.sources);
-            orderJson.order.styleExamples = n2; orderJson.order.sources = s2; delete orderJson.delivery;
+            orderJson.order.styleExamples = n2; orderJson.order.sources = s2; orderJson.order.links = linkRecords(n2, s2); delete orderJson.delivery;
             renameSpecFile(orderJson, n2, s2);
             var all2 = files.training.map(function (f, i) { return { f: f, name: 'training/' + n2[i] }; })
               .concat(files.sources.map(function (f, i) { return { f: f, name: 'sources/' + s2[i] }; }));
@@ -580,6 +655,17 @@
       })
       .then(function () { btn.disabled = false; btn.textContent = 'Send'; $('send-progress').textContent = ''; });
   });
+
+  // Pasted links (saved as .txt sources): where each came from, for the onboarding agent and the audit report.
+  function linkRecords(trainNames, srcNames) {
+    var out = [];
+    [['training', trainNames], ['sources', srcNames]].forEach(function (x) {
+      files[x[0]].forEach(function (f, i) {
+        if (f.ppLink) out.push({ file: x[0] + '/' + x[1][i], url: f.ppLink.url, pasted: f.ppLink.pasted !== f.ppLink.url ? f.ppLink.pasted : undefined, site: f.ppLink.site, title: f.ppLink.title, read: today() });
+      });
+    });
+    return out.length ? out : undefined;
+  }
 
   // "Which uploaded file is the test" (itemSpecs.versions.file) names the file as it is saved in the order.
   function renameSpecFile(orderJson, trainNames, srcNames) {
@@ -639,6 +725,7 @@
       ? 'Send uploads your files and your order to us, privately: only you and our team can see them.'
       : 'Nothing is uploaded. Send makes one zip file on this device for you to email' + (backend ? ' (or sign in at the top to send it online).' : '.');
     if (u && u.email && !$('reply').value.trim()) $('reply').value = u.email;
+    renderLinkAccess();
   }
 
   function download() {
@@ -718,8 +805,8 @@
   applyLayout(); showStep(0, false);
 
   // ---------- start ----------
-  PPBackend.load().then(function (b) { backend = b; if (b) PPBackend.wireSignIn(b, onUser); });
-  setupDrop('training'); setupDrop('sources');
+  PPBackend.load().then(function (b) { backend = b; if (b) PPBackend.wireSignIn(b, onUser); renderLinkAccess(); });
+  setupDrop('training'); setupDrop('sources'); setupLink('training'); setupLink('sources');
   $('limit-text').textContent = fmtBytes(LIMITS.sources);
   renderFiles('training'); renderFiles('sources');
   Promise.all([PP.loadBrand(), PP.getJSON('../menu.json'), PP.getJSON('../feasibility.json').catch(function () { return null; })]).then(function (r) {

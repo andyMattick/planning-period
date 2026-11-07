@@ -89,6 +89,9 @@ follow-up, the online review and the final files. Setup, rules and tests: **docs
 small fetch client, so nothing loads from a CDN; Supabase is another origin, so the service worker never touches or
 caches sign-in, uploads, orders or signed file links.
 
+**Paste a link** (Nov 7, 2026) is the site's first server code: `api/fetch-page.js`, a Vercel function the order page
+calls with a POST, so the service worker never touches it (it only handles GETs). Online and signed in only.
+
 Still to come from the plan below: Background Sync for an order sent offline (today: the zip), push notifications.
 
 ## When there's a real backend (the plan, Nov 5, 2026)

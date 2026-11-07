@@ -9,6 +9,9 @@
 The page can only count pages; the agent reads the material. When they differ, the agent's read-out wins and the
 follow-up says why. **All numbers are pilot estimates** (owner, Nov 5, 2026), to recalibrate from real orders below.
 
+A **pasted link** (docs/BACKEND.md) is counted like any text file: its article text's words ÷ `wordsPerPage` (the
+preview card shows the pages it adds before she uses it). The counting itself didn't change.
+
 ## The numbers and why
 
 | Key | Value | Why |

@@ -95,6 +95,62 @@ reminder, a cron job on the owner's computer, or the runner in C).
 Locally: `PP_SUPABASE_URL=… PP_SUPABASE_ANON_KEY=… npm run serve` (or a `backend.config.json` copied from the example)
 switches online orders on at http://localhost:4321/site/.
 
+## Paste a link (built Nov 7, 2026)
+
+On the order page, steps 1 and 2 each have a **🔗 Paste a link** box (signed in only; signed out or in local mode it
+says to sign in, or to save the page with File → Save page as and upload it). **Get the page** sends the address to our
+own server, which reads the page as text and sends back `{ url, finalUrl, title, site, text, words }` (never the
+page's HTML). The page shows a preview card (title, site, word count, the first ~300 words, and the pages it adds to
+the source count) with **Use this** / **Remove**. **Use this** turns it into a `.txt` file in that step's list
+(`link - <title>.txt`: a header with the address, the title and the date, then the text), so the 25 MB limit, the
+page count, the upload to `uploads/<teacher>/<order>/{training,sources}/`, `orders.mjs pull` and the onboarding agent
+treat it exactly like an uploaded file. `order.json` also lists each link in `order.links`
+(`[{ file, url, pasted?, site, title, read }]`) for the audit report. The source notice and the "sent to AI" notice stay
+on screen.
+
+| Piece | Where |
+|---|---|
+| The server function | `api/fetch-page.js` (a Vercel serverless function; `vercel.json` gives it 20 s and the two files it reads) → `scripts/fetch-page.mjs` (all the logic) |
+| The text extraction | `scripts/html-text.mjs` `pageToText` (the same code as for saved pages; linear time on any input) |
+| The browser side | `site/backend.js` `fetchPage`, `site/order.js` (the link box and card) |
+| Local testing | `npm run serve` mounts the same handler at `/api/fetch-page` |
+| Tests | `scripts/test-fetch-page.mjs` (in `npm run check`), and the link steps in `scripts/test-orders.mjs` |
+
+**Why a Vercel function, not a Supabase Edge Function:** the site is already on Vercel, which already has the only two
+settings the function needs (`PP_SUPABASE_URL`, `PP_SUPABASE_ANON_KEY`), so there's **no new secret** and nothing new to
+deploy by hand (Edge Functions need the Supabase CLI and a separate deploy). It runs on Node, so it shares
+`scripts/html-text.mjs` with the agents' copy instead of a Deno fork, and Node lets us pin the socket to the address we
+checked (Deno's `fetch` can't), which is what stops DNS rebinding.
+
+**The guard** (this fetches addresses a user typed, from our server):
+- Only a signed-in teacher: the function checks her access token with Supabase (`/auth/v1/user` with the anon key; no
+  service key). No token or a bad one: 401.
+- Only `http`/`https`, ports 80 and 443, no user name or password in the address, at most 2048 characters.
+- The host is resolved on the server and **every** address must be public. Refused: `0.0.0.0/8`, `10/8`, `100.64/10`
+  (CGNAT), `127/8`, `169.254/16` (link-local, the cloud metadata address 169.254.169.254), `172.16/12`, `192.168/16`,
+  `192.0.0/24`, the documentation and benchmarking ranges, `224/4` multicast, `240/4` and broadcast; IPv6 `::`, `::1`,
+  IPv4-mapped and -compatible addresses (checked as IPv4), everything outside `2000::/3` (so `fc00::/7`, `fe80::/10`,
+  `ff00::/8` …), Teredo, 6to4, NAT64 and documentation prefixes. Names like `localhost`, `*.local`, `*.internal`,
+  `*.home.arpa` are refused before any lookup. Odd spellings (`127.1`, `0x7f000001`, `2130706433`, octal) are
+  normalised by the URL parser first, so they're caught too.
+- The connection goes to the address that was checked (the socket's lookup is pinned), so a second DNS answer can't
+  swap in a private address. TLS still checks the certificate against the host name.
+- At most 3 redirects, followed by hand; every new address goes through all the checks again. Meta refresh and
+  scripts are never followed (the page is only text to us).
+- 10 seconds in all, at most 3 MB read (counted after decompression, so a gzip bomb stops too); only `text/html`,
+  `application/xhtml+xml` and `text/plain`. A PDF, image or other file: "Download the file and upload it instead".
+  401/402/403/429/451 (a paywall or a block): "This page didn't let us read it: save it from your browser and upload it".
+- 30 links an hour per teacher. **The count is kept in memory per server instance** (a cold start or a second instance
+  starts its own count): fine for the pilot; move it to a table if it's ever abused.
+- The user agent names the product (read from `brand.config.json`) and nothing personal.
+- It logs only the host, the status and the size of each request: never the path, the token or the text.
+
+**The owner's setup:** nothing new. Steps 1–7 above already set `PP_SUPABASE_URL` and `PP_SUPABASE_ANON_KEY` in Vercel;
+the next deploy picks up `api/fetch-page.js` by itself. To check it after deploying: sign in on the order page, paste a
+public article's address in step 2, press **Get the page**, and see the preview. (Vercel → the project → **Logs**,
+filter `fetchPage`, shows one line per request: host, status, bytes.) To switch links off, delete `api/fetch-page.js`
+and redeploy: the box then says it couldn't read the page and to upload the saved page instead.
+
 ## Tested, and how
 
 - `node scripts/test-orders.mjs [--shots <folder>]`: a fake Supabase (`scripts/test-orders/fake-supabase.mjs`: the Auth,
@@ -108,5 +164,17 @@ switches online orders on at http://localhost:4321/site/.
   can't add an order for someone else or an already-approved one, can't update an order directly or upload into
   another teacher's folder, answers only when asked, can't approve with a missing or changed file or cancel after
   approving; another teacher sees none of her rows; the owner sees all; anon sees nothing.
+- `node scripts/test-fetch-page.mjs` (part of `npm run check`, a few seconds, no outside network): 75 allowed and refused
+  addresses (`127.1`, `0x7f000001`, `2130706433`, `[::ffff:127.0.0.1]`, `169.254.169.254`, `localhost` …), a stubbed
+  DNS that answers with private addresses, and a local page server: redirects (a loop, to metadata, to a private IP, to
+  another port, to `file:`), PDF/image/JSON, 403/404/500, over 3 MB (declared, streamed, a gzip bomb), a slow page, gzip,
+  a charset, the handler's 401/405/415/429/503, the rate limit, and the extraction in linear time on 3 MB of hostile
+  markup. The test reaches its local server only through an `allowAddress` option the Vercel function never passes.
+- `scripts/test-orders.mjs` also pastes a link (a local page) → preview → Use this → Send, and checks the `.txt` in
+  uploads and `order.links`; a metadata address and a redirect to it show the friendly error; signed out and local mode
+  show the save-and-upload hint.
+- **Not tested on Vercel's real runtime or against real websites** (the sandbox has no direct internet): the function's
+  bundling (`includeFiles`), the 20 s limit, real paywalls and sites that block bots. Try a few real articles after the
+  first deploy.
 - **Not tested against a real Supabase project** (none exists yet): real email delivery, the real magic-link redirect,
   real Storage limits and the exact error texts. Do step 9 before telling teachers.

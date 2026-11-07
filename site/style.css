@@ -136,7 +136,7 @@ details.how[open] { padding-bottom: 16px; }
 label { font-weight: 600; display: block; margin-bottom: 4px; }
 .field { margin: 12px 0; }
 .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-input[type=text], input[type=email], input[type=number], select, textarea {
+input[type=text], input[type=email], input[type=url], input[type=number], select, textarea {
   width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong);
   border-radius: 8px; padding: 9px 11px; min-height: 44px;
 }
@@ -277,6 +277,17 @@ details summary { cursor: pointer; font-weight: 600; padding: 6px 0; min-height:
 .signin-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .signin-row input { flex: 1 1 220px; }
 .signin-row .btn { flex: 0 1 auto; }
+
+/* Paste a link (order page, steps 1 and 2): the box under each drop zone and the preview card */
+.linkbox { margin: 12px 0 0; }
+.linkbox > label { display: block; font-weight: 600; margin: 0 0 6px; }
+.linkbox [data-link-hint] { margin: 6px 0 0; }
+.link-card { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px 14px; margin: 10px 0 0; }
+.link-card h3 { margin: 0 0 2px; font-size: 1.05rem; overflow-wrap: anywhere; }
+.link-card .link-meta { color: var(--muted); font-size: .9rem; margin: 0 0 8px; overflow-wrap: anywhere; }
+.link-card .link-text { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; max-height: 12em; overflow: auto; font-size: .9rem; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0 0 10px; }
+.link-card .link-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.files .flink { color: var(--muted); font-size: .85rem; white-space: nowrap; }
 
 /* My orders: a planner, one row per order */
 .list-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 20px 0 8px; }

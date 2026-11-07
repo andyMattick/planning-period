@@ -31,8 +31,9 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
   - **D.** Tokens and payment (Stripe) once real teachers pay.
 - **Also:** upload a web page (a saved .html file, text only, scripts ignored) alongside PDF and Word (built Nov 6, 2026:
   both drop zones, the page count reads the page's text, `scripts/html-text.mjs` for the agents).
-- **Later: paste a link.** A box for a web address instead of a saved page. It needs the server (C): the page is
-  fetched there, text only, never run, with the same source fence and size limit; the browser can't fetch other
-  sites itself. Until then: File → Save page as, and drop in the .html file.
-- **Status:** web-page upload, A and B built Nov 6, 2026 (docs/BACKEND.md; needs the owner's new Supabase project,
+- **Paste a link** (built Nov 7, 2026): a box for a web address in steps 1 and 2, signed in only. Our server (a Vercel
+  function, `api/fetch-page.js`) reads the page as text, never runs it, with an address guard and the same source
+  fence and size limit; the link becomes a `.txt` source. Signed out: File → Save page as, and drop in the .html file.
+  docs/BACKEND.md, "Paste a link".
+- **Status:** web-page upload, A and B built Nov 6, 2026; paste a link Nov 7, 2026 (docs/BACKEND.md; needs the owner's new Supabase project,
   steps there); B2, C, C2, D next.

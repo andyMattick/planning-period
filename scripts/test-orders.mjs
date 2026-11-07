@@ -8,6 +8,7 @@
 import { spawn, spawnSync, execFileSync } from 'node:child_process';
 import { mkdtempSync, writeFileSync, readFileSync, existsSync, mkdirSync, cpSync, rmSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
+import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
@@ -32,12 +33,24 @@ const ok = (m) => { passed++; console.log(`✓ ${m}`); };
 
 // ---------- servers ----------
 const fake = await startFake();
+// A stand-in public web page for "Paste a link" (the link reader may reach only this exact host:port: PP_FETCH_TEST_ALLOW).
+const pageSrv = createServer((req, res) => {
+  if (req.url === '/volcanoes') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    return res.end(`<!doctype html><html><head><title>How volcanoes form</title><script>window.evil = 1</script></head><body><nav>Home | Shop | Login</nav>
+<article><h1>How volcanoes form</h1>${'<p>Magma rises through cracks in the crust and erupts as lava, ash and gas. '.repeat(60)}</p></article><footer>Copyright Somebody</footer></body></html>`);
+  }
+  if (req.url === '/to-metadata') { res.writeHead(302, { Location: 'http://169.254.169.254/latest/meta-data/' }); return res.end(); }
+  res.writeHead(404); res.end();
+});
+await new Promise((r) => pageSrv.listen(0, '127.0.0.1', r));
+const PAGE = `http://127.0.0.1:${pageSrv.address().port}`;
 function serve(port, extraEnv) {
   const p = spawn(process.execPath, [join(ROOT, 'scripts/serve.mjs')], { env: { ...process.env, PORT: String(port), PP_SUPABASE_URL: '', PP_SUPABASE_ANON_KEY: '', ...extraEnv }, stdio: ['ignore', 'pipe', 'inherit'] });
   return new Promise((res) => p.stdout.on('data', (d) => { if (/Serving/.test(String(d))) res(p); }));
 }
 const LOCAL_PORT = 4398, ONLINE_PORT = 4399;
-const servers = [await serve(LOCAL_PORT, {}), await serve(ONLINE_PORT, { PP_SUPABASE_URL: fake.url, PP_SUPABASE_ANON_KEY: ANON })];
+const servers = [await serve(LOCAL_PORT, {}), await serve(ONLINE_PORT, { PP_SUPABASE_URL: fake.url, PP_SUPABASE_ANON_KEY: ANON, PP_FETCH_TEST_ALLOW: PAGE.replace('http://', '') })];
 const LOCAL = `http://localhost:${LOCAL_PORT}/site/`, ONLINE = `http://localhost:${ONLINE_PORT}/site/`;
 
 // Async on purpose: the fake Supabase runs in this process, so a blocking spawnSync would starve it.
@@ -94,6 +107,8 @@ try {
     await page.goto(LOCAL);
     await fillOrder(page, { sources: [join(FIX, 'water-cycle.html')] });
     assert.equal(await page.isVisible('#account'), false, 'no sign-in box in local mode');
+    assert.ok(await page.isDisabled('#link-sources') && await page.isDisabled('[data-link-get="sources"]'), 'no links in local mode');
+    assert.match(await page.textContent('[data-link="sources"] [data-link-hint]'), /save the page \(File → Save page as\) and upload it/);
     const pages = await page.textContent('#list-sources .fpages');
     assert.match(pages, /about \d+ page/, 'the web page is counted');
     assert.equal(await page.evaluate(() => window.evil), undefined, 'the uploaded web page never ran');
@@ -105,7 +120,7 @@ try {
     await shot(page, `local-${kind}-done-zip`);
     await c.close();
   }
-  ok('local mode: the web page is counted as text (scripts never run), no sign-in box, Send downloads the order zip (phone and desktop)');
+  ok('local mode: the web page is counted as text (scripts never run), no sign-in box, the link box shows the save-and-upload hint, Send downloads the order zip (phone and desktop)');
 
   // ===== 2. sign in and send online =====
   const c = await ctx('desktop'), page = await c.newPage();
@@ -113,6 +128,10 @@ try {
   await page.goto(ONLINE);
   await page.waitForSelector('#account:not([hidden])');
   await shot(page, 'online-desktop-signed-out');
+  assert.ok(await page.isDisabled('#link-training') && await page.isDisabled('[data-link-get="sources"]'));
+  assert.equal((await page.textContent('[data-link="sources"] [data-link-hint]')).trim(), 'Sign in to add links, or save the page (File → Save page as) and upload it.');
+  assert.equal(await page.isVisible('#fence'), true, 'the source notice stays visible');
+  ok('signed out: "Paste a link" is off, with the hint to sign in or save the page and upload it');
   await page.fill('#signin-email', 'ortiz@example.org');
   await page.click('#signin-btn');
   await page.waitForSelector('#signin-sent:not(:empty)');
@@ -125,7 +144,58 @@ try {
   assert.match(await page.textContent('#send-note'), /uploads your files/);
   ok('sign-in: email link → back on the order page signed in, the token taken out of the address bar');
 
+  // ===== 2b. paste a link: preview → Use this (a blocked address shows the friendly error) =====
+  assert.equal(await page.isVisible('[data-link="sources"] [data-link-hint]'), false);
+  await page.fill('#link-sources', 'http://169.254.169.254/latest/meta-data/');
+  await page.click('[data-link-get="sources"]');
+  await page.waitForSelector('[data-link="sources"] [data-link-err]:not(:empty)');
+  assert.match(await page.textContent('[data-link="sources"] [data-link-err]'), /private or local network/);
+  await page.fill('#link-sources', PAGE + '/to-metadata');
+  await page.click('[data-link-get="sources"]');
+  await page.waitForFunction(() => /private or local network/.test(document.querySelector('[data-link="sources"] [data-link-err]').textContent));
+  await page.fill('#link-sources', PAGE + '/volcanoes');
+  await page.press('#link-sources', 'Enter');
+  await page.waitForSelector('[data-link="sources"] [data-link-card]:not([hidden]) h3');
+  assert.equal(await page.textContent('[data-link="sources"] [data-link-err]'), '');
+  assert.equal(await page.textContent('[data-link="sources"] .link-card h3'), 'How volcanoes form');
+  const meta = await page.textContent('[data-link="sources"] .link-meta');
+  assert.match(meta, /^127\.0\.0\.1 · 843 words · adds about 3 pages of source$/, meta);
+  const preview = await page.textContent('[data-link="sources"] .link-text');
+  assert.ok(/^How volcanoes form\nMagma rises/.test(preview) && / …$/.test(preview) && !/Home \| Shop|Copyright|window\.evil|</.test(preview), preview.slice(0, 200));
+  assert.equal(await page.evaluate(() => window.evil), undefined);
+  await noSideways(page, 'order page with a link preview (desktop)');
+  await shot(page, 'link-desktop-light-preview');
+  await page.click('[data-link="sources"] [data-link-use]');
+  await page.waitForFunction(() => /link - How volcanoes form\.txt/.test(document.getElementById('list-sources').textContent));
+  assert.match(await page.textContent('#list-sources .fpages'), /about 3 pages/);
+  assert.match(await page.textContent('#list-sources .flink'), /127\.0\.0\.1/);
+  assert.equal(await page.isVisible('[data-link="sources"] [data-link-card]'), false);
+  for (const [kind, scheme] of [['phone', 'light'], ['phone', 'dark'], ['desktop', 'dark']]) {
+    const c2 = await ctx(kind, scheme), p2 = await c2.newPage();
+    await p2.goto(ONLINE);
+    await p2.evaluate((s) => localStorage.setItem('pp-session', s), await page.evaluate(() => localStorage.getItem('pp-session')));
+    await p2.reload();
+    await p2.waitForSelector('#acct-in:not([hidden])');
+    if (kind === 'phone') await p2.evaluate(() => window.PPShowStep(1));
+    await p2.fill('#link-sources', PAGE + '/volcanoes');
+    await p2.click('[data-link-get="sources"]');
+    await p2.waitForSelector('[data-link="sources"] .link-card h3');
+    await noSideways(p2, `link preview (${kind} ${scheme})`);
+    await shot(p2, `link-${kind}-${scheme}-preview`);
+    if (kind === 'phone' && scheme === 'light') {
+      await p2.click('[data-link="sources"] [data-link-use]');
+      await p2.fill('#link-sources', 'http://[::ffff:127.0.0.1]/');
+      await p2.click('[data-link-get="sources"]');
+      await p2.waitForSelector('[data-link="sources"] [data-link-err]:not(:empty)');
+      await noSideways(p2, 'link added + error (phone)');
+      await shot(p2, 'link-phone-light-added-and-blocked');
+    }
+    await c2.close();
+  }
+  ok('paste a link: a metadata address and a redirect to it are refused with the friendly message; a page → preview (title, site, 843 words, first 300 words, +3 pages) → Use this → "link - How volcanoes form.txt" in the sources list');
+
   const sources = [join(FIX, 'water-cycle.html'), ...(existsSync(join(FIX, 'chapter 4 (ratios).pdf')) ? [join(FIX, 'chapter 4 (ratios).pdf')] : [])];
+  const LINK_FILE = 'link - How volcanoes form.txt';
   await fillOrder(page, { sources, training: [join(FIX, 'my old quiz.txt')] });
   assert.equal(await page.inputValue('#reply'), 'ortiz@example.org', 'her email is filled in from the account');
   await page.click('#send');
@@ -135,10 +205,15 @@ try {
   let st = await state();
   let o = st.orders.find((x) => x.id === orderId);
   assert.equal(o.status, 'sent');
-  assert.equal(o.upload_files.length, sources.length + 1);
+  assert.equal(o.upload_files.length, sources.length + 2);
+  assert.ok(o.upload_files.includes(`${o.teacher}/${orderId}/sources/${LINK_FILE}`), 'the link is uploaded as a source file');
+  const linkTxt = Buffer.from(await (await svc('GET', `/storage/v1/object/uploads/${o.teacher}/${orderId}/sources/${encodeURIComponent(LINK_FILE)}`)).arrayBuffer()).toString('utf8');
+  assert.match(linkTxt, new RegExp(`^Web page \\(pasted link, read as text only\\): How volcanoes form\\nAddress: ${PAGE.replace(/\./g, '\\.')}/volcanoes\\nSite: 127\\.0\\.0\\.1\\nRead on: \\d{4}-\\d{2}-\\d{2}\\n\\n---\\n\\nHow volcanoes form\\nMagma rises`));
+  assert.deepEqual(o.order_json.order.links, [{ file: 'sources/' + LINK_FILE, url: PAGE + '/volcanoes', site: '127.0.0.1', title: 'How volcanoes form', read: o.order_json.order.links[0].read }]);
   assert.ok(o.upload_files.every((p) => p.startsWith(`${o.teacher}/${orderId}/`) && st.objects.includes('uploads/' + p)), 'files are in uploads/<teacher>/<order>/');
-  assert.deepEqual(o.order_json.order.sources, sources.map((s) => s.split('/').pop().replace(/[^A-Za-z0-9._ ()-]+/g, '_')));
+  assert.deepEqual(o.order_json.order.sources, [LINK_FILE, ...sources.map((s) => s.split('/').pop().replace(/[^A-Za-z0-9._ ()-]+/g, '_'))]);
   assert.equal(o.order_json.delivery, 'online');
+  ok('the pasted link went up as sources/' + LINK_FILE + ' (a header with the address, title and date, then the text) and order.json lists it in links');
   ok(`Send uploaded ${o.upload_files.length} files to uploads/<teacher>/${orderId}/ and added the order (status sent); no zip`);
 
   // ===== 3. My orders, and the owner's pull =====
@@ -148,7 +223,7 @@ try {
   await owner('list');
   const pullOut = await owner('pull', orderId);
   const WORK = join(WORK_ROOT, orderId);
-  assert.ok(existsSync(join(WORK, 'in/order.json')) && existsSync(join(WORK, 'in/sources/water-cycle.html')) && existsSync(join(WORK, 'in/training/my old quiz.txt')), pullOut);
+  assert.ok(existsSync(join(WORK, 'in/order.json')) && existsSync(join(WORK, 'in/sources/water-cycle.html')) && existsSync(join(WORK, 'in/training/my old quiz.txt')) && existsSync(join(WORK, 'in/sources', LINK_FILE)), pullOut);
   assert.equal((await state()).orders.find((x) => x.id === orderId).status, 'onboarding');
   const txt = execFileSync(process.execPath, [join(ROOT, 'scripts/html-text.mjs'), join(WORK, 'in/sources/water-cycle.html')], { encoding: 'utf8' });
   assert.ok(/The water cycle/.test(txt) && !/window\.evil|color:red/.test(txt), 'html-text keeps the text and drops scripts and styles');
@@ -343,6 +418,7 @@ try {
 } finally {
   await browser.close();
   servers.forEach((s) => s.kill());
+  pageSrv.close();
   fake.close();
   rmSync(TMP, { recursive: true, force: true });
 }
