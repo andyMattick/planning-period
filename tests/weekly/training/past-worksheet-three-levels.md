@@ -1,0 +1,6 @@
+# Practice: Level 1, 2, 3 (made-up teacher Ms. Quill, past worksheet)
+Name: ________  Date: ________
+**Level 1 (warm up).** 1. ...  2. ...  3. ...  (show your work in the box)
+**Level 2 (on your own).** 4. ...  5. ...  6. ...
+**Level 3 (challenge: two steps).** 7. ...  8. ...
+Answer key on the back. Directions are one short sentence each, in bold.

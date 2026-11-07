@@ -1,0 +1,13 @@
+{
+  "_note": "Public pages the weekly test reads with the real fetchPage (scripts/weekly-test.mjs). expect: what fetchPage should give (ok: article text read; blocked: the site refused, 401/403/429; notPage: a file, not a web page; missing: 404). A list means either is fine (sites change). minWords: an ok page should have at least this much article text.",
+  "links": [
+    { "url": "https://en.wikipedia.org/wiki/Water_cycle", "kind": "encyclopedia article (Wikipedia)", "expect": "ok", "minWords": 1500 },
+    { "url": "https://en.wikipedia.org/wiki/Simple_machine", "kind": "encyclopedia article (Wikipedia)", "expect": "ok", "minWords": 1000 },
+    { "url": "https://www.archives.gov/founding-docs/declaration-transcript", "kind": "government page (National Archives), a primary source", "expect": "ok", "minWords": 1000 },
+    { "url": "https://www.loc.gov/classroom-materials/immigration/", "kind": "government page (Library of Congress), teacher materials", "expect": ["ok", "blocked"], "minWords": 100 },
+    { "url": "https://www.gutenberg.org/files/11/11-h/11-h.htm", "kind": "public-domain book (Project Gutenberg, Alice's Adventures in Wonderland)", "expect": "ok", "minWords": 20000 },
+    { "url": "https://www.nytimes.com/section/science", "kind": "news site that blocks bots or needs a subscription", "expect": ["blocked", "ok"] },
+    { "url": "https://www.irs.gov/pub/irs-pdf/fw4.pdf", "kind": "a PDF file, not a web page", "expect": "notPage" },
+    { "url": "https://en.wikipedia.org/wiki/Pp_weekly_test_page_that_does_not_exist_2026", "kind": "a page that does not exist", "expect": "missing" }
+  ]
+}

@@ -7,7 +7,8 @@
     "render": "node scripts/render-pack.mjs",
     "serve": "node scripts/serve.mjs",
     "test:orders": "node scripts/test-orders.mjs",
-    "orders": "node scripts/orders.mjs"
+    "orders": "node scripts/orders.mjs",
+    "weekly": "node scripts/weekly-test.mjs"
   },
   "dependencies": {
     "docx": "^9.15.2",
