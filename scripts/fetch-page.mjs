@@ -26,7 +26,9 @@ import { pageToText } from './html-text.mjs';
 const require = createRequire(import.meta.url);
 const brand = (() => { try { return require('../brand.config.json'); } catch { return {}; } })();
 
-export const LIMITS = { timeoutMs: 10000, maxBytes: 3 * 1024 * 1024, maxRedirects: 3, maxUrl: 2048, perHour: 30, maxTextChars: 1500000 };
+export const LIMITS = { timeoutMs: 10000, maxBytes: 3 * 1024 * 1024, maxRedirects: 3, maxUrl: 2048, perHour: 30, maxTextChars: 1500000, maxTextBytes: 4000000 };
+// C0 controls but tab and new line, DEL, C1 controls, and the bidi overrides/isolates (they can disguise a title or file name)
+const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/g;
 export const USER_AGENT = `${String(brand.shortName || brand.name || 'Teacher packs').replace(/[^\x20-\x7e]/g, '')} link reader (text only; for a teacher's own lesson materials)`;
 
 // Messages the teacher sees (site/order.js shows `message`).
@@ -157,7 +159,7 @@ function requestOnce(u, addr, { signal, maxBytes }) {
       else if (enc === 'br') stream = res.pipe(zlib.createBrotliDecompress());
       else if (enc && enc !== 'identity') { res.destroy(); return reject(new PageError('notText')); }
       const chunks = []; let size = 0, raw = 0;
-      res.on('data', (c) => { raw += c.length; });
+      res.on('data', (c) => { raw += c.length; if (raw > maxBytes) { res.destroy(); stream.destroy(); reject(new PageError('tooBig')); } });   // also when it inflates to nothing
       stream.on('data', (c) => {
         size += c.length;
         if (size > maxBytes || raw > maxBytes) { res.destroy(); stream.destroy(); reject(new PageError('tooBig')); return; }
@@ -214,8 +216,11 @@ export async function fetchPage(rawUrl, opts = {}) {
       const plain = /^text\/plain/.test(r.type || '');
       const page = plain ? { title: '', text: html.replace(/\r\n?/g, '\n').split('\n').map((l) => l.replace(/[ \t]+/g, ' ').trim()).join('\n').replace(/\n{3,}/g, '\n\n').trim(), words: 0 } : pageToText(html);
       if (plain) page.words = (page.text.match(/[\p{L}\p{N}]+(?:['’][\p{L}]+)?/gu) || []).length;
+      // control characters (other than tab and new line) are dropped: they aren't text, and JSON writes each as 6 bytes
+      page.text = page.text.replace(CONTROL, ''); page.title = String(page.title || '').replace(CONTROL, ' ').replace(/\s+/g, ' ').trim();
       if (page.words < 20) throw new PageError('empty');
       if (page.text.length > LIMITS.maxTextChars) throw new PageError('tooBig');   // keeps the reply well under the host's response limit
+      if (Buffer.byteLength(page.text) > LIMITS.maxTextBytes) throw new PageError('tooBig');   // 2-byte charsets grow in UTF-8
       const site = u.hostname.replace(/^www\./, '');
       return { url: first, finalUrl: u.href, title: (page.title || site).slice(0, 300), site, text: page.text, words: page.words };
     }

@@ -75,6 +75,12 @@ const srv = createServer((req, res) => {
   if (p === '/endless-403') { res.writeHead(403, { 'Content-Type': 'text/html' }); const iv = setInterval(() => { if (!res.write('x'.repeat(65536))) {} }, 1); res.on('close', () => clearInterval(iv)); return; }
   if (p === '/oops') { res.writeHead(500); return res.end(); }
   if (p === '/empty') { res.writeHead(200, { 'Content-Type': 'text/html' }); return res.end('<div id="app"></div><script src="app.js"></script>'); }
+  if (p === '/gz-no-output') {   // a gzip header with a comment that never ends: bytes come in, nothing comes out
+    res.writeHead(200, { 'Content-Type': 'text/html', 'Content-Encoding': 'gzip' }); res.write(Buffer.from([0x1f, 0x8b, 8, 0x10, 0, 0, 0, 0, 0, 3]));
+    let n = 0; const w = () => { while (n < 40 && res.write(Buffer.alloc(100 * 1024, 0x61))) n++; if (n >= 40) res.end(); else res.once('drain', w); }; return w();
+  }
+  if (p === '/wide') { res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-16le' }); return res.end(Buffer.from(('水'.repeat(20) + ' ').repeat(70000), 'utf16le')); }
+  if (p === '/controls') { res.writeHead(200, { 'Content-Type': 'text/html' }); return res.end('<head><title>Safe\u202etxt.exe\u0007 title</title></head><p>' + 'Plain\u0001 words\u001b[31m here \u0085and there. '.repeat(10) + '</p>'); }
   if (p === '/r1') return hop('/r2');
   if (p === '/r2') return hop('/article');
   if (p === '/loop') return hop('/loop');
@@ -105,12 +111,17 @@ try {
   assert.equal((await get('/gz')).words, a.words);
   assert.match((await get('/latin1')).text, /Le café est très bon/);
   assert.equal((await get('/plain')).words, 60);
+  const c = await get('/controls');
+  assert.ok(!/[\u0000-\u0008\u000b-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/.test(c.title + c.text), 'no control or bidi characters');
+  assert.equal(c.title, 'Safe txt.exe title'); assert.match(c.text, /^Plain words\[31m here and there\./);
+  ok('control characters and bidi overrides are dropped from the title and the text');
   const r = await get('/r1'); assert.equal(r.finalUrl, BASE + '/article'); assert.equal(r.url, BASE + '/r1');
   ok('gzip, a declared charset, text/plain, and 2 redirects (finalUrl reported)');
 
   const cases = { '/loop': 'redirects', '/to-meta': 'blocked', '/to-private': 'blocked', '/to-other-port': 'port', '/to-file': 'scheme',
     '/to-name': 'blocked', '/pdf': 'notPage', '/png': 'notPage', '/json': 'notText', '/paywall': 'denied', '/endless-403': 'denied', '/gone': 'missing',
-    '/oops': 'upstream', '/empty': 'empty', '/big': 'tooBig', '/big-chunked': 'tooBig', '/bomb': 'tooBig' };
+    '/oops': 'upstream', '/empty': 'empty', '/big': 'tooBig', '/big-chunked': 'tooBig', '/bomb': 'tooBig',
+    '/gz-no-output': 'tooBig', '/wide': 'tooBig' };
   for (const [p, want] of Object.entries(cases)) assert.equal(await code(get(p)), want, p);
   ok('refused: a redirect loop (max 3), redirects to metadata / a private IP / another port / file: / a name resolving private; PDF, image, JSON; 403 paywall, 404, 500; a script-only page; over 3 MB (declared, streamed, or a gzip bomb)');
 
@@ -161,6 +172,13 @@ for (const s of ['<script'.repeat(500000), '<a'.repeat(1500000), '<!--'.repeat(7
   const t = Date.now(); htmlToText(s); pageToText(s);
   assert.ok(Date.now() - t < 3000, 'linear time on ' + s.slice(0, 10) + ` (${Date.now() - t} ms)`);
 }
+// a dropped element opened many times whose only closing tag has no ">" (it used to search to the end each time)
+for (const tag of ['nav', 'svg', 'head', 'aside', 'iframe']) {
+  const s = ('<' + tag + '>').repeat(600000) + '</' + tag, t = Date.now();
+  htmlToText(s); pageToText(s);
+  assert.ok(Date.now() - t < 3000, `linear time on <${tag}> ×600000 then "</${tag}" (${Date.now() - t} ms)`);
+}
+assert.equal(htmlToText('<p>keep</p><svg>x</svg><p>also</p>'), 'keep\nalso\n');
 assert.equal(htmlToText('<p>a &#99999999; &#xD800; b</p>'), 'a b\n');
 assert.equal(htmlToText('<head><title>x</title></head><body><p>Hello <b>you</b></p><p>there</p>'), 'Hello you\nthere\n');
 assert.equal(htmlToText('<head><title>No close<p>Body text'), 'Body text\n'.replace('Body', 'No close Body'));

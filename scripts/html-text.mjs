@@ -39,8 +39,8 @@ function strip(html, drop) {
     const close = m[1] === '/', name = m[2].toLowerCase();
     if (!close && drop.includes(name) && src[k - 1] !== '/') {
       const end = unclosed.has(name) ? -1 : low.indexOf('</' + name, k + 1);    // the element and all inside it
-      if (end < 0) unclosed.add(name);
       const gt = end < 0 ? -1 : src.indexOf('>', end + 2);
+      if (gt < 0) unclosed.add(name);    // no full closing tag (none, or a "</nav" with no ">"): never search again
       if (gt >= 0) { out.push(' '); i = gt + 1; continue; }
       if (name === 'script' || name === 'style') break;   // an unclosed script or style: the rest is code, not text
       out.push(' '); i = k + 1; continue;                 // an unclosed <head>, <nav> …: just the tag

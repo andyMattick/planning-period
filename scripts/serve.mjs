@@ -23,7 +23,8 @@ const TYPES = {
 };
 // "Paste a link": the same handler as the Vercel function api/fetch-page.js. PP_FETCH_TEST_ALLOW=127.0.0.1:<port> lets the
 // end-to-end test reach its own local page server (one exact host and port; never set on the real site).
-const testAllow = (process.env.PP_FETCH_TEST_ALLOW || '').trim();
+// Honoured only as 127.0.0.1:<port> and never on Vercel, so a mistaken setting can't open any other address.
+const testAllow = /^127\.0\.0\.1:\d{1,5}$/.test((process.env.PP_FETCH_TEST_ALLOW || '').trim()) && !process.env.VERCEL ? process.env.PP_FETCH_TEST_ALLOW.trim() : '';
 const fetchPageHandler = createHandler({
   config: () => backendConfig() || (() => { try { const c = JSON.parse(readFileSync(CONFIG_FILE, 'utf8')); return c.supabaseUrl && c.supabaseAnonKey ? c : null; } catch { return null; } })(),
   allowAddress: testAllow ? (host, port) => `${host}:${port}` === testAllow : undefined,
