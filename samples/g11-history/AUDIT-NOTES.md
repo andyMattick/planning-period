@@ -133,3 +133,9 @@ blind tester can still link them). Lesson for the auditor: the cross-item check 
 reader is what catches two items on the same event.
 
 No outputs are committed for this sample (only `pack.json`); the preview renders (the same page counts as before).
+
+**Owner decision, Nov 7, 2026 (one-time exception to rule 5):** A q21's key was reworded in round 6 ("Hayes ending army
+protection for Louisiana's Republican governor": same letter, same event, fact-checked) because it shared "the last
+Republican" with A q13's key and no stem or wrong-choice change could clear the cross-item check. The owner accepted it as
+a one-time exception. The rule stands: fix wrong choices, never keys, to pass a check; the next case gets a new question
+on the same skill instead.
