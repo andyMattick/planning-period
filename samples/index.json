@@ -18,7 +18,9 @@
     "title": "Reading Check (A/B) on two original passages, with a RACE checklist: the option-1 remake",
     "grade": "7",
     "subject": "ela",
-    "folder": "samples/g7-ela2"
+    "folder": "samples/g7-ela2",
+    "hidden": true,
+    "hiddenWhy": "Owner, Nov 7, 2026: not shown on the public Samples page until it passes the no-passage gate (open fixes in samples/g7-ela2/AUDIT-NOTES.md)."
   },
   {
     "id": "g8-science",
