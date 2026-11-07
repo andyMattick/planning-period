@@ -9,7 +9,8 @@ You make nothing and change nothing in the order.
 ## Inputs (only these)
 - `order.json`: grade, subject, topic, `items`, `quantities`, `requests`, `itemRequests` (free text per item),
   `itemSpecs` when the order page sent them (per item: `questions`, `types` {mc, short, open}, `choices`, `versions`,
-  `pages`, `slides`, `days`, `lessons`, `quizzes`, `tests`), and the page's `feasibility` block (its own live warnings)
+  `pages`, `slides`, `days`, `lessons`, `quizzes`, `tests`; a reading quiz may carry `passages` and `mc: "testing"`, her
+  pick of the in-testing multiple-choice option), and the page's `feasibility` block (its own live warnings)
   if present, plus `lines` and `tokenTotal`.
 - The **sources** (`sources/`) and the **training files** (`training/`, the teacher's own past work).
 - `menu.json` (items, tokens) and `feasibility.json` (defaults, limits, questions per page, messages).
@@ -62,11 +63,18 @@ You make nothing and change nothing in the order.
      (`feasibility.json` `readingquiz`). A `quiz` built on passages **is a `readingquiz`** (150 tokens, not 40), and a
      `test` built on passages gets the reading surcharge (+110 tokens): step 7. Grammar, vocabulary or writing quizzes
      with no passage stay `quiz`.
-     **Recommend the reading defaults** (`feasibility.json` `readingquiz`; owner option 1, Nov 6, 2026): at least 8
-     multiple-choice items a version, **no multiple-choice Part A/Part B pairs**, and at least 2 short answers that quote
-     the passage (owner, Nov 7, 2026: the pairs leaked in every probe round of g7-ela2's three attempts; docs/audits/AUDIT-2026-11-07-ela-try-c.md).
-     A teacher who asks for Part A/Part B pairs gets one plain question: our recommendation (the evidence skill in short
-     answers that cite and the constructed response) or her pairs, with one line on why (step 5a).
+     **Recommend the reading defaults** (`feasibility.json` `readingquiz`; owner, Nov 7, 2026, after four ELA tries
+     failed the fresh no-passage probe): **citing short answers plus a RACE response, no multiple choice** (about 3–4
+     short answers a passage, each a claim plus a quote or a paragraph-specific detail; no Part A/Part B pairs).
+     **Multiple choice on passages is in testing.** When she picks the menu option (`itemSpecs.readingquiz.mc` is
+     `"testing"`) or asks for multiple choice on the passages in her requests, make it a `warnings` entry
+     (`kind: "inTesting"`) and say it in the follow-up in these words: "Multiple choice on passages is in testing: our
+     checks can still sometimes answer it without reading. Short answers and RACE are fully checked." Then plan it with
+     `readingquiz.mcInTesting` (at least 8 multiple choice a version, 4 choices, no pairs, plus 2 citing short answers
+     and the RACE) and ask one question only if her ask is unclear (A: short answers and RACE only, recommended; B: add
+     the multiple choice in testing). Never say or imply that the multiple choice passes our checks. A teacher who asks
+     for Part A/Part B pairs gets one plain question: our recommendation (the evidence skill in short answers that cite
+     and the constructed response) or her pairs, with one line on why (step 5a).
      **Familiar topic:** when a nonfiction topic is a well-known textbook example (otters and kelp for keystone species,
      g7-ela2), say a student could answer from what she already knows, and offer a less familiar case of the same idea
      (recommended) or her own text.
@@ -104,7 +112,7 @@ You make nothing and change nothing in the order.
   "whatWeWillMake": [ { "item", "count", "questions", "types", "choices", "versions", "levels", "pages|slides|days|lessons", "note" } ],
   "assumptions": [ "…each default we used, and why" ],
   "questions": [ { "id": "q1", "ask": "…", "options": ["A …", "B …"], "recommended": "A", "why": "…" } ],
-  "warnings": [ { "item", "kind": "tooMany" | "tooFew" | "outsideLimits" | "noSource" | "unreadable" | "gradeMismatch" | "tooLong",
+  "warnings": [ { "item", "kind": "tooMany" | "tooFew" | "outsideLimits" | "noSource" | "unreadable" | "gradeMismatch" | "tooLong" | "inTesting",
                   "asked", "feasible", "message" } ],
   "tokens": { "asked": 0, "recomputed": 0, "lines": [ { "item", "quantity", "tokensEach", "tokens" } ], "note": "" }
 }
@@ -125,7 +133,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 8** (Nov 7, 2026)
+**Version 9** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -152,3 +160,7 @@ You make nothing and change nothing in the order.
 - v8, Nov 7, 2026 (owner decision "D and 1-4", adopting docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 1): reading quizzes: recommend
   no multiple-choice Part A/Part B pairs (evidence in short answers that cite and the RACE); a teacher who asks for pairs
   gets a question with our recommendation (g7-ela2: the pairs were right without the passage in every probe round).
+- v9, Nov 7, 2026 (owner decision 1, Nov 7, 2026, after four ELA tries failed the fresh no-passage probe,
+  docs/audits/AUDIT-2026-11-07-ela-try-d.md): reading quizzes default to citing short answers plus a RACE, no multiple
+  choice; multiple choice on passages is "in testing": warn (`inTesting`) in the menu's words when she picks it or asks
+  for it, plan it with `readingquiz.mcInTesting`, and never claim it passes.

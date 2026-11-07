@@ -243,7 +243,7 @@
                 ],
                 "B": [
                   "Thaddeus Stevens",
-                  "Edwin Stanton",
+                  "Charles Sumner",
                   "Blanche K. Bruce",
                   "Oliver O. Howard"
                 ]
@@ -328,7 +328,7 @@
               "type": "mc",
               "prompt": {
                 "A": "What was the main goal of the Black Codes passed in 1865 and 1866?",
-                "B": "Which law is an example of the apprenticeship rules in the Black Codes?"
+                "B": "Which law is an example of the apprenticeship rules Southern legislatures passed for freedpeople in 1865–66?"
               },
               "choices": {
                 "A": [
@@ -466,7 +466,7 @@
                   "new immigrants arriving in Southern ports"
                 ],
                 "B": [
-                  "the Wade-Davis Bill",
+                  "the Freedmen's Bureau Act",
                   "the Tenure of Office Act",
                   "the Enforcement Acts",
                   "the Civil Rights Act of 1875"
@@ -501,7 +501,7 @@
                   "Freedpeople preferred wages and refused to farm.",
                   "Northern banks made planters divide every plantation into rental farms by 1867.",
                   "Most freedpeople had no land after pardons undid the land grants.",
-                  "The Black Codes required it in each state."
+                  "Congress required it in the Reconstruction Acts."
                 ]
               },
               "answer": {
@@ -525,7 +525,7 @@
               "choices": {
                 "A": [
                   "They led Johnson to send troops to guard Black voters.",
-                  "They pushed Southern states, one by one, to ratify the 14th.",
+                  "They convinced Johnson to sign the next Freedmen's Bureau bill.",
                   "They ended the Bureau's work in Louisiana and Tennessee.",
                   "They helped Republicans win in 1866, so Congress took control."
                 ],
@@ -559,12 +559,12 @@
                   "the Ku Klux Klan Act of 1871",
                   "the ratification of the 15th Amendment",
                   "the Panic of 1873",
-                  "the pocket veto of the Wade-Davis Bill"
+                  "the Tenure of Office Act of 1867"
                 ],
                 "B": [
                   "the Reconstruction Acts and Johnson's impeachment",
                   "the 15th Amendment and Grant's 1868 win",
-                  "the Enforcement Acts and the Klan trials of 1871",
+                  "the Memphis massacre and the Civil Rights Act of 1866",
                   "the 1873 depression and weariness with the South"
                 ]
               },
@@ -653,14 +653,14 @@
               "skill": "13th Amendment and the Black Codes",
               "type": "mc",
               "prompt": {
-                "A": "DOCUMENT 1 — Source: U.S. Constitution, 13th Amendment, Section 1 (ratified December 6, 1865). \"Neither slavery nor involuntary servitude, except as a punishment for crime whereof the party shall have been duly convicted, shall exist within the United States, or any place subject to their jurisdiction.\" Black Code lawmakers made \"vagrancy\" a crime. Why did the clause beginning \"except\" matter for those laws?",
+                "A": "DOCUMENT 1 — Source: a county court record (written for this test; not a real document), 1866. \"Henry Ames, freedman, found without a labor contract, was fined twenty dollars. Not able to pay, he is hired out for six months to Mr. Coles, who paid the fine.\" The record is dated 1866, after the 13th Amendment was ratified. How did the 13th Amendment itself leave room for a county to hire a man out like this?",
                 "B": "DOCUMENT 1 — Source: a county law (written for this test; not a real document), 1866. \"Any freedman found without a labor contract on the first day of January shall be taken up as a vagrant, fined fifty dollars, and, if he cannot pay, hired out to whoever pays the fine.\" Lawmakers claimed laws like this did not break the 13th Amendment. What were they relying on?"
               },
               "choices": {
                 "A": [
                   "It let states force people convicted of a crime to work.",
-                  "It let states keep slavery until 1870, if they paid owners.",
-                  "It let states pardon planters convicted of a crime against a worker.",
+                  "It let states keep forced labor until 1870, if they paid owners.",
+                  "It let county courts free planters convicted of harming a worker.",
                   "It let freedpeople, for the first time, sue employers."
                 ],
                 "B": [
@@ -675,7 +675,7 @@
                 "B": 2
               },
               "why": {
-                "A": "Forced labor stayed legal as punishment for a crime, so a vagrancy conviction could lead to being hired out.",
+                "A": "The 13th still allowed forced labor for people duly convicted, so a vagrancy conviction could lead to being hired out.",
                 "B": "The 13th allows involuntary servitude \"as a punishment for crime,\" so making joblessness a crime opened the door to forced labor."
               }
             },
@@ -825,7 +825,7 @@
                 ],
                 "B": [
                   "freedpeople left politics to Northern Republicans.",
-                  "Black Southerners were content with the Black Codes.",
+                  "Black Southerners were content with Johnson's plan.",
                   "freedpeople organized and made their own demands.",
                   "the Freedmen's Bureau wrote the convention's speeches."
                 ]
@@ -853,7 +853,7 @@
                   "the Reconstruction Acts setting up military districts in 1867",
                   "the Redeemers taking back Mississippi in 1875",
                   "the founding of the Freedmen's Bureau",
-                  "Hayes ending army protection for the last Republican governments"
+                  "Hayes ending army protection for Louisiana's Republican governor"
                 ],
                 "B": [
                   "the Ten Percent Plan",
@@ -1310,6 +1310,86 @@
           }
         ],
         "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 7,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-07T19:02:34.032Z",
+        "rows": 55,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 7,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-07T19:02:34.123Z",
+        "questions": 50,
+        "chance": 0.25,
+        "worst": [
+          [
+            "largest",
+            1
+          ],
+          [
+            "notVote",
+            0.27
+          ],
+          [
+            "absolute",
+            0.262
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Unit 5 Review Sheet: Reconstruction, 1865–1877",
+            "n": 6,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 A",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 B",
+            "n": 22,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "Unit 5 Test: Reconstruction, 1865–1877 (all versions)",
+            "n": 44,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 50,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "cross-item",
+        "round": 7,
+        "agent": "🤖 Wilco (cross-item check)",
+        "at": "2026-11-07T19:02:34.203Z",
+        "questions": 50,
+        "hits": [],
+        "pass": true
       }
     ],
     "blind": [
@@ -1615,6 +1695,116 @@
             "what": "New A ('still kept slavery') is false and plausible: Johnson's terms required ending slavery, and it is not a Black Codes choice, so it avoids round 4's warning. C ('joined the Republicans') is weak because a Republican Congress would not refuse Republicans, but it can still draw a student who mixes up the parties. That is acceptable at level 2."
           }
         ]
+      },
+      {
+        "round": 6,
+        "agent": "🙈 Blind tester (social studies), recheck",
+        "matched": 17,
+        "of": 17,
+        "byLevel": {
+          "L1": {
+            "items": 2,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L2": {
+            "items": 6,
+            "accuracy": 1,
+            "meanConfidence": 5,
+            "tooEasy": 0,
+            "steps": {
+              "B q5": 1,
+              "A q7": 1,
+              "B q8": 1,
+              "B q9": 1,
+              "B q20": 2,
+              "A q21": 2
+            },
+            "typicalStudent": "most get all six; B q8 and B q9 need recall of names, not reasoning"
+          },
+          "L3": {
+            "items": 9,
+            "accuracy": 1,
+            "meanConfidence": 4.7,
+            "tooEasy": 1,
+            "steps": {
+              "B q10": 2,
+              "A q11": 2,
+              "B q11": 2,
+              "A q12": 2,
+              "B q12": 2,
+              "A q13": 2,
+              "A q15": 2,
+              "A q19": 2,
+              "B q19": 1
+            },
+            "typicalStudent": "about half to two thirds right; each needs a cause-to-effect link or reading a document then applying a fact, except B q19 (one match)"
+          },
+          "note": "17 changed or linked items only, so this cannot check the test's overall L3 share (target 30–50%). Within the view, L3 is harder than L2 except B q19."
+        },
+        "findings": [
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q19",
+            "kind": "FIX",
+            "what": "Too easy for level 3, and easier than A q19. The made-up speech states Wade-Davis's defining rule (a majority must swear loyalty) almost word for word as the notes put it, so the item is one matching step. Direction: have the speaker show strictness without naming the rule (distrust of a few men saying they're sorry, wanting real proof of loyalty before readmission), so the student has to infer which plan fits. Keep the three lenient 1864 wrong choices. Facts to check: Wade-Davis required a majority of the state's white male citizens to swear an oath, not of '1860 voters' (see facts round 1 JUDGMENT)."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q21",
+            "kind": "JUDGMENT",
+            "what": "A q13's key (troops left two statehouses in 1877) describes the same event as this letter, in the same version. Round 6's rewording removed the shared words, so no answer text is repeated, but a student can still connect q13 to q21. Reading 1 (KEEP): the letter's April 1877 date alone rules out A, B and C, so q13 adds almost nothing, and having both a recall item and a document item on the unit's climax is normal. Reading 2 (FIX): move one of the two items to version B, or make q21's letter about a different event, so neither item helps with the other. I lean KEEP."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q13",
+            "kind": "KEEP",
+            "what": "My giveaway flag belongs to the A q13/q21 pair, decided as a JUDGMENT under A q21. The item itself is sound: the key matches Day 8, the other three choices are plausible, and there's no myth."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q15",
+            "kind": "JUDGMENT",
+            "what": "A q1's key (the 13th ended slavery except as punishment for a crime) is printed in the same version and points to q15's key. Reading 1 (KEEP): the notes make this clause the link on purpose, and q15 tests applying it to a court record (L1 recall, then L3 use). Reading 2 (FIX): move q1 or q15 to the other version, or test a different part of the 13th Amendment in q1, so q15 can't be solved by matching with q1."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 B q12",
+            "kind": "FIX",
+            "what": "Earlier round 1 finding on B q12 (its suggested wrong pair, the Enforcement Acts and the Klan trials, was used as written and printed B q9's key in the same version).",
+            "fixed": "Round 6 replaced choice C with the Memphis massacre and the Civil Rights Act of 1866. The pair is real (both 1866), clearly did not explain the mid-1870s fade, and no longer names B q9's key. No other B item in the view gives B q12 away. Blind solve: D, matched."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q21",
+            "kind": "FIX",
+            "what": "Earlier round 3 finding on the A q21 key (wording issue, last fixed in round 4).",
+            "fixed": "Round 6 changed the key to Hayes ending army protection for Louisiana's Republican governor, which no longer repeats q13's 'last Republican governments'. It is accurate (Day 8: troops withdrawn from the Louisiana statehouse, April 1877), avoids the 'last troops' myth, contains no 1877, and shares no distinctive word with the letter. Blind solve: D, matched. The leftover link to A q13 is the JUDGMENT above."
+          }
+        ]
+      },
+      {
+        "round": 7,
+        "agent": "🙈 Blind tester (social studies), recheck",
+        "matched": null,
+        "of": 2,
+        "findings": [
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q15",
+            "kind": "KEEP",
+            "what": "The new stem fixes the referent: 'the 13th Amendment itself' makes 'It' in every choice clearly the amendment. One right answer (A); B, C and D are false of the amendment's text. Dates fit the notes (ratified Dec 6, 1865; record 1866). The edit adds no new cue in the choices: all four start 'It let…' and A is not the only one that echoes the stem."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q15",
+            "kind": "JUDGMENT",
+            "what": "Cross-item cue and level. A q1's key (C) states the exception clause in almost the same words as q15's key (A), and q1 comes first. Reading 1: acceptable. q1 tests recall of the clause; q15 tests applying it to a document (seeing that a vagrancy fine is a criminal conviction). That is 2–3 steps, harder than q1, and still L3. Reading 2: once the stem names the 13th Amendment, q15 is close to 'match q1 C', which is about L2 for a typical student. If the teacher wants it firmly L3, possible direction: make one wrong choice also sound like a legal loophole the codes used (e.g. apprenticing minors, which the Black Codes did but the amendment does not mention). Facts to check: any new wrong choice must be false of the 13th Amendment's text."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q15",
+            "kind": "JUDGMENT",
+            "what": "Choice C (county courts freeing planters convicted of harming a worker) is implausible, and few students would pick it, so the item works like 3 choices. Optional: replace it with a wrong choice that sounds like a real amendment power, such as one taken from the 14th (citizenship) or 15th (voting). Facts to check: it must clearly not be in the 13th."
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q1",
+            "kind": "KEEP",
+            "what": "Unchanged. Key C is correct and it has one right answer. The only issue is the q15 link above."
+          }
+        ]
       }
     ],
     "facts": [
@@ -1768,6 +1958,47 @@
           }
         ],
         "confirmed": 7
+      },
+      {
+        "round": 6,
+        "agent": "🔎 Fact checker",
+        "claims": 28,
+        "flagged": 2,
+        "notes": "Fresh agent, round 6 recheck. 28 claims in the changed text (A q15 stem, key, wrong choices and why line; A q11 B; A q12 D; A q21 key; B q2 B; B q5 stem; B q9 A; B q10 D; B q12 C; B q20 B). 21 match the source, 5 are true but need a reference, 0 are off and 2 are judgment calls. Nothing is off, so no sweep was needed. A q15 key is back to 'convicted of a crime' (source l.27–29), and its why line matches. The invented 1866 record matches the notes (l.32–33: no contract → vagrancy fine → hired out if unable to pay), and it is labeled as invented. Each new wrong choice is false for a reason a student can learn, and none is true of a real case. A q11 B: Johnson vetoed every Freedmen's Bureau bill. The February 1866 veto was sustained, July 16, 1866 was overridden, and July 25, 1868 was overridden the same day, so he never signed a 'next' bill (notes l.49; Wikipedia 'Freedmen's Bureau bills'; UCSB American Presidency Project, veto message of July 25, 1868). A q12 D: the Tenure of Office Act passed over a veto on March 2, 1867 (reference). It is unrelated to the 1874 House. B q2 B: Sumner was a senator, not the Bureau's head (l.73). B q9 A: the Bureau act came in 1865 and was a relief agency, not an anti-Klan law (l.39). B q10 D: the Reconstruction Acts required new constitutions and the 14th, not sharecropping (l.70–72). B q12 C: Memphis (May 1866) and the Civil Rights Act (April 1866) built Republican strength (l.53–54, 65–67). B q20 B: freedmen's conventions demanded the vote, which Johnson's plan did not give (l.10, 21). A q21 key: Hayes ordered the troops at the New Orleans statehouse back to barracks in April 1877 (reference: Coakley, CMH 1988; Foner 1988, ch. 12). New Orleans was Louisiana's capital then. No troop myth appears in the new text. B q5 stem: Mississippi (Nov 1865) and South Carolina (Dec 1865) passed apprenticeship laws, and others followed in 1866 (National Constitution Center, 'Mississippi and South Carolina Black Codes (1865)'). Web search was used.",
+        "findings": [
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q15",
+            "kind": "JUDGMENT",
+            "what": "Every choice begins with 'It', but the stem's last sentence asks why the county could act and never names the amendment. The nearest singular nouns are 'the one [law] used here' and 'a man'. If a student reads 'It' as the county's vagrancy law, D ('let freedpeople, for the first time, sue employers') is partly true of a real case: Mississippi's 1865 code let freedmen 'sue and be sued' (source l.32: the Codes let freedpeople 'go to court in limited ways'). Read as the 13th Amendment, D is plainly false and A is the only right answer. Reading 1: the stem mentions the 13th Amendment just before, so students will take 'It' as the amendment. Keep it. Reading 2: make the referent explicit, for example by ending the stem with 'What in the 13th Amendment let a county still hire a man out like this?' This is a direction only. No new facts are added, and the key letter stays the same.",
+            "source": "Teacher notes l.26–33; Mississippi 'Act to confer civil rights on freedmen' (Nov. 1865), via National Constitution Center, Historic Document Library"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q15",
+            "kind": "JUDGMENT",
+            "what": "The stem says 'Laws like the one used here were passed after the 13th Amendment.' Every such law came after Congress passed the amendment (Jan. 31, 1865). But Mississippi's vagrancy act (Nov. 24, 1865) came before ratification (Dec. 6, 1865). South Carolina's code (Dec. 1865) and the 1866 laws came after it. Reading 1: true as written, so keep it. Reading 2: the stem dates the amendment to ratification elsewhere (A q1), so a precise student could object. If so, write 'after Congress passed the 13th Amendment'. This does not make any choice false.",
+            "source": "Teacher notes l.26, l.31; National Constitution Center, 'Mississippi and South Carolina Black Codes (1865)'"
+          },
+          {
+            "where": "Unit 5 Test: Reconstruction, 1865–1877 A q21",
+            "kind": "KEEP",
+            "what": "The new key 'Hayes ending army protection for Louisiana's Republican governor' is accurate. Stephen Packard, the Republican claimant, lost his government after the troops returned to barracks (April 24, 1877), and Democrat Francis Nicholls took control. Packard's title was disputed, but 'Republican governor' names the claimant the letter's 'our governor' means. It matches the why line and the A q13 key. It is not the troop myth."
+          }
+        ]
+      },
+      {
+        "round": 7,
+        "agent": "🔎 Fact checker",
+        "claims": 7,
+        "flagged": 0,
+        "notes": "Checked A q15 only: new stem, record, choices A–D, key A, why A. Stem: record dated 1866 is after ratification (Dec. 6, 1865): source, notes line 26. Key A and why A ('except as a punishment for crime whereof the party shall have been duly convicted'): source, notes lines 26–30; vagrancy fine then hire-out matches notes lines 31–33. B (forced labor until 1870, paid owners), C (free convicted planters), D (freedpeople sue for the first time) are false of the 13th Amendment: true reading is source, notes line 27 (Section 1 text, no compensation or delay). D is not true of a real 13th-Amendment provision; court access came from Black Codes/Civil Rights Act 1866, not the amendment, so D stays wrong for a learnable reason. No off claims, so no sweep needed. No web search used; the source covered every claim.",
+        "findings": [
+          {
+            "where": "A q15 stem + key",
+            "kind": "KEEP",
+            "what": "The record says Ames 'was fined', not 'convicted'. The key needs a conviction, and a fine imposed by a county court implies one, so it holds. Optional: 'was convicted of vagrancy and fined'.",
+            "source": "sources/reconstruction-unit-notes.md lines 26–33"
+          }
+        ]
       }
     ]
   },
@@ -2060,10 +2291,92 @@
       "minutes": null,
       "tokens": null,
       "cost": null
+    },
+    {
+      "at": "18:50",
+      "who": "📝 Maker",
+      "what": "Round 6 (owner, Nov 7, 2026: fix the 11 cross-item giveaways): changed the wrong choices of A q11, A q12, B q2, B q9, B q10, B q12, B q20, the stems of A q15 (an invented 1866 court record instead of the amendment text) and B q5, and reworded A q21's key (same answer, letter D) because \"the last Republican\" sat in both A q13's and A q21's keys; it also reworded A q15's key, which the lead restored (not needed)",
+      "minutes": 2.4,
+      "tokens": 1203799,
+      "cost": 0.95,
+      "round": 6
+    },
+    {
+      "at": "18:52",
+      "who": "🧭 Order lead",
+      "what": "Restored A q15's key to its earlier text (\"It let states force people convicted of a crime to work.\"); cross-item still 0 hits; keys and test-wise pass",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 6
+    },
+    {
+      "at": "18:55",
+      "who": "🙈 Blind tester (social studies), recheck 5",
+      "what": "Round 6, keyless: 17 changed and partner items, 17 of 17 matched; FIX B q19 too easy (unchanged text); JUDGMENT A q13/A q21 (same event in two items) and A q1/A q15; earlier B q12 and A q21 findings fixed",
+      "minutes": 2.6,
+      "tokens": 839121,
+      "cost": 1.38,
+      "round": 6
+    },
+    {
+      "at": "18:56",
+      "who": "🔎 Fact checker",
+      "what": "Round 6 recheck (web allowed): 28 claims in the changed text, 0 off, 2 JUDGMENT on A q15's stem (\"It\" unclear; Mississippi's vagrancy act came before ratification); A q21's new key accurate",
+      "minutes": 1.9,
+      "tokens": 886656,
+      "cost": 1,
+      "round": 6
+    },
+    {
+      "at": "18:59",
+      "who": "📝 Maker",
+      "what": "Round 7: A q15's stem only, so \"It\" plainly means the 13th Amendment and the date claim rests on the record's 1866 date",
+      "minutes": 0.8,
+      "tokens": 688026,
+      "cost": 0.45,
+      "round": 7
+    },
+    {
+      "at": "19:00",
+      "who": "🙈 Blind tester (social studies), recheck 6",
+      "what": "Round 7, keyless: A q15 and A q1, 2 of 2 matched; the stem fix KEEP; JUDGMENT A q1/A q15 link and a weak choice C",
+      "minutes": 0.7,
+      "tokens": 199537,
+      "cost": 0.31,
+      "round": 7
+    },
+    {
+      "at": "19:00",
+      "who": "🔎 Fact checker",
+      "what": "Round 7 recheck of A q15: 7 claims, 0 off",
+      "minutes": 0.8,
+      "tokens": 706559,
+      "cost": 0.4,
+      "round": 7
+    },
+    {
+      "at": "19:01",
+      "who": "🤖 Wilco",
+      "what": "Round 7: keys, test-wise bots and cross-item (0 hits, was 11) all pass",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 7
+    },
+    {
+      "at": "19:02",
+      "who": "🧭 Order lead",
+      "what": "Merged the round 6–7 entries and logged them (the lead wrote these rows from each session's own record; no reporter session); the sample leaves checks/cross-item-debt.json",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 7
     }
   ],
   "audit": {
     "notes": [
+      "Open after rounds 6–7 (cross-item fix, Nov 7, 2026): test B q19 is too easy for level 3 (the made-up speech states the Wade-Davis rule almost word for word; unchanged text, a blind FIX left for the owner); A q13 and A q21 both test the 1877 statehouse withdrawal, and A q1's key states the clause A q15 applies (JUDGMENT: the shared words are gone, the shared idea is not); A q21's key was reworded with the same answer, because no stem or wrong-choice change could separate the two keys (JUDGMENT for the owner).",
       "Open for the teacher after round 5: Review sheet p7 is still light for level 3 (the stem quotes 'No State shall' and a wrong choice is impossible on dates, so a student can reach the key without knowing Cruikshank). Test B q13 doesn't match A q13 and is easier (A asks about the Compromise's effect; B asks how the dispute was settled, and choice D is much shorter and draws few). Also for the teacher: review sheet p4 has the only choice with a quoted word ('vagrant'). Review sheet p10 asks students to pick between two causes (violence or the North losing interest), but the source's closing section and the sheet's BIG QUESTIONS #3 name three (violence, court rulings, the North); the rubric should say where court rulings count. The KNOW IT COLD boxes have coverage gaps: Wade-Davis's majority oath, the Stanton firing, the Klan's targets, Slaughterhouse (1873) and the 1,500 Black officeholders are tested but not in the boxes. Test B q21 presents the Compromise of 1877 as a bargain (Woodward); Peskin (1973) argues there wasn't one. The review sheet's Compromise line could say 'promised' before 'railroad aid', since the source says it was promised and the aid never came.",
       "The two round 3 open items fixed in round 4: Test A q21's key changed from 'Hayes pulling the last federal troops out of the South' (the myth) to 'Hayes ending army protection for the last Republican governments' (accurate and shares no distinctive word with the letter). The review sheet changed from 4 pages to 2 pages: the 8 KNOW IT COLD boxes became 2 (People and Terms and dates), the practice set went from 10 questions to 7 (p3, p5 and p9 cut), the 'troops leave' box line was fixed to say troops left the South Carolina and Louisiana statehouses (April), and the Electoral Commission line was added.",
       "The order: one studyguide (two pages at most, with a practice set) and one test (about 40% harder questions, A and B versions). Grade 11, U.S. History, Reconstruction 1865–1877. The maker wrote 10 practice questions and 24 test questions per version (58 scored items total). The tests are 42% level 3 (10 of 24), on target.",

@@ -81,7 +81,14 @@ work; fresh agents and Wilco's bots do.
 g7-ela: fresh testers answered 20 of 20 without the passages; g7-ela2, remade under the first rules, still got 10, 8 and
 9 of 10 (version A) through three rounds. The leaks that were left: four Part A/Part B pairs printed 16 real sentences
 that retold the story; the reader matched quotes to choices one-to-one; a textbook topic (otters and kelp) answered
-from general knowledge. So:
+from general knowledge. Four tries at multiple choice on passages still failed the fresh probe (g7-ela2 try d: A 4,
+B 7 of 8), so:
+0. **Short answers and RACE by default; multiple choice only "in testing"** (owner, Nov 7, 2026). A reading quiz is
+   citing short answers (a claim plus a quote or a paragraph-specific detail, rule 4) and a RACE response, with no
+   multiple choice, unless `onboarding.json` or the teacher's answer says she picked "multiple choice on passages (in
+   testing)". Then the multiple-choice rules below apply in full (at least 8 a version, rules 1–8), and your hand-off
+   says the version's multiple choice is in testing; never write that it passed. Rules 1–3 and 6–8 apply to short
+   answers too: each needs the passage to earn more than half its credit.
 1. **Plan the passage and the questions together (passage-first design).** Before writing the passage, list each
    question's skill, its key reading and **2–3 rival readings a careless reader of this passage would make**; write the
    passage so details support each rival reading (a red herring per inference question, a character's mistaken belief
@@ -90,7 +97,11 @@ from general knowledge. So:
    backed rival, never the key (g7-ela2 remake: A q1 was the genre's default, r3 and final). **The same goes for the
    story's turn:** the change the story type predicts (the shy pet warms up, the kid proves he's ready) is a rival; the
    key is a feeling, reason or realization the default gets wrong, seen only in this story's details (g7-ela2 try c: A
-   q1 and A q2 the type's default in every round).
+   q1 and A q2 the type's default in every round). **A reused passage that keeps drawing `type` cues gets a new turn,
+   not just new items:** when the probe tags a `type` cue on a story that was already used in an earlier round or try,
+   rewrite the story's turn (what changes and why) so the type's default is wrong, then re-plan the items on it
+   (docs/audits/AUDIT-2026-11-07-ela-try-d.md proposal 2, adopted Nov 7, 2026: try d reused try c's shy-pet story and
+   B's type cues came back in round 3).
 2. **Unfamiliar topics.** Fiction: invented people, places and events, nothing a student could know. Nonfiction: a
    case or angle a grade-level student won't know (a little-known place, study or person), not the textbook example of
    the idea (keystone species → otters and kelp); when the teacher's notes name the familiar example, use a less
@@ -98,7 +109,7 @@ from general knowledge. So:
    happened, in what order, why this author says so), never a fact general knowledge answers. **A word-in-context item
    uses a word the passage uses in a less common sense, and all four choices are real senses that fit the sentence**; if
    no such word exists, ask it as a short answer (g7-ela2 remake: "cropped", "living", "slip" answered from everyday
-   use, 6 probe hits in 4 rounds). **When that turns a multiple-choice item into a short answer, add another
+   use, 6 probe hits in 4 rounds). **In-testing multiple choice: when that turns a multiple-choice item into a short answer, add another
    multiple-choice item** (another skill from the teacher's list, planned passage-first like the rest) **so each version
    keeps at least 8 multiple choice**: the probe's line needs 8 or more to tell reading from luck (`agents/blind-ela.md`,
    mode 1; g7-ela2 round 4 fell to 7). Say the mc and short-answer counts per version in your hand-off.
@@ -163,7 +174,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 7** (Nov 7, 2026)
+**Version 8** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -199,3 +210,7 @@ have it) and the number of questions per document.
   each other: 11, 8, 12 of the probe's right answers); a FIX round re-checks the whole version (fixes moved clues, A
   8 → 9); every wrong choice ruled out by the passage (fact FIX all three rounds); the story's turn is never the type's
   default (A q1, A q2). Maker v6's at least 8 mc a version stays.
+- v8, Nov 7, 2026 (owner decisions 1 and 3, Nov 7, 2026, after four ELA tries failed the fresh no-passage probe;
+  docs/audits/AUDIT-2026-11-07-ela-try-d.md): reading rule 0, short answers and RACE by default, multiple choice on
+  passages only when the teacher picked the in-testing option, and never called passing; a reused story that keeps
+  drawing `type` cues gets a new turn, not just new items (try d proposal 2: B's type cues came back on try c's story).

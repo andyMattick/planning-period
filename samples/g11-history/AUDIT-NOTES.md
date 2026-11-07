@@ -101,3 +101,41 @@ Lincoln's Second Inaugural, Douglass in May 1865) were confirmed word for word. 
 - `reporter.md`: use the measured session duration, not the agent's own guess.
 - `PACK-FORMAT.md`: add a study guide "know" block (bullets, not bold) that the student view also prints.
 - `PRICING.md`: the study guide plus test came to $9.85 in agent cost against a 95-token ($9.50) budget, before the lead's time. Keep watching the `test` price.
+
+## Rounds 6–7: the cross-item giveaways (owner decision 2, Nov 7, 2026; written by the order lead)
+
+`checks/cross-item.mjs` came in after this sample was finished and found **11 hits**: an item's key printed in another
+item of the same version (A q1 in A q15, A q7 in A q11, A q13 and A q21 in each other, A q19 in A q12; B q8 in B q2, B q9
+in B q12, B q11 in B q5, B q10 and B q20, B q19 in B q9). Same separation as before: each role a fresh `claude -p`
+session in its own folder; costs are each session's own record.
+
+| Step | Who | Result | Cost |
+|---|---|---|---|
+| Round 6 maker (cap $2.50) | fresh maker, FIX list only | changed 7 wrong choices (A q11, A q12, B q2, B q9, B q10, B q12, B q20), 2 stems (A q15: an invented 1866 court record in place of the amendment's text; B q5: "the apprenticeship rules Southern legislatures passed for freedpeople in 1865–66"); reworded 2 keys (below); cross-item 11 → 0 | $0.95 |
+| Lead | | restored A q15's key to its old text: the reword wasn't needed (cross-item stays at 0) | not measured |
+| Round 6 blind recheck (keyless, then scored) | fresh blind tester, 17 changed and partner items | 17 of 17 matched; FIX B q19 too easy for L3 (unchanged text); JUDGMENT A q13/A q21 and A q1/A q15; earlier B q12 and A q21 findings confirmed fixed | $1.39 |
+| Round 6 fact recheck (web allowed) | fresh fact checker | 28 claims, 0 off; 2 JUDGMENT on A q15's new stem ("It" unclear; "laws like this were passed after the 13th" is not true of Mississippi's Nov. 1865 act) | $1.00 |
+| Round 7 maker (cap $0.80) | fresh maker, A q15's stem only | "The record is dated 1866, after the 13th Amendment was ratified. How did the 13th Amendment itself leave room…" | $0.45 |
+| Round 7 blind and fact rechecks | two fresh sessions | A q15: KEEP (the stem fix works), 2 of 2 matched; 7 claims, 0 off | $0.31 + $0.40 |
+| Wilco | scripts | keys, test-wise and cross-item pass (round 7) | — |
+| **Total** | | under the $6 cap | **$4.49** |
+
+**One key's wording changed, with the same answer (for the owner).** A q13's key ("…the last Republican governments
+fell") and A q21's key ("…army protection for the last Republican governments") printed each other's phrase, so no
+stem or wrong-choice change could pass the check. The round 6 maker reworded A q21's key to "Hayes ending army
+protection for Louisiana's Republican governor" (still D, the same event; the fact checker confirmed it: Packard's
+government fell after the troops left the statehouse on April 24, 1877). The answer did not change; the words did. It
+is flagged here and in `audit.notes` rather than passed off as a wrong-choice fix.
+
+**Open, listed first in `audit.notes`:** B q19 too easy for L3 (a FIX on text nobody changed in this round); the shared
+*idea* (not words) between A q13 and A q21, and between A q1 and A q15 (JUDGMENT: the cross-item check is satisfied, the
+blind tester can still link them). Lesson for the auditor: the cross-item check catches shared words; a fresh blind
+reader is what catches two items on the same event.
+
+No outputs are committed for this sample (only `pack.json`); the preview renders (the same page counts as before).
+
+**Owner decision, Nov 7, 2026 (one-time exception to rule 5):** A q21's key was reworded in round 6 ("Hayes ending army
+protection for Louisiana's Republican governor": same letter, same event, fact-checked) because it shared "the last
+Republican" with A q13's key and no stem or wrong-choice change could clear the cross-item check. The owner accepted it as
+a one-time exception. The rule stands: fix wrong choices, never keys, to pass a check; the next case gets a new question
+on the same skill instead.

@@ -5,7 +5,8 @@ budgets, what the checkers caught, every brief change and why, price recommendat
 
 - [AUDIT-2026-11-07-ela-try-d.md](AUDIT-2026-11-07-ela-try-d.md): g7-ela2 "try d" (no mc pairs, cross-item check;
   proposals only): $12.63 of $16.50, gate still open (A 4, B 7 of 8); item cues about halved; proposals: probes name
-  every right item, rewrite a reused story's turn, blind solve after round 1, two final probes per version.
+  every right item, rewrite a reused story's turn, blind solve after round 1, two final probes per version. **Adopted Nov 7, 2026** (1, 2, 3, 4, 6), with reading quizzes sold as short answer + RACE and passage
+  multiple choice "in testing".
 - [AUDIT-2026-11-07-ela-try-c.md](AUDIT-2026-11-07-ela-try-c.md): g7-ela2 "try c" (invented article, 8+ mc a version; proposals 1, 2, 4, 5 adopted;
   proposals only): $13.50 of $16.50, gate still open (A 9, B 5 of 10); topic cues gone, items answering each other the
   main leak; proposals: drop the mc pairs, a scripted cross-item check, 8 mc, whole-version fix lists.

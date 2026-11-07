@@ -14,8 +14,10 @@ doesn't test reading.
   passages, the other version, the key or an earlier draft of this quiz. The lead scores it
   (`checks/score-blind.mjs`, one version's lines) and writes your entry from your notes, so you need no second session.
 - **When.** Round 1, after the maker's checks (with `checks/no-passage.mjs`) exit 0 and before any other checker; again
-  on the changed reading items in every later round; and **once more on every whole version just before the preview**
-  (a fix to one item can let an unchanged item leak: g7-ela2's pairs).
+  on the changed reading items in every later round; and **twice more on every whole version just before the preview**,
+  in two fresh sessions per version (a fix to one item can let an unchanged item leak: g7-ela2's pairs). The lead uses
+  both scores: **the version fails if either run fails**, and the two are never averaged (docs/audits/AUDIT-2026-11-07-ela-try-d.md
+  proposal 4, adopted Nov 7, 2026: at 8 items chance alone reaches the line 11–26% of the time, so one run is noisy).
 1. You get **one version's questions only** (`student-view.mjs --no-passages --only …`): no passages, no key.
 2. Answer every item as a test-wise student would, from the stems, the choices and the other items. Multiple choice:
    one JSON line each (`{"where", "answer", "confidence", "note"}`; in `note`, the cue you used: a stem word, another
@@ -23,13 +25,16 @@ doesn't test reading.
    **Tag every cue** with one of `topic` (general knowledge of the subject), `word` (a word's everyday meaning),
    `item` (another item), `type` (the story or article type's usual reading), `sounds` (the key sounds right) or
    `guess`, as `"cue"` in the line; the lead logs the split per version (g7-ela2 remake: is the probe's world knowledge
-   what fails a quiz? Two orders of tags decide).
+   what fails a quiz? Two orders of tags decide). **Every item the probe got right is named, with its cue tag, at any
+   confidence**: tag every line (a guess is `guess`), and the entry the lead writes after scoring lists each right item
+   with its cue (try d proposal 1, adopted Nov 7, 2026: three failing probes named no items, so the maker had nothing to fix).
    **Short answers:** write the answer you'd give without the passage.
 3. **The line (a version fails on any one):**
    - **Multiple choice right more than chance + 15 points**: with 4 choices, more than 40% (6 or 7 mc: 3 right fails;
      8–9: 4 fails; 10–12: 5 fails). Part A and Part B count as two items.
    - **A short answer earning more than half its credit** without the passage (the lead scores it against its `accept`
-     and `why`).
+     and `why`). This is the whole line for a version with no multiple choice, the default reading quiz since Nov 7,
+     2026 (citing short answers and a RACE); multiple choice on passages is "in testing" (`agents/maker.md` reading rule 0).
    - Every item you got right at confidence 4–5 from a cue you can name is a FIX, pass or fail.
    Why 15 points: it is Pet World's margin for a model-run check (the scripted bots, which are exact, get 10), and it
    is where the owner's line already sat (25% + 15 = 40%). A probe that only guesses clears it 89% of the time on 8 items
@@ -133,11 +138,12 @@ fixed (no separate "confirmed" list: g8-science's reporter lost 6 that way); a p
 with `"sameAs": {"check", "round", "where"}` naming the earlier one. **Write the entry to a file**
 (`checks-blind-r<N>.json` in your folder); the lead merges it, since other checkers run at the same time (g11-history).
 A probe (mode 1) writes its own entry the same way, with `"agent": "🙈 No-passage probe (ELA)"`, `passageFree` for its
-one version, `"gate": "pass" | "fail"`, and a FIX per item it got right at confidence 4–5 from a cue it can name. Never edit `documents`. The
+one version, `"gate": "pass" | "fail"`, a FIX per item it got right at confidence 4–5 from a cue it can name, and a finding naming
+every other item it got right with its cue tag (any confidence; try d proposal 1). Never edit `documents`. The
 reporter takes your minutes from your session's record, not from your estimate.
 
 ---
-**Version 5** (Nov 7, 2026)
+**Version 6** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's blind review (`docs/BLIND-REVIEW.md` steps 2–4) and the traps its
@@ -161,3 +167,7 @@ reporter takes your minutes from your session's record, not from your estimate.
 - v5, Nov 7, 2026 (owner decision "D and 1-4", adopting docs/audits/AUDIT-2026-11-07-ela-try-c.md proposals 1 and 5): a multiple-choice
   Part A/Part B pair is FIX unless the plan records the teacher's choice; a wrong choice the passage doesn't rule out
   is FIX (g7-ela2 try c: pairs right without the passage every round; fact FIX on unrefuted choices every round).
+- v6, Nov 7, 2026 (owner decisions 1 and 3, Nov 7, 2026; docs/audits/AUDIT-2026-11-07-ela-try-d.md proposals 1 and 4,
+  adopted): two fresh final probes per version before the preview, failing if either fails (never averaged); every item
+  a probe got right is named in its entry with its cue, at any confidence; a version with no multiple choice
+  (the default reading quiz now: short answers and RACE) is judged on its short answers alone.

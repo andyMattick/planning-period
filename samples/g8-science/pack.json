@@ -988,8 +988,8 @@
               "skill": "balanced means atoms, not molecules",
               "type": "open",
               "prompt": {
-                "A": "2H₂ + O₂ → 2H₂O has 3 molecules on the left and 2 on the right. Marcus says it can't be balanced. Is he right? Use a counting table to explain.",
-                "B": "N₂ + 3H₂ → 2NH₃ has 4 molecules on the left and 2 on the right. Lena says it can't be balanced. Is she right? Use a counting table to explain."
+                "A": "2H₂ + O₂ → 2H₂O has 3 molecules on the reactant side and 2 on the product side. Marcus says it can't be balanced. Is he right? Use a counting table to explain.",
+                "B": "N₂ + 3H₂ → 2NH₃ has 4 molecules on the reactant side and 2 on the product side. Lena says it can't be balanced. Is she right? Use a counting table to explain."
               },
               "answer": {
                 "A": "No. Balanced means the same number of atoms of each element, not the same number of molecules. H: 4 on the reactant side, 4 on the product side. O: 2 and 2. Every row matches, so it is balanced.",
@@ -1415,6 +1415,93 @@
           }
         ],
         "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 5,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-07T19:02:34.251Z",
+        "rows": 54,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 5,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-07T19:02:34.328Z",
+        "questions": 14,
+        "chance": 0.25,
+        "worst": [
+          [
+            "absolute",
+            0.286
+          ],
+          [
+            "posC",
+            0.286
+          ],
+          [
+            "posD",
+            0.286
+          ]
+        ],
+        "groups": [
+          {
+            "group": "Guided Notes: Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions and Conservation of Mass",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz A",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz B",
+            "n": 7,
+            "chance": 0.25,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "Chemical Reactions Quiz (all versions)",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 14,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "cross-item",
+        "round": 5,
+        "agent": "🤖 Wilco (cross-item check)",
+        "at": "2026-11-07T19:02:34.388Z",
+        "questions": 14,
+        "hits": [],
+        "pass": true
       }
     ],
     "blind": [
@@ -1742,6 +1829,50 @@
             "what": "Now a real L3, with no flags and no mismatch. It is the same skill, level and shape as A q8 (an MCl3 equation, one coefficient given, 2 and 3 to find), and the key sits at a different letter. B is no easier, perhaps slightly harder, since the given 2 is on the reactant side. The key, the why line and the wrong choices all check out: Cl-only, the Fe2Cl2 subscript trap, and swapped coefficients. No twins, no two-right, no cue. For the teacher: A's fourth wrong choice is 'Cl total as the coefficient' while B's is 'swapped coefficients'. Reading 1: both are real errors, so the forms stay parallel enough (my recommendation: keep). Reading 2: for strict parallel forms, make B's version a 6Cl2 choice like A's."
           }
         ]
+      },
+      {
+        "round": 5,
+        "agent": "🙈 Blind tester (science), recheck",
+        "matched": 4,
+        "of": 4,
+        "note": "q8 A/B auto-scored 2 of 2. q10 A/B judged by hand: both of my written answers agree with the model answers (verdict 'no', atoms not molecules, the same row counts), so 4 of 4.",
+        "byLevel": {
+          "L3": {
+            "items": 4,
+            "blindAccuracy": "100%",
+            "meanConfidence": 5,
+            "tooEasy": 2,
+            "steps": {
+              "A q8": "about 4 (count both rows, find 2 coefficients, recount); a typical grade 8 student would mostly get it",
+              "B q8": "about 4, same shape; a typical student would mostly get it",
+              "A q10": "about 3 (count H, count O, compare), on an equation and misconception the notes work out; nearly every student would get it",
+              "B q10": "about 3, on the guided notes' own n28 equation and table; nearly every student would get it"
+            },
+            "verdict": "q8 is a real L3. q10 is recall in both versions, so it is not clearly harder than the L2 items."
+          }
+        },
+        "findings": [
+          {
+            "where": "Chemical Reactions Quiz A q10",
+            "kind": "FIX",
+            "what": "No giveaway left: the reworded stem shares nothing with q8's key in either direction. But it is too easy for L3, because it is recall: 2H₂ + O₂ → 2H₂O is the notes' board example, guided notes n10 and the first practice line, and the notes' common-mistakes list makes this exact molecule-count point about this exact equation. Direction: keep the skill (atoms, not molecules) but use an already-balanced equation the notes and guided notes don't use, with fewer molecules on the product side, and change A and B together. Facts to check: whatever equation is chosen is balanced, real, and not in the notes or guided notes (e.g. 2CO + O₂ → 2CO₂ might fit). Another option: relabel q10 as L2. Each version would then have 3 of 10 L3 (30%), which still meets the quiz rule of at least 1 in 4, but it undoes the round 1 level-mix fix, so the lead should weigh it."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q10",
+            "kind": "FIX",
+            "what": "Same problem as A q10, but worse: N₂ + 3H₂ → 2NH₃ is a practice line in the notes and the whole of guided notes n28 (balance it and fill in the counting table), so students have already done the counting. The molecule-count misconception is also in the notes' common-mistakes list. Direction: swap in an unpracticed, already-balanced equation, parallel to whatever A gets. Facts to check: it is balanced, real, not in the notes or guided notes, and the stem's molecule counts are right (e.g. 4Al + 3O₂ → 2Al₂O₃ might fit, but it would bring Al into B while A q8 uses Al, so check that). A and B are also not equally hard right now (A's equation is the notes' worked example of the misconception), so redo both together."
+          },
+          {
+            "where": "Chemical Reactions Quiz A q8",
+            "kind": "KEEP",
+            "what": "Matched the key (B) with confidence 5. One right answer, no twin choices, no cue. It doesn't give away q10 and q10 doesn't give it away. A fair L3."
+          },
+          {
+            "where": "Chemical Reactions Quiz B q8",
+            "kind": "KEEP",
+            "what": "Matched the key (D) with confidence 5. Parallel to A q8 with the key at a different letter. No twins, no two-right answers, no cross-item giveaway."
+          }
+        ]
       }
     ],
     "facts": [
@@ -2037,6 +2168,27 @@
             "kind": "JUDGMENT",
             "what": "Not a fact error. It is for the order lead to confirm, if this is not already intended. q8 is an mc item, but it sits under 'Part 3 · Explain it' with the directions 'Write in complete sentences.' The student copy's header also says 'For the last part, write in complete sentences.' A student may not know whether to circle a letter or write.",
             "source": "pack.json section heading/directions for q8"
+          }
+        ]
+      },
+      {
+        "round": 5,
+        "agent": "🔎 Fact checker",
+        "claims": 14,
+        "flagged": 0,
+        "notes": "Recheck of the q10 stems changed in A and B (CHANGES.md r5) and their unchanged model answers and why lines. Claims: A equation balanced (H 4/4, O 2/2); A molecule counts 3 reactant (2H₂ + O₂) and 2 product (2H₂O); B equation balanced (N 2/2, H 6/6); B counts 4 reactant (N₂ + 3H₂) and 2 product (2NH₃); every species named is a molecule (H₂, O₂, H₂O, N₂, H₂, NH₃), so 'molecules' is right; 'reactant side'/'product side' is the source's own wording (sources/unit4-lesson3-notes.md:35, the counting-table headings) and correct for left/right of the arrow; answer 'No' is correct for both (balanced = same atoms of each element, not same molecules: source); model-answer tables (A H 4/4, O 2/2; B N 2/2, H 6/6) correct; A and B why lines match. Nothing marked off, so no sweep finding. Elsewhere the slide notes (pack.json:630, :676) still say '3 molecules on the left and 2 on the right'; that is true and is teacher-facing, not a quiz stem, so no fact issue. No web reference needed: all facts are in the source or checked by atom count.",
+        "findings": [
+          {
+            "where": "Chemical Reactions Quiz A q10 prompt + answer",
+            "kind": "KEEP",
+            "what": "2H₂ + O₂ → 2H₂O: 3 molecules reactant side, 2 product side; H 4/4, O 2/2, balanced; 'No' is correct.",
+            "source": "sources/unit4-lesson3-notes.md:35 (counting table wording); atom count"
+          },
+          {
+            "where": "Chemical Reactions Quiz B q10 prompt + answer",
+            "kind": "KEEP",
+            "what": "N₂ + 3H₂ → 2NH₃: 4 molecules reactant side, 2 product side; N 2/2, H 6/6, balanced; 'No' is correct.",
+            "source": "sources/unit4-lesson3-notes.md:35 (counting table wording); atom count"
           }
         ]
       }
@@ -2366,10 +2518,56 @@
       "tokens": null,
       "cost": null,
       "round": "preview"
+    },
+    {
+      "at": "18:50",
+      "who": "📝 Maker",
+      "what": "Round 5 (owner, Nov 7, 2026: fix the cross-item giveaway): q10's stem in A and B now says \"reactant side\"/\"product side\" instead of \"left\"/\"right\", which B q8's key uses",
+      "minutes": 0.7,
+      "tokens": 660266,
+      "cost": 0.45,
+      "round": 5
+    },
+    {
+      "at": "18:55",
+      "who": "🙈 Blind tester (science), recheck",
+      "what": "Round 5, keyless: q8 and q10 in A and B, 4 of 4 matched; no giveaway left; FIX A q10 and B q10 too easy for level 3 (both equations are practised in the notes; unchanged text)",
+      "minutes": 1.4,
+      "tokens": 512850,
+      "cost": 0.88,
+      "round": 5
+    },
+    {
+      "at": "18:56",
+      "who": "🔎 Fact checker, recheck",
+      "what": "Round 5: 14 claims in the changed stems and their model answers, 0 off",
+      "minutes": 0.4,
+      "tokens": 275772,
+      "cost": 0.26,
+      "round": 5
+    },
+    {
+      "at": "19:01",
+      "who": "🤖 Wilco (keys)",
+      "what": "Round 5: keys, test-wise bots and cross-item (0 hits, was 1) all pass",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 5
+    },
+    {
+      "at": "19:02",
+      "who": "Order lead",
+      "what": "Merged the round 5 entries and logged them from each session's own record (no reporter session); the sample leaves checks/cross-item-debt.json",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 5
     }
   ],
   "audit": {
     "notes": [
+      "Open after round 5 (cross-item fix, Nov 7, 2026): quiz q10 (A and B) is too easy for level 3: both equations are practised in the notes (blind FIX on unchanged text, left for the owner; agents/maker.md rule 3).",
       "Pack: guided notes (34 items in 6 sections), lesson slides (9 + title, no student items), quiz (10 questions each in versions A and B). Total student-copy items: 54 (notes 34, quiz A 10, quiz B 10). MC items in the quiz: 14 (7 per version, q1–q5, q7, q8).",
       "Round 1 — Maker (6.1 min, 2,244,567 tokens, $2.024 exact): wrote all three documents. The lead ran Wilco on the 14 MC items: keys passed (54 rows, 0 errors), test-wise passed (worst middle bot 32% vs chance 25%, line 35%). The lead also noticed from a preview render that quiz q4 choices like '2 Ca, 4 O, 4 H' wrapped mid-choice in the 4-column layout and flagged it as a layout fix (not measured).",
       "Round 1 — Blind tester (1.9 + 0.7 = 2.6 min, 678,791 tokens, $0.866 exact): answered all 54 items without the key, then scored; matched 54 of 54 (all 10 open items agreed by hand). Findings: 6 FIX, 1 JUDGMENT, 2 KEEP. FIX: n33 giveaway/weight word ('gets heavier'); A q8 too easy for L3, not parallel to B q8; L3 share only 30% (3 of 10); B q9 weight language ('is heavier'); n2 missing reversed accept forms; n20 missing 'all the atoms'. JUDGMENT: A q7 key may cue test-wise student. KEEP: B q1 order cue unavoidable at L1; n4 'somewhere' is teacher's own phrase.",

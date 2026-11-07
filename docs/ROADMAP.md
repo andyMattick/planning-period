@@ -2,6 +2,21 @@
 
 Ideas the owner asked for, in his words, with what's planned. Newest first.
 
+## Reading quizzes: short answer + RACE; multiple choice on passages "in testing" (owner, Nov 7, 2026)
+- **Owner:** after four ELA tries (g7-ela2 remake, tries c and d) failed the fresh no-passage probe, reading quizzes are
+  sold as citing short answers plus a RACE response until a passage-based multiple-choice version passes.
+- **Done:** `menu.json` (the item's text and an option the teacher sees: "Multiple choice on passages is in testing: our
+  checks can still sometimes answer it without reading. Short answers and RACE are fully checked."), `feasibility.json`
+  (default 6 short answers + 1 RACE a version; `mcInTesting` for the option), the order page (a Yes/No field with that
+  warning), onboarding v9 (warns in those words), maker v8, blind-ela v6, docs/FEASIBILITY.md, docs/PRICING.md (150 kept).
+  We make no claim that it passes: try d's final probes were A 4 and B 7 of 8 (`docs/audits/AUDIT-2026-11-07-ela-try-d.md`).
+- **What lets multiple choice graduate:** one reading sample whose every version passes **two fresh final no-passage
+  probes** (the runbook's step 4a line, chance + 15 points; a version fails if either run fails, never averaged), with
+  the keyless blind solve and the fact recheck of its last round's fixes clean. Then the owner decides whether to drop
+  "in testing" and make multiple choice an ordinary option again.
+- **Status:** in testing. g7-ela2 stays hidden from the Samples page and on `checks/cross-item-debt.json` until a later
+  attempt passes.
+
 ## Say or type what you want; the onboarding agent does the rest (owner, Nov 5, 2026)
 - **Owner:** "can we add a feature that a person speaks or types what they want and the onboard person takes all the info they share, asks questions for the rest?"
 - **Step 1 (no server):** a "Tell us in your own words" box at the top of the order page with a 🎤 button (the browser's own dictation, Web Speech API, on the device; typing always works). The text goes in order.json as `ownWords`. The onboarding agent reads it first, fills grade, subject, items, numbers, due date and requests from it, shows "here's what we understood", and its follow-up asks only for what's missing (still at most 3 questions). The menu stays for people who prefer it. About 30–45 min, $5–10.

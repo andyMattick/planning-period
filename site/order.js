@@ -442,7 +442,7 @@
     var defaults = (feas && feas.defaults) || {}, limits = (feas && feas.limits) || {};
     var tmpl = (feas && feas.messages && feas.messages.defaultUsed) || 'If you leave this blank, we\'ll use: {default}.';
     box.innerHTML = ids.length ? ids.map(function (id) {
-      var spec = picked[id].spec = picked[id].spec || {}, d = defaults[id], fields = PPFeas.SPECS[id] || [];
+      var spec = picked[id].spec = picked[id].spec || {}, d = defaults[id], fields = (PPFeas.SPECS[id] || []).concat(optionFields(id));
       var def = PPFeas.defaultText(id, d);
       return '<div class="item-spec req" data-item-spec="' + esc(id) + '"><h3>' + esc(itemById(id).label) +
         (picked[id].qty > 1 ? ' <span class="muted">× ' + picked[id].qty + '</span>' : '') + '</h3>' +
@@ -454,8 +454,16 @@
     }).join('') : '<p class="muted small">Pick something in step 3 to tell us the details for that item.</p>';
     renderFeas();
   }
+  // A menu item's options (menu.json items[].options): a Yes/No choice each; one marked "testing" shows its note as a
+  // warning when picked (owner, Nov 7, 2026: multiple choice on reading passages is in testing).
+  function optionFields(id) {
+    return ((itemById(id) || {}).options || []).map(function (o) {
+      return { key: o.id, label: o.label, type: 'select', options: [['', 'No'], [o.status || 'yes', 'Yes']] };
+    });
+  }
   function notesHTML(id, spec, lim) {
     var notes = PPFeas.limitNotes(id, spec, lim);
+    ((itemById(id) || {}).options || []).forEach(function (o) { if (spec && spec[o.id] && o.note) notes.push(o.note); });
     return notes.map(function (n) { return '<p class="warn small">' + esc(n) + '</p>'; }).join('');
   }
   $('item-requests').addEventListener('input', function (e) {

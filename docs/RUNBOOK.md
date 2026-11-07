@@ -113,14 +113,22 @@ or an earlier draft. It gets that version's questions only:
 node $REPO/checks/student-view.mjs "$WORK/pack.json" --no-passages --only "<every where in version A, | between>" --out "$WORK/probe-A.md"
 node $REPO/checks/score-blind.mjs "$WORK/pack.json" "$WORK/probe-A.jsonl"     # the lead scores it; the same for B
 ```
-**A version fails** when its multiple choice is right **more than chance + 15 points** (4 choices: more than 40%; 10 mc:
-5 fails, 8 mc: 4 fails) or a short answer earns more than half its credit without the passage (the lead scores short
-answers against `accept` and `why`). Why that line, and why it is never raised: `agents/blind-ela.md`, mode 1. A fail goes
+**A version fails** when a short answer earns more than half its credit without the passage (the lead scores short
+answers against `accept` and `why`) or, when the teacher picked the in-testing multiple choice (owner, Nov 7, 2026: a
+reading quiz is citing short answers and a RACE by default), its multiple choice is right **more than chance + 15
+points** (4 choices: more than 40%; 10 mc: 5 fails, 8 mc: 4 fails). The lead's probe entry names every item the probe
+got right with its cue tag, at any confidence (`agents/blind-ela.md`; docs/audits/AUDIT-2026-11-07-ela-try-d.md proposal 1). Why that line, and why it is never raised: `agents/blind-ela.md`, mode 1. A fail goes
 back to the maker (a redesign in round 1, a FIX round after) to fix the questions, never the key; then the probe again
-on new fresh sessions. Steps 5–7 start only on a draft that passed, with one exception: **a nonfiction passage the maker
+on new fresh sessions. **A reused passage whose probe tags a `type` cue:** the FIX list asks for a new turn for the
+story, not only new items (`agents/maker.md` reading rule 1; try d proposal 2, adopted Nov 7, 2026). Steps 6–7 start
+only on a draft that passed, with two exceptions. **The keyless blind solve (step 5) runs after round 1 whether or not
+the gate passed**, so its findings (two right answers, guessable keys, wrong levels) join round 2's FIX list instead of
+arriving in round 3 with no round left (try d proposal 3, adopted Nov 7, 2026; the same cost, earlier). And **a nonfiction passage the maker
 means to keep gets the fact checker in round 1, alongside the gate** (g7-ela2: three failed gates left the article's
-claims unchecked). The probes run again on changed reading items every round, and on **every whole version just
-before the preview** (step 11): a version that fails it is not previewed without telling the owner. Log each probe
+claims unchecked). The probes run again on changed reading items every round, and **twice on every whole
+version just before the preview** (step 11): two fresh sessions per version, and the version fails if either run fails;
+never average a fail away (try d proposal 4, adopted Nov 7, 2026: at 8 items chance alone reaches the line 11–26% of
+the time). A version that fails is not previewed without telling the owner. Log each probe
 (about $0.27 a version; the lead's scoring is not a session).
 
 ## 5. Fresh blind tester for the subject (at the same time as 6 and 7)
@@ -181,7 +189,9 @@ It records round 2 and sets `fixed` on each earlier finding it confirms (no sepa
 found again is a new finding with `sameAs` naming the earlier one, so it is counted once. In the same round, a **fresh
 fact checker** (science, social studies, ELA nonfiction) or **solver** (math) checks the changed text, **every
 suggested wording** the maker used, and sweeps the whole pack for any claim it marks false; ELA reading items get the
-no-passage probe again (step 4a). A new FIX: back to step 8. After round 3, stop and decide with the teacher (next
+no-passage probe again (step 4a). A new FIX: back to step 8. **The last round's fact FIXes get a fresh fact recheck
+before the preview** (or before a sample is shown), even when no round is left for anything else (try d proposal 6,
+adopted Nov 7, 2026: 3 fact FIXes from round 3 were never rechecked). After round 3, stop and decide with the teacher (next
 section).
 
 **Cost stop.** After every round the lead adds up the log. When the order passes **2× its token budget** (tokens ×
@@ -221,7 +231,7 @@ measured") and `audit.notes`: every round, every catch, every fix, Wilco before 
 ## 11. Preview, then the teacher agrees or asks for changes (CLAUDE.md rule 7)
 
 ```
-# reading items: the final whole-version no-passage probe first (step 4a)
+# reading items first: two final whole-version no-passage probes per version (step 4a) and the fact recheck of the last round's fixes (step 9)
 node $REPO/scripts/render-pack.mjs "$WORK" --preview   # writes $WORK/out-preview/ and $WORK/preview.zip: watermarked PDFs, AUDIT-REPORT, REVIEW.html
 cd "$WORK/preview" && zip -qr "$WORK/$ORDER-preview.zip" . && cd -
 ```

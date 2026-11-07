@@ -151,3 +151,23 @@ rounds from blind/solver/facts only, or let Wilco take the order round.
 - A slim reporter hand-off (numbers table + pack without documents) cut the reporter from $1.53 to $0.92 but still
   took 7.7 minutes; most of it was copying 26 rows unchanged. The lead could append rows and let the reporter write only
   notes.
+
+## Round 5: the cross-item giveaway (owner decision 2, Nov 7, 2026; written by the order lead)
+
+`checks/cross-item.mjs` came in after this sample was finished and found **1 hit**: B q8's key ("Use 3Cl₂ on the left
+and 2FeCl₃ on the right") shares "left" and "right" with B q10's stem ("4 molecules on the left and 2 on the right").
+Each role a fresh `claude -p` session in its own folder; costs are each session's own record.
+
+| Step | Who | Result | Cost |
+|---|---|---|---|
+| Maker (cap $1.50) | fresh maker, FIX list only | q10's stem in B, and in A to keep them parallel: "on the reactant side" / "on the product side"; no key or model answer changed; cross-item 1 → 0 | $0.45 |
+| Blind recheck (keyless, then scored) | fresh blind tester, q8 and q10 in A and B | 4 of 4 matched, no giveaway left; FIX A q10 and B q10 too easy for L3: both equations are practised in the notes (unchanged text) | $0.88 |
+| Fact recheck | fresh fact checker | 14 claims in the changed stems and model answers, 0 off | $0.26 |
+| Wilco | scripts | keys, test-wise and cross-item pass (round 5) | — |
+| **Total** | | under the $6 cap | **$1.59** |
+
+**Open, listed first in `audit.notes`:** q10 (A and B) is too easy for L3 because its equation is one the notes practise
+(`agents/maker.md` rule 3). It is older than this round; fixing it means a new equation and a new model answer, which is
+more than the owner's "fix only the flagged items", so it is left for the owner.
+
+No outputs are committed for this sample (only `pack.json`); the preview renders with the same page counts as before.
