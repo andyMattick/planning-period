@@ -10,6 +10,7 @@
      5. Every samples/<name>/pack.json passes checks/keys.mjs and checks/test-wise.mjs.
      5a. Every sample with a math check passes checks/math.mjs (SymPy), and broken copies of samples/_cap-math fail it.
      5c. checks/puzzles.mjs catches broken copies of samples/_cap-games (a bad grid, a word twice, a non-unique puzzle…).
+     5d. Reading samples pass checks/no-passage.mjs (no-passage bots), except a shrink-only known-failing list.
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
@@ -156,6 +157,27 @@ if (!packs.length) skip('no samples/*/pack.json yet: nothing to check');
 for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs', 'puzzles.mjs']) {   // puzzles.mjs: games and puzzles (docs/KINDS-GAMES.md)
   const r = run(s, join(ROOT, p));
   if (r.status === 0) ok(`${p} passes checks/${s}`); else fail(`${p} fails checks/${s}:\n${r.stdout}${r.stderr}`);
+}
+
+/* 5d. reading items (docs/audits/AUDIT-2026-11-07-ela.md): checks/no-passage.mjs bites (--self-test), and every sample
+   with reading questions passes it, except the ones in checks/no-passage-debt.json. That list can only shrink: a pack on
+   it that now passes must come off, and nothing outside NO_PASSAGE_DEBT_MAX may ever be added. */
+{
+  const NP = join(ROOT, 'checks', 'no-passage.mjs'), DEBT = 'checks/no-passage-debt.json';
+  const NO_PASSAGE_DEBT_MAX = ['samples/g7-ela/pack.json', 'samples/g7-ela2/pack.json'];
+  const st = spawnSync(process.execPath, [NP, '--self-test'], { cwd: ROOT, encoding: 'utf8' });
+  if (st.status === 0) ok(`checks/no-passage.mjs --self-test (${(st.stdout.match(/^✓/gm) || []).length} cases)`); else fail(`checks/no-passage.mjs --self-test failed:\n${st.stdout}${st.stderr}`);
+  let debt = {};
+  try { debt = Object.fromEntries(Object.entries(readJSON(DEBT)).filter(([k]) => !k.startsWith('_'))); } catch (e) { fail(`${DEBT}: ${e.message}`); }
+  for (const k of Object.keys(debt)) if (!NO_PASSAGE_DEBT_MAX.includes(k)) fail(`${DEBT} lists ${k}: the list can only shrink (a new pack fixes its questions instead)`);
+  for (const p of packs) {
+    const r = spawnSync(process.execPath, [NP, join(ROOT, p)], { cwd: ROOT, encoding: 'utf8' });
+    if (/no reading questions/.test(r.stdout)) continue;
+    if (r.status === 0 && debt[p]) fail(`${p} now passes checks/no-passage.mjs: take it off ${DEBT}`);
+    else if (r.status === 0) ok(`${p} passes checks/no-passage.mjs`);
+    else if (debt[p]) skip(`${p} fails checks/no-passage.mjs, known (${DEBT}: needs the remake): ${(r.stdout.split('\n')[0] || '').replace(/^✗\s*/, '').slice(0, 140)}`);
+    else fail(`${p} fails checks/no-passage.mjs:\n${r.stdout}${r.stderr}`);
+  }
 }
 
 /* 5a. math (docs/KINDS-MATH.md): every sample with a `math.check` passes checks/math.mjs (SymPy), and the check bites */
