@@ -186,6 +186,7 @@
       var u = client.user();
       $('acct-out').hidden = !!u; $('acct-in').hidden = !u;
       if (u) $('acct-email').textContent = u.email || 'your account';
+      if (root.PP && root.PP.setWho) root.PP.setWho(u);
       if (onUser) onUser(u);
     }
     if (client.hashResult && client.hashResult.error) $('signin-err').textContent = 'That sign-in link did not work (' + client.hashResult.error + '). Ask for a new one.';
