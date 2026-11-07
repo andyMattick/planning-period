@@ -1,0 +1,242 @@
+{
+  "_note": "Made by tests/weekly/make-fixtures.mjs: what each made-up source is and what importing it should give (scripts/weekly-test.mjs).",
+  "fixtures": [
+    {
+      "file": "g3-math-fractions-notes.docx",
+      "grade": "3",
+      "subject": "math",
+      "topic": "Understanding fractions: equal parts, number lines, equivalent fractions",
+      "kind": "notes",
+      "pickable": true,
+      "vocab": true,
+      "expect": {
+        "method": "docx-words",
+        "pages": [
+          1,
+          2
+        ],
+        "readable": true
+      }
+    },
+    {
+      "file": "g8-science-cells-chapter.pdf",
+      "grade": "8",
+      "subject": "science",
+      "topic": "Cells: cell theory, organelles, plant and animal cells",
+      "kind": "chapter",
+      "pickable": true,
+      "vocab": true,
+      "expect": {
+        "method": "pdf-pages",
+        "pages": [
+          3,
+          3
+        ],
+        "readable": true
+      }
+    },
+    {
+      "file": "g5-social-colonial-regions-slides.pptx",
+      "grade": "5",
+      "subject": "social",
+      "topic": "The thirteen colonies: New England, Middle and Southern regions",
+      "kind": "slides",
+      "pickable": true,
+      "vocab": false,
+      "expect": {
+        "method": "pptx-words",
+        "pages": [
+          0.3,
+          2
+        ],
+        "slides": 6,
+        "readable": true
+      }
+    },
+    {
+      "file": "g6-ela-figurative-language.md",
+      "grade": "6",
+      "subject": "ela",
+      "topic": "Figurative language: simile, metaphor, personification, hyperbole, idiom",
+      "kind": "notes",
+      "pickable": true,
+      "vocab": true,
+      "expect": {
+        "method": "text-words",
+        "pages": [
+          0.5,
+          3
+        ],
+        "readable": true
+      }
+    },
+    {
+      "file": "g7-science-water-cycle.txt",
+      "grade": "7",
+      "subject": "science",
+      "topic": "The water cycle",
+      "kind": "notes",
+      "pickable": true,
+      "vocab": true,
+      "expect": {
+        "method": "text-words",
+        "pages": [
+          1,
+          3
+        ],
+        "readable": true
+      }
+    },
+    {
+      "file": "g9-ela-greek-latin-roots.html",
+      "grade": "9",
+      "subject": "ela",
+      "topic": "Greek and Latin roots (Unit 3 vocabulary)",
+      "kind": "article",
+      "pickable": true,
+      "vocab": true,
+      "expect": {
+        "method": "html-words",
+        "pages": [
+          0.5,
+          2
+        ],
+        "readable": true,
+        "mustNotContain": [
+          "analytics.js"
+        ]
+      }
+    },
+    {
+      "file": "g4-science-simple-machines-saved-page.html",
+      "grade": "4",
+      "subject": "science",
+      "topic": "Simple machines",
+      "kind": "article",
+      "pickable": true,
+      "vocab": true,
+      "expect": {
+        "method": "html-words",
+        "pages": [
+          1,
+          3
+        ],
+        "readable": true,
+        "mustNotContain": [
+          "IGNORE ALL PREVIOUS",
+          "SYSTEM NOTE TO AI",
+          "dataLayer",
+          "NewsArticle",
+          "document.write"
+        ]
+      }
+    },
+    {
+      "file": "g5-math-fraction-standards.txt",
+      "grade": "5",
+      "subject": "math",
+      "topic": "Fractions: adding, subtracting, fractions as division, multiplying",
+      "kind": "standards",
+      "pickable": true,
+      "vocab": false,
+      "expect": {
+        "method": "text-words",
+        "pages": [
+          0.2,
+          1
+        ],
+        "readable": true,
+        "standards": 4
+      }
+    },
+    {
+      "file": "g6-math-ratios-old-test.docx",
+      "grade": "6",
+      "subject": "math",
+      "topic": "Ratios and rates (unit test)",
+      "kind": "oldtest",
+      "pickable": true,
+      "vocab": false,
+      "expect": {
+        "method": "docx-words",
+        "pages": [
+          0.5,
+          2
+        ],
+        "readable": true
+      }
+    },
+    {
+      "file": "g7-social-rome-scanned.pdf",
+      "grade": "7",
+      "subject": "social",
+      "topic": "Ancient Rome (a scanned worksheet)",
+      "kind": "scan",
+      "pickable": false,
+      "vocab": false,
+      "expect": {
+        "method": "pdf-pages",
+        "pages": [
+          2,
+          2
+        ],
+        "readable": false,
+        "onboarding": "unreadable"
+      }
+    },
+    {
+      "file": "g11-social-millbrook-reader.txt",
+      "grade": "11",
+      "subject": "social",
+      "topic": "Local history of Millbrook (a long course reader)",
+      "kind": "reader",
+      "pickable": false,
+      "vocab": false,
+      "expect": {
+        "method": "text-words",
+        "pages": [
+          80,
+          140
+        ],
+        "readable": true,
+        "onboarding": "source fence: use only the chapters the order needs"
+      }
+    },
+    {
+      "file": "g2-science-magnets-tiny.md",
+      "grade": "2",
+      "subject": "science",
+      "topic": "Magnets",
+      "kind": "tiny",
+      "pickable": false,
+      "vocab": false,
+      "expect": {
+        "method": "text-words",
+        "pages": [
+          0.1,
+          0.5
+        ],
+        "readable": true,
+        "tooMany": {
+          "item": "test",
+          "questions": 25
+        },
+        "onboarding": "tooMany"
+      }
+    }
+  ],
+  "training": [
+    {
+      "file": "past-worksheet-three-levels.md",
+      "note": "a made-up teacher's past worksheet: three levels, boxes for work"
+    },
+    {
+      "file": "past-quiz-ten-questions.md",
+      "note": "a made-up teacher's past quiz: 8 multiple choice, 2 short answer"
+    },
+    {
+      "file": "past-exit-tickets.md",
+      "note": "a made-up teacher's past exit tickets: short, friendly wording"
+    }
+  ]
+}
