@@ -14,7 +14,7 @@
 //   node scripts/weekly-test.mjs --self-test            the fast part (2 and 4, offline, in a temporary folder): npm run check runs it
 //   node scripts/weekly-test.mjs --publish <out> [--repo <dir>]
 //     after the agent part: copies <out>/summary.md to docs/weekly/<date>.md, each order's audit report to
-//     docs/weekly/<date>/AUDIT-<item>.pdf (and preview PDFs under 1 MB), updates docs/weekly/README.md (newest first)
+//     docs/weekly/<date>/AUDIT-<item>.pdf (and preview PDFs under 1 MB, and findings-<item>.json: checks and log totals), updates docs/weekly/README.md (newest first)
 //     and appends the run to tests/weekly/history.json. Refuses a summary that writes the product's name.
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, copyFileSync, statSync, mkdtempSync, rmSync } from 'node:fs';
 import { join, resolve, dirname, basename, relative, sep } from 'node:path';
@@ -479,7 +479,7 @@ async function run() {
   if (orders.length < 2) orderRows.push({ problems: [`only ${orders.length} order(s) could be picked`] });
 
   const plan = {
-    date, seed, maxTokens, capPerOrderUsd: 4, capPerRunUsd: 10,
+    date, seed, maxTokens, capPerOrderUsd: 3.75, capSpotCheckUsd: 0.5, capAuditUsd: 2, capPerRunUsd: 10,
     replay: `node scripts/weekly-test.mjs --seed ${seed} --out ${out}`,
     orders: written.map(({ o, oj, dir }) => ({
       id: o.id, folder: dir, item: o.item, label: o.label, source: o.fixture.file, grade: o.fixture.grade, subject: o.fixture.subject,
@@ -577,6 +577,18 @@ function publish() {
       const name = audit ? `AUDIT-${o.item}.pdf` : `${o.item}-${f}`;
       copyFileSync(join(prev, f), join(dayDir, name)); added.push(`docs/weekly/${date}/${name}`);
     }
+  }
+  // each order's findings (checks and the log's totals, never the questions): what next week's auditor reads for repeats
+  for (const o of plan.orders) {
+    const pp = join(o.folder, 'pack.json');
+    if (!existsSync(pp)) continue;
+    let pack; try { pack = readJSON(pp); } catch { console.log(`  ${o.id}: pack.json unreadable: no findings copied`); continue; }
+    const log = Array.isArray(pack.log) ? pack.log : [];
+    const num = (k) => log.reduce((t, r) => t + (typeof r[k] === 'number' ? r[k] : 0), 0);
+    const findings = { date, order: o.id, item: o.item, subject: o.subject, grade: o.grade, source: o.source, tokens: o.tokens, budgetUsd: o.budgetUsd,
+      checks: pack.checks || {}, log: { rows: log.length, minutes: Math.round(num('minutes') * 10) / 10, usd: Math.round(num('cost') * 100) / 100 } };
+    const name = `findings-${o.item}.json`;
+    writeFileSync(join(dayDir, name), JSON.stringify(findings, null, 2) + '\n'); added.push(`docs/weekly/${date}/${name}`);
   }
   // the index, newest first
   const idxPath = join(docs, 'README.md');
