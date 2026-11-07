@@ -79,6 +79,11 @@ You make nothing and change nothing in the order.
    training files show) and list each one under `assumptions` ("Quiz: 10 questions, 7 mc, 2 short, 1 written, A/B,
    because you didn't say"). Say a test's harder share as the default says it: "about 40% harder questions", never
    "about half".
+5a. **The teacher's own rules against our design.** Read her notes, style examples and requests for rules about how
+   questions are built ("every Part B choice must be a real sentence", "no short answers") and compare them with ours
+   (`agents/maker.md`, `feasibility.json`). A clash is one of your questions, with our recommendation and her rule as an
+   option, never a silent pick in `whatWeWillMake` (g7-ela2 remake: his "real sentences only" went into the plan note
+   while option 1 puts an unmatched quote in each Part B).
 6. **Choose at most 3 questions.** Only things that change what we make and that you can't decide well yourself.
    Rank: an impossible or too-large ask first, then a choice between two reasonable readings, then anything else.
    Each question has 2–4 short options and a recommended default; each can be answered in one word ("A", "yes",
@@ -119,7 +124,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 6** (Nov 7, 2026)
+**Version 7** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -140,3 +145,6 @@ You make nothing and change nothing in the order.
   at least 8 mc a version, at most one Part A/Part B pair a passage and 2 short answers that quote the passage (g7-ela2:
   the 4 pairs recommended became the order and leaked every round); warn about a textbook-example topic and offer a less
   familiar case (g7-ela2: otters and kelp answered from general knowledge); count the follow-up's words (217 > 200).
+- v7, Nov 7, 2026 (remake audit, docs/audits/AUDIT-2026-11-07-ela-remake.md, adopted by the owner): step 5a, compare
+  the teacher's own rules with our design and ask when they clash (g7-ela2 remake: "every Part B choice must be a real
+  sentence" vs option 1's unmatched quote, written into the plan instead of asked).

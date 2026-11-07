@@ -20,6 +20,10 @@ doesn't test reading.
 2. Answer every item as a test-wise student would, from the stems, the choices and the other items. Multiple choice:
    one JSON line each (`{"where", "answer", "confidence", "note"}`; in `note`, the cue you used: a stem word, another
    item, a quote that fits only one choice, general knowledge of the topic, "only this one sounds like a teacher").
+   **Tag every cue** with one of `topic` (general knowledge of the subject), `word` (a word's everyday meaning),
+   `item` (another item), `type` (the story or article type's usual reading), `sounds` (the key sounds right) or
+   `guess`, as `"cue"` in the line; the lead logs the split per version (g7-ela2 remake: is the probe's world knowledge
+   what fails a quiz? Two orders of tags decide).
    **Short answers:** write the answer you'd give without the passage.
 3. **The line (a version fails on any one):**
    - **Multiple choice right more than chance + 15 points**: with 4 choices, more than 40% (6 or 7 mc: 3 right fails;
@@ -88,7 +92,10 @@ item again, then score and decide as below. Report both.
 - The key is the broadest statement (main-idea and definition keys); a wrong choice must be as broad.
 - Grammar items: the "right" form is a style-guide choice (serial comma, *which*/*that*, a semicolon before
   *however*). That is JUDGMENT for the teacher's style, never a silent pick.
-- Vocabulary in context: the key is the dictionary meaning but the passage uses another sense.
+- Vocabulary in context: the key is the dictionary meaning but the passage uses another sense; or **the key is the
+  everyday sense** and the wrong choices don't fit the sentence, so no reading is needed (g7-ela2 remake: "cropped",
+  "living", "slip").
+- **The key is the story type's default reading** ("the shy cat warms up"): a non-reader guesses it (g7-ela2 remake A q1).
 - A quoted passage over the size fence, or a question about a part of a book the source didn't include.
 
 ## Always (every subject; Pet World's never-again list)
@@ -129,7 +136,7 @@ one version, `"gate": "pass" | "fail"`, and a FIX per item it got right at confi
 reporter takes your minutes from your session's record, not from your estimate.
 
 ---
-**Version 3** (Nov 7, 2026)
+**Version 4** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's blind review (`docs/BLIND-REVIEW.md` steps 2–4) and the traps its
@@ -147,3 +154,6 @@ reporter takes your minutes from your session's record, not from your estimate.
   probe before the preview (g7-ela2: fixed pairs let unchanged items leak); on a fail the questions change, never the
   key or the check; unmatched quotes allowed only as defined, pairs one a passage, short answers that cite, general
   knowledge as a named cue (g7-ela2: A 10, 8, 9 of 10 without the passages through three rounds).
+- v4, Nov 7, 2026 (remake audit, docs/audits/AUDIT-2026-11-07-ela-remake.md, adopted by the owner): probes tag each
+  answer's cue (topic, word, item, type, sounds, guess) so the lead can log the split; traps for an everyday-sense
+  word-in-context key and a key that is the story type's default (g7-ela2 remake: probes 5–8 of 8 through round 3).

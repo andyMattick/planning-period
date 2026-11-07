@@ -91,6 +91,7 @@
   PP.getJSON('../menu.json').then(function (m) { menu = m; }).catch(function () {})
     .then(function () { return PP.getJSON('../samples/index.json'); })
     .then(function (list) {
+      if (Array.isArray(list)) list = list.filter(function (x) { return x && !x.hidden; });   // a sample still failing a gate stays off the public page
       if (!Array.isArray(list) || !list.length) return empty('No sample packs yet. Check back soon.');
       return Promise.all(list.map(card)).then(function (nodes) {
         box.innerHTML = ''; nodes.forEach(function (n) { box.appendChild(n); });
