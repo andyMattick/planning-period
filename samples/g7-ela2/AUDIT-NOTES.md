@@ -92,3 +92,58 @@ FIX round and the blind solve even with the gate open, and retired `samples/g7-e
   "really" echoes the story; A q6 recall; B q1 answerable from A q4 D side by side; 7 mc is below the 8-mc floor),
   2 JUDGMENT (A q8/q9: the article leans; the A q9 key shows "hard", not "neutral"), 7 KEEP. L3 4 of 11 a version.
 - No round 5: the owner approved one. Everything open is listed first in the audit report and in this note.
+
+## Try c (owner decision, Nov 7, 2026): an invented article and at least 8 mc a version
+The owner chose both fixes: (a) replace "The Long Fence" with an informational article about an invented place, and
+(b) `agents/maker.md` v6 (committed first): a word-in-context item moved to a short answer is replaced by another mc
+item, so each version keeps at least 8 mc. Same order, same made-up teacher; hard stop $15. Records:
+`samples/g7-ela2/attempts/try-c/` (the attempt's pack with its checks, log and audit; the three FIX lists the lead
+sent; every probe's answers; the blind solve's answers; the watermarked preview PDFs and AUDIT-REPORT, without REVIEW.html, which prints the product name). Audit (proposals only):
+`docs/audits/AUDIT-2026-11-07-ela-try-c.md`.
+
+**Result in one line: the gate still fails after 3 rounds (final whole-version probes A 9 of 10, B 5 of 10; 5 of 10
+fails), so the sample stays hidden and this pack (the option-1 remake above) stays the sample. Keys are sound: the
+keyless blind solve with the passages matched 20 of 20. Cost $13.50 in all, under the $15 stop (0.82× the $16.50
+budget).**
+
+- **Story kept:** "Biscuit", trimmed 374 → 350 words; the open story FIX were folded in (the "really" echo, B q3's
+  level, B q4's key and unmatched quotes contradicted, no short answer's line printed as a choice).
+- **Article:** round 1 "Trouble in the East Valley" (Corvan Island; 316 words). Rewritten in round 2 as **"The Reeds of
+  the North Lagoon"** (Vessa Island: drell birds, kib snails, tolla reeds; 322 words), built to break the familiar
+  cascade (a storm, not hunting; salt blamed wrongly; hand planting first). Byline on the student copy: "Written for
+  this quiz. Vessa Island, its people and its animals are invented." Three fact checks found no contradiction between
+  paragraphs; their FIX were all key or `why` wording (widening, wrong choices only unsupported, not contradicted).
+- **Counts:** 10 mc + 2 citing short answers + RACE a version; one Part A/B pair a passage; L3 4 of 13.
+
+| Round | Step | Minutes | Cost |
+|---|---|---|---|
+| 0 | Lead's runner test call | 0.1 | $0.11 |
+| 1 | 📝 Maker, cap $4.10 (a new article: redesign cap) | 10.1 | $2.42 |
+| 1 | 🔎 Fact check (internal consistency) | 2.8 | $0.77 |
+| 1 | 🙈 Probes A, B | 0.8 + 1.0 | $0.69 |
+| 2 | 📝 Maker, redesign, cap $3.50 | 10.8 | $2.98 |
+| 2 | 🔎 Fact check (rewritten article) | 2.9 | $0.87 |
+| 2 | 🙈 Probes A, B | 0.9 + 0.7 | $0.64 |
+| 3 | 📝 Maker, FIX round, cap $2.75 | 7.3 | $1.88 |
+| 3 | 🙈 Probes A, B (whole versions after the last change: the final probe) | 0.9 + 0.9 | $0.70 |
+| 3 | 🔎 Fact recheck | 1.8 | $0.68 |
+| 3 | 🙈 Blind solve, both versions (keyless) | 3.7 | $1.02 |
+| after | 🧾 Reporter (cheaper tier) | 1.4 | $0.29 |
+| after | 🔎 Auditor (proposals only) | 1.3 | $0.45 |
+| | **Total** | **47.8** | **$13.50** |
+
+| Round | A right of 10 (sure) | A cues | B right of 10 (sure) | B cues | Short answers over half |
+|---|---|---|---|---|---|
+| 1 | **7** (6) | item 5, topic 2 | **9** (6) | item 6, type 2, sounds 1 | none |
+| 2 | **8** (3) | item 4, topic 2, type 1, sounds 1 | **6** (2) | item 4, topic 1, sounds 1 | A q12 borderline (paragraph guessed) |
+| 3, final | **9** (3) | item 7, type 1, guess 1 | **5** (2) | item 5 | none (blind solve: B q12 could be) |
+
+What the invented article fixed: topic cues 4 → 3 → **0**. What it did not: **items answering each other** (11 → 8 →
+12 of the right answers), above all the Part A/Part B pairs (right without the passage in every round) and article
+items whose choices restate another item's cause chain.
+
+Open (listed first in the attempt's `audit.notes`): the gate (both versions); the blind solve's 7 FIX (A q9/q10 and B
+q9/q10 answer themselves; A q8, A q11, B q8 guessable from other items; B q12 everyday sense and B q8's stem prints its
+detail; B q3 easier than A q3); 2 minor fact FIX (A q11 and B q11 `why`); JUDGMENT for the teacher (A q3 choice D a
+defensible reading; B q10 D weakly contradicted; B q7 D; his "real sentences only" for Part B vs one unmatched quote).
+No round 4: the auditor's proposals go to the owner.

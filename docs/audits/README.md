@@ -3,6 +3,9 @@
 One report per audit, newest first (`agents/auditor.md` step 6). Each says what the orders cost against their token
 budgets, what the checkers caught, every brief change and why, price recommendations and ways to make it cheaper.
 
+- [AUDIT-2026-11-07-ela-try-c.md](AUDIT-2026-11-07-ela-try-c.md): g7-ela2 "try c" (invented article, 8+ mc a version;
+  proposals only): $13.50 of $16.50, gate still open (A 9, B 5 of 10); topic cues gone, items answering each other the
+  main leak; proposals: drop the mc pairs, a scripted cross-item check, 8 mc, whole-version fix lists.
 - [AUDIT-2026-11-07-ela-remake.md](AUDIT-2026-11-07-ela-remake.md): the option-1 remake of g7-ela2 (proposals only):
   $9.30 of $16.50 so far, gate still open after round 3; 3 briefs proposed and adopted by the owner (maker v5, onboarding v7, blind-ela v4);
   the probe's topic knowledge is mostly a brief problem; `readingquiz` held at 150.

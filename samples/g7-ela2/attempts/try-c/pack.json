@@ -1,0 +1,1753 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-05-g7-ela2",
+  "order": {
+    "id": "pp-2026-11-05-g7-ela2",
+    "date": "2026-11-05",
+    "teacher": "Mr. Haverford (made-up sample)",
+    "grade": "7",
+    "subject": "ela",
+    "topic": "Making inferences and citing text evidence (fiction and nonfiction)",
+    "items": [
+      "readingquiz",
+      "rubric"
+    ],
+    "extras": [
+      "styleSetup"
+    ],
+    "lines": [
+      {
+        "id": "readingquiz",
+        "label": "Reading quiz on passages (A/B)",
+        "quantity": 1,
+        "tokensEach": 150,
+        "tokens": 150
+      },
+      {
+        "id": "rubric",
+        "label": "Rubric",
+        "quantity": 1,
+        "tokensEach": 15,
+        "tokens": 15
+      },
+      {
+        "id": "styleSetup",
+        "label": "Set up my agents with my examples",
+        "quantity": 1,
+        "tokensEach": 0,
+        "tokens": 0,
+        "extra": true
+      }
+    ],
+    "tokens": 165,
+    "itemRequests": {
+      "readingquiz": "Write two ORIGINAL passages from my notes, about 300 words each: one short story and one nonfiction article. Both versions read the same two passages. 10 multiple choice per version, inference and text evidence, with Part A / Part B pairs where Part B asks for the quotation that best supports Part A. Then one short constructed response (RACE). The questions should really need the passage: last year my kids could guess half of a store-bought quiz without reading.",
+      "rubric": "A 4-point RACE rubric (Restate, Answer, Cite, Explain) for the constructed response, in words my 7th graders can use to check their own answer."
+    },
+    "itemSpecs": {
+      "readingquiz": {
+        "questions": 11,
+        "passages": 2,
+        "types": {
+          "mc": 10,
+          "short": 0,
+          "open": 1
+        },
+        "choices": 4,
+        "versions": 2
+      }
+    },
+    "requests": "Mixed class: some readers are a year below grade level, so keep sentences clear but don't make the passages babyish. Number the paragraphs; my students cite them in brackets like [3].",
+    "sources": [
+      "inference-unit-notes.md"
+    ],
+    "styleExamples": [
+      "old-reading-check-character.md",
+      "old-race-response-and-rubric.md"
+    ],
+    "tokenTotal": 165
+  },
+  "style": {
+    "notes": [
+      "First line: Name ____ Class ____ Date ____.",
+      "Title in ALL CAPS with (Form A) or (Form B).",
+      "Plain text, no boxes; long underscore answer lines.",
+      "Questions 1. 2.; choices A.–D. one per line; one-word choices lowercase.",
+      "Part A and Part B each numbered; evidence choices are short quotes ending in [paragraph].",
+      "Short, plain directions; constructed response on the back with RACE spelled out.",
+      "About grade 7 reading level; short sentences; American spelling."
+    ],
+    "font": "Arial",
+    "accent": "#1f4e79",
+    "layout": {
+      "fields": [
+        "Name",
+        "Class",
+        "Date"
+      ],
+      "numbering": "1.",
+      "choiceStyle": "A.",
+      "nameBox": false,
+      "boldDirections": false
+    }
+  },
+  "documents": [
+    {
+      "item": "readingquiz",
+      "kind": "readingquiz",
+      "title": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\"",
+      "directions": "Read the story and the article. Then answer each question. Fill in the circle next to the best answer.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "passages": [
+        {
+          "id": "p1",
+          "title": "Biscuit",
+          "kind": "fiction",
+          "source": "Written for this quiz.",
+          "paragraphs": [
+            "Mrs. Abara handed Kiran her spare key and a page of notes. \"Biscuit is shy with new people, so don't take it personally,\" she said. At the bottom she had written: Dev will come Thursday to water the plants. Kiran had asked his parents for a pet for three years. Four days with Biscuit felt like a test, and he planned to get a perfect score.",
+            "On Monday morning the apartment was silent. Kiran filled the bowl and crouched by the couch. \"Here, kitty, kitty!\" He shook the food bag and tapped the bowl with a spoon, louder each time. He walked to school with his shoulders up near his ears.",
+            "That evening the bowl was empty, and the blanket on the armchair was warm and covered in orange hair. Kiran looked behind the mat. Nothing had spilled. At dinner his sister Tam said, \"So she ate!\" Kiran shook his head. \"Dev must have come by and tossed it out. She won't touch anything I give her.\"",
+            "On Tuesday he tried harder. He waved a feather toy under the bed and sang to her. Two green eyes watched him from the dark, then slid away. \"She misses Mrs. Abara too much to eat,\" he told Tam. \"And she hates me.\" Tam shrugged. \"Or you're loud.\"",
+            "On Wednesday evening Kiran had a math test to study for and no energy for singing. He sat on the floor against the couch, opened his notebook, and forgot to call her at all.",
+            "After a while, something warm leaned against his elbow. Biscuit sat beside him, staring at the page as if she were checking his work. Kiran did not reach for her. He kept writing, but slower. She stayed until he finished the last problem.",
+            "On Thursday, Dev was watering the plants when Mrs. Abara got home. She glanced at Kiran's notebook. \"I used to teach math, you know.\" Kiran started to say, \"She didn't eat at first,\" then looked at Dev and stopped. Biscuit was curled on the armchair, watching him. \"Could I come over sometimes?\" he asked. \"I'd bring my homework.\""
+          ]
+        },
+        {
+          "id": "p2",
+          "title": "The Reeds of the North Lagoon",
+          "kind": "nonfiction",
+          "source": "Written for this quiz. Vessa Island, its people and its animals are invented.",
+          "paragraphs": [
+            "Vessa Island has two shallow lagoons, North and South, with a strip of sand between them. Tall tolla reeds once grew thick along both shores. A long-legged gray bird called the drell nests only in thick reeds. At night it wades through the mud and eats kib snails.",
+            "In the winter of 1961, a storm flattened the reeds around the North Lagoon. The South Lagoon, behind higher dunes, lost only a few. With nowhere to nest, the North Lagoon's drells flew off. Some fishermen were glad. They believed drells ate young fish, though no one had ever seen one do it.",
+            "Everyone expected the reeds to come back in a year or two, as they had after smaller storms. They did not. Each spring, green shoots poked up from the mud, and each summer they were gone. Islanders blamed the salt the storm had washed in.",
+            "In 1968, a teacher named Hana Selk tested the North Lagoon's water and found it no saltier than the South's. Then she went out after dark with a lamp. The mud was crowded with kib snails, and they were eating the new shoots down to the roots. Without drells, almost nothing was eating the kibs.",
+            "The islanders first tried planting reeds by hand. The snails ate those too. So in 1971 Selk's students built wooden nesting platforms and hid them in the last reed clumps. Two pairs of drells moved in the next spring.",
+            "The change was slow. For five summers the shoots kept vanishing, and some islanders said the platforms were a waste of wood. By 1980, though, every platform was in use, the snails were thinner on the mud, and reeds stood again along the North Lagoon's shore.",
+            "The fishermen's catch did not drop when the drells came back. If anything, it rose. Young fish hide among reed stems.",
+            "Selk later wrote, \"The storm knocked the reeds down. The missing birds kept them down.\""
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "heading": "Questions 1-5: \"Biscuit\"",
+          "passage": "p1",
+          "questions": [
+            {
+              "id": "q1",
+              "passage": "p1",
+              "level": 1,
+              "skill": "infer a character's feelings or beliefs",
+              "type": "mc",
+              "prompt": {
+                "A": "In paragraph 1, how does Kiran feel about his four days with Biscuit?",
+                "B": "In paragraph 4, what does Tam think the problem is?"
+              },
+              "choices": {
+                "A": [
+                  "nervous that Biscuit will not like him",
+                  "sorry he agreed to watch someone else's cat",
+                  "set on proving he can take care of a pet",
+                  "sure the job will be easy and quick"
+                ],
+                "B": [
+                  "Biscuit misses her owner too much.",
+                  "Kiran is making too much noise.",
+                  "Biscuit is shy with people she doesn't know.",
+                  "The feather toy frightens Biscuit."
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 1
+              },
+              "why": {
+                "A": "The four days \"felt like a test, and he planned to get a perfect score\" [1], after three years of asking for a pet. He shows no worry yet that Biscuit won't like him (that comes on Monday and Tuesday [3]-[4]); nothing shows he is sorry; he plans to work hard and never calls the job easy.",
+                "B": "Tam answers Kiran's ideas with \"Or you're loud\" [4]. Missing Mrs. Abara is Kiran's idea [4], not Tam's; \"shy with new people\" is Mrs. Abara's warning [1]; the feather toy is only what Kiran waves [4]."
+              }
+            },
+            {
+              "id": "q2",
+              "passage": "p1",
+              "level": 2,
+              "skill": "infer why a character acts",
+              "type": "mc",
+              "prompt": {
+                "A": "In paragraph 5, why doesn't Kiran call Biscuit on Wednesday evening?",
+                "B": "In paragraph 3, why does Kiran shake his head at dinner?"
+              },
+              "choices": {
+                "A": [
+                  "His mind is on the math test he has to study for.",
+                  "He plans to ignore her so she will come to him.",
+                  "Mrs. Abara's notes told him to leave her alone.",
+                  "He has given up on ever winning Biscuit over."
+                ],
+                "B": [
+                  "He thinks Biscuit spilled most of it behind the mat.",
+                  "He wants Tam to stop asking about Biscuit.",
+                  "He believes someone else emptied Biscuit's bowl.",
+                  "He thinks Biscuit ate only a few bites of it."
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 2
+              },
+              "why": {
+                "A": "He has \"a math test to study for and no energy for singing\" and \"forgot to call her\" [5]. It is not a plan: he forgot. Mrs. Abara says Biscuit is shy [1], and the written note is about Dev's Thursday visit; nothing tells him to leave her alone. He has not given up: he forgot to call her, and on Thursday he asks to come back [7].",
+                "B": "Tam says \"So she ate!\" and Kiran shakes his head: \"Dev must have come by and tossed it out\" [3]. He checked behind the mat and \"Nothing had spilled\" [3]; Tam is not nagging, she says one line; he does not think Biscuit ate any of it (\"She won't touch anything I give her\" [3])."
+              }
+            },
+            {
+              "id": "q3",
+              "passage": "p1",
+              "level": 3,
+              "skill": "infer what a character realizes",
+              "type": "mc",
+              "prompt": {
+                "A": "Part A: Near the end of the story, why does Kiran stop in the middle of a sentence?",
+                "B": "Part A: In paragraph 7, why does Kiran offer to bring his homework when he visits?"
+              },
+              "choices": {
+                "A": [
+                  "He remembers he was told not to take Biscuit's shyness personally.",
+                  "He sees Biscuit watching him and does not want to upset her.",
+                  "He sees that Biscuit must have eaten the food herself.",
+                  "He does not want to blame Dev for the food in front of him."
+                ],
+                "B": [
+                  "He hopes Biscuit will come sit by him again while he works.",
+                  "He hopes Biscuit will let him pet her while he studies.",
+                  "He thinks Biscuit likes being sung to while he works.",
+                  "He thinks Biscuit is lonely without Mrs. Abara."
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 0
+              },
+              "why": {
+                "A": "Two steps: on Monday Kiran said Dev \"must have come by and tossed it out\" [3], but the note says Dev comes Thursday [1], and Dev is only now there [7]. Seeing Dev, Kiran sees nobody threw the food out, so Biscuit ate it. He was told not to take her shyness personally [1], but his half-sentence is about the food (\"She didn't eat at first\" [7]), not her shyness; Biscuit is calm on the armchair [7], and he looks at Dev, not at her, when he stops; Dev could not have tossed the food on Monday, so there is nothing to blame him for.",
+                "B": "Two steps: on Wednesday Biscuit sat beside him while he did math and \"stayed until he finished the last problem\" [6]; on Thursday he looks at Biscuit watching him and then offers to bring homework [7], so he connects her coming near with him sitting and working. He \"did not reach for her\" [6], so petting is not what drew her; he had \"no energy for singing\" on Wednesday [5], and singing made her slide away [4]; missing Mrs. Abara was his wrong Tuesday idea [4]."
+              }
+            },
+            {
+              "id": "q4",
+              "passage": "p1",
+              "level": 2,
+              "skill": "choose the best supporting quotation",
+              "type": "mc",
+              "prompt": {
+                "A": "Part B: Which quotation from the story BEST supports the answer to Part A?",
+                "B": "Part B: Which line from the story BEST supports your Part A answer?"
+              },
+              "choices": {
+                "A": [
+                  "\"Biscuit is shy with new people, so don't take it personally,\" [1]",
+                  "\"Dev will come Thursday to water the plants.\" [1]",
+                  "\"On Monday, Dev's watering can sat by the empty bowl.\" [3]",
+                  "\"Biscuit was curled on the armchair, watching him.\" [7]"
+                ],
+                "B": [
+                  "\"When he reached out, she rubbed her head on his hand.\" [6]",
+                  "\"He sang softly to her as he did his math.\" [5]",
+                  "\"She misses Mrs. Abara too much to eat,\" [4]",
+                  "\"She stayed until he finished the last problem.\" [6]"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 3
+              },
+              "why": {
+                "A": "Key: the note shows Dev was not coming until Thursday [1], so he could not have tossed the food on Monday, and Biscuit ate it. The shy line [1] backs \"told not to take her shyness personally\"; the armchair line [7] backs \"does not want to upset her.\" \"On Monday, Dev's watering can sat by the empty bowl\" is unmatched (backs \"blame Dev\"): the passage contradicts it, since Dev comes Thursday [1] and Kiran only guesses \"Dev must have come by\"; the real line in [3] is \"That evening the bowl was empty, and the blanket on the armchair was warm and covered in orange hair.\"",
+                "B": "Key: Biscuit stayed beside him until his homework was done [6], so she comes near when he sits and works. \"She misses Mrs. Abara too much to eat\" [4] is real and backs \"lonely without Mrs. Abara.\" \"When he reached out, she rubbed her head on his hand\" is unmatched (backs \"let him pet her\"): the passage contradicts it; the real line in [6] is \"Kiran did not reach for her.\" \"He sang softly to her as he did his math\" is unmatched (backs \"likes being sung to\"): the real line in [5] says he had \"no energy for singing\" and \"forgot to call her at all.\""
+              }
+            },
+            {
+              "id": "q5",
+              "passage": "p1",
+              "level": 2,
+              "skill": "cite evidence for a claim",
+              "type": "short",
+              "prompt": {
+                "A": "On Tuesday, what does Kiran try, and how does Biscuit respond? Quote the sentence that shows how she responds and give its paragraph number.",
+                "B": "On Monday morning, what does Kiran do to get Biscuit to come out? Quote one sentence that shows it and give its paragraph number."
+              },
+              "answer": {
+                "A": "He waves a feather toy and sings; she looks at him and then moves away: \"Two green eyes watched him from the dark, then slid away.\" [4]",
+                "B": "He calls her and makes more and more noise with the food: \"He shook the food bag and tapped the bowl with a spoon, louder each time.\" [2]"
+              },
+              "accept": {
+                "A": [
+                  "feather toy and singing; she watches, then goes away, quoting \"Two green eyes watched him from the dark, then slid away.\" [4]",
+                  "he tries harder with a toy and a song; she watches him, then slides away, with the [4] sentence"
+                ],
+                "B": [
+                  "shakes the food bag and taps the bowl louder each time, quoting the [2] sentence",
+                  "calls \"Here, kitty, kitty!\" and makes noise, quoting a [2] sentence"
+                ]
+              },
+              "why": {
+                "A": "Full credit: the toy or the singing, her watching and then slipping away, and the [4] sentence. \"She hides\" or \"she ignores him\" with no line from [4] earns at most half credit.",
+                "B": "Full credit: calling or the bag and bowl noise, plus a [2] sentence. \"He calls her\" with no line or detail from [2] earns at most half credit."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Questions 6-12: \"The Reeds of the North Lagoon\"",
+          "passage": "p2",
+          "questions": [
+            {
+              "id": "q6",
+              "passage": "p2",
+              "level": 1,
+              "skill": "find a detail in the text",
+              "type": "mc",
+              "prompt": {
+                "A": "According to the article, when did the first drells move onto the platforms?",
+                "B": "According to the article, who built the nesting platforms?"
+              },
+              "choices": {
+                "A": [
+                  "the same summer the platforms were built",
+                  "five summers after the platforms were built",
+                  "in 1980, once the reeds stood again",
+                  "the spring after the platforms were built"
+                ],
+                "B": [
+                  "the fishermen of the North Lagoon",
+                  "islanders from the South Lagoon",
+                  "Hana Selk's students",
+                  "Hana Selk and the fishermen"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 2
+              },
+              "why": {
+                "A": "The platforms were built in 1971, and \"Two pairs of drells moved in the next spring\" [5]. Five summers is how long the shoots kept vanishing [6]; 1980 is when every platform was in use [6]; nothing says drells moved in the summer of building.",
+                "B": "\"Selk's students built wooden nesting platforms\" [5]. The fishermen are only mentioned as glad the drells left [2] and in the catch [7]; Selk is never said to have built them herself; South Lagoon islanders are not mentioned."
+              }
+            },
+            {
+              "id": "q7",
+              "passage": "p2",
+              "level": 2,
+              "skill": "infer a cause the text does not spell out",
+              "type": "mc",
+              "prompt": {
+                "A": "Why did the drells most likely stay away from the North Lagoon for years after the storm?",
+                "B": "Why did the South Lagoon most likely lose only a few reeds in the 1961 storm?"
+              },
+              "choices": {
+                "A": [
+                  "The fishermen kept chasing them away.",
+                  "Too few thick reeds were left for nesting.",
+                  "Salt from the storm had killed the snails they ate.",
+                  "There was too little food left for them to eat."
+                ],
+                "B": [
+                  "Its higher dunes kept the worst of the storm away.",
+                  "Its drells kept the hungry snails off the young shoots.",
+                  "Its water was much less salty than the North Lagoon's.",
+                  "Its reeds grew farther from the open sea."
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 0
+              },
+              "why": {
+                "A": "Drells nest only in thick reeds [1]; the storm flattened the North's reeds [2], the new shoots were gone each summer [3], and only the last reed clumps were left [5]. Drells came back once platforms were hidden in those clumps [5]. No one chased them (they flew off with nowhere to nest [2]); the kibs crowded the mud [4], so they were not killed; food was not short, since the mud was crowded with kibs [4], which drells eat [1].",
+                "B": "The South Lagoon is \"behind higher dunes\" and \"lost only a few\" [2]: the dunes sheltered it from the storm. The snails ate shoots after the storm, not during it [3]-[4]; Selk found the North no saltier than the South [4]; the article never says where the open sea is."
+              }
+            },
+            {
+              "id": "q8",
+              "passage": "p2",
+              "level": 3,
+              "skill": "trace a cause-and-effect chain",
+              "type": "mc",
+              "prompt": {
+                "A": "Based on the article, why did the North Lagoon's reeds stay away after 1961, when they had come back after smaller storms?",
+                "B": "The first drells moved onto the platforms in 1972, but the new shoots kept vanishing for years afterward. Based on the article, what most likely explains the delay?"
+              },
+              "choices": {
+                "A": [
+                  "This storm drove off the birds the new shoots depended on.",
+                  "This storm left salt in the water that never washed out.",
+                  "This storm buried the roots under sand from the dunes.",
+                  "This storm drove off the fish that ate the snails."
+                ],
+                "B": [
+                  "Salt from the 1961 storm was still in the water.",
+                  "Two pairs of drells were too few for all the kibs.",
+                  "The new drells ate young fish, not kib snails.",
+                  "The reed roots needed years to heal from the kibs."
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 1
+              },
+              "why": {
+                "A": "Two steps: after 1961 the drells flew off [2]; without drells almost nothing ate the kibs, and the kibs ate the new shoots [4]; so shoots that came up each spring were gone each summer [3]. Selk found the water no saltier than the South's [4]; shoots came up every spring [3], so the roots were not buried; no fish are said to eat snails, and without drells \"almost nothing was eating the kibs\" [4].",
+                "B": "Two steps: only two pairs moved in at first [5]; by 1980 every platform was in use and the snails were thinner on the mud [6]; so it took more drells to thin out the kibs. Selk found the water no saltier than the South's [4]; drells eat kib snails [1] and no one had seen one eat fish [2]; shoots came up every spring [3], so the roots were alive, and the shoots vanished because kibs ate them [4]."
+              }
+            },
+            {
+              "id": "q9",
+              "passage": "p2",
+              "level": 3,
+              "skill": "infer why the author includes a detail",
+              "type": "mc",
+              "prompt": {
+                "A": "Part A: Why does the author tell about the islanders planting reeds by hand?",
+                "B": "Part A: What does the article suggest about the belief that drells ate young fish?"
+              },
+              "choices": {
+                "A": [
+                  "to show that new plants could not last while the snails went uneaten",
+                  "to show that salt left by the storm still killed young plants",
+                  "to show that planting by hand worked for a while",
+                  "to show that the islanders did not want the drells back"
+                ],
+                "B": [
+                  "It was proved true by fishermen in 1960.",
+                  "It was true, though the harm to the fish was small.",
+                  "It led the fishermen to drive the drells away.",
+                  "It was only a guess, with nothing to back it up."
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 3
+              },
+              "why": {
+                "A": "Two steps: the hand-planted reeds were eaten too [5], and without drells almost nothing ate the kibs [4]; so planting could not work until something ate the snails, which is why the platforms came next [5]. Selk found the water no saltier than the South's [4]; the planted reeds were eaten, not standing [5]; nothing says the islanders as a whole wanted the drells gone (only some fishermen were glad [2]), and they built platforms to bring them back [5].",
+                "B": "Two steps: \"no one had ever seen\" a drell eat young fish [2], and when the drells came back the catch did not drop and if anything rose [7]. So nothing backed the belief. Nothing shows it was proved (no one saw it [2]); nothing shows any harm to fish (the catch rose [7]); the drells flew off because they had nowhere to nest [2], not because fishermen drove them away."
+              }
+            },
+            {
+              "id": "q10",
+              "passage": "p2",
+              "level": 2,
+              "skill": "choose the best supporting quotation",
+              "type": "mc",
+              "prompt": {
+                "A": "Part B: Which quotation from the article BEST supports the answer to Part A?",
+                "B": "Part B: Which line from the article BEST supports your Part A answer?"
+              },
+              "choices": {
+                "A": [
+                  "\"Islanders blamed the salt the storm had washed in.\" [3]",
+                  "\"By summer the planted reeds stood tall along the shore.\" [5]",
+                  "\"Some fishermen were glad.\" [2]",
+                  "\"The snails ate those too.\" [5]"
+                ],
+                "B": [
+                  "\"They believed drells ate young fish, though no one had ever seen one do it.\" [2]",
+                  "\"In 1960, fishermen counted dozens of drells eating young fish.\" [1]",
+                  "\"The fishermen's catch did not drop when the drells came back.\" [7]",
+                  "\"The fishermen chased the last drells off with nets.\" [2]"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 0
+              },
+              "why": {
+                "A": "Key: the planted reeds were eaten by the snails [5], so new plants could not last while the snails went uneaten. The salt line [3] backs \"salt left by the storm still killed young plants\"; \"Some fishermen were glad\" [2] backs \"the islanders did not want the drells back.\" \"By summer the planted reeds stood tall along the shore\" is unmatched (backs \"planting by hand worked for a while\"): the passage contradicts it; the real line in [5] is \"The snails ate those too,\" and shoots kept vanishing for five summers [6].",
+                "B": "Key: the belief had no sighting behind it [2]. \"The fishermen's catch did not drop\" [7] is real and backs \"true, though the harm to the fish was small.\" \"In 1960, fishermen counted dozens of drells eating young fish\" is unmatched (backs \"proved true\"): the passage contradicts it; the real line in [1] is \"At night it wades through the mud and eats kib snails,\" and [2] says no one had ever seen a drell eat a young fish. \"The fishermen chased the last drells off with nets\" is unmatched (backs \"drive the drells away\"): the real line in [2] is \"With nowhere to nest, the North Lagoon's drells flew off.\""
+              }
+            },
+            {
+              "id": "q11",
+              "passage": "p2",
+              "level": 2,
+              "skill": "infer why the author includes a detail",
+              "type": "mc",
+              "prompt": {
+                "A": "Why does the author say Selk went out after dark?",
+                "B": "Why does the article say the platforms were hidden in the last reed clumps?"
+              },
+              "choices": {
+                "A": [
+                  "to show she was searching for the drells that had left",
+                  "to show the shoots were being eaten at night",
+                  "to show that her water test had to be done at night",
+                  "to show she did not want the fishermen to see her"
+                ],
+                "B": [
+                  "because a storm like the one in 1961 might flatten them",
+                  "because snails could not climb into thick reeds",
+                  "because drells will nest only where reeds grow thick",
+                  "because hunting birds might spot them"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 2
+              },
+              "why": {
+                "A": "After dark, with a lamp, Selk saw the mud crowded with kib snails eating the new shoots down to the roots [4]; drells also feed at night [1]. Nothing says she was looking for drells; she tested the water before going out [4]; the fishermen are not in [4], and nothing says she hid from anyone.",
+                "B": "The drell \"nests only in thick reeds\" [1], and the last reed clumps [5] were the only reeds left standing to hide the platforms in. Nothing says the clumps sheltered the platforms from storms or that snails cannot climb reeds (they ate the shoots [4]); hunting birds are never mentioned."
+              }
+            },
+            {
+              "id": "q12",
+              "passage": "p2",
+              "level": 2,
+              "skill": "word meaning from context, with evidence",
+              "type": "short",
+              "prompt": {
+                "A": "What does \"thinner\" mean as it is used in paragraph 6? Quote a sentence from an earlier paragraph that helps show the meaning, and give its paragraph number.",
+                "B": "What does \"in use\" mean as it is used in paragraph 6? Give one detail from another paragraph that shows it happening, and give the paragraph number."
+              },
+              "answer": {
+                "A": "Fewer and more spread out, not crowded: \"The mud was crowded with kib snails, and they were eating the new shoots down to the roots.\" [4]",
+                "B": "Being used for nests; drells were nesting on the platforms: \"Two pairs of drells moved in the next spring.\" [5]"
+              },
+              "accept": {
+                "A": [
+                  "fewer / not as many snails, quoting the [4] sentence about the mud crowded with kib snails",
+                  "less crowded, spread out, with \"The mud was crowded with kib snails\" [4]"
+                ],
+                "B": [
+                  "had drells nesting on them; two pairs of drells moved in [5]",
+                  "being used by drells as nests, with the [5] detail about drells moving in"
+                ]
+              },
+              "why": {
+                "A": "Full credit: a meaning like \"fewer / less crowded\" plus the [4] sentence about the crowded mud. \"Skinnier\" is the everyday sense and does not fit. A meaning with no line from the passage earns at most half credit.",
+                "B": "Full credit: a meaning like \"had drells nesting on them\" plus the [5] detail of the two pairs moving in. \"Used by people\" or \"being fixed\" does not fit. A meaning with no detail from the passage earns at most half credit."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "CONSTRUCTED RESPONSE (4 points)",
+          "passage": "p1",
+          "directions": "Write your answer on the lines.",
+          "questions": [
+            {
+              "id": "q13",
+              "passage": "p1",
+              "level": 3,
+              "skill": "infer how a character changes (RACE)",
+              "type": "open",
+              "space": 4,
+              "prompt": {
+                "A": "How does Kiran change from the beginning of \"Biscuit\" to the end? Use RACE: R - Restate the question. A - Answer it. C - Cite two pieces of evidence with [paragraph numbers]. E - Explain how each piece of evidence proves your answer.",
+                "B": "How does the way Kiran treats Biscuit change from Monday to Wednesday evening? Use RACE: R - Restate the question. A - Answer it. C - Cite two pieces of evidence with [paragraph numbers]. E - Explain how each piece of evidence proves your answer."
+              },
+              "answer": {
+                "A": "Kiran changes from trying hard and loudly to win Biscuit over to being calm and patient. At first he calls and taps the bowl \"louder each time\" [2]. Later he \"did not reach for her\" [6], and he asks to come back [7].",
+                "B": "Kiran goes from chasing Biscuit with noise to leaving her alone and letting her come to him. He taps the bowl \"louder each time\" [2] and sings to her [4]; on Wednesday he \"did not reach for her\" and kept writing [6]."
+              },
+              "why": {
+                "A": "Score with the RACE CHECKLIST. Strong evidence: [2] or [4] for the start; [5], [6] or [7] for the end. The Explain row needs how each quote shows the change.",
+                "B": "Score with the RACE CHECKLIST. Strong evidence: [2] or [4] for Monday and Tuesday; [5] or [6] for Wednesday evening ([7] is Thursday, outside the question). The Explain row needs how each quote shows the change."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item": "rubric",
+      "title": "RACE CHECKLIST",
+      "rubric": {
+        "title": "RACE CHECKLIST",
+        "levelNames": [
+          "4 = Got it!",
+          "3 = Almost",
+          "2 = Started",
+          "1 = Not yet"
+        ],
+        "note": "Score: Add the four rows and divide by 4. I round up.",
+        "criteria": [
+          {
+            "name": "Restate",
+            "levels": [
+              "I turned the question into my first sentence.",
+              "I restated part of the question.",
+              "I copied the question word for word.",
+              "I did not restate the question."
+            ]
+          },
+          {
+            "name": "Answer",
+            "levels": [
+              "I answered every part of the question clearly.",
+              "I answered, but part of my answer is unclear.",
+              "My answer only partly fits the question.",
+              "I did not answer the question."
+            ]
+          },
+          {
+            "name": "Cite",
+            "levels": [
+              "I used two quotes, each with a [paragraph number].",
+              "I used two quotes, but one has no [paragraph number].",
+              "I used one quote.",
+              "I did not use any quotes."
+            ]
+          },
+          {
+            "name": "Explain",
+            "levels": [
+              "I explained how each quote proves my answer.",
+              "I explained one quote.",
+              "I said the quotes prove it but not how.",
+              "I did not explain my quotes."
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "checks": {
+    "blind": [
+      {
+        "round": 1,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 7,
+        "of": 10,
+        "passageFree": {
+          "A": {
+            "matched": 7,
+            "of": 10,
+            "confident": 5,
+            "cues": {
+              "item": 5,
+              "topic": 2
+            }
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs, cue tags, short answers against accept/why: none over half credit)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" A q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (topic): dying trees leave bare slopes; erosion silts streams and fish decline - general ecology"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" A q8",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (topic): ambrels eat grubs (q8 D grub shells, q11 C); trophic cascade: first effect is more grubs, tree damage comes later"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" A q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue (item): q10 choice A ('same dry summers, and its trees stayed green') is a control showing weather is not the cause"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" A q10",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue (item): the 'But ... same dry summers' sentence from paragraph 3 pairs directly with q9 D"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" A q11",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q8 D (grub shells in droppings) and q8 B (grubs underground) show ambrels hunt grubs below ground"
+          }
+        ]
+      },
+      {
+        "round": 1,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 9,
+        "of": 10,
+        "passageFree": {
+          "B": {
+            "matched": 9,
+            "of": 10,
+            "confident": 6,
+            "cues": {
+              "type": 2,
+              "item": 6,
+              "sounds": 1
+            }
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs, cue tags, short answers against accept/why: none over half credit)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" B q3",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q4 choice C, \"She stayed until he finished the last problem\" [6], shows Biscuit stayed by him during homework, which fits only A. B is the distractor built on the 'used to teach math' quote."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" B q4",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): Matches the A answer to q3; it is the only choice about Biscuit staying near him while he works."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" B q6",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): Beetles plus grubs in the soil; q10 D mentions 'grub shells' in paragraph 4. Eggshells and gulls belong to the egg plot, not the soil."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" B q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q10 B quotes paragraph 6: 'young hesk trees grow on the East Valley's lower slopes.' Roots holding soil is also general erosion knowledge (topic)."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" B q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q10 D (ambrel droppings full of grub shells) and the clearly built-up arc (removed lizard leads to grubs, then dying trees) point to the ambrels protecting the trees. The other choices are off-message."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"TROUBLE IN THE EAST VALLEY\" B q11",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (sounds): 'Why mention X' in an ecology article usually means showing the human cost. Muddy streams (q7) point to the fish being hurt, which matches B. A is the near rival."
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 8,
+        "of": 10,
+        "passageFree": {
+          "A": {
+            "matched": 8,
+            "of": 10,
+            "confident": 3,
+            "cues": {
+              "type": 1,
+              "item": 4,
+              "topic": 2,
+              "sounds": 1
+            }
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs, cue tags, short answers against accept/why: none over half credit)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q8",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q7 and q11 show the drells and their nesting are what brought the reeds back, and q10 C shows the shoots were eaten every summer (snails). B is the only choice that links reeds, drells and that chain."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q10 C (shoots came up each spring and were gone each summer) shows something besides the storm was at work, and the stem's 'expected' signals a surprise."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q10",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): The only quote that shows the reeds tried to come back but something kept removing them, which supports q9 D."
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 6,
+        "of": 10,
+        "passageFree": {
+          "B": {
+            "matched": 6,
+            "of": 10,
+            "confident": 2,
+            "cues": {
+              "sounds": 1,
+              "item": 4,
+              "topic": 1
+            }
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs, cue tags, short answers against accept/why: none over half credit)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q3",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q4 D: Biscuit sat beside him staring at the page as if checking his work [6], so company while he studies"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q4",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): only quote about homework or a page; matches q3 A"
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 9,
+        "of": 10,
+        "passageFree": {
+          "A": {
+            "matched": 9,
+            "of": 10,
+            "confident": 3,
+            "cues": {
+              "type": 1,
+              "item": 7,
+              "guess": 1
+            }
+          }
+        },
+        "gate": "fail",
+        "final": "whole-version probe after the last change (serves as the final probe)",
+        "scoredBy": "order lead (checks/score-blind.mjs, cue tags, short answers against accept/why: none over half credit)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q10 choice D 'The snails ate those too' and q11's shoots eaten at night point to snails eating the planted reeds."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q10",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): Only quote matching the snail chain other items describe; 'too' fits planted reeds."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q11",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): Snails eat shoots (q10 D, q9 A); a night trip reveals what was eating the shoots."
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 5,
+        "of": 10,
+        "passageFree": {
+          "B": {
+            "matched": 5,
+            "of": 10,
+            "confident": 2,
+            "cues": {
+              "item": 5
+            }
+          }
+        },
+        "gate": "fail",
+        "final": "whole-version probe after the last change (serves as the final probe)",
+        "scoredBy": "order lead (checks/score-blind.mjs, cue tags, short answers against accept/why: none over half credit)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): q10 A says 'no one had ever seen one do it' = only a guess; q10 C (catch didn't drop) backs it too."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q10",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue (item): Only quote that directly says the belief had no evidence; B contradicts it, D is about chasing."
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 Blind tester (ELA)",
+        "matched": 20,
+        "of": 20,
+        "note": "Phase b with the passages: every multiple-choice key matched (20 of 20); the 4 short answers match their key in substance (score-blind compares exact text). Phase a (no passages) saw both versions in one file, so it is not the gate.",
+        "passageFree": {
+          "A": {
+            "matched": 10,
+            "of": 10,
+            "confident": 4,
+            "shortOverHalf": "none likely (A q5, A q12 at most half)",
+            "cues": {
+              "item": 7,
+              "type": 1,
+              "guess": 2
+            }
+          },
+          "B": {
+            "matched": 7,
+            "of": 10,
+            "confident": 3,
+            "shortOverHalf": "B q12 likely (meaning + detail from B q8 stem; only the paragraph number missing)",
+            "cues": {
+              "item": 8,
+              "guess": 2
+            }
+          }
+        },
+        "byLevel": {
+          "L1": {
+            "items": 4,
+            "where": "A q1, A q6, B q1, B q6",
+            "meanConfidence": 5,
+            "tooEasy": 0
+          },
+          "L2": {
+            "items": 14,
+            "where": "q2, q4, q5, q7, q10, q11, q12 in each version",
+            "meanConfidence": 4.9,
+            "tooEasy": 0
+          },
+          "L3": {
+            "items": 8,
+            "where": "q3, q8, q9, q13 in each version",
+            "meanConfidence": 5,
+            "tooEasy": 2,
+            "steps": {
+              "A q3": "3 steps ([1] Dev comes Thursday, [3] Kiran's claim, [7] sees Dev); typical student ~50%, a real L3",
+              "A q8": "2-3 steps ([3] vs [4], [1] drells eat kibs; [8] nearly states it); typical student yes",
+              "A q9": "2 steps (author's purpose from [5]); typical student yes",
+              "A q13": "multi-step synthesis; typical student partial",
+              "B q3": "1 step ([6] to [7]); near literal, typical student yes: easier than A q3",
+              "B q8": "2 steps ([5] two pairs, [6] slow change; salt ruled out in [4]); typical student mostly",
+              "B q9": "1 step ([2] 'no one had ever seen one do it'); near literal, typical student yes",
+              "B q13": "2-3 steps comparing [2] with [5]-[6]; typical student partial"
+            },
+            "share": "4 of 13 per version (31%), meets the quiz 1-in-4 floor, but B's L3 is softer than A's"
+          }
+        },
+        "findings": [
+          {
+            "where": "version A (whole)",
+            "kind": "FIX",
+            "what": "No-passage solve: 10 of 10 mc right (4 at confidence 4-5), well over the 40% line. Main leaks: the A q9/A q10 pair, A q8 and A q11 all lean on the same snails-ate-the-shoots chain that the other items' choices spell out; A q1 is the story type's default (kid sets out to prove himself)."
+          },
+          {
+            "where": "version B (whole)",
+            "kind": "FIX",
+            "what": "No-passage solve: 7 of 10 mc right (3 at confidence 4-5), over the 40% line. Leaks: B q9/B q10 paraphrase pair, B q8 (taught by a B q7 wrong choice), and B q3/B q4 point at each other. B q1, B q6 and B q7 held up."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q9",
+            "kind": "FIX",
+            "what": "Part A key and Part B key are the only choices about snails, and Part B's key restates Part A's key, so the pair answers itself without the passage. Direction: give Part A a second wrong choice about snails or eaten shoots that misreads [5] (e.g. a timing or cause slip), and give Part B a real on-topic quote that supports that wrong choice, not an off-topic line like the fishermen one (A q10 C)."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q8",
+            "kind": "FIX",
+            "what": "Right at confidence 4 with no passage: A q9's key (snails went uneaten) plus the salt line in A q10 tell a test-taker the cause is missing birds. D (fish that ate snails) is a made-up idea no reader would choose. Direction: replace D with a misreading the passage supports, such as one built on the fishermen being glad the drells left [2]. Facts to check: the passage never says the fishermen drove them off."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q11",
+            "kind": "FIX",
+            "what": "Right at confidence 4 with no passage: every other A item about the article is about snails eating shoots, so B is the obvious pick. Direction: make one wrong choice another real use of the night trip in [4], such as seeing what the snails were doing to the roots versus how many there were, so the reader has to check [4]."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q9",
+            "kind": "FIX",
+            "what": "Part B key ('no one had ever seen one do it') is a near-paraphrase of Part A key D, so the pair gives itself away; also B q9 is close to literal ([2] says it outright) and too easy for L3. Direction: make Part A ask what the [7] catch data suggest about the belief (needs [2]+[7]), and give Part B a second real quote that fits a wrong choice."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q8",
+            "kind": "FIX",
+            "what": "B q7's wrong choice B (drells kept the snails off the young shoots) teaches the article's mechanism, and with 'first drells' in the stem, B (two pairs too few) is guessable at confidence 4. Direction: reword B q7 B to another misreading (not the drell-snail link), and give B q8 a second wrong choice tied to the birds, e.g. the drells nesting at first but not feeding nearby. Facts to check: the article doesn't say where the drells fed."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q12",
+            "kind": "FIX",
+            "what": "Can get more than half credit with no passage: 'in use' is the everyday sense, and B q8's stem prints a detail that shows it (the first drells moved onto the platforms). Only the paragraph number is missing. Direction: take the drells' move-in detail out of B q8's stem (e.g. ask about the five slow summers instead), or pick a phrase in [6] whose meaning in context isn't the everyday one."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q3",
+            "kind": "FIX",
+            "what": "Listed L3 but it is one step and close to literal ([6] she sat by him while he worked, so he offers to bring homework). Much easier than A q3, which needs three clues; B is easier than A at the same position. B q3/B q4 also point at each other in the no-passage solve. Direction: make B q3 an inference that needs two paragraphs (e.g. what Kiran learned about why Biscuit came to him, combining [2]/[4] with [5]-[6])."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q3",
+            "kind": "JUDGMENT",
+            "what": "Key C (he realizes Biscuit ate the food) is the best reading with [1]. But D, not wanting to blame Dev in front of him, is a defensible social reading of 'looked at Dev and stopped', and D's 'for the food in front of him' is unclear. Teacher decides: keep D and say C is better because of the Thursday note, or reword D so the passage rules it out (e.g. a motive that [7] contradicts)."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q10",
+            "kind": "JUDGMENT",
+            "what": "D (chased the last drells off with nets) is an unmatched quote, but the passage only weakly contradicts it ([2]: drells flew off because there was nowhere to nest; no nets are mentioned). Check that its why says unmatched and points to [2]; otherwise swap it for a real quote."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q7",
+            "kind": "JUDGMENT",
+            "what": "Key A (higher dunes) is stated in [2]. Some readers may infer D (farther from the open sea) from 'behind higher dunes'. The passage never says it, so it's probably fine, but the teacher may want D changed to something the passage rules out."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q12",
+            "kind": "JUDGMENT",
+            "what": "'Thinner' here means fewer/less crowded, which a non-reader can guess from everyday sense. Credit for the meaning alone should stay at half or less, with the rest for the [4] 'crowded with kib snails' quote. Check that accept/why name [4]."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q1",
+            "kind": "KEEP",
+            "what": "My no-passage guess (C) was the story-type default but only at confidence 2. With the passage it's solid ([1] 'perfect score'). Watch it if the final probe gets it at 4-5."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q4",
+            "kind": "KEEP",
+            "what": "Unmatched quote C (Dev's watering can by the bowl, [3]) is contradicted by [1]/[7] and is a good trap. B q4 A/B are also properly contradicted ([5] no energy for singing, [6] did not reach for her). One pair per passage per version: OK."
+          }
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "round": 1,
+        "agent": "🔎 Fact checker",
+        "claims": 162,
+        "flagged": 14,
+        "notes": "Adapted brief: p2 ('Trouble in the East Valley') is invented on purpose (owner's decision), so it was checked for INTERNAL consistency only, not against an outside reference. Claim count = 36 article claims (p2 [1] 5, [2] 7, [3] 5, [4] 9, [5] 4, [6] 5, [7] 1) + 26 keys + 26 'why' lines + 8 accept entries + 4 short-answer models + 2 RACE models + 60 wrong choices (10 MC x 3 x 2 versions). The article has no contradiction between paragraphs: timeline (hens about eighty years ago [2] -> ambrels hard to find within ten years [2] -> East trees die [3] -> Marrow digs in 1979 [4] -> 200 ambrels moved West to East in 1985 [6] -> young trees today [6]), places (ridge, East/West valleys), who did what (farmers paid children [2]; islanders blamed dry summers [3]; Marrow dug [4]; islanders carried ambrels [6]) and the cause chain (ambrels removed -> grubs -> roots chewed -> trees die -> soil washes -> fish scarce) all hold. Every 'why' quote and every Part B choice was compared word for word with the passage: all exact (q7 A uses a marked ellipsis). All four unmatched quotes are contradicted, not just missing, and their whys give the real line. Main problems are in the keys/whys: one false statement about Mrs. Abara's notes (q2 A), several 'why' or key lines that widen 'most likely' or say 'only' where the passage does not, two wrong choices that the passage arguably supports (q3 B choice B, q9 B choice A), and the shared q13 'why' allowing [7] for Version B. No sweep hits beyond those listed. Real-world check done from knowledge; no web search was run.",
+        "findings": [
+          {
+            "where": "q2 why.A",
+            "kind": "FIX",
+            "what": "'The notes only say she is shy [1]' is false. Mrs. Abara SAYS aloud that Biscuit is shy; the page of notes says 'Dev will come Thursday to water the plants.' Suggested direction: 'Mrs. Abara only tells him Biscuit is shy [1], and her note is about Dev's Thursday visit; nothing tells him to leave her alone.' Sweep: q2 why.B, q3 why.A and q4 why.A use 'note' correctly; no other place.",
+            "source": "p1 [1]"
+          },
+          {
+            "where": "q3 choices.B[1] ('Mrs. Abara used to teach and could help him with math.')",
+            "kind": "FIX",
+            "what": "This wrong choice is half true and the order of [7] supports it: she glances at his notebook and says 'I used to teach math, you know,' and Kiran then offers to bring his homework. The why's 'he never asks her for help' does not rule it out. Replace with a choice the passage contradicts or plainly does not support (direction: something tied to Dev or the plants, e.g. 'He wants to help Dev water the plants.'; facts to check: [7] only shows Dev watering, Kiran never offers to help). Sweep: q4 choices.B[0] '\"I used to teach math, you know.\" [7]' and q4 why.B 'backs \"Mrs. Abara will help him\"' must change with it.",
+            "source": "p1 [7]"
+          },
+          {
+            "where": "q8 answer B / choices.B[0] ('They kept going missing, since gulls were the real thieves.')",
+            "kind": "FIX",
+            "what": "Widens the passage: [4] says the eggs had 'most likely' been taken by gulls; the key makes it certain. Suggested: 'They kept going missing, since gulls were most likely taking them.' Sweep: q8 why.A and why.B, q6 why.B, q7 why.A keep the 'most likely' / 'likely' hedge; no other place.",
+            "source": "p2 [4]"
+          },
+          {
+            "where": "q8 why.B",
+            "kind": "FIX",
+            "what": "Two widenings. (1) 'ambrels crossed the ridge only when islanders carried them in 1985 [6], not on their own': the article never says ambrels could not cross on their own; it only describes the 1985 move. Direction: 'the only crossing the article describes is the 1985 move by islanders [6].' (2) 'The farmers expected the losses to stop [2]': [2] says they blamed the ambrels and paid for them to be caught; 'expected' is an inference. Direction: 'The farmers blamed the ambrels [2], but they had the wrong animal.'",
+            "source": "p2 [2], [6]"
+          },
+          {
+            "where": "q9 why.B",
+            "kind": "FIX",
+            "what": "'young trees grow back after ambrels return, not by hand planting [6]': [6] never says how the young trees came to grow, so 'not by hand planting' goes beyond it. Direction: 'the article never mentions planting trees by hand [6].'",
+            "source": "p2 [6]"
+          },
+          {
+            "where": "q9 choices.B[0] ('to point out that Marrow faulted the farmers for the loss')",
+            "kind": "FIX",
+            "what": "Arguably true: Marrow's line that the island 'paid its children to get rid of its gardeners' [7] is a criticism of what the islanders did, and in [2] it is the farmers ('they') who paid the children. The why's 'the article never shows her blaming farmers' does not hold up against the quote's tone. Replace with a choice the passage contradicts (direction: 'to point out that Marrow blamed the gulls for the dying trees'; facts to check: [4] links gulls only to the eggs).",
+            "source": "p2 [2], [7]"
+          },
+          {
+            "where": "q13 why (shared by A and B)",
+            "kind": "FIX",
+            "what": "'Strong evidence: ... [5], [6] or [7] for the end.' Version B asks about Monday to Wednesday evening, so [7] (Thursday) is outside the question for B. Make the why per version: A as written; B '[2] or [4] for the start; [5] or [6] for Wednesday evening.'",
+            "source": "p1 [5]-[7]"
+          },
+          {
+            "where": "q12 answer.B",
+            "kind": "FIX",
+            "what": "'stayed alive and common instead of dying off' adds 'common'; [6] says only 'Grubs held out for years.' Suggested: 'Kept going, stayed around instead of dying off; meanwhile some people called the plan a failure [6].' Minor, same kind: accept.B[1] 'people said the plan failed' could read 'some people said the plan failed', as in [6].",
+            "source": "p2 [6]"
+          },
+          {
+            "where": "q5 accept.A[1]",
+            "kind": "FIX",
+            "what": "'she slides away into the dark' adds a detail: in [4] her eyes watch him 'from the dark, then slid away'; where she goes is not stated. Suggested: 'she watches from the dark, then slides away'. Minor.",
+            "source": "p1 [4]"
+          },
+          {
+            "where": "q11 why.B",
+            "kind": "FIX",
+            "what": "'rain washed the soil in only because the roots were gone [5]': [5] gives the order (trees died, then rains washed soil) and says roots hold the soil, but not 'only because'. Drop 'only'. Minor.",
+            "source": "p2 [5]"
+          },
+          {
+            "where": "q8 prompt.A ('which change would most likely show up first?')",
+            "kind": "JUDGMENT",
+            "what": "'Show up' can mean 'be noticed'. In the East Valley the first thing people noticed was the trees dying [3]; the grubs were only found when Marrow dug in 1979 [4]. A careful reader could defend choice C. Suggest 'which change would most likely happen first?' so the key (more grubs) is the only fair answer.",
+            "source": "p2 [3], [4]"
+          },
+          {
+            "where": "q3 choices.A[0] and q4 choices.A[0]",
+            "kind": "JUDGMENT",
+            "what": "Choice A ('He does not want Dev to hear that he had any trouble') is not contradicted by the passage: [7] says only that he 'looked at Dev and stopped'. The key (Biscuit ate after all) is the better inference from [1]+[3]+[7], but the distractor is unrefuted, not false. Also, the Part B choice '\"then looked at Dev and stopped\" [7]' fits the key as well as choice A; the key line [1] is needed for the full inference, so it is still 'best'. Teacher to decide whether to keep.",
+            "source": "p1 [1], [3], [7]"
+          },
+          {
+            "where": "q10 choices.B[1] ('Today, though, young hesk trees grow on the East Valley's lower slopes' [6])",
+            "kind": "JUDGMENT",
+            "what": "This line also supports the Part A key (ambrels protected the trees): trees come back after the ambrels are returned in 1985 [6]. The key line [4] (droppings full of grub shells) is more direct, but the why's claim that [6] only 'backs \"plant new trees\"' undersells it. Consider a different distractor, or note in the why that [6] is weaker because it does not show what the ambrels ate.",
+            "source": "p2 [4], [6]"
+          },
+          {
+            "where": "passage p2 source (byline)",
+            "kind": "JUDGMENT",
+            "what": "The byline 'Written for this quiz. Corvan Island, its people and its animals are invented.' is clear. But the paragraphs themselves use real-looking years (1979, 1985) and 'about eighty years ago', so without the byline the article reads as real history. Confirm the byline prints on the student page next to the passage, not only in the data.",
+            "source": "p2 source field"
+          },
+          {
+            "where": "passage p2, all paragraphs (internal consistency)",
+            "kind": "KEEP",
+            "what": "No paragraph contradicts another. Dates and order: hens ~80 years ago [2], ambrels scarce within 10 years [2], then trees die [3], 1979 dig [4], 1985 move [6], today [6]. Places: East Valley = bounty, dying trees, grubs, washed soil, regrowth; West Valley = few farms, left alone, green trees, few grubs, ambrel source for 1985. 'Both valleys were once covered' [1] is consistent: the East lost its cover, so 'both' is no longer true. Marrow's 'the island' [7] is figurative and fine.",
+            "source": "p2 [1]-[7]"
+          },
+          {
+            "where": "passage p2 (real-world check)",
+            "kind": "KEEP",
+            "what": "Corvan Island, the hesk tree, the ambrel, the lomas beetle and Ilse Marrow are not real places, species or people known to me. 'Lomas' is a real Spanish word (and a name for Peruvian fog-hill habitats), but there is no well-known 'lomas beetle'. Gulls, hens and a 'cold northern sea' are generic. The bounty-and-backlash pattern echoes real cases in general, but no specific real event is named or retold.",
+            "source": "p2 [1], [4]"
+          },
+          {
+            "where": "q4 and q10 Part B keys and unmatched quotes (both versions)",
+            "kind": "KEEP",
+            "what": "Every Part B key is an exact quote and proves its Part A key: q4 A '\"Dev will come Thursday to water the plants.\" [1]'; q4 B '\"She stayed until he finished the last problem.\" [6]'; q10 A '\"But the West Valley had the same dry summers, and its trees stayed green.\" [3]'; q10 B '\"she found ambrel droppings full of grub shells\" [4]'. All four unmatched quotes are contradicted by the passage, and each why gives the real line: 'Nothing had spilled.' [3]; 'He shook the food bag and tapped the bowl with a spoon, louder each time.' [2]; 'A rocky ridge splits it into two valleys, East and West.' [1] (and [3]: same dry summers); 'A gray lizard called the ambrel lives among their roots.' [1].",
+            "source": "p1 [1]-[3], [6]; p2 [1], [3], [4]"
+          },
+          {
+            "where": "q1, q2 B, q5 B, q6, q7, q11 A, q12 A, q13 answers",
+            "kind": "KEEP",
+            "what": "Keys say no more than the passage, whys quote it exactly, and no wrong choice is true by the passage. Checked: q1 A ('She won't touch anything I give her' [3]), q1 B ('Or you're loud' [4]), q2 B ('like a test' [1]), q5 B model and accepts ([2]), q6 A/B ([2], [4]), q7 A/B ([5], [6]; ellipsis marked), q11 A ('hunt by smell under the ground' [4]), q12 A model and both accepts (exact [4] sentences), q13 A/B models ('louder each time' [2], 'did not reach for her' [6], 'sang to her' [4]).",
+            "source": "p1 [1]-[7]; p2 [2], [4]-[6]"
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🔎 Fact checker",
+        "claims": 166,
+        "flagged": 9,
+        "notes": "Adapted brief, round 2. p2 is now 'The Reeds of the North Lagoon' (Vessa Island, invented on purpose, the owner's decision). Following the brief, I checked it only against itself. Claim count = 46 article claims (p2 [1] 8, [2] 9, [3] 5, [4] 7, [5] 6, [6] 6, [7] 3, [8] 2) + 20 MC keys + 4 short-answer models + 2 RACE models + 26 'why' lines + 8 accept entries + 60 wrong choices (10 MC x 3 x 2 versions) = 166. No paragraph of the article contradicts another. The timeline holds: storm in winter 1961 [2] -> shoots fail each summer [3] -> Selk tests in 1968 [4] -> hand planting, then platforms in 1971, first pairs the next spring (1972) [5] -> five slow summers -> reeds back by 1980 [6]. The q8 B prompt's '1972' is worked out correctly from [5]. I compared every 'why' quote and every Part B choice with the passage word for word, and all are exact. All 4 Part B keys are exact and prove their Part A keys. Three of the four unmatched quotes are contradicted by the passage. The fourth (q4 A, 'friend's house on Tuesday night') is only missing, not contradicted. All round 1 story findings are fixed. All round 1 article findings are marked fixed with 'article replaced'. New problems: one false 'why' line in the story (q3 why.A), one unmatched quote that the passage doesn't contradict (q4 A), one prompt that assumes something the article never says (q8 A), one 'why' that denies a comparison [3] does make (q9 why.A), and three small widenings. Style only, not a fact issue: q9 why.B's third sentence starts lowercase and repeats the second. I didn't run a web search. The real-name check below is from memory.",
+        "findings": [
+          {
+            "where": "q3 why.A (Version A) ('He never leaves her alone for a night (he comes each day, Monday to Wednesday [2]-[6])')",
+            "kind": "FIX",
+            "what": "This is false by the passage. Kiran is a visiting pet sitter who goes home: he eats dinner with Tam on Monday [3] and talks with Tam on Tuesday [4]. So Biscuit is alone every night. That makes the wrong choice 'He remembers that he left her all alone one whole night' arguably true, not wrong for the reason the 'why' gives. Direction: replace the choice with one the passage contradicts, for example 'He sees that Biscuit is hiding from Dev.' Facts to check: [7] Biscuit 'was curled on the armchair, watching him'. Then rewrite this line of the 'why' to match. Sweep: q4 choices.A[0] and q4 why.A change with it (next finding). No other place says he never leaves her.",
+            "source": "p1 [2]-[4], [7]"
+          },
+          {
+            "where": "q4 choices.A[0] (Version A unmatched quote '\"Kiran stayed at a friend’s house on Tuesday night.\" [4]') and q4 why.A",
+            "kind": "FIX",
+            "what": "This unmatched quote is missing from the passage, not contradicted by it. [4] shows Kiran at the apartment on Tuesday and talking with Tam, but never says where he spent the night. So the 'why' line 'on Tuesday he was at the apartment singing to her [4]' doesn't rule it out. Replace it along with the q3 A choice, using a quote the passage contradicts. Example direction, if the q3 choice becomes 'hiding from Dev': '\"Biscuit ran under the bed when Dev came in.\" [7]'. Real line: 'Biscuit was curled on the armchair, watching him.' [7]. Facts to check: [7].",
+            "source": "p1 [4], [7]"
+          },
+          {
+            "where": "q8 prompt.A, answer.A and why.A (Version A)",
+            "kind": "FIX",
+            "what": "The prompt asks why the South Lagoon's reeds 'stay healthy after 1961'. The article never says so: [2] says only that the South 'lost only a few' in the storm, and nothing later describes the South's reeds or drells. The key ('enough reeds for its drells to stay') is a two-step inference built on a premise the text doesn't give. Also, why.A cites 'so its drells had nests and stayed to eat the kibs [1]', but [1] says nothing about the South's drells. Its 'kibs ate every shoot [4]' widens [4], which says they were 'eating the new shoots down to the roots'. Direction, either (a) add one sentence to the article, e.g. at the end of [4]: 'In the South Lagoon, where the drells had stayed, the reeds were as thick as ever.' (facts to check: consistent with [2] 'lost only a few' and [1] 'nests only in thick reeds'; it does not clash with [5] or [6]), or (b) reword the prompt to 'The South Lagoon lost only a few reeds in the storm. Based on the article, what would most likely happen to its drells?' (key: 'They would stay, because they still had thick reeds to nest in.'). Either way, change 'every shoot' to 'the new shoots'.",
+            "source": "p2 [1], [2], [4]"
+          },
+          {
+            "where": "q9 why.A (Version A) and q9 choices.A[0] ('to show that the 1961 storm was worse than any before it')",
+            "kind": "FIX",
+            "what": "why.A says 'The article never compares the 1961 storm with all earlier ones'. That's wrong: [3] says the reeds came back 'as they had after smaller storms', which does call the earlier storms smaller. So part of the wrong choice is supported by the text. It is still wrong as the author's purpose, but a student who reads [3] closely can defend it. Direction: replace the choice with a purpose the passage contradicts, e.g. 'to show that the storm hit the South Lagoon hardest' (facts to check: [2] the South 'lost only a few'). Fix the 'why' to match. Sweep: q10 why.A says the [2] storm line 'backs \"worse than any before\"' and must change with the choice.",
+            "source": "p2 [2], [3]"
+          },
+          {
+            "where": "q8 why.B (Version B) ('the snails were thinner only once every platform was in use, by 1980 [6]')",
+            "kind": "FIX",
+            "what": "'Only once' widens [6]. It says that by 1980 every platform was in use and the snails were thinner, not that one waited on the other. Suggested: 'by 1980 every platform was in use and the snails were thinner [6]'. Minor.",
+            "source": "p2 [6]"
+          },
+          {
+            "where": "q11 why.B (Version B) ('so the platforms went where reeds were still thick [5]')",
+            "kind": "FIX",
+            "what": "[5] says 'the last reed clumps', not that the reeds there were still thick. The drells had flown off 'with nowhere to nest' [2], so the clumps may not have been thick. The key ('drells will nest only where reeds grow thick') is a fair inference from [1]. The 'why' just shouldn't put 'still thick' in [5]. Suggested: 'so the platforms went into the last reed clumps [5], the only reeds left'. Minor.",
+            "source": "p2 [1], [2], [5]"
+          },
+          {
+            "where": "q10 why.A (Version A) label",
+            "kind": "FIX",
+            "what": "The 'why' says the salt line [3] backs 'salt was killing the reeds', but the q9 A choice it pairs with reads 'to show that salt had poisoned the lagoon'. Make the label match the choice's wording. Minor, not a fact error.",
+            "source": "pack q9 choices.A[2]"
+          },
+          {
+            "where": "q8 choices.B[0] ('Salt from the 1961 storm was still in the mud.') with q8 why.B; also q7 why.A on choices.A[2]",
+            "kind": "JUDGMENT",
+            "what": "Both 'why' lines answer salt choices with 'Selk found the water no saltier [than the South's] [4]'. In q8 B, Selk tested the water, not the mud. In q7 A the choice compares the lagoon with 'the years after the storm', not with the South. Both choices stay wrong, because [4] and [8] put the cause on the snails and the missing birds. But the 'why' doesn't quite refute the choice as worded. Suggested: change q8 B to '...was still in the water' so [4] answers it directly. In q7 why.A, say the article never ties salt to the fish catch.",
+            "source": "p2 [4], [7], [8]"
+          },
+          {
+            "where": "passage p2 source (byline)",
+            "kind": "JUDGMENT",
+            "what": "Same concern as round 1, now about the new article. The byline says it is invented, but the paragraphs use real-looking years (1961, 1968, 1971, 1980) and a named teacher, so without the byline it reads as real history. Confirm the byline prints next to the passage on the student page.",
+            "source": "p2 source field"
+          },
+          {
+            "where": "passage p2, all paragraphs (internal consistency)",
+            "kind": "KEEP",
+            "what": "No paragraph contradicts another. Dates and order: 1961 storm [2]; shoots fail each spring and summer [3]; 1968 test [4]; hand planting, then 1971 platforms, first pairs the next spring [5]; five slow summers, then by 1980 the reeds are back [6]. Places: North = flattened, drells gone, snails crowded, platforms, regrowth; South = higher dunes, lost only a few, used as Selk's salt comparison. Who did what: the storm flattened the reeds; the drells flew off; some fishermen were glad; islanders blamed salt; Selk tested and found the snails; islanders planted by hand; Selk's students built the platforms. Cause chain: storm -> no nests -> drells leave -> snails unchecked -> shoots eaten -> reeds stay down. Platforms bring drells back -> fewer snails -> reeds return -> young fish shelter. This matches Selk's quote [8]. Two points I checked and kept: (1) drells 'nest only in thick reeds' [1] yet use wooden platforms, which is fine because the platforms sit inside reed clumps [5]; (2) 'last reed clumps' [5] after the reeds were 'flattened' [2] is fine, because 'flattened' doesn't mean every clump died.",
+            "source": "p2 [1]-[8]"
+          },
+          {
+            "where": "passage p2 (no real place, species or event)",
+            "kind": "KEEP",
+            "what": "No real island, species, person or event is named. Vessa Island, tolla reeds, the drell, the kib snail and Hana Selk are not real islands, species or people that I know of. Two near-misses, both fine: 'Vessa' is also the name of a real village on Chios, Greece, but not an island. 'Tolla' is a village in Corsica, not a plant. The 1961 storm is unnamed and generic. The story pattern (predator lost -> grazers strip the marsh -> predator returns) echoes real marsh ecology in general, but no real case is retold.",
+            "source": "p2 [1]-[8]"
+          },
+          {
+            "where": "Part B keys and unmatched quotes: q4 B, q10 A, q10 B",
+            "kind": "KEEP",
+            "what": "Every Part B key is an exact quote that proves its Part A key: q4 A '\"Dev will come Thursday to water the plants.\" [1]'; q4 B '\"Biscuit sat beside him, staring at the page as if she were checking his work.\" [6]'; q10 A '\"Each spring, green shoots poked up from the mud, and each summer they were gone.\" [3]'; q10 B '\"They believed drells ate young fish, though no one had ever seen one do it.\" [2]'. The other unmatched quotes are contradicted, and each 'why' gives the exact real line. q4 A, Biscuit hides/keep quiet: the real [1] line is 'Biscuit is shy with new people...', and she sits beside him in [6]. q4 B, purred when he sang: [4] 'Two green eyes watched him from the dark, then slid away.' q4 B, wanted Dev to see: in [3] he says 'She won't touch anything I give her.' q10 A, many years: [3] 'Everyone expected the reeds to come back in a year or two, as they had after smaller storms.' q10 B, hunts young fish: [1] 'At night it wades through the mud and eats kib snails' and [2] 'no one had ever seen one do it.' The q4 A unmatched quote is the exception (finding above).",
+            "source": "p1 [1], [3], [4], [6]; p2 [1]-[3]"
+          },
+          {
+            "where": "q1, q2, q3 B, q5, q6, q7, q9 B, q11 A, q12, q13 (both versions)",
+            "kind": "KEEP",
+            "what": "In these items, keys say no more than the passage, the 'why' lines quote it exactly, and no wrong choice is true by the passage. q1 A/B: [3], [4]. q2 A/B: [5]; 'Nothing had spilled.' [3]. q3 B: [6], [7]. Biscuit missing Mrs. Abara is contradicted, since Mrs. Abara is home in [7]. q5 models and accepts: [4], [2], quoted exactly. q6 A/B: [5]. q7 A: [6], [7]. q7 B: [2]; 'much less salty' is contradicted by [4]. q9 B: [2], [7]. q11 A: [6]. q12 A: the exact [4] sentence. q12 B: [3], [4], [6]. q13 models: 'louder each time' [2], 'did not reach for her' [6].",
+            "source": "p1 [1]-[7]; p2 [1]-[7]"
+          },
+          {
+            "round": 1,
+            "where": "q2 why.A",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. It now reads 'Mrs. Abara says Biscuit is shy [1], and the written note is about Dev's Thursday visit; nothing tells him to leave her alone.' This matches [1].",
+            "source": "p1 [1]"
+          },
+          {
+            "round": 1,
+            "where": "q3 choices.B[1] ('Mrs. Abara used to teach and could help him with math.')",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. The choice is replaced by 'He thinks Biscuit misses Mrs. Abara and needs a friend', which [7] contradicts because she is home. The q4 B '\"I used to teach math\"' choice is gone too.",
+            "source": "p1 [7]"
+          },
+          {
+            "round": 1,
+            "where": "q13 why (shared by A and B)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. The 'why' is now written per version. B says '[5] or [6] for Wednesday evening ([7] is Thursday, outside the question)'.",
+            "source": "p1 [5]-[7]"
+          },
+          {
+            "round": 1,
+            "where": "q5 accept.A[1]",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. It now reads 'she watches him, then slides away', with no 'into the dark'.",
+            "source": "p1 [4]"
+          },
+          {
+            "round": 1,
+            "where": "q3 choices.A[0] and q4 choices.A[0]",
+            "kind": "JUDGMENT",
+            "fixed": true,
+            "what": "Confirmed fixed: the 'does not want Dev to hear' choice is gone. Its replacement has a new problem, recorded this round in the q3 why.A and q4 choices.A[0] findings.",
+            "source": "p1 [7]"
+          },
+          {
+            "round": 1,
+            "where": "q4 and q10 Part B keys and unmatched quotes (both versions)",
+            "kind": "KEEP",
+            "fixed": true,
+            "what": "The story half was rechecked this round (see the round 2 Part B KEEP and the q4 A FIX). The article half: article replaced.",
+            "source": "p1; p2"
+          },
+          {
+            "round": 1,
+            "where": "q1, q2 B, q5 B, q6, q7, q11 A, q12 A, q13 answers",
+            "kind": "KEEP",
+            "fixed": true,
+            "what": "The story items were rechecked this round (see the round 2 KEEP). The article items: article replaced.",
+            "source": "p1; p2"
+          },
+          {
+            "round": 1,
+            "where": "q8 answer B / choices.B[0] (gulls)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "q8 why.B (ambrels crossed the ridge; farmers expected)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "q9 why.B (not by hand planting)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "q9 choices.B[0] (Marrow faulted the farmers)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "q12 answer.B (stayed alive and common)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "q11 why.B (only because the roots were gone)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "q8 prompt.A ('show up first')",
+            "kind": "JUDGMENT",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "q10 choices.B[1] (young hesk trees [6])",
+            "kind": "JUDGMENT",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "passage p2 source (byline)",
+            "kind": "JUDGMENT",
+            "fixed": true,
+            "what": "article replaced (the same concern is raised again for the new article this round)",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "passage p2, all paragraphs (internal consistency)",
+            "kind": "KEEP",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          },
+          {
+            "round": 1,
+            "where": "passage p2 (real-world check)",
+            "kind": "KEEP",
+            "fixed": true,
+            "what": "article replaced",
+            "source": "p2 (old)"
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🔎 Fact checker",
+        "claims": 118,
+        "flagged": 3,
+        "notes": "Round 3 recheck, adapted brief. p2 (Vessa Island) is invented on purpose, so I checked it only against itself. No passage sentence changed: both passages match the round 2 text word for word, so I didn't need a new cross-paragraph check. I checked every changed item in both versions: A q1-q4, q6-q12 and B q2-q4, q8-q12. Claim count = 22 keys and models + 66 wrong choices + 22 'why' lines + 8 Part B quotes. Results: every key says no more than its passage. Every 'why' quote and every Part B choice is exact. All 4 Part B keys are exact and prove their Part A keys: q4 A [1], q4 B [6], q10 A [5], q10 B [2]. All 5 unmatched quotes are contradicted by the passage, and each 'why' gives the real line. No wrong choice is true by the passage, except for one judgment call (A q3 D). All 9 round 2 findings are fixed except the byline JUDGMENT, which carries over. I found 2 new minor FIXes, both in 'why' lines. Sweep: the 'left standing' wording appears only in q11 why.B. The 'drells also feed at night' clause appears only in q11 why.A. I didn't run a web search; none was needed.",
+        "findings": [
+          {
+            "where": "q11 why.A (Version A) ('drells also feed at night [1]')",
+            "kind": "FIX",
+            "what": "The clause is true ([1] 'At night it wades through the mud'), but it argues for the wrong choice 'searching for the drells that had left'. It hands a student a reason to pick that rival. Direction: delete the clause. The key needs only [4].",
+            "source": "p2 [1], [4]"
+          },
+          {
+            "where": "q11 why.B (Version B) ('the only reeds left standing')",
+            "kind": "FIX",
+            "what": "'Standing' widens [5], which says only 'the last reed clumps'. [6] says reeds 'stood again' only by 1980. Minor. Suggested: 'the last reed clumps [5] were the only reeds left to hide the platforms in'.",
+            "source": "p2 [5], [6]"
+          },
+          {
+            "where": "q3 choices.A[3] ('He does not want to blame Dev for the food in front of him.') and q4 choices.A[2]",
+            "kind": "JUDGMENT",
+            "what": "Kiran 'looked at Dev and stopped' [7]. That fits a reading where he still believes Dev tossed the food but won't say so to Dev's face. The passage doesn't rule this out. The 'why' line's 'nothing to blame him for' assumes he already sees the key. It stays wrong only because [1] shows Dev wasn't coming until Thursday, and that is the same step the key uses. The key is still the stronger reading. The unmatched quote 'Dev's watering can' [3] is contradicted only by the same inference from [1], not by a line in the passage. The teacher can accept it, or drop 'for the food' to weaken the rival.",
+            "source": "p1 [1], [3], [7]"
+          },
+          {
+            "where": "passage p2 source (byline)",
+            "kind": "JUDGMENT",
+            "sameAs": "round 2 byline JUDGMENT",
+            "what": "No change. The source still says the island and its animals are invented. Confirm that the byline prints next to the passage on the student page.",
+            "source": "p2 source field"
+          },
+          {
+            "where": "Changed items, both versions (A q1-q4, q6-q12; B q2-q4, q8-q12)",
+            "kind": "KEEP",
+            "what": "Every key is backed. A q1 [1]; A q2 [5]; B q2 [3]; A q3 [1], [3], [7]; B q3 [6], [7]; A q6 [5]; A q7 [1], [2], [5]; A q8 [2]-[4]; B q8 [5], [6]; A q9 [4], [5]; B q9 [2], [7]; A q11 [4]; B q11 [1], [5]; A q12 [4]; B q12 [5]. Each unmatched quote is contradicted, with the real line quoted. q4 A 'watering can' [3]: the note in [1] and the real [3] line. q4 B 'rubbed her head' [6]: 'Kiran did not reach for her.' q4 B 'sang softly' [5]: 'no energy for singing'. q10 A 'stood tall' [5]: 'The snails ate those too.' q10 B 'counted dozens' [1]: 'eats kib snails' and the [2] line. q10 B 'chased ... with nets' [2]: 'flew off'. The real but non-key quotes back their rivals: the shy line, the armchair line, the salt line, 'Some fishermen were glad.', 'She misses Mrs. Abara...', and 'catch did not drop'.",
+            "source": "p1; p2"
+          },
+          {
+            "round": 2,
+            "where": "q3 why.A (Version A)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. The 'left her alone one night' choice and its 'why' are gone.",
+            "source": "p1"
+          },
+          {
+            "round": 2,
+            "where": "q4 choices.A[0] (friend's house)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. It was replaced by a contradicted quote (see the JUDGMENT above on how strongly).",
+            "source": "p1 [1], [3]"
+          },
+          {
+            "round": 2,
+            "where": "q8 prompt.A, answer.A and why.A",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. The South premise is gone and 'every shoot' is now 'the new shoots'. The new key rests on [2]-[4].",
+            "source": "p2 [2]-[4]"
+          },
+          {
+            "round": 2,
+            "where": "q9 why.A / choices.A[0] (storm worse than any)",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. The choice is gone and the q10 why.A label changed with it.",
+            "source": "p2 [3]"
+          },
+          {
+            "round": 2,
+            "where": "q8 why.B ('only once')",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. It now reads 'by 1980 every platform was in use and the snails were thinner on the mud [6]'.",
+            "source": "p2 [6]"
+          },
+          {
+            "round": 2,
+            "where": "q11 why.B ('still thick')",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. A new small widening ('left standing') is logged above.",
+            "source": "p2 [5]"
+          },
+          {
+            "round": 2,
+            "where": "q10 why.A label",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Confirmed fixed. The label 'salt left by the storm still killed young plants' matches the choice.",
+            "source": "pack q9 choices.A[1]"
+          },
+          {
+            "round": 2,
+            "where": "q8 choices.B[0] salt / q7 why.A",
+            "kind": "JUDGMENT",
+            "fixed": true,
+            "what": "Confirmed fixed. q8 B now says 'water', so [4] answers it directly. q7 A was rewritten, and its salt rival is now answered by 'the kibs crowded the mud' [4].",
+            "source": "p2 [4]"
+          },
+          {
+            "round": 2,
+            "where": "passage p2 source (byline)",
+            "kind": "JUDGMENT",
+            "what": "Carried over to round 3 (sameAs).",
+            "source": "p2 source field"
+          }
+        ]
+      }
+    ],
+    "wilco": [
+      {
+        "check": "keys",
+        "round": 1,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-07T17:27:59.595Z",
+        "rows": 26,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 1,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-07T17:27:59.662Z",
+        "questions": 20,
+        "chance": 0.25,
+        "worst": [
+          [
+            "largest",
+            0.333
+          ],
+          [
+            "specific",
+            0.317
+          ],
+          [
+            "converge",
+            0.3
+          ]
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" (all versions)",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "RACE CHECKLIST",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "no-passage",
+        "round": 1,
+        "agent": "🤖 Wilco (no-passage bots)",
+        "at": "2026-11-07T17:27:59.716Z",
+        "questions": 20,
+        "worst": [
+          "echo",
+          0.25
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B",
+            "n": 10,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" (all versions)",
+            "n": 20,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "log": [
+    {
+      "at": "—",
+      "who": "🧭 Order lead",
+      "what": "Receive order and owner's decision \"try c\"; commit maker.md v6; rebuild maker inputs (onboarding.json from the order's records, teacher's go, open FIX list). Not measured.",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 0
+    },
+    {
+      "at": "—",
+      "who": "🧭 Order lead",
+      "what": "Runner test",
+      "minutes": 0.1,
+      "tokens": null,
+      "cost": 0.11,
+      "round": 0
+    },
+    {
+      "at": "—",
+      "who": "📝 Maker",
+      "what": "Round 1: kept the story (trimmed 374 to 350 words); new invented article \"Trouble in the East Valley\" (316 words); 10 multiple choice + 2 short + RACE per version. Cap $4.10",
+      "minutes": 10.1,
+      "tokens": 1661588,
+      "cost": 2.42,
+      "round": 1
+    },
+    {
+      "at": "17:27",
+      "who": "🤖 Wilco",
+      "what": "Scripts: keys, test-wise bots, no-passage bots. All three pass (recorded as round 1; the pack shows the later article title). Not measured",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 1
+    },
+    {
+      "at": "—",
+      "who": "🔎 Fact checker",
+      "what": "Round 1: invented article checked against itself only. 14 flagged: 10 FIX, 4 JUDGMENT",
+      "minutes": 2.8,
+      "tokens": 339109,
+      "cost": 0.77,
+      "round": 1
+    },
+    {
+      "at": "—",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 1, version A: 7 of 10 right without the passage. Fail",
+      "minutes": 0.8,
+      "tokens": 191504,
+      "cost": 0.32,
+      "round": 1
+    },
+    {
+      "at": "—",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 1, version B: 9 of 10 right without the passage. Fail",
+      "minutes": 1,
+      "tokens": 247971,
+      "cost": 0.37,
+      "round": 1
+    },
+    {
+      "at": "—",
+      "who": "📝 Maker",
+      "what": "Round 2 redesign: article rewritten as \"The Reeds of the North Lagoon\" (322 words) to break the familiar cause chain. Cap $3.50",
+      "minutes": 10.8,
+      "tokens": 3594658,
+      "cost": 2.98,
+      "round": 2
+    },
+    {
+      "at": "—",
+      "who": "🔎 Fact checker",
+      "what": "Round 2 on the rewritten article: 7 new FIX, 2 new JUDGMENT; the round 1 items were confirmed gone with the old article",
+      "minutes": 2.9,
+      "tokens": 458791,
+      "cost": 0.87,
+      "round": 2
+    },
+    {
+      "at": "—",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 2, version A: 8 of 10 right without the passage. Fail",
+      "minutes": 0.9,
+      "tokens": 244714,
+      "cost": 0.34,
+      "round": 2
+    },
+    {
+      "at": "—",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 2, version B: 6 of 10 right without the passage. Fail",
+      "minutes": 0.7,
+      "tokens": 190513,
+      "cost": 0.3,
+      "round": 2
+    },
+    {
+      "at": "—",
+      "who": "📝 Maker",
+      "what": "Round 3 FIX (last round): answer pairs made symmetric (A q1, q2, q6, q7, q8, q11, q12; B q2, q8, q12 reworked); fact FIX applied. Cap $2.75",
+      "minutes": 7.3,
+      "tokens": 1598198,
+      "cost": 1.88,
+      "round": 3
+    },
+    {
+      "at": "—",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 3, version A, whole version, final: 9 of 10 right without the passage. Fail",
+      "minutes": 0.9,
+      "tokens": 192688,
+      "cost": 0.33,
+      "round": 3
+    },
+    {
+      "at": "—",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Round 3, version B, whole version, final: 5 of 10 right without the passage. Fail",
+      "minutes": 0.9,
+      "tokens": 295263,
+      "cost": 0.37,
+      "round": 3
+    },
+    {
+      "at": "—",
+      "who": "🔎 Fact checker",
+      "what": "Round 3 recheck: earlier FIX confirmed fixed; 2 new minor FIX, 2 JUDGMENT",
+      "minutes": 1.8,
+      "tokens": 476612,
+      "cost": 0.68,
+      "round": 3
+    },
+    {
+      "at": "—",
+      "who": "🙈 Blind tester (ELA)",
+      "what": "Round 3 keyless solve of both versions: 20 of 20 keys confirmed; 7 FIX, 4 JUDGMENT, 2 KEEP",
+      "minutes": 3.7,
+      "tokens": 633717,
+      "cost": 1.02,
+      "round": 3
+    },
+    {
+      "at": "—",
+      "who": "🧭 Order lead",
+      "what": "Score probes, close the order: gate still open after 3 rounds; records filed under attempts/try-c. No preview sent to the teacher, no approval. Not measured",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    }
+  ],
+  "audit": {
+    "notes": [
+      "Open for the teacher: the no-passage gate fails for both versions after 3 rounds. In the final probes, version A got 9 of 10 right without the passage and version B got 5 of 10 (the line: 5 or more of 10 fails, so each version needed 4 or fewer). Still open: 2 small fact FIX (A q11 and B q11, in the \"why\" lines) and 7 FIX from the keyless solve (answer pairs A q9/q10 and B q9/q10 give each other away; A q8, A q11 and B q8 can be guessed from other items; B q12 fits an everyday meaning; B q3 is easier than A q3). Four JUDGMENT questions are also open, including whether the \"invented place\" line in the byline is enough. This pack is not ready to hand out as final.",
+      "What this attempt tried (owner's decision \"try c\"): an invented nonfiction article instead of a real-world one, and at least 8 multiple choice per version (10 were made). No preview was sent to the teacher and there is no approval, so there is no final section.",
+      "Round 1: the maker kept the story \"Biscuit\" (374 to 350 words) and wrote \"Trouble in the East Valley\" (316 words). The fact checker found no contradictions in the article (checked against itself, since it is invented) and flagged 14 items: 10 FIX, 4 JUDGMENT. No-passage probe: A 7 of 10, B 9 of 10. Cues were mostly other items giving the answer away (A 5, B 6), some general topic knowledge (A 2), plus 2 by question type and 1 by sound in B. Fail.",
+      "Round 2: the maker threw out the article and wrote \"The Reeds of the North Lagoon\" (322 words), built so the familiar cause chain does not work (storm, not hunting; salt blamed wrongly; hand planting first). The fact checker confirmed the round 1 items gone with the old article and found 7 new FIX and 2 JUDGMENT. Probe: A 8 of 10, B 6 of 10. Cues: other items 4 + 4, topic 2 + 1. Fail.",
+      "Round 3 (last round allowed): the maker made the answer pairs symmetric and applied the fact FIX. Fact recheck: 7 of the round 2 FIX and 1 JUDGMENT confirmed fixed, 2 new minor FIX, 2 JUDGMENT. Final whole-version probes: A 9 of 10 (other items 7, question type 1, guess 1), B 5 of 10 (other items 5). No short answer got more than half credit in any probe (the keyless solver thinks B q12 might). Fail.",
+      "Keyless solve (both versions, with passages): 20 of 20 multiple-choice keys confirmed and the 4 short answers match in substance. It logged 13 items: 7 FIX, 4 JUDGMENT, 2 KEEP (the open ones are listed above).",
+      "Fact checks in all: 3 checks, 14 + 9 + 3 new items flagged (round 1: 10 FIX, 4 JUDGMENT; round 2: 7 FIX, 2 JUDGMENT; round 3: 2 FIX, 2 JUDGMENT). Every FIX from rounds 1 and 2 is fixed or replaced; the 2 new in round 3 are open. The byline JUDGMENT was raised in each round and is still open.",
+      "Wilco: one run is in the record (keys, test-wise bots, no-passage bots), all passing. Worst test-wise bot: largest-choice picked the key 33.3% of the time, chance 25%. No-passage bots: worst was echo at 25%, equal to chance. Keys: 26 rows, 0 errors. The record has no separate before/after runs for rounds 2 and 3, so no before/after figures are given. Note that the bots pass while the model probes fail: the model probes catch answers that follow from other items, which the bots do not.",
+      "Time and cost (exact: each from its own session record; the tokens are the sessions' reported totals, with no input/output/cache split in the hand-off, and reported tokens can understate billed use, so the dollars are the figure to trust): agent minutes 44.7; tokens 10,125,326; cost $12.77 from the rows (the lead logged $12.76; the 1 cent is rounding). That includes the lead's runner test, 0.1 minute and $0.11. Wall-clock time cannot be given: the hand-off has no start and end times, only one Wilco timestamp (17:27 UTC). The lead's own steps are not measured.",
+      "Running cost against the budget: the order's budget is $16.50 (165 tokens x $0.10) and the hard stop for this attempt was $15. After round 1: $4.00. After round 2: $8.49. After round 3: $12.77. That is 77% of the budget, under the hard stop and well under 2x, so no cost stop was hit. Each maker stayed under its cap ($2.42 of $4.10; $2.98 of $3.50; $1.88 of $2.75). Cost per version: about $6.39 (half of the total).",
+      "Hours worked in plain terms: 14 sessions across 3 rounds, 8 of them checks that tried to answer the questions without the passage or without the key. Round 3 made the 3 rounds' best result for A but B's gate result got better too (9, 6, then 5 of 10); A went the other way (7, 8, then 9 of 10).",
+      "Hidden sample stays hidden. This attempt's records go to samples/g7-ela2/attempts/try-c/; the earlier g7-ela2 pack stays the sample. A fresh auditor writes the proposals."
+    ],
+    "briefChanges": [
+      {
+        "file": "agents/maker.md",
+        "from": 5,
+        "to": 6,
+        "why": "owner decision try c (b): keep at least 8 mc a version when a word-in-context item becomes a short answer"
+      }
+    ]
+  }
+}
