@@ -82,12 +82,17 @@ from general knowledge. So:
 1. **Plan the passage and the questions together (passage-first design).** Before writing the passage, list each
    question's skill, its key reading and **2–3 rival readings a careless reader of this passage would make**; write the
    passage so details support each rival reading (a red herring per inference question, a character's mistaken belief
-   in her own words), and the key wins only on a close read. Every wrong choice is one of those readings.
+   in her own words), and the key wins only on a close read. Every wrong choice is one of those readings. **Write the
+   reading a non-reader would guess from the story type** ("the shy cat warms up", "she misses her owner"): it is a
+   backed rival, never the key (g7-ela2 remake: A q1 was the genre's default, r3 and final).
 2. **Unfamiliar topics.** Fiction: invented people, places and events, nothing a student could know. Nonfiction: a
    case or angle a grade-level student won't know (a little-known place, study or person), not the textbook example of
    the idea (keystone species → otters and kelp); when the teacher's notes name the familiar example, use a less
    familiar one of the same idea and say so in your hand-off. Ask about this passage's particulars (what it says
-   happened, in what order, why this author says so), never a fact general knowledge answers.
+   happened, in what order, why this author says so), never a fact general knowledge answers. **A word-in-context item
+   uses a word the passage uses in a less common sense, and all four choices are real senses that fit the sentence**; if
+   no such word exists, ask it as a short answer (g7-ela2 remake: "cropped", "living", "slip" answered from everyday
+   use, 6 probe hits in 4 rounds).
 3. **The stem never quotes or names the deciding detail**, and no item answers another (Part B retelling Part A, a later
    stem stating an earlier key, the same quote in two items).
 4. **Few pairs, more short answers that cite.** At most **one Part A/Part B pair per passage**. Put the evidence skill in
@@ -101,14 +106,22 @@ from general knowledge. So:
    tell real from unmatched, so matching quotes to choices stops working; a reader who checks the passage can. Rules:
    an unmatched quote is never a variation of the key's own line (the converge bot, and a reader comparing the two);
    its `why` says "unmatched" and gives the real line; every other wrong quote is real and backs one of Part A's wrong
-   readings; no quote, real or unmatched, is printed in two items of a version. Cite paragraphs the same way on every
+   readings; **every quote is as much about the stem's subject as the key, so the key is never the only quote that names
+   it** (g7-ela2 remake: B q8/q9's [3] quote, three rounds); no quote, real or unmatched, is printed in two items of a
+   version. Cite paragraphs the same way on every
    choice and spread the keys' paragraph numbers (the number bots read them).
 6. **Check, don't re-draft.** Run `node checks/no-passage.mjs pack.json` with the other checks until it exits 0 (rule 6).
    Read each version once without the passage and write what you'd answer: over 4 of 10 right, fix those items once,
    then hand off. Your self-read is a screen, not the check (g7-ela2 round 2: you read 4, the fresh probe got 8): the
-   fresh no-passage probe decides (`agents/blind-ela.md`, mode 1), so don't spend the cap on more drafts.
+   fresh no-passage probe decides (`agents/blind-ela.md`, mode 1), so don't spend the cap on more drafts. **A cue the
+   FIX list names leaves the whole version** (every stem and choice); rewording around it is not a fix (g7-ela2 remake:
+   the "empty bowl" idea moved from A q3 to q2 and stayed through round 3).
 7. A passage you write is about 250–350 words at the order's reading level, goes in the pack's `passages` field
-   (docs/PACK-FORMAT.md, "Passages") and says it was written for this quiz.
+   (docs/PACK-FORMAT.md, "Passages") and says it was written for this quiz; give each passage's word count in every
+   hand-off. **A key or `why` says no more than the passage** (no widening of its claim: g7-ela2 remake, "compare places
+   with the same weather" became "the weather is the same on both sides" in 3 places, fact FIX).
+8. **A plan line that contradicts this brief** (in `onboarding.json` or the teacher's notes) is a JUDGMENT in your
+   hand-off, never a silent pick (g7-ela2 remake: "every Part B choice is a real sentence" against rule 5).
 
 ## Other kinds (docs/KINDS-MATH.md, KINDS-GAMES.md, KINDS-APPS.md)
 - **Math:** all math in LaTeX (`$…$`; money as `\$12`); graphs as data (`figure: {graph}`), the asked element hidden;
@@ -135,7 +148,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 4** (Nov 7, 2026)
+**Version 5** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -156,3 +169,8 @@ have it) and the number of questions per document.
   textbook example (g7-ela2 otters and kelp answered from general knowledge); run `checks/no-passage.mjs`; one self-read,
   then hand off (g7-ela2 round 2 self-read 4 vs probe 8; round 1 four internal drafts, $7.32); passages in the
   `passages` field; a dollar cap and save early (g7-ela2 makers $21.95 of $26.21; a 10-minute runner limit lost $0.43).
+- v5, Nov 7, 2026 (remake audit, docs/audits/AUDIT-2026-11-07-ela-remake.md, adopted by the owner): the story type's
+  default reading is a rival, never the key; word-in-context items use a less common sense with four real senses; every
+  Part B quote as on-topic as the key; a named cue leaves the whole version; a key or `why` says no more than the passage
+  and hand-offs give word counts; a plan line that contradicts the brief is a JUDGMENT (g7-ela2 remake: probes A 8, 6, 5,
+  6 and B 7, 8, 7, 6 of 8; 3 fact FIX; story 395 words).

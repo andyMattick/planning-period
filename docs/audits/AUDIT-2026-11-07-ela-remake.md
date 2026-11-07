@@ -5,7 +5,7 @@ For the owner. Written by a fresh 🔎 auditor (`agents/auditor.md` v3), who wro
 `onboarding.json`, `FOLLOW-UP.md` and the "go" answer, the lead's two FIX lists, the makers' three hand-offs, the eight
 probe notes, `agents/*.md`, `docs/RUNBOOK.md` and the last audit (`AUDIT-2026-11-07-ela.md`). No teacher comments (a
 made-up teacher; the sample stopped at the preview, so there is no `approval.json`). **The owner asked for proposals
-only: no brief, check or pack was changed.** Every change below is a proposal for the owner.
+only; on Nov 7 the owner adopted all of section 5 (see there).**
 
 ## 1. Cost against the budget
 
@@ -76,7 +76,10 @@ What the probes' right answers came from, final round (8 mc a version):
   evidence for the owner to weigh a separate rule for it. Until then, the brief fix is item types: ask about this
   article's build and claims, never a cause-and-effect an informed adult already knows.
 
-## 5. Proposed brief changes (none made)
+## 5. Brief changes: proposed, then ADOPTED by the owner (Nov 7, 2026)
+
+**Adopted as proposed** (owner, Nov 7, 2026): `agents/maker.md` v5, `agents/onboarding.md` v7, `agents/blind-ela.md` v4,
+each with a change-log line citing this audit. Round 4 of this order ran under them (section 10).
 
 | File | Version | Rule, in one sentence | Cause |
 |---|---|---|---|
