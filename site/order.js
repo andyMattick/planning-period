@@ -270,7 +270,7 @@
 
     $('items').innerHTML = menu.items.map(function (it) {
       return '<div class="card" data-item="' + esc(it.id) + '">' +
-        '<label class="pick"><input type="checkbox" value="' + esc(it.id) + '"><span><b>' + esc(it.label) + '</b></span></label>' +
+        '<label class="pick"><input type="checkbox" value="' + esc(it.id) + '">' + paperIcon(it.id) + '<span><b>' + esc(it.label) + '</b></span></label>' +
         '<p class="detail">' + esc(it.detail) + '</p>' +
         '<div class="tags"><span class="tag cost">' + it.tokens + ' tokens</span>' +
         (it.versions ? '<span class="tag ab">A/B versions</span>' : '') +
@@ -282,7 +282,7 @@
 
     $('extras').innerHTML = menu.extras.map(function (x) {
       return '<div class="card" data-extra="' + esc(x.id) + '">' +
-        '<label class="pick"><input type="checkbox" value="' + esc(x.id) + '"><span><b>' + esc(x.label) + '</b></span></label>' +
+        '<label class="pick"><input type="checkbox" value="' + esc(x.id) + '">' + paperIcon(x.id) + '<span><b>' + esc(x.label) + '</b></span></label>' +
         '<p class="detail">' + esc(x.detail) + '</p>' +
         '<div class="tags"><span class="tag cost">' + (x.tokens ? x.tokens + ' tokens' : 'Included') + '</span></div></div>';
     }).join('');
@@ -318,6 +318,28 @@
       card.classList.toggle('on', e.target.checked);
       renderCost();
     });
+  }
+
+  // Small paper-style icons for the menu, so it reads like a catalog of classroom documents.
+  var PAPER_KIND = { worksheet: 'lines', notes: 'lines', homework: 'lines', studyguide: 'lines', bellringer: 'lines',
+    quiz: 'checks', readingquiz: 'checks', test: 'checks', versions: 'checks',
+    slides: 'screen', quizshow: 'screen', rubric: 'grid', crossword: 'grid', wordsearch: 'grid', logicpuzzle: 'grid',
+    project: 'stack', unitpack: 'stack', unitfull: 'stack',
+    reviewgame: 'device', reviewapp: 'device', interactive: 'device', practicegame: 'device', styleSetup: 'pen' };
+  var PAPER_GLYPH = {
+    lines: '<path d="M10 17h16M10 22h16M10 27h16M10 32h10"/>',
+    checks: '<rect x="9.5" y="15.5" width="5" height="5" rx="1"/><path d="M17 18h9"/><rect x="9.5" y="25.5" width="5" height="5" rx="1"/><path d="M10.5 28l1.6 1.6 3-3.6M17 28h9"/>',
+    screen: '<rect x="8.5" y="16.5" width="19" height="13" rx="1.5"/><path d="M15 33h6M18 29.5V33"/>',
+    grid: '<path d="M9.5 15.5h17v17h-17zM9.5 21.2h17M9.5 26.8h17M15.2 15.5v17M20.8 15.5v17"/>',
+    stack: '<path d="M9 18h18M9 23h18M9 28h18M9 33h18"/><path d="M6 8v34h24" opacity=".55"/>',
+    device: '<rect x="12.5" y="14.5" width="11" height="19" rx="2"/><path d="M16.5 30.5h3"/>',
+    pen: '<path d="M11 32l2-6 11-11 4 4-11 11z"/><path d="M21 18l4 4"/>'
+  };
+  function paperIcon(id) {
+    var k = PAPER_KIND[id] || 'lines';
+    return '<span class="paper p-' + k + '" aria-hidden="true"><svg viewBox="0 0 36 44" width="36" height="44">' +
+      '<path class="sheet" d="M4.5 2.5h19l8 8v31h-27z"/><path class="fold" d="M23.5 2.5v8h8"/>' +
+      '<g class="glyph" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + PAPER_GLYPH[k] + '</g></svg></span>';
   }
 
   function qtyUnit(id) {
@@ -412,6 +434,12 @@
         '<td class="n">' + (l.tokens ? l.tokens + ' tokens' : 'included') + '</td></tr>';
     }).join('') : '<tr><td class="muted">Nothing picked yet</td><td class="n">0</td></tr>') +
       '<tr class="total"><td>Total</td><td class="n">' + sum + ' tokens</td></tr>';
+    // The summary card (desktop: right column) and the phone's bottom bar show the same total.
+    var sl = $('sum-lines');
+    if (sl) sl.innerHTML = lines.length ? lines.map(function (l) {
+      return '<li><span>' + esc(l.label) + (l.quantity > 1 ? ' × ' + l.quantity : '') + '</span><span class="n">' + (l.tokens ? l.tokens : 'incl.') + '</span></li>';
+    }).join('') : '<li class="muted">Nothing picked yet</li>';
+    document.querySelectorAll('[data-sum-total]').forEach(function (el) { el.textContent = sum + ' tokens'; });
     return sum;
   }
 
@@ -653,7 +681,9 @@
   $('order').insertBefore(dots, steps[0]);
   var wnav = document.createElement('div');
   wnav.className = 'wizard-nav';
-  wnav.innerHTML = '<button type="button" class="btn" data-back>Back</button><button type="button" class="btn primary" data-next>Next</button>';
+  wnav.innerHTML = '<button type="button" class="btn" data-back>Back</button>' +
+    '<button type="button" class="wiz-total" data-jump-send aria-label="Token total: go to step 5, review cost and send"><span class="small">Total</span><b data-sum-total>0 tokens</b></button>' +
+    '<button type="button" class="btn primary" data-next>Next</button>';
   $('order').appendChild(wnav);
 
   function showStep(i, focus) {
@@ -672,6 +702,12 @@
   }
   window.PPShowStep = function (i) { showStep(i, true); };
   dots.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) showStep(Number(b.getAttribute('data-go')), true); });
+  document.addEventListener('click', function (e) {
+    var j = e.target.closest('[data-jump-send]'); if (!j) return;
+    e.preventDefault();
+    if (document.body.classList.contains('wizard')) showStep(steps.length - 1, true);
+    else { var h = $('s5-h'); h.setAttribute('tabindex', '-1'); h.scrollIntoView({ block: 'start', behavior: 'smooth' }); h.focus({ preventScroll: true }); }
+  });
   wnav.addEventListener('click', function (e) {
     if (e.target.closest('[data-back]')) showStep(current - 1, true);
     if (e.target.closest('[data-next]')) showStep(current + 1, true);
