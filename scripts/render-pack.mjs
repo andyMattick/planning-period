@@ -15,7 +15,7 @@ import { slug, questionsOf, layoutOf, scrubSecrets, cleanSvg, kindOf } from './r
 import { copyHtml, rubricHtml, handoutHtml, cardsHtml, footerTemplate, headerTemplate, watermark, PREVIEW_MARK } from './render/html.mjs';
 import { copyDocx, rubricDocx } from './render/docx.mjs';
 import { deckPptx } from './render/pptx.mjs';
-import { auditHtml, tptHtml } from './render/audit.mjs';
+import { auditHtml } from './render/audit.mjs';
 import { reviewHtml, STATEMENT } from './render/review.mjs';
 import { mathPngMaker, setMathEnabled } from './render/math.mjs';
 import { GAME_KINDS, renderGame } from './render/games.mjs';
@@ -210,11 +210,6 @@ export async function renderPack(folder, { mode } = {}) {
       fs.writeFileSync(path.join(outDir, 'REVIEW.html'), reviewHtml(pack, ctx, pdfs, packHashOf(pack)));
       files = [...made.map((m) => m.file), 'REVIEW.html'];
     } else {
-      const wantsTpt = [...(order.items || []), ...(order.extras || [])].includes('tpt');
-      if (wantsTpt) {
-        const sellable = made.filter((m) => !/^AUDIT/.test(m.file)).map((m) => m.file);
-        await pdf('SELL-IT-ON-TPT.pdf', tptHtml(pack, ctx, sellable), 'Sell it yourself', 'A one-page guide to selling this pack on Teachers Pay Teachers');
-      }
       write('project.json', JSON.stringify(scrubSecrets(pack), null, 2) + '\n', 'This pack as data: upload it again to change it, reprint it or make new versions');
       const readme = [
         `${brand.name}: your pack`,

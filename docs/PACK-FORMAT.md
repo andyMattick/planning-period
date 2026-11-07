@@ -89,7 +89,7 @@ All optional; a pack without them renders the same as before.
 | Field | What |
 |---|---|
 | `date` | The order date shown on the audit report (else `order.date`, else the date in `id`, else today) |
-| `order.extras` | Extras from `menu.json` (`"tpt"` here or in `order.items` adds `SELL-IT-ON-TPT.pdf`) |
+| `order.extras` | Extras from `menu.json` |
 | `style.layout` | Exact layout choices, when the notes aren't enough: `nameBox` (bool), `boldDirections` (bool), `fields` (`["Name","Date","Period"]`), `numbering` (`"1."` or `"1)"`), `choiceStyle` (`"A."`, `"A)"`, `"(A)"`), `fontSize` (pt), `workLines` (work lines under a numeric question). Without it the renderer reads the notes: "box" + "name" gives a name box, "show work" gives 3 work lines |
 | `style.font` | Used first; PDFs fall back to Liberation Sans / Arial / DejaVu Sans (or a serif stack for a serif font). Word files name the teacher's font |
 | `style.accent` | Darkened until it reads as text on white and prints well in grayscale; color is never the only signal |
@@ -189,7 +189,7 @@ node scripts/render-pack.mjs <folder> --final    # only with a matching approval
   - **I agree — release my files** (only when every box is ticked and a name is typed) saves `approval-<order id>.json`:
     `{orderId, name, date (ISO), statement (the exact agreement text), packHash, documents:[{file, title, sha256}]}`,
     one entry per preview PDF with the SHA-256 of the file they saw.
-- No Word, PowerPoint, `project.json`, README or TPT guide: nothing editable leaves before sign-off.
+- No Word, PowerPoint, `project.json` or README: nothing editable leaves before sign-off.
 
 **2. Final** → `<folder>/out/` and `<folder>/out.zip`
 
@@ -212,7 +212,6 @@ The final has no watermark and has every file below; `README.txt` and the audit 
 | `AUDIT-REPORT.pdf` | The reporter's report: what each agent did, every round, every catch and fix, time and cost |
 | `project.json` | The pack itself, so the teacher can upload it again to change, reprint or make new versions |
 | `README.txt` | What's inside, the AI notice, "check before students see it", and the delete notice |
-| `SELL-IT-ON-TPT.pdf` | Only if `order.items` or `order.extras` has `"tpt"` |
 
 `<doc>` is the document title in lowercase with dashes (`Ratios Quiz` → `ratios-quiz`). Every PDF is Letter size with
 page numbers and a footer: the brand short name and "Made with AI · check before use". A sample:

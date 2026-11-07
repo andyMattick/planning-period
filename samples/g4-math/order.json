@@ -8,7 +8,7 @@
     "subject": "math",
     "topic": "Multi-step word problems with multiplication and division (remainders)",
     "items": ["worksheet", "quiz"],
-    "extras": ["tpt"],
+    "extras": [],
     "requests": "Real-world stories, please (our farm stand, the co-op, trips). Level 3 needs two steps. In each level, put one problem where the remainder changes the answer: round up, drop it, or the remainder is the answer.",
     "itemRequests": {
       "worksheet": "About 12 problems, easiest first. Leave room to show work.",
@@ -20,8 +20,7 @@
   },
   "lines": [
     { "id": "worksheet", "label": "Worksheet with answer key", "quantity": 1, "tokensEach": 30, "tokens": 30 },
-    { "id": "quiz", "label": "Quiz with A/B versions", "quantity": 1, "tokensEach": 40, "tokens": 40 },
-    { "id": "tpt", "label": "Sell-it-yourself guide (TPT)", "quantity": 1, "tokensEach": 0, "tokens": 0, "extra": true }
+    { "id": "quiz", "label": "Quiz with A/B versions", "quantity": 1, "tokensEach": 40, "tokens": 40 }
   ],
   "tokenTotal": 70,
   "replyTo": "lindqvist.homeschool@example.com",
