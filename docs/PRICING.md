@@ -63,7 +63,7 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
 | `reviewapp` | 60 | $6.00 | $3–5 (**guess**) | the content (cards, steps, practice) plus a tested offline app template; checked like a quiz and opened in a browser test (added Nov 5, 2026) |
 | `interactive` | 45 | $4.50 | $2.5–3.5 (**guess**) | a worksheet's content plus accepted answer forms and hints, built on the Pet World note-sheet engine; browser-tested (added Nov 5, 2026) |
 | `practicegame` | 70 | $7.00 | $3–6 (**guess**) | about 20 questions checked like a quiz, plus a tested game template skinned with the theme and a browser test; recalibrate after the first ones (added Nov 5, 2026) |
-| `tpt`, `styleSetup` (extras) | 0 | — | about $0.5–1.5 for style setup, once | the first order's style notes, carried by the order |
+| `styleSetup` (extra) | 0 | — | about $0.5–1.5 for style setup, once | the first order's style notes, carried by the order |
 
 **Owner decisions flagged by this table:**
 1. **`unitpack` at 220 tokens has no margin.** À la carte, a 4-lesson pack is 4 × 25 + 4 × 30 + 40 + 25 + 70 = 355

@@ -1,4 +1,4 @@
-// AUDIT-REPORT.pdf and SELL-IT-ON-TPT.pdf. Every number here is counted from the pack: nothing is estimated or rounded up.
+// AUDIT-REPORT.pdf. Every number here is counted from the pack: nothing is estimated or rounded up.
 // Display formats are the same everywhere: minutes to 1 decimal, money to 2, percents whole (util.mjs).
 
 import { esc, money, int, mins, pct, questionsOf, inkAccent, fontStack } from './util.mjs';
@@ -404,38 +404,4 @@ function exampleTitle(pack) {
   const topic = String(o.topic || '').replace(/\b([a-z])([a-z]{3,})/g, (m, a, b) => a.toUpperCase() + b);
   const ab = docs.some((d) => (d.versions || []).length > 1) ? ' with A/B Versions' : '';
   return [o.grade && `Grade ${o.grade}`, topic, what].filter(Boolean).join(' ') + ab;
-}
-
-export function tptHtml(pack, ctx, sellable) {
-  const o = pack.order || {};
-  const body = `<div class="brand"><span>${esc(ctx.brand.name)} · Sell it yourself</span><span>${esc(pack.id || '')}</span></div>
-  <h1 style="font-size:22pt;margin-top:12pt">Selling this pack on Teachers Pay Teachers</h1>
-  <p class="for" style="margin-bottom:8pt">A practical guide. It isn't legal advice, and TPT's rules can change, so check them before you list.</p>
-  <div class="two">
-  <div>
-    <h3 style="margin-top:2pt">1. Make sure it's yours to sell</h3>
-    <ul><li>Sell it only if the source you uploaded is your own work (your notes, your old worksheets) or material you have the rights to sell.</li>
-    <li>If it came from a textbook, a bought curriculum or someone else's product, don't sell it: that material belongs to them.</li>
-    <li>Some schools and districts have rules about selling material made for your job. Check yours.</li></ul>
-    <h3>2. Check it first</h3>
-    <ul><li>Read every question and key yourself. The agents checked it, but you're the one putting your name on it.</li>
-    <li>Try it with students once if you can, and fix anything that confused them.</li></ul>
-    <h3>3. What to upload</h3>
-    <ul>${sellable.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>
-    <p class="muted">Leave out AUDIT-REPORT.pdf, project.json and README.txt: they're for you.</p>
-  </div>
-  <div>
-    <h3 style="margin-top:2pt">4. How to describe it</h3>
-    <ul><li>Title: grade, topic and type, for example "${esc(exampleTitle(pack))}".</li>
-    <li>Say exactly what's inside: page counts, versions, that keys are included.</li>
-    <li>Use a student page for the preview, never the key.</li>
-    <li>Only list standards you've checked the pack really covers.</li>
-    <li>Price it by looking at similar listings. We don't guess sales or prices.</li></ul>
-    <h3>5. Say it was made with AI</h3>
-    <p>Put a line like this in your description:</p>
-    <div class="summary" style="font-size:10.5pt">"This resource was drafted with AI tools from my own teaching materials, then reviewed and edited by me."</div>
-    <p>Keep the "Made with AI" footer on the pages. Before you list, <b>read TPT's current policy on AI-made resources</b> (in their seller help pages and terms) and follow it: it may ask for a specific disclosure or a setting on the listing.</p>
-  </div></div>
-  <div class="notice">${esc(ctx.brand.aiNotice)}</div>`;
-  return `<!doctype html><html><head><meta charset="utf-8"><title>Sell it on TPT</title><style>${css(ctx)}</style></head><body>${body}</body></html>`;
 }

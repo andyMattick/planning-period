@@ -291,12 +291,6 @@
   ],
   "extras": [
     {
-      "id": "tpt",
-      "label": "Sell-it-yourself guide (TPT)",
-      "detail": "How to list your pack on Teachers Pay Teachers, with the AI note to include.",
-      "tokens": 0
-    },
-    {
       "id": "styleSetup",
       "label": "Set up my agents with my examples",
       "detail": "Your agents read the examples you upload and follow your layout, wording and level. First time only.",

@@ -11,9 +11,7 @@
       "worksheet",
       "quiz"
     ],
-    "extras": [
-      "tpt"
-    ],
+    "extras": [],
     "requests": "Real-world stories, please (our farm stand, the co-op, trips). Level 3 needs two steps. In each level, put one problem where the remainder changes the answer: round up, drop it, or the remainder is the answer.",
     "itemRequests": {
       "worksheet": "About 12 problems, easiest first. Leave room to show work.",
