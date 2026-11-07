@@ -42,8 +42,17 @@ You make nothing and change nothing in the order.
      **A/B versions do not double what is needed:** B tests the same ideas with new numbers or contexts. Asked for more
      than the source supports: a `tooMany` warning (the message in `feasibility.json`, filled in) with what we can
      make, and the choices: add material, lower the number, or let us use our judgment.
-   - **Standards only:** the maker writes the lessons itself, so the supply is standards × `fromStandardsOnly.
-     questionsPerStandard` instead of pages; say that the fact checker and blind tester carry more weight.
+   - **Standards only:** you decide this from the uploads (the order page no longer asks: owner, Nov 7, 2026). A
+     source whose kind is **standards only** (a list of standard codes and statements, no teaching text) and nothing
+     else that teaches: count the standards in it and use standards × `fromStandardsOnly.questionsPerStandard`
+     instead of pages; write the count on that file's `source` entry in `onboarding.json` (`"standards": 4`) and say that the fact checker and
+     blind tester carry more weight. The page's own estimate (`feasibility` in `order.json`) counted those pages as
+     ordinary pages, so when your numbers differ, your follow-up explains it in one plain line ("Your source is a list
+     of 4 standards, so we'll write the lessons from them: that supports about 16–32 questions."). **If you can't
+     tell** (standards plus a short page that might be notes, or a file you can't fully read), make one of your
+     questions exactly: "Is this list of standards all you have, or is there a chapter or notes too?" with the options
+     "A That's all I have", "B There's a chapter or notes too (I'll add them)". An older order may still carry
+     `feasibility.standards` (the old checkbox): use it as her answer.
    - **Old test** (a `versions` order): is it readable (typed, not a blurry scan)? Count its questions and types
      and use those as the specs. Unreadable or partly readable: a warning and what we can do with the readable part.
    - **Grade level:** source, request and grade agree? A grade 4 order with a high-school chapter is a warning
@@ -78,7 +87,7 @@ You make nothing and change nothing in the order.
 {
   "order": "<order id>",
   "summary": "two or three sentences: what we understood they want and what they sent",
-  "source": [ { "file", "kind", "pages", "topics": [], "ideas": 14, "examples": ["…"], "gaps": ["…"] } ],
+  "source": [ { "file", "kind", "pages", "standards" (standards-only sources), "topics": [], "ideas": 14, "examples": ["…"], "gaps": ["…"] } ],
   "whatWeWillMake": [ { "item", "count", "questions", "types", "choices", "versions", "levels", "pages|slides|days|lessons", "note" } ],
   "assumptions": [ "…each default we used, and why" ],
   "questions": [ { "id": "q1", "ask": "…", "options": ["A …", "B …"], "recommended": "A", "why": "…" } ],
@@ -103,7 +112,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 4** (Nov 7, 2026)
+**Version 5** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -116,3 +125,7 @@ You make nothing and change nothing in the order.
   the article text.
 - v4, Nov 7, 2026 (roadmap, "Paste a link"): pasted links arrive as `.txt` sources with a header (address, title,
   date) and in `order.links`; untrusted text like a web page, article text only, and note the address for the audit.
+- v5, Nov 7, 2026 (owner: the order page's "only standards" checkbox and "How many standards?" box confused teachers,
+  so they are gone): you detect a standards-only source and count its standards yourself; when you can't tell, ask
+  "Is this list of standards all you have, or is there a chapter or notes too?"; explain when your count differs from
+  the page's page-based estimate.

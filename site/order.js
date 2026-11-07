@@ -73,7 +73,7 @@
       tag.textContent = !r ? 'reading…' : r.pages != null ? 'about ' + pagesText(r.pages) : 'pages unknown';
     });
     var unknown = files.sources.filter(function (f) { var r = estOf(f); return r && r.pages == null; });
-    $('ask-pages-wrap').hidden = !unknown.length || $('standards-only').checked;
+    $('ask-pages-wrap').hidden = !unknown.length;
     $('ask-pages-names').textContent = unknown.map(function (f) { return f.name; }).join(', ');
   }
   function pagesText(p) { var n = Math.max(1, Math.round(p)); return n + (n === 1 ? ' page' : ' pages'); }
@@ -82,20 +82,18 @@
   // Each item draws on the material at its own rate: math practice (worksheet, homework, bell ringers) at
   // mathPracticePerPage when the subject is math, everything else at questionsPerPage (feasibility.json).
   // The range shown is for the mix asked: units ÷ Σ(share ÷ rate), so "asked ≤ high" means the mix fits.
-  function rateFor(id, standards) {
-    if (standards) {
-      var per = (feas && feas.fromStandardsOnly && feas.fromStandardsOnly.questionsPerStandard) || [4, 8];
-      return { low: per[0], high: per[1] };
-    }
+  // A source that is only standards is counted in pages here like any other; the onboarding agent spots it, counts the
+  // standards (feasibility.fromStandardsOnly) and its follow-up explains (owner, Nov 7, 2026: no checkbox on the page).
+  function rateFor(id) {
     var mpp = feas && feas.mathPracticePerPage;
     if (mpp && $('subject').value === 'math' && (mpp.appliesTo || []).indexOf(id) >= 0) return { low: mpp.low, high: mpp.high, math: true };
     var qpp = (feas && feas.questionsPerPage) || { low: 6, high: 10 };
     return { low: qpp.low, high: qpp.high };
   }
-  function feasRows(standards) {
+  function feasRows() {
     var d = (feas && feas.defaults) || {}, lim = (feas && feas.limits) || {};
     return pickedIds().filter(function (id) { return PPFeas.COUNTS_QUESTIONS[id]; }).map(function (id) {
-      var r = rateFor(id, standards), q = PPFeas.questionsFor(id, picked[id].spec, d[id]);
+      var r = rateFor(id), q = PPFeas.questionsFor(id, picked[id].spec, d[id]);
       var range = lim[id] && lim[id].questions;
       return { id: id, label: itemById(id).label, n: q, qty: picked[id].qty, rlow: r.low, rhigh: r.high, math: !!r.math,
         min: Math.min(q, range ? range[0] : 1) };
@@ -104,21 +102,14 @@
   function useOf(rows, key) { return rows.reduce(function (s, r) { return s + r.n * r.qty / r[key]; }, 0); }
   function supported(rows, units, key) {
     var asked = rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
-    if (!asked) { var r0 = rateFor('quiz', false); return Math.max(1, Math.round(units * (key === 'rlow' ? r0.low : r0.high))); }
+    if (!asked) { var r0 = rateFor('quiz'); return Math.max(1, Math.round(units * (key === 'rlow' ? r0.low : r0.high))); }
     return Math.max(1, Math.round(asked * units / useOf(rows, key)));
   }
   function feasState() {
-    var standards = $('standards-only').checked;
-    var rows = feasRows(standards);
+    var rows = feasRows();
     var asked = rows.reduce(function (s, r) { return s + r.n * r.qty; }, 0);
     var st = { asked: asked, pages: null, low: null, high: null, method: [], askedPages: null, rows: rows, units: null,
       mathPractice: rows.some(function (r) { return r.math; }) };
-    if (standards) {
-      var n = Number($('standards-count').value);
-      st.method.push('standards');
-      if (n > 0) { st.standards = n; st.units = n; st.low = supported(rows, n, 'rlow'); st.high = supported(rows, n, 'rhigh'); }
-      return st;
-    }
     var known = 0, unknown = 0, pending = 0;
     files.sources.forEach(function (f) {
       var r = estOf(f);
@@ -151,12 +142,11 @@
     return { rows: rows, total: total, fits: useOf(rows, 'rhigh') <= units + eps, biggest: biggest[0] || null };
   }
 
-  // "1 page" / "3 pages" / "3 standards": the plural is done here, not in feasibility.json's "{pages} page(s)".
-  function amountText(st) { return st.standards ? plural(st.standards, 'standard') : pagesText(st.pages); }
+  // "1 page" / "3 pages": the plural is done here, not in feasibility.json's "{pages} page(s)".
+  function amountText(st) { return pagesText(st.pages); }
   function tooManyText(st) {
     var tmpl = String((feas && feas.messages && feas.messages.tooMany) || '{asked} questions from about {pages} page(s) of material is more than it can support.');
     tmpl = tmpl.indexOf('{pages} page(s)') >= 0 ? tmpl.replace('{pages} page(s)', '{amount}') : tmpl.replace('{pages}', '{amount}').replace(/ page\(s\)/g, '');
-    if (st.standards) tmpl = tmpl.replace('{amount} of material', '{amount}');
     return PPFeas.fill(tmpl, { asked: st.asked, amount: amountText(st), low: st.low, high: st.high });
   }
   function renderFeas() {
@@ -225,12 +215,7 @@
       else $('s2-h').scrollIntoView({ block: 'start' });
     }
   });
-  ['standards-only', 'standards-count', 'ask-pages'].forEach(function (id) {
-    $(id).addEventListener('input', function () {
-      $('standards-wrap').hidden = !$('standards-only').checked;
-      showEstimates(); renderFeas();
-    });
-  });
+  $('ask-pages').addEventListener('input', function () { showEstimates(); renderFeas(); });
 
   function setupDrop(list) {
     var zone = document.querySelector('.drop[data-list="' + list + '"]');
@@ -567,7 +552,7 @@
       method: st.method.join('+') || 'none',
       files: files.sources.map(function (f) { var r = estOf(f) || {}; return { name: f.name, pages: r.pages != null ? Math.round(r.pages * 10) / 10 : null, method: r.method || 'pending' }; }),
       askedPages: st.askedPages,
-      standards: st.standards || null,
+      standards: null,   // filled by the onboarding agent when the source is only standards (docs/PACK-FORMAT.md)
       asked: st.asked, low: st.low, high: st.high,
       mathPractice: st.mathPractice,
       tooMuch: st.high != null && st.asked > st.high,

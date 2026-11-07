@@ -28,10 +28,12 @@ Nothing else is hand-edited. Change the pack, then render again.
     // The live "that's too much" check, measured on the teacher's device. Never blocks Send.
     "feasibility": {
       "pagesEstimated": 1.2,                    // about how many pages of source (null when unknown)
-      "method": "text-words+pdf-pages+asked",   // text-words | html-words | pdf-pages | docx-words | pptx-words | asked | standards
+      "method": "text-words+pdf-pages+asked",   // text-words | html-words | pdf-pages | docx-words | pptx-words | asked | standards (older orders)
       "files": [{ "name": "notes.txt", "pages": 1.2, "method": "text-words" }],
       "askedPages": null,                       // her answer to "About how many pages is your source?"
-      "standards": null,                        // "My source is only standards": how many (questionsPerStandard)
+      "standards": null,                        // always null from the order page since Nov 7, 2026 (no checkbox): the onboarding
+                                                // agent detects a standards-only source and counts the standards itself
+                                                // (its onboarding.json); older orders may carry a number here: still valid
       "asked": 75,                              // questions asked across items × quantity (A/B versions don't double)
       "low": 7, "high": 12,                     // pages × questionsPerPage (or standards × questionsPerStandard)
       "tooMuch": true, "warned": true,          // over the high end now / the warning was shown at some point

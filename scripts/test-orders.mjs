@@ -107,6 +107,7 @@ try {
     await page.goto(LOCAL);
     await fillOrder(page, { sources: [join(FIX, 'water-cycle.html')] });
     assert.equal(await page.isVisible('#account'), false, 'no sign-in box in local mode');
+    assert.equal(await page.$('#standards-only, #standards-count'), null, 'no "only standards" checkbox (onboarding detects it)');
     assert.ok(await page.isDisabled('#link-sources') && await page.isDisabled('[data-link-get="sources"]'), 'no links in local mode');
     assert.match(await page.textContent('[data-link="sources"] [data-link-hint]'), /save the page \(File → Save page as\) and upload it/);
     const pages = await page.textContent('#list-sources .fpages');
