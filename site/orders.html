@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2f6f5e" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#15181c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c2026" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
@@ -19,12 +19,13 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="./" data-brand="shortName">&nbsp;</a>
-    <nav class="nav"><a href="./">Order</a><a href="orders.html" aria-current="page">My orders</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html">About</a></nav>
+    <a class="brand" href="./"><img src="icons/icon.svg" alt="" width="30" height="30"><span data-brand="shortName">&nbsp;</span></a>
+    <nav class="nav"><a href="./">New order</a><a href="orders.html" aria-current="page">My orders</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html">About</a></nav>
   </div>
 </header>
 <main class="wrap">
-  <section class="hero">
+  <section class="hero page-head">
+    <p class="eyebrow">Planner</p>
     <h1>My orders</h1>
     <p class="tagline">Follow each order, answer our questions, review your preview and get your files.</p>
     <div id="load-error" class="error" role="alert"></div>
@@ -53,8 +54,14 @@
   </section>
 
   <div id="list" aria-live="polite"></div>
+
+  <section class="good-to-know" aria-labelledby="gtk-h">
+    <h2 class="h3" id="gtk-h">Good to know</h2>
+    <p class="notice" data-brand="aiNotice"></p>
+    <p data-brand="deleteNotice"></p>
+  </section>
 </main>
-<footer class="foot"><div class="wrap"><span data-brand="aiNotice"></span> · <span data-brand="deleteNotice"></span></div></footer>
+<footer class="foot"><div class="wrap"><span data-brand="promise"></span> · <a href="./">New order</a></div></footer>
 <script src="common.js"></script>
 <script src="backend.js"></script>
 <script src="orders.js"></script>
