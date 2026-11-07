@@ -11,8 +11,8 @@ keys, and log everything. How to run an order by hand: `docs/RUNBOOK.md`.
 |---|---|---|---|
 | 0 | 🧾 Reporter | the order | `log` (first row), and keeps logging every step below |
 | 1 | 🧭 Onboarding (fresh) | `order.json`, the sources, the training files, `menu.json`, `feasibility.json` | `onboarding.json` and `FOLLOW-UP.md` in the order folder (not `pack.json`); the teacher's reply is saved as `followup-answer.md` |
-| 2 | 📝 Maker | `onboarding.json` and `followup-answer.md` first, then the style notes, the sources, the order | `style`, `documents` |
-| 2a | 🙈 No-passage probe (ELA reading items only; one fresh session per version) | one version's questions, no passages, no key | `checks.blind` (round 1, `passageFree`, `gate`). **The round 1 gate:** over about 40% right (chance 25%) fails the round, and the maker redesigns (step 2) before any other checker runs |
+| 2 | 📝 Maker (a dollar cap per session: `docs/RUNBOOK.md` step 4) | `onboarding.json` and `followup-answer.md` first, then the style notes, the sources, the order | `style`, `documents` |
+| 2a | 🤖 `checks/no-passage.mjs`, then 🙈 No-passage probe (ELA reading items only; one fresh session per version that has seen nothing of the quiz; the lead scores it) | one version's questions, no passages, no key | `checks.wilco` (`no-passage`), `checks.blind` (`passageFree`, `gate`). **The gate, every round and once more on whole versions before the preview:** multiple choice right more than chance + 15 points (40% with 4 choices) or a short answer earning over half its credit without the passage fails the version; the maker fixes the questions, never the key, before any other checker runs (a kept nonfiction passage gets the fact checker in round 1 anyway) |
 | 3 | 🤖 Wilco (scripts the lead runs; no agent session) | `pack.json` | `checks.wilco` (`checks/keys.mjs`, `checks/test-wise.mjs`, with `--write`; `checks/apps.mjs`, `checks/puzzles.mjs` for apps and puzzles) |
 | 3 | 🙈 Blind tester for the subject (fresh) | the student copy only (ELA: no passages, then the passages), then the key | an entry file the lead merges into `checks.blind` (round 1) |
 | 3 | 🧮 Solver (math: `checks/math.mjs` first) or 🔎 Fact checker (science, social studies; ELA with nonfiction claims; puzzle clues with `because`; quiz-show clues; card backs) | the student copy only, then the key and sources | an entry file for `checks.solver` or `checks.facts` |
@@ -56,4 +56,6 @@ bumps them, and `npm run check` fails if one is missing.
 
 Changed Nov 5, 2026 by the first audit (`docs/audits/AUDIT-2026-11-05.md`): the ELA round 1 no-passage gate (owner),
 checkers' entry files merged by the lead, Wilco run by the lead, a fact or solver recheck on changed text every round,
-the cost stop, and who runs when for puzzles and apps. The auditor's reports: `docs/audits/README.md`.
+the cost stop, and who runs when for puzzles and apps. Changed Nov 7, 2026 by the ELA audit
+(`docs/audits/AUDIT-2026-11-07-ela.md`, owner option 1): the no-passage bots and the probe's line, the final probe before
+the preview, the round 1 passage fact check, the maker's dollar cap. The auditor's reports: `docs/audits/README.md`.

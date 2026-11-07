@@ -91,19 +91,36 @@ Start a fresh agent with `agents/maker.md`, `$WORK/onboarding.json` and `$WORK/f
 them the lead relayed bot output 8 times.) It writes `$WORK/pack.json`. Log its minutes, tokens and cost from the
 session's own record.
 
-## 4a. ELA reading items: the no-passage gate (round 1, before any other checker)
+**Dollar cap on every maker session** (owner, option 1, Nov 6, 2026): the order's budget is tokens × $0.10; a first
+draft gets **one third** of it, a redesign **one quarter**, a FIX round (step 8) **one sixth**, and never more than half
+of what is left below the cost stop (2× the budget). A reading quiz with a rubric (165 tokens, $16.50): **$5.50,
+$4.10, $2.75**. With `claude -p`, pass `--max-budget-usd <cap>`; give the runner at least 60 minutes (g7-ela2: a
+10-minute runner limit lost $0.43 of work). Why: g7-ela2's uncapped makers cost $7.32 and $12.21 against a $16.50 order
+(84% of its $26.21); its capped FIX round used $2.42 of $5.50. Every other sample's maker sessions fit these caps
+(g4-math $1.38 of $2.33, g8-science $2.02 of $3.83, g11-history $3.01 of $3.17, g7-ela $3.06 at the reading price). A
+session that hits its cap leaves its last saved `pack.json` (the maker saves as it goes): send that draft to the checks;
+if it is incomplete, one fresh session at the FIX cap finishes it, then tell the owner.
 
-Owner's rule, Nov 5, 2026 (g7-ela: three fresh testers answered 20 of 20 without the passages; the bots passed it).
-For each version, a **fresh** session with `agents/blind-ela.md` (mode 1) and that version's questions only, no
-passages:
+## 4a. ELA reading items: the no-passage gate (required, every round, and before the preview)
+
+Owner's rule, Nov 5, 2026, and option 1, Nov 6 (g7-ela: 20 of 20 answered without the passages; g7-ela2, remade:
+A 10, 8 and 9 of 10 over three rounds; the bots passed both). First `node $REPO/checks/no-passage.mjs "$WORK/pack.json"
+--write` (the maker already ran it; a fail goes straight back). Then, for each version, a **fresh** session with
+`agents/blind-ela.md` (mode 1): never the maker, never a session that has seen the passages, the other version, the key
+or an earlier draft. It gets that version's questions only:
 ```
 node $REPO/checks/student-view.mjs "$WORK/pack.json" --no-passages --only "<every where in version A, | between>" --out "$WORK/probe-A.md"
-node $REPO/checks/score-blind.mjs "$WORK/pack.json" "$WORK/probe-A.jsonl"     # the same for B
+node $REPO/checks/score-blind.mjs "$WORK/pack.json" "$WORK/probe-A.jsonl"     # the lead scores it; the same for B
 ```
-**Over about 40% right in either version fails the round** (chance 25% with 4 choices; 5 of 10 fails). A fail goes back
-to a fresh maker session for a redesign of the passage and choices (`agents/maker.md`, "Reading items"), then the probe
-again on new fresh sessions. Steps 5–7 start only on a draft that passed. The probes run again on changed reading
-items in every later round. Log each probe (about $0.20 a version).
+**A version fails** when its multiple choice is right **more than chance + 15 points** (4 choices: more than 40%; 10 mc:
+5 fails, 8 mc: 4 fails) or a short answer earns more than half its credit without the passage (the lead scores short
+answers against `accept` and `why`). Why that line, and why it is never raised: `agents/blind-ela.md`, mode 1. A fail goes
+back to the maker (a redesign in round 1, a FIX round after) to fix the questions, never the key; then the probe again
+on new fresh sessions. Steps 5–7 start only on a draft that passed, with one exception: **a nonfiction passage the maker
+means to keep gets the fact checker in round 1, alongside the gate** (g7-ela2: three failed gates left the article's
+claims unchecked). The probes run again on changed reading items every round, and on **every whole version just
+before the preview** (step 11): a version that fails it is not previewed without telling the owner. Log each probe
+(about $0.27 a version; the lead's scoring is not a session).
 
 ## 5. Fresh blind tester for the subject (at the same time as 6 and 7)
 
@@ -135,6 +152,7 @@ fact checker web search, and check the session's allowed tools actually took (g1
 ```
 node $REPO/checks/keys.mjs "$WORK/pack.json" --write
 node $REPO/checks/test-wise.mjs "$WORK/pack.json" --write          # add --pass 70 if the teacher gave a pass mark
+node $REPO/checks/no-passage.mjs "$WORK/pack.json" --write         # reading items
 ```
 Both must exit 0 (plus `checks/apps.mjs` for apps and `checks/puzzles.mjs` for puzzles). On a fail, `--items` lists
 which bot picks each key, for the maker. The lead runs these scripts; no agent session is needed.
@@ -198,6 +216,7 @@ measured") and `audit.notes`: every round, every catch, every fix, Wilco before 
 ## 11. Preview, then the teacher agrees or asks for changes (CLAUDE.md rule 7)
 
 ```
+# reading items: the final whole-version no-passage probe first (step 4a)
 node $REPO/scripts/render-pack.mjs "$WORK" --preview   # writes $WORK/out-preview/ and $WORK/preview.zip: watermarked PDFs, AUDIT-REPORT, REVIEW.html
 cd "$WORK/preview" && zip -qr "$WORK/$ORDER-preview.zip" . && cd -
 ```

@@ -80,7 +80,7 @@
     {
       "id": "readingquiz",
       "label": "Reading quiz on passages (A/B)",
-      "detail": "English reading: 8–12 questions on one to three short passages (yours, or written from your notes), two versions. Every question needs the passage: a reader who skips it is tested before anything else is checked. Wrong choices are the misreadings of that passage; evidence choices are real quotes.",
+      "detail": "English reading: 8–12 questions on one to three short passages (yours, or written from your notes), two versions. Every question needs the passage: a reader who skips it is tested before anything else is checked. Wrong choices are the misreadings of that passage; evidence is checked against the passage, with short answers that quote it.",
       "tokens": 150,
       "formats": [
         "pdf",
