@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2f6f5e" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#15181c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c2026" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
@@ -19,14 +19,15 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="./" data-brand="shortName">&nbsp;</a>
-    <nav class="nav"><a href="./" aria-current="page">Order</a><a href="orders.html">My orders</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html">About</a></nav>
+    <a class="brand" href="./"><img src="icons/icon.svg" alt="" width="30" height="30"><span data-brand="shortName">&nbsp;</span></a>
+    <nav class="nav"><a href="./" aria-current="page">New order</a><a href="orders.html">My orders</a><a href="review.html">Review a preview</a><a href="samples.html">Sample packs</a><a href="about.html">About</a></nav>
   </div>
 </header>
 
 <main class="wrap">
-  <section class="hero">
-    <h1>Order a classroom pack</h1>
+  <section class="hero page-head">
+    <p class="eyebrow">Classroom packs</p>
+    <h1>New order</h1>
     <p class="tagline" data-brand="tagline"></p>
     <p class="phone-only small">Five quick steps, then you look over a preview before anything is final. <a href="about.html">How it works</a></p>
     <div id="load-error" class="error" role="alert"></div>
@@ -50,8 +51,8 @@
     </div>
   </section>
 
-  <section class="how" aria-labelledby="how-h">
-    <h2 id="how-h">How it works</h2>
+  <details class="how">
+    <summary><span class="how-sum"><span class="h2" id="how-h">How it works</span> <span class="small muted">Five steps here, a preview you approve, and a team of checkers that didn't write the work</span></span></summary>
     <p class="sell">Agents taught by teachers, checked by agents that didn't write the work.</p>
     <p class="small">You send your own examples and your source. One agent makes the pack in your style. Fresh agents that never saw it being made check every question. A reporter logs every step, so you get a report that shows the work.</p>
     <ol class="flow">
@@ -72,14 +73,15 @@
       <li><b>🧾 Reporter</b>Logs every step and writes your audit report.</li>
       <li><b>🔎 Auditor</b>Learns from each order and your comments, and keeps it affordable.</li>
     </ul>
-  </section>
+  </details>
 
+  <div class="order-layout">
   <form id="order" novalidate>
     <!-- 1. Training documents -->
     <section class="step" aria-labelledby="s1-h">
       <div class="step-head"><span class="num" aria-hidden="true">1</span><div>
-        <h2 id="s1-h">Drop in your training documents</h2>
-        <p>Your own past worksheets, quizzes or notes, so your agents learn your style: layout, wording and level.</p>
+        <h2 id="s1-h">Your examples</h2>
+        <p>Drop in your own past worksheets, quizzes or notes (your training documents), so your agents learn your style: layout, wording and level.</p>
       </div></div>
       <div class="drop" data-list="training">
         <p>Drag files here, or</p>
@@ -96,8 +98,8 @@
     <!-- 2. Source material -->
     <section class="step" aria-labelledby="s2-h">
       <div class="step-head"><span class="num" aria-hidden="true">2</span><div>
-        <h2 id="s2-h">Drop in your source material</h2>
-        <p>What the pack should teach: your notes, a chapter, the standards, your slides.</p>
+        <h2 id="s2-h">Your sources</h2>
+        <p>Drop in what the pack should teach: your notes, a chapter, the standards, your slides.</p>
       </div></div>
       <div class="notice" id="fence"><p>Only upload material you have the right to use.</p><p>What you upload is sent to AI to make your pack.</p></div>
       <div class="drop" data-list="sources">
@@ -126,8 +128,8 @@
     <!-- 3. Menu -->
     <section class="step" aria-labelledby="s3-h">
       <div class="step-head"><span class="num" aria-hidden="true">3</span><div>
-        <h2 id="s3-h">Pick from the menu</h2>
-        <p>Tell us the class and topic, then choose what you'd like made.</p>
+        <h2 id="s3-h">What you want</h2>
+        <p>Tell us the class and topic, then pick from the menu what you'd like made.</p>
       </div></div>
       <div class="row">
         <div class="field"><label for="grade">Grade</label><select id="grade" required><option value="">Choose a grade</option></select></div>
@@ -135,9 +137,9 @@
       </div>
       <div class="field" id="other-wrap" hidden><label for="subject-other">Which subject?</label><input type="text" id="subject-other" placeholder="For example: Spanish, Art, Health"></div>
       <div class="field"><label for="topic">Topic</label><input type="text" id="topic" placeholder="For example: Ratios and rates, The water cycle, The American Revolution"></div>
-      <h3 style="margin-top:16px">What to make</h3>
+      <h3 class="catalog-h">What to make</h3>
       <div class="cards" id="items"></div>
-      <h3 style="margin-top:18px">Extras</h3>
+      <h3 class="catalog-h">Extras</h3>
       <div class="cards" id="extras"></div>
       <div class="error" id="err-menu" role="alert"></div>
     </section>
@@ -145,7 +147,7 @@
     <!-- 4. Requests -->
     <section class="step" aria-labelledby="s4-h">
       <div class="step-head"><span class="num" aria-hidden="true">4</span><div>
-        <h2 id="s4-h">Specific requests</h2>
+        <h2 id="s4-h">Requests</h2>
         <p>Tell us the number and types of questions, how many answer choices, how long a project runs, and so on. If you leave a box blank, the agents choose the most common mix for your grade and subject.</p>
       </div></div>
       <div id="item-requests"><p class="muted small" id="no-items-note">Pick something in step 3 to add a request just for that item.</p></div>
@@ -156,8 +158,8 @@
     <!-- 5. Cost and send -->
     <section class="step" aria-labelledby="s5-h">
       <div class="step-head"><span class="num" aria-hidden="true">5</span><div>
-        <h2 id="s5-h">Token cost</h2>
-        <p>The total updates as you choose.</p>
+        <h2 id="s5-h">Review cost and send</h2>
+        <p>The token total updates as you choose. Check it, tell us who you are, and press Send.</p>
       </div></div>
       <table class="cost-table" aria-live="polite"><tbody id="cost-lines"></tbody></table>
       <p class="small muted" data-brand="tokenNote"></p>
@@ -174,6 +176,16 @@
       </div>
     </section>
   </form>
+
+  <aside class="cost-summary" aria-labelledby="sum-h">
+    <h2 class="h3" id="sum-h">Your order</h2>
+    <ul class="sum-lines" id="sum-lines"><li class="muted">Nothing picked yet</li></ul>
+    <p class="sum-total"><span>Total</span> <b data-sum-total>0 tokens</b></p>
+    <p class="small muted">The total updates as you choose. You see it again in step 5 before you send.</p>
+    <p><a class="btn primary" href="#s5-h" data-jump-send>Review cost and send</a></p>
+    <p class="notice small" data-brand="aiNotice"></p>
+  </aside>
+  </div>
 
   <section class="step done" id="done-online" hidden tabindex="-1" aria-labelledby="done-online-h">
     <h2 id="done-online-h">Your order is in</h2>

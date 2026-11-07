@@ -11,7 +11,7 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
 ## A less plain, less "AI" look (owner, Nov 5, 2026)
 - **Owner:** "the presentation of the app is pretty plain, can we make it look less ai?" — picked **Bright classroom**: bold friendly colors, rounded shapes, playful doodle illustrations of the agent characters (Tess, Brick, Reel, Inka, Wilco, Hush, Tally, Margo; original designs from docs/marketing/CAMPAIGN-YOUR-STANDARDS-YOUR-WORLD.md's character sheet), a bit like Pet World.
 - **Plan:** a design pass over every page (order, review, samples, world, about): a distinctive heading font (bundled, no CDN), a real palette with light and dark versions, code-drawn SVG doodles of the agents (no stock art), a stronger hero, the agents shown at work in "How it works", phone screenshots and a fresh-eyes design review before merging. Bump the service worker. About 1 hour, $8–15.
-- **Status:** next session, first.
+- **Status:** first pass done Nov 7, 2026 (branch `teacher-app-look`): a teacher's-app shell (top bar, sidebar, restyled tab bar), status folder colors, the order page as numbered planning steps with a sticky token summary and paper icons, My orders as a planner with a next action per row, the review beside a large preview. Agent doodles and a bundled heading font are still open.
 
 ## Streamline the order loop (owner, Nov 6, 2026)
 - **Owner:** "[the product] feels very clunky... teachers make it, it zips, they email it, i claude it, i send back the doc

@@ -46,6 +46,24 @@
       return '<p>' + esc(p).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>') + '</p>';
     }).join('');
   }
+  // The planner row's one next step for her, so the list reads like an inbox.
+  function nextAction(o, mine) {
+    var id = esc(o.id);
+    if (o.status === 'needs_answer' && mine) {
+      var n = ((o.follow_up || {}).questions || []).length;
+      return '<a class="btn primary next" href="#fu-' + id + '">' + (n ? 'Answer ' + n + (n === 1 ? ' question' : ' questions') : 'Read our note') + '</a>';
+    }
+    if (o.status === 'preview_ready' && mine) return '<a class="btn primary next" href="#rv-' + id + '">Review preview</a>';
+    if (o.status === 'final_ready') {
+      var zip = (o.final_files || []).filter(function (f) { return /\.zip$/i.test(f); })[0];
+      if (zip) return '<a class="btn primary next" data-sign="deliverables:' + esc(base(o) + zip) + '" data-name="' + esc(o.id + '.zip') + '" href="#">Download everything (zip)</a>';
+    }
+    return '';
+  }
+  function dateTab(t) {
+    var d = new Date(t); if (isNaN(d)) return '';
+    return '<span class="date-tab" aria-hidden="true"><span class="m">' + esc(d.toLocaleDateString(undefined, { month: 'short' })) + '</span><span class="d">' + d.getDate() + '</span></span>';
+  }
   function base(o) { return o.teacher + '/' + o.id + '/'; }
   function letterOf(opt, i) { var m = /^\s*([A-Z])[\s.):]/.exec(opt); return m ? m[1] : String.fromCharCode(65 + i); }
   function optText(opt) { return String(opt).replace(/^\s*[A-Z][\s.):]+\s*/, ''); }
@@ -105,8 +123,9 @@
     var cancel = mine && CANCELLABLE.indexOf(o.status) >= 0 && o.status !== 'preview_ready'
       ? '<p class="cancel-row"><button type="button" class="btn link danger" data-cancel="' + esc(o.id) + '">Cancel this order</button></p>' : '';
     return '<article class="order-card s-' + esc(o.status) + '" id="o-' + esc(o.id) + '" data-id="' + esc(o.id) + '">' +
-      '<div class="order-head"><span class="status-chip">' + esc(st[0]) + '</span><h3>' + esc(title) + '</h3>' +
+      '<div class="order-head">' + dateTab(o.created_at) + '<div class="order-main"><h3>' + esc(title) + '</h3>' +
       '<p class="small muted">' + esc(items.join(', ')) + (items.length ? ' · ' : '') + esc(o.token_total) + ' tokens · ' + esc(when(o.created_at)) + who + '<br><span class="oid">' + esc(o.id) + '</span></p></div>' +
+      '<div class="order-side"><span class="status-chip">' + esc(st[0]) + '</span>' + nextAction(o, mine) + '</div></div>' +
       '<p class="status-text">' + esc(st[1]) + '</p>' + (o.note ? '<p class="notice small">' + esc(o.note) + '</p>' : '') +
       body + '<div class="error" data-err role="alert"></div><div class="ok" data-ok role="status"></div>' + cancel + hist + '</article>';
   }
@@ -125,7 +144,7 @@
       }).join('') + '</div>' + (q.why ? '<p class="small muted">' + esc(q.why) + '</p>' : '') + '</fieldset>';
     }).join('');
     if (readOnly) return '<div class="fu">' + mdLite(fu.message) + qHTML + '</div>';
-    return '<div class="fu">' + mdLite(fu.message) + qHTML +
+    return '<div class="fu" id="fu-' + esc(o.id) + '" tabindex="-1">' + mdLite(fu.message) + qHTML +
       '<div class="field"><label for="fu-extra-' + esc(o.id) + '">Anything else? <span class="hint">(optional)</span></label>' +
       '<textarea id="fu-extra-' + esc(o.id) + '" rows="2" data-extra="' + esc(o.id) + '" placeholder="In your own words">' + esc(d.extra) + '</textarea></div>' +
       '<div class="actions">' + (qs.length ? '<button type="button" class="btn primary" data-send-answer="' + esc(o.id) + '">Send my answers</button>' : '') +
@@ -151,11 +170,16 @@
     var titles = (rv.docTitles || []).slice();
     if ((rv.documents || []).some(function (x) { return /AUDIT-REPORT/i.test(x.file); })) titles.push('Audit report');
     var zip = (o.preview_files || []).filter(function (f) { return /\.zip$/i.test(f); })[0];
-    return '<div class="review">' +
-      '<h4>1. Look over your preview</h4><ul class="dl-list">' + (rv.documents || []).map(function (x) {
-        return '<li><a class="btn" target="_blank" rel="noopener" data-sign="deliverables:' + esc(base(o) + 'preview/' + x.file) + '" href="#">Open</a> <span>' + esc(x.title || x.file) + '<br><span class="small muted">' + esc(x.file) + '</span></span></li>';
+    var docs = rv.documents || [];
+    return '<div class="review" id="rv-' + id + '" tabindex="-1"><div class="paper-pane">' +
+      '<h4>1. Look over your preview</h4><ul class="dl-list">' + docs.map(function (x, i) {
+        return '<li><a class="btn" target="_blank" rel="noopener" data-doc="' + i + '" data-sign="deliverables:' + esc(base(o) + 'preview/' + x.file) + '" href="#">Open</a> <span>' + esc(x.title || x.file) + '<br><span class="small muted">' + esc(x.file) + '</span></span>' +
+          (/\.pdf$/i.test(x.file) ? '<button type="button" class="btn link show-doc" data-show="' + i + '" aria-pressed="' + (i === 0) + '">Show here</button>' : '') + '</li>';
       }).join('') + '</ul>' +
+      (docs.some(function (x) { return /\.pdf$/i.test(x.file); }) ? '<div class="paper-frame"><iframe data-viewer title="Your preview" loading="lazy"></iframe>' +
+        '<p class="small muted">If the page doesn\'t show here, use Open.</p></div>' : '') +
       (zip ? '<p class="small"><a data-sign="deliverables:' + esc(base(o) + zip) + '" data-name="' + esc(o.id + '-preview.zip') + '" href="#">Download the whole preview</a> (a zip with REVIEW.html, for looking it over offline)</p>' : '') +
+      '</div><div class="grade-pane">' +
       '<h4>2. Comments</h4><p class="small muted">What should change in each document: the question number and what it should say. Leave a box empty if it is fine.</p>' +
       titles.map(function (t, i) {
         return '<div class="field req"><label for="c-' + id + '-' + i + '">' + esc(t) + '</label><textarea id="c-' + id + '-' + i + '" rows="2" data-comment="' + id + '" data-title="' + esc(t) + '">' + esc(d.comments[t] || '') + '</textarea></div>';
@@ -168,7 +192,15 @@
       '<div class="actions"><button type="button" class="btn" data-changes="' + id + '">Request changes</button>' +
       '<button type="button" class="btn primary" data-approve="' + id + '">Approve: release my files</button></div>' +
       '<p class="small muted" data-why="' + id + '"></p>' +
-      '<p class="cancel-row"><button type="button" class="btn link danger" data-cancel="' + id + '">Cancel this order</button></p></div>';
+      '<p class="cancel-row"><button type="button" class="btn link danger" data-cancel="' + id + '">Cancel this order</button></p></div></div>';
+  }
+  // The large preview beside the checklist: only on a wide screen (phones open each file with Open).
+  function wide() { return !!(window.matchMedia && matchMedia('(min-width: 1100px)').matches); }
+  function showDoc(review, i) {
+    var a = review.querySelector('a[data-doc="' + i + '"]'), f = review.querySelector('iframe[data-viewer]');
+    if (!a || !f || !a.getAttribute('href') || a.getAttribute('href') === '#') return;
+    f.src = a.href;
+    review.querySelectorAll('[data-show]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-show') === String(i))); });
   }
   function reviewState(o) {
     var d = draft(o.id);
@@ -230,9 +262,8 @@
     var list = (o.final_files || []).slice();
     var zip = list.filter(function (f) { return /\.zip$/i.test(f); });
     var rest = list.filter(function (f) { return !/\.zip$/i.test(f); });
-    return (zip.length ? '<p>' + zip.map(function (f) {
-      return '<a class="btn primary big" data-sign="deliverables:' + esc(base(o) + f) + '" data-name="' + esc(o.id + '.zip') + '" href="#">Download everything (zip)</a>';
-    }).join(' ') + '</p>' : '') +
+    // The zip is the row's own button (nextAction); here, each file on its own.
+    return (zip.length ? '<p class="small muted">Everything is in one zip: the button above. Or download each file:</p>' : '') +
       (rest.length ? '<details><summary>Each file (' + rest.length + ')</summary>' + filesHTML(o, rest, 'Files') + '</details>' : '') +
       '<p class="notice small" data-brand-ai></p>';
   }
@@ -240,7 +271,11 @@
   function signLinks() {
     document.querySelectorAll('[data-sign]').forEach(function (a) {
       var v = a.getAttribute('data-sign'), i = v.indexOf(':');
-      backend.signedUrl(v.slice(0, i), v.slice(i + 1), 3600, a.getAttribute('data-name') || null).then(function (u) { a.href = u; }, function () {
+      backend.signedUrl(v.slice(0, i), v.slice(i + 1), 3600, a.getAttribute('data-name') || null).then(function (u) {
+        a.href = u;
+        var rv = a.getAttribute('data-doc') === '0' && wide() && a.closest('.review');
+        if (rv) showDoc(rv, 0);
+      }, function () {
         a.removeAttribute('href'); a.classList.add('broken'); a.title = 'This file could not be opened. Refresh the page.';
       });
     });
@@ -263,6 +298,11 @@
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-refresh]')) { loadAll(); return; }
     var b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-show')) {
+      var rv = b.closest('.review');
+      if (wide()) showDoc(rv, b.getAttribute('data-show')); else { var a = rv.querySelector('a[data-doc="' + b.getAttribute('data-show') + '"]'); if (a) a.click(); }
+      return;
+    }
     var o = orderOf(b); if (!o) return;
     var card = document.getElementById('o-' + o.id);
     if (b.hasAttribute('data-send-answer')) act(o, card, function () { return sendAnswer(o, false); }, 'Thank you. We are starting on it.');
