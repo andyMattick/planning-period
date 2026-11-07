@@ -187,7 +187,7 @@ for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs', 'puzzles.mj
    the ones in checks/cross-item-debt.json, listed for the owner when the check came in. That list can only shrink, as 5d. */
 {
   const CI = join(ROOT, 'checks', 'cross-item.mjs'), DEBT = 'checks/cross-item-debt.json';
-  const CROSS_ITEM_DEBT_MAX = ['samples/g11-history/pack.json', 'samples/g7-ela2/pack.json', 'samples/g8-science/pack.json'];
+  const CROSS_ITEM_DEBT_MAX = ['samples/g7-ela2/pack.json'];   // g11-history and g8-science fixed Nov 7, 2026
   const st = spawnSync(process.execPath, [CI, '--self-test'], { cwd: ROOT, encoding: 'utf8' });
   if (st.status === 0) ok(`checks/cross-item.mjs --self-test (${(st.stdout.match(/^✓/gm) || []).length} cases)`); else fail(`checks/cross-item.mjs --self-test failed:\n${st.stdout}${st.stderr}`);
   let debt = {};
