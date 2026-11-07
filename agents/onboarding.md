@@ -63,9 +63,10 @@ You make nothing and change nothing in the order.
      `test` built on passages gets the reading surcharge (+110 tokens): step 7. Grammar, vocabulary or writing quizzes
      with no passage stay `quiz`.
      **Recommend the reading defaults** (`feasibility.json` `readingquiz`; owner option 1, Nov 6, 2026): at least 8
-     multiple-choice items a version, **at most one Part A/Part B pair a passage**, and 2 short answers that quote the
-     passage. Never recommend more pairs (g7-ela2: your recommendation of 4 became the order, and its quotes retold the
-     story); a teacher who asks for more gets one plain line on why we use fewer and the choice.
+     multiple-choice items a version, **no multiple-choice Part A/Part B pairs**, and at least 2 short answers that quote
+     the passage (owner, Nov 7, 2026: the pairs leaked in every probe round of g7-ela2's three attempts; docs/audits/AUDIT-2026-11-07-ela-try-c.md).
+     A teacher who asks for Part A/Part B pairs gets one plain question: our recommendation (the evidence skill in short
+     answers that cite and the constructed response) or her pairs, with one line on why (step 5a).
      **Familiar topic:** when a nonfiction topic is a well-known textbook example (otters and kelp for keystone species,
      g7-ela2), say a student could answer from what she already knows, and offer a less familiar case of the same idea
      (recommended) or her own text.
@@ -124,7 +125,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 7** (Nov 7, 2026)
+**Version 8** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -148,3 +149,6 @@ You make nothing and change nothing in the order.
 - v7, Nov 7, 2026 (remake audit, docs/audits/AUDIT-2026-11-07-ela-remake.md, adopted by the owner): step 5a, compare
   the teacher's own rules with our design and ask when they clash (g7-ela2 remake: "every Part B choice must be a real
   sentence" vs option 1's unmatched quote, written into the plan instead of asked).
+- v8, Nov 7, 2026 (owner decision "D and 1-4", adopting docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 1): reading quizzes: recommend
+  no multiple-choice Part A/Part B pairs (evidence in short answers that cite and the RACE); a teacher who asks for pairs
+  gets a question with our recommendation (g7-ela2: the pairs were right without the passage in every probe round).

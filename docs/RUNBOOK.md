@@ -86,7 +86,7 @@ The examples stay only for this teacher's agents; `rm -rf "$STYLE"` when they as
 Start a fresh agent with `agents/maker.md`, `$WORK/onboarding.json` and `$WORK/followup-answer.md` (read first),
 `$STYLE/style.md`, `in/order.json`, `in/sources/` and `docs/PACK-FORMAT.md`, in a folder that holds **a copy of
 `$REPO/checks/`** (and `scripts/` for puzzles), so it runs the checks itself: `node checks/keys.mjs pack.json` and
-`node checks/test-wise.mjs pack.json` until both exit 0 (`--items` only shows which bot picks each key: it always exits
+`node checks/test-wise.mjs pack.json` until both exit 0 (and `node checks/cross-item.mjs pack.json`: every pack) (`--items` only shows which bot picks each key: it always exits
 0), plus `checks/math.mjs` for math, `checks/puzzles.mjs` for puzzles, `checks/apps.mjs` for apps. (g7-ela: without
 them the lead relayed bot output 8 times.) It writes `$WORK/pack.json`. Log its minutes, tokens and cost from the
 session's own record.
@@ -105,7 +105,8 @@ if it is incomplete, one fresh session at the FIX cap finishes it, then tell the
 
 Owner's rule, Nov 5, 2026, and option 1, Nov 6 (g7-ela: 20 of 20 answered without the passages; g7-ela2, remade:
 A 10, 8 and 9 of 10 over three rounds; the bots passed both). First `node $REPO/checks/no-passage.mjs "$WORK/pack.json"
---write` (the maker already ran it; a fail goes straight back). Then, for each version, a **fresh** session with
+--write` and `node $REPO/checks/cross-item.mjs "$WORK/pack.json" --write` (the maker already ran them; a fail goes
+straight back, **before any paid probe**: owner, Nov 7, 2026, docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 2). Then, for each version, a **fresh** session with
 `agents/blind-ela.md` (mode 1): never the maker, never a session that has seen the passages, the other version, the key
 or an earlier draft. It gets that version's questions only:
 ```
@@ -153,14 +154,18 @@ fact checker web search, and check the session's allowed tools actually took (g1
 node $REPO/checks/keys.mjs "$WORK/pack.json" --write
 node $REPO/checks/test-wise.mjs "$WORK/pack.json" --write          # add --pass 70 if the teacher gave a pass mark
 node $REPO/checks/no-passage.mjs "$WORK/pack.json" --write         # reading items
+node $REPO/checks/cross-item.mjs "$WORK/pack.json" --write         # every pack: no key printed in another item
 ```
 Both must exit 0 (plus `checks/apps.mjs` for apps and `checks/puzzles.mjs` for puzzles). On a fail, `--items` lists
 which bot picks each key, for the maker. The lead runs these scripts; no agent session is needed.
 
 ## 8. Round 2 on FIX
 
-A **new short session** of the maker gets only the FIX list (from `checks.blind`, `checks.solver`, `checks.facts`, and
-Wilco's `--items` lines). Send a checker's suggested fix as a direction, with its facts marked to check. It changes
+A **new short session** of the maker gets only the FIX list, **written for the whole version**: each finding names
+the item and the cue, and the list ends with "re-check every other item in this version for the words, ideas and quotes
+you change, and rerun every check" (owner, Nov 7, 2026, docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 4: try c's item-by-item fixes moved
+clues to other items, A 8 → 9 of 10). The findings come from `checks.blind`, `checks.solver`, `checks.facts`, and
+Wilco's `--items` and cross-item lines. Send a checker's suggested fix as a direction, with its facts marked to check. It changes
 wrong choices, never a right key to pass a check (a key that is wrong is corrected and logged), keeps ids, and reruns
 the checks in its folder. JUDGMENT items go to the teacher in the preview, not to the maker.
 

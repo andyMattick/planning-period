@@ -1,0 +1,22 @@
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q1", "answer": "C", "confidence": 3, "cue": "type", "note": "Tam repeats the 'shy' default"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q1", "answer": "A", "confidence": 3, "cue": "item", "note": "other items hint the food vanished"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q2", "answer": "A", "confidence": 4, "cue": "item", "note": "B q3 choice A (other version)"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q2", "answer": "A", "confidence": 3, "cue": "item", "note": "A q2 choices mention singing, feather toy"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q3", "answer": "C", "confidence": 2, "cue": "item", "note": "B q1/B q4 choices mention Dev"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q3", "answer": "A", "confidence": 4, "cue": "item", "note": "A q2 choice A; patience-wins-the-cat type"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q4", "answer": "B", "confidence": 4, "cue": "sounds", "note": "years of asking = eager; other three don't fit"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q4", "answer": "A", "confidence": 3, "cue": "type", "note": "warm blanket = rested while he was away"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q5", "answer": "He waves a feather toy and sings; she slips away and hides.", "confidence": 2, "cue": "item", "note": "from A q2/B q2 choices"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q5", "answer": "He crouches down and calls her, holding out food.", "confidence": 2, "cue": "item", "note": "B q2 choice C 'crouched down by the couch'"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q6", "answer": "C", "confidence": 2, "cue": "item", "note": "B q6 stem names Selk (other version)"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q6", "answer": "D", "confidence": 3, "cue": "item", "note": "1968 = find-out year (B q7 stem); D breaks date order"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q7", "answer": "A", "confidence": 2, "cue": "topic", "note": "sheltered by higher land"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q7", "answer": "B", "confidence": 3, "cue": "item", "note": "B q9 choice A mentions watching at night"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q8", "answer": "D", "confidence": 4, "cue": "item", "note": "B q8 choice C: drells eat kibs"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q8", "answer": "C", "confidence": 4, "cue": "item", "note": "A q8 choice D: shoots depend on the birds"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q9", "answer": "D", "confidence": 4, "cue": "item", "note": "B q8/q9 choices: snails eat shoots"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q9", "answer": "B", "confidence": 3, "cue": "sounds", "note": "myth-busted point of the article"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q10", "answer": "fewer, less crowded (spread out)", "confidence": 2, "cue": "guess", "note": "guessed it is about snails"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q10", "answer": "groups of plants growing close together", "confidence": 3, "cue": "word", "note": "everyday meaning"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" A q11", "answer": "He changes from loud and pushy, trying hard to win her, to quiet and patient, letting her come to him.", "confidence": 3, "cue": "type", "note": "default arc plus A q2/B q3"}
+{"where": "READING CHECK: \"BISCUIT\" AND \"THE REEDS OF THE NORTH LAGOON\" B q11", "answer": "He goes from trying too hard and thinking she hates him to calm and patient; she comes to him.", "confidence": 3, "cue": "type", "note": "default arc"}

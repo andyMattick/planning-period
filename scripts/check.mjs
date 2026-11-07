@@ -11,6 +11,7 @@
      5a. Every sample with a math check passes checks/math.mjs (SymPy), and broken copies of samples/_cap-math fail it.
      5c. checks/puzzles.mjs catches broken copies of samples/_cap-games (a bad grid, a word twice, a non-unique puzzle…).
      5d. Reading samples pass checks/no-passage.mjs (no-passage bots), except a shrink-only known-failing list.
+     5e. Every sample passes checks/cross-item.mjs (no key printed in another item), except a shrink-only known-failing list.
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
@@ -178,6 +179,27 @@ for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs', 'puzzles.mj
     else if (r.status === 0) ok(`${p} passes checks/no-passage.mjs`);
     else if (debt[p]) skip(`${p} fails checks/no-passage.mjs, known (${DEBT}: needs the remake): ${(r.stdout.split('\n')[0] || '').replace(/^✗\s*/, '').slice(0, 140)}`);
     else fail(`${p} fails checks/no-passage.mjs:\n${r.stdout}${r.stderr}`);
+  }
+}
+
+/* 5e. cross-item (docs/audits/AUDIT-2026-11-07-ela-try-c.md, proposal 2, adopted Nov 7, 2026): checks/cross-item.mjs
+   bites (--self-test), and every sample passes it (no item's key printed in another item of the same version), except
+   the ones in checks/cross-item-debt.json, listed for the owner when the check came in. That list can only shrink, as 5d. */
+{
+  const CI = join(ROOT, 'checks', 'cross-item.mjs'), DEBT = 'checks/cross-item-debt.json';
+  const CROSS_ITEM_DEBT_MAX = ['samples/g11-history/pack.json', 'samples/g7-ela2/pack.json', 'samples/g8-science/pack.json'];
+  const st = spawnSync(process.execPath, [CI, '--self-test'], { cwd: ROOT, encoding: 'utf8' });
+  if (st.status === 0) ok(`checks/cross-item.mjs --self-test (${(st.stdout.match(/^✓/gm) || []).length} cases)`); else fail(`checks/cross-item.mjs --self-test failed:\n${st.stdout}${st.stderr}`);
+  let debt = {};
+  try { debt = Object.fromEntries(Object.entries(readJSON(DEBT)).filter(([k]) => !k.startsWith('_'))); } catch (e) { fail(`${DEBT}: ${e.message}`); }
+  for (const k of Object.keys(debt)) if (!CROSS_ITEM_DEBT_MAX.includes(k)) fail(`${DEBT} lists ${k}: the list can only shrink (a new pack fixes its questions instead)`);
+  for (const p of packs) {
+    const r = spawnSync(process.execPath, [CI, join(ROOT, p)], { cwd: ROOT, encoding: 'utf8' });
+    if (/nothing to check/.test(r.stdout)) continue;
+    if (r.status === 0 && debt[p]) fail(`${p} now passes checks/cross-item.mjs: take it off ${DEBT}`);
+    else if (r.status === 0) ok(`${p} passes checks/cross-item.mjs`);
+    else if (debt[p]) skip(`${p} fails checks/cross-item.mjs, known (${DEBT}): ${(r.stdout.split('\n')[0] || '').replace(/^✗\s*/, '').slice(0, 140)}`);
+    else fail(`${p} fails checks/cross-item.mjs:\n${r.stdout}${r.stderr}`);
   }
 }
 

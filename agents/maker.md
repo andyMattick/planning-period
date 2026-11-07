@@ -53,11 +53,14 @@ work; fresh agents and Wilco's bots do.
    over A–D and don't put a question's key under the same letter in A and B.
 6. **Check while you write** (these don't count as the check), in your own folder: `node checks/keys.mjs pack.json`
    and `node checks/test-wise.mjs pack.json` until **both exit 0** (reading items: `node checks/no-passage.mjs pack.json`
-   too); `--items` shows which bot picks each key but
+   and `node checks/cross-item.mjs pack.json`, which names every item whose key is printed in another item of the
+   version: owner, Nov 7, 2026, docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 2); `--items` shows which bot picks each key but
    **always exits 0**, so never read it as a pass (g8-science: a "pass" on `--items` cost an extra maker session).
    Math: also `node checks/math.mjs pack.json`. Puzzles: `node scripts/make-puzzles.mjs <folder> --write` and
    `node checks/puzzles.mjs pack.json`. Apps: `node checks/apps.mjs pack.json`. Fix wrong choices, never a check.
-7. **Round 2:** change only the FIX items. Fix wrong choices, never a right key, to pass a bot. Keep ids. Say in one
+7. **Round 2:** change only the FIX items, **then re-check the whole version**: for each word, idea or quote you
+   changed or added, read every other item of that version (stems and choices) for it, and rerun every check (owner,
+   Nov 7, 2026, docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 4: g7-ela2 try c's fixes moved clues to other items, A 8 → 9 of 10). Fix wrong choices, never a right key, to pass a bot. Keep ids. Say in one
    line per item what you changed, for the reporter. **A checker's suggested fix is a direction, not text to paste:**
    check every fact in it against the source before you use it (g11-history: a recheck's suggested wording, used word
    for word, put the "last federal troops" myth into a key). **A key that is wrong** (not the answer the source best
@@ -84,7 +87,10 @@ from general knowledge. So:
    passage so details support each rival reading (a red herring per inference question, a character's mistaken belief
    in her own words), and the key wins only on a close read. Every wrong choice is one of those readings. **Write the
    reading a non-reader would guess from the story type** ("the shy cat warms up", "she misses her owner"): it is a
-   backed rival, never the key (g7-ela2 remake: A q1 was the genre's default, r3 and final).
+   backed rival, never the key (g7-ela2 remake: A q1 was the genre's default, r3 and final). **The same goes for the
+   story's turn:** the change the story type predicts (the shy pet warms up, the kid proves he's ready) is a rival; the
+   key is a feeling, reason or realization the default gets wrong, seen only in this story's details (g7-ela2 try c: A
+   q1 and A q2 the type's default in every round).
 2. **Unfamiliar topics.** Fiction: invented people, places and events, nothing a student could know. Nonfiction: a
    case or angle a grade-level student won't know (a little-known place, study or person), not the textbook example of
    the idea (keystone species → otters and kelp); when the teacher's notes name the familiar example, use a less
@@ -92,21 +98,27 @@ from general knowledge. So:
    happened, in what order, why this author says so), never a fact general knowledge answers. **A word-in-context item
    uses a word the passage uses in a less common sense, and all four choices are real senses that fit the sentence**; if
    no such word exists, ask it as a short answer (g7-ela2 remake: "cropped", "living", "slip" answered from everyday
-   use, 6 probe hits in 4 rounds).
+   use, 6 probe hits in 4 rounds). **When that turns a multiple-choice item into a short answer, add another
+   multiple-choice item** (another skill from the teacher's list, planned passage-first like the rest) **so each version
+   keeps at least 8 multiple choice**: the probe's line needs 8 or more to tell reading from luck (`agents/blind-ela.md`,
+   mode 1; g7-ela2 round 4 fell to 7). Say the mc and short-answer counts per version in your hand-off.
 3. **The stem never quotes or names the deciding detail**, and no item answers another (Part B retelling Part A, a later
    stem stating an earlier key, the same quote in two items).
-4. **Few pairs, more short answers that cite.** At most **one Part A/Part B pair per passage**. Put the evidence skill in
-   **at least 2 short answers per version** instead: each asks for a claim plus a quote or a paragraph-specific detail
+4. **No multiple-choice Part A/Part B pairs; evidence goes in short answers that cite** (owner, Nov 7, 2026, adopting
+   docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 1: in g7-ela2's three attempts the pairs were right without the passage in every probe
+   round, and each leak counts twice). Test the evidence skill in **at least 2 short answers per version** and the
+   constructed response instead; a teacher who asks for Part A/Part B pairs gets them only as a JUDGMENT the owner or
+   onboarding settled (rule 9). Each short answer asks for a claim plus a quote or a paragraph-specific detail
    ("Quote the sentence that shows…", "What does the author say happened right after…, and in which paragraph?").
    Its `accept` and `why` name the lines that earn the credit; an answer a reader could write without the passage (a
    general claim with no line from the text) must earn at most half the credit.
-5. **Evidence choices (Part B and any "which quotation" item): the key is an exact quote; at least one wrong choice is an
+5. **Evidence choices (a stand-alone "which quotation" item, its claim stated in the stem): the key is an exact quote; at least one wrong choice is an
    unmatched quote** (owner, option 1): the passage's words with a word or phrase changed so it no longer says what the
    passage says, or a line in the passage's voice that the passage doesn't contain and contradicts. A non-reader can't
    tell real from unmatched, so matching quotes to choices stops working; a reader who checks the passage can. Rules:
    an unmatched quote is never a variation of the key's own line (the converge bot, and a reader comparing the two);
-   its `why` says "unmatched" and gives the real line; every other wrong quote is real and backs one of Part A's wrong
-   readings; **every quote is as much about the stem's subject as the key, so the key is never the only quote that names
+   its `why` says "unmatched" and gives the real line; every other wrong quote is real and backs a wrong reading of the
+   stem's claim; **every quote is as much about the stem's subject as the key, so the key is never the only quote that names
    it** (g7-ela2 remake: B q8/q9's [3] quote, three rounds); no quote, real or unmatched, is printed in two items of a
    version. Cite paragraphs the same way on every
    choice and spread the keys' paragraph numbers (the number bots read them).
@@ -120,7 +132,10 @@ from general knowledge. So:
    (docs/PACK-FORMAT.md, "Passages") and says it was written for this quiz; give each passage's word count in every
    hand-off. **A key or `why` says no more than the passage** (no widening of its claim: g7-ela2 remake, "compare places
    with the same weather" became "the weather is the same on both sides" in 3 places, fact FIX).
-8. **A plan line that contradicts this brief** (in `onboarding.json` or the teacher's notes) is a JUDGMENT in your
+8. **Every wrong choice is ruled out by the passage, not just unsupported by it.** Its `why` names the paragraph that
+   contradicts it; a wrong choice the passage leaves open is a second defensible answer, so change it (owner, Nov 7,
+   2026, docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 5: fact FIX on unrefuted wrong choices in all three rounds of try c).
+9. **A plan line that contradicts this brief** (in `onboarding.json` or the teacher's notes) is a JUDGMENT in your
    hand-off, never a silent pick (g7-ela2 remake: "every Part B choice is a real sentence" against rule 5).
 
 ## Other kinds (docs/KINDS-MATH.md, KINDS-GAMES.md, KINDS-APPS.md)
@@ -148,7 +163,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 5** (Nov 7, 2026)
+**Version 7** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -174,3 +189,13 @@ have it) and the number of questions per document.
   Part B quote as on-topic as the key; a named cue leaves the whole version; a key or `why` says no more than the passage
   and hand-offs give word counts; a plan line that contradicts the brief is a JUDGMENT (g7-ela2 remake: probes A 8, 6, 5,
   6 and B 7, 8, 7, 6 of 8; 3 fact FIX; story 395 words).
+- v6, Nov 7, 2026 (owner decision "try c", b, Nov 7, 2026; docs/audits/AUDIT-2026-11-07-ela-remake.md section 10): a
+  word-in-context item moved to a short answer is replaced by another multiple-choice item, so each version keeps at
+  least 8 mc and the hand-off gives the counts (g7-ela2 round 4: 7 mc a version, below the 8-mc floor the probe's
+  line needs).
+- v7, Nov 7, 2026 (owner decision "D and 1-4", Nov 7, 2026, adopting docs/audits/AUDIT-2026-11-07-ela-try-c.md proposals 1, 2, 4 and
+  5): reading items: no multiple-choice Part A/Part B pairs, evidence in at least 2 citing short answers and the RACE
+  (the pairs leaked in every probe round, g7-ela2 try c A 7, 8, 9 of 10); run `checks/cross-item.mjs` (items answering
+  each other: 11, 8, 12 of the probe's right answers); a FIX round re-checks the whole version (fixes moved clues, A
+  8 → 9); every wrong choice ruled out by the passage (fact FIX all three rounds); the story's turn is never the type's
+  default (A q1, A q2). Maker v6's at least 8 mc a version stays.
