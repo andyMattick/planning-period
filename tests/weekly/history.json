@@ -1,0 +1,4 @@
+{
+  "_note": "What each weekly test run picked (scripts/weekly-test.mjs --publish appends; the picker never repeats the last run's item and source pairs).",
+  "runs": []
+}

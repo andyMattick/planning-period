@@ -15,6 +15,7 @@
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
      10. "Paste a link": scripts/test-fetch-page.mjs (the server's address guard, limits and text extraction).
+     11. The weekly test's offline self-test: scripts/weekly-test.mjs --self-test (fixtures import, the order picker).
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -317,6 +318,13 @@ else {
 {
   const r = spawnSync(process.execPath, [join(ROOT, 'scripts/test-fetch-page.mjs')], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
   if (r.status === 0) ok(r.stdout.trim().split('\n').pop() + ' (scripts/test-fetch-page.mjs)'); else fail(`scripts/test-fetch-page.mjs failed:\n${r.stdout}${r.stderr}`);
+}
+
+/* 11. The weekly test (docs/WEEKLY-TEST.md): the fixtures import as expected and the order picker is repeatable, skips
+   last week's pairs and writes valid order folders (scripts/weekly-test.mjs --self-test: offline, under a second) */
+{
+  const r = spawnSync(process.execPath, [join(ROOT, 'scripts/weekly-test.mjs'), '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 60000 });
+  if (r.status === 0) ok(r.stdout.trim().split('\n').pop()); else fail(`scripts/weekly-test.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
 }
 
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');
