@@ -92,7 +92,10 @@ from general knowledge. So:
    happened, in what order, why this author says so), never a fact general knowledge answers. **A word-in-context item
    uses a word the passage uses in a less common sense, and all four choices are real senses that fit the sentence**; if
    no such word exists, ask it as a short answer (g7-ela2 remake: "cropped", "living", "slip" answered from everyday
-   use, 6 probe hits in 4 rounds).
+   use, 6 probe hits in 4 rounds). **When that turns a multiple-choice item into a short answer, add another
+   multiple-choice item** (another skill from the teacher's list, planned passage-first like the rest) **so each version
+   keeps at least 8 multiple choice**: the probe's line needs 8 or more to tell reading from luck (`agents/blind-ela.md`,
+   mode 1; g7-ela2 round 4 fell to 7). Say the mc and short-answer counts per version in your hand-off.
 3. **The stem never quotes or names the deciding detail**, and no item answers another (Part B retelling Part A, a later
    stem stating an earlier key, the same quote in two items).
 4. **Few pairs, more short answers that cite.** At most **one Part A/Part B pair per passage**. Put the evidence skill in
@@ -148,7 +151,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 5** (Nov 7, 2026)
+**Version 6** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -174,3 +177,7 @@ have it) and the number of questions per document.
   Part B quote as on-topic as the key; a named cue leaves the whole version; a key or `why` says no more than the passage
   and hand-offs give word counts; a plan line that contradicts the brief is a JUDGMENT (g7-ela2 remake: probes A 8, 6, 5,
   6 and B 7, 8, 7, 6 of 8; 3 fact FIX; story 395 words).
+- v6, Nov 7, 2026 (owner decision "try c", b, Nov 7, 2026; docs/audits/AUDIT-2026-11-07-ela-remake.md section 10): a
+  word-in-context item moved to a short answer is replaced by another multiple-choice item, so each version keeps at
+  least 8 mc and the hand-off gives the counts (g7-ela2 round 4: 7 mc a version, below the 8-mc floor the probe's
+  line needs).
