@@ -19,6 +19,11 @@ copied unchanged to `checks/test-wise-cues.mjs`, the notes bots, and the course 
    Judged per document version, per document and on the whole pack (groups of 8 or more questions).
    **FAIL: any strategy more than 10 points above chance** (Pet World's rule). Add `--pass <mark>` when the teacher
    gives a pass mark: then also within 15 points of it fails.
+2a. Reading items (a `readingquiz`, or any document with passages): `node checks/no-passage.mjs pack.json --write`.
+   Its bots never see the passage; they read one version's stems and choices together, as a non-reader holds them:
+   pairMatch (Part B quotes lined up with Part A choices by shared words), echo (the choice whose words come back in
+   the version's other items), quoteEcho (a three-word run printed in another item) and their vote. Same FAIL rule (more
+   than 10 points above chance, groups of 8 or more). It runs before the fresh no-passage probe and never replaces it.
 3. Apps: `node checks/apps.mjs pack.json` (content, hashed answers and the browser test). Puzzles:
    `node checks/puzzles.mjs pack.json` (grids and exactly one solution). Both must exit 0; a fail is fixed in the pack
    (forms, hints, choices, clues), never by weakening the check.
@@ -39,8 +44,12 @@ reporter each run's result and the worst strategy before and after (the audit re
 - Small documents are noisy: one question moves an 8-question quiz 12 points. **Too few to judge:** when a document
   has too few mc or number questions for a bot (g4-math: 8 mc, 2 all-number), the bot is "not judged", not "passed";
   say so in the report.
-- **Reading without the passage:** the bots passed a quiz three fresh testers answered 20 of 20 without the passages
-  (g7-ela). Passage-dependence is the ELA round 1 gate's job (`agents/blind-ela.md`, mode 1), not yours.
+- **Reading without the passage:** `checks/test-wise.mjs` passed quizzes fresh testers answered 20 of 20 (g7-ela) and
+  9 of 10 (g7-ela2 A) without the passages. `checks/no-passage.mjs` catches the cross-item part (it fails g7-ela B at
+  40% and g7-ela2 B at 38%), but it missed g7-ela2 A, where the probe used general knowledge and "the key sounds
+  right": the fresh probe (`agents/blind-ela.md`, mode 1) stays the gate. Both old samples are on
+  `checks/no-passage-debt.json`, a known-failing list that can only shrink (`npm run check` fails if a pack on it passes
+  or one off it fails); a new pack never joins it.
 - **"(paragraph N)" citations** in evidence choices are read as numbers by the number bots (smallest, largest, middle):
   a real but weak cue. The maker spreads the keys' paragraphs; the check stays as it is (g7-ela). Wrong choices
   rewritten to fix a no-passage giveaway tend to set off converge, then learnedCV, then middle: rerun all, every time.
@@ -50,7 +59,7 @@ reporter each run's result and the worst strategy before and after (the audit re
 - `keys` rows have no chance and no line: report them as passed or not, never as a percentage.
 
 ---
-**Version 2** (Nov 5, 2026)
+**Version 3** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's `docs/FAIRNESS.md` (the rule, the cues, converge counted on printed
@@ -60,3 +69,7 @@ reporter each run's result and the worst strategy before and after (the audit re
   (g8-science); reruns keep the round (g7-ela); new known limits: too few to judge (g4-math), passage-dependence is the
   ELA gate's (g7-ela), paragraph citations as numbers (g7-ela), LaTeX source length (docs/KINDS-MATH.md), keys rows
   have no chance (g4-math, g7-ela).
+- v3, Nov 7, 2026 (ELA audit, docs/audits/AUDIT-2026-11-07-ela.md; owner option 1, Nov 6): `checks/no-passage.mjs`
+  for reading items (pairMatch, echo, quoteEcho, vote; Wilco's 10-point rule; a self-test in `npm run check`), because
+  the per-question bots passed both ELA samples a non-reader beat (g7-ela 20/20, g7-ela2 A 9/10); the two old samples on
+  a shrink-only known-failing list until the remake.

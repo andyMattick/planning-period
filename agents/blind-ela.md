@@ -6,18 +6,37 @@ flags are what make the pack good.
 
 You run in one of two modes. The lead says which.
 
-## Mode 1: the no-passage probe (the round 1 gate, owner's rule, Nov 5, 2026)
-The g7-ela sample: three fresh testers answered 20 of 20 questions without reading the passages, at confidence 4–5,
-and Wilco's bots passed the same quiz. A reading question a student can answer without the passage doesn't test
-reading. So before any other checker runs:
-1. You get **one version's questions only** (what one student sees), no passages, no other version, no key.
-2. Answer every multiple-choice item, Part A and Part B, as a test-wise student would: from the stems, the choices
-   and the other items. One JSON line each (`{"where", "answer", "confidence", "note"}`); in `note`, the cue you used.
-3. Score it (`checks/score-blind.mjs`). Report `passageFree: {"<version>": {"matched", "of", "confident"}}`
-   (confident = confidence 4–5) and the cues, item by item.
-4. **The line: more than about 40% right fails the round** (chance with 4 choices is 25%; 5 of 10 fails, 4 of 10
-   passes). A fail goes straight back to the maker for a **redesign** (passage and choices, `agents/maker.md`,
-   "Reading items"); no other checker runs on a failed draft. Each version is probed by its own fresh session.
+## Mode 1: the no-passage probe (required for every reading item; owner, Nov 5, and option 1, Nov 6, 2026)
+g7-ela: three fresh testers answered 20 of 20 without the passages while Wilco's bots passed; g7-ela2, remade under the
+first rules, still failed three rounds (A 10, 8, 9 of 10). A reading question a student can answer without the passage
+doesn't test reading.
+- **Who.** A fresh session per version, started by the lead: never the maker, never a session that has seen the
+  passages, the other version, the key or an earlier draft of this quiz. The lead scores it
+  (`checks/score-blind.mjs`, one version's lines) and writes your entry from your notes, so you need no second session.
+- **When.** Round 1, after the maker's checks (with `checks/no-passage.mjs`) exit 0 and before any other checker; again
+  on the changed reading items in every later round; and **once more on every whole version just before the preview**
+  (a fix to one item can let an unchanged item leak: g7-ela2's pairs).
+1. You get **one version's questions only** (`student-view.mjs --no-passages --only …`): no passages, no key.
+2. Answer every item as a test-wise student would, from the stems, the choices and the other items. Multiple choice:
+   one JSON line each (`{"where", "answer", "confidence", "note"}`; in `note`, the cue you used: a stem word, another
+   item, a quote that fits only one choice, general knowledge of the topic, "only this one sounds like a teacher").
+   **Short answers:** write the answer you'd give without the passage.
+3. **The line (a version fails on any one):**
+   - **Multiple choice right more than chance + 15 points**: with 4 choices, more than 40% (6 or 7 mc: 3 right fails;
+     8–9: 4 fails; 10–12: 5 fails). Part A and Part B count as two items.
+   - **A short answer earning more than half its credit** without the passage (the lead scores it against its `accept`
+     and `why`).
+   - Every item you got right at confidence 4–5 from a cue you can name is a FIX, pass or fail.
+   Why 15 points: it is Pet World's margin for a model-run check (the scripted bots, which are exact, get 10), and it
+   is where the owner's line already sat (25% + 15 = 40%). A probe that only guesses clears it 89% of the time on 8 items
+   and 92% on 10 (only 76–83% on 6, 7 or 9), and a quiz that leaks two or three items beyond luck fails. A false fail costs one FIX round on the
+   named items (about $2.75 + $0.54 for probes); a false pass sends out a quiz that doesn't test reading. The line is
+   never raised to cut false fails: the remedy for noise is more items (at least 8 mc a version, `feasibility.json`).
+4. **On a fail:** the version goes back to the maker with your cues, item by item. The maker fixes the questions (wrong
+   choices, stems, pairs, the passage), never the key, and never asks for the check to change. No other checker runs on
+   a failed draft (the passage fact check of round 1 excepted: `docs/RUNBOOK.md` step 4a). A fail at the round 3 limit
+   or at the cost stop goes to the owner with the numbers; a quiz that fails the final probe is never previewed without
+   telling the owner.
 
 ## Mode 2: the blind solve (two phases, standard for every reading item)
 **Inputs.** Round 1: the student copy (`node checks/student-view.mjs pack.json --out ~/pp-work/<order>/view.md`) and,
@@ -51,11 +70,17 @@ item again, then score and decide as below. Report both.
 
 ## Traps for ELA
 - **Answerable without the passage** (phase a): the stem quotes or names the deciding detail; only the key sounds like
-  a teacher's answer; one item answers another (Part B retells Part A; a later stem states an earlier key); wrong
-  choices that are silly or off-topic without reading. Each is FIX: the fix is a wrong choice that is a real misreading
-  of this passage, supported by a detail in it.
-- **Part B (evidence):** every choice must be a real, exact quote from the passage (check each against it), each
-  plausible for the claim. A paraphrase, an invented quote or the only on-topic quote is FIX.
+  a teacher's answer; one item answers another (Part B retells Part A; a later stem states an earlier key; a quote
+  printed in two items); general knowledge of the topic answers it (g7-ela2: otters and kelp); wrong choices that are
+  silly or off-topic without reading. Each is FIX: the fix is a wrong choice that is a real misreading of this passage,
+  supported by a detail in it.
+- **Evidence (Part B and "which quotation" items):** check every choice against the passage. The key must be an exact
+  quote. A wrong choice may be an **unmatched quote** (owner, option 1: the passage's words changed so they no longer say
+  what it says, or a line it doesn't contain) only when the passage contradicts it, its `why` says "unmatched" and it
+  is not a variation of the key's own line; any other paraphrase or invented quote, or the only on-topic quote, is FIX.
+  More than one Part A/Part B pair on a passage is FIX (`agents/maker.md`, reading rule 4).
+- **Short answers that cite:** the `accept` and `why` must name the lines that earn credit; one a reader could answer
+  well without the passage is FIX.
 - **Two defensible answers.** The most common English finding: a main idea, a tone word, an inference or a
   theme where a second choice is also supported by the passage. Find the line that supports each; if two have
   support, it's FIX (reword a wrong choice) or JUDGMENT.
@@ -104,7 +129,7 @@ one version, `"gate": "pass" | "fail"`, and a FIX per item it got right at confi
 reporter takes your minutes from your session's record, not from your estimate.
 
 ---
-**Version 2** (Nov 5, 2026)
+**Version 3** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's blind review (`docs/BLIND-REVIEW.md` steps 2–4) and the traps its
@@ -115,3 +140,10 @@ reporter takes your minutes from your session's record, not from your estimate.
   3); suggested fixes are directions with their facts flagged (g11-history q21); recheck traps (an edit made two right,
   g7-ela); the rubric is read (g7-ela); `fixed`/`sameAs` and an entry file (g8, g11); `--only` takes `|` (g11);
   step counts for difficulty (g4); crossword, logic puzzle, quiz-show and app checks (docs/KINDS-GAMES.md, KINDS-APPS.md).
+- v3, Nov 7, 2026 (ELA audit, docs/audits/AUDIT-2026-11-07-ela.md; owner option 1, Nov 6): the probe is required for
+  every reading item, run by a fresh session per version that has seen nothing of the quiz, scored by the lead (g7-ela2:
+  the scoring session cost $0.39, more than the probe); the line is chance + 15 points on multiple choice (40% with 4
+  choices, the same place as before, now explained) plus short answers scored without the passage; a final whole-version
+  probe before the preview (g7-ela2: fixed pairs let unchanged items leak); on a fail the questions change, never the
+  key or the check; unmatched quotes allowed only as defined, pairs one a passage, short answers that cite, general
+  knowledge as a named cue (g7-ela2: A 10, 8, 9 of 10 without the passages through three rounds).

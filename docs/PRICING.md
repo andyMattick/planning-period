@@ -108,6 +108,14 @@ tokens ($15.00)**: about 1.2–1.7× the typical cost, the menu's usual cushion,
 round. The plain `quiz` (40) stays for quizzes with no passage (math, science, history, grammar). The rubric is its own
 item, as before (`rubric` 15).
 
+**Measured again (g7-ela2, Nov 5; ELA audit, docs/audits/AUDIT-2026-11-07-ela.md):** $26.21 against 165 tokens
+($16.50 with the rubric), with no passing draft: the makers were $21.95 of it (uncapped first draft $7.32, redesign
+$12.21). Two reading orders over budget is a price signal, but both failed for the design option 1 replaces, and maker
+sessions are now capped ($5.50 / $4.10 / $2.75 for a reading quiz with a rubric, `docs/RUNBOOK.md` step 4), which
+puts a reading quiz with a rubric at about $7.6–17.0 with no redesign (low: the logs' cheapest steps; high: both makers
+at their caps and the heaviest recheck) and $4.64 more per redesign (its cap plus two probes). `readingquiz` stays 150 until two
+option-1 orders are measured; if both pass $15, the auditor recommends about 180 (owner decides).
+
 **Reading test (a `test` built on passages):** no ELA test has run yet. Until one is measured, the 🧭 onboarding agent
 adds the same reading surcharge as the quiz, **+110 tokens** (`readingquiz` 150 − `quiz` 40), to the test's 70:
 **180 tokens** for a reading test with A/B versions. The surcharge pays for passage-first design, the round 1 gate on

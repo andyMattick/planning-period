@@ -52,7 +52,8 @@ work; fresh agents and Wilco's bots do.
    value; wrong choices that are not each one small change from the key (the converge bot); spread key letters evenly
    over A–D and don't put a question's key under the same letter in A and B.
 6. **Check while you write** (these don't count as the check), in your own folder: `node checks/keys.mjs pack.json`
-   and `node checks/test-wise.mjs pack.json` until **both exit 0**; `--items` shows which bot picks each key but
+   and `node checks/test-wise.mjs pack.json` until **both exit 0** (reading items: `node checks/no-passage.mjs pack.json`
+   too); `--items` shows which bot picks each key but
    **always exits 0**, so never read it as a pass (g8-science: a "pass" on `--items` cost an extra maker session).
    Math: also `node checks/math.mjs pack.json`. Puzzles: `node scripts/make-puzzles.mjs <folder> --write` and
    `node checks/puzzles.mjs pack.json`. Apps: `node checks/apps.mjs pack.json`. Fix wrong choices, never a check.
@@ -73,27 +74,41 @@ work; fresh agents and Wilco's bots do.
 10. Every pack says it was made by AI from their sources (the renderer adds `brand.config.json`'s `aiNotice`); don't
    add your own name or the product's name anywhere.
 
-## Reading items (English; the owner's rules, Nov 5, 2026)
-The g7-ela sample: three fresh testers answered **20 of 20** questions **without the passages**; two more rounds of
-rewriting choices got that to 9 of 10, still failing. The cause was the order of work: the passage was written first and
-the questions after. So:
+## Reading items (English; the owner's rules, Nov 5, 2026, and option 1, Nov 6, 2026)
+g7-ela: fresh testers answered 20 of 20 without the passages; g7-ela2, remade under the first rules, still got 10, 8 and
+9 of 10 (version A) through three rounds. The leaks that were left: four Part A/Part B pairs printed 16 real sentences
+that retold the story; the reader matched quotes to choices one-to-one; a textbook topic (otters and kelp) answered
+from general knowledge. So:
 1. **Plan the passage and the questions together (passage-first design).** Before writing the passage, list each
-   question's skill, its key reading and **2–3 rival readings a careless reader of this passage would make**. Then
-   write the passage so details in it support each rival reading (a red herring per inference question), and the key
-   wins only on a close read. Every wrong choice is one of those readings, true-sounding and contradicted by the
-   passage, never a reading that is silly or off-topic without it.
-2. **The stem never quotes or names the deciding detail**, and no item answers another (Part B retelling Part A, or a
-   later stem stating an earlier key).
-3. **Part B (evidence): every choice is a real, exact quote from the passage**, each one plausible for the claim, so
-   they can't be ranked without reading. No paraphrased or invented "quotes", no off-topic quote. Cite paragraphs the
-   same way on every choice, and spread the keys' paragraph numbers (lowest, highest, middle) across a version: the
-   number bots read "(paragraph N)" as a value.
-4. **Read your own questions without the passage** before you hand off: for each version, write what you'd answer
-   from the stems and choices alone. More than about 4 in 10 right means redesign the passage and choices, not tweak
-   wording. Round 1's gate (`agents/blind-ela.md`, the no-passage probe) fails the round at the same line.
-5. A passage you write is about 250–350 words at the order's reading level, and says it was written for this quiz.
-   Until the pack format has a passage field, follow the lead's instruction for where passages go and hand them over
-   as a separate file too (the student view doesn't print them).
+   question's skill, its key reading and **2–3 rival readings a careless reader of this passage would make**; write the
+   passage so details support each rival reading (a red herring per inference question, a character's mistaken belief
+   in her own words), and the key wins only on a close read. Every wrong choice is one of those readings.
+2. **Unfamiliar topics.** Fiction: invented people, places and events, nothing a student could know. Nonfiction: a
+   case or angle a grade-level student won't know (a little-known place, study or person), not the textbook example of
+   the idea (keystone species → otters and kelp); when the teacher's notes name the familiar example, use a less
+   familiar one of the same idea and say so in your hand-off. Ask about this passage's particulars (what it says
+   happened, in what order, why this author says so), never a fact general knowledge answers.
+3. **The stem never quotes or names the deciding detail**, and no item answers another (Part B retelling Part A, a later
+   stem stating an earlier key, the same quote in two items).
+4. **Few pairs, more short answers that cite.** At most **one Part A/Part B pair per passage**. Put the evidence skill in
+   **at least 2 short answers per version** instead: each asks for a claim plus a quote or a paragraph-specific detail
+   ("Quote the sentence that shows…", "What does the author say happened right after…, and in which paragraph?").
+   Its `accept` and `why` name the lines that earn the credit; an answer a reader could write without the passage (a
+   general claim with no line from the text) must earn at most half the credit.
+5. **Evidence choices (Part B and any "which quotation" item): the key is an exact quote; at least one wrong choice is an
+   unmatched quote** (owner, option 1): the passage's words with a word or phrase changed so it no longer says what the
+   passage says, or a line in the passage's voice that the passage doesn't contain and contradicts. A non-reader can't
+   tell real from unmatched, so matching quotes to choices stops working; a reader who checks the passage can. Rules:
+   an unmatched quote is never a variation of the key's own line (the converge bot, and a reader comparing the two);
+   its `why` says "unmatched" and gives the real line; every other wrong quote is real and backs one of Part A's wrong
+   readings; no quote, real or unmatched, is printed in two items of a version. Cite paragraphs the same way on every
+   choice and spread the keys' paragraph numbers (the number bots read them).
+6. **Check, don't re-draft.** Run `node checks/no-passage.mjs pack.json` with the other checks until it exits 0 (rule 6).
+   Read each version once without the passage and write what you'd answer: over 4 of 10 right, fix those items once,
+   then hand off. Your self-read is a screen, not the check (g7-ela2 round 2: you read 4, the fresh probe got 8): the
+   fresh no-passage probe decides (`agents/blind-ela.md`, mode 1), so don't spend the cap on more drafts.
+7. A passage you write is about 250–350 words at the order's reading level, goes in the pack's `passages` field
+   (docs/PACK-FORMAT.md, "Passages") and says it was written for this quiz.
 
 ## Other kinds (docs/KINDS-MATH.md, KINDS-GAMES.md, KINDS-APPS.md)
 - **Math:** all math in LaTeX (`$…$`; money as `\$12`); graphs as data (`figure: {graph}`), the asked element hidden;
@@ -108,12 +123,19 @@ the questions after. So:
   student really types, and `miss` for the 1–2 predictable wrong answers; card backs under 90 characters; memorize
   text quoted exactly from the source or a public-domain original, with `source`.
 
+## Your dollar cap (owner, option 1, Nov 6, 2026)
+The lead starts you with a cap (`docs/RUNBOOK.md` step 4: a first draft one third of the order's budget, a redesign one
+quarter, a FIX round one sixth; reading quiz plus rubric: $5.50, $4.10, $2.75). g7-ela2's uncapped makers cost $7.32
+and $12.21 (four internal drafts, 95 turns) against a $16.50 order; the capped FIX round used $2.42 of $5.50. So:
+**write `pack.json` early** (after the plan and passages, then after each document) so a session that hits the cap
+leaves a draft, and hand off at the first complete draft that passes the checks.
+
 ## Stop when
 Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: minutes, tokens (and the split if you
 have it) and the number of questions per document.
 
 ---
-**Version 3** (Nov 5, 2026)
+**Version 4** (Nov 7, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -127,3 +149,10 @@ have it) and the number of questions per document.
   L3 never a practised example, quizzes at least 1 in 4 L3, "about 40%" not "about half" (g8, g4, onboarding);
   the teacher's titles and page limits (g11); estimates and remainders (g4); math, puzzle and app rules from the
   capability docs.
+- v4, Nov 7, 2026 (ELA audit, docs/audits/AUDIT-2026-11-07-ela.md; owner option 1, Nov 6): reading items: at most one
+  Part A/Part B pair a passage and at least 2 short answers per version that cite the passage (g7-ela2: 4 pairs, the
+  quotes retold the story, probe A 10, 8, 9 of 10); evidence keys exact, at least one unmatched quote a Part B, never a
+  variation of the key's line, no quote in two items (g7-ela2: quotes matched one-to-one); unfamiliar topics, not the
+  textbook example (g7-ela2 otters and kelp answered from general knowledge); run `checks/no-passage.mjs`; one self-read,
+  then hand off (g7-ela2 round 2 self-read 4 vs probe 8; round 1 four internal drafts, $7.32); passages in the
+  `passages` field; a dollar cap and save early (g7-ela2 makers $21.95 of $26.21; a 10-minute runner limit lost $0.43).

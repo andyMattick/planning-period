@@ -34,7 +34,9 @@ material, lower the number, or let us use our judgment (we'd make 10). It never 
 passages, always 4 choices (the round 1 no-passage gate's line, about 40%, assumes chance is 25%). A passage of about
 250–350 words supports about 4–6 inference and evidence questions; Part A and Part B count as two. The g7-ela sample
 (10 questions a version on 2 passages) sat at that top end and still needed the passage-first redesign, so the onboarding
-agent warns above 6 a passage. Pricing: `docs/PRICING.md` section 2b. The order page shows the item but has no spec
+agent warns above 6 a passage. Since the ELA audit (Nov 7, 2026; owner option 1): 11 questions by default, at least 8 multiple
+choice a version (the no-passage line, chance + 15 points, is too noisy below that), at most one Part A/Part B pair a
+passage (`pairs`, 0–3) and 2 short answers that quote the passage; g7-ela2's 4 pairs retold the story to a non-reader. Pricing: `docs/PRICING.md` section 2b. The order page shows the item but has no spec
 fields for it yet (an owner change to `site/feasibility.js`).
 
 ## Recalibrate (after every 5 orders)
