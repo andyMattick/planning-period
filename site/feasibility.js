@@ -17,6 +17,7 @@
   var SPECS = {
     worksheet: Q_FIELDS, homework: Q_FIELDS, bellringer: Q_FIELDS, reviewgame: Q_FIELDS,
     quiz: Q_FIELDS.concat([VERSIONS]), test: Q_FIELDS.concat([VERSIONS]),
+    readingquiz: [Q_FIELDS[0], { key: 'passages', label: 'Passages', type: 'number' }, VERSIONS],
     versions: [
       { key: 'file', label: 'Which uploaded file is the test?', type: 'file' },
       { key: 'versions', label: 'How many versions', type: 'number', min: 2, max: 3 }
@@ -49,6 +50,7 @@
     if (d.questions != null && SPECS[id] && SPECS[id][0].key === 'questions') {
       var t = d.types ? TYPE_KEYS.filter(function (k) { return d.types[k]; }).map(function (k) { return d.types[k] + ' ' + TYPE_NAMES[k]; }) : [];
       parts.push(plural(d.questions, 'question') + (t.length ? ' (' + t.join(', ') + ')' : ''));
+      if (d.passages) parts.push('on ' + plural(d.passages, 'passage'));
       if (d.choices && (!d.types || d.types.mc)) parts.push(d.choices + ' choices each');
       if (d.versions) parts.push(plural(d.versions, 'version'));
     } else if (id === 'versions') {

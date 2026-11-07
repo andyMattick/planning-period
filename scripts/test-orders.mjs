@@ -123,6 +123,24 @@ try {
   }
   ok('local mode: the web page is counted as text (scripts never run), no sign-in box, the link box shows the save-and-upload hint, Send downloads the order zip (phone and desktop)');
 
+  // ===== 1b. reading quiz: short answer + RACE by default, multiple choice on passages only as an "in testing" option (owner, Nov 7, 2026) =====
+  {
+    const c = await ctx('phone'), page = await c.newPage();
+    await page.goto(LOCAL);
+    await page.waitForSelector('#items .card', { state: 'attached' });
+    assert.match(await page.textContent('#items [data-item="readingquiz"]'), /Multiple choice on passages is in testing: our checks can still sometimes answer it without reading\. Short answers and RACE are fully checked\./);
+    await page.evaluate(() => { const b = document.querySelector('#items [data-item="readingquiz"] input[type=checkbox]'); b.checked = true; b.dispatchEvent(new Event('change', { bubbles: true })); window.PPShowStep(3); });   // 0-based: step 4, the requests
+    const spec = '[data-item-spec="readingquiz"]';
+    assert.match(await page.textContent(spec), /7 questions \(6 short answer, 1 written response\), on 2 passages, 2 versions/, 'the default is short answers + RACE');
+    assert.doesNotMatch(await page.textContent(spec + ' .spec-notes'), /in testing/, 'no warning until she picks it');
+    await page.selectOption('#sp-readingquiz-mc', 'testing');
+    assert.match(await page.textContent(spec + ' .spec-notes'), /Multiple choice on passages is in testing/, 'picking it shows the warning');
+    await noSideways(page, 'order page, reading quiz option (phone)');
+    await shot(page, 'local-phone-readingquiz-in-testing');
+    await c.close();
+  }
+  ok('reading quiz: short answers + RACE by default; picking "multiple choice on passages (in testing)" shows the in-testing warning (phone)');
+
   // ===== 2. sign in and send online =====
   const c = await ctx('desktop'), page = await c.newPage();
   page.on('dialog', (d) => d.accept());

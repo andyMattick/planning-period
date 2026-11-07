@@ -28,16 +28,29 @@ preview card shows the pages it adds before she uses it). The counting itself di
 Example: 75 questions from 1 page. Supply 6–10, so the follow-up says "about 6–10 good questions", and offers: add
 material, lower the number, or let us use our judgment (we'd make 10). It never makes 75 thin questions.
 
-## Reading quizzes on passages (first audit, Nov 5, 2026)
+## Reading quizzes on passages (first audit, Nov 5, 2026; short answer + RACE since Nov 7, 2026)
 
-`readingquiz` (defaults and limits in `feasibility.json`): 10 questions on 2 passages by default, 6–16 questions, 1–3
-passages, always 4 choices (the round 1 no-passage gate's line, about 40%, assumes chance is 25%). A passage of about
-250–350 words supports about 4–6 inference and evidence questions; Part A and Part B count as two. The g7-ela sample
-(10 questions a version on 2 passages) sat at that top end and still needed the passage-first redesign, so the onboarding
-agent warns above 6 a passage. Since the ELA audit (Nov 7, 2026; owner option 1): 11 questions by default, at least 8 multiple
-choice a version (the no-passage line, chance + 15 points, is too noisy below that), at most one Part A/Part B pair a
-passage (`pairs`, 0–3) and 2 short answers that quote the passage; g7-ela2's 4 pairs retold the story to a non-reader. Pricing: `docs/PRICING.md` section 2b. The order page shows the item but has no spec
-fields for it yet (an owner change to `site/feasibility.js`).
+**Owner, Nov 7, 2026 (after four ELA tries failed the fresh no-passage probe):** `readingquiz` is sold as **citing short
+answers plus a RACE response, with no multiple choice**, until a passage-based multiple-choice version passes. The
+defaults (`feasibility.json`): 7 questions a version (6 short answers that quote the passage or name a paragraph-specific
+detail, 1 RACE), 2 passages, A/B; 4–16 questions, 1–3 passages. A passage of about 250–350 words supports about 3–4
+citing short answers. Each short answer still faces the no-passage probe: one a reader could answer without the passage
+earns at most half its credit (`agents/blind-ela.md`, mode 1).
+
+**Multiple choice on passages is "in testing"**, offered only as the menu option the teacher sees on the item
+(`menu.json` `readingquiz.options`, shown as a Yes/No field in step 4 with this warning when picked): "Multiple choice on
+passages is in testing: our checks can still sometimes answer it without reading. Short answers and RACE are fully
+checked." When she picks it, `feasibility.json` `readingquiz.mcInTesting` gives the mix (at least 8 multiple choice a
+version, so the no-passage line, chance + 15 points, is fair; always 4 choices; no Part A/Part B pairs; 2 citing short
+answers and the RACE), and the onboarding agent warns in the follow-up (`agents/onboarding.md` step 4). We make no claim
+that it passes: g7-ela2's four tries failed the fresh probe (try d: A 4 and B 7 of 8, `docs/audits/AUDIT-2026-11-07-ela-try-d.md`).
+What lets it graduate: `docs/ROADMAP.md`.
+
+History: the first audit set 10 questions on 2 passages (the g7-ela sample sat at the top end, about 6 a passage, and
+still needed the passage-first redesign), so the onboarding agent warns above 6 questions a passage. Option 1 (Nov 6–7)
+raised it to 11 with at least 8 multiple choice and no Part A/Part B pairs (`pairs` 0; g7-ela2's 4 pairs retold the
+story to a non-reader). Pricing: `docs/PRICING.md` section 2b. The order page shows the item's questions, passages and
+versions fields and the in-testing option (`site/feasibility.js`, `site/order.js`).
 
 ## Recalibrate (after every 5 orders)
 
