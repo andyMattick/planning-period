@@ -65,6 +65,15 @@
   }
   function tabBar() {
     document.body.classList.add('shell');
+    // Keyboard users skip the top bar and sidebar.
+    var main = document.querySelector('main');
+    if (main && !document.querySelector('.skip')) {
+      if (!main.id) main.id = 'main';
+      if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+      var skip = document.createElement('a');
+      skip.className = 'skip'; skip.href = '#' + main.id; skip.textContent = 'Skip to the page';
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
     var side = document.createElement('nav');
     side.className = 'sidebar'; side.setAttribute('aria-label', 'Main');
     side.innerHTML = '<div class="side-in">' + links('side') + '</div>';

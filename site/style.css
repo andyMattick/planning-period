@@ -436,3 +436,21 @@ a.broken { opacity: .5; pointer-events: none; }
 .demo-card li { margin: 4px 0; }
 .demo-links { display: flex; flex-wrap: wrap; gap: 8px; }
 .demo-links .btn { text-decoration: none; display: inline-flex; align-items: center; }
+
+/* Headings that only take focus from code (the phone steps, a jump to step 5) don't need a ring. */
+h2[tabindex="-1"]:focus { outline: none; }
+@media (max-width: 640px) {
+  body.wizard .hero .tagline, body.wizard .eyebrow { display: none; }
+  body.wizard .hero { padding-bottom: 0; }
+  .step-head { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; align-items: center; }
+  .step-head > div { display: contents; }
+  .step-head h2 { margin: 0; }
+  .step-head p { grid-column: 1 / -1; margin-top: 8px; }
+}
+@media (min-width: 960px) {
+  body.shell > main.wrap, body.shell > .foot > .wrap { margin-left: 0; padding-left: 32px; padding-right: 32px; }
+  body.shell > .foot .wrap { max-width: 880px; }
+}
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; background: var(--accent); color: var(--accent-ink); padding: 10px 14px; border-radius: 8px; font-weight: 700; }
+.skip:focus { top: 8px; }
+main:focus { outline: none; }
