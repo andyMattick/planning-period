@@ -6,9 +6,10 @@ hard stop $17). Same order and made-up teacher (Mr. Haverford, grade 7: `reading
 new passages. The earlier run of this order (sea otters and kelp, 4 pairs) is in git history: $26.21, probes A 10, 8, 9
 and B 9, 5, 5 of 10, three failed gates. Stopped at the preview (no approval.json).
 
-**Result in one line: it now passes `checks/no-passage.mjs` (worst bot 25%, chance 25%; it came off the debt list), cost
-$9.30 for rounds 0–3 (0.56× the $16.50 budget, 0.62× the quiz's $15; $10.17 with the audit), but the fresh no-passage probe still fails both versions
-after round 3 (final: A 6 of 8, B 6 of 8; 4 fails), so the blind solve never ran and 3 small fact FIX are open.**
+**Result in one line: it passes `checks/no-passage.mjs` (off the debt list, now empty), the blind solve confirmed every
+key (20 of 20) and all six article fact FIX from rounds 1–3 are fixed, but the fresh no-passage probe still fails both
+versions after the owner's extra round 4 (A 3 of 7, the line exactly; B 5 of 7). Cost $13.88 in all (0.84× the $16.50
+budget, 0.93× the quiz's $15), under the $17 stop. Open FIX go to the teacher with the preview, listed first.**
 
 ## How the team was run
 Every role was a fresh `claude -p` session in its own folder with only its brief's files; makers got `--max-budget-usd`
@@ -34,6 +35,12 @@ record (exact); the lead's session is not measured.
 | | **Total, rounds 0–3** (15:28–16:07 UTC) | **32.1** | **$9.30** |
 | after | 🔎 Auditor (proposals only) | 2.7 | $0.87 |
 | | **Total with the audit** | **34.8** | **$10.17** |
+| 4 | 📝 Maker, FIX round under maker v5, cap $2.75 | 4.5 | $1.43 |
+| 4 | 🙈 Probes A, B (whole versions) | 0.6 + 0.6 | $0.35 |
+| 4 | 🔎 Fact recheck | 1.1 | $0.42 |
+| 4 | 🙈 Blind solve, both versions (no passages, then passages, then the key) | 3.3 | $1.14 |
+| 4 | 🧾 Reporter (whole story rewritten) | 1.0 | $0.37 |
+| | **Total, the whole remake** | **45.9** | **$13.88** |
 
 Two starts were stopped by the lead in their first minute (a 10-minute runner limit set by mistake; web tools passed in
 a form that would be denied); their cost has no record ("not measured").
@@ -45,6 +52,7 @@ a form that would be denied); their cost has no record ("not measured").
 | 2 | **6** (4) | **8** (4) | none | echo 28% |
 | 3 | **5** (3) | **7** (3) | none | pairMatch 25% |
 | final | **6** (1) | **6** (3) | none | 25% |
+| 4 (7 mc; 3 fails) | **3** (0) | **5** (0) | B q10 (its line printed as q9 D) | echo 26% |
 
 What option 1 fixed: short answers that cite now hold (no probe earned over half after round 1); the pairs no longer
 match quote to choice one-to-one (pairMatch at chance); confidence fell (A sure 6 → 1). What it did not: the probe still
@@ -66,3 +74,21 @@ unfamiliar to a U.S. 7th grader but not to the model that probes it: an invented
   rabbit fence; [3]–[4] state a debated cascade as settled (the cats hedge in [4] answers part of it).
 - The story is 395 words (the brief says about 250–350).
 - `samples/g7-ela` stays on the debt list as the record of the old design; it comes off only if the owner retires it.
+
+## Round 4 (owner approved, Nov 7, 2026)
+The owner adopted the audit's brief changes (`maker.md` v5, `onboarding.md` v7, `blind-ela.md` v4), approved one more
+FIX round and the blind solve even with the gate open, and retired `samples/g7-ela` to `archive/samples/g7-ela`.
+- **Maker** (fresh, $1.43 of $2.75): the two word-in-context items became short answers that cite (so 7 mc + 3 short a
+  version, not the 8 + 2 ordered), new rivals in A q1, A q3, B q2 and both fence pairs, the B q6 and A q10 keys corrected
+  to what [2] says (a correctness fix), the story trimmed to 374 words.
+- **Probes** (fresh, cue tags): A 3 of 7, none sure (cues: item 4, type 3, topic 3); B 5 of 7, none sure (item 7, type 2,
+  topic 2). Both still over the line; B q10 earns full credit because q9 prints its line. Topic knowledge is a minority
+  cue now; cross-item cues are the main one.
+- **Fact recheck:** the 3 "same weather" FIX are fixed; 2 new: A q10's key adds "only the number of dingoes differs"
+  (wider than [2]); B q6's choice B ("far less rain") may be true of real places. 1 JUDGMENT (A q7: kangaroos or sheep).
+- **Blind solve** (fresh, keyless, both versions): **20 of 20 right, every key confirmed, every quote exact.** 11 FIX
+  (B q6, B q8/q9 guessable; B q7 still an everyday word, its "floods" detail in B q6 C; B q4's key proves less than its
+  Part A; both unmatched quotes in the story pairs are contradicted only by silence; B q3 a level easier than A q3; A q1's
+  "really" echoes the story; A q6 recall; B q1 answerable from A q4 D side by side; 7 mc is below the 8-mc floor),
+  2 JUDGMENT (A q8/q9: the article leans; the A q9 key shows "hard", not "neutral"), 7 KEEP. L3 4 of 11 a version.
+- No round 5: the owner approved one. Everything open is listed first in the audit report and in this note.

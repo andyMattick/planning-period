@@ -124,3 +124,19 @@ the section 5 rules; if both finished orders pass $15, raise it to about 180 as 
 
 Word-in-context and pair items in the probe notes; whether a named cue survives a FIX round; the cue split (topic
 knowledge against the rest); passage word counts; the finished cost of this order against $15.
+
+## 10. After the audit: round 4 under the adopted briefs (added by the order lead, Nov 7, 2026)
+
+The owner adopted section 5 as proposed and approved one more FIX round, the blind solve with the gate open, and
+retiring `samples/g7-ela` (now `archive/samples/g7-ela`; the no-passage debt list and its ceiling are empty).
+- **Cost:** round 4 $3.71 (maker $1.43, probes $0.35, fact recheck $0.42, blind solve $1.14, reporter $0.37); the whole
+  remake **$13.88**, 0.84× the $16.50 budget and 0.93× the quiz's $15, under the $17 stop. One order, under budget:
+  still no price change.
+- **Gate:** A 3 of 7 (the line is 3 at 7 mc), B 5 of 7, none at confidence 4–5 (A 1 → 0 sure, B 3 → 0). The word-in-
+  context items moved to short answers, which took the order to 7 mc and below the 8-mc floor the line needs (the blind
+  tester's FIX): for the owner, whether maker v5 rule 2's "ask it as a short answer" should keep the mc count instead.
+- **Cue tags** (blind-ela v4, first use): A item 4, type 3, topic 3; B item 7, type 2, topic 2. Cross-item cues are now
+  the main leak (B q10's line printed as B q9 D); topic knowledge is a minority, as section 4 predicted.
+- **Keys:** the blind solve confirmed every key (20 of 20) and every quote; the fact checker closed the 3 open FIX and
+  found 2 new wording FIX. Open FIX and JUDGMENT go to the teacher with the preview, listed first.
+
