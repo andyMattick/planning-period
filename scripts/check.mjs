@@ -165,7 +165,7 @@ for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs', 'puzzles.mj
    it that now passes must come off, and nothing outside NO_PASSAGE_DEBT_MAX may ever be added. */
 {
   const NP = join(ROOT, 'checks', 'no-passage.mjs'), DEBT = 'checks/no-passage-debt.json';
-  const NO_PASSAGE_DEBT_MAX = ['samples/g7-ela/pack.json', 'samples/g7-ela2/pack.json'];
+  const NO_PASSAGE_DEBT_MAX = ['samples/g7-ela/pack.json'];   // g7-ela2 came off after its option-1 remake (Nov 7, 2026)
   const st = spawnSync(process.execPath, [NP, '--self-test'], { cwd: ROOT, encoding: 'utf8' });
   if (st.status === 0) ok(`checks/no-passage.mjs --self-test (${(st.stdout.match(/^✓/gm) || []).length} cases)`); else fail(`checks/no-passage.mjs --self-test failed:\n${st.stdout}${st.stderr}`);
   let debt = {};

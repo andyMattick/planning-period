@@ -70,15 +70,12 @@
   "style": {
     "notes": [
       "First line: Name ____ Class ____ Date ____.",
-      "Title in ALL CAPS: READING CHECK: \"STORY TITLE\" with (Form A) or (Form B) on the same line.",
-      "Plain text, no boxes; answer lines are long underscores.",
-      "Questions numbered 1. 2. …; choices A.–D. indented, one per line; one-word choices lowercase.",
-      "Part A and Part B each get their own number. Part B: \"Which quotation from the text BEST supports the answer to Part A?\" Evidence choices are short quotes ending with the paragraph in brackets, like [6].",
-      "Short, plain directions: \"Read the story. Then answer each question. Fill in the circle next to the best answer.\"",
-      "Questions cite paragraphs: \"In paragraph 2, …\"; vocab: \"What does the word … mean in paragraph 5?\"",
-      "Constructed response header CONSTRUCTED RESPONSE (4 points), on the back; a \"How does [character] change\" question with Use RACE spelled out; Cite asks for two pieces of evidence with [paragraph numbers]; four blank lines.",
-      "RACE CHECKLIST: rows Restate, Answer, Cite, Explain; columns 4 = Got it!, 3 = Almost, 2 = Started, 1 = Not yet; student \"I…\" statements; \"Add the four rows and divide by 4. I round up.\"",
-      "About grade 7 reading level: short sentences, everyday words. American spelling."
+      "Title in ALL CAPS with (Form A) or (Form B).",
+      "Plain text, no boxes; long underscore answer lines.",
+      "Questions 1. 2.; choices A.–D. one per line; one-word choices lowercase.",
+      "Part A and Part B each numbered; evidence choices are short quotes ending in [paragraph].",
+      "Short, plain directions; constructed response on the back with RACE spelled out.",
+      "About grade 7 reading level; short sentences; American spelling."
     ],
     "font": "Arial",
     "accent": "#1f4e79",
@@ -97,8 +94,8 @@
   "documents": [
     {
       "item": "readingquiz",
-      "kind": "quiz",
-      "title": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\"",
+      "kind": "readingquiz",
+      "title": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\"",
       "directions": "Read the story and the article. Then answer each question. Fill in the circle next to the best answer.",
       "versions": [
         "A",
@@ -107,68 +104,61 @@
       "passages": [
         {
           "id": "p1",
-          "title": "The Bench by the Library",
+          "title": "Biscuit",
           "kind": "fiction",
+          "source": "original",
           "paragraphs": [
-            "The text came during science: \"Bench by the library after school. We need to talk.\" Marisol always put smiley faces in her texts. This one was plain.",
-            "All afternoon, Ellie went over the week. Tuesday at lunch, she had sat with Dana's group. Marisol, who was late, had ended up eating alone. When Ellie waved, Marisol hadn't waved back.",
-            "Marisol was already on the bench. Her little brother, Teo, sat beside her, eating crackers. He wore a green sweatshirt that fit him perfectly. Marisol kept peeking into a paper bag on her lap. She did not look up.",
-            "Ellie spoke first. \"Sorry about lunch. Dana took the seat I saved for you.\"",
-            "Marisol blinked. \"Lunch? You think I'm mad about lunch?\"",
-            "She took a long, slow breath, then another one. \"Mom's been packing up our hall closet this week.\" She swallowed. \"Bags of stuff to give away. She washed everything in hot water first.\"",
-            "Marisol's eyes went to Teo, and so did Ellie's. There was a small ink stain on one cuff of his sweatshirt. Back in fifth grade, Ellie had made that stain.",
-            "\"I'm so sorry,\" Marisol said in a rush. \"You lent it to me, and I never gave it back. Now it's tiny. My birthday money paid for a new one.\" Inside the bag was a sweatshirt in the same green, stiff and new. The new one had a hood, too, and two deep pockets.",
-            "Teo tugged on Marisol's sleeve and held out his arms. \"Look! It's mine now! Marisol made me wear it.\" That sweatshirt had been Ellie's favorite for three winters.",
-            "For a long second, Ellie didn't say a word. She thought of all the cold mornings she had pulled those soft old sleeves down over her hands.",
-            "Then she saw Marisol gripping the bench so hard her knuckles were pale.",
-            "Suddenly Ellie laughed so hard she had to hold on to the bench. \"Honestly? It looks better on him.\"",
-            "That night, Ellie sent Marisol a text. It was just three smiley faces."
-          ],
-          "source": "original"
+            "Mrs. Abara handed Kiran her spare key and a page of notes. \"Biscuit is shy with new people, so don't take it personally,\" she said. At the bottom of the page she had written: Dev will come Thursday to water the plants. Kiran had asked his parents for a pet for three years. Four days with Biscuit, Monday to Thursday, felt like a test, and he planned to get a perfect score.",
+            "On Monday morning the apartment was silent. Kiran filled the bowl and crouched by the couch. \"Here, kitty, kitty!\" he called. He shook the food bag and tapped the bowl with a spoon, louder each time. Nothing moved. He walked to school with his shoulders up near his ears.",
+            "That evening the bowl was empty, and the blanket on the armchair was warm and covered in orange hair. Kiran checked behind the mat. Nothing had spilled. At dinner his little sister, Tam, said, \"So she ate!\" Kiran shook his head. \"Dev must have come by and tossed it out. She won't touch anything I give her.\"",
+            "On Tuesday he tried harder. He waved a feather toy under the bed and sang to her. Two green eyes watched him from the dark, then slid away. \"She misses Mrs. Abara too much to eat,\" he told Tam. \"And she hates me.\" Tam kept eating her cereal. \"Or you're really loud.\"",
+            "On Wednesday evening, Kiran had a math test to study for and no energy left for singing. The heater under the window clicked on, the way it did every evening. He sat on the floor with his back against the couch and opened his notebook. He forgot to call her at all.",
+            "After a while, something warm leaned against his elbow. Biscuit sat beside him, staring at the page as if she were checking his work. Kiran did not reach for her. He kept writing, but slower, and he hardly breathed. She stayed until he finished the last problem.",
+            "On Thursday, Dev was watering the plants when Mrs. Abara got home. She glanced at Kiran's notebook on the table. \"I used to teach math, you know.\" Kiran started to say, \"She didn't eat at first,\" then looked at Dev and stopped. \"Could I come over sometimes?\" he asked instead. \"I'd bring my homework.\" Mrs. Abara smiled and pressed a folded ten-dollar bill into his hand."
+          ]
         },
         {
           "id": "p2",
-          "title": "What Happened to the Kelp?",
+          "title": "The Long Fence",
           "kind": "nonfiction",
+          "source": "original",
           "paragraphs": [
-            "Divers off the Pacific coast found something strange. Where tall kelp forests should have stood, the sea floor was almost bare. Purple urchins covered the rocks. Storms can rip whole kelp plants loose. Dirty water can block the sunlight kelp needs. People blamed both.",
-            "Kelp is a giant brown seaweed. Gas-filled floats hold its long blades up toward the light. Young fish and crabs hide among its long blades. It can grow as much as two feet in a single day. Winter storms pound this coast every year, tearing plants loose from the rocks. But a healthy forest usually grows back within a year or two. Yet these bare places stayed bare for many years.",
-            "Sea otters eat sea urchins. Unlike seals and whales, otters have no blubber. They stay warm with the thickest fur of any animal. An otter also eats about a quarter of its weight each day. Even a few otters can keep urchin numbers down.",
-            "That fur nearly wiped otters out. In the 1700s and 1800s, hunters killed hundreds of thousands of them for their fur. By the early 1900s, otters were gone from most of the coast.",
-            "Urchins acted differently once the otters were gone. When otters hunt nearby, urchins tend to stay tucked into cracks, eating bits of drifting kelp. With no otters around, they crept out into the open. They spread across the sea floor in huge numbers, chewing through living plants. Urchins are able to live for years on almost nothing. Once the kelp was gone, they stayed.",
-            "Once laws protected otters, some places got them back. The otters did not have to eat every single urchin. Many urchins that were left went back into hiding, and kelp grew back over the rock. A wide range of fish, crabs, and snails returned with it.",
-            "Scientists call the otter a keystone species. They have since found a whole raft of animals like it. The divers had looked for something harmful that had arrived. The real answer was not something new but something that had gone missing from the coast."
-          ],
-          "source": "original"
+            "Across the dry middle of Australia runs a fence more than 5,000 kilometers long. It is called the Dingo Fence, and it is one of the longest structures on Earth. Ranchers began building it more than 100 years ago. They wanted to keep dingoes, Australia's wild dogs, away from their sheep.",
+            "The fence mostly works. Dingoes are common on one side and rare on the other. On the sheep side, ranchers also poison, trap and shoot wild dogs. Still, a few slip through gaps after floods. The fence gives scientists a natural experiment. Nobody set it up as a test, but scientists can compare places on the two sides that have the same kind of land and the same weather.",
+            "On the side with few dingoes, there are many more kangaroos. Dingoes hunt kangaroos, so where dingoes are rare, more young kangaroos live to grow up. In many places on that side, the grass is cropped short and the ground is barer. Kangaroos graze on the same grass that sheep need.",
+            "The changes go further. Red foxes and feral cats were introduced to Australia by people from Europe. Dingoes kill foxes and cats. Where dingoes are rare, foxes are more common, and small native animals, such as hopping mice, are harder to find. Some studies find more cats there too. Foxes and cats are a main reason many small Australian mammals have disappeared from large areas.",
+            "None of this makes the answer simple. Dingoes do kill sheep and calves. For the families who raise sheep, the fence protects their living. Some people say the fence should come down. Others say it must stay. Many scientists say more study is needed before anyone decides.",
+            "The fence was built to solve one problem: dingoes eating sheep. It shows how pulling one hunter out of a place can change far more than anyone planned."
+          ]
         }
       ],
       "sections": [
         {
-          "heading": "Read \"The Bench by the Library.\" Then answer questions 1–5.",
+          "heading": "Questions 1-5: \"Biscuit\"",
           "passage": "p1",
           "questions": [
             {
               "id": "q1",
-              "level": 2,
-              "skill": "infer what a character feels or wants",
-              "type": "mc",
               "passage": "p1",
+              "level": 1,
+              "skill": "infer a character's feelings or beliefs",
+              "type": "mc",
               "prompt": {
-                "A": "Part A: How does Marisol most likely feel at the start of her talk with Ellie?",
-                "B": "Part A: Why did Marisol most likely send Ellie the text?"
+                "A": "In paragraph 4, what reason does Kiran give for the way Biscuit is acting?",
+                "B": "In paragraph 1, how does Kiran think of the four days he will look after Biscuit?"
               },
               "choices": {
                 "A": [
-                  "hurt, because Ellie left her to eat lunch by herself",
-                  "afraid, because she has to admit to a mistake",
-                  "sad, because her family is getting ready to move away",
-                  "eager, because she has a surprise to give Ellie"
+                  "She does not like the food he gives her.",
+                  "She is sad that her owner is away.",
+                  "Dev frightened her when he came by.",
+                  "She only comes out when nobody is home."
                 ],
                 "B": [
-                  "to tell Ellie she was angry about lunch",
-                  "to tell Ellie her family was moving to another town",
-                  "to admit that she ruined something Ellie had lent her",
-                  "to ask for help with her brother"
+                  "a chance to have the pet his parents will not get him",
+                  "a job Mrs. Abara warned him would be hard",
+                  "a test he wants to do perfectly on",
+                  "a way to earn the money he wants for a pet"
                 ]
               },
               "answer": {
@@ -176,29 +166,32 @@
                 "B": 2
               },
               "why": {
-                "A": "Marisol takes 'a long, slow breath, then another one' and swallows [6], then says 'I'm so sorry' and admits the borrowed sweatshirt shrank [8]: she is afraid of how Ellie will take it. 'You think I'm mad about lunch?' [5] shows she isn't hurt about lunch; the closet is packed to give things away, not to move [6]; the bag holds a replacement she is nervous about, not a happy surprise.",
-                "B": "Teo is wearing Ellie's sweatshirt (it has the stain she made in fifth grade [7]), and it now fits him 'perfectly' [3]; Marisol confesses it shrank after she never gave it back [8]. She is surprised Ellie thinks she is mad about lunch [5]; the bags are things to give away [6]; and Teo is there to show Ellie the sweatshirt, not to be looked after ('Marisol made me wear it' [9])."
+                "A": "He says \"She misses Mrs. Abara too much to eat\" [4]. The food line is from [3] and is about whether she ate; Dev has not come yet [1]; the warm blanket [3] is a clue a careless reader turns into \"only when nobody is home,\" but that is not what Kiran says.",
+                "B": "\"Four days with Biscuit ... felt like a test, and he planned to get a perfect score\" [1]. He has wanted a pet for three years [1], but these four days do not give him one; Mrs. Abara says Biscuit is shy, not that the job is hard [1]; the money comes only at the end [7] and he never asks for it."
               }
             },
             {
               "id": "q2",
-              "level": 2,
-              "skill": "choose the best evidence",
-              "type": "mc",
               "passage": "p1",
-              "prompt": "Part B: Which quotation from the text BEST supports the answer to Part A?",
+              "level": 2,
+              "skill": "infer why a character acts",
+              "type": "mc",
+              "prompt": {
+                "A": "In paragraph 3, why does Kiran check behind the mat?",
+                "B": "In paragraph 7, why does Mrs. Abara say that she used to teach math?"
+              },
               "choices": {
                 "A": [
-                  "\"When Ellie waved, Marisol hadn't waved back.\" [2]",
-                  "\"Marisol kept peeking into a paper bag on her lap.\" [3]",
-                  "\"Mom's been packing up our hall closet this week.\" [6]",
-                  "\"She took a long, slow breath, then another one.\" [6]"
+                  "He thinks Biscuit is hiding behind it where he can't see her.",
+                  "He is looking for the spare key that Mrs. Abara gave him.",
+                  "He wants to see whether Dev left a note for him under the mat.",
+                  "He wants to know if the food fell out instead of being eaten."
                 ],
                 "B": [
-                  "\"Marisol's eyes went to Teo, and so did Ellie's.\" [7]",
-                  "\"Teo tugged on Marisol's sleeve and held out his arms.\" [9]",
-                  "\"Bags of stuff to give away.\" [6]",
-                  "\"Sorry about lunch.\" [4]"
+                  "She has noticed what Kiran was working on.",
+                  "She is explaining why she wrote such careful notes.",
+                  "She thinks Biscuit helped him study.",
+                  "She is surprised that he did homework instead of the job."
                 ]
               },
               "answer": {
@@ -206,32 +199,32 @@
                 "B": 0
               },
               "why": {
-                "A": "The slow breaths come just before she gives the bad news. The waving [2] fits the hurt reading, the peeking [3] the surprise reading and the packing [6] the moving reading, but the story shows each of those is wrong.",
-                "B": "Marisol turns Ellie's eyes to Teo [7], who is wearing the sweatshirt Ellie lent her, now shrunk: that is what she has to own up to. Ellie's apology [4] fits 'angry', the bags [6] fit 'moving' and Teo tugging on Marisol's sleeve [9] fits 'help with her brother', but the story shows each of those is wrong (Marisol: 'You think I'm mad about lunch?' [5])."
+                "A": "He finds the bowl empty and checks, then notes \"Nothing had spilled\" [3]; he does not believe she ate. Biscuit hides under the bed [4], not behind the mat; the key and the note about Dev came from Mrs. Abara [1].",
+                "B": "She speaks right after she \"glanced at Kiran's notebook on the table\" [7], and his notebook holds math problems [5-6]. The notes were about Biscuit and Dev [1], not about teaching; \"checking his work\" [6] is only how Biscuit looked; nothing shows she is unhappy with the job."
               }
             },
             {
               "id": "q3",
-              "level": 2,
-              "skill": "word meaning from context",
-              "type": "mc",
               "passage": "p1",
+              "level": 3,
+              "skill": "infer what a character realizes",
+              "type": "mc",
               "prompt": {
-                "A": "What does the word \"stiff\" mean in paragraph 8?",
-                "B": "What does the phrase \"went over\" mean in paragraph 2?"
+                "A": "Part A: In paragraph 7, why does Kiran stop in the middle of what he is saying?",
+                "B": "Part A: Which statement about Dev is best supported by the story?"
               },
               "choices": {
                 "A": [
-                  "awkward and cold toward others",
-                  "sore and achy after hard work",
-                  "firm and quite hard to bend",
-                  "strict and harsh with people"
+                  "He does not want Mrs. Abara to think he failed the job.",
+                  "He is afraid talking will scare Biscuit.",
+                  "He realizes his idea about the empty bowl was wrong.",
+                  "He does not want Dev to hear that he had trouble."
                 ],
                 "B": [
-                  "walked across the room",
-                  "was liked by the others",
-                  "got past it and let it go",
-                  "thought back through it"
+                  "He is the reason Biscuit hid under the bed.",
+                  "He came by each day of the week to water the plants.",
+                  "He threw out Biscuit's food on Monday evening.",
+                  "He did not come to the apartment until Thursday."
                 ]
               },
               "answer": {
@@ -239,32 +232,32 @@
                 "B": 3
               },
               "why": {
-                "A": "The new sweatshirt is 'stiff and new' [8], unlike the old one's 'soft old sleeves' [10]: firm, not yet soft. Nobody in the paragraph is unfriendly, sore or strict.",
-                "B": "'All afternoon, Ellie went over the week' [2], and the next sentences replay Tuesday's lunch: she thought back through it. She is not walking anywhere that afternoon, nobody is judging her week, and she has not let it go: she is still worried when she gets to the bench [4]."
+                "A": "Two steps: Kiran blamed the empty bowl on Dev [3], but Mrs. Abara's note says Dev comes Thursday [1], and Dev is only now there [7]. Seeing Dev, Kiran realizes nobody threw the food out: Biscuit ate it, so his idea was wrong. Wanting a perfect score [1] and Biscuit hiding [4] each fit one clue only.",
+                "B": "The note says \"Dev will come Thursday\" [1] and he is there on Thursday [7]. Kiran's idea that Dev threw out the food [3] is his wrong belief; Biscuit is \"shy with new people\" [1], but Dev was never there while she hid."
               }
             },
             {
               "id": "q4",
-              "level": 3,
-              "skill": "infer what a character's words or actions mean, using clues across the story",
-              "type": "mc",
               "passage": "p1",
+              "level": 2,
+              "skill": "choose the best supporting quotation",
+              "type": "mc",
               "prompt": {
-                "A": "Part A: Why did Marisol most likely bring Teo to the bench?",
-                "B": "Part A: What does Ellie's text at the end of the story most likely tell Marisol?"
+                "A": "Part B: Which quotation from the text BEST supports the answer to Part A?",
+                "B": "Part B: Which quotation from the story BEST supports your answer to Part A?"
               },
               "choices": {
                 "A": [
-                  "She meant for Ellie to spot the problem herself.",
-                  "She had to look after him while their mom was busy.",
-                  "She wanted Teo to thank Ellie for a gift.",
-                  "She hoped Ellie would not get angry in front of a little kid."
+                  "\"Dev will come Thursday to water the plants.\" [1]",
+                  "\"Two green eyes watched him from the dark, then slid away.\" [4]",
+                  "\"Dev laughed and asked Kiran if the cat had won.\" [7]",
+                  "\"he planned to get a perfect score\" [1]"
                 ],
                 "B": [
-                  "that she is sorry for leaving Marisol alone at lunch",
-                  "that everything between them is back to normal now",
-                  "that she thinks Marisol's serious text was funny",
-                  "that she is still upset but doesn't want to say so"
+                  "\"She won't touch anything I give her.\" [3]",
+                  "\"On Thursday, Dev was watering the plants when Mrs. Abara got home.\" [7]",
+                  "\"Biscuit is shy with new people, so don't take it personally.\" [1]",
+                  "\"Kiran heard someone at the door on Monday afternoon.\" [2]"
                 ]
               },
               "answer": {
@@ -272,131 +265,133 @@
                 "B": 1
               },
               "why": {
-                "A": "Teo says 'Marisol made me wear it' [9], and when Marisol can't get the words out, she looks at Teo so Ellie does too [7]: she wanted Ellie to see the shrunken sweatshirt for herself. Nothing says she had to babysit; 'It's mine now!' is about the sweatshirt, not a thank-you; and Ellie never gets angry [11]-[12].",
-                "B": "Marisol always put smiley faces in her texts; her worried one was plain [1]. Ellie answers with nothing but smiley faces [13], Marisol's own way of texting, so things are normal again. Lunch was never the problem ('You think I'm mad about lunch?' [5]); Ellie laughs and jokes [12], so she isn't hiding anger; and nothing shows she found the text funny."
+                "A": "Key: the note shows Dev could not have tossed the food on Monday [1], so the bowl was empty because Biscuit ate. The [4] line backs \"talking will make Biscuit hide\"; the \"perfect score\" line [1] backs \"failed the job.\" \"Dev laughed and asked Kiran if the cat had won\" is unmatched: Dev never speaks in the story; the real line in [7] is \"On Thursday, Dev was watering the plants when Mrs. Abara got home.\"",
+                "B": "Key: Dev first appears on Thursday [7], as the note planned. The [3] line is Kiran's wrong belief that backs \"threw out the food\"; the [1] line backs \"the reason she hid.\" \"Kiran heard someone at the door on Monday afternoon\" is unmatched: the story never says it and it backs \"came by each day\"; the real line in [2] is \"Kiran filled the bowl and crouched by the couch.\""
               }
             },
             {
               "id": "q5",
-              "level": 3,
-              "skill": "choose the best evidence",
-              "type": "mc",
               "passage": "p1",
-              "prompt": "Part B: Which quotation from the text BEST supports the answer to Part A?",
-              "choices": {
-                "A": [
-                  "\"She did not look up.\" [3]",
-                  "\"Her little brother, Teo, sat beside her, eating crackers.\" [3]",
-                  "\"Marisol made me wear it.\" [9]",
-                  "\"Look! It's mine now!\" [9]"
-                ],
-                "B": [
-                  "\"Dana took the seat I saved for you.\" [4]",
-                  "\"Bench by the library after school. We need to talk.\" [1]",
-                  "\"Then she saw Marisol gripping the bench so hard her knuckles were pale.\" [11]",
-                  "\"This one was plain.\" [1]"
-                ]
+              "level": 2,
+              "skill": "cite evidence for a claim",
+              "type": "short",
+              "prompt": {
+                "A": "Where did Biscuit spend Monday while Kiran was at school? Quote the sentence that shows it and give its paragraph number.",
+                "B": "What does Kiran do differently on Wednesday evening from Monday and Tuesday? Quote the sentence that shows it and give its paragraph number."
               },
               "answer": {
-                "A": 2,
-                "B": 3
+                "A": "On the armchair: \"That evening the bowl was empty, and the blanket on the armchair was warm and covered in orange hair.\" [3]",
+                "B": "He does not call her at all: \"He forgot to call her at all.\" [5]"
+              },
+              "accept": {
+                "A": [
+                  "on the armchair blanket, with the [3] sentence about the warm blanket covered in orange hair",
+                  "on the armchair, quoting \"the blanket on the armchair was warm and covered in orange hair\" [3]"
+                ],
+                "B": [
+                  "he never calls her, quoting \"He forgot to call her at all.\" [5]",
+                  "he sits on the floor and studies, quoting \"He sat on the floor with his back against the couch and opened his notebook.\" [5]"
+                ]
               },
               "why": {
-                "A": "Teo says Marisol made him wear the sweatshirt [9], and Marisol turns Ellie's eyes to him [7] instead of explaining: she set it up so Ellie would see the shrunken sweatshirt for herself. The crackers [3] fit 'babysitting', 'It's mine now!' [9] fits 'a gift', and Marisol not looking up [3] fits 'afraid Ellie would get angry', but the story shows each of those is wrong (Ellie never gets angry [12]).",
-                "B": "Marisol always put smiley faces in her texts, so a plain one was the sign something was wrong, so a text of only smiley faces means 'we're back to normal.' The saved seat [4] fits 'sorry about lunch', the serious text [1] fits 'funny', and Marisol's tight grip on the bench [11] fits 'still upset' (but it is Marisol who is tense, and Ellie laughs [12])."
+                "A": "Full credit: the armchair (blanket) plus the [3] sentence. \"Under the bed\" is where she hides on Tuesday [4], not where she spent Monday. An answer with no quotation or paragraph-specific detail from the text earns at most half credit.",
+                "B": "Full credit: he stops calling (or sits and studies) plus a [5] sentence. \"He was quiet\" with no line from [5] earns at most half credit."
               }
             }
           ]
         },
         {
-          "heading": "Read \"What Happened to the Kelp?\" Then answer questions 6–10.",
+          "heading": "Questions 6-10: \"The Long Fence\"",
           "passage": "p2",
           "questions": [
             {
               "id": "q6",
-              "level": 3,
-              "skill": "infer a cause and effect the article doesn't spell out",
-              "type": "mc",
               "passage": "p2",
+              "level": 1,
+              "skill": "find the detail that supports an inference",
+              "type": "mc",
               "prompt": {
-                "A": "Part A: Based on the article, how did the otters' return help the kelp grow back?",
-                "B": "Part A: Based on the article, why did the bare places stay bare for so many years?"
+                "A": "Which animal does the author use as an example of the small native animals that are harder to find where dingoes are rare?",
+                "B": "What does the article say about the weather on the two sides of the fence?"
               },
               "choices": {
                 "A": [
-                  "Many of the urchins the otters missed stopped chewing on living plants.",
-                  "The otters ate so many urchins each day that very few of the urchins were left.",
-                  "Storms that kept tearing up the young kelp plants finally stopped.",
-                  "The harmful thing that was killing the kelp plants finally went away."
+                  "bilbies",
+                  "quolls",
+                  "hopping mice",
+                  "rock wallabies"
                 ],
                 "B": [
-                  "So many urchins covered the rocks that young kelp had no room to take hold.",
-                  "Winter storms kept tearing out each young plant before it grew.",
-                  "The urchins could outlast the hungry times and eat each new plant.",
-                  "Dirty water kept blocking the sunlight that young kelp needed."
+                  "It is the same on both sides.",
+                  "The sheep side is drier.",
+                  "Only one side floods.",
+                  "The dingo side is wetter."
                 ]
               },
               "answer": {
-                "A": 0,
-                "B": 2
+                "A": 2,
+                "B": 0
               },
               "why": {
-                "A": "The otters 'did not have to eat every single urchin' [6]: when otters hunt nearby, urchins stay in cracks eating drifting kelp [5], so many went back into hiding and the kelp grew back [6]. An otter eats a lot each day [3], but the article never says almost all urchins were eaten; storms are only a wrong guess (forests grow back after them [2]); and nothing harmful 'arrived' [7].",
-                "B": "Urchins 'are able to live for years on almost nothing' [5], so after the kelp was gone they did not starve or leave ('they stayed' [5]) and kept chewing each new plant [5]. The article never says urchins left no room for kelp; a healthy forest grows back within a year or two after storms [2]; and dirty water was only what people blamed [1], while the real answer was something that had gone missing [7]."
+                "A": "\"...small native animals, such as hopping mice, are harder to find\" [4]. The other three are real small Australian animals, but the article never names them; only a reader of [4] knows which one the author chose.",
+                "B": "Scientists compare places with \"the same kind of land and the same weather\" [2]. The barer ground [3] comes from kangaroos grazing, not from drier weather."
               }
             },
             {
               "id": "q7",
-              "level": 2,
-              "skill": "choose the best evidence",
-              "type": "mc",
               "passage": "p2",
-              "prompt": "Part B: Which quotation from the text BEST supports the answer to Part A?",
+              "level": 2,
+              "skill": "word meaning from context",
+              "type": "mc",
+              "prompt": {
+                "A": "What does the word \"cropped\" mean in paragraph 3?",
+                "B": "What does the word \"slip\" mean in paragraph 2?"
+              },
               "choices": {
                 "A": [
-                  "\"Storms can rip whole kelp plants loose.\" [1]",
-                  "\"When otters hunt nearby, urchins tend to stay tucked into cracks, eating bits of drifting kelp.\" [5]",
-                  "\"The divers had looked for something harmful that had arrived.\" [7]",
-                  "\"Even a few otters can keep urchin numbers down.\" [3]"
+                  "dried out and turned brown by the heat",
+                  "bitten off close to the ground by animals",
+                  "pulled out, roots and all",
+                  "trampled flat by many animals"
                 ],
                 "B": [
-                  "\"Urchins are able to live for years on almost nothing.\" [5]",
-                  "\"Purple urchins covered the rocks.\" [1]",
-                  "\"Winter storms pound this coast every year, tearing plants loose from the rocks.\" [2]",
-                  "\"Dirty water can block the sunlight kelp needs.\" [1]"
+                  "lose their footing in the mud",
+                  "are washed through by floodwater",
+                  "get past without being stopped",
+                  "are let through by the ranchers"
                 ]
               },
               "answer": {
                 "A": 1,
-                "B": 0
+                "B": 2
               },
               "why": {
-                "A": "With otters nearby, urchins hide and eat drifting kelp instead of living plants, so the kelp can grow back even though many urchins are left [6]. The storms [1] and 'something harmful that had arrived' [7] are wrong ideas the article sets aside, and 'Even a few otters can keep urchin numbers down' [3] fits 'very few were left', but the article says the otters 'did not have to eat every single urchin' [6].",
-                "B": "Urchins that can live for years on almost nothing can wait out the time with no kelp and eat each new plant. The urchins covering the rocks [1] fit the 'no room' reading, the storms [2] fit the storm reading, and the dirty water [1] fits the sunlight reading, but the article sets each of those aside."
+                "A": "Paragraph 3: more kangaroos live there, and \"Kangaroos graze on the same grass\" [3], so the grass is eaten short. The weather is the same on both sides [2], so not the heat; \"cropped short\" says the grass is short, not gone or flattened.",
+                "B": "Paragraph 2: the fence \"mostly works,\" but \"a few slip through gaps\" [2], so a few dingoes get past it. The floods make the gaps; nothing says the dogs fall or are carried, and ranchers on the sheep side kill wild dogs [2], they don't let them in."
               }
             },
             {
               "id": "q8",
-              "level": 2,
-              "skill": "word meaning from context",
-              "type": "mc",
               "passage": "p2",
+              "level": 3,
+              "skill": "infer the author's purpose and point of view",
+              "type": "mc",
               "prompt": {
-                "A": "What does the word \"raft\" mean in paragraph 7?",
-                "B": "What does the word \"range\" mean in paragraph 6?"
+                "A": "Part A: Which statement best describes the author's view on what should happen to the fence?",
+                "B": "Part A: Why does the author end paragraph 3 the way it does?"
               },
               "choices": {
                 "A": [
-                  "a group of otters floating together",
-                  "a floating mat of loose kelp",
-                  "a flat, floating platform",
-                  "a large group of similar things"
+                  "The author says it should stay until sheep can be kept safe another way.",
+                  "The author says it should not change until scientists study it more.",
+                  "The author never says so directly but hints it should come down.",
+                  "The author does not say which side is right."
                 ],
                 "B": [
-                  "the area where an animal lives",
-                  "a mix of many different kinds",
-                  "a line of mountains under the sea",
-                  "how far an animal can travel in a day"
+                  "to explain why kangaroos are so much more common on the side where dingoes are rare",
+                  "to show that more kangaroos also cause trouble for sheep ranchers",
+                  "to show that both animals can live on the same plains peacefully",
+                  "to show that sheep should no longer be raised there"
                 ]
               },
               "answer": {
@@ -404,96 +399,96 @@
                 "B": 1
               },
               "why": {
-                "A": "Scientists 'have since found a whole raft of animals like it' [7]: many such keystone animals. Otters, kelp and boats are other things called rafts, but the sentence is about how many animals like the otter were found.",
-                "B": "'A wide range of fish, crabs, and snails returned' [6]: many different kinds of animals came back. The sentence is about kinds of animals, not an area, mountains or how far animals travel."
+                "A": "Two steps: the author lists harms [3-4], then the good the fence does [5], and reports both sides (\"Some people say ... Others say\") [5]. The call for more study is what \"many scientists say\" [5], not the author's own view, and the ending [6] says what the fence shows, not what to do.",
+                "B": "The last sentence of [3] ties the kangaroo change back to the ranchers' sheep: more kangaroos eat the grass sheep need, so they compete; they do not live together peacefully. The cause of more kangaroos was given earlier in [3]; the article never says to stop raising sheep."
               }
             },
             {
               "id": "q9",
-              "level": 2,
-              "skill": "explain why the author includes a detail",
-              "type": "mc",
               "passage": "p2",
+              "level": 2,
+              "skill": "choose the best supporting quotation",
+              "type": "mc",
               "prompt": {
-                "A": "Part A: Why does the author tell how fast kelp can grow?",
-                "B": "Part A: Why does the author tell how much an otter eats each day?"
+                "A": "Part B: Which quotation from the text BEST supports the answer to Part A?",
+                "B": "Part B: Which quotation from the article BEST supports your answer to Part A?"
               },
               "choices": {
                 "A": [
-                  "to show that the forest gives young fish a lot of shelter",
-                  "to show that the bare places would soon fill in again on their own",
-                  "to show that something was keeping the forest from growing back",
-                  "to show that the forest needs a lot of sunlight to keep growing"
+                  "\"Many scientists say more study is needed before anyone decides.\" [5]",
+                  "\"For the families who raise sheep, the fence protects their living.\" [5]",
+                  "\"Dingoes kill foxes and cats.\" [4]",
+                  "\"The fence should come down to save small animals.\" [6]"
                 ],
                 "B": [
-                  "to show how much energy staying warm with fur takes",
-                  "to show why hunters wanted otters so badly",
-                  "to show why urchins hide in cracks whenever otters are near",
-                  "to show how even a few otters are enough to keep a whole forest safe"
-                ]
-              },
-              "answer": {
-                "A": 2,
-                "B": 3
-              },
-              "why": {
-                "A": "Right after the growth fact, the author says a forest usually grows back within a year or two after storms, 'Yet these bare places stayed bare for many years' [2]: fast growth makes the bare rock a puzzle, so something was stopping it. The article does not use it to talk about shelter or light, and the bare places did not fill in on their own; they stayed bare for years.",
-                "B": "The sentences are 'An otter also eats about a quarter of its weight each day. Even a few otters can keep urchin numbers down' [3]. The article ties the fur to warmth and to hunting [3]-[4], but never ties the amount an otter eats to staying warm, to hunters, or to urchins hiding."
-              }
-            },
-            {
-              "id": "q10",
-              "level": 2,
-              "skill": "choose the best evidence",
-              "type": "mc",
-              "passage": "p2",
-              "prompt": "Part B: Which quotation from the text BEST supports the answer to Part A?",
-              "choices": {
-                "A": [
-                  "\"Yet these bare places stayed bare for many years.\" [2]",
-                  "\"Gas-filled floats hold its long blades up toward the light.\" [2]",
-                  "\"But a healthy forest usually grows back within a year or two.\" [2]",
-                  "\"Young fish and crabs hide among its long blades.\" [2]"
-                ],
-                "B": [
-                  "\"In the 1700s and 1800s, hunters killed hundreds of thousands of them for their fur.\" [4]",
-                  "\"The otters did not have to eat every single urchin.\" [6]",
-                  "\"With no otters around, they crept out into the open.\" [5]",
-                  "\"Unlike seals and whales, otters have no blubber.\" [3]"
+                  "\"Fewer families raise flocks along the fence each year.\" [6]",
+                  "\"Dingoes hunt kangaroos, so where dingoes are rare, more young kangaroos live to grow up.\" [3]",
+                  "\"Dingoes are common on one side and rare on the other.\" [2]",
+                  "\"Kangaroos graze on the same grass that sheep need.\" [3]"
                 ]
               },
               "answer": {
                 "A": 0,
-                "B": 1
+                "B": 3
               },
               "why": {
-                "A": "It shows the puzzle the growth fact sets up: a fast-growing forest stayed bare. The floats [2] fit the sunlight reading, the usual regrowth [2] fits 'would soon fill in on their own' (but that is a healthy forest, not these bare places), and the fish and crabs [2] fit the shelter reading.",
-                "B": "The otters 'did not have to eat every single urchin' [6]: a few otters were enough to protect the kelp. 'No blubber' [3] fits the warmth reading, the hunters [4] fit the hunters reading, and the urchins creeping out [5] fit the hiding reading."
+                "A": "Key: the author reports what scientists say [5] and takes no side. The families line [5] backs \"should stay\"; the [4] line backs \"hints it should come down.\" \"The fence should come down to save small animals\" is unmatched: the author never says what should happen to the fence; the real line in [6] is \"It shows how pulling one hunter out of a place can change far more than anyone planned.\"",
+                "B": "Key: the sentence links more kangaroos to the grass sheep need [3]; they compete for it. The other [3] line gives the cause of more kangaroos; the [2] line is about dingoes, not sheep. \"Fewer families raise flocks along the fence each year\" is unmatched: it backs \"no longer raise sheep\"; the real line in [6] is \"The fence was built to solve one problem: dingoes eating sheep.\""
+              }
+            },
+            {
+              "id": "q10",
+              "passage": "p2",
+              "level": 3,
+              "skill": "explain an idea with a quotation",
+              "type": "short",
+              "prompt": {
+                "A": "In paragraph 2, the author calls the fence a natural experiment. Explain why it works as an experiment even though nobody planned it, and quote the sentence that shows it. Give the paragraph number.",
+                "B": "In paragraph 5, what does the author admit to the people who want the fence to stay, and why does the author put it after the changes to the animals? Quote the sentence and give its paragraph number."
+              },
+              "answer": {
+                "A": "Nobody built it as a test, but the two sides have the same land and weather and differ in dingoes, so scientists can compare them: \"Nobody set it up as a test, but scientists can compare places on the two sides that have the same kind of land and the same weather.\" [2]",
+                "B": "The author admits that dingoes do kill sheep and calves and that the fence protects ranch families' living. Coming after the harms in [3-4], it shows the question is not simple: \"Dingoes do kill sheep and calves.\" [5] or \"For the families who raise sheep, the fence protects their living.\" [5]"
+              },
+              "accept": {
+                "A": [
+                  "same land and weather on both sides, only the dingoes differ, quoting the [2] sentence",
+                  "nobody set it up but the sides can be compared, quoting \"Nobody set it up as a test...\" [2]"
+                ],
+                "B": [
+                  "dingoes kill sheep and calves, quoting [5], to show the answer is not simple",
+                  "the fence protects ranchers' living, quoting [5], to balance the harms in [3-4]",
+                  "\"None of this makes the answer simple.\" [5] with what is admitted"
+                ]
+              },
+              "why": {
+                "A": "Full credit needs both steps (nobody planned it; the two sides match in land and weather so they can be compared) and the [2] sentence. A general definition of an experiment with no line from [2] earns at most half credit.",
+                "B": "Full credit needs what is admitted, why it comes after [3-4] (to show the choice is not simple), and a [5] sentence. A general claim with no line from [5] earns at most half credit."
               }
             }
           ]
         },
         {
           "heading": "CONSTRUCTED RESPONSE (4 points)",
-          "directions": "Answer on the back. Use the story \"The Bench by the Library.\"",
           "passage": "p1",
+          "directions": "Write your answer on the lines.",
           "questions": [
             {
               "id": "q11",
-              "level": 3,
-              "skill": "RACE constructed response: how a character changes",
-              "type": "open",
               "passage": "p1",
+              "level": 3,
+              "skill": "infer how a character changes (RACE)",
+              "type": "open",
+              "space": 4,
               "prompt": {
-                "A": "How does Ellie change from the beginning of the story to the end? Use RACE: Restate the question. Answer it. Cite two pieces of evidence from the story with [paragraph numbers]. Explain how each piece of evidence proves your answer.",
-                "B": "How do Ellie's feelings about her talk with Marisol change from the beginning of the story to the end? Use RACE: Restate the question. Answer it. Cite two pieces of evidence from the story with [paragraph numbers]. Explain how each piece of evidence proves your answer."
+                "A": "How does Kiran change from the beginning of \"Biscuit\" to the end? Use RACE: R - Restate the question. A - Answer it. C - Cite two pieces of evidence with [paragraph numbers]. E - Explain how each piece of evidence proves your answer.",
+                "B": "How do Kiran's feelings about looking after Biscuit change from the first morning to the last day? Use RACE: R - Restate the question. A - Answer it. C - Cite two pieces of evidence with [paragraph numbers]. E - Explain how each piece of evidence proves your answer."
               },
               "answer": {
-                "A": "Ellie changes from worried and guilty, sure she is in trouble, to calm and kind, comforting a friend who is the one in trouble. At the start she goes over the week 'all afternoon' [2] and says 'Sorry about lunch' before Marisol says a word [4]. This shows she expects Marisol to be angry with her. At the end she laughs and says, 'Honestly? It looks better on him' [12], and that night she sends 'just three smiley faces' [13]. This shows she lets go of her favorite sweatshirt and makes sure Marisol knows they are fine.",
-                "B": "Ellie starts out worried and guilty, sure she is in trouble, and ends up relieved and kind, putting her friend at ease. At the start she spends 'all afternoon' going over the week [2] and says 'Sorry about lunch' before Marisol can speak [4]. This shows she expects Marisol to be angry with her. At the end she laughs and says, 'Honestly? It looks better on him' [12], and that night she sends 'just three smiley faces' [13]. This shows the worry is gone and she wants Marisol to know they are fine."
+                "A": "Kiran changes from trying hard and loudly to win Biscuit over to being calm and patient. At first he calls and taps the bowl, \"louder each time\" [2]. Later he \"did not reach for her\" and \"hardly breathed\" [6], and he asks to come back [7].",
+                "B": "Kiran goes from tense and sure he is failing to calm and attached to Biscuit. He walks to school \"with his shoulders up near his ears\" [2] and says \"she hates me\" [4]; at the end he asks, \"Could I come over sometimes?\" [7]."
               },
-              "space": 4,
-              "why": "Full credit: says how Ellie changes (A) or how her feelings about the talk change (B), gives two quotations with [paragraph numbers] from early and late in the story, and explains each one. Score with the RACE checklist."
+              "why": "Score with the RACE CHECKLIST. Strong evidence: [2] or [4] for the start; [5], [6] or [7] for the end. The Explain row needs how each quote shows the change."
             }
           ]
         }
@@ -501,9 +496,7 @@
     },
     {
       "item": "rubric",
-      "kind": "rubric",
       "title": "RACE CHECKLIST",
-      "directions": "Check your constructed response. Circle one box in each row.",
       "rubric": {
         "title": "RACE CHECKLIST",
         "levelNames": [
@@ -512,369 +505,58 @@
           "2 = Started",
           "1 = Not yet"
         ],
+        "note": "Score: Add the four rows and divide by 4. I round up.",
         "criteria": [
           {
             "name": "Restate",
             "levels": [
-              "I turned the question into my first sentence, in my own words.",
-              "I restated most of the question.",
-              "I used a few words from the question, but not a full sentence.",
+              "I turned the question into my first sentence.",
+              "I restated part of the question.",
+              "I copied the question word for word.",
               "I did not restate the question."
             ]
           },
           {
             "name": "Answer",
             "levels": [
-              "I answered every part of the question clearly, and my answer fits the story.",
-              "I answered the question, but part of my answer is unclear.",
-              "My answer is only partly right, or it is hard to find.",
-              "I did not answer the question, or my answer does not fit the story."
+              "I answered every part of the question clearly.",
+              "I answered, but part of my answer is unclear.",
+              "My answer only partly fits the question.",
+              "I did not answer the question."
             ]
           },
           {
             "name": "Cite",
             "levels": [
-              "I quoted two pieces of evidence that prove my answer, each with its [paragraph number].",
-              "I gave two pieces of evidence, but one doesn't fit well or is missing its [paragraph number].",
-              "I gave only one piece of evidence, or my evidence only mentions the topic.",
-              "I did not use evidence from the text."
+              "I used two quotes, each with a [paragraph number].",
+              "I used two quotes, but one has no [paragraph number].",
+              "I used one quote.",
+              "I did not use any quotes."
             ]
           },
           {
             "name": "Explain",
             "levels": [
-              "I explained in my own words how each piece of evidence proves my answer.",
-              "I explained one piece of evidence well, or I explained both only a little.",
-              "I mostly repeated my quotes instead of explaining them.",
-              "I did not explain my evidence."
+              "I explained how each quote proves my answer.",
+              "I explained one quote.",
+              "I said the quotes prove it but not how.",
+              "I did not explain my quotes."
             ]
           }
-        ],
-        "note": "Add the four rows and divide by 4. I round up."
+        ]
       }
     }
   ],
   "checks": {
-    "blind": [
-      {
-        "round": 1,
-        "agent": "🙈 No-passage probe (ELA)",
-        "version": "A",
-        "matched": 10,
-        "of": 10,
-        "passageFree": {
-          "A": {
-            "matched": 10,
-            "of": 10,
-            "confident": 9
-          }
-        },
-        "gate": "fail",
-        "notes": "q3 ('settle') was also right but at confidence 3 (lean: a meeting to sort things out, with 'calm down' as runner-up), so it has no FIX here; it still adds to the fail. Each Part A/B pair gives itself away: whoever solves one half gets the other.",
-        "findings": [
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q1",
-            "kind": "FIX",
-            "what": "Part B's quiet-porch quote, plus the faded-leash quote in q5's choices, tells the student her own dog is gone, and only the key mentions a dog that is gone. Choice A (her dog Pepper) is also contradicted by those quotes. Direction: don't put the deciding detail in the evidence choices. Give the wrong answers misreadings the story supports, each with its own matching Part B quote, so the Part B list doesn't point to one feeling.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q2",
-            "kind": "FIX",
-            "what": "Only one quote is about loneliness or company. The others are about treats, ownership and digging, so the student can match it to Part A's key without reading. Direction: each wrong quote should be a real passage line that plausibly backs one of Part A's wrong choices.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q4",
-            "kind": "FIX",
-            "what": "Part B's school-until-four quote is the only quote about schedules and lines up with the key's 'days Leo is at school'. 'Didn't take the money' rules out buying Biscuit, and the dog-is-gone cue from q1/q2 rules out meeting Pepper. Direction: the wrong choices should be requests the story supports in part (for example, ones that involve timing or Leo's schedule), and the story-side items shouldn't share cues.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q5",
-            "kind": "FIX",
-            "what": "It is the only quote that mentions school, so it matches the q4 key straight from the wording. Direction: replace the wrong quotes with lines that plausibly support the other q4 choices, so the student must read to choose.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q6",
-            "kind": "FIX",
-            "what": "The key restates Part B's 'live for years on almost nothing' quote nearly word for word. Direction: reword the key so it isn't an echo of a listed quote, and give each wrong cause (fish leaving, floats, holdfasts) a real supporting line among the Part B choices. Facts to check: whether the article actually supports the holdfast and float ideas.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q7",
-            "kind": "FIX",
-            "what": "It is the only quote about urchins surviving on bare rock. The others are about shelter, floats and blubber, so the right one stands out. Direction: wrong quotes about urchins and kelp regrowth that back q6's wrong choices.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q8",
-            "kind": "FIX",
-            "what": "The key is the only choice in a sea-floor or kelp sense, in an article about kelp. 'Otters sleep' is silly and 'garden rows' is the land sense. Direction: put in at least two wrong choices that are also ocean or kelp meanings, so only the context in paragraph 5 decides.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q9",
-            "kind": "FIX",
-            "what": "Two of Part B's quotes ('whole forest can depend on it' and the keystone line) point to the key, which is also the broadest choice. Direction: give one wrong choice the same breadth, and make sure the Part B list has a strong quote for each wrong main idea, so two quotes don't vote for the key.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A q10",
-            "kind": "FIX",
-            "what": "'Whole forest can depend on it' shares the key's wording ('whole underwater forest'), so the student can match it without reading. Direction: don't let the key quote repeat Part A's key phrase. Use a quote that supports the idea without echoing it.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          }
-        ]
-      },
-      {
-        "round": 1,
-        "agent": "🙈 No-passage probe (ELA)",
-        "version": "B",
-        "matched": 9,
-        "of": 10,
-        "passageFree": {
-          "B": {
-            "matched": 9,
-            "of": 10,
-            "confident": 10
-          }
-        },
-        "gate": "fail",
-        "note": "9 of 10 right without the passages (chance is about 2.5); all 10 answered at confidence 4-5. q3 was the only miss: I took 'square' as 'all even' (money owed), the key is the calendar box. The three Part A/Part B pairs give each other away: one Part B quote per pair is the only one that fits any Part A choice.",
-        "findings": [
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q1",
-            "kind": "FIX",
-            "what": "The other items give it away. The q4/q5 choices show that she wants walks with the dog rather than money, so the 'about to ask a favor' feeling is the one to pick. The q2 throat-clearing choice also points to uneasy. Direction: make the wrong feelings real misreadings tied to details in the story (e.g. a 'touched' reading that a line about his savings supports), and stop q5 from naming the favor.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q2",
-            "kind": "FIX",
-            "what": "Only one choice shows a feeling (a nervous action). The other three are plain actions or descriptions (holding out bills, a tag, the note's tone) that support no feeling about the money. Direction: give each wrong choice a quote that plausibly shows a feeling, such as signs that she is touched or embarrassed.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q4",
-            "kind": "FIX",
-            "what": "q5's choice A quotes her asking to walk with the dog, which states this answer. The wrong reasons (buying the dog, asking his parents, a leash fund) have no support in the other items and read as made up. Direction: wrong choices that a student could reach by misreading this story's details, and a Part B pair that doesn't restate the key.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q5",
-            "kind": "FIX",
-            "what": "It is the only quote about her wanting time with the dog, so it mirrors the q4 key word for word. The others (treats, the leash, his stomach sank) fit no q4 choice. Direction: make each wrong quote fit a q4 wrong choice (e.g. the leash line goes with the leash choice, but only loosely), so that matching the pairs doesn't solve both.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q6",
-            "kind": "FIX",
-            "what": "q7 choice C (a quarter of its own weight each day) matches this key. General knowledge also rules out D (otters don't eat kelp), and A and C sound invented. Direction: wrong reasons the article half-supports (e.g. a detail about rocks or urchins hiding), and a Part B whose numbers don't restate the key. Facts to check: whatever the article says about urchin behavior.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q7",
-            "kind": "FIX",
-            "what": "It is the only quote about how much an otter eats, which matches the q6 key one to one. Each wrong quote fits no q6 choice, except that A loosely fits the rocks choice. Direction: give each q6 wrong choice a quote that seems to support it, so that the pair can't be solved by matching.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q8",
-            "kind": "FIX",
-            "what": "The topic gives it away: in a kelp article, only the 'groups of plants' sense fits; opinions, stalls and racks are off-topic. Direction: choose a word whose wrong senses could also fit a sea or science context, or use wrong choices that are other plausible meanings in this article.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q9",
-            "kind": "FIX",
-            "what": "The key is the only choice that links all three things in the title (otters, urchins, kelp), and it is the broadest. C is an opinion a student can rule out. Direction: make the wrong choices as broad and as tied to the title, e.g. a three-part claim the article does not make.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          },
-          {
-            "where": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B q10",
-            "kind": "FIX",
-            "what": "It is the only quote that ties the otters' return to the kelp, so it restates the q9 key. Fur, hunting and divers each fit a single narrower q9 choice. Direction: wrong quotes that look central (cause and effect, about kelp or urchins) but support only part of the idea.",
-            "fixed": "Round 2 redesign: both passages and every item were rewritten (passage-first), so this cue is gone; the new items were probed again in round 2."
-          }
-        ]
-      },
-      {
-        "round": 2,
-        "agent": "🙈 No-passage probe (ELA)",
-        "version": "A",
-        "matched": 8,
-        "of": 10,
-        "passageFree": {
-          "A": {
-            "matched": 8,
-            "of": 10,
-            "confident": 5
-          }
-        },
-        "gate": "fail",
-        "findings": [
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q6",
-            "kind": "FIX",
-            "what": "The Part B choice \"Urchins acted differently once the otters were gone\" (q7 B) points straight to a change in how urchins behaved, so A is the only Part A choice that fits it. B ('ate so many') reads as the obvious trap, and C/D are clearly the same ideas as the storm and harmful-thing quotes in q7. Direction: make at least one wrong choice a real misreading about urchin behavior or otter feeding that a detail in the article supports, so the behavior idea isn't unique to the key. Also give q7 a second plausible quote about urchins or otters (see q7)."
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q7",
-            "kind": "FIX",
-            "what": "B is the only quote about urchin behavior. A (storms) and C (something harmful arriving) are clearly the matches for the wrong Part A choices C and D, and D ('Sea otters eat sea urchins') is too general, so the pair can be solved as a set without reading. Direction: replace A or C with a second exact quote about urchins or otters that is plausible for the claim but doesn't show the behavior change."
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q9",
-            "kind": "FIX",
-            "what": "q10 A, \"Yet these bare places stayed bare for many years,\" sits right next to 'how fast kelp can grow' and gives away the contrast in C. A and D (shelter for fish, sunlight) are clearly matches for the quotes in q10 D and B, and B ('strong enough to heal from anything') is too absolute. Direction: make a wrong choice a real misreading of the fast-growth detail, for example 'to show that the bare places should have filled in on their own', if the passage supports it. Or move the 'Yet ... stayed bare' line out of the Part B choices."
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q10",
-            "kind": "FIX",
-            "what": "'Yet' marks the only contrast quote, and each other choice clearly matches one wrong Part A choice (B = sunlight, D = fish shelter, C = 'grows back' fits the wrong 'heal from anything'). Any Part B where every distractor is a match for a Part A distractor can be solved by elimination. Direction: give at least one wrong quote that also mentions the bare places or slow recovery but doesn't show that something was blocking regrowth."
-          }
-        ]
-      },
-      {
-        "round": 2,
-        "agent": "🙈 No-passage probe (ELA)",
-        "version": "B",
-        "matched": 5,
-        "of": 10,
-        "passageFree": {
-          "B": {
-            "matched": 5,
-            "of": 10,
-            "confident": 3
-          }
-        },
-        "gate": "fail",
-        "findings": [
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q3",
-            "kind": "FIX",
-            "what": "Answered at confidence 4 with no passage. q2's choice D quotes paragraph 2 (Ellie thinking about Tuesday's lunch), which tells a reader that paragraph 2 is her replaying events, so 'thought back through it' is the only sense that fits. The other senses (crossing over, exceeding a limit) don't fit a girl thinking about her week. Direction: make the wrong choices senses a student could really believe from the context of paragraph 2 (for example, one tied to how her lunch choice was received), and avoid quoting paragraph 2 in a nearby Part B choice in a way that shows what the paragraph is doing."
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q6",
-            "kind": "FIX",
-            "what": "Answered at confidence 5. Part B (q7) choice A restates the key almost word for word (urchins live on almost nothing and stay once the kelp is gone), so Part B gives away Part A. The other Part B choices match the wrong Part A choices one by one (hiding in cracks, winter storms, fast growth), so the pairs show which answer is which. Direction: the key should be an inference the reader has to build from two parts of the article, not a paraphrase of one sentence. Wrong choices should be real misreadings that a detail in the article supports. Facts to check: whether the article really supports the storm and hiding choices as tempting misreadings."
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q7",
-            "kind": "FIX",
-            "what": "Answered at confidence 5. It is the only quote with a 'so … they stayed' cause-and-effect that answers 'why did the bare places stay bare'; the others describe storms, hiding or growth rate, not staying bare. It also repeats the q6 key. Direction: make at least two choices plausible evidence for staying bare (exact quotes about the barrens lasting), so the student has to match the specific claim in Part A. Check each against the passage."
-          }
-        ]
-      },
-      {
-        "round": 3,
-        "agent": "🙈 No-passage probe (ELA)",
-        "version": "A",
-        "matched": 9,
-        "of": 10,
-        "passageFree": {
-          "A": {
-            "matched": 9,
-            "of": 10,
-            "confident": 4
-          }
-        },
-        "gate": "fail",
-        "notes": "Fresh session, version A only, no passages (answers and cues in the session’s own words). Scored by the lead with checks/score-blind.mjs; this entry was assembled by the lead from the probe’s answer file, with no second scoring session, to save cost near the cost stop. Also right at lower confidence: q1 (confidence 3), q2 (confidence 3), q3 (confidence 2), q4 (confidence 3), q5 (confidence 3).",
-        "findings": [
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q6",
-            "kind": "FIX",
-            "what": "Right without the passage at confidence 4. The probe’s cue: q7 B (urchins hide in cracks eating drifting kelp) restates choice A; A is the oddly specific choice",
-            "sameAs": {
-              "check": "blind",
-              "round": 2,
-              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q6"
-            }
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q7",
-            "kind": "FIX",
-            "what": "Right without the passage at confidence 4. The probe’s cue: the only quote matching A's 'stopped chewing on living plants'",
-            "sameAs": {
-              "check": "blind",
-              "round": 2,
-              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q7"
-            }
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q9",
-            "kind": "FIX",
-            "what": "Right without the passage at confidence 4. The probe’s cue: q10 A 'bare places stayed bare' contrasts with fast growth, so something was stopping regrowth",
-            "sameAs": {
-              "check": "blind",
-              "round": 2,
-              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q9"
-            }
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q10",
-            "kind": "FIX",
-            "what": "Right without the passage at confidence 4. The probe’s cue: the 'Yet ... stayed bare' contrast supports C in q9",
-            "sameAs": {
-              "check": "blind",
-              "round": 2,
-              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A q10"
-            }
-          }
-        ]
-      },
-      {
-        "round": 3,
-        "agent": "🙈 No-passage probe (ELA)",
-        "version": "B",
-        "matched": 5,
-        "of": 10,
-        "passageFree": {
-          "B": {
-            "matched": 5,
-            "of": 10,
-            "confident": 2
-          }
-        },
-        "gate": "fail",
-        "notes": "Fresh session, version B only, no passages (answers and cues in the session’s own words). Scored by the lead with checks/score-blind.mjs; this entry was assembled by the lead from the probe’s answer file, with no second scoring session, to save cost near the cost stop. Also right at lower confidence: q3 (confidence 3), q4 (confidence 3), q5 (confidence 3).",
-        "findings": [
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q6",
-            "kind": "FIX",
-            "what": "Right without the passage at confidence 4. The probe’s cue: stem 'for so many years' echoes q7 A 'live for years on almost nothing' = outlast hungry times",
-            "sameAs": {
-              "check": "blind",
-              "round": 2,
-              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q6"
-            }
-          },
-          {
-            "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q7",
-            "kind": "FIX",
-            "what": "Right without the passage at confidence 4. The probe’s cue: 'for years' word match with q6 stem; pairs with q6 C",
-            "sameAs": {
-              "check": "blind",
-              "round": 2,
-              "where": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B q7"
-            }
-          }
-        ]
-      }
-    ],
     "wilco": [
       {
         "check": "keys",
         "round": 1,
         "agent": "🤖 Wilco (keys)",
-        "at": "2026-11-05T19:08:18.338Z",
+        "at": "2026-11-07T15:40:57.625Z",
         "rows": 22,
         "errors": 0,
-        "warnings": 4,
+        "warnings": 2,
         "problems": [],
         "pass": true
       },
@@ -882,8 +564,8 @@
         "check": "test-wise",
         "round": 1,
         "agent": "🤖 Wilco (test-wise bots)",
-        "at": "2026-11-05T19:08:18.419Z",
-        "questions": 20,
+        "at": "2026-11-07T15:40:57.697Z",
+        "questions": 16,
         "chance": 0.25,
         "worst": [
           [
@@ -895,99 +577,28 @@
             0.333
           ],
           [
-            "converge",
-            0.3
-          ]
-        ],
-        "groups": [
-          {
-            "group": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" A",
-            "n": 10,
-            "chance": 0.25,
-            "counted": true,
-            "fails": []
-          },
-          {
-            "group": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" B",
-            "n": 10,
-            "chance": 0.25,
-            "counted": true,
-            "fails": []
-          },
-          {
-            "group": "READING CHECK: \"THE NOTE ON THE GATE\" AND \"OTTERS, URCHINS, AND KELP\" (all versions)",
-            "n": 20,
-            "chance": 0.25,
-            "counted": true,
-            "fails": []
-          },
-          {
-            "group": "RACE CHECKLIST",
-            "n": 0,
-            "chance": 0,
-            "counted": false,
-            "fails": []
-          },
-          {
-            "group": "whole pack",
-            "n": 20,
-            "chance": 0.25,
-            "counted": true,
-            "fails": []
-          }
-        ],
-        "pass": true
-      },
-      {
-        "check": "keys",
-        "round": 2,
-        "agent": "🤖 Wilco (keys)",
-        "at": "2026-11-05T19:08:18.469Z",
-        "rows": 22,
-        "errors": 0,
-        "warnings": 4,
-        "problems": [],
-        "pass": true
-      },
-      {
-        "check": "test-wise",
-        "round": 2,
-        "agent": "🤖 Wilco (test-wise bots)",
-        "at": "2026-11-05T19:08:18.544Z",
-        "questions": 20,
-        "chance": 0.25,
-        "worst": [
-          [
             "notVote",
-            0.292
-          ],
-          [
-            "middle",
-            0.287
-          ],
-          [
-            "notLongest",
-            0.267
+            0.26
           ]
         ],
         "groups": [
           {
-            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A",
-            "n": 10,
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A",
+            "n": 8,
             "chance": 0.25,
             "counted": true,
             "fails": []
           },
           {
-            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B",
-            "n": 10,
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B",
+            "n": 8,
             "chance": 0.25,
             "counted": true,
             "fails": []
           },
           {
-            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" (all versions)",
-            "n": 20,
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" (all versions)",
+            "n": 16,
             "chance": 0.25,
             "counted": true,
             "fails": []
@@ -1001,7 +612,148 @@
           },
           {
             "group": "whole pack",
-            "n": 20,
+            "n": 16,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "no-passage",
+        "round": 1,
+        "agent": "🤖 Wilco (no-passage bots)",
+        "at": "2026-11-07T15:40:57.766Z",
+        "questions": 16,
+        "worst": [
+          "quoteEcho",
+          0.344
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" (all versions)",
+            "n": 16,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "keys",
+        "round": 2,
+        "agent": "🤖 Wilco (keys)",
+        "at": "2026-11-07T15:52:45.191Z",
+        "rows": 22,
+        "errors": 0,
+        "warnings": 0,
+        "problems": [],
+        "pass": true
+      },
+      {
+        "check": "test-wise",
+        "round": 2,
+        "agent": "🤖 Wilco (test-wise bots)",
+        "at": "2026-11-07T15:52:45.273Z",
+        "questions": 16,
+        "chance": 0.25,
+        "worst": [
+          [
+            "oddOne",
+            0.297
+          ],
+          [
+            "middle",
+            0.297
+          ],
+          [
+            "overlap",
+            0.281
+          ]
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" (all versions)",
+            "n": 16,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "RACE CHECKLIST",
+            "n": 0,
+            "chance": 0,
+            "counted": false,
+            "fails": []
+          },
+          {
+            "group": "whole pack",
+            "n": 16,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "no-passage",
+        "round": 2,
+        "agent": "🤖 Wilco (no-passage bots)",
+        "at": "2026-11-07T15:52:45.329Z",
+        "questions": 16,
+        "worst": [
+          "echo",
+          0.281
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" (all versions)",
+            "n": 16,
             "chance": 0.25,
             "counted": true,
             "fails": []
@@ -1013,10 +765,10 @@
         "check": "keys",
         "round": 3,
         "agent": "🤖 Wilco (keys)",
-        "at": "2026-11-05T19:08:18.596Z",
+        "at": "2026-11-07T15:59:11.730Z",
         "rows": 22,
         "errors": 0,
-        "warnings": 4,
+        "warnings": 0,
         "problems": [],
         "pass": true
       },
@@ -1024,41 +776,41 @@
         "check": "test-wise",
         "round": 3,
         "agent": "🤖 Wilco (test-wise bots)",
-        "at": "2026-11-05T19:08:18.669Z",
-        "questions": 20,
+        "at": "2026-11-07T15:59:11.804Z",
+        "questions": 16,
         "chance": 0.25,
         "worst": [
           [
-            "largest",
-            0.321
+            "overlap",
+            0.281
           ],
           [
             "middle",
-            0.317
+            0.281
           ],
           [
-            "learnedCV",
-            0.3
+            "absolute",
+            0.276
           ]
         ],
         "groups": [
           {
-            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" A",
-            "n": 10,
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A",
+            "n": 8,
             "chance": 0.25,
             "counted": true,
             "fails": []
           },
           {
-            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" B",
-            "n": 10,
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B",
+            "n": 8,
             "chance": 0.25,
             "counted": true,
             "fails": []
           },
           {
-            "group": "READING CHECK: \"THE BENCH BY THE LIBRARY\" AND \"WHAT HAPPENED TO THE KELP?\" (all versions)",
-            "n": 20,
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" (all versions)",
+            "n": 16,
             "chance": 0.25,
             "counted": true,
             "fails": []
@@ -1072,7 +824,42 @@
           },
           {
             "group": "whole pack",
-            "n": 20,
+            "n": 16,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "check": "no-passage",
+        "round": 3,
+        "agent": "🤖 Wilco (no-passage bots)",
+        "at": "2026-11-07T15:59:11.871Z",
+        "questions": 16,
+        "worst": [
+          "pairMatch",
+          0.25
+        ],
+        "groups": [
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B",
+            "n": 8,
+            "chance": 0.25,
+            "counted": true,
+            "fails": []
+          },
+          {
+            "group": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" (all versions)",
+            "n": 16,
             "chance": 0.25,
             "counted": true,
             "fails": []
@@ -1080,230 +867,762 @@
         ],
         "pass": true
       }
+    ],
+    "blind": [
+      {
+        "round": 1,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 8,
+        "of": 8,
+        "passageFree": {
+          "A": {
+            "matched": 8,
+            "of": 8,
+            "confident": 6
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs and the accept/why lines)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q2",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: shy-cat story pattern; q4 D shows she 'stayed', so he is careful not to scare her off. A contradicts the cat staying; B and D read as filler."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q3",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: the story's arc is Kiran bonding with the cat; A and C are set up by the q4 quotes (math teacher, ten-dollar bill), so they look like planted traps."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q6",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: general knowledge: dingoes eat kangaroos, so fewer dingoes means more kangaroos grazing. The other choices have nothing to do with dingoes."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: general knowledge of the term; the others ignore the idea of comparing two sides of the fence"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q8",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: q9 B is almost the same as D ('change far more than anyone planned'); 'most want readers to understand' points to a measured choice, and A, B and C are extreme"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: it repeats the wording of q8 D and sounds like a concluding sentence; C sounds fake ('clever answer to every problem')"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q5",
+            "kind": "FIX",
+            "what": "Short answer without the passage: Tam is right, with the [6] line \"stayed until he finished the last problem\", taken from q4 D (lead's score: 1 of the credit)"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q10",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: the right chain from general knowledge, but a quote from [6], not [4] (lead's score: 0.5 of the credit)"
+          }
+        ]
+      },
+      {
+        "round": 1,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 7,
+        "of": 8,
+        "passageFree": {
+          "B": {
+            "matched": 7,
+            "of": 8,
+            "confident": 7
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs and the accept/why lines)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q1",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: q3/q11 imply the cat wasn't eating with him at first and feelings change; only negative choice fitting a worried start"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q3",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: q4 C 'She ate the whole time, I think' and q5 'clue she is doing fine' give it away"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q4",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: only quote matching Part A choice A; restates it"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q6",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: general knowledge: dingoes suppress foxes and cats (mesopredator release); q10 hints ecosystem effects"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: q9 A quote 'protects their living' for sheep families = livelihood/income"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q8",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: q9 quotes from [5] about protecting families and dingoes killing sheep; 'also' fits a balancing paragraph; A's history is para 1"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: only quote showing good for people; B is para 1, D is an extreme claim"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q5",
+            "kind": "FIX",
+            "what": "Short answer without the passage: the empty bowl, paragraph 3, from q2 choices (lead's score: 1 of the credit)"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q10",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: more kangaroos and less grass from general knowledge; the quote guessed, not the line (lead's score: 0.5 of the credit)"
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 6,
+        "of": 8,
+        "passageFree": {
+          "A": {
+            "matched": 6,
+            "of": 8,
+            "confident": 4
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs and the accept/why lines)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q2",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: other item: q3 C says Biscuit 'had been eating since Monday', so the story turns on whether the food is really eaten; D is the only choice about eating"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: general knowledge of the topic: grass on one side of the fence grazed short by kangaroos/sheep; outback ranchers don't mow, and 'cropped' near 'crop' is a trap"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q8",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: other item: q9 A 'more study is needed before anyone decides' fits only a balanced author; q9 D 'scientists now agree' sounds like an invented quote; balanced informational article is the teacher answer"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: pairs with q8 D; the 'more study needed' line is the only one that shows the author not taking a side"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q5",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: a guess (under the bed), no line (lead's score: 0 of the credit)"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q10",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: the idea of a natural experiment from general knowledge, no quote or paragraph (lead's score: 0.5 of the credit)"
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 8,
+        "of": 8,
+        "passageFree": {
+          "B": {
+            "matched": 8,
+            "of": 8,
+            "confident": 4
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs and the accept/why lines)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q6",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: q9 C 'natural experiment' means the conditions match on both sides; B/C/D are distractors that each name one side"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: general knowledge: 'make a living'; paragraph 5 is about ranchers (q9 A, q10 'people who want the fence to stay')"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q8",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: Part B D 'Kangaroos graze on the same grass that sheep need' [3] reads like the last line of paragraph 3 and fits only B; A just restates Part B choice B"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: the only paragraph-3 quote about sheep; matches q8 B"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q5",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: a guess (sits away from her), no line (lead's score: 0 of the credit)"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q10",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: the ranchers living idea from q7 and q9 A, no exact quote (lead's score: 0.5 of the credit)"
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 5,
+        "of": 8,
+        "passageFree": {
+          "A": {
+            "matched": 5,
+            "of": 8,
+            "confident": 3
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs and the accept/why lines)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q1",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: general knowledge: a pet-sitting story, the owner (Mrs. Abara) is away; 'sad her owner is away' is the kind reason a kid gives. Others are odd/contradict the hiding cat."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q2",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: another item: q3 C mentions 'his idea about the empty bowl', so he is checking whether the food was really eaten. A cat behind a mat is implausible."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: general knowledge of vocabulary: grass 'cropped' by grazing animals means bitten off short; article is about kangaroos/sheep grazing."
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q5",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: a guess (under the bed), no line (lead's score: 0 of the credit)"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q10",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: the natural-experiment idea from general knowledge and the stem, no quote or paragraph (lead's score: 0.5 of the credit)"
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 7,
+        "of": 8,
+        "passageFree": {
+          "B": {
+            "matched": 7,
+            "of": 8,
+            "confident": 3
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs and the accept/why lines)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: general knowledge: animals 'slip through' a fence = get past unstopped; topic of a barrier fence"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q8",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: q9 choice D 'Kangaroos graze on the same grass that sheep need' [3] is likely the end of paragraph 3 and fits only B; A is the earlier sentence of the paragraph, not its end"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: pairs with B in Part A: only quote linking kangaroos to sheep ranchers' trouble; B quote matches distractor A"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q5",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: a guess (sits quietly), no line (lead's score: 0 of the credit)"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q10",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: a general admission that the fence protects flocks, no line and not the key admission (lead's score: 0.25 of the credit)"
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "A",
+        "matched": 6,
+        "of": 8,
+        "passageFree": {
+          "A": {
+            "matched": 6,
+            "of": 8,
+            "confident": 1
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs and the accept/why lines)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: general knowledge of the word 'cropped' (grass cropped by grazing kangaroos); dictionary sense"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q5",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: a guess, no line (lead's score: 0 of the credit)"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" A q10",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: the natural-experiment idea from general knowledge, no quote (lead's score: 0.5 of the credit)"
+          }
+        ],
+        "final": true,
+        "notes": "Final whole-version probe before the preview (fresh session; the round 3 whole-version probe was run on the same text)"
+      },
+      {
+        "round": 3,
+        "agent": "🙈 No-passage probe (ELA)",
+        "version": "B",
+        "matched": 6,
+        "of": 8,
+        "passageFree": {
+          "B": {
+            "matched": 6,
+            "of": 8,
+            "confident": 3
+          }
+        },
+        "gate": "fail",
+        "scoredBy": "order lead (checks/score-blind.mjs and the accept/why lines)",
+        "findings": [
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q7",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 5; cue: general vocabulary: animals 'slip through' a fence = get past unstopped"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q8",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: q9 choice D (kangaroos graze on the grass sheep need) is the obvious paragraph-3 closer; pairs with B"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q9",
+            "kind": "FIX",
+            "what": "Right without the passage at confidence 4; cue: only quote about kangaroos causing trouble for sheep; matches q8 B; tagged [3]"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q5",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: a guess, no line (lead's score: 0 of the credit)"
+          },
+          {
+            "where": "READING CHECK: \"BISCUIT\" AND \"THE LONG FENCE\" B q10",
+            "kind": "KEEP",
+            "what": "Short answer without the passage: protects the ranchers living, no quote or paragraph (lead's score: 0.5 of the credit)"
+          }
+        ],
+        "final": true,
+        "notes": "Final whole-version probe before the preview (fresh session; the round 3 whole-version probe was run on the same text)"
+      }
+    ],
+    "facts": [
+      {
+        "round": 1,
+        "agent": "🔎 Fact checker",
+        "claims": 24,
+        "flagged": 4,
+        "notes": "Passage only (passage-p2.md, 'The Long Fence'). The teacher's notes cover sea otters and kelp, so no claim here has a teacher source; every claim was checked with web search (8 searches) and marked reference / off / judgment. Claims counted: [1] length >5,000 km; one of the longest structures; runs across the dry interior; ranchers built it; begun >100 years ago; purpose was to keep dingoes from sheep; dingoes are Australia's wild dogs. [2] fence mostly works; dingoes common on one side and rare on the other; a few get through gaps after floods; natural experiment; sites matched for land and weather. [3] many more kangaroos where dingoes are rare; dingoes hunt kangaroos and more young survive; grass cropped short and ground barer; kangaroos eat the grass sheep need. [4] foxes and cats brought by Europeans; dingoes kill foxes and cats; foxes more common where dingoes are rare; cats more common where dingoes are rare; hopping mice harder to find; foxes and cats a main cause of small-mammal losses. [5] dingoes kill sheep and calves; people disagree about removing the fence and many scientists call for more study. [6] built to solve one problem (dingoes eating sheep); removing one predator changed more than planned. 20 are reference-true. 1 is off: cats. 1 is overstated: the fence is credited alone. 2 are judgment calls for the teacher: the fence began as a rabbit fence, and paras [3]-[4] state a disputed cascade as settled fact. Sweep: the 'fence alone' cause sits in [2] and [6]. The cats claim appears only in [4], and the 'one problem' origin in [1] and [6]. The questions were not checked (they are being redesigned); recheck any question or key that uses cats, the fence-alone cause, or 'built to solve one problem'.",
+        "findings": [
+          {
+            "where": "The Long Fence [4]",
+            "kind": "FIX",
+            "what": "'Where dingoes are rare, foxes and cats are more common' is overstated for cats. The fox part holds: foxes were more common where dingoes were absent (Letnic & Koch 2010, Letnic & Dworjanyn). The cat part does not hold everywhere: the main cross-fence comparison found feral cats did not respond to dingo exclusion (Letnic & Koch 2010), and only a later six-year SA study (2011-2017) found more cats on the dingo-free side. Direction: keep foxes as the firm claim and hedge cats. For example: 'Where dingoes are rare, foxes are more common, and some studies have found more feral cats too, and small native animals, such as hopping mice, are harder to find.' Or drop cats from this sentence. Facts to check: the wording should claim no more for cats than 'some studies'.",
+            "source": "Letnic & Koch 2010, Austral Ecology, 'Are dingoes a trophic regulator in arid Australia? A comparison of mammal communities on either side of the dingo fence' (https://trophiccascades.forestry.oregonstate.edu/sites/trophic/files/Letnic%20and%20Koch%202010.pdf); UNSW 2019, 'Dogged researchers show that dingoes keep feral cats in check' (https://www.unsw.edu.au/newsroom/news/2019/04/dogged-researchers-show-that-dingoes-keep-feral-cats-in-check)"
+          },
+          {
+            "where": "The Long Fence [2]",
+            "kind": "FIX",
+            "what": "'The fence mostly works. Dingoes are common on one side and rare on the other.' credits the fence alone. Inside the fence, landholders are required by law to destroy wild dogs, by poison baiting (the main tool), trapping and shooting. The fence is a barrier, and the killing on the sheep side is a large part of why dingoes are rare there. This matters in a quiz on cause and effect: a student could infer that the fence alone emptied the area. Direction: add one sentence, for example 'On the sheep side, ranchers also poison, trap and shoot any dingoes they find.' Facts to check: baiting, trapping and shooting are all named in SA policy, and destroying wild dogs inside the fence is required by law in SA.",
+            "source": "PIRSA, 'Declared animal policy: wild dogs and dingoes' (https://pir.sa.gov.au/__data/assets/pdf_file/0007/388159/declared-animal-policy-wild-dogs-dingoes.pdf); PIRSA 'Wild dogs and dingoes' (https://pir.sa.gov.au/wild-dogs)"
+          },
+          {
+            "where": "The Long Fence [6]",
+            "kind": "FIX",
+            "what": "Same claim as [2], found in the sweep. 'pulling one hunter out of a place' is fine once [2] says how dingoes were removed (fence plus poisoning and shooting). Without the [2] fix, [6] repeats the fence-alone cause. No change is needed here if [2] is fixed. Check that any question key using [6] does not state 'the fence removed the dingoes'.",
+            "source": "As for [2] (PIRSA declared animal policy)"
+          },
+          {
+            "where": "The Long Fence [3]-[4]",
+            "kind": "JUDGMENT",
+            "what": "Paras [3]-[4] state the dingo, kangaroo/fox, grass/small-mammal chain as plain fact. Paras [3] and [4] each match published cross-fence studies. Whether dingoes control foxes and cats across Australia is disputed, however: Allen and colleagues found no rise in foxes or cats after dingo removal in baiting and fenced experiments, and other researchers dispute those methods. Para [5] says 'many scientists say more study is needed', which partly covers this. One reading: fine for grade 7, since [5] signals the uncertainty. The other: attribute the findings, e.g. '[3] Scientists who studied the fence found many more kangaroos...' This would also give the inference questions an author's-claim-versus-evidence angle. Teacher's call.",
+            "source": "Morris & Letnic et al. 2017, Proc. R. Soc. B, doi:10.1098/rspb.2017.0111 (UNSW release: https://unsw.edu.au/newsroom/news/2017/05/dingo-fence-study-shows-dingo-extermination-leads-to-poorer-soil); Allen et al. 2013 and the comment on it (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3937246/); Allen et al., 'Wild dogma' (https://openpolar.no/Record/ftusqland:oai:research.usq.edu.au:q3871)"
+          },
+          {
+            "where": "The Long Fence [1]",
+            "kind": "JUDGMENT",
+            "what": "'Ranchers began building it more than 100 years ago. They wanted to keep dingoes... away from their sheep.' The first sections (1880-1885) were built as rabbit fences, which failed and were converted section by section into a dingo barrier. Governments as well as landholders built and ran it. [6] says the same: 'built to solve one problem: dingoes eating sheep'. One reading: a fair grade 7 shortening, because the fence that exists today was made and kept up to stop dingoes, and '>100 years' is true under either date. This is not a known myth. The other reading: add 'Parts of it began as a fence against rabbits.' Teacher's call. Facts to check if added: rabbit-fence origin in the 1880s.",
+            "source": "Wikipedia, 'Dingo Fence' (https://en.wikipedia.org/wiki/Dingo_Fence); WorldAtlas, 'What Makes The Dingo Fence One Of The World's Longest Structures?' (https://www.worldatlas.com/articles/what-makes-the-dingo-fence-one-of-the-world-s-longest-structures.html)"
+          },
+          {
+            "where": "The Long Fence [1]",
+            "kind": "KEEP",
+            "what": "'more than 5,000 kilometers long' and 'one of the longest structures on Earth' are true: about 5,614 km, and it is commonly described as one of the world's longest structures. 'Across the dry middle of Australia' is a fair shortening: the fence runs from southern Queensland to the Great Australian Bight through arid and semi-arid inland country, though not the Red Centre itself. Optional precision: 'across the dry outback'.",
+            "source": "Wikipedia, 'Dingo Fence'; WorldAtlas (links above)"
+          },
+          {
+            "where": "The Long Fence [2]",
+            "kind": "KEEP",
+            "what": "'a few slip through gaps after floods' is true: state policy expects incursions after floods or fires, and wild dogs persist inside in places. 'natural experiment... same kind of land and the same weather' is a fair shortening: the studies compare matched sites, and the authors call the fence an inadvertent experiment. Rainfall and land use still differ somewhat between sides, which the satellite study notes. That detail is fine to leave out at grade 7.",
+            "source": "PIRSA declared animal policy (link above); UNSW 2021, 'Dingo effects on ecosystem visible from space' (https://unsw.edu.au/news/2021/02/dingo-effects-on-ecosystem-visible-from-space-)"
+          },
+          {
+            "where": "The Long Fence [3]",
+            "kind": "KEEP",
+            "what": "All four claims check out. Kangaroos are far more abundant where dingoes are rare: one survey counted about 3,200 kangaroos and 1 dingo inside the fence, against 85 dingoes and 8 kangaroos outside. Dingoes prey mainly on kangaroos. Vegetation cover is lower where kangaroos are dense: kangaroo-exclusion plots inside the fence had about 12% more cover. Kangaroos compete with sheep for pasture. 'more young kangaroos live to grow up' is a fair simplification of predation on young kangaroos. Caution for the question writers: woody shrubs increase on the dingo-free side (UNSW 2016), so no question or key should say all plants decline there.",
+            "source": "Morris & Letnic 2017 (Nature news: https://www.nature.com/articles/nature.2017.21962); CSIRO Wildlife Research WR9920531 (https://www.publish.csiro.au/WR/WR9920531); UNSW 2016 shrub study (https://www.unsw.edu.au/newsroom/news/2016/12/detective-work-across-dingo-fence-reveals-new-factor-in-woody-sh)"
+          },
+          {
+            "where": "The Long Fence [4]",
+            "kind": "KEEP",
+            "what": "These claims are true. Red foxes were brought from Europe for sport hunting, released in Victoria from about 1871. Feral cats came with European settlement. Dingoes kill foxes and cats, which is documented intraguild predation. The dusky hopping mouse is less abundant where dingoes are absent. Foxes and feral cats are the leading cause of Australia's small-mammal extinctions and range losses (Woinarski et al. 2015, PNAS), and 'a main reason' matches that. The one exception is the cats-more-common claim, which is FIX above.",
+            "source": "Tasmanian Government NRE, 'European Red Foxes' (https://nre.tas.gov.au/invasive-species/invasive-animals/invasive-mammals/european-red-foxes); Science News on Woinarski et al. 2015 (https://www.sciencenews.org/blog/wild-things/cats-and-foxes-are-driving-australias-mammals-extinct); Letnic & Koch 2010 (link above)"
+          },
+          {
+            "where": "The Long Fence [5]",
+            "kind": "KEEP",
+            "what": "'Dingoes do kill sheep and calves' is true: sheep are the main livestock loss, and cattle losses are mostly calves. The split of opinion and the call for more study fairly reflect the real dispute (see the JUDGMENT on [3]-[4]). The paragraph gives both sides without taking one.",
+            "source": "CSIRO WR9920531; Modern Farmer, 'Are Dingoes Devouring Australia's Sheep Industry?' (https://modernfarmer.com/2013/12/dingos-devouring-australias-sheep-industry/)"
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "agent": "🔎 Fact checker",
+        "claims": 19,
+        "flagged": 3,
+        "notes": "Recheck of the two changed sentences ([2], [4]) and a sweep of the article items A/B q6-q10 (prompts, choices, keys, why). No web search used: every fact in the new wording is covered by round 1's sources (PIRSA declared animal policy; Letnic & Koch 2010; UNSW 2019). Claims counted: [2] new sentence: ranchers act on the sheep side; poison; trap; shoot (4). [4] new wording: foxes more common where dingoes are rare; 'some studies' find more cats (2). Items: A q6 why (bilbies, quolls, rock wallabies are real small Australian animals, not named in the article); B q6 key + why (same weather; barer ground from grazing); A q7 why (weather same on both sides); B q7 why (ranchers kill wild dogs, don't let them in); B q8/q9 key + why (kangaroos compete with sheep for grass); A q9 choice C (dingoes kill foxes and cats); A q10 key (two sides same land and weather, differ in dingoes); B q10 key (dingoes kill sheep and calves; fence protects ranch families' living); A q8/q9 key (author takes no side) (13). All three round 1 FIXes are fixed. The passage is the same in every place it appears in view.md (both versions, every question). Sweep: no item uses 'cats more common', 'the fence removed the dingoes', or 'all plants decline'. The fake quotations in A q9 D and B q9 A are labelled 'unmatched' in the why lines and are not stated as fact. One new overstatement, in 3 places: items turn the article's 'compare places on the two sides that have the same ... weather' (matched sites) into 'the weather is the same on both sides'. Round 1 noted that rainfall really does differ between the sides in places.",
+        "findings": [
+          {
+            "where": "The Long Fence [4]",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Round 1: cats-more-common was overstated. Now: 'Where dingoes are rare, foxes are more common, ... Some studies find more cats there too.' Checked: foxes are the firm claim (Letnic & Koch 2010). 'Some studies' is accurate for cats: Letnic & Koch 2010 found no cat response, and the UNSW 2019 six-year SA study found more cats on the dingo-free side. 'there' points back to 'where dingoes are rare', which is correct. The next sentence ('Foxes and cats are a main reason...') still holds (Woinarski et al. 2015). Confirmed.",
+            "source": "Letnic & Koch 2010, Austral Ecology; UNSW 2019 (https://www.unsw.edu.au/newsroom/news/2019/04/dogged-researchers-show-that-dingoes-keep-feral-cats-in-check)"
+          },
+          {
+            "where": "The Long Fence [2]",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Round 1: 'fence mostly works' credited the fence alone. Now adds: 'On the sheep side, ranchers also poison, trap and shoot wild dogs.' Checked: baiting (the main tool), trapping and shooting are all named in SA policy, and landholders inside the fence must destroy wild dogs. Government and contract 'doggers' also do this work, so 'ranchers' is a fair grade 7 shortening, not a myth. 'Wild dogs' matches [1]'s 'dingoes, Australia's wild dogs'. Confirmed.",
+            "source": "PIRSA, 'Declared animal policy: wild dogs and dingoes' (https://pir.sa.gov.au/__data/assets/pdf_file/0007/388159/declared-animal-policy-wild-dogs-dingoes.pdf)"
+          },
+          {
+            "where": "The Long Fence [6]",
+            "kind": "FIX",
+            "fixed": true,
+            "what": "Round 1: this repeated the fence-alone cause unless [2] was fixed. [2] is fixed, so 'pulling one hunter out of a place' now reads as fence plus killing. Sweep: no key or why says 'the fence removed the dingoes'. B q7 why ('ranchers on the sheep side kill wild dogs [2]') matches the new [2]. Confirmed.",
+            "source": "As for [2]"
+          },
+          {
+            "where": "The Long Fence [3]-[4]",
+            "kind": "JUDGMENT",
+            "sameAs": "round 1 [3]-[4] JUDGMENT",
+            "what": "Unchanged, still the teacher's call: is the dingo cascade stated as settled? The cats hedge in [4] partly answers it.",
+            "source": "As round 1"
+          },
+          {
+            "where": "The Long Fence [1]",
+            "kind": "JUDGMENT",
+            "sameAs": "round 1 [1] JUDGMENT",
+            "what": "Unchanged, still the teacher's call: the rabbit-fence origin. Sweep: no item uses 'built to solve one problem'. B q9 why quotes [6]'s line only to show which line is real.",
+            "source": "As round 1"
+          },
+          {
+            "where": "B q6 key and why",
+            "kind": "FIX",
+            "what": "Key 'It is the same on both sides.' overstates the article. [2] says scientists compare *places* on the two sides that have the same land and weather (matched sites). It does not say that the whole sides have the same weather, and in reality rainfall differs between the sides in places (UNSW 2021 satellite study). A careful reader of [2] could reject the key. Direction: key 'Scientists can compare places on the two sides that have the same weather.' Or reword the prompt: 'What does the article say about the places scientists compare on the two sides?' Distractors B-D stay wrong. The why's 'barer ground [3] comes from kangaroos grazing' matches [3] and the studies, so keep it. Facts to check: none beyond [2]'s wording.",
+            "source": "Passage [2]; UNSW 2021 (https://unsw.edu.au/news/2021/02/dingo-effects-on-ecosystem-visible-from-space-)"
+          },
+          {
+            "where": "A q7 why",
+            "kind": "FIX",
+            "what": "Same claim, found in the sweep: 'The weather is the same on both sides [2], so not the heat'. Direction: 'Scientists compare places with the same weather [2], so heat does not explain the short grass; kangaroos grazing does [3].' The key ('bitten off close to the ground by animals') is fine.",
+            "source": "Passage [2]"
+          },
+          {
+            "where": "A q10 key",
+            "kind": "FIX",
+            "what": "Same claim, found in the sweep: 'the two sides have the same land and weather and differ in dingoes'. Direction: 'scientists can pick places on the two sides with the same land and weather that differ in dingoes'. The quoted [2] sentence and the scoring rule are fine. 'Differ in dingoes' is still right after the [2] fix.",
+            "source": "Passage [2]"
+          },
+          {
+            "where": "Article items A q6, A q8-q9, B q7-q10",
+            "kind": "KEEP",
+            "what": "A q6: bilbies, quolls and rock wallabies are real Australian animals that the article doesn't name, so the why is true. A q8/q9: the author does take no side ([5] reports both sides and attributes 'more study' to scientists). B q8/q9: kangaroos do compete with sheep for pasture (round 1 KEEP [3]). A q9 C 'Dingoes kill foxes and cats' is true and quoted exactly. B q10: 'Dingoes do kill sheep and calves' is true (round 1 KEEP [5]). B q7: 'slip' and the floods are true (round 1 KEEP [2]).",
+            "source": "Round 1 sources; passage"
+          }
+        ]
+      }
     ]
   },
-  "rounds": 3,
   "log": [
     {
-      "at": "17:20",
+      "at": "15:28",
       "who": "🧭 Order lead",
-      "what": "Opened the order: folder, order.json, teacher's notes, 2 style examples; added the passage field to the pack format first",
+      "what": "Opened the remake: same order and made-up teacher (Mr. Haverford), new branch, order folder, his style notes reused from his first order (no new style step); tested the session runner (one $0.11 test call)",
       "minutes": null,
       "tokens": null,
       "cost": null,
       "round": 0
     },
     {
-      "at": "17:24",
+      "at": "15:30",
       "who": "🧭 Onboarding",
-      "what": "Measured the notes and 2 style examples: 2 questions (story idea; number of Part A/B pairs), no warnings, 165 tokens recomputed (same); FOLLOW-UP.md 217 words",
-      "minutes": 1.3,
-      "tokens": 448872,
-      "cost": 0.49,
+      "what": "Measured the notes (1.5 pages) and 2 past pieces; recommended 8 mc + 2 citing short answers + RACE, one pair a passage, and a less familiar case than otters and kelp; no warnings; 165 tokens recomputed (same); FOLLOW-UP.md 190 words, 2 questions",
+      "minutes": 1,
+      "tokens": 420018,
+      "cost": 0.5,
       "round": 0
     },
     {
-      "at": "17:27",
+      "at": "15:31",
       "who": "🧭 Order lead",
-      "what": "Teacher's reply \"go\" saved (story idea A, 4 pairs)",
+      "what": "Teacher's reply \"go\" saved (simulated for the sample: no waiting time)",
       "minutes": null,
       "tokens": null,
       "cost": null,
       "round": 0
     },
     {
-      "at": "17:25",
-      "who": "🎨 Style notes",
-      "what": "Wrote style.md from the 2 training files (294 words)",
-      "minutes": 0.5,
-      "tokens": 259260,
-      "cost": 0.23,
-      "round": 0
-    },
-    {
-      "at": "17:26",
-      "who": "📝 Maker",
-      "what": "Round 1 session cut off at the 10-minute runner limit mid-turn, nothing saved (cost recorded before the cut)",
-      "minutes": 10.0,
-      "tokens": 274669,
-      "cost": 0.43,
-      "round": 1
-    },
-    {
-      "at": "17:37",
-      "who": "📝 Maker",
-      "what": "Round 1, same session resumed: plan, 2 passages (350 and 346 words), 22 rows plus rubric, 4 drafts; keys and test-wise checks passed",
-      "minutes": 29.2,
-      "tokens": 7904983,
-      "cost": 6.89,
-      "round": 1
-    },
-    {
-      "at": "18:07",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 1, version A, no passages: answered 10 multiple-choice",
-      "minutes": 0.5,
-      "tokens": 190133,
-      "cost": 0.27,
-      "round": 1
-    },
-    {
-      "at": "18:07",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 1, version B, no passages: answered 10 multiple-choice",
-      "minutes": 0.5,
-      "tokens": 189266,
-      "cost": 0.26,
-      "round": 1
-    },
-    {
-      "at": "18:08",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 1, version A scored and entry written: 10 of 10 right (9 sure), gate FAIL",
-      "minutes": 0.5,
-      "tokens": 159959,
-      "cost": 0.39,
-      "round": 1
-    },
-    {
-      "at": "18:08",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 1, version B scored and entry written: 9 of 10 right (10 sure), gate FAIL",
-      "minutes": 0.5,
-      "tokens": 159487,
-      "cost": 0.39,
-      "round": 1
-    },
-    {
-      "at": "18:08",
-      "who": "🤖 Wilco",
-      "what": "Round 1: keys pass; test-wise pass, worst largest 33%, middleValue 33%, converge 30% (chance 25%, line 35%)",
-      "minutes": null,
-      "tokens": null,
-      "cost": null,
-      "round": 1
-    },
-    {
-      "at": "18:09",
-      "who": "📝 Maker",
-      "what": "Round 2, fresh session, redesign after the failed gate: new passages (333 and 348 words), every item rewritten with one rival quote per Part A choice, 3 drafts",
-      "minutes": 47.2,
-      "tokens": 19500754,
-      "cost": 12.21,
-      "round": 2
-    },
-    {
-      "at": "18:56",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 2, version A, no passages, fresh session",
-      "minutes": 0.6,
-      "tokens": 278767,
-      "cost": 0.29,
-      "round": 2
-    },
-    {
-      "at": "18:56",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 2, version B, no passages, fresh session",
-      "minutes": 0.6,
-      "tokens": 190533,
-      "cost": 0.27,
-      "round": 2
-    },
-    {
-      "at": "18:57",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 2, version A scored and entry written: 8 of 10 right (5 sure), gate FAIL",
-      "minutes": 0.4,
-      "tokens": 156966,
-      "cost": 0.4,
-      "round": 2
-    },
-    {
-      "at": "18:57",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 2, version B scored and entry written: 5 of 10 right (3 sure), gate FAIL",
-      "minutes": 0.4,
-      "tokens": 160298,
-      "cost": 0.38,
-      "round": 2
-    },
-    {
-      "at": "18:58",
-      "who": "🤖 Wilco",
-      "what": "Round 2: keys pass; test-wise pass, worst notVote 29%, middle 29%, notLongest 27% (chance 25%)",
-      "minutes": null,
-      "tokens": null,
-      "cost": null,
-      "round": 2
-    },
-    {
-      "at": "18:58",
-      "who": "📝 Maker",
-      "what": "Round 3, fresh short session on the FIX list only (A q1/q2, q4/q5, q6/q7, q9/q10; B q3, q6/q7), hard limit $5.50; passages 338 and 346 words",
-      "minutes": 8.3,
-      "tokens": 2938419,
-      "cost": 2.42,
-      "round": 3
-    },
-    {
-      "at": "19:07",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 3, version A, no passages, fresh session: 9 of 10 right (4 sure), gate FAIL (scored and entered by the lead from the probe's answers, no second session)",
-      "minutes": 0.6,
-      "tokens": 190874,
-      "cost": 0.27,
-      "round": 3
-    },
-    {
-      "at": "19:07",
-      "who": "🙈 No-passage probe (ELA)",
-      "what": "Round 3, version B, no passages, fresh session: 5 of 10 right (2 sure), gate FAIL (scored and entered by the lead, as above)",
-      "minutes": 0.6,
-      "tokens": 190939,
-      "cost": 0.27,
-      "round": 3
-    },
-    {
-      "at": "19:08",
-      "who": "🤖 Wilco",
-      "what": "Round 3: keys pass; test-wise pass, worst largest 32%, middle 32%, learnedCV 30% (chance 25%)",
-      "minutes": null,
-      "tokens": null,
-      "cost": null,
-      "round": 3
-    },
-    {
-      "at": "19:10",
+      "at": "15:31",
       "who": "🧭 Order lead",
-      "what": "Stopped at round 3, the limit without the owner; order at $25.86, 1.7x the $15 budget. Blind tester (with passages) and fact checker did not run.",
+      "what": "A first maker start was stopped after about a minute: the lead had set a 10-minute runner limit by mistake; restarted with 60 (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 1
+    },
+    {
+      "at": "15:32",
+      "who": "📝 Maker",
+      "what": "First draft, cap $5.50: story \"Biscuit\" (invented) and article \"The Long Fence\" (the Dingo Fence), 11 items a version, rubric; its checks all exit 0; self-read about 4 of 8 a version",
+      "minutes": 8.6,
+      "tokens": 2213078,
+      "cost": 2.24,
+      "round": 1
+    },
+    {
+      "at": "15:41",
+      "who": "🤖 Wilco",
+      "what": "keys pass (2 same-prompt warnings A/B); test-wise pass; no-passage pass (worst quoteEcho 34%, chance 25%)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 1
+    },
+    {
+      "at": "15:41",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Version A, no passages: 8 of 8 mc right (6 sure); short answer q5 full credit: FAIL",
+      "minutes": 0.6,
+      "tokens": 38937,
+      "cost": 0.17,
+      "round": 1
+    },
+    {
+      "at": "15:41",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Version B, no passages: 7 of 8 mc right (7 sure); short answer q5 full credit: FAIL",
+      "minutes": 0.5,
+      "tokens": 37514,
+      "cost": 0.15,
+      "round": 1
+    },
+    {
+      "at": "15:42",
+      "who": "🧭 Order lead",
+      "what": "A first fact-check start was stopped after 20 seconds: web tools were passed in a form that would be denied; restarted (not measured)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 1
+    },
+    {
+      "at": "15:43",
+      "who": "🔎 Fact checker",
+      "what": "Round 1 passage fact check of the article (kept passage): 24 claims, 3 FIX (cats overstated [4]; fence credited alone [2], [6]), 2 JUDGMENT",
+      "minutes": 2.1,
+      "tokens": 615140,
+      "cost": 0.68,
+      "round": 1
+    },
+    {
+      "at": "15:43",
+      "who": "📝 Maker",
+      "what": "Redesign, cap $4.10: new rival readings in the story ([1], [5], [7] rewritten), new stems for every item; article unchanged; checks exit 0",
+      "minutes": 8.5,
+      "tokens": 3430053,
+      "cost": 2.49,
+      "round": 2
+    },
+    {
+      "at": "15:52",
+      "who": "🤖 Wilco",
+      "what": "keys pass (0 warnings); test-wise pass; no-passage pass (worst echo 28%)",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 2
+    },
+    {
+      "at": "15:52",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Version A: 6 of 8 mc right (4 sure); short answers at most half: FAIL",
+      "minutes": 0.6,
+      "tokens": 39180,
+      "cost": 0.12,
+      "round": 2
+    },
+    {
+      "at": "15:52",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Version B: 8 of 8 mc right (4 sure); short answers at most half: FAIL",
+      "minutes": 0.6,
+      "tokens": 39560,
+      "cost": 0.12,
+      "round": 2
+    },
+    {
+      "at": "15:53",
+      "who": "📝 Maker",
+      "what": "FIX round, cap $2.75: 8 FIX items plus the two article sentences from the fact check; checks exit 0",
+      "minutes": 4.9,
+      "tokens": 1584012,
+      "cost": 1.47,
+      "round": 3
+    },
+    {
+      "at": "15:59",
+      "who": "🤖 Wilco",
+      "what": "keys pass; test-wise pass; no-passage pass (worst pairMatch 25%, chance 25%)",
       "minutes": null,
       "tokens": null,
       "cost": null,
       "round": 3
     },
     {
-      "at": "19:09",
+      "at": "15:59",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Version A, whole version: 5 of 8 mc right (3 sure): FAIL",
+      "minutes": 0.6,
+      "tokens": 39678,
+      "cost": 0.13,
+      "round": 3
+    },
+    {
+      "at": "15:59",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Version B, whole version: 7 of 8 mc right (3 sure): FAIL",
+      "minutes": 0.6,
+      "tokens": 39796,
+      "cost": 0.13,
+      "round": 3
+    },
+    {
+      "at": "16:00",
+      "who": "🔎 Fact checker",
+      "what": "Recheck of the changed article sentences and sweep of the article items: round 1 FIX all fixed; 3 new FIX (B q6 key, A q7 why, A q10 key say the weather is the same on both sides; the article says scientists compare places with the same weather)",
+      "minutes": 1,
+      "tokens": 328747,
+      "cost": 0.45,
+      "round": 3
+    },
+    {
+      "at": "16:01",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Final whole-version probe A before the preview: 6 of 8 mc right (1 sure): FAIL",
+      "minutes": 0.7,
+      "tokens": 39805,
+      "cost": 0.13,
+      "round": 3
+    },
+    {
+      "at": "16:01",
+      "who": "🙈 No-passage probe (ELA)",
+      "what": "Final whole-version probe B before the preview: 6 of 8 mc right (3 sure): FAIL",
+      "minutes": 0.6,
+      "tokens": 39062,
+      "cost": 0.12,
+      "round": 3
+    },
+    {
+      "at": "16:03",
+      "who": "🧭 Order lead",
+      "what": "Round 3 limit reached with the gate open in both versions and 3 fact FIX open; no blind solve (the runbook runs it only on a draft that passed the gate); the owner is told before any round 4",
+      "minutes": null,
+      "tokens": null,
+      "cost": null,
+      "round": 3
+    },
+    {
+      "at": "16:05",
       "who": "🧾 Reporter",
-      "what": "Wrote the log (22 rows) and the audit notes from a short hand-off (cheaper tier). Exact (session).",
-      "minutes": 1.5,
-      "tokens": 438343,
-      "cost": 0.35,
+      "what": "Wrote the audit report story from the log and checks (cheaper tier, short hand-off)",
+      "minutes": 0.9,
+      "tokens": 389285,
+      "cost": 0.29,
       "round": 3
     },
     {
-      "at": "19:12",
+      "at": "16:07",
       "who": "🧭 Order lead",
-      "what": "Corrected the hand-off's agent-minute total (99.1 was a slip; the rows add to 101.7, as the reporter found) and added the reporter's own row: the order total is $26.21 and 103.2 agent minutes.",
+      "what": "Rendered the watermarked preview for the owner only (no approval, no final)",
       "minutes": null,
       "tokens": null,
       "cost": null,
       "round": 3
     },
     {
-      "at": "19:14",
+      "at": "16:09",
+      "who": "🔎 Auditor",
+      "what": "Fresh audit of this order: proposals only (maker v5, onboarding v7, blind-ela v4), no brief changed on this branch; docs/audits/AUDIT-2026-11-07-ela-remake.md",
+      "minutes": 2.7,
+      "tokens": 642416,
+      "cost": 0.87,
+      "round": 3
+    },
+    {
+      "at": "16:12",
       "who": "🧭 Order lead",
-      "what": "Rendered the watermarked preview for the owner (made-up sample: no teacher to send it to) and looked at every page. No approval. Noted one possible two-right item (A q8, 'raft') for the owner.",
+      "what": "Correction (reporter rule 9): the report total of $9.01 left out the reporter itself; with it $9.30 for rounds 0–3 (0.56× the $16.50 budget), and $10.17 with the audit",
       "minutes": null,
       "tokens": null,
       "cost": null,
@@ -1312,28 +1631,20 @@
   ],
   "audit": {
     "notes": [
-      "Open for the teacher: the reading quiz did not pass the no-passage check in any of 3 rounds (readers who never saw the passages still got 9 of 10 right on version A and 5 of 10 on version B in round 3; chance is about 2.5, the line is 4); the blind solve with the passages and the fact check never ran, so the article's claims are unchecked; a watermarked preview was made for the owner only and nothing is approved, so there is no final version.",
-      "Also open, from the lead's look at the preview (not a checker's finding): in version A q8 ('raft'), choice A (a group of otters floating together) and the key D (a large group of similar things) may both be right, since paragraph 7's raft is a group of animals; the blind tester who would check this never ran.",
-      "Order: grade 7 ELA for Mr. Haverford, reading quiz (150 tokens) plus rubric (15) = 165 tokens; the budget is the reading-quiz price, 150 tokens = $15.00, and the cost stop (2x) is $30.00.",
-      "Onboarding (1.3 minutes, 448,872 tokens, $0.49): read one and a half pages of notes and 2 past pieces, found 0 warnings, recomputed 165 tokens (same as asked), and asked 2 questions (which story idea; how many Part A/Part B pairs). FOLLOW-UP.md ran 217 words against a target of about 200.",
-      "The teacher's answer was \"go\" at 17:27 UTC (story idea A, 4 pairs), simulated by the lead, so there was no waiting time and no change to the tokens. A style-notes step then wrote a 294-word style sheet from the 2 examples (0.5 minutes, $0.23).",
-      "Round 1: the maker's first session was cut off at the 10-minute runner limit with nothing saved ($0.43 spent), then resumed and finished 2 passages, 22 rows and the rubric in 29.2 minutes ($6.89) after 4 drafts. Its own read was about 9 of 10 guessable per version.",
-      "Round 1 gate (no-passage probe; chance 2.5 of 10, line 4): version A 10 of 10 right (9 sure), FAIL; version B 9 of 10 right (10 sure), FAIL. Running total after round 1: $9.35, 0.62x the budget.",
-      "Round 1 catches: 9 FIX on version A (q1, q2, q4, q5, q6, q7, q8, q9, q10) and 9 on version B (q1, q2, q4, q5, q6, q7, q8, q9, q10), 18 in all. Each Part B quote fit only one Part A choice, so solving one half gave away the other, and the word-meaning items had only one choice that fit the topic. All 18 were fixed by the round 2 redesign.",
-      "Wilco round 1: keys pass (22 rows, 0 errors, 4 warnings); test-wise pass, worst strategies largest 33% and middleValue 33% against chance 25% and a line of 35%.",
-      "Round 2: a fresh maker session redesigned both passages and rewrote every item with one rival quote per Part A choice (47.2 minutes, $12.21, the longest step). Gate: version A 8 of 10 right (5 sure), FAIL; version B 5 of 10 right (3 sure), FAIL. Running total $22.90, 1.53x the budget.",
-      "Round 2 catches: 4 FIX on version A (q6, q7, q9, q10) and 3 on version B (q3, q6, q7). The leaks were Part B quotes that restate the key, a lone 'Yet ... stayed bare' contrast quote, and a quote of paragraph 2 that showed which meaning of a word fit. The round 3 maker worked from this list.",
-      "Wilco round 2: keys pass; test-wise pass, worst notVote 29% and middle 29% against chance 25%, down from 33% in round 1.",
-      "Round 3: a fresh short maker session (8.3 minutes, $2.42, hard limit $5.50) worked the FIX list. Gate: version A 9 of 10 right (4 sure), FAIL; version B 5 of 10 right (2 sure), FAIL. The lead assembled these two entries from the probes' answers with no second scoring session, to save cost. Running total $25.86, 1.72x the budget.",
-      "Round 3 catches: 4 FIX on version A (q6, q7, q9, q10) and 2 on version B (q6, q7), the same items as round 2, so none of these 6 were fixed. The cues are still in the Part A/Part B pairs (for example A q6 is restated by q7 B; B q6 and q7 share 'for years'). The article pairs (A q6/q7, A q9/q10, B q6/q7) leaked in every round.",
-      "Wilco round 3: keys pass; test-wise pass, worst largest 32% and middle 32%, learnedCV 30%, chance 25%. Wilco's worst score was 33% in round 1, 29% in round 2 and 32% in round 3, so its bots passed every round while the no-passage reader did not.",
-      "No-passage results per version and round, as right of 10 (answered at high confidence): version A 10 (9), 8 (5), 9 (4); version B 9 (10), 5 (3), 5 (2). The high-confidence count fell each round, but the right count stayed well above chance.",
-      "No KEEP or JUDGMENT items were recorded, and there are no fact-check findings because the fact checker did not run.",
-      "Did not run: the blind tester with the passages and the fact checker. The runbook starts them only on a draft that passed the gate, and none did. Unchecked claims: an otter eats about a quarter of its weight a day, a few otters can keep urchin numbers down, fur hunting in the 1700s and 1800s, and urchins living for years on almost nothing.",
-      "Preview rounds and agreement: a watermarked preview was rendered for the owner only (this is a made-up sample, so no teacher saw it); no changes were asked and nothing was approved.",
-      "Why work stopped: round 3 is the limit without the owner, and another redesign plus the first blind solve and fact check would have passed $30. The $30.00 cost stop was not crossed ($25.86, 1.72x the $15.00 budget).",
-      "Totals (exact, from each session's own record; session dollars are used, not token counts): agent time 103.2 minutes with the reporter (101.7 before it), 33,632,522 tokens, $26.21 with the reporter ($25.86 before it), 1.75x the $15.00 budget. The lead's hand-off line said 99.1 minutes; the rows add to 101.7, which is used here. Wall clock 17:20 to 19:10 UTC, 110 minutes. Wilco scripts and the lead's own steps were not measured.",
-      "Per document and question: the pack is one reading quiz (A and B) plus the rubric, with no separate cost per document; over its 22 rows (20 multiple-choice, 2 constructed response) that is about $1.18 per row. The makers cost $21.95 (cut-off session included), the probes $3.19, onboarding and style notes $0.72."
+      "Open for the teacher: (1) the no-passage gate is open in both versions after round 3 (final probe: A 6 of 8, B 6 of 8 multiple-choice right without the passages; 4 or more fails, chance is 2); (2) 3 fact FIX still open: B q6 key, A q7 why and A q10 key say \"the weather is the same on both sides\", which overstates article [2] (scientists compare places with the same weather); (3) the blind solve with the passages never ran, so keys are checked only by the fact checker (article items) and keys.mjs; (4) JUDGMENTs: your notes asked that every Part B choice be a real sentence, but each Part B now has one unmatched quote (owner's option 1); and the fact checker's two calls on the article: the fence began as a rabbit fence ([1]), and [3]-[4] state a disputed dingo chain as settled fact.",
+      "Onboarding (round 0): 1 min, 420,018 tokens, $0.50. It measured the notes (1.6 pages, 14 distinct ideas) and 2 past pieces. No warnings. It recommended 8 multiple choice + 2 citing short answers + RACE, one Part A/B pair a passage, and a less familiar case than otters and kelp. Two questions went out (FOLLOW-UP.md); the answer was \"go\" (simulated for the sample, no waiting time). Tokens unchanged at 165.",
+      "Round 1: the maker wrote the story \"Biscuit\" and the article \"The Long Fence\" plus the rubric in 8.6 min, $2.24 (cap $5.50); its own read guessed about 4 of 8 a version. Wilco passed everything. The no-passage probes did not: A 8 of 8 right (6 sure), B 7 of 8 (7 sure), and short answer q5 got full credit in both. 15 FIX (A 7, B 8) and 2 KEEP (q10 in each, half credit); none fixed yet.",
+      "Round 1 facts: the fact checker read the article (24 claims, 8 web searches, 2.1 min, $0.68): 20 true, 1 off (cats more common where dingoes are rare, [4]), 1 overstated (the fence credited alone for rare dingoes, [2] and [6]). 3 FIX, 2 JUDGMENT, 5 KEEP (length, [3], [4] otherwise, [5], [2] floods).",
+      "Round 2: the maker redesigned the story's rival readings ([1], [5], [7]) and wrote new stems for every item in 8.5 min, $2.49 (cap $4.10). Probes: A 6 of 8 (4 sure), B 8 of 8 (4 sure); short answers at most half credit. 8 FIX (A 4, B 4) and 4 KEEP.",
+      "Round 3: one maker FIX round (8 FIX items plus the 2 article sentences: ranchers also poison, trap and shoot on the sheep side; cats hedged to \"some studies\") took 4.9 min, $1.47 (cap $2.75). Probes: A 5 of 8 (3 sure), B 7 of 8 (3 sure). The fact recheck (19 claims, 1 min, $0.45) found all 3 round 1 FIX fixed and 3 new FIX (the same-weather wording above); the JUDGMENTs are unchanged. The final probe on the same text: A 6 of 8 (1 sure), B 6 of 8 (3 sure). Open FIX from that probe: A q7 (\"cropped\" is a known word); B q7 (\"slip through\"), B q8 and B q9 (the paragraph [3] quote gives the pair away). Short answers q5 and q10 stayed KEEP: 0 and 0.5 credit.",
+      "No-passage results by round (right of 8, gate fails at 4 or more): R1 A 8, B 7; R2 A 6, B 8; R3 A 5, B 7; final A 6, B 6. The previous run of this order (of 10 items) got A 10, 8, 9 and B 9, 5, 5. The count fell but never reached 3 or fewer; the lead stopped at the round 3 limit and tells the owner before any round 4.",
+      "Wilco, worst strategy against chance 25%: round 1 test-wise largest and middleValue 33.3%, no-passage quoteEcho 34.4%; round 2 oddOne and middle 29.7%, echo 28.1%; round 3 overlap and middle 28.1%, pairMatch 25.0%. Keys: 22 rows, 0 errors every round (2 same-prompt warnings in round 1, 0 after). Every Wilco check passed in every round, yet the probes still beat the gate.",
+      "Not measured: the lead's own session; two lead restarts (maker runner limit set to 10 minutes by mistake, about a minute; fact check passed web tools in a form that would be denied, 20 seconds); the Wilco script runs (no minutes or cost). No preview has been sent and there is no approval yet, so there is no final section.",
+      "Time: wall clock 15:28 to 16:05 UTC, 37 minutes. Agent minutes 30.9 (exact, from each session's record): maker 22.0, probes 4.8, fact checker 3.1, onboarding 1.0.",
+      "Cost: $8.90 in the log (exact, each session's own dollars) plus a $0.11 test call of the session runner = $9.01 for the whole remake. Maker $6.20 (3 sessions), probes $1.07 (8 sessions), fact checker $1.13 (2 sessions), onboarding $0.50. Reported tokens: 8,904,580 across the logged sessions; they are not billed tokens, so dollars are the figure used. Quiz and rubric are not costed separately; the quiz is 22 item slots (11 questions in 2 versions) at about $0.41 each.",
+      "Budget: 165 tokens x $0.10 = $16.50 (the quiz alone, 150 tokens = $15.00). Running total after round 0 $0.61 (4% of budget), round 1 $3.85 (23%), round 2 $6.58 (40%), round 3 $9.01 (55%). Never near 2x ($33.00); the owner's hard stop for the remake was $17, so $7.99 is left under it. Caps: first maker $2.24 of $5.50, redesign $2.49 of $4.10, FIX $1.47 of $2.75.",
+      "Against the previous run of this order, which cost $26.21: this remake cost $9.01 (34%), in 3 maker rounds and 8 probe sessions.",
+      "Correction by the lead: the total above left out the reporter ($0.29). Rounds 0–3 cost $9.30 (exact, from each session plus the lead's $0.11 test call): 0.56× the $16.50 budget, 0.62× the quiz's $15, under the owner's $17 stop. The audit after it added $0.87, so $10.17 in all."
     ],
     "briefChanges": []
   }

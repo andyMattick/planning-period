@@ -1,5 +1,4 @@
 {
-  "_note": "Reading samples known to fail checks/no-passage.mjs (docs/audits/AUDIT-2026-11-07-ela.md). The list can only shrink: npm run check fails when a pack here passes (take it off) and when a pack not here fails. The ceiling is NO_PASSAGE_DEBT_MAX in scripts/check.mjs; never add to it to make a pack pass. Both need the option-1 remake (owner, Nov 6, 2026).",
-  "samples/g7-ela/pack.json": "B version: readingVote 40% (chance 25%); fresh probes 20/20 without the passages",
-  "samples/g7-ela2/pack.json": "B version: echo 38% (chance 25%); fresh probes A 9/10, B 5/10 without the passages (round 3)"
+  "_note": "Reading samples known to fail checks/no-passage.mjs (docs/audits/AUDIT-2026-11-07-ela.md). The list can only shrink: npm run check fails when a pack here passes (take it off) and when a pack not here fails. The ceiling is NO_PASSAGE_DEBT_MAX in scripts/check.mjs; never add to it to make a pack pass. g7-ela2 came off after its option-1 remake (Nov 7, 2026); g7-ela stays as the record of the old design until the owner retires it.",
+  "samples/g7-ela/pack.json": "B version: readingVote 40% (chance 25%); fresh probes 20/20 without the passages"
 }
