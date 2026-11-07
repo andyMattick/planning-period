@@ -3,7 +3,10 @@
 One report per audit, newest first (`agents/auditor.md` step 6). Each says what the orders cost against their token
 budgets, what the checkers caught, every brief change and why, price recommendations and ways to make it cheaper.
 
-- [AUDIT-2026-11-07-ela-try-c.md](AUDIT-2026-11-07-ela-try-c.md): g7-ela2 "try c" (invented article, 8+ mc a version;
+- [AUDIT-2026-11-07-ela-try-d.md](AUDIT-2026-11-07-ela-try-d.md): g7-ela2 "try d" (no mc pairs, cross-item check;
+  proposals only): $12.63 of $16.50, gate still open (A 4, B 7 of 8); item cues about halved; proposals: probes name
+  every right item, rewrite a reused story's turn, blind solve after round 1, two final probes per version.
+- [AUDIT-2026-11-07-ela-try-c.md](AUDIT-2026-11-07-ela-try-c.md): g7-ela2 "try c" (invented article, 8+ mc a version; proposals 1, 2, 4, 5 adopted;
   proposals only): $13.50 of $16.50, gate still open (A 9, B 5 of 10); topic cues gone, items answering each other the
   main leak; proposals: drop the mc pairs, a scripted cross-item check, 8 mc, whole-version fix lists.
 - [AUDIT-2026-11-07-ela-remake.md](AUDIT-2026-11-07-ela-remake.md): the option-1 remake of g7-ela2 (proposals only):

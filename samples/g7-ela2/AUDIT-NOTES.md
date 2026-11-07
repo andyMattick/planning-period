@@ -147,3 +147,51 @@ q9/q10 answer themselves; A q8, A q11, B q8 guessable from other items; B q12 ev
 detail; B q3 easier than A q3); 2 minor fact FIX (A q11 and B q11 `why`); JUDGMENT for the teacher (A q3 choice D a
 defensible reading; B q10 D weakly contradicted; B q7 D; his "real sentences only" for Part B vs one unmatched quote).
 No round 4: the auditor's proposals go to the owner.
+
+## Try d (owner decision "D and 1-4", Nov 7, 2026): no mc pairs, a cross-item check, the same passages
+Before the attempt the lead adopted the try-c audit's proposals (section 6 of `docs/audits/AUDIT-2026-11-07-ela-try-c.md`):
+`agents/maker.md` v7 (no multiple-choice Part A/Part B pairs; wrong choices ruled out by a paragraph; a FIX round
+re-checks the whole version; the story's turn is never the type's default; at least 8 mc stays), `agents/onboarding.md`
+v8, `agents/wilco.md` v4, `agents/blind-ela.md` v5, `feasibility.json` (pairs 0), `docs/RUNBOOK.md` steps 4, 4a, 7, 8,
+and a new `checks/cross-item.mjs` (self-test; `npm run check` 5e; shrink-only known-failing list
+`checks/cross-item-debt.json`: g11-history 11 hits, g7-ela2 2, g8-science 1, listed for the owner). Hard stop $15.
+Records: `samples/g7-ela2/attempts/try-d/` (pack with checks, log and audit; FIX lists; probe and blind-solve answers;
+watermarked preview PDFs and AUDIT-REPORT, without REVIEW.html, which prints the product name). Audit (proposals
+only): `docs/audits/AUDIT-2026-11-07-ela-try-d.md`.
+
+**Result in one line: the gate still fails after 3 rounds (final whole-version probes A 4 of 8, B 7 of 8; 4 of 8
+fails), so the sample stays hidden and this pack stays the sample. Keys are sound (blind solve 16 of 16 mc). Cost
+$12.63, under the $15 stop (0.77× the $16.50 budget).**
+
+- **Passages:** the same "Biscuit" (350 words) and "The Reeds of the North Lagoon" (321 words; round 2 dropped "once"
+  from [1], a fact JUDGMENT). **Counts:** 8 mc + 2 citing short answers + RACE a version, no pairs, L3 4 of 11.
+- **Bots:** keys, test-wise, no-passage and cross-item exit 0 every round; cross-item had 0 hits every round while the
+  probes found 2-3 item cues: the leaks are in meaning, not words.
+
+| Round | Step | Minutes | Cost |
+|---|---|---|---|
+| 1 | 📝 Maker, cap $4.10 | 11.3 | $3.02 |
+| 1 | 🔎 Fact check (internal) | 1.3 | $0.46 |
+| 1 | 🙈 Probes A, B | 0.8 + 0.7 | $0.62 |
+| 2 | 📝 Maker, FIX round, cap $2.75 | 8.3 | $2.11 |
+| 2 | 🔎 Fact recheck | 1.6 | $0.55 |
+| 2 | 🙈 Probes A, B | 0.7 + 0.8 | $0.61 |
+| 3 | 📝 Maker, FIX round, cap $2.75 | 7.7 | $2.27 |
+| 3 | 🙈 Probes A, B (whole versions after the last change: the final probe) | 0.7 + 0.7 | $0.62 |
+| 3 | 🔎 Fact recheck | 1.1 | $0.47 |
+| 3 | 🙈 Blind solve, both versions (keyless) | 3.2 | $1.11 |
+| after | 🧾 Reporter (cheaper tier) | 1.1 | $0.27 |
+| after | 🔎 Auditor (proposals only) | 1.5 | $0.52 |
+| | **Total** | **41.5** | **$12.63** |
+
+| Round | A right of 8 (sure) | A cues | B right of 8 (sure) | B cues | Short answers over half |
+|---|---|---|---|---|---|
+| 1 | **5** (3) | type 2, item 2, sounds 1 | **7** (1) | item 3, sounds 2, type 1, guess 1 | none |
+| 2 | **4** (0) | sounds 2, item 1, topic 1 | **5** (1) | item 2, topic 2, sounds 1 | B q5 close (B q3 C printed its detail) |
+| 3, final | **4** (0) | item 2, sounds 1, topic 1 | **7** (0) | item 3, type 2, topic 1, sounds 1 | none |
+
+Compared with try c (A 7, 8, 9 and B 9, 6, 5 of 10; item cues 11, 8, 12), dropping the pairs about halved the item cues
+(5, 3, 5) and confidence fell to none sure, but B did not settle. Open (listed first in the attempt's `audit.notes`):
+the gate (both versions); the blind solve's 8 FIX (A q4, A q8, B q8 guessable; A q9 and B q9 one-step for L3; B q3
+two right answers; B q6 years out of order; B q5's action in B q2 C); 3 round-3 fact FIX not rechecked (A q3 choice C
+true by [1]; B q3 choice A arguably true; A q9 choices B, C unsupported). No round 4: it would pass the $15 stop.
