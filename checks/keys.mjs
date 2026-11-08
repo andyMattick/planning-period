@@ -5,6 +5,7 @@
 
    Errors (exit 1):
      - the pack's shape: format 1, a documents list, question ids unique in a document, a known type
+   - a document's `format` (printable or interactive) and, when interactive, `grading` (auto or print), kind and types
      - mc: 2–6 choices, none empty, an answer index that points at one of them
      - no two choices the same, in text (case, spacing and end marks ignored) or in value (0.5 and 1/2; Pet World's
        "terrible mistake")
@@ -25,6 +26,7 @@
 import { loadPack, rows, norm, signature, valueOf, sameValue, pick, perVersion, versionsOf, kindOf, docName,
   TYPES, TEST_KINDS, VERSIONED_KINDS, SCORED_KINDS, nextRound, writeWilco, argsOf } from './pack-lib.mjs';
 import { writeFileSync } from 'node:fs';
+const INTERACTIVE_KINDS = ['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide'];   // = scripts/render/interactive-format.mjs FORMAT_KINDS
 import { pathToFileURL } from 'node:url';
 
 export function checkKeys(pack) {
@@ -39,6 +41,13 @@ export function checkKeys(pack) {
     if (!doc.sections || !Array.isArray(doc.sections)) { if (!doc.slides && !doc.rubric) warn(`${name}: no sections, slides or rubric`); }
     if (VERSIONED_KINDS.includes(kind) && (vers.length < 2 || vers[0] === null)) err(`${name}: a ${kind} needs versions ["A", "B"]`);
     if (new Set(vers).size !== vers.length) err(`${name}: a version is listed twice`);
+    // the format (docs/KINDS-INTERACTIVE-FORMAT.md): printable (the default) or an interactive page, graded in the page or printed
+    if (doc.format != null && !['printable', 'interactive'].includes(doc.format)) err(`${name}: format must be "printable" or "interactive" (got ${JSON.stringify(doc.format)})`);
+    if (doc.format === 'interactive') {
+      if (!['auto', 'print'].includes(doc.grading)) err(`${name}: an interactive document needs grading "auto" or "print"`);
+      if (!INTERACTIVE_KINDS.includes(kind)) err(`${name}: a ${kind} can't be interactive (only ${INTERACTIVE_KINDS.join(', ')})`);
+      for (const q of qs) if (!['mc', 'tf', 'numeric', 'short', 'open', 'match'].includes(q.type || 'short')) err(`${name} ${q.id}: type ${q.type} can't be in an interactive page`);
+    } else if (doc.grading != null) err(`${name}: "grading" is only for format "interactive"`);
     // reading passages (docs/PACK-FORMAT.md, "Passages"): not questions; ids unique, paragraphs given, every reference found
     const passages = (Array.isArray(doc.passages) ? doc.passages : []).filter((p) => p && p.paragraphs !== undefined);
     const pids = new Set();
