@@ -9,7 +9,7 @@ press Send. Agents make the pack, separate agents check it, and the teacher gets
 - The team and the rules: `CLAUDE.md`, `agents/`
 - Running an order by hand (the pilot): `docs/RUNBOOK.md`
 - The auditor's reports (one per audit, newest first): `docs/audits/README.md`
-- The weekly test (2 random orders through the real team every Friday night, `npm run weekly`): `docs/WEEKLY-TEST.md`; its reports: `docs/weekly/README.md`
+- The weekly test (1 random order through the real team every Friday night, $5 cap, `npm run weekly`): `docs/WEEKLY-TEST.md`; its reports: `docs/weekly/README.md`
 - The world request form moved out (owner, Nov 6, 2026); its last version is kept in `archive/world-request/`
 
 ## Setup for running orders and checks
