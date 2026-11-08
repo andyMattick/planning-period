@@ -527,6 +527,9 @@ try {
   assert.equal(await tab.getAttribute('iframe', 'sandbox'), 'allow-scripts allow-modals allow-downloads');
   await tab.frameLocator('iframe').locator('#pp-name').waitFor();
   await noSideways(tab, 'full-screen interactive page');
+  // the viewer is a bare page: no app menu or tab bar (their icons have no styles there and drew huge)
+  assert.equal(await tab.locator('nav, .tabbar, body > svg').count(), 0, 'the viewer has no app shell');
+  assert.ok(await tab.evaluate(() => [...document.querySelectorAll('svg')].every((x) => x.getBoundingClientRect().width < 200)), 'no huge icons');
   // Download: a real tap on page.html's Download button saves the whole page as an .html file
   const [dl] = await Promise.all([tab.waitForEvent('download'), tab.click('#dl')]);
   assert.equal(dl.suggestedFilename(), pageFile);
