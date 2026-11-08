@@ -102,6 +102,24 @@ try {
   if (!au || !Array.isArray(au.subjects) || !Number.isInteger(au.maxItems) || au.maxItems < 1 || !Number.isInteger(au.maxTokens) || au.maxTokens < 1) errs.push('automatic needs subjects, and maxItems and maxTokens as whole numbers, 1 or more');
   else for (const s of au.subjects) if (!(menu.subjects || []).some((x) => x.id === s)) errs.push(`automatic.subjects: ${s} is not a subject`);
   if (au?.subjects?.includes('ela')) errs.push('automatic.subjects: English / reading is run by a person, never auto');
+  // plans (owner, Nov 8, 2026): valid, and docs/PRICING.md section 4 says the same numbers, with examples from the menu's tokens
+  const pl = menu.plans, tok = (id) => (menu.items || []).find((i) => i.id === id)?.tokens;
+  if (!pl || !Array.isArray(pl.monthly) || !pl.monthly.length || !pl.oneTime || !(pl.oneTime.perToken > 0) || !(pl.oneTime.minimum >= 0)) errs.push('plans needs monthly plans and oneTime {perToken, minimum}');
+  else {
+    const doc = existsSync(join(ROOT, 'docs/PRICING.md')) ? readFileSync(join(ROOT, 'docs/PRICING.md'), 'utf8') : '';
+    const usd = (x) => `$${Number.isInteger(x) ? x : x.toFixed(2)}`, cents = (x) => `${Math.round(x * 100)}¢`;
+    const want = [`| One-time | ${cents(pl.oneTime.perToken)} a token |`, `${usd(pl.oneTime.minimum)} minimum`,
+      `a test $${Math.max(pl.oneTime.minimum, tok('test') * pl.oneTime.perToken).toFixed(2)}`, `a quiz $${Math.max(pl.oneTime.minimum, tok('quiz') * pl.oneTime.perToken).toFixed(2)}`,
+      `a worksheet $${Math.max(pl.oneTime.minimum, tok('worksheet') * pl.oneTime.perToken).toFixed(2)}`];
+    for (const p of pl.monthly) {
+      if (!p.id || !p.label || !Number.isInteger(p.tokens) || p.tokens < 1 || !(p.price > 0) || !(p.annual > 0)) { errs.push(`plans.monthly ${p.id}: needs id, label, price, tokens and annual`); continue; }
+      if (p.price / p.tokens > pl.oneTime.perToken) errs.push(`plans.monthly ${p.id}: a plan must cost less a token than one-time`);
+      want.push(`| ${p.label} | ${usd(p.price)}/month | ${p.tokens} a month |`, `${usd(p.annual)} a year (${p.label})`,
+        `${Math.floor(p.tokens / tok('test'))} tests`, `${Math.floor(p.tokens / tok('quiz'))} quizzes`);
+    }
+    if (pl.monthly[0]) want.push(`${Math.floor(pl.monthly[0].tokens / tok('worksheet'))} worksheets (${tok('worksheet')})`);
+    for (const w of want) if (!doc.includes(w)) errs.push(`docs/PRICING.md section 4 doesn't say "${w}" (menu.json plans and the menu's tokens)`);
+  }
   if (!(menu.items || []).length) errs.push('no items');
   const pricing = existsSync(join(ROOT, 'docs/PRICING.md')) ? readFileSync(join(ROOT, 'docs/PRICING.md'), 'utf8') : '';
   if (!pricing) errs.push('docs/PRICING.md is missing');

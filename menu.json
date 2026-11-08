@@ -352,6 +352,29 @@
       "tokens": 0
     }
   ],
+  "plans": {
+    "_note": "What tokens cost (owner, Nov 8, 2026): docs/PRICING.md section 4, which npm run check compares with this. Shown on the order page; nothing can be bought yet (payments and monthly token counting are not built).",
+    "monthly": [
+      {
+        "id": "teacher",
+        "label": "Teacher",
+        "price": 25,
+        "tokens": 250,
+        "annual": 250
+      },
+      {
+        "id": "plus",
+        "label": "Teacher Plus",
+        "price": 49,
+        "tokens": 500,
+        "annual": 490
+      }
+    ],
+    "oneTime": {
+      "perToken": 0.15,
+      "minimum": 5
+    }
+  },
   "mathCourses": [
     "Pre-algebra",
     "Algebra 1",

@@ -116,6 +116,16 @@ try {
     assert.equal(await page.evaluate(() => window.evil), undefined, 'the uploaded web page never ran');
     assert.equal(await page.textContent('#turnaround-before'), 'Ready within 24 hours: a person on our team runs bigger orders with the agent team. Every pack includes the audit report. Please check the pack before students see it.', 'local mode: an emailed order is run by a person (24 hours)');
     assert.equal(await page.textContent('#turnaround-why'), 'Why: Sent by email.');
+    // plans (owner, Nov 8, 2026; menu.json plans): what this order costs each way; nothing to buy
+    assert.equal(await page.textContent('#plans-order'), 'This order: $6.00 one-time, or 40 of your 250 / 500 monthly tokens');
+    await page.evaluate(() => { document.getElementById('plans').open = true; });
+    const plans = await page.$$eval('#plans-list li', (ls) => ls.map((l) => l.textContent));
+    assert.deepEqual(plans, ['Teacher: $25/month for 250 tokens a month ($250 a year). About 3 tests, or 6 quizzes, or 8 worksheets a month.',
+      'Teacher Plus: $49/month for 500 tokens a month ($490 a year). About 7 tests, or 12 quizzes, or 16 worksheets a month.',
+      'One-time: 15¢ a token, $5 minimum an order (a test $10.50, a quiz $6.00, a worksheet $5.00).']);
+    assert.match(await page.textContent('#plans'), /Plans start soon: there is nothing to buy yet\./);
+    assert.equal(await page.$$eval('#plans a, #plans button', (x) => x.length), 0, 'no buy buttons or links in the plans');
+    if (kind === 'phone') { await page.setViewportSize({ width: 375, height: 740 }); await page.evaluate(() => window.PPShowStep(4)); await noSideways(page, 'order page, plans open (375 px)'); await page.waitForTimeout(400); await page.locator('#plans').screenshot({ path: join(SHOTS, 'local-phone-375-plans.png') }); }
     await noSideways(page, `order page (local, ${kind})`);
     if (kind === 'phone') { await page.evaluate(() => window.PPShowStep(1)); await shot(page, 'local-phone-sources-html'); await page.evaluate(() => window.PPShowStep(4)); }
     const [dl] = await Promise.all([page.waitForEvent('download'), page.evaluate(() => document.getElementById('order').requestSubmit())]);
@@ -125,6 +135,7 @@ try {
     await shot(page, `local-${kind}-done-zip`);
     await c.close();
   }
+  ok('plans: Teacher $25 (250 tokens), Teacher Plus $49 (500), one-time 15¢ a token with a $5 minimum, with what each buys and "This order: $6.00 one-time, or 40 of your 250 / 500 monthly tokens"; no buy button; no sideways scroll at 375 px');
   ok('local mode: the turnaround before Send and on the done screen is 24 hours ("Why: Sent by email")');
   ok('local mode: the web page is counted as text (scripts never run), no sign-in box, the link box shows the save-and-upload hint, Send downloads the order zip (phone and desktop)');
 

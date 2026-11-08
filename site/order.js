@@ -619,7 +619,30 @@
     }).join('') : '<li class="muted">Nothing picked yet</li>';
     document.querySelectorAll('[data-sum-total]').forEach(function (el) { el.textContent = sum + ' tokens'; });
     renderTurnaround(sum);
+    renderPlans(sum);
     return sum;
+  }
+
+  // ---------- plans (owner, Nov 8, 2026; menu.json "plans", docs/PRICING.md section 4): shown, nothing to buy yet ----------
+  function usd(x) { return '$' + (Math.round(x * 100) % 100 ? x.toFixed(2) : String(Math.round(x))); }
+  function oneTimePrice(tokens, ot) { return '$' + Math.max(ot.minimum, tokens * ot.perToken).toFixed(2); }
+  function renderPlans(sum) {
+    var pl = menu.plans, list = $('plans-list');
+    if (!list) return;
+    $('plans').hidden = !pl;
+    if (!pl) return;
+    var t = function (id) { return (itemById(id) || {}).tokens || 0; };
+    var ot = pl.oneTime;
+    list.innerHTML = pl.monthly.map(function (p) {
+      var buys = [[t('test'), 'tests'], [t('quiz'), 'quizzes'], [t('worksheet'), 'worksheets']].filter(function (x) { return x[0]; })
+        .map(function (x) { return Math.floor(p.tokens / x[0]) + ' ' + x[1]; }).join(', or ');
+      return '<li data-plan="' + esc(p.id) + '"><b>' + esc(p.label) + '</b>: ' + usd(p.price) + '/month for ' + p.tokens + ' tokens a month (' + usd(p.annual) + ' a year). About ' + esc(buys) + ' a month.</li>';
+    }).join('') +
+      '<li data-plan="one-time"><b>One-time</b>: ' + Math.round(ot.perToken * 100) + '¢ a token, ' + usd(ot.minimum) + ' minimum an order (a test ' +
+      oneTimePrice(t('test'), ot) + ', a quiz ' + oneTimePrice(t('quiz'), ot) + ', a worksheet ' + oneTimePrice(t('worksheet'), ot) + ').</li>';
+    $('plans-order').textContent = sum > 0
+      ? 'This order: ' + oneTimePrice(sum, ot) + ' one-time, or ' + sum + ' of your ' + pl.monthly.map(function (p) { return p.tokens; }).join(' / ') + ' monthly tokens'
+      : 'What an order would cost';
   }
 
   // ---------- turnaround (before Send, and on the done screens) ----------

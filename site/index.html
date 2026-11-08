@@ -178,6 +178,11 @@
       <table class="cost-table" aria-live="polite"><tbody id="cost-lines"></tbody></table>
       <p class="small muted" data-brand="tokenNote"></p>
       <div aria-live="polite"><p id="turnaround-before"></p><p class="small muted" id="turnaround-why" hidden></p></div>
+      <details class="plans" id="plans">
+        <summary><b>Plans</b> <span class="small muted" id="plans-order">What this order would cost</span></summary>
+        <ul class="plans-list" id="plans-list"></ul>
+        <p class="small muted">Unused monthly tokens reset each month. Orders a person runs cost the same tokens. Plans start soon: there is nothing to buy yet.</p>
+      </details>
       <div class="row">
         <div class="field"><label for="teacher">Your name <span class="hint">(how the pack should address you)</span></label><input type="text" id="teacher" autocomplete="name" placeholder="Ms. Rivera"></div>
         <div class="field"><label for="reply">Your email <span class="hint">(where to send the pack)</span></label><input type="email" id="reply" autocomplete="email" placeholder="you@school.org"></div>
