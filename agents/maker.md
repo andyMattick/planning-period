@@ -174,6 +174,8 @@ checks run on them. In addition:
   `tol: {"within": 0.1, "places": 1}` or `round: 2`, never a list of near values. Add `miss` for one or two predictable
   wrong answers and a `hint` where it helps: both show only on the results page, after Finish;
 - short answers are never scored by the page: if the teacher wants it scored, write the item as `numeric` or `mc`.
+- word the directions for a screen as well as paper ("choose", not "circle"; "type your work" or "show your work on
+  paper"): the same directions print on the teacher copy.
 Nothing else changes; never write a key into the prompt or a choice to make the page work.
 
 ## Your dollar cap (owner, option 1, Nov 6, 2026)

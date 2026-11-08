@@ -269,7 +269,7 @@ async function openPage(b, file, { width = 375, height = 800, scheme = 'light', 
 async function noSideways(page) { const [sw, w] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]); return sw <= w + 1 ? null : `scrolls sideways at ${w} px (${sw} wide)`; }
 
 // Answer every question: right (from the pack's key) or wrong. Short and written answers get a sentence either way.
-async function answerAll(page, doc, ver, data, how) {
+export async function answerAll(page, doc, ver, data, how) {
   const qs = new Map(questions(doc).map((q) => [String(q.id), q]));
   for (const it of data.blocks.filter((x) => x.t === 'q')) {
     const q = qs.get(it.id), a = vv(q.answer, ver), sel = `[data-q="${it.id}"]`;
@@ -368,6 +368,7 @@ export async function checkBrowser(pages, pack, { shotsDir } = {}) {
         await o.page.click('#pp-finish');
         await o.page.waitForSelector(p.doc.grading === 'auto' ? '#pp-score' : '#s-h');
         await shot(o.page, `${tag}-1280-${p.doc.grading === 'auto' ? 'results' : 'sheet'}`);
+        if (p.doc.grading === 'print') { await o.page.emulateMedia({ media: 'print' }); await shot(o.page, `${tag}-1280-sheet-print`); await o.page.emulateMedia({ media: 'screen' }); }
         if (o.errors.length) fail(`page errors with storage blocked: ${o.errors.slice(0, 3).join(' | ')}`);
         await o.context.close();
       } catch (e) { fail(`browser: ${e.message.split('\n')[0]}`); }
