@@ -183,7 +183,8 @@
         // an interactive page (docs/KINDS-INTERACTIVE-FORMAT.md): tried here in a sandboxed frame, or downloaded
         if (/\.html$/i.test(x.file)) {
           return '<li class="is-page"><button type="button" class="btn" data-try="' + i + '" data-file="' + esc(x.file) + '">Try it here</button> <span>' + esc(x.title || x.file) + ' <span class="tag-int">interactive page</span><br><span class="small muted">' + esc(x.file) + '</span></span>' +
-            '<a class="btn link" data-sign="deliverables:' + esc(base(o) + 'preview/' + x.file) + '" data-name="' + esc(x.file) + '" href="#">Download</a></li>';
+            '<button type="button" class="btn link" data-full="' + i + '" data-file="' + esc(x.file) + '">Open full screen</button>' +
+            '<button type="button" class="btn link" data-dl-page="' + i + '" data-file="' + esc(x.file) + '">Download</button></li>';
         }
         return '<li><a class="btn" target="_blank" rel="noopener" data-doc="' + i + '" data-sign="deliverables:' + esc(base(o) + 'preview/' + x.file) + '" href="#">Open</a> <span>' + esc(x.title || x.file) + '<br><span class="small muted">' + esc(x.file) + '</span></span>' +
           (/\.pdf$/i.test(x.file) ? '<button type="button" class="btn link show-doc" data-show="' + i + '" aria-pressed="' + (i === 0) + '">Show here</button>' : '') + '</li>';
@@ -230,6 +231,37 @@
       rv.querySelectorAll('[data-try]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
       box.scrollIntoView({ block: 'nearest' });
     }, function () { rv.querySelector('[data-try-label]').textContent = 'This page could not be opened. Refresh the page.'; });
+  }
+  // The page's bytes (storage hands an interactive page back as text/plain, so it never runs on the storage site).
+  function pageBytes(o, file) { return backend.signedUrl('deliverables', base(o) + 'preview/' + file, 600).then(backend.fetchBytes); }
+  // Open full screen: a new tab that shows the page in a sandboxed frame filling the screen (phones included). The tab
+  // is opened in the tap itself (so it isn't blocked as a pop-up) and filled once the page has loaded.
+  function fullPage(b) {
+    var o = orderOf(b); if (!o) return;
+    var file = b.getAttribute('data-file'), w = window.open('', '_blank');
+    if (!w) { b.textContent = 'Allow pop-ups, then try again'; return; }
+    w.document.title = file; w.document.body.style.margin = '0'; w.document.body.textContent = 'Loading…';
+    pageBytes(o, file).then(function (bytes) {
+      var f = w.document.createElement('iframe');
+      f.setAttribute('sandbox', 'allow-scripts allow-modals allow-downloads');
+      f.setAttribute('title', 'Interactive page, as a student sees it');
+      f.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0';
+      f.srcdoc = new TextDecoder().decode(bytes);
+      w.document.body.textContent = ''; w.document.body.appendChild(f);
+    }, function () { w.document.body.textContent = 'This page could not be opened. Go back and refresh My orders.'; });
+  }
+  // Download: build the file here as a real web page (text/html), so phones and computers save it as an .html file
+  // that opens in a browser, instead of the plain text storage serves.
+  function downloadPage(b) {
+    var o = orderOf(b); if (!o) return;
+    var file = b.getAttribute('data-file'), label = b.textContent;
+    b.textContent = 'Preparing…';
+    pageBytes(o, file).then(function (bytes) {
+      var url = URL.createObjectURL(new Blob([bytes], { type: 'text/html' })), a = document.createElement('a');
+      a.href = url; a.download = file; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+      b.textContent = label;
+    }, function () { b.textContent = 'Could not download: refresh the page'; });
   }
   function reviewState(o) {
     var d = draft(o.id);
@@ -328,6 +360,8 @@
     if (e.target.closest('[data-refresh]')) { loadAll(); return; }
     var b = e.target.closest('button'); if (!b) return;
     if (b.hasAttribute('data-try')) { tryPage(b); return; }
+    if (b.hasAttribute('data-full')) { fullPage(b); return; }
+    if (b.hasAttribute('data-dl-page')) { downloadPage(b); return; }
     if (b.hasAttribute('data-show')) {
       var rv = b.closest('.review');
       if (wide()) showDoc(rv, b.getAttribute('data-show')); else { var a = rv.querySelector('a[data-doc="' + b.getAttribute('data-show') + '"]'); if (a) a.click(); }
