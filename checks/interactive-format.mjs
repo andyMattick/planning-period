@@ -36,7 +36,7 @@ import { fileURLToPath } from 'node:url';
 import { loadPack, docName, argsOf } from './pack-lib.mjs';
 import { basesOf } from './apps.mjs';
 import { isInteractiveFormat, formatProblems, pageHtml, pageFile, versionsOfDoc, loadForms, OBJECTIVE_TYPES, scoredHere, splitBlanks, classCode } from '../scripts/render/interactive-format.mjs';
-import { vv, tfValue, keyText, subjectLabelOf } from '../scripts/render/util.mjs';
+import { vv, tfValue, keyText, subjectLabelOf, partsOf, hasPool, poolDocs } from '../scripts/render/util.mjs';
 import { plainMath } from '../scripts/render/math.mjs';
 import { packHashOf } from '../scripts/render-pack.mjs';
 
@@ -55,8 +55,12 @@ export function dataOf(html) {
 // What a student can see on the page anyway (prompts, choices, passages…): a key that is printed there gives nothing away.
 function visibleText(data) {
   const out = [data.title, data.sub, data.directions];
-  for (const b of data.blocks || []) {
-    if (b.t === 'q') out.push(b.prompt, ...(b.parts || []), ...(b.choices || []), ...(b.left || []), b.unit, b.figure, b.hint, b.cat);
+  // one version per student: every version's questions are on the page (for some student)
+  const blocks = [...(data.blocks || []), ...((data.pool && data.pool.versions) || []).flatMap((v) => v.blocks || [])];
+  const stims = [data.stimuli, ...((data.pool && data.pool.versions) || []).map((v) => v.stimuli)].filter(Boolean).flatMap((m) => Object.values(m));
+  for (const st of stims) out.push(st.title, st.use, st.intro, st.table, st.figure);
+  for (const b of blocks) {
+    if (b.t === 'q') out.push(b.prompt, ...(b.parts || []), ...(b.choices || []), ...(b.left || []), ...((b.sub || []).map((p) => p.prompt)), b.unit, b.figure, b.hint, b.cat);
     if (b.t === 'passage') out.push(b.title, ...(b.paras || []));
     if (b.t === 'section') out.push(b.heading, b.directions);
   }
@@ -88,6 +92,8 @@ export function selfContained(html) {
 function keyTexts(q, ver) {
   const type = q.type || 'short', a = vv(q.answer, ver), out = [];
   if (['numeric', 'short', 'open'].includes(type)) out.push(...[a, ...(vv(q.accept, ver) || [])].filter((x) => x != null && String(x).trim().length >= 1).map(String));
+  // a multi-part answer: each part's strong answer and full-credit checklist are teacher-only
+  for (const p of partsOf(q, ver)) out.push(...[p.answer, ...p.checklist].filter((x) => x != null && String(x).trim().length >= 1).map(String));
   return out;
 }
 
@@ -108,18 +114,29 @@ export function checkPage(pack, doc, ver, html) {
   // key word that happens to be in it ("greater", "the same") is not counted; only a script byte-identical to its
   // repo file is left out, so a key hidden in a changed script is still found
   const lower = withoutLibraries(html).toLowerCase();
+  // markup (tag names and attributes: a graph's coordinates, a pattern's size) is not text a student reads; a number in
+  // it that happens to equal a key is not a leak (the text between tags is still searched)
+  const noTags = lower.replace(/\\u003c[^>]*>/g, ' ').replace(/<[^>]*>/g, ' ');
+  // one version per student: no key of any version in the file, and no answer field anywhere in the pool's data
+  const checkQs = hasPool(doc) ? poolDocs(doc).flatMap(({ doc: d }) => questions(d).map((q) => [q, null])) : questions(doc).map((q) => [q, ver]);
+  if (data.pool) {
+    if (!hasPool(doc)) errs.push('the page has a pool but the pack does not');
+    else if (data.pool.codes.length !== doc.pool.versions.length) errs.push(`the page holds ${data.pool.codes.length} versions, the pool ${doc.pool.versions.length}`);
+    const raw = JSON.stringify(data.pool);
+    for (const f of ['"answer"', '"accept"', '"why"', '"math"', '"checklist"', '"acc"', '"pairs"', '"miss"', '"rv"']) if (raw.includes(f)) errs.push(`one version per student: the page's versions hold ${f.replace(/"/g, '')}`);
+  }
   // explanations are never in the file as text (auto: locked with the right answer; print: not there at all)
-  for (const q of questions(doc)) {
+  for (const [q, ver] of checkQs) {
     const why = String(vv(q.why, ver) ?? '').trim();
     if (why.length >= 12 && lower.includes(why.toLowerCase().slice(0, 60)) && !visible.includes(norm(why).slice(0, 60))) errs.push(`${q.id}: its explanation is in the file as text`);
     for (const k of keyTexts(q, ver)) {
       const kk = norm(k);
       if (kk.length < 3 || visible.includes(kk)) continue;           // short numbers and visible text give nothing away
-      if (lower.includes(k.toLowerCase())) errs.push(`${q.id}: the key “${k}” is in the file as text`);
+      if (noTags.includes(k.toLowerCase())) errs.push(`${q.id}: the key “${k}” is in the file as text`);
     }
     for (const f of ['look', 'model']) if (q[f] && lower.includes(norm([].concat(q[f]).join(' ')).slice(0, 40))) errs.push(`${q.id}: the teacher's ${f} notes are in the file`);
   }
-  const items = data.blocks.filter((b) => b.t === 'q');
+  const items = [...data.blocks, ...((data.pool && data.pool.versions) || []).flatMap((v) => v.blocks)].filter((b) => b.t === 'q');
   if (!auto) {
     if (engine.salt) errs.push('print mode: the page has a salt');
     if (data.tc) errs.push('print mode: the page has a class-code check');
@@ -217,7 +234,7 @@ export function buildPages(pack, { both = false, preview = false } = {}) {
   const bases = basesOf(pack), out = [];
   const subjectLabel = subjectLabelOf(menu, pack.order);
   for (const doc0 of pack.documents.filter(isInteractiveFormat)) {
-    for (const g of both ? ['auto', 'print'] : [doc0.grading]) {
+    for (const g of both && !hasPool(doc0) ? ['auto', 'print'] : [doc0.grading]) {   // one per student is print only
       const doc = withGrading(doc0, g);
       for (const ver of versionsOfDoc(doc)) {
         const base = bases.get(doc0);
@@ -332,7 +349,8 @@ export async function answerOne(page, q, it, ver, how) {
       const forms = [a, ...(vv(q.accept, ver) || [])].map(String);
       const alt = equivalentForms(forms[0]).find((f) => f !== forms[0]);
       await page.fill(`#a-${it.id}`, how === 'right' ? (how === 'right' && alt ? alt : forms[0]) : '987654321');
-    } else if (it.type === 'open') await page.fill(`#a-${it.id}`, 'I think the mass stays the same because the atoms are only rearranged in the reaction.');
+    } else if (it.sub) { for (let i = 0; i < it.sub.length; i++) await page.fill(`#a-${it.id}-${i}`, `Part ${it.sub[i].label}: I compared the percents in each group.`); }
+    else if (it.type === 'open') await page.fill(`#a-${it.id}`, 'I think the mass stays the same because the atoms are only rearranged in the reaction.');
     else await page.fill(`#a-${it.id}`, how === 'right' ? String(a) : 'not sure');
   }
 }
@@ -358,6 +376,8 @@ export async function checkBrowser(pages, pack, { shotsDir } = {}) {
         const X = { b, p, file, data, tag, fail, notes, shot, pack };
         if (data.mode === 'notes') { await browseNotes(X); continue; }
         if (data.mode === 'game') { await browseGame(X); continue; }
+        if (data.pool) { await browsePool(X); continue; }
+        await browseNav(X);
         // 1. right answers (phone)
         let o = await openPage(b, file);
         const sw = await noSideways(o.page); if (sw) fail('answering page ' + sw);
@@ -425,6 +445,95 @@ export async function checkBrowser(pages, pack, { shotsDir } = {}) {
     }
   } finally { await b.close(); fs.rmSync(tmp, { recursive: true, force: true }); }
   return { errors, notes, shots };
+}
+
+/* ---------- question navigation (owner, Nov 8, 2026): numbered buttons, Previous/Next, Finish lists what's blank ---------- */
+async function browseNav({ b, p, file, data, tag, fail, notes, shot }) {
+  const qs = data.blocks.filter((x) => x.t === 'q');
+  if (qs.length < 2) return;
+  const o = await openPage(b, file);
+  try {
+    if ((await o.page.locator('.qnav .qn').count()) !== qs.length) fail(`the navigation has ${await o.page.locator('.qnav .qn').count()} buttons for ${qs.length} questions`);
+    const k = Math.min(2, qs.length - 1);
+    await o.page.click(`.qnav .qn[data-go="${k}"]`);
+    if ((await o.page.evaluate(() => document.activeElement && document.activeElement.getAttribute('data-q'))) !== qs[k].id) fail(`the question ${qs[k].n} button didn't move to question ${qs[k].n}`);
+    if ((await o.page.getAttribute(`.qnav .qn[data-go="${k}"]`, 'aria-current')) !== 'true') fail('the current question is not marked in the navigation');
+    await o.page.click('#pp-next');
+    if ((await o.page.evaluate(() => document.activeElement && document.activeElement.getAttribute('data-q'))) !== qs[k + 1 < qs.length ? k + 1 : k].id) fail('Next didn\'t move to the next question');
+    await o.page.click('#pp-prev');
+    if ((await o.page.evaluate(() => document.activeElement && document.activeElement.getAttribute('data-q'))) !== qs[k].id) fail('Previous didn\'t move back');
+    // keyboard: Tab to a number button and press Enter
+    await o.page.focus('.qnav .qn[data-go="0"]'); await o.page.keyboard.press('Enter');
+    if ((await o.page.evaluate(() => document.activeElement && document.activeElement.getAttribute('data-q'))) !== qs[0].id) fail('Enter on a number button didn\'t jump to the question');
+    // answered state: answer the first question; its button says so (text and label)
+    const first = qs[0];
+    if (first.type === 'mc') await o.page.check(`[data-q="${first.id}"] input[value="0"]`);
+    else if (first.type === 'tf') await o.page.check(`[data-q="${first.id}"] input[value="true"]`);
+    else if (first.type === 'match') await o.page.selectOption(`#m-${first.id}-0`, '0');
+    else if (first.sub) await o.page.fill(`#a-${first.id}-0`, 'something');
+    else await o.page.fill(`#a-${first.id}`, '12');
+    const lab = await o.page.getAttribute('.qnav .qn[data-go="0"]', 'aria-label');
+    if (!/, answered$/.test(lab || '') || !(await o.page.getAttribute('.qnav .qn[data-go="0"]', 'class')).includes('done')) fail(`an answered question's button doesn't say so (${lab})`);
+    if (!/not answered/.test(await o.page.getAttribute('.qnav .qn[data-go="1"]', 'aria-label'))) fail('a blank question\'s button doesn\'t say "not answered"');
+    const sw = await noSideways(o.page); if (sw) fail('with the navigation, the page ' + sw);
+    await shot(o.page, `${tag}-375-nav`);
+    // Finish with blanks: the list of unanswered questions, each a button to it, and "you can still…"
+    await o.page.fill('#pp-name', 'Nav Test (made-up)');
+    await o.page.click('#pp-finish');
+    await o.page.waitForSelector('#pp-missing:not([hidden])');
+    const miss = await o.page.locator('#pp-missing .qn').count();
+    if (miss !== qs.length - 1) fail(`Finish listed ${miss} unanswered questions, not ${qs.length - 1}`);
+    if (!/You can still (print|finish)/.test(await o.page.textContent('#pp-missing'))) fail('the unanswered list doesn\'t say she can still finish or print');
+    await shot(o.page, `${tag}-375-finish-unanswered`);
+    await o.page.click('#pp-missing .qn >> nth=0');
+    if ((await o.page.evaluate(() => document.activeElement && document.activeElement.getAttribute('data-q'))) !== qs[1].id) fail('a button in the unanswered list didn\'t go to that question');
+    if (o.errors.length) fail(`page errors: ${o.errors.slice(0, 3).join(' | ')}`);
+    notes.push(`${p.name}: navigation (${qs.length} buttons, Previous/Next, Enter) and Finish lists ${miss} unanswered`);
+  } finally { await o.context.close(); }
+}
+
+/* ---------- one version per student: a name picks a version; the sheet shows its code; no key in the page ---------- */
+export function poolIndexOf(salt, name, n) {
+  const norm = String(name || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const h = crypto.createHash('sha256').update(`PPS1|${salt}|${norm}`, 'utf8').digest();
+  return h.readUInt32BE(0) % n;
+}
+async function browsePool({ b, p, file, data, tag, fail, notes, shot }) {
+  const pool = data.pool, flat = poolDocs(p.doc);
+  const names = ['Ana Ruiz (made-up)', 'Ben Cole (made-up)', 'Chen Li (made-up)'];
+  for (const [ni, name] of names.entries()) {
+    const o = await openPage(b, file);
+    try {
+      if (!(await o.page.isVisible('#pp-start'))) { fail('no "Get my questions" start screen'); return; }
+      if (await o.page.$('[data-q]')) fail('questions show before the student types her name');
+      await o.page.fill('#pp-name', name);
+      await o.page.click('#pp-start');
+      await o.page.waitForSelector('[data-q]');
+      const want = pool.codes[poolIndexOf(pool.salt, name, pool.codes.length)];
+      const shown = (await o.page.textContent('.top .ver')) || '';
+      if (!shown.includes(want)) fail(`${name}: the page shows "${shown}", not the code ${want} her name gives`);
+      const fd = flat.find((x) => x.code === want);
+      const v = pool.versions[pool.codes.indexOf(want)];
+      const firstQ = v.blocks.find((x) => x.t === 'q');
+      if (!(await o.page.textContent(`[data-q="${firstQ.id}"]`)).includes(String(firstQ.prompt).replace(/<[^>]*>/g, '').slice(0, 30))) fail(`${name}: the questions are not version ${want}'s`);
+      if (ni === 0) {
+        if ((await o.page.locator('.stim').count()) < 2) fail('the shared data set is not shown with its questions');
+        const sw = await noSideways(o.page); if (sw) fail('pool page ' + sw);
+        await shot(o.page, `${tag}-375-pool-answering`);
+        await o.page.reload(); await o.page.waitForSelector('[data-q]');
+        if (!((await o.page.textContent('.top .ver')) || '').includes(want)) fail('a reload lost the version');
+      }
+      await answerAll(o.page, fd.doc, null, { blocks: v.blocks }, 'right');
+      await o.page.click('#pp-finish');
+      await o.page.waitForSelector('#s-h');
+      const sheet = await o.page.textContent('.sheet');
+      if (!sheet.includes(want)) fail(`${name}: the answer sheet has no version code`);
+      if ((await o.page.locator('.sq').count()) !== v.blocks.filter((x) => x.t === 'q').length) fail('the answer sheet does not list every question');
+      if (ni === 0) await shot(o.page, `${tag}-375-pool-sheet`);
+      if (o.errors.length) fail(`page errors: ${o.errors.slice(0, 3).join(' | ')}`);
+      notes.push(`${name}: version ${want}, answer sheet with the code`);
+    } finally { await o.context.close(); }
+  }
 }
 
 /* ---------- guided notes in the browser ---------- */

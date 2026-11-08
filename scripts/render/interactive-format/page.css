@@ -108,3 +108,20 @@ body.big .wrap { max-width: 1100px; } body.big .cprompt, body.big .cchoices, bod
   .pv-mark { position: fixed; color: rgba(0, 0, 0, .14); }
   a { color: inherit; }
 }
+/* shared data sets, multi-part answers, question navigation (owner, Nov 8, 2026) */
+.stim { border: 2px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 0 0 10px; background: var(--soft); }
+.stim .stitle { font-weight: 800; margin: 0 0 2px; } .stim .use { font-style: italic; color: var(--muted); font-size: 15px; margin: 0 0 6px; } .stim p { margin: 0 0 6px; }
+.stab { overflow-x: auto; } table.data { border-collapse: collapse; font-size: 15px; margin: 4px 0; } table.data th, table.data td { border: 1px solid var(--line); padding: 4px 8px; text-align: center; } table.data th:first-child, table.data td:first-child { text-align: left; }
+table.data caption { text-align: left; font-size: 14px; color: var(--muted); }
+.dtab { margin: 4px 0; font-size: 15px; } .dtab summary { cursor: pointer; min-height: 32px; } .dtab table { margin-top: 4px; }
+.psub { margin: 8px 0; } .psub textarea { min-height: 70px; }
+.qnav { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 6px; background: var(--bg); border-bottom: 1px solid var(--line); padding: 6px 0; margin: 8px 0; }
+.qnav .nb { padding: 6px 10px; flex: none; } .qnav .nb:disabled { opacity: .45; cursor: default; }
+.qnums { display: flex; gap: 6px; overflow-x: auto; flex: 1; min-width: 0; padding: 2px; }
+.qn { font: inherit; font-weight: 700; min-width: 44px; min-height: 44px; border: 2px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); cursor: pointer; flex: none; position: relative; }
+.qn.done { border-color: var(--accent); background: var(--soft); } .qn .dot { position: absolute; right: 2px; top: 0; font-size: 12px; color: var(--ok); }
+.qn[aria-current="true"] { outline: 3px solid var(--ink); outline-offset: 1px; }
+.missing { border: 2px solid var(--part); border-radius: 8px; padding: 6px 10px; margin: 6px 0; } .missing .qnums { flex-wrap: wrap; overflow: visible; }
+.q { scroll-margin-top: 64px; }
+.vcode { font-family: monospace; letter-spacing: 2px; }
+@media print { .stim { background: none; } .dtab { display: none; } .qnav { display: none !important; } }

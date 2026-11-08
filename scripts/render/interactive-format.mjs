@@ -19,10 +19,11 @@ import path from 'node:path';
 import vm from 'node:vm';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { esc, vv, cleanSvg, kindOf, questionsOf, tfValue, passagePlan, passageByline, fontStack, letter, keyText } from './util.mjs';
+import { esc, vv, cleanSvg, kindOf, questionsOf, tfValue, passagePlan, passageByline, fontStack, letter, keyText, stimulusPlan, stimulusRef, groupLine, partsOf, hasPool, poolDocs } from './util.mjs';
+import { graphTable } from './graph.mjs';
 import { mathHtml, katexCss, plainMath } from './math.mjs';
 import { saltOf, hashOf, lock } from './apps.mjs';
-import { rubricTableHtml, PREVIEW_MARK } from './html.mjs';
+import { rubricTableHtml, PREVIEW_MARK, dataTableHtml } from './html.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const read = (f) => fs.readFileSync(path.join(HERE, f), 'utf8');
@@ -56,7 +57,10 @@ export function classCode(pack, file) {
   const h = crypto.createHash('sha256').update(`PPT1|${JSON.stringify(pack)}|${file}`, 'utf8').digest();
   return Array.from(h.subarray(0, 6), (b) => CODE_LETTERS[b % CODE_LETTERS.length]).join('');
 }
-export const versionsOfDoc = (doc) => (Array.isArray(doc.versions) && doc.versions.length ? doc.versions : [null]);
+// A document with one version per student (doc.pool) is one page holding every version (no keys), so it has no letter.
+export const versionsOfDoc = (doc) => (hasPool(doc) ? [null] : Array.isArray(doc.versions) && doc.versions.length ? doc.versions : [null]);
+// The salt the page and the teacher's key page use to turn a name into a version (not a secret: it only spreads names).
+export const poolSalt = (pack, doc, base) => crypto.createHash('sha256').update(`PPS1|${pack.id || 'pack'}|${base}|${(doc.pool && doc.pool.seed) || ''}`, 'utf8').digest('hex').slice(0, 16);
 export const pageFile = (base, ver) => `${base}-interactive${ver ? `-${ver}` : ''}.html`;
 export const storageKey = (pack, file) => `pp-int:${pack.id || 'pack'}:${file.replace(/\.html$/, '')}:v1`;
 export const CSP = "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'";
@@ -101,6 +105,15 @@ export function formatProblems(pack, doc) {
   return out;
 }
 
+/* A figure for the page: the cleaned SVG and, for a data plot (a segmented bar, a scatter plot), its data as a table for
+   screen readers, folded under "Data table". */
+export function figureBlock(raw) {
+  const svg = cleanSvg(raw);
+  if (!svg) return '';
+  const t = graphTable(raw);
+  return svg + (t ? `<details class="dtab"><summary>Data table${t.caption ? `: ${esc(t.caption)}` : ''}</summary>${dataTableHtml({ columns: t.head, rows: t.rows }, esc)}</details>` : '');
+}
+
 /* One question, for one version: what the page shows, and (auto only) the hashes it checks against. */
 function pageItem(pack, doc, q, n, ver, salt, R, problems, { auto, mode, code }) {
   let type = q.type || 'short';
@@ -112,7 +125,11 @@ function pageItem(pack, doc, q, n, ver, salt, R, problems, { auto, mode, code })
   const k = mode === 'notes' && ['short', 'numeric'].includes(type) ? blanksIn(raw) : 0;
   if (k) { it.type = 'fill'; it.ftype = type; it.k = k; it.parts = String(raw).split(BLANK_RE).map((x) => mathHtml(x)); delete it.prompt; }
   if (wordChecked(q, ver, mode) && !k) it.words = true;
-  const fig = cleanSvg(vv(q.figure, ver)); if (fig) it.figure = fig;
+  const fig = figureBlock(vv(q.figure, ver)); if (fig) it.figure = fig;
+  const sid = stimulusRef(q, ver); if (sid) it.stim = sid;
+  // a multi-part long answer: a box per part (never scored here: it goes to the teacher)
+  const sub = ['short', 'open'].includes(type) && mode === 'doc' ? partsOf(q, ver) : [];
+  if (sub.length) { it.sub = sub.map((p) => ({ label: p.label, prompt: mathHtml(p.prompt), ...(p.points != null ? { points: p.points } : {}) })); if (q.points == null) it.points = sub.reduce((s2, p) => s2 + (p.points ?? 2), 0); }
   const unit = vv(q.unit, ver); if (unit && type !== 'open') { it.unit = mathHtml(unit); it.unitText = plainMath(unit); }
   if (type === 'mc') it.choices = (vv(q.choices, ver) || []).map((c) => mathHtml(c));
   if (type === 'match') {
@@ -183,6 +200,17 @@ function pageItem(pack, doc, q, n, ver, salt, R, problems, { auto, mode, code })
 
 /* Everything one page holds. ctx: {brand, subjectLabel, preview, build}. */
 export function pageData(pack, doc, ver, base, ctx = {}) {
+  // one version per student: every pool version's questions, as a page graded on paper (no keys, no hashes)
+  if (hasPool(doc)) {
+    const problems = [];
+    if (doc.grading !== 'print') problems.push(`${doc.title}: one version per student is made only as "print the results" (the page can't hold keys)`);
+    const members = poolDocs(doc).map(({ code, doc: d }) => ({ code, r: pageData(pack, { ...d, grading: 'print' }, null, base, ctx) }));
+    const first = members[0].r;
+    members.forEach((m) => problems.push(...m.r.problems.map((x) => `${m.code}: ${x}`)));
+    const data = { ...first.data, ver: null, blocks: [], stimuli: {}, build: `${first.data.build} · ${members.length} versions, one per student`,
+      pool: { salt: poolSalt(pack, doc, base), codes: members.map((m) => m.code), versions: members.map((m) => ({ blocks: m.r.data.blocks, ...(m.r.data.stimuli ? { stimuli: m.r.data.stimuli } : {}) })) } };
+    return { data, engine: first.engine, problems: [...new Set(problems)], auto: false };
+  }
   const problems = formatProblems(pack, doc);
   const auto = doc.grading === 'auto';
   const file = pageFile(base, ver);
@@ -204,6 +232,16 @@ export function pageData(pack, doc, ver, base, ctx = {}) {
   };
   if (mode !== 'doc') data.mode = mode;
   if (code) data.tc = hashOf(salt, '_class', `code:${code}`);   // checks a typed class-mode code; the code itself is not here
+  // shared data sets: held once in the data, shown with each question that cites one
+  const splan = stimulusPlan(doc, ver);
+  if (splan.groups.size) {
+    data.stimuli = {};
+    for (const [id, ns] of splan.groups) {
+      const st = splan.byId.get(id);
+      data.stimuli[id] = { title: st.title ? mathHtml(String(st.title)) : '', use: groupLine(ns), intro: st.intro ? mathHtml(String(st.intro)) : '',
+        table: dataTableHtml(st.table, (x) => mathHtml(x)), figure: figureBlock(st.figure) };
+    }
+  }
   const plan = passagePlan(doc, ver);
   const passage = (p) => ({ t: 'passage', title: String(p.title || 'Passage'), byline: passageByline(p), paras: (vv(p.paragraphs, ver) || []).map((x) => mathHtml(x)) });
   plan.top.forEach((p) => data.blocks.push(passage(p)));
@@ -272,6 +310,11 @@ export function teacherNoteLines(doc, codes = []) {
     lines.push(auto
       ? `Played as a class: "Play as a class" puts the cards on a projector with a scoreboard for 2 to 6 teams; you give each card's points to a team. "Reveal answer" shows the answer and why once you type the class code${codes.length ? ` (${codes.map((c) => `${c.ver ? `version ${c.ver}: ` : ''}${c.code}`).join(', ')})` : ''}, which is printed only here.`
       : 'Played as a class: "Play as a class" puts the cards on a projector with a scoreboard for 2 to 6 teams; read the answers from this teacher copy and give each card\'s points to a team.');
+  } else if (hasPool(doc)) {
+    const n = doc.pool.versions.length;
+    lines.push(`One version per student: one HTML file (…-interactive.html) holds ${n} versions with the same questions and different numbers. A student types her name and presses "Get my questions"; her name picks her version, and its 5-letter version code shows at the top of her page and on her printed answer sheet. It works offline in any browser, needs no accounts and sends nothing anywhere.`);
+    lines.push('The page holds no answers at all. When the student presses Finish it shows an answer sheet (name, date, version code, every answer, room for points) to print or save as a PDF. Grade it with the key for her code: the all-versions key (PDF) or your teacher key page (an HTML file in your final files: type her code or her name). Keep the key page to yourself; never share it with the student page.');
+    lines.push(`This teacher copy is version A, the version the checkers read in full; every version's numbers and keys were made from it by script and each key was checked again.`);
   } else {
     lines.push(`Students answer this on a device: ${files}. It works offline in any browser, needs no accounts and sends nothing anywhere; answers are saved only in that browser, so a student can close it and come back.`);
     lines.push(auto

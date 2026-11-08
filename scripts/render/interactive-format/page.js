@@ -18,10 +18,29 @@
   var AUTO = D.grading === 'auto' && !!F;
   var esc = P.esc;
   var app = document.getElementById('app');
-  var items = [];
-  (D.blocks || []).forEach(function (b) { if (b.t === 'q') items.push(b); });
-  var byId = {};
-  items.forEach(function (q) { byId[q.id] = q; });
+  var items = [], byId = {};
+  function setBlocks(blocks) {
+    items.length = 0; Object.keys(byId).forEach(function (k) { delete byId[k]; });
+    (blocks || []).forEach(function (b) { if (b.t === 'q') items.push(b); });
+    items.forEach(function (q) { byId[q.id] = q; });
+  }
+  /* One version per student (D.pool): the page holds every version's questions (never a key) and picks one from the
+     student's name, through a 5-letter version code shown on her page and her answer sheet. The teacher's key page
+     (a separate file, never shared with students) finds the same version from the code or the name. */
+  var POOL = D.pool && Array.isArray(D.pool.codes) && D.pool.codes.length ? D.pool : null;
+  function normName(n) { return String(n || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function poolIndex(name) {
+    var b = P.sha256Sync(new TextEncoder().encode('PPS1|' + POOL.salt + '|' + normName(name)));
+    return (((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | b[3]) >>> 0) % POOL.codes.length;
+  }
+  function usePool(code) {
+    var i = POOL.codes.indexOf(code);
+    if (i < 0) { D.blocks = []; D.stimuli = {}; D.code = null; setBlocks([]); return false; }
+    D.blocks = POOL.versions[i].blocks; D.stimuli = POOL.versions[i].stimuli || {}; D.code = code; setBlocks(D.blocks);
+    return true;
+  }
+  if (POOL) { var raw0 = P.loadJSON(D.key) || {}; usePool(raw0.x && typeof raw0.x.code === 'string' ? raw0.x.code : ''); }
+  else setBlocks(D.blocks);
   var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   var OBJECTIVE = { mc: 1, tf: 1, numeric: 1, match: 1, fill: 1 };
   function scored(q) { return !!OBJECTIVE[q.type] || !!q.words; }
@@ -53,7 +72,7 @@
   function answered(q) {
     var a = st.answers[q.id];
     if (q.type === 'match') return Array.isArray(a) && a.some(function (x) { return x !== null && x !== '' && x !== undefined; });
-    if (q.type === 'fill') return Array.isArray(a) && a.some(function (x) { return typeof x === 'string' && x.trim() !== ''; });
+    if (q.type === 'fill' || q.sub) return Array.isArray(a) && a.some(function (x) { return typeof x === 'string' && x.trim() !== ''; });
     if (q.type === 'mc') return typeof a === 'number';
     if (q.type === 'tf') return a === 'true' || a === 'false';
     return typeof a === 'string' && a.trim() !== '';
@@ -64,6 +83,7 @@
     if (q.type === 'mc') return q.choices[a] != null ? '<b>' + LETTERS[a] + '.</b> ' + q.choices[a] : '<i>(blank)</i>';
     if (q.type === 'tf') return a === 'true' ? 'True' : 'False';
     if (q.type === 'fill') return fillText(q, a);
+    if (q.sub) return q.sub.map(function (p, i) { var v = a[i]; return '<span class="psub"><b>(' + esc(p.label) + ')</b> ' + (typeof v === 'string' && v.trim() ? '<span class="typed">' + esc(v).replace(/\n/g, '<br>') + '</span>' : '<i>(blank)</i>') + '</span>'; }).join('');
     if (q.type === 'match') return q.left.map(function (l, i) { var c = a[i]; return '<span class="pair">' + (i + 1) + ' → ' + (c === null || c === '' || c === undefined ? '<i>blank</i>' : LETTERS[c]) + '</span>'; }).join(' ');
     return '<span class="typed">' + esc(a).replace(/\n/g, '<br>') + '</span>' + (q.unit && q.type !== 'open' ? ' ' + q.unit : '');
   }
@@ -91,12 +111,19 @@
   function shell(inner) {
     return (D.preview ? '<div class="pv-banner" role="note"><b>PREVIEW</b> · not approved for use. The final file has no watermark.</div>' : '') +
       '<header class="top"><div><p class="kicker">' + esc(D.sub || '') + '</p><h1>' + esc(D.title) + '</h1></div>' +
-      (D.ver ? '<span class="ver">Version ' + esc(D.ver) + '</span>' : '') + '</header>' + inner +
+      (D.code ? '<span class="ver">Version code ' + esc(D.code) + '</span>' : D.ver ? '<span class="ver">Version ' + esc(D.ver) + '</span>' : '') + '</header>' + inner +
       '<footer class="foot"><p>' + esc(D.notice || '') + '</p><p>' + esc(D.build || '') + '</p></footer>';
+  }
+  // a shared data set, shown with each question that uses it
+  function stimHtml(q) {
+    var st = q.stim && D.stimuli && D.stimuli[q.stim];
+    if (!st) return '';
+    return '<div class="stim">' + (st.title ? '<p class="stitle">' + st.title + '</p>' : '') + (st.use ? '<p class="use">' + esc(st.use) + '</p>' : '') +
+      (st.intro ? '<p>' + st.intro + '</p>' : '') + (st.table ? '<div class="stab">' + st.table + '</div>' : '') + (st.figure ? '<div class="fig">' + st.figure + '</div>' : '') + '</div>';
   }
   function questionHtml(q) {
     if (q.type === 'fill') return fillHtml(q);
-    var id = esc(q.id), h = '<div class="q" role="group" aria-labelledby="p-' + id + '" id="q-' + id + '" data-q="' + id + '">' +
+    var id = esc(q.id), h = '<div class="q" role="group" aria-labelledby="p-' + id + '" id="q-' + id + '" data-q="' + id + '" tabindex="-1">' + stimHtml(q) +
       '<div class="qhead"><span class="num" aria-hidden="true">' + q.n + '.</span><div class="prompt" id="p-' + id + '"><span class="sr">Question ' + q.n + '. </span>' + q.prompt + '</div></div>' +
       (q.figure ? '<div class="fig">' + q.figure + '</div>' : '');
     var a = st.answers[q.id];
@@ -117,6 +144,13 @@
               return '<option value="' + j + '"' + (arr[i] === j ? ' selected' : '') + '>' + LETTERS[j] + '. ' + esc(c) + '</option>';
             }).join('') + '</select></div>';
         }).join('') + '</div>';
+    } else if (q.sub) {
+      var pa = Array.isArray(a) ? a : [];
+      h += q.sub.map(function (p, i) {
+        return '<div class="psub"><label class="lbl" for="a-' + id + '-' + i + '"><span aria-hidden="true">(' + esc(p.label) + ')</span><span class="sr">Part ' + esc(p.label) + '.</span> ' + p.prompt +
+          (p.points != null ? ' <span class="small">(' + p.points + ' point' + (p.points === 1 ? '' : 's') + ')</span>' : '') + '</label>' +
+          '<textarea id="a-' + id + '-' + i + '" data-p="' + i + '" rows="' + (q.type === 'open' ? 5 : 2) + '" spellcheck="true">' + esc(pa[i] || '') + '</textarea></div>';
+      }).join('');
     } else if (q.type === 'open') {
       h += '<label class="lbl" for="a-' + id + '">Your answer</label><textarea id="a-' + id + '" rows="6" spellcheck="true">' + esc(a || '') + '</textarea>';
     } else {
@@ -139,6 +173,43 @@
     return n + ' of ' + items.length + ' answered';
   }
 
+  /* ---------- question navigation: a numbered button per question (answered or not), Previous and Next ---------- */
+  var cur = 0;
+  function navLabel(q) { return 'Question ' + q.n + ', ' + (answered(q) ? 'answered' : 'not answered yet'); }
+  function navHtml() {
+    if (items.length < 2) return '';
+    return '<nav class="qnav noprint" aria-label="Go to a question"><button type="button" class="btn nb" id="pp-prev">Previous</button>' +
+      '<div class="qnums">' + items.map(function (q, i) {
+        return '<button type="button" class="qn' + (answered(q) ? ' done' : '') + '" data-go="' + i + '" aria-label="' + esc(navLabel(q)) + '"' + (i === cur ? ' aria-current="true"' : '') + '>' + q.n + '<span class="dot" aria-hidden="true">' + (answered(q) ? '✓' : '') + '</span></button>';
+      }).join('') + '</div><button type="button" class="btn nb" id="pp-next">Next</button></nav>';
+  }
+  function updateNav() {
+    var bs = app.querySelectorAll('.qnav .qn');
+    for (var i = 0; i < bs.length; i++) {
+      var q = items[Number(bs[i].getAttribute('data-go'))]; if (!q) continue;
+      var done = answered(q);
+      bs[i].className = 'qn' + (done ? ' done' : '');
+      bs[i].setAttribute('aria-label', navLabel(q));
+      bs[i].querySelector('.dot').textContent = done ? '✓' : '';
+      if (Number(bs[i].getAttribute('data-go')) === cur) bs[i].setAttribute('aria-current', 'true'); else bs[i].removeAttribute('aria-current');
+    }
+    var pv = document.getElementById('pp-prev'), nx = document.getElementById('pp-next');
+    if (pv) pv.disabled = cur <= 0;
+    if (nx) nx.disabled = cur >= items.length - 1;
+  }
+  function go(i) {
+    if (i < 0 || i >= items.length) return;
+    cur = i;
+    var el = document.getElementById('q-' + items[i].id);
+    if (el) { if (el.scrollIntoView) el.scrollIntoView({ block: 'start' }); el.focus({ preventScroll: true }); }
+    updateNav();
+  }
+  function missingHtml(blank) {
+    return '<p><b>Not answered yet:</b></p><div class="qnums">' + blank.map(function (q) {
+      return '<button type="button" class="qn" data-go="' + items.indexOf(q) + '" aria-label="Go to question ' + q.n + '">' + q.n + '</button>';
+    }).join('') + '</div><p>' + (AUTO ? 'You can still finish: press <b>Finish</b> again.' : 'You can still print your answer sheet: press <b>Finish</b> again.') + '</p>';
+  }
+
   /* ---------- 1. answering ---------- */
   var confirmBlank = false;
   function showAnswering() {
@@ -147,13 +218,15 @@
       '<section class="who" aria-label="About you"><div class="field"><label for="pp-name">Your name</label><input id="pp-name" type="text" autocomplete="name" value="' + esc(st.name) + '"></div>' +
       '<p class="date">Date: ' + esc(dateText()) + '</p></section>' +
       (canStore ? '' : '<p class="warn" role="status">This browser is blocking saving, so your answers will be lost if you close the page. Finish in one go.</p>') +
+      navHtml() +
       (D.directions ? '<p class="dirs">' + D.directions + '</p>' : '') +
       '<p class="how noprint">' + (AUTO ? 'Answer every question, then press <b>Finish</b>. The page checks your answers when you finish. Written answers go to your teacher.' :
         'Answer every question, then press <b>Finish</b> to make an answer sheet to print or save for your teacher.') + '</p>' +
       '<div id="main" tabindex="-1">' + blocksHtml() + '</div>' +
-      '<div class="finish noprint"><p id="pp-count" aria-live="polite">' + countText() + '</p><p id="pp-err" class="err" role="alert"></p>' +
+      '<div class="finish noprint"><p id="pp-count" aria-live="polite">' + countText() + '</p><p id="pp-err" class="err" role="alert"></p><div id="pp-missing" class="missing" hidden></div>' +
       '<button type="button" class="btn primary" id="pp-finish">Finish</button></div>' +
       '<p class="saved noprint" id="pp-saved" aria-live="polite">' + (st.savedAt ? 'Saved on this device at ' + timeText(st.savedAt) + '.' : 'Your answers are saved on this device as you go.') + '</p>');
+    updateNav();
   }
   function onInput(e) {
     var t = e.target;
@@ -170,19 +243,25 @@
       var bs = Array.isArray(st.answers[q.id]) ? st.answers[q.id].slice() : [];
       bs[Number(t.getAttribute('data-b'))] = t.value;
       st.answers[q.id] = bs;
+    } else if (q.sub) {
+      var ps = Array.isArray(st.answers[q.id]) ? st.answers[q.id].slice() : [];
+      ps[Number(t.getAttribute('data-p'))] = t.value;
+      st.answers[q.id] = ps;
     } else st.answers[q.id] = t.value;
     confirmBlank = false;
     if (core.onChange) core.onChange(q, t);
     save();
     var c = document.getElementById('pp-count'); if (c) c.textContent = countText();
+    updateNav();
   }
   function finish() {
     var err = document.getElementById('pp-err');
     if (!st.name.trim()) { err.textContent = 'Type your name at the top first.'; document.getElementById('pp-name').focus(); return; }
-    var blank = items.filter(function (q) { return !answered(q); }).map(function (q) { return q.n; });
+    var blankQs = items.filter(function (q) { return !answered(q); }), blank = blankQs.map(function (q) { return q.n; });
     if (blank.length && !confirmBlank) {
       confirmBlank = true;
       err.textContent = (blank.length === 1 ? 'Question ' + blank[0] + ' is' : 'Questions ' + blank.join(', ') + ' are') + ' blank. Press Finish again to finish anyway.';
+      var ms = document.getElementById('pp-missing'); if (ms) { ms.innerHTML = missingHtml(blankQs); ms.hidden = false; }
       return;
     }
     st.finished = true; st.finishedAt = new Date().toISOString();
@@ -266,6 +345,12 @@
   function showSheet() {
     document.body.setAttribute('data-view', 'sheet');
     var list = items.map(function (q) {
+      var a = st.answers[q.id];
+      if (q.sub) return '<li class="sq"><div class="rq"><span class="num">' + q.n + '.</span> <span>' + q.prompt + '</span></div>' + q.sub.map(function (p, i) {
+        var v = Array.isArray(a) ? a[i] : '';
+        return '<div class="psub"><p class="ra"><span class="lbl2">(' + esc(p.label) + ')</span> ' + (typeof v === 'string' && v.trim() ? '<span class="typed">' + esc(v).replace(/\n/g, '<br>') + '</span>' : '<i>(blank)</i>') + '</p>' +
+          '<p class="grade-line"><span>Part (' + esc(p.label) + ') points: ______ / ' + (p.points != null ? p.points : 2) + '</span></p></div>';
+      }).join('') + '<p class="grade-line"><span>Points: ______ / ' + (q.points || 1) + '</span><span>Grader notes: ____________________</span></p></li>';
       return '<li class="sq"><div class="rq"><span class="num">' + q.n + '.</span> <span>' + q.prompt + '</span></div>' +
         '<p class="ra"><span class="lbl2">Answer:</span> ' + answerHtml(q) + '</p>' +
         '<p class="grade-line"><span>Points: ______ / ' + (q.points || 1) + '</span><span>Grader notes: ____________________</span></p></li>';
@@ -274,7 +359,8 @@
     app.innerHTML = shell(
       '<section class="sheet" aria-labelledby="s-h"><h2 id="s-h" tabindex="-1">Answer sheet</h2>' +
       '<dl class="sheet-meta"><div><dt>Name</dt><dd>' + esc(st.name) + '</dd></div><div><dt>Date</dt><dd>' + esc(dateText(st.finishedAt)) + '</dd></div>' +
-      '<div><dt>Assignment</dt><dd>' + esc(D.title) + (D.ver ? ' (version ' + esc(D.ver) + ')' : '') + '</dd></div></dl>' +
+      '<div><dt>Assignment</dt><dd>' + esc(D.title) + (D.ver ? ' (version ' + esc(D.ver) + ')' : '') + '</dd></div>' +
+      (D.code ? '<div><dt>Version code</dt><dd class="vcode">' + esc(D.code) + '</dd></div>' : '') + '</dl>' +
       '<div class="row noprint"><button type="button" class="btn primary" id="pp-print">Print</button><button type="button" class="btn" id="pp-pdf">Save as PDF</button>' +
       '<button type="button" class="btn" id="pp-edit">Change my answers</button><button type="button" class="btn" id="pp-reset">Start over for a new student</button></div>' +
       '<p class="small noprint" id="pp-pdf-tip" hidden>In the print window, choose <b>Save as PDF</b> as the printer, then save the file and hand it in.</p>' +
@@ -294,12 +380,32 @@
   var MODE = D.mode && window.PPI_MODES && window.PPI_MODES[D.mode];
   if (MODE) { MODE(core); return; }
 
+  /* ---------- one version per student: the name picks the version before the questions show ---------- */
+  function showStart() {
+    document.body.setAttribute('data-view', 'start');
+    app.innerHTML = shell('<section class="who" aria-label="About you"><div class="field"><label for="pp-name">Your name (first and last)</label><input id="pp-name" type="text" autocomplete="name" value="' + esc(st.name) + '"></div>' +
+      '<p class="date">Date: ' + esc(dateText()) + '</p></section>' +
+      '<p class="how">Everyone gets their own numbers. Type your name the way your teacher writes it, then press <b>Get my questions</b>. Your version code will show at the top.</p>' +
+      '<p id="pp-err" class="err" role="alert"></p><div class="row"><button type="button" class="btn primary" id="pp-start">Get my questions</button></div>');
+  }
+  function start() {
+    var name = (document.getElementById('pp-name') || {}).value || '';
+    if (!normName(name)) { document.getElementById('pp-err').textContent = 'Type your name first.'; document.getElementById('pp-name').focus(); return; }
+    var code = POOL.codes[poolIndex(name)];
+    st.name = name; st.x.code = code; usePool(code); save();
+    showAnswering(); var m = document.getElementById('main'); if (m) m.focus();
+  }
+
   /* ---------- events ---------- */
   var resetArmed = null;
   app.addEventListener('input', onInput);
   app.addEventListener('change', function (e) { if (e.target.type === 'radio' || e.target.tagName === 'SELECT') onInput(e); });
   app.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-go')) { go(Number(b.getAttribute('data-go'))); return; }
+    if (b.id === 'pp-prev') { go(cur - 1); return; }
+    if (b.id === 'pp-next') { go(cur + 1); return; }
+    if (b.id === 'pp-start') { start(); return; }
     if (b.id === 'pp-finish') finish();
     else if (b.id === 'pp-print') window.print();
     else if (b.id === 'pp-pdf') { document.getElementById('pp-pdf-tip').hidden = false; window.print(); }
@@ -307,9 +413,18 @@
     else if (b.id === 'pp-reset') {
       if (!resetArmed) { b.textContent = 'Tap again to clear this device'; resetArmed = setTimeout(function () { resetArmed = null; b.textContent = 'Start over for a new student'; }, 4000); return; }
       clearTimeout(resetArmed); resetArmed = null;
-      P.lsDel(D.key); st = load(); st.name = ''; st.answers = {}; st.finished = false; st.finishedAt = null; st.savedAt = null;
-      showAnswering(); document.getElementById('pp-name').focus();
+      P.lsDel(D.key); st = load(); st.name = ''; st.answers = {}; st.x = {}; st.finished = false; st.finishedAt = null; st.savedAt = null;
+      if (POOL) { usePool(''); showStart(); } else showAnswering();
+      document.getElementById('pp-name').focus();
     }
   });
-  if (st.finished) showDone(); else showAnswering();
+  // the question a student is working on is the current one in the navigation
+  app.addEventListener('focusin', function (e) {
+    var box = e.target.closest && e.target.closest('[data-q]'); if (!box) return;
+    var i = items.indexOf(byId[box.getAttribute('data-q')]);
+    if (i >= 0 && i !== cur) { cur = i; updateNav(); }
+  });
+  app.addEventListener('keydown', function (e) { if (e.key === 'Enter' && e.target.id === 'pp-name' && POOL && !D.code) start(); });
+  if (POOL && !D.code) showStart();
+  else if (st.finished) showDone(); else showAnswering();
 })();
