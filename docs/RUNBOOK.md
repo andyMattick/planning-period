@@ -22,11 +22,12 @@ mode, or a teacher who didn't sign in) use the email steps marked "zip:". Everyt
 
 "If this is going to be feasible, we have got to make this shorter." The first real online order took 31 minutes from
 her answer to the preview, 13 of them gaps between steps (docs/audits/TIME-2026-11-08.md). The coordinator runs the
-steps below for one online order with no gaps, and the automatic runner (docs/BACKEND.md) starts it when she sends and
-when she answers. By hand:
+steps below for one online order with no gaps, and the automatic runner (docs/BACKEND.md) starts it when she sends,
+when she answers and when she approves (the final, owner, Nov 8, 2026). By hand:
 ```
 source ~/.pp-owner.env
-node $REPO/scripts/run-order.mjs $ORDER                 # auto: onboarding for sent, the build for building
+node $REPO/scripts/run-order.mjs $ORDER                 # auto: onboarding for sent, the build for building, the final for approved
+node $REPO/scripts/run-order.mjs $ORDER --stage final --audit   # the final, then the auditor through the gate (commits to this checkout's main)
 node $REPO/scripts/run-order.mjs $ORDER --dry-run --keep --no-post   # canned sessions, nothing spent (a rehearsal)
 ```
 
@@ -37,7 +38,9 @@ node $REPO/scripts/run-order.mjs $ORDER --dry-run --keep --no-post   # canned se
 | | 5, 6, 7 | 🤖 Wilco scripts first (seconds), then 🙈 blind tester (A) ⫽ 🧮 solver (A) ⫽ 🧮 solver (B, C…) or 🔎 fact checker; entries merged by the script | 2 min |
 | | 8, 9 | a new 📝 maker session on the FIX list (whole-version wording, step 8) → `versions.mjs` → a recheck of **only the changed rows**: a fresh blind tester (A rows of script-made items, every version of hand-written ones) ⫽ a fresh solver or fact checker (every version of the changed rows, plus a sweep of every `why`) ⫽ Wilco | 3.5 min a round |
 | | 9, 10 | **one scripted whole-version check of every version** (`versions.mjs --verify`, keys, test-wise, cross-item, `math.mjs`, `interactive-format.mjs --browser`) ⫽ 🧾 reporter (faster setting; the script writes the log rows from each session's record, the reporter writes the story) | 1 min |
-| | 11 | render the watermarked preview, browser check, `orders.mjs preview` | 1.5 min |
+| | 11 | render the watermarked preview, browser check, `orders.mjs preview` (it also keeps the reviewed `pack.json` and the log in `work/`) | 1.5 min |
+| final (`approved`) | 11–13 | `work-get` (the kept pack), `preview-get` (the files she saw), `approval`; `render-pack.mjs --final` (refuses if the pack or any preview file changed: status `failed` with a note for her, nothing posted); `orders.mjs final` (`final_ready`; never the owner copy); `orders.mjs purge` (uploads, preview, `work/`; finals and style notes stay); the working copy, owner copy included, deleted | 2 min |
+| | 14 | the order's record; a fresh 🔎 auditor ($1.00 cap) edits briefs in a copy; `scripts/auditor-gate.mjs` commits and pushes to main what passes the gate and `npm run check`, and lists the rest for the owner | 5 min |
 
 **What keeps the quality the same:**
 - Every check is still a fresh session that never saw the pack being made; a recheck is a new session, not the round 1
@@ -60,6 +63,15 @@ node $REPO/scripts/run-order.mjs $ORDER --dry-run --keep --no-post   # canned se
 - Her uploads are read as text only (`html-text.mjs`; Word and PowerPoint from their XML; PDFs as they are); the
   working folder and the sessions' transcripts are deleted after the run (`--keep` keeps the folder).
 - Her blind-check choice (step 5) comes from her order, never from the maker's pack.
+- The final is rendered only by `render-pack.mjs --final`, which checks her approval against the pack and every preview
+  file she saw; the runner never works around a refusal.
+
+**Automatic now** (with the owner's setup in docs/BACKEND.md): send → follow-up, answer → preview, approve → final,
+purge and audit, and a daily `purge --due 7`. **Still by hand:** her **Request changes** (step 11: comments, a maker
+round, a fresh recheck, a new preview; when she then approves, the final is automatic), the orders the runner hands
+off (exit 3: carry on from the step it names), and anything the auditor's gate refuses (listed in
+`docs/audits/BRIEF-CHANGES.md` and the audit report, with a patch in `docs/audits/refused/`, for the owner to apply or
+not).
 
 ## 1. Receive the order
 
@@ -344,6 +356,10 @@ opens `REVIEW.html` offline, looks everything over and saves one of two files:
 
 Nothing goes out as final without `approval.json`; the renderer's final mode refuses to run without a matching one.
 
+**Automatic:** when she presses Approve in My orders, the runner does steps 11 (approval), 12 and 13 itself
+(`run-order.mjs --stage final`, "The fast path"). After a changes round by hand, post the new preview with `orders.mjs
+preview` as usual: it keeps the new `pack.json` for the final.
+
 ## 12. Render the final pack
 
 ```
@@ -354,15 +370,19 @@ cd "$WORK/out" && zip -qr "$WORK/$ORDER.zip" . && cd -
 Open two files at phone and print size before sending (an interactive page: answer it on a phone, press Finish).
 The final has `HOW-TO-SHARE-THE-INTERACTIVE-PAGES.txt` when the pack has interactive pages.
 Online: `node $REPO/scripts/orders.mjs final $ORDER` uploads `out/` and `out.zip` (status `final_ready`); she downloads
-them in My orders.
+them in My orders. `AUDIT-REPORT-OWNER.pdf` (render-pack writes it beside `out/`, in `$WORK`) is never uploaded:
+`final` skips it and refuses an `out.zip` that holds it; it is deleted with `$WORK` in step 13.
 
 ## 13. Deliver, then delete uploads and working copies (CLAUDE.md rule 1)
 
-Online: step 12's `final` delivered it. When she has downloaded it (or after 7 days):
-`node $REPO/scripts/orders.mjs purge $ORDER` deletes her uploads and the preview files from storage (the final files
-stay for her; add `--finals` to delete them too), then run the record and `rm -rf "$WORK"` lines below.
-`node $REPO/scripts/orders.mjs purge --due` does it for every order that is due (run it daily). A failed order:
+Online: step 12's `final` delivered it. Then `node $REPO/scripts/orders.mjs purge $ORDER` deletes her uploads, the
+preview files and the kept working files (`work/`) from storage (the final files stay for her; add `--finals` to delete
+them too; her style notes are never purged), then run the record and `rm -rf "$WORK"` lines below.
+`node $REPO/scripts/orders.mjs purge --due` does it for every order that is due. A failed order:
 `node $REPO/scripts/orders.mjs status $ORDER failed "<what she should know>"`.
+**Automatic:** the runner purges right after it posts the finals, writes the record (`records/<id>.json`, the same
+fields as below) for the auditor, and deletes its working copy (the owner copy of the audit report with it: the
+records keep no PDFs); `.github/workflows/purge-due.yml` runs `purge --due 7` every day.
 
 Zip: send `$WORK/$ORDER.zip` (the notices inside say it was made by AI and to check it before students see it). When the
 teacher confirms they have it:
@@ -379,20 +399,29 @@ this teacher only.
 ## 14. Auditor
 
 A fresh agent with `agents/auditor.md`, `records/$ORDER.json`, `comments/$ORDER.md` (if any) and `agents/`. It edits
-briefs (version bump and a change-log line naming the finding or comment), records the changes in the record's
-`audit.briefChanges`, lists cheaper-without-losing-quality ideas, writes its report (`docs/audits/AUDIT-<date>.md`, a
-line in `docs/audits/README.md`), and commits:
+briefs as it sees fit (owner, Nov 8, 2026: version bump and a change-log line naming the finding or comment), records
+the changes in the record's `audit.briefChanges`, lists cheaper-without-losing-quality ideas, and writes its report
+(`docs/audits/AUDIT-<date>-$ORDER.md`, a line in `docs/audits/README.md`). Its changes reach main **only through the
+gate** (`agents/auditor.md`, "The gate"):
 ```
-cd $REPO && npm run check && git add agents/ records/$ORDER.json comments/ docs/audits/ && git commit -m "Audit $ORDER: <what changed in which brief>"
+cd $REPO && node scripts/auditor-gate.mjs --repo . --cause $ORDER --report docs/audits/AUDIT-$(date -u +%F)-$ORDER.md --commit --push
 ```
-If the teacher writes more comments after delivery, add them to `comments/$ORDER.md` and run the auditor again.
+The gate accepts only brief edits (one version bump and a cause each, no hard rule removed or reworded, nothing
+skipped), a new report and record; refuses `checks/`, `scripts/`, `CLAUDE.md`, `menu.json` prices and
+`feasibility.json` thresholds; runs `npm run check`; then commits and pushes to main what passes, with a line each in
+`docs/audits/BRIEF-CHANGES.md`. A refusal applies nothing: the change is kept as `docs/audits/refused/<date>-….patch`
+and listed for the owner. Its first output line is the digest ("auditor changed: …; to undo: git revert <sha>").
+**Automatic:** the runner does this after every final (`run-order.mjs --stage final --audit`, with the
+`PP_AUDIT_TOKEN` push token). If the teacher writes more comments after delivery, add them to `comments/$ORDER.md`
+and run the auditor and the gate again (by hand).
 
 ## Where things live
 
 | What | Where | Kept? |
 |---|---|---|
 | Order zip, sources, pack.json, views, previews, final files | `~/pp-work/<order>/` | deleted after delivery |
-| Online: her uploads, the preview files | Supabase `uploads/<teacher>/<order>/`, `deliverables/<teacher>/<order>/preview/` | deleted by `orders.mjs purge` after delivery |
+| Online: her uploads, the preview files, the kept pack and log | Supabase `uploads/<teacher>/<order>/`, `deliverables/<teacher>/<order>/preview/` and `work/` | deleted by `orders.mjs purge` right after delivery (the runner), or by the daily `purge --due` |
+| The owner copy of the audit report | `$WORK/AUDIT-REPORT-OWNER.pdf` | never uploaded; deleted with `$WORK` |
 | Online: the final files | Supabase `deliverables/<teacher>/<order>/final/` | for her to download; `purge --finals` deletes them |
 | The teacher's style notes and examples | `~/pp-styles/<teacher>/` | for their agents only, deleted on request |
 | The teacher's change requests and later comments | `comments/<order>.md` (repo) | yes: the auditor's input |
@@ -400,3 +429,4 @@ If the teacher writes more comments after delivery, add them to `comments/$ORDER
 | The teacher's agreement | `~/pp-work/<order>/approval.json`, logged in the pack and the record | the log line |
 | Checks, log and audit of the order | `records/<order>.json` (repo) | yes |
 | The auditor's reports | `docs/audits/` (repo) | yes |
+| The auditor's brief changes, applied and refused | `docs/audits/BRIEF-CHANGES.md`, `docs/audits/refused/` (repo) | yes |

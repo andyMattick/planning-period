@@ -4,7 +4,8 @@
 // Wilco's checks, SymPy, the renderer, the browser check). It spends nothing.
 //   node scripts/test-run-order.mjs        (about a minute; part of npm run check)
 import { spawn, spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, existsSync, rmSync, writeFileSync, readdirSync } from 'node:fs';
+import { mkdtempSync, readFileSync, existsSync, rmSync, writeFileSync, readdirSync, cpSync, symlinkSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -154,6 +155,89 @@ try {
     }
   }
 
+  /* 7. her approval → the final: rendered against her approval, posted (final_ready), uploads, preview and working files
+     deleted, finals and style notes kept, the owner copy never uploaded; then the auditor edits a brief and the gate
+     puts it on main (a made-up copy of the repository with its own bare origin; the gate's npm run check is stubbed here,
+     scripts/auditor-gate.mjs --self-test and npm run check itself cover it) */
+  const sha = (b) => createHash('sha256').update(b).digest('hex');
+  const download = async (k) => Buffer.from(await (await fetch(`${fake.url}/storage/v1/object/${k}`, { headers: { apikey: SERVICE } })).arrayBuffer());
+  async function approve(id) {   // what My orders does: download every preview file she was shown, hash it, approve_order
+    const ord = await orderOf(id);
+    const documents = [];
+    for (const d of ord.review.documents) documents.push({ file: d.file, title: d.title, sha256: sha(await download(`deliverables/${teacher}/${id}/preview/${d.file}`)) });
+    const r = await fetch(`${fake.url}/rest/v1/rpc/approve_order`, { method: 'POST', headers: { apikey: ANON, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_order: id, p_approval: { orderId: id, name: 'Mr. Example (made-up)', date: new Date().toISOString(), statement: ord.review.statement, packHash: ord.review.packHash, documents, judgments: [] } }) });
+    return r.ok;
+  }
+  // a made-up copy of the repository (its working tree as it is now) with a bare origin to push to
+  const repo = join(tmp, 'repo'), origin = join(tmp, 'origin.git');
+  cpSync(ROOT, repo, { recursive: true, filter: (p) => !/(^|\/)(\.git|node_modules)(\/|$)/.test(p.slice(ROOT.length)) });
+  symlinkSync(join(ROOT, 'node_modules'), join(repo, 'node_modules'), 'dir');
+  const git = (cwd, ...a) => spawnSync('git', ['-C', cwd, ...a], { encoding: 'utf8' });
+  git(tmp, 'init', '-q', '--bare', '-b', 'main', origin);
+  git(repo, 'init', '-q', '-b', 'main'); writeFileSync(join(repo, '.git/info/exclude'), 'node_modules\n');
+  git(repo, 'add', '-A'); git(repo, '-c', 'user.name=t', '-c', 'user.email=t@example.test', 'commit', '-q', '-m', 'start');
+  git(repo, 'remote', 'add', 'origin', origin); git(repo, 'push', '-q', 'origin', 'main');
+  const onMain = (f) => { const r = git(origin, 'show', `main:${f}`); return r.status === 0 ? r.stdout : null; };
+  const GATE = { PP_GATE_CHECK: `node -e "console.log('All checks pass.')"`, GIT_AUTHOR_NAME: 'order runner', GIT_AUTHOR_EMAIL: 'runner@example.test' };
+  const makerV = Number(/\*\*Version (\d+)\*\*/.exec(readFileSync(join(ROOT, 'agents/maker.md'), 'utf8'))[1]);
+
+  ok(await approve(ID) && (await orderOf(ID)).status === 'approved', 'she approves the preview in My orders (approve_order)');
+  const calls7 = join(tmp, 'calls7.jsonl'), work7 = join(tmp, 'w-final');
+  const r7 = await run(ID, ['--work', work7, '--audit', '--audit-repo', repo, '--audit-push'], { PP_FAKE_CALLS: calls7, ...GATE });
+  ok(r7.code === 0, `final exit ${r7.code}:\n${r7.out}`);
+  o = await orderOf(ID);
+  let objs7 = (await state()).objects;
+  const mine = (part) => objs7.filter((k) => k.startsWith(`deliverables/${teacher}/${ID}/${part}/`));
+  ok(o.status === 'final_ready' && (o.final_files || []).includes('final/out.zip') && mine('final').length >= 5, `final posted: ${o.status}, ${(o.final_files || []).length} files`);
+  ok(['A', 'B', 'C'].every((v) => mine('final').some((k) => k.endsWith(`interactive-${v}.html`))) && mine('final').some((k) => /README\.txt$/.test(k)), 'the final has every version\'s page and the README');
+  ok(!objs7.some((k) => /OWNER/i.test(k)) && !(o.final_files || []).some((f) => /OWNER/i.test(f)), 'the owner copy of the audit report was never uploaded');
+  ok(!(await download(`deliverables/${teacher}/${ID}/final/out.zip`)).includes('AUDIT-REPORT-OWNER'), 'the final zip has no owner copy');
+  ok(!objs7.some((k) => k.startsWith(`uploads/${teacher}/${ID}/`)) && !mine('preview').length && !mine('work').length && o.uploads_purged_at, 'her uploads, the preview files and the working files are deleted');
+  ok(objs7.includes(`deliverables/${teacher}/style/style.md`), 'her style notes are kept (hers, deletable anytime)');
+  ok(!existsSync(work7), 'the working folder (with the owner copy) is deleted');
+  const c7 = callsOf(calls7);
+  ok(c7.length === 1 && c7[0].role === 'auditor-r1' && c7[0].cap === '1.00' && !c7[0].files.includes('.git'), `one fresh auditor session, capped, with no .git (${c7.map((x) => x.role)})`);
+  const maker7 = onMain('agents/maker.md') || '';
+  ok(maker7.includes(`**Version ${makerV + 1}**`) && maker7.includes('(dry-run auditor)'), 'the auditor\'s brief change passed the gate and is on main');
+  ok((onMain('docs/audits/BRIEF-CHANGES.md') || '').includes(`agents/maker.md v${makerV} → v${makerV + 1}`) && /auditor changed: agents\/maker\.md v\d+ .*to undo: git revert [0-9a-f]{40}/.test(r7.out), 'listed in docs/audits/BRIEF-CHANGES.md, and the run says how to undo it');
+  const rec = JSON.parse(onMain(`records/${ID}.json`) || '{}');
+  ok(rec.checks && rec.log?.some((r) => /final files/.test(r.what)) && !rec.documents && !rec.style && !JSON.stringify(rec).includes('Mr. Example') && !JSON.stringify(rec).includes('Same questions, different numbers'), 'the record on main: checks and log, no documents, style, name or requests');
+  ok((onMain('docs/audits/README.md') || '').includes(ID) && git(origin, 'log', '-1', '--format=%s', 'main').stdout.startsWith(`Auditor (${ID})`), 'the report is listed and the commit names the order');
+
+  /* 8. another order: the auditor also edits checks/ → the gate refuses the whole change; the order is delivered anyway */
+  ok(await approve(ID5), 'approve the second order');
+  const r8 = await run(ID5, ['--work', join(tmp, 'w8'), '--audit', '--audit-repo', repo, '--audit-push'], { ...GATE, PP_FAKE_AUDIT: 'checks' });
+  ok(r8.code === 0 && (await orderOf(ID5)).status === 'final_ready', `delivered although the audit was refused: exit ${r8.code}\n${r8.out}`);
+  ok(/refused/.test(r8.out) && !(onMain('checks/test-wise.mjs') || '').includes('loosened') && (onMain('agents/maker.md') || '').includes(`**Version ${makerV + 1}**`), 'the gate refused it: checks/ and the brief on main are unchanged');
+  ok(/REFUSED .*checks\/test-wise\.mjs/.test(onMain('docs/audits/BRIEF-CHANGES.md') || '') && (onMain(`docs/audits/refused/${new Date().toISOString().slice(0, 10)}-${ID5}.patch`) || '').includes('loosened'), 'listed for the owner with the patch');
+
+  /* 9. a preview file changed after she approved → failed with a note, nothing posted */
+  const ID6 = 'pp-2026-11-08-test06';
+  await newOrder(ID6, { checks: { blind: false } });
+  ok((await run(ID6, ['--work', join(tmp, 'w6a')])).code === 0, 'onboard (third order)');
+  await fetch(`${fake.url}/rest/v1/rpc/answer_follow_up`, { method: 'POST', headers: { apikey: ANON, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_order: ID6, p_answer: 'go' }) });
+  ok((await run(ID6, ['--work', join(tmp, 'w6b')])).code === 0 && (await orderOf(ID6)).status === 'preview_ready', 'build (third order)');
+  ok(await approve(ID6), 'approve the third order');
+  const victim = (await orderOf(ID6)).review.documents[0].file;
+  await api('POST', `/storage/v1/object/deliverables/${teacher}/${ID6}/preview/${victim}`, Buffer.concat([await download(`deliverables/${teacher}/${ID6}/preview/${victim}`), Buffer.from('\n')]), { 'Content-Type': 'application/pdf', 'x-upsert': 'true' });
+  const calls9 = join(tmp, 'calls9.jsonl');
+  const r9 = await run(ID6, ['--work', join(tmp, 'w9'), '--audit', '--audit-repo', repo], { PP_FAKE_CALLS: calls9, ...GATE });
+  o = await orderOf(ID6);
+  ok(r9.code === 1 && o.status === 'failed' && /no longer matches the one you approved/.test(o.note || '') && /changed after/.test(r9.out), `a changed preview file: exit ${r9.code}, ${o.status}, ${o.note}`);
+  ok(!(await state()).objects.some((k) => k.startsWith(`deliverables/${teacher}/${ID6}/final/`)) && !(o.final_files || []).length && !callsOf(calls9).length, 'nothing was posted and no auditor ran');
+
+  /* 10. the daily purge: a failed order a week old loses its uploads, preview and working files */
+  await fetch(`${fake.url}/__test/age?id=${ID6}`);
+  const pr = await new Promise((res) => {   // async: the fake Supabase runs in this process
+    const p = spawn(process.execPath, [join(ROOT, 'scripts/orders.mjs'), 'purge', '--due', '7'], { env: { ...process.env, PP_SUPABASE_URL: fake.url, PP_SUPABASE_SERVICE_KEY: SERVICE } });
+    let stdout = '', stderr = ''; p.stdout.on('data', (d) => { stdout += d; }); p.stderr.on('data', (d) => { stderr += d; });
+    p.on('close', (status) => res({ status, stdout, stderr }));
+  });
+  const left = (await state()).objects.filter((k) => k.includes(`/${ID6}/`));
+  ok(pr.status === 0 && !left.length && (await orderOf(ID6)).uploads_purged_at, `purge --due deleted the failed order's files (${pr.stdout}${pr.stderr}; left ${left})`);
+  ok((await state()).objects.includes(`deliverables/${teacher}/style/style.md`), 'her style notes survive the daily purge');
+
   /* 6. nothing to do for an order in another status; a bad id is refused */
   ok((await run(ID, [])).code === 0, 'auto on a preview_ready order does nothing');
   ok((await run('pp-bad', [])).code === 2, 'a bad id is refused');
@@ -162,5 +246,5 @@ try {
   if (process.env.PP_TEST_KEEP) console.log(`kept ${tmp}`); else rmSync(tmp, { recursive: true, force: true });
 }
 if (bad) { console.log(`run-order: ${bad} of ${n} checks failed`); process.exit(1); }
-console.log(`run-order: all ${n} checks pass (dry run: onboarding, a build with a FIX round and a targeted recheck, the cost stop, a crash)`);
+console.log(`run-order: all ${n} checks pass (dry run: onboarding, a build with a FIX round and a targeted recheck, the cost stop, a crash, the final after her approval with the auditor through the gate, a refused audit, a changed preview file refused, the daily purge)`);
 process.exit(0);

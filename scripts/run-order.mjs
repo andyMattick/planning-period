@@ -2,8 +2,8 @@
 /* The order coordinator (docs/RUNBOOK.md, "The fast path"; docs/ROADMAP.md step C). It drives one online order through
    the runbook with fresh headless Claude Code sessions, the way the lead did by hand, without the gaps between steps.
 
-     node scripts/run-order.mjs <order id> [--stage onboard|build|auto] [--dry-run [fixtures dir]] [--work <dir>]
-                                [--keep] [--no-post] [--max-rounds 3]
+     node scripts/run-order.mjs <order id> [--stage onboard|build|final|auto] [--dry-run [fixtures dir]] [--work <dir>]
+                                [--keep] [--no-post] [--max-rounds 3] [--audit [--audit-repo <dir>] [--audit-push]]
 
    onboard  (status sent/onboarding): pull → text copies of the uploads → the 🧭 onboarding session and, on a first
             order with style examples, the 🎨 style-notes session, at the same time → checks on the follow-up → post it
@@ -14,7 +14,16 @@
             → a recheck of **only the changed items** (fresh sessions, parallel) → after the last round, one scripted
             whole-version check of every version, with the 🧾 reporter (faster setting) at the same time → render the
             watermarked preview → browser check → post it (preview_ready).
-   auto     picks onboard or build from the order's status (the runner's default).
+   final    (status approved: she pressed Approve in My orders): the pack she reviewed (kept in work/ by orders.mjs
+            preview) and the preview files she saw → her approval → render-pack.mjs --final, which refuses if the pack
+            or any preview file changed since she approved (then: status failed with a note for her, nothing posted) →
+            post the finals (final_ready) → purge her uploads, the preview files and work/ (CLAUDE.md rule 1; the finals
+            and her style notes stay) → the owner copy of the audit report is deleted with the working copy, never
+            uploaded. With --audit (the runner sets PP_AUDIT=1 when it has a push token): a fresh 🔎 auditor session on
+            the order's record (records/<id>.json: checks, log, audit, counts; no documents, no uploads) edits the
+            briefs as it sees fit, and scripts/auditor-gate.mjs applies it to main only if it passes the gate and
+            npm run check (refused: listed for the owner). The order is delivered either way.
+   auto     picks onboard, build or final from the order's status (the runner's default).
 
    Roles, settings and caps (each cap also ≤ half of what is left below the cost stop, split over parallel sessions):
      maker r1 budget/3, FIX round budget/6 (docs/RUNBOOK.md step 4) · blind tester, solver, fact checker 15% of the
@@ -27,7 +36,7 @@
    no pack.json; the key arrives only in the second phase (the same session, resumed). The maker never writes checks,
    log or audit: this script keeps them. Every session's minutes, tokens and dollars come from its own record.
 
-   Exit 0 done (follow-up or preview posted) · 3 handed to the owner (cost stop, an open FIX after the last round, an
+   Exit 0 done (follow-up, preview or final posted) · 3 handed to the owner (cost stop, an open FIX after the last round, an
    order kind the runner doesn't do yet; status stays building with a note, the working files are kept in
    deliverables/<teacher>/<id>/work/) · 1 failed (status failed with a note) · 2 usage.
 
@@ -50,15 +59,19 @@ const argv = process.argv.slice(2);
 const opt = (n, dflt = null) => { const i = argv.indexOf(`--${n}`); if (i < 0) return dflt; const v = argv[i + 1]; const has = v && !v.startsWith('--'); argv.splice(i, has ? 2 : 1); return has ? v : true; };
 const stageOpt = opt('stage', 'auto'), dry = opt('dry-run'), workOpt = opt('work'), keep = !!opt('keep'), noPost = !!opt('no-post');
 const MAX_ROUNDS = Number(opt('max-rounds', 3));
+const AUDIT = !!opt('audit') || process.env.PP_AUDIT === '1', auditRepoOpt = opt('audit-repo'), AUDIT_PUSH = !!opt('audit-push') || process.env.PP_AUDIT_PUSH === '1';
 const ID = argv[0];
-if (!ID || !ID_RE.test(ID) || !['onboard', 'build', 'auto'].includes(stageOpt)) {
-  console.error('usage: node scripts/run-order.mjs <pp-YYYY-MM-DD-xxxxxx> [--stage onboard|build|auto] [--dry-run [fixtures]] [--work dir] [--keep] [--no-post]');
+if (!ID || !ID_RE.test(ID) || !['onboard', 'build', 'final', 'auto'].includes(stageOpt)) {
+  console.error('usage: node scripts/run-order.mjs <pp-YYYY-MM-DD-xxxxxx> [--stage onboard|build|final|auto] [--dry-run [fixtures]] [--work dir] [--keep] [--no-post] [--audit [--audit-repo dir] [--audit-push]]');
   process.exit(2);
 }
 const WORK = resolve(workOpt && workOpt !== true ? workOpt : join(process.env.PP_WORK_ROOT || join(homedir(), 'pp-work'), ID));
 const FIXTURES = dry ? resolve(dry === true ? join(ROOT, 'scripts/test-run-order/fixtures') : dry) : null;
 const childEnv = { ...process.env };
 if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_USE_ENV_PROXY) childEnv.NODE_USE_ENV_PROXY = '1';
+// the auditor's push token goes only to scripts/auditor-gate.mjs, never to an agent session
+const AUDIT_TOKEN = process.env.PP_AUDIT_TOKEN || '';
+delete childEnv.PP_AUDIT_TOKEN;
 const MODEL = { standard: process.env.PP_MODEL_STANDARD || '', fast: process.env.PP_MODEL_FAST || '' };
 
 /* ---------- small helpers ---------- */
@@ -82,7 +95,7 @@ function sh(cmd, args, { cwd = ROOT, env = childEnv, timeout = 600000, input } =
 const nodeRun = (script, args, o) => sh(process.execPath, [join(ROOT, script), ...args], o);
 async function orders(...args) {
   const r = await nodeRun('scripts/orders.mjs', [...args, '--work', WORK]);
-  if (r.code !== 0) throw new Error(`orders.mjs ${args[0]} failed: ${(r.err || r.out).trim().split('\n').pop()}`);
+  if (r.code !== 0) { const ls = (r.err || r.out).trim().split('\n'); throw new Error(`orders.mjs ${args[0]} failed: ${ls.find((l) => /^(orders:|\w*Error)/.test(l)) || ls.pop()}`); }
   return r.out;
 }
 
@@ -97,7 +110,7 @@ const room = () => (BUDGET == null ? Infinity : 2 * BUDGET - spent());
 /* ---------- sessions ---------- */
 const CLAUDE = dry ? [process.execPath, join(ROOT, 'scripts/test-run-order/fake-claude.mjs')] : [process.env.PP_CLAUDE_BIN || 'claude'];
 const TOOLS = { base: ['Read', 'Write', 'Edit', 'Glob', 'Grep', 'Bash(node:*)', 'Bash(python3:*)'], web: ['WebSearch', 'WebFetch'] };
-const NAMES = { onboarding: '🧭 Onboarding', style: '🎨 Style notes', maker: '📝 Maker', blind: null, solver: '🧮 Solver', 'solver-bc': '🧮 Solver', facts: '🔎 Fact checker', reporter: '🧾 Reporter' };
+const NAMES = { auditor: '🔎 Auditor', onboarding: '🧭 Onboarding', style: '🎨 Style notes', maker: '📝 Maker', blind: null, solver: '🧮 Solver', 'solver-bc': '🧮 Solver', facts: '🔎 Fact checker', reporter: '🧾 Reporter' };
 let blindName = '🙈 Blind tester';
 
 /* One fresh headless session (or a resumed one for a second phase). Returns its record. */
@@ -496,6 +509,110 @@ times. Plain words, numbers from the files, no product name.\n`);
   say(`posted the preview: ${round} round${round === 1 ? '' : 's'}, ${money(total)} of ${money(BUDGET)}`);
 }
 
+/* =================== final (after her approval) =================== */
+class Refused extends Error {}
+function orderRecord(pack, ob, approval) {
+  // what the auditor and the pricing need (docs/RUNBOOK.md step 13): checks, log, audit, counts; never her documents,
+  // style notes, sources, requests or name
+  const { documents, style, order, ...r } = pack;
+  const o = order || {};
+  r.order = { grade: o.grade, subject: o.subject, topic: o.topic, items: o.items, ...(o.checks ? { checks: o.checks } : {}) };
+  if (ob) r.onboarding = { source: (ob.source || []).map((x) => ({ kind: x.kind, pages: x.pages, ideas: x.ideas })), made: ob.whatWeWillMake,
+    warnings: (ob.warnings || []).map((w) => w.kind), questions: (ob.questions || []).length, tokens: ob.tokens };
+  r.approved = String(approval.date).slice(0, 10);
+  r.log = logRows().map(({ at, who, what, minutes, tokens, cost, round }) => ({ at, who, what, minutes, tokens, cost, round }));
+  return r;
+}
+
+async function final() {
+  const o = await show();
+  if (o.status !== 'approved') { say(`${ID} is ${o.status}, not approved: no final to make`); return; }
+  // the pack she reviewed (orders.mjs preview kept it in work/) and the preview files she saw, from storage
+  await orders('work-get', ID);
+  for (const f of ['pack.json', 'run-log.jsonl', 'onboarding.json']) if (existsSync(join(WORK, 'work', f))) copyFileSync(join(WORK, 'work', f), join(WORK, f));
+  if (!existsSync(join(WORK, 'pack.json'))) throw new HandOff('no pack.json was kept with this preview (posted before the runner kept it): render the final by hand (docs/RUNBOOK.md step 12)');
+  await orders('preview-get', ID);
+  await orders('approval', ID);
+  const approval = readJSON(join(WORK, 'approval.json'));
+  const round = Math.max(1, ...logRows().map((r) => Number(r.round) || 1));
+  logRow({ who: 'Runner', what: `Picked up her approval (${String(approval.date).slice(0, 10)}, ${(approval.documents || []).length} preview files) and the pack and preview files she reviewed`, round });
+  // render-pack.mjs --final checks the approval: this order, this exact pack, every preview file's SHA-256. Never bypassed.
+  const rend = await nodeRun('scripts/render-pack.mjs', [WORK, '--final'], { timeout: 900000 });
+  if (rend.code) {
+    const why = (rend.out + rend.err).trim().split('\n').filter((l) => /not approved/.test(l)).pop();
+    if (why) { logRow({ who: 'Runner', what: `The final was refused: ${why.replace(/^.*?not approved: /, '').slice(0, 200)}`, round }); throw new Refused(why); }
+    throw new Error(`render-pack --final failed: ${(rend.out + rend.err).trim().split('\n').pop()}`);
+  }
+  // the owner copy of the audit report is never delivered (render-pack writes it beside out/, orders.mjs final skips it)
+  const outFiles = readdirSync(join(WORK, 'out'), { recursive: true }).map(String);
+  if (outFiles.some((f) => /AUDIT-REPORT-OWNER/i.test(f)) || (existsSync(join(WORK, 'out.zip')) && readFileSync(join(WORK, 'out.zip')).includes('AUDIT-REPORT-OWNER')))
+    throw new Error('the owner copy of the audit report is in out/: it is never delivered');
+  logRow({ who: 'Runner', what: `Rendered the final files (${outFiles.length}), checked against her approval`, round });
+  await orders('final', ID);
+  logRow({ who: 'Runner', what: 'Posted the final files to My orders (final_ready)', round });
+  say(`posted the final (${outFiles.length} files)`);
+  const record = orderRecord(readJSON(join(WORK, 'pack.json')), existsSync(join(WORK, 'onboarding.json')) ? readJSON(join(WORK, 'onboarding.json')) : null, approval);
+  // delivered: her uploads, the preview files and the kept working files go (CLAUDE.md rule 1); the finals and her style
+  // notes stay. If this fails, orders.mjs purge --due (daily) catches it.
+  try { await orders('purge', ID); logRow({ who: 'Runner', what: 'Deleted her uploads, the preview files and the working files (the final files and her style notes stay)', round }); }
+  catch (e) { say(`purge failed (the daily purge --due will retry): ${e.message}`); }
+  rmSync(join(WORK, 'AUDIT-REPORT-OWNER.pdf'), { force: true });   // and the rest of the working copy in cleanup()
+  if (AUDIT) {
+    try { await auditor(record); } catch (e) { say(`the auditor did not finish (the order is delivered): ${e.message}`); summary(`Auditor: did not finish (${e.message})`); }
+  } else say('no auditor this run (--audit or PP_AUDIT=1 turns it on; it needs a push token: docs/BACKEND.md)');
+}
+
+/* =================== the auditor (owner, Nov 8, 2026: "auditor makes edits as they see fit") =================== */
+const summary = (line) => { if (process.env.GITHUB_STEP_SUMMARY) try { appendFileSync(process.env.GITHUB_STEP_SUMMARY, line + '\n'); } catch {} };
+function treeFiles(dir, base = dir, out = []) {
+  for (const f of readdirSync(dir)) {
+    if (dir === base && ['.git', '.claude', 'node_modules', 'TASK.md'].includes(f)) continue;   // anything else it edits goes to the gate
+    const p = join(dir, f), st = statSync(p, { throwIfNoEntry: false });
+    if (!st) continue;
+    if (st.isDirectory()) { if (f !== 'node_modules') treeFiles(p, base, out); } else if (st.isFile()) out.push(p.slice(base.length + 1));
+  }
+  return out;
+}
+async function auditor(record) {
+  const repo = resolve(auditRepoOpt && auditRepoOpt !== true ? auditRepoOpt : ROOT);
+  const date = new Date().toISOString().slice(0, 10), report = `docs/audits/AUDIT-${date}-${ID}.md`;
+  const dir = join(SESS(), 'auditor-r1');
+  rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
+  // a copy of the repository (no .git): the gate, not the session, decides what reaches the repository
+  cpSync(repo, dir, { recursive: true, filter: (s) => !/(^|\/)(\.git|node_modules)(\/|$)/.test(s.slice(repo.length)) });
+  try { symlinkSync(join(ROOT, 'node_modules'), join(dir, 'node_modules'), 'dir'); } catch {}
+  mkdirSync(join(dir, 'records'), { recursive: true });
+  writeJSON(join(dir, 'records', `${ID}.json`), record);
+  const before = new Map(treeFiles(dir).map((f) => [f, readFileSync(join(dir, f))]));
+  writeFileSync(join(dir, 'TASK.md'), `You are the auditor, a fresh agent: you didn't make or check order ${ID}. Follow agents/auditor.md.
+The order was delivered; its record is records/${ID}.json (checks, log, audit, onboarding counts). The teacher's change
+requests, if any, are in comments/${ID}.md. Earlier records are in records/, earlier reports in docs/audits/.
+Your brief changes go straight to main through scripts/auditor-gate.mjs (agents/auditor.md, "The gate"): edit only
+agents/*.md briefs in place (not README.md), one version bump per brief with a change-log line naming the cause in
+brackets; never remove or reword a hard rule, never weaken a check. Price and threshold ideas go in your report only.
+Write your report to ${report} and a line for it at the top of docs/audits/README.md, and record your changes in
+records/${ID}.json's audit.briefChanges. Don't run git. Work only in this folder.\n`);
+  await session('auditor', 1, '', dir, { cap: 1.0, minutes: 20, what: 'Read the order record and edited the briefs (through the gate)' });
+  // the session's changes, file by file, onto the repository's working tree; the gate checks them all
+  const after = treeFiles(dir);
+  let n = 0;
+  for (const f of after) {
+    const now = readFileSync(join(dir, f)), was = before.get(f);
+    if (was && Buffer.compare(was, now) === 0) continue;
+    mkdirSync(dirname(join(repo, f)), { recursive: true }); writeFileSync(join(repo, f), now); n++;
+  }
+  for (const f of before.keys()) if (!after.includes(f) && f !== `records/${ID}.json`) { rmSync(join(repo, f), { force: true }); n++; }
+  if (!existsSync(join(repo, 'records', `${ID}.json`))) { mkdirSync(join(repo, 'records'), { recursive: true }); writeJSON(join(repo, 'records', `${ID}.json`), record); }
+  say(`the auditor changed ${n} file${n === 1 ? '' : 's'}; the gate decides`);
+  const g = await nodeRun('scripts/auditor-gate.mjs', ['--repo', repo, '--cause', ID, '--report', report, '--commit', ...(AUDIT_PUSH ? ['--push'] : [])], { timeout: 2400000, env: { ...childEnv, ...(AUDIT_TOKEN ? { PP_AUDIT_TOKEN: AUDIT_TOKEN } : {}) } });
+  let res = null;
+  try { res = JSON.parse(g.out.trim().split('\n').pop()); } catch {}
+  if (!res) throw new Error(`the gate gave no result: ${(g.err || g.out).trim().split('\n').pop()}`);
+  say(res.digest); summary(`Auditor: ${res.digest}`);
+  if (g.code) throw new Error(res.error || 'the gate failed');
+  return res;
+}
+
 /* =================== main =================== */
 async function keepWork(reason, open) {
   writeFileSync(join(WORK, 'HANDOFF.md'), `# ${ID}: handed to the owner\n\n${reason}\n\n${(open || []).map((f) => `- ${f.where}: ${f.what}`).join('\n')}\n\nCost so far: ${money(spent())}` +
@@ -517,20 +634,26 @@ let code = 0, STAGE = null;
 try {
   mkdirSync(WORK, { recursive: true });
   const o = await show();
-  const stage = STAGE = stageOpt !== 'auto' ? stageOpt : ['sent', 'onboarding'].includes(o.status) ? 'onboard' : o.status === 'building' ? 'build' : null;
+  const stage = STAGE = stageOpt !== 'auto' ? stageOpt : ['sent', 'onboarding'].includes(o.status) ? 'onboard' : o.status === 'building' ? 'build' : o.status === 'approved' ? 'final' : null;
   if (!stage) { say(`${ID} is ${o.status}: nothing to run`); }
   else {
     say(`${ID}: ${stage}${dry ? ' (dry run: canned sessions)' : ''}`);
-    if (stage === 'onboard') await onboard(); else await build();
+    if (stage === 'onboard') await onboard(); else if (stage === 'final') await final(); else await build();
   }
 } catch (e) {
   if (e instanceof HandOff) {
     code = 3; say(`handed to the owner: ${e.message}`);
     await keepWork(e.message, e.cause);
     // the status stays where the stage left it (a status change would start the runner again): only the note changes
-    const onboarding = STAGE === 'onboard';
-    try { await orders('status', ID, onboarding ? 'onboarding' : 'building', onboarding ? 'We are taking a quick look at your order before we send our questions.'
-      : 'Your order needs a quick look from us before the preview. We will post it as soon as it is ready.'); } catch (x) { say(`could not set the note: ${x.message}`); }
+    const [st, note] = STAGE === 'onboard' ? ['onboarding', 'We are taking a quick look at your order before we send our questions.']
+      : STAGE === 'final' ? ['approved', 'Thank you for approving. Your final files need a quick look from us; we will post them as soon as they are ready.']
+      : ['building', 'Your order needs a quick look from us before the preview. We will post it as soon as it is ready.'];
+    try { await orders('status', ID, st, note); } catch (x) { say(`could not set the note: ${x.message}`); }
+  } else if (e instanceof Refused) {
+    // render-pack.mjs --final refused (a preview file or the pack changed after she approved): nothing is posted
+    code = 1; say(`final refused: ${e.message}`);
+    await keepWork(`final refused: ${e.message}`);
+    try { await orders('status', ID, 'failed', 'We did not release your final files: the preview we have on file no longer matches the one you approved. Nothing was sent. We have been told and will make you a new preview to approve.'); } catch (x) { say(`could not set the status: ${x.message}`); }
   } else {
     code = 1; say(`failed: ${e.message}`);
     await keepWork(`failed: ${e.message}`);

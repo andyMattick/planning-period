@@ -1,0 +1,42 @@
+# The daily purge (CLAUDE.md rule 1; docs/BACKEND.md, "Deleting uploads"): every day it deletes the uploads, preview
+# files and kept working files of each order the database says is due (final_ready, cancelled or failed, untouched for 7
+# days and not purged yet: orders_due_for_purge). The final files and her style notes stay. It prints only order ids and
+# counts. Off switch: repository variable PP_PURGE_ENABLED = false. Not set up (no secrets): it says so and does nothing.
+name: Daily purge
+
+on:
+  schedule:
+    - cron: '23 8 * * *'   # every day, 08:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: purge-due
+  cancel-in-progress: false
+
+jobs:
+  purge:
+    if: vars.PP_PURGE_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Delete what is due
+        env:
+          PP_SUPABASE_URL: ${{ secrets.PP_SUPABASE_URL }}
+          PP_SUPABASE_SERVICE_KEY: ${{ secrets.PP_SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ -z "$PP_SUPABASE_URL" ] || [ -z "$PP_SUPABASE_SERVICE_KEY" ]; then
+            echo "Not set up: no PP_SUPABASE_URL / PP_SUPABASE_SERVICE_KEY secrets (docs/BACKEND.md). Nothing deleted." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          node scripts/orders.mjs purge --due 7 | tee -a "$GITHUB_STEP_SUMMARY"

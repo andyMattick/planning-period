@@ -108,6 +108,11 @@ cold — please check it yourself before students see it") and the order stores 
 online alike). The review in My orders and the preview say "Blind check skipped at your request" at the top. Same
 tokens (docs/PRICING.md); what still runs: docs/RUNBOOK.md step 5. Service worker `v13`.
 
+**Approve releases the files by itself** (owner, Nov 8, 2026): with the automatic runner on (docs/BACKEND.md), Approve
+in My orders starts the final: the files are checked against what she approved, posted (**Ready**, with the zip) in a
+few minutes, and her uploads and the preview are deleted then (rule 1). If anything changed since she approved, nothing
+is released and the order shows **Stopped** with a note. A change request still goes to the owner.
+
 Still to come from the plan below: Background Sync for an order sent offline (today: the zip), push notifications.
 
 ## When there's a real backend (the plan, Nov 5, 2026)

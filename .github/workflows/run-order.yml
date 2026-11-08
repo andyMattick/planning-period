@@ -1,19 +1,21 @@
 # The automatic runner (docs/ROADMAP.md step C; setup and how to turn it off: docs/BACKEND.md, "The automatic runner").
 # A database trigger in the Supabase project (supabase/runner/dispatch.sql) sends a repository_dispatch when an order
-# is sent (order-sent: onboarding, posts the follow-up) or answered (order-answered: the build, stops at preview_ready).
-# Secrets come from the repository's Actions secrets, never from the code. Nothing here deploys or merges anything.
+# is sent (order-sent: onboarding, posts the follow-up), answered (order-answered: the build, stops at preview_ready) or
+# approved by her in My orders (order-approved: the final files against her approval, final_ready, the purge, then the
+# auditor through scripts/auditor-gate.mjs). Secrets come from the repository's Actions secrets, never from the code.
+# Nothing here deploys anything; the only push is the gated auditor commit to main, with PP_AUDIT_TOKEN (final only).
 name: Run order
 
 on:
   repository_dispatch:
-    types: [order-sent, order-answered]
+    types: [order-sent, order-answered, order-approved]
   workflow_dispatch:
     inputs:
       id:
         description: Order id (pp-YYYY-MM-DD-xxxxxx)
         required: true
       stage:
-        description: onboard, build or auto (from its status)
+        description: onboard, build, final or auto (from its status; auto never runs the auditor)
         required: false
         default: auto
 
@@ -30,20 +32,24 @@ jobs:
     # the off switch: repository variable PP_RUNNER_ENABLED must be "true"
     if: vars.PP_RUNNER_ENABLED == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    # the final (render, post, purge) takes minutes; the auditor's gate runs npm run check once or twice
+    timeout-minutes: ${{ github.event.action == 'order-approved' && 45 || 75 }}
     env:
       ORDER_ID: ${{ github.event.client_payload.id || inputs.id }}
-      STAGE: ${{ github.event.action == 'order-sent' && 'onboard' || github.event.action == 'order-answered' && 'build' || inputs.stage || 'auto' }}
+      STAGE: ${{ github.event.action == 'order-sent' && 'onboard' || github.event.action == 'order-answered' && 'build' || github.event.action == 'order-approved' && 'final' || inputs.stage || 'auto' }}
     steps:
       - name: Check the order id
         run: |
           if ! printf '%s' "$ORDER_ID" | grep -Eq '^pp-[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9]{6}$'; then
             echo "not an order id"; exit 2
           fi
-          case "$STAGE" in onboard|build|auto) ;; *) echo "bad stage"; exit 2 ;; esac
+          case "$STAGE" in onboard|build|final|auto) ;; *) echo "bad stage"; exit 2 ;; esac
           echo "PP_WORK_ROOT=$RUNNER_TEMP/pp-work" >> "$GITHUB_ENV"
 
       - uses: actions/checkout@v4
+        with:
+          # no token left in .git/config: the auditor's push token goes to scripts/auditor-gate.mjs only
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
@@ -68,12 +74,20 @@ jobs:
           PP_SUPABASE_SERVICE_KEY: ${{ secrets.PP_SUPABASE_SERVICE_KEY }}
           PP_MODEL_STANDARD: ${{ vars.PP_MODEL_STANDARD }}
           PP_MODEL_FAST: ${{ vars.PP_MODEL_FAST }}
+          # final only: a fine-grained token with Contents: write on this repository, for the auditor's gated commit
+          PP_AUDIT_TOKEN: ${{ env.STAGE == 'final' && secrets.PP_AUDIT_TOKEN || '' }}
+          GIT_AUTHOR_NAME: order runner
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          PP_AUDITOR_ENABLED: ${{ vars.PP_AUDITOR_ENABLED }}
         run: |
           set +e
+          if [ "$STAGE" = final ] && [ -n "$PP_AUDIT_TOKEN" ] && [ "$PP_AUDITOR_ENABLED" != false ]; then
+            export PP_AUDIT=1 PP_AUDIT_PUSH=1      # the auditor edits briefs; the gate commits what passes to main
+          fi
           node scripts/run-order.mjs "$ORDER_ID" --stage "$STAGE"
           code=$?
           case $code in
-            0) echo "Done: $ORDER_ID ($STAGE)" >> "$GITHUB_STEP_SUMMARY" ;;
+            0) echo "Done: $ORDER_ID ($STAGE)" >> "$GITHUB_STEP_SUMMARY" ;;   # the final adds the auditor's digest above
             3) echo "Handed to the owner: $ORDER_ID ($STAGE). Status unchanged, with a note for her; files in deliverables/<teacher>/$ORDER_ID/work/ (orders.mjs work-get)." >> "$GITHUB_STEP_SUMMARY" ;;
             *) echo "Failed: $ORDER_ID ($STAGE). Status failed, with a note for her." >> "$GITHUB_STEP_SUMMARY" ;;
           esac
