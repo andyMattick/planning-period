@@ -495,3 +495,7 @@ main:focus { outline: none; }
 /* the follow-up's Other choice: a radio with its own text box */
 .fu-other .fu-other-text { width: 100%; margin-top: 6px; min-height: 40px; font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg, #fff); color: inherit; }
 .fu-other > span { flex: 1; }
+
+/* The review's judgment calls ("Your decisions") */
+fieldset.jcall { border: 0; padding: 0; margin: 10px 0; min-width: 0; }
+fieldset.jcall legend { padding: 0; font-weight: 500; }

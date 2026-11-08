@@ -31,7 +31,36 @@
   };
   var CANCELLABLE = ['draft', 'sent', 'onboarding', 'needs_answer', 'building', 'preview_ready', 'changes_requested', 'failed'];
 
-  function draft(id) { return drafts[id] = drafts[id] || { checks: {}, comments: {}, general: '', name: '', answers: null, other: {}, extra: '' }; }
+  function draft(id) { return drafts[id] = drafts[id] || { checks: {}, comments: {}, general: '', name: '', answers: null, other: {}, extra: '', picks: null }; }
+  // Judgment calls (the review's "Your decisions"): option 0 is always "keep it as it is"; any other pick asks for a
+  // change, so it is sent with Request changes (scripts/render/review.mjs KEEP_OPTION). Our pick starts chosen.
+  function calls(o) { return ((o.review || {}).judgments || []).filter(function (c) { return c && c.id; }); }
+  function picksOf(o) {
+    var d = draft(o.id);
+    if (!d.picks) { d.picks = {}; calls(o).forEach(function (c) { if ((c.options || []).length && c.recommend != null) d.picks[c.id] = Number(c.recommend); }); }
+    return d.picks;
+  }
+  function changePicks(o) { var p = picksOf(o); return calls(o).filter(function (c) { return (c.options || []).length && p[c.id] != null && p[c.id] !== 0; }); }
+  function decisions(o) {
+    var p = picksOf(o);
+    return calls(o).filter(function (c) { return (c.options || []).length && p[c.id] != null; }).map(function (c) {
+      return { id: c.id, where: c.where, choice: c.options[p[c.id]], option: p[c.id], recommended: c.recommend, change: p[c.id] !== 0 };
+    });
+  }
+  function decisionsHTML(o) {
+    var cs = calls(o), p = picksOf(o), id = esc(o.id);
+    if (!cs.length) return '';
+    return '<h4>Your decisions</h4><p class="small muted">Matters of your style, left for you. Our pick is chosen; tap another to change it. Keeping a question as it is lets you approve; any other choice is sent with Request changes.</p>' +
+      cs.map(function (c) {
+        var opts = c.options || [];
+        return '<fieldset class="field jcall" data-call="' + esc(c.id) + '"><legend><b>' + esc(c.where) + '.</b> ' + esc(c.issue) + '</legend>' +
+          (opts.length ? '<div class="choice-row">' + opts.map(function (x, i) {
+            return '<label><input type="radio" name="jc-' + id + '-' + esc(c.id) + '" data-pick="' + id + '" data-call="' + esc(c.id) + '" value="' + i + '"' + (p[c.id] === i ? ' checked' : '') + '> ' + esc(x) +
+              (i === c.recommend ? ' <span class="tag-int">our pick</span>' : '') + '</label>';
+          }).join('') + '</div>' + (c.why ? '<p class="small muted">Why we suggest it: ' + esc(c.why) + '</p>' : '')
+            : '<p class="small muted">' + esc(c.text || '') + ' Write your choice in the comments.</p>') + '</fieldset>';
+      }).join('');
+  }
   function itemLabel(id) {
     var it = (menu.items || []).concat(menu.extras || []).filter(function (x) { return x.id === id; })[0];
     return it ? it.label : id;
@@ -201,6 +230,7 @@
         return '<div class="field req"><label for="c-' + id + '-' + i + '">' + esc(t) + '</label><textarea id="c-' + id + '-' + i + '" rows="2" data-comment="' + id + '" data-title="' + esc(t) + '">' + esc(d.comments[t] || '') + '</textarea></div>';
       }).join('') +
       '<div class="field"><label for="c-' + id + '-all">For the whole pack</label><textarea id="c-' + id + '-all" rows="2" data-general="' + id + '" placeholder="Anything else to change">' + esc(d.general) + '</textarea></div>' +
+      decisionsHTML(o) +
       '<h4>3. Approve or ask for changes</h4><p class="small muted">Tick every box only when it is true.</p><ul class="checks">' + CHECKS.map(function (c) {
         return '<li><label><input type="checkbox" data-check="' + id + '" data-key="' + c[0] + '"' + (d.checks[c[0]] ? ' checked' : '') + '> ' + esc(c[1]) + '</label></li>';
       }).join('') + '</ul>' +
@@ -268,8 +298,10 @@
     var all = CHECKS.every(function (c) { return d.checks[c[0]]; });
     var comments = Object.keys(d.comments).filter(function (t) { return d.comments[t].trim(); }).map(function (t) { return { title: t, comment: d.comments[t].trim() }; });
     if (d.general.trim()) comments.push({ title: 'Whole pack', comment: d.general.trim() });
+    var ch = changePicks(o), p = picksOf(o);
+    if (ch.length) comments.push({ title: 'Your decisions', comment: ch.map(function (c) { return c.where + ': ' + c.options[p[c.id]]; }).join(' · ') });
     var name = d.name.trim().length > 0;
-    return { all: all, comments: comments, name: name, canApprove: all && name && !comments.length, canChange: name && comments.length > 0 };
+    return { all: all, comments: comments, name: name, decisionChange: ch.length > 0, canApprove: all && name && !comments.length, canChange: name && comments.length > 0 };
   }
   function updateReview(o) {
     var card = document.getElementById('o-' + o.id); if (!card || o.status !== 'preview_ready') return;
@@ -280,6 +312,7 @@
     if (!s.name) why.push('type your name');
     if (!s.all) why.push('tick every box to approve');
     if (!s.comments.length) why.push('write a comment to request changes');
+    else if (s.decisionChange) why.push('one of your decisions asks for a change, so send it with Request changes (to approve instead, keep those questions as they are and clear your comments)');
     else why.push('to approve instead, clear your comments (approving means nothing needs a change)');
     card.querySelector('[data-why]').textContent = 'To continue: ' + why.join('; ') + '.';
   }
@@ -299,14 +332,14 @@
     });
     return chain.then(function () {
       var approval = { orderId: o.id, name: d.name.trim(), date: new Date().toISOString(), statement: rv.statement,
-        packHash: rv.packHash, documents: out };
+        packHash: rv.packHash, documents: out, judgments: decisions(o) };
       return backend.rpc('approve_order', { p_order: o.id, p_approval: approval });
     });
   }
   function requestChanges(o) {
     var d = draft(o.id), s = reviewState(o);
     var body = { orderId: o.id, name: d.name.trim(), date: new Date().toISOString(), packHash: (o.review || {}).packHash || null,
-      checklist: CHECKS.map(function (c) { return { item: c[1], checked: !!d.checks[c[0]] }; }), comments: s.comments };
+      checklist: CHECKS.map(function (c) { return { item: c[1], checked: !!d.checks[c[0]] }; }), comments: s.comments, judgments: decisions(o) };
     return backend.rpc('request_changes', { p_order: o.id, p_comments: body });
   }
 
@@ -391,6 +424,7 @@
     else if (t.hasAttribute('data-general')) d.general = t.value;
     else if (t.hasAttribute('data-check')) d.checks[t.getAttribute('data-key')] = t.checked;
     else if (t.hasAttribute('data-who')) d.name = t.value;
+    else if (t.hasAttribute('data-pick')) { if (t.checked) picksOf(o)[t.getAttribute('data-call')] = Number(t.value); }
     updateReview(o);
   });
   document.addEventListener('change', function (e) { if (e.target.type === 'radio' || e.target.type === 'checkbox') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
