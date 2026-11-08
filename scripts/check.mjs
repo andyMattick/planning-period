@@ -360,6 +360,28 @@ else {
   if (st.status === 0) ok(`checks/interactive-format.mjs catches all ${n} broken copies, and samples/_fixture passes as interactive (every question type, both modes)`); else fail(`checks/interactive-format.mjs --self-test failed:\n${st.stdout}${st.stderr}`);
 }
 
+/* 12b. Subject "Other (say which)": the teacher's own words (order.subjectOther) print, never "Other (say which)"
+   (the renderer's subject line on every copy, the audit report and the interactive page all read subjectLabelOf). */
+{
+  const { subjectLabelOf } = await import('../scripts/render/util.mjs');
+  const menu = readJSON('menu.json');
+  const errs = [];
+  if (subjectLabelOf(menu, { subject: 'other', subjectOther: ' Statistics ' }) !== 'Statistics') errs.push('subject other + subjectOther does not give "Statistics"');
+  if (subjectLabelOf(menu, { subject: 'math', subjectOther: 'Statistics' }) !== menu.subjects.find((s) => s.id === 'math').label) errs.push('subjectOther changed a non-other subject');
+  if (subjectLabelOf(menu, { subject: 'other' }) !== menu.subjects.find((s) => s.id === 'other').label) errs.push('subject other with no subjectOther lost the menu label');
+  const PRINT = join(ROOT, 'samples/_cap-interactive/print/pack.json');
+  if (existsSync(PRINT)) {
+    const { buildPages } = await import('../checks/interactive-format.mjs');
+    const pack = JSON.parse(readFileSync(PRINT, 'utf8'));
+    pack.order = { ...pack.order, subject: 'other', subjectOther: 'Statistics' };
+    for (const pg of buildPages(pack)) {
+      if (!pg.html.includes('Statistics')) errs.push(`${pg.name}: the page doesn't print "Statistics"`);
+      if (/say which/i.test(pg.html)) errs.push(`${pg.name}: the page prints "say which"`);
+    }
+  }
+  if (errs.length) fail(`subject "other": ${errs.join('; ')}`); else ok('subject "other" prints the teacher\'s own subject (subjectOther) on the copies and the interactive page');
+}
+
 /* 10. "Paste a link" (scripts/fetch-page.mjs): the address guard, redirects, size/time/type limits, the sign-in check and
    the text extraction, against a local test server (a few seconds, no outside network) */
 {

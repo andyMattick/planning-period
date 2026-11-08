@@ -11,7 +11,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { slug, questionsOf, layoutOf, scrubSecrets, cleanSvg, kindOf } from './render/util.mjs';
+import { slug, questionsOf, layoutOf, scrubSecrets, cleanSvg, kindOf, subjectLabelOf } from './render/util.mjs';
 import { copyHtml, rubricHtml, handoutHtml, cardsHtml, footerTemplate, headerTemplate, watermark, PREVIEW_MARK } from './render/html.mjs';
 import { copyDocx, rubricDocx } from './render/docx.mjs';
 import { deckPptx } from './render/pptx.mjs';
@@ -97,7 +97,7 @@ export async function renderPack(folder, { mode } = {}) {
   const menu = JSON.parse(fs.readFileSync(path.join(ROOT, 'menu.json'), 'utf8'));
   const style = pack.style || {};
   const order = pack.order || {};
-  const subjectLabel = menu.subjects.find((s) => s.id === order.subject)?.label || order.subject || '';
+  const subjectLabel = subjectLabelOf(menu, order);
   const date = pack.date || order.date || (pack.id?.match(/\d{4}-\d{2}-\d{2}/) || [])[0] || new Date().toISOString().slice(0, 10);
 
   const outDir = path.join(folder, preview ? 'out-preview' : 'out');
