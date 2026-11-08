@@ -210,6 +210,8 @@ try {
   await shot(page, 'link-desktop-light-preview');
   await page.click('[data-link="sources"] [data-link-use]');
   await page.waitForFunction(() => /link - How volcanoes form\.txt/.test(document.getElementById('list-sources').textContent));
+  // the page count is worked out a moment after the file is added (it shows "reading…" first): wait for it, then check it
+  await page.waitForFunction(() => !/reading/.test(document.querySelector('#list-sources .fpages')?.textContent || 'reading'));
   assert.match(await page.textContent('#list-sources .fpages'), /about 3 pages/);
   assert.match(await page.textContent('#list-sources .flink'), /127\.0\.0\.1/);
   assert.equal(await page.isVisible('[data-link="sources"] [data-link-card]'), false);
@@ -303,15 +305,18 @@ try {
   await page.reload();
   await page.waitForSelector(`#o-${orderId} .fu-q`);
   assert.ok(await page.isChecked(`input[name="${orderId}:q1"][value="B"]`), 'our pick is chosen to start');
+  assert.equal(await page.locator(`#o-${orderId} .fu-other`).count(), 2, 'every question has an Other choice');
   await page.check(`input[name="${orderId}:q1"][value="A"]`);
+  await page.fill(`#o-${orderId} [data-other][data-q="q2"]`, 'only if it fits on one page');   // typing in Other picks Other
+  assert.ok(await page.isChecked(`input[name="${orderId}:q2"][value="Other"]`), 'typing in the Other box picks Other');
   await page.fill(`[data-extra="${orderId}"]`, 'Use local rivers in the stories.');
   await page.click(`[data-send-answer="${orderId}"]`);
   await page.waitForFunction((id) => /Being made/.test(document.querySelector('#o-' + id + ' .status-chip')?.textContent || ''), orderId);
   o = (await state()).orders.find((x) => x.id === orderId);
-  assert.equal(o.answer, '1 A, 2 A · Use local rivers in the stories.');
-  assert.deepEqual(o.answers, { q1: 'A', q2: 'A' });
+  assert.equal(o.answer, '1 A, 2 Other: only if it fits on one page · Use local rivers in the stories.');
+  assert.deepEqual(o.answers, { q1: 'A', q2: 'Other: only if it fits on one page' });
   await owner('answer', orderId);
-  assert.match(readFileSync(join(WORK, 'followup-answer.md'), 'utf8'), /1 A, 2 A/);
+  assert.match(readFileSync(join(WORK, 'followup-answer.md'), 'utf8'), /1 A, 2 Other: only if it fits on one page/);
   ok('follow-up: questions with one-tap options (our pick pre-chosen); her answer saved, status building; orders.mjs answer writes followup-answer.md');
 
   // ===== 5. preview → request changes → new preview → approve =====

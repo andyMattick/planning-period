@@ -479,3 +479,7 @@ main:focus { outline: none; }
 .radio-card:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
 .radio-card input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
 .radio-card > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+/* the follow-up's Other choice: a radio with its own text box */
+.fu-other .fu-other-text { width: 100%; margin-top: 6px; min-height: 40px; font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg, #fff); color: inherit; }
+.fu-other > span { flex: 1; }

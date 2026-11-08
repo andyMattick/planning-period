@@ -31,7 +31,7 @@
   };
   var CANCELLABLE = ['draft', 'sent', 'onboarding', 'needs_answer', 'building', 'preview_ready', 'changes_requested', 'failed'];
 
-  function draft(id) { return drafts[id] = drafts[id] || { checks: {}, comments: {}, general: '', name: '', answers: null, extra: '' }; }
+  function draft(id) { return drafts[id] = drafts[id] || { checks: {}, comments: {}, general: '', name: '', answers: null, other: {}, extra: '' }; }
   function itemLabel(id) {
     var it = (menu.items || []).concat(menu.extras || []).filter(function (x) { return x.id === id; })[0];
     return it ? it.label : id;
@@ -141,9 +141,14 @@
         return '<label><input type="radio" name="' + esc(o.id + ':' + qid) + '" value="' + esc(L) + '" data-answer="' + esc(o.id) + '" data-q="' + esc(qid) + '"' +
           (d.answers[qid] === L ? ' checked' : '') + (readOnly ? ' disabled' : '') + '><span><b>' + esc(L) + '</b> ' + esc(optText(opt)) +
           (L === rec ? ' <span class="rec">our pick</span>' : '') + '</span></label>';
-      }).join('') + '</div>' + (q.why ? '<p class="small muted">' + esc(q.why) + '</p>' : '') + '</fieldset>';
+      }).join('') +
+        // Other: her own answer in her own words (owner, Nov 8, 2026)
+        '<label class="fu-other"><input type="radio" name="' + esc(o.id + ':' + qid) + '" value="Other" data-answer="' + esc(o.id) + '" data-q="' + esc(qid) + '"' +
+        (d.answers[qid] === 'Other' ? ' checked' : '') + (readOnly ? ' disabled' : '') + '><span><b>Other</b> ' +
+        '<input type="text" maxlength="300" class="fu-other-text" data-other="' + esc(o.id) + '" data-q="' + esc(qid) + '" aria-label="Other answer for question ' + (i + 1) + '" placeholder="Your own answer" value="' + esc((d.other || {})[qid] || '') + '"' + (readOnly ? ' disabled' : '') + '></span></label>' +
+        '</div>' + (q.why ? '<p class="small muted">' + esc(q.why) + '</p>' : '') + '</fieldset>';
     }).join('');
-    if (readOnly) return '<div class="fu">' + mdLite(fu.message) + qHTML + '</div>';
+    if (readOnly) return '<div class="fu"><p class="note"><b>Only the teacher who placed this order can answer.</b> Sign in with ' + esc((teachers[o.teacher] && teachers[o.teacher].email) || 'the email it was ordered from') + ' to choose answers.</p>' + mdLite(fu.message) + qHTML + '</div>';
     return '<div class="fu" id="fu-' + esc(o.id) + '" tabindex="-1">' + mdLite(fu.message) + qHTML +
       '<div class="field"><label for="fu-extra-' + esc(o.id) + '">Anything else? <span class="hint">(optional)</span></label>' +
       '<textarea id="fu-extra-' + esc(o.id) + '" rows="2" data-extra="' + esc(o.id) + '" placeholder="In your own words">' + esc(d.extra) + '</textarea></div>' +
@@ -156,6 +161,8 @@
     qs.forEach(function (q, i) {
       var qid = q.id || 'q' + (i + 1), rec = String(q.recommended || '').charAt(0).toUpperCase();
       answers[qid] = go ? rec || d.answers[qid] : d.answers[qid];
+      var other = String((d.other || {})[qid] || '').trim();
+      if (!go && answers[qid] === 'Other') answers[qid] = 'Other: ' + (other || '(no text)');
       parts.push((i + 1) + ' ' + answers[qid]);
     });
     var text = go ? 'go' : parts.join(', ');
@@ -341,6 +348,10 @@
     var t = e.target, o = orderOf(t); if (!o) return;
     var d = draft(o.id);
     if (t.hasAttribute('data-answer')) d.answers[t.getAttribute('data-q')] = t.value;
+    else if (t.hasAttribute('data-other')) {
+      var q = t.getAttribute('data-q'); d.other = d.other || {}; d.other[q] = t.value; d.answers[q] = 'Other';
+      var r = t.closest('label') && t.closest('label').querySelector('input[type=radio]'); if (r) r.checked = true;
+    }
     else if (t.hasAttribute('data-extra')) d.extra = t.value;
     else if (t.hasAttribute('data-comment')) d.comments[t.getAttribute('data-title')] = t.value;
     else if (t.hasAttribute('data-general')) d.general = t.value;
