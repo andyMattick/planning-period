@@ -156,6 +156,73 @@ What it can't do: word answers ("the graph rises"), proofs, constructions, readi
 only on the picture (write the check from the function the graph draws), statistics answers that depend on a
 convention (quartile methods: give `evaluate` the value you mean).
 
+## 4. Number versions by script: `gen` (owner, Nov 8, 2026)
+
+For a "same questions, different numbers" order (a test or quiz with versions, a `versions` order that asks for new
+numbers), the maker writes **version A only**, with every number as a named parameter, and `scripts/versions.mjs` makes
+B, C… in under a second. Why: the first real online order (docs/audits/TIME-2026-11-08.md) spent 9.9 of its 31 minutes
+in the maker writing three versions by hand, most of it re-working each table, r, line and key for B and C.
+
+```
+node scripts/versions.mjs pack.json                 # makes every version in the document's `versions` other than A
+node scripts/versions.mjs pack.json --verify        # B, C… in the pack still come from A's formulas (exit 1 if not)
+```
+
+The spec, on the document (parameters several items share, such as a two-way table) and on each item:
+
+```jsonc
+"gen": {                                                        // on the document: params, derived, constraints
+  "params": { "a": {"int": [20, 60], "A": 36}, "b": {"int": [20, 60], "A": 24} },
+  "derived": { "r1": "a + b", "n": "a + b + c + e" },             // mathjs, in order
+  "constraints": ["a != c", "a / r1 != c / r2", "n <= 200"]
+}
+"gen": {                                                        // on a question
+  "params": { "d0": {"num": [10, 30], "places": 1, "A": 12.5}, "xr": {"int": [4, 12], "A": 8}, "yr": {"int": [10, 50], "A": 26} },
+  "derived": { "pred": "d0 + d1*xr" },
+  "constraints": ["abs(yr - pred) >= 0.5"],
+  "distinct": ["{{yr - pred|2}}", "{{pred - yr|2}}"],         // the key and each distractor formula, as printed: must differ
+  "fields": {                                                   // templates for the version fields
+    "prompt": "The least-squares line $\\hat{y} = {{d0}} + {{d1}}x$ … One data point is ({{xr}}, {{yr}}). Find its residual.",
+    "answer": "{{yr - pred|2}}",
+    "math": {"type": "evaluate", "expr": "{{yr}} - ({{d0}} + {{d1}}*{{xr}})"},
+    "why": "Predicted: {{d0}} + {{d1}}({{xr}}) = {{pred|2}}. Residual = {{yr}} − {{pred|2}} = {{yr - pred|2}}."
+  }
+}
+```
+
+- **Parameters:** `int` (with `step`), `num` (with `places`) or `pick` (a list); each one gives its **version A value**.
+  An item's names can't repeat the document's.
+- **Placeholders:** `{{expr}}` prints a number (no trailing zeros), `{{expr|1}}` rounds to 1 place, `{{expr|f2}}` keeps
+  2 places, `u` prints a minus as −, `,` adds thousands commas; a whole string `"{{=expr}}"` is the value itself (for a
+  graph spec). Helpers besides mathjs's own: `corr(xs, ys)`, `slope(xs, ys)`, `intercept(xs, ys)`. Templates can't call
+  `import`, `evaluate`, `parse` or similar.
+- **Fields:** any per-version field (`prompt`, `figure` as an SVG string or a graph spec, `choices`, `answer`, `accept`,
+  `why`, `math` as the `math.check` object). An mc item's choices are written in A's order and its key is A's `answer`;
+  each new version moves the key to a letter the earlier versions didn't use (spreading the letters). Per-version fields
+  with no template (a `unit`) are copied from A. Items without `gen` are written by hand in every version, as before.
+
+**It refuses** (exit 1, nothing written) when: the formulas don't give version A exactly (so what the checkers read in A
+is what makes B and C); a constraint fails (it redraws up to 200 times per item and per document, and names the
+constraint that kept failing; a `--values` number that breaks one is refused, never redrawn); two choices print the same
+or have the same value; two `distinct` texts print the same; a version's prompt and picture repeat another version's; a
+numeric item has no `math` template, or a `math` template uses no parameter or comes out the same as A's while the
+numbers changed (a number typed into the check); or SymPy (`checks/math.mjs`, run on every key it made) disagrees. It
+warns when a choice is word for word in A (the memorizer bot reads a graded A). The same seed (the pack's id by default)
+and the same A always give the same B, C….
+
+**What it does not replace.** The math check on B and C uses the same formulas as their keys, so it proves the
+arithmetic and rounding, not that a formula is right: version A's blind tester and solver prove that, and **a fresh
+solver still works every number in B and C from the student copy** (docs/RUNBOOK.md, "The fast path"). Wilco runs on
+every version. Tested by `scripts/test-versions.mjs` on the made-up fixture `checks/fixtures/versions/version-a.pack.json`
+(in `npm run check`).
+
+**Per-student numbers later** (the owner's wish in this order's request, "randomize the numbers, not the questions";
+`feasibility.json` says not supported yet). The spec is the whole recipe: a student's version is
+`versions.mjs --versions S --seed <order id>|<student code>`, with the same refusals and the same SymPy check. What it
+still needs: making them before the class (say 40 seats a class, about 1 s for 40 versions), a teacher copy per seat (or
+one answer table per seat), a solver sweep of a sample of seats plus SymPy on every seat, and the interactive page picking
+its seat from a class code. Nothing about the checked version A changes.
+
 ## For the maker and solver briefs (the auditor adds these; nobody else edits `agents/`)
 
 Suggested additions, for the auditor to word and version:

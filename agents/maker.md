@@ -162,6 +162,30 @@ B 7 of 8), so:
   student really types, and `miss` for the 1–2 predictable wrong answers; card backs under 90 characters; memorize
   text quoted exactly from the source or a public-domain original, with `source`.
 
+## Same questions, different numbers: write version A, the script makes the rest (owner, Nov 8, 2026)
+When the order asks for versions that differ only in their numbers (the follow-up or the request says "same questions,
+different numbers", or the teacher asked for number-randomized versions), write **version A only** and give every item
+whose numbers change a `gen` spec (docs/KINDS-MATH.md §4): each number a named parameter with its range and its A value,
+shared numbers (a two-way table several items read) on the document, `derived` values, `constraints` (table cells that
+must add up, r in a range, a residual that isn't 0, a prediction inside the data), and `fields` templates for the
+prompt, the picture, the choices, the key, `accept`, `why` and the `math.check`. Then in your folder:
+```
+node scripts/versions.mjs pack.json          # makes B, C…; refuses numbers that break a constraint or tie a distractor to the key
+```
+and run every check (rule 6) on the result. Rules:
+- **Write the formulas from the problem, never from A's numbers:** a key, a distractor or a check with a number typed in
+  is refused (or wrong in B). Each wrong choice is its own misconception formula (the wrong denominator, the sign
+  flipped, the joint instead of the conditional), and `distinct` lists the key with each one, as printed.
+- **Constraints carry the item's sense:** what makes A a fair question (a clear association, a point off the line, an
+  x inside the data, numbers a student can work) must hold for every draw. Ranges near A's difficulty: B's numbers never
+  make it easier (no round totals when A's aren't).
+- **Wilco's cues carry over:** the script keeps your choices' shape, so fix length, overlap and wording cues in A; a
+  choice with no number is word for word in every version (the script warns): give it a number from the item or accept
+  the memorizer's warning only when Wilco passes.
+- An item whose wording, not just its numbers, should change between versions (a different context) is written by hand
+  in every version, without `gen`. A FIX round changes A (and its `gen`), then reruns `versions.mjs`.
+- Say in your hand-off which items are script-made and the seed (the pack's id unless the lead gave one).
+
 ## The interactive format (owner, Nov 8, 2026; docs/KINDS-INTERACTIVE-FORMAT.md)
 
 When `order.itemSpecs.<item>.format` is `"interactive"`, set the document's `format: "interactive"` and `grading`
@@ -200,7 +224,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 10** (Nov 8, 2026)
+**Version 11** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -245,3 +269,7 @@ have it) and the number of questions per document.
 - v10, Nov 8, 2026 (owner: "I want it for guided notes and review"): interactive guided notes (blanks as `______`,
   several blanks named in order with `;` in the key and every `accept`) and review games (sections as categories,
   `points` or `level`; short answers of 4 words or fewer scored by the page).
+- v11, Nov 8, 2026 (owner: "if this is going to be feasible, we have got to make this shorter"; docs/audits/TIME-2026-11-08.md):
+  for "same questions, different numbers" orders, write version A with a `gen` spec and let `scripts/versions.mjs`
+  make B, C… (pp-2026-11-08-a20840: three versions by hand took 9.9 of 31 minutes and $2.07 of $5.56). Changed at the
+  owner's request, not by the auditor.

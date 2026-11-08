@@ -1,0 +1,537 @@
+{
+  "format": 1,
+  "id": "fixture-g12-versions",
+  "order": {
+    "teacher": "Mr. Example (made-up sample)",
+    "grade": "12",
+    "subject": "math",
+    "topic": "Two-variable data",
+    "items": [
+      "quiz"
+    ],
+    "requests": "Same questions, different numbers in each version",
+    "sources": [
+      "made-up-source.pdf"
+    ],
+    "styleExamples": []
+  },
+  "style": {
+    "notes": [
+      "Numbered questions"
+    ],
+    "font": "Lexend",
+    "accent": "#2b6cb0"
+  },
+  "documents": [
+    {
+      "item": "quiz",
+      "kind": "quiz",
+      "title": "Two-Variable Data Quiz",
+      "directions": "Answer each question. Calculators are allowed.",
+      "versions": [
+        "A",
+        "B",
+        "C"
+      ],
+      "gen": {
+        "params": {
+          "a": {
+            "int": [
+              20,
+              60
+            ],
+            "A": 36
+          },
+          "b": {
+            "int": [
+              20,
+              60
+            ],
+            "A": 24
+          },
+          "c": {
+            "int": [
+              20,
+              60
+            ],
+            "A": 30
+          },
+          "e": {
+            "int": [
+              20,
+              60
+            ],
+            "A": 50
+          }
+        },
+        "derived": {
+          "r1": "a + b",
+          "r2": "c + e",
+          "k1": "a + c",
+          "n": "a + b + c + e"
+        },
+        "constraints": [
+          "a != c",
+          "r1 != r2",
+          "r1 != k1",
+          "a / r1 != c / r2",
+          "n <= 200"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Questions",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "which calculation gives a conditional percent",
+              "type": "mc",
+              "prompt": {
+                "A": "A school surveyed students about their grade and whether they joined a club. Of the 9th graders, what percent joined a club? Which calculation answers the question?"
+              },
+              "figure": {
+                "A": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 96\" width=\"360\" height=\"96\" font-family=\"sans-serif\" font-size=\"13\"><text x=\"8\" y=\"20\" font-weight=\"bold\">Grade</text><text x=\"120\" y=\"20\" font-weight=\"bold\">Joined a club</text><text x=\"250\" y=\"20\" font-weight=\"bold\">Did not join</text><text x=\"8\" y=\"50\">9th grade</text><text x=\"150\" y=\"50\">36</text><text x=\"280\" y=\"50\">24</text><text x=\"8\" y=\"80\">10th grade</text><text x=\"150\" y=\"80\">30</text><text x=\"280\" y=\"80\">50</text></svg>"
+              },
+              "choices": {
+                "A": [
+                  "Divide 36 by 140, the total of everyone surveyed",
+                  "Divide 36 by 60, the total of the 9th graders surveyed",
+                  "Divide 36 by 66, the total who joined a club",
+                  "Divide 60 by 140, the share of 9th graders surveyed"
+                ]
+              },
+              "answer": {
+                "A": 1
+              },
+              "why": {
+                "A": "The \"of\" group is the 9th graders, so their total (60) is the denominator and the 9th graders who joined (36) are the numerator."
+              },
+              "gen": {
+                "fields": {
+                  "prompt": "A school surveyed students about their grade and whether they joined a club. Of the 9th graders, what percent joined a club? Which calculation answers the question?",
+                  "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 96\" width=\"360\" height=\"96\" font-family=\"sans-serif\" font-size=\"13\"><text x=\"8\" y=\"20\" font-weight=\"bold\">Grade</text><text x=\"120\" y=\"20\" font-weight=\"bold\">Joined a club</text><text x=\"250\" y=\"20\" font-weight=\"bold\">Did not join</text><text x=\"8\" y=\"50\">9th grade</text><text x=\"150\" y=\"50\">{{a}}</text><text x=\"280\" y=\"50\">{{b}}</text><text x=\"8\" y=\"80\">10th grade</text><text x=\"150\" y=\"80\">{{c}}</text><text x=\"280\" y=\"80\">{{e}}</text></svg>",
+                  "choices": [
+                    "Divide {{a}} by {{n}}, the total of everyone surveyed",
+                    "Divide {{a}} by {{r1}}, the total of the 9th graders surveyed",
+                    "Divide {{a}} by {{k1}}, the total who joined a club",
+                    "Divide {{r1}} by {{n}}, the share of 9th graders surveyed"
+                  ],
+                  "why": "The \"of\" group is the 9th graders, so their total ({{r1}}) is the denominator and the 9th graders who joined ({{a}}) are the numerator."
+                }
+              }
+            },
+            {
+              "id": "q2",
+              "level": 2,
+              "skill": "joint percent from a two-way table",
+              "type": "numeric",
+              "unit": "%",
+              "prompt": {
+                "A": "Use the table. What percent of all the students surveyed are 10th graders who joined a club? Round to one decimal place."
+              },
+              "figure": {
+                "A": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 96\" width=\"360\" height=\"96\" font-family=\"sans-serif\" font-size=\"13\"><text x=\"8\" y=\"20\" font-weight=\"bold\">Grade</text><text x=\"120\" y=\"20\" font-weight=\"bold\">Joined a club</text><text x=\"250\" y=\"20\" font-weight=\"bold\">Did not join</text><text x=\"8\" y=\"50\">9th grade</text><text x=\"150\" y=\"50\">36</text><text x=\"280\" y=\"50\">24</text><text x=\"8\" y=\"80\">10th grade</text><text x=\"150\" y=\"80\">30</text><text x=\"280\" y=\"80\">50</text></svg>"
+              },
+              "answer": {
+                "A": "21.4"
+              },
+              "accept": {
+                "A": []
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "evaluate",
+                    "expr": "30/140*100",
+                    "tol": 0.05
+                  }
+                }
+              },
+              "why": {
+                "A": "Joint percent: 30 ÷ 140 ≈ 21.4%. The denominator is everyone in the table."
+              },
+              "gen": {
+                "fields": {
+                  "prompt": "Use the table. What percent of all the students surveyed are 10th graders who joined a club? Round to one decimal place.",
+                  "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 96\" width=\"360\" height=\"96\" font-family=\"sans-serif\" font-size=\"13\"><text x=\"8\" y=\"20\" font-weight=\"bold\">Grade</text><text x=\"120\" y=\"20\" font-weight=\"bold\">Joined a club</text><text x=\"250\" y=\"20\" font-weight=\"bold\">Did not join</text><text x=\"8\" y=\"50\">9th grade</text><text x=\"150\" y=\"50\">{{a}}</text><text x=\"280\" y=\"50\">{{b}}</text><text x=\"8\" y=\"80\">10th grade</text><text x=\"150\" y=\"80\">{{c}}</text><text x=\"280\" y=\"80\">{{e}}</text></svg>",
+                  "answer": "{{c/n*100|1}}",
+                  "math": {
+                    "type": "evaluate",
+                    "expr": "{{c}}/{{n}}*100",
+                    "tol": 0.05
+                  },
+                  "why": "Joint percent: {{c}} ÷ {{n}} ≈ {{c/n*100|1}}%. The denominator is everyone in the table."
+                }
+              }
+            },
+            {
+              "id": "q3",
+              "level": 3,
+              "skill": "conditional percent, choosing the group",
+              "type": "numeric",
+              "unit": "%",
+              "prompt": {
+                "A": "Use the table. Of the students who joined a club, what percent are 9th graders? Round to one decimal place."
+              },
+              "figure": {
+                "A": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 96\" width=\"360\" height=\"96\" font-family=\"sans-serif\" font-size=\"13\"><text x=\"8\" y=\"20\" font-weight=\"bold\">Grade</text><text x=\"120\" y=\"20\" font-weight=\"bold\">Joined a club</text><text x=\"250\" y=\"20\" font-weight=\"bold\">Did not join</text><text x=\"8\" y=\"50\">9th grade</text><text x=\"150\" y=\"50\">36</text><text x=\"280\" y=\"50\">24</text><text x=\"8\" y=\"80\">10th grade</text><text x=\"150\" y=\"80\">30</text><text x=\"280\" y=\"80\">50</text></svg>"
+              },
+              "answer": {
+                "A": "54.5"
+              },
+              "accept": {
+                "A": []
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "evaluate",
+                    "expr": "36/66*100",
+                    "tol": 0.05
+                  }
+                }
+              },
+              "why": {
+                "A": "The group after \"of\" is everyone who joined a club (36 + 30 = 66), so 36 ÷ 66 ≈ 54.5%."
+              },
+              "gen": {
+                "distinct": [
+                  "{{a/k1*100|1}}",
+                  "{{a/r1*100|1}}",
+                  "{{a/n*100|1}}"
+                ],
+                "fields": {
+                  "prompt": "Use the table. Of the students who joined a club, what percent are 9th graders? Round to one decimal place.",
+                  "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 96\" width=\"360\" height=\"96\" font-family=\"sans-serif\" font-size=\"13\"><text x=\"8\" y=\"20\" font-weight=\"bold\">Grade</text><text x=\"120\" y=\"20\" font-weight=\"bold\">Joined a club</text><text x=\"250\" y=\"20\" font-weight=\"bold\">Did not join</text><text x=\"8\" y=\"50\">9th grade</text><text x=\"150\" y=\"50\">{{a}}</text><text x=\"280\" y=\"50\">{{b}}</text><text x=\"8\" y=\"80\">10th grade</text><text x=\"150\" y=\"80\">{{c}}</text><text x=\"280\" y=\"80\">{{e}}</text></svg>",
+                  "answer": "{{a/k1*100|1}}",
+                  "math": {
+                    "type": "evaluate",
+                    "expr": "{{a}}/{{k1}}*100",
+                    "tol": 0.05
+                  },
+                  "why": "The group after \"of\" is everyone who joined a club ({{a}} + {{c}} = {{k1}}), so {{a}} ÷ {{k1}} ≈ {{a/k1*100|1}}%."
+                }
+              }
+            },
+            {
+              "id": "q4",
+              "level": 2,
+              "skill": "interpret the slope in context",
+              "type": "mc",
+              "prompt": {
+                "A": "A coach finds the least-squares line $\\hat{y} = 38.5 + 2.3x$, where $x$ is hours of practice per week and $\\hat{y}$ is the predicted free-throw percent. Which statement interprets the slope?"
+              },
+              "choices": {
+                "A": [
+                  "Each extra hour of weekly practice adds about 2.3 predicted points",
+                  "A player who does not practice is predicted to make 2.3% of free throws",
+                  "The correlation between weekly practice hours and free-throw percent is about 2.3",
+                  "Players whose free-throw percent is 2.3 points higher are predicted to practice one more hour a week"
+                ]
+              },
+              "answer": {
+                "A": 0
+              },
+              "why": {
+                "A": "The slope, 2.3, is the change in predicted free-throw percent for each one-hour increase in weekly practice."
+              },
+              "gen": {
+                "params": {
+                  "b0": {
+                    "num": [
+                      30,
+                      50
+                    ],
+                    "places": 1,
+                    "A": 38.5
+                  },
+                  "b1": {
+                    "num": [
+                      1.2,
+                      3.0
+                    ],
+                    "places": 1,
+                    "A": 2.3
+                  }
+                },
+                "constraints": [
+                  "b1 != round(b1)"
+                ],
+                "fields": {
+                  "prompt": "A coach finds the least-squares line $\\hat{y} = {{b0}} + {{b1}}x$, where $x$ is hours of practice per week and $\\hat{y}$ is the predicted free-throw percent. Which statement interprets the slope?",
+                  "choices": [
+                    "Each extra hour of weekly practice adds about {{b1}} predicted points",
+                    "A player who does not practice is predicted to make {{b1}}% of free throws",
+                    "The correlation between weekly practice hours and free-throw percent is about {{b1}}",
+                    "Players whose free-throw percent is {{b1}} points higher are predicted to practice one more hour a week"
+                  ],
+                  "why": "The slope, {{b1}}, is the change in predicted free-throw percent for each one-hour increase in weekly practice."
+                }
+              }
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "predict from a least-squares line",
+              "type": "numeric",
+              "unit": "ft",
+              "prompt": {
+                "A": "A ranger measured young trees aged 3 to 9 years. The least-squares line is $\\hat{y} = 2.4 + 1.9x$, where $x$ is age in years and $\\hat{y}$ is predicted height in feet. Predict the height of a tree that is 6 years old."
+              },
+              "answer": {
+                "A": "13.8"
+              },
+              "accept": {
+                "A": []
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "evaluate",
+                    "expr": "2.4 + 1.9*6"
+                  }
+                }
+              },
+              "why": {
+                "A": "ŷ = 2.4 + 1.9(6) = 13.8 ft. Age 6 is inside the ages measured, so the prediction is reasonable."
+              },
+              "gen": {
+                "params": {
+                  "c0": {
+                    "num": [
+                      1.5,
+                      3.5
+                    ],
+                    "places": 1,
+                    "A": 2.4
+                  },
+                  "m": {
+                    "num": [
+                      1.2,
+                      2.4
+                    ],
+                    "places": 1,
+                    "A": 1.9
+                  },
+                  "lo": {
+                    "int": [
+                      2,
+                      4
+                    ],
+                    "A": 3
+                  },
+                  "hi": {
+                    "int": [
+                      8,
+                      10
+                    ],
+                    "A": 9
+                  },
+                  "x0": {
+                    "int": [
+                      4,
+                      8
+                    ],
+                    "A": 6
+                  }
+                },
+                "constraints": [
+                  "x0 > lo and x0 < hi"
+                ],
+                "fields": {
+                  "prompt": "A ranger measured young trees aged {{lo}} to {{hi}} years. The least-squares line is $\\hat{y} = {{c0}} + {{m}}x$, where $x$ is age in years and $\\hat{y}$ is predicted height in feet. Predict the height of a tree that is {{x0}} years old.",
+                  "answer": "{{c0 + m*x0|2}}",
+                  "math": {
+                    "type": "evaluate",
+                    "expr": "{{c0}} + {{m}}*{{x0}}"
+                  },
+                  "why": "ŷ = {{c0}} + {{m}}({{x0}}) = {{c0 + m*x0|2}} ft. Age {{x0}} is inside the ages measured, so the prediction is reasonable."
+                }
+              }
+            },
+            {
+              "id": "q6",
+              "level": 3,
+              "skill": "strength of r versus its sign",
+              "type": "mc",
+              "prompt": {
+                "A": "Hours studied and quiz score have r = 0.74. Hours of TV watched and quiz score have r = −0.81. Which statement is correct?"
+              },
+              "choices": {
+                "A": [
+                  "Because 0.74 is above 0 and −0.81 is below 0, the study relationship is the stronger one",
+                  "Because one r is positive and one is negative, the two can't be compared for strength",
+                  "Because −0.81 is farther from 0 than 0.74 is, the TV relationship is the stronger one",
+                  "Because a negative r shows a weaker pattern, the TV relationship is the weaker one"
+                ]
+              },
+              "answer": {
+                "A": 2
+              },
+              "why": {
+                "A": "Strength is how far r is from 0: |−0.81| = 0.81 is more than 0.74, so the TV relationship is stronger (and negative)."
+              },
+              "gen": {
+                "params": {
+                  "rs": {
+                    "num": [
+                      0.55,
+                      0.85
+                    ],
+                    "places": 2,
+                    "A": 0.74
+                  },
+                  "rt": {
+                    "num": [
+                      0.6,
+                      0.9
+                    ],
+                    "places": 2,
+                    "A": 0.81
+                  }
+                },
+                "constraints": [
+                  "rt > rs + 0.04"
+                ],
+                "fields": {
+                  "prompt": "Hours studied and quiz score have r = {{rs}}. Hours of TV watched and quiz score have r = {{-rt|u}}. Which statement is correct?",
+                  "choices": [
+                    "Because {{rs}} is above 0 and {{-rt|u}} is below 0, the study relationship is the stronger one",
+                    "Because one r is positive and one is negative, the two can't be compared for strength",
+                    "Because {{-rt|u}} is farther from 0 than {{rs}} is, the TV relationship is the stronger one",
+                    "Because a negative r shows a weaker pattern, the TV relationship is the weaker one"
+                  ],
+                  "why": "Strength is how far r is from 0: |{{-rt|u}}| = {{rt}} is more than {{rs}}, so the TV relationship is stronger (and negative)."
+                }
+              }
+            },
+            {
+              "id": "q7",
+              "level": 1,
+              "skill": "explanatory vs response variable",
+              "type": "short",
+              "prompt": {
+                "A": "Researchers recorded hours of exercise per week and resting heart rate for 40 adults, to use exercise time to predict heart rate. Name the explanatory variable and the response variable.",
+                "B": "A study recorded hours of sleep and reaction time for 30 drivers, to use sleep to predict reaction time. Name the explanatory variable and the response variable.",
+                "C": "A stand recorded the daily high temperature and cups of lemonade sold on 25 days, to use temperature to predict sales. Name the explanatory variable and the response variable."
+              },
+              "answer": {
+                "A": "Explanatory: hours of exercise per week. Response: resting heart rate.",
+                "B": "Explanatory: hours of sleep. Response: reaction time.",
+                "C": "Explanatory: daily high temperature. Response: cups of lemonade sold."
+              },
+              "accept": {
+                "A": [
+                  "exercise is explanatory, heart rate is the response"
+                ],
+                "B": [
+                  "sleep is explanatory, reaction time is the response"
+                ],
+                "C": [
+                  "temperature is explanatory, lemonade sales are the response"
+                ]
+              },
+              "why": {
+                "A": "The variable used to predict is explanatory (x); the one predicted is the response (y).",
+                "B": "The variable used to predict is explanatory (x); the one predicted is the response (y).",
+                "C": "The variable used to predict is explanatory (x); the one predicted is the response (y)."
+              }
+            },
+            {
+              "id": "q8",
+              "level": 3,
+              "skill": "residual of a data point",
+              "type": "numeric",
+              "prompt": {
+                "A": "The least-squares line $\\hat{y} = 12.5 + 1.5x$ was fit to some data. One data point is (8, 26). Find the residual of this point."
+              },
+              "answer": {
+                "A": "1.5"
+              },
+              "accept": {
+                "A": []
+              },
+              "math": {
+                "check": {
+                  "A": {
+                    "type": "evaluate",
+                    "expr": "26 - (12.5 + 1.5*8)"
+                  }
+                }
+              },
+              "why": {
+                "A": "Predicted: 12.5 + 1.5(8) = 24.5. Residual = actual − predicted = 26 − 24.5 = 1.5."
+              },
+              "gen": {
+                "params": {
+                  "d0": {
+                    "num": [
+                      10,
+                      30
+                    ],
+                    "places": 1,
+                    "A": 12.5
+                  },
+                  "d1": {
+                    "num": [
+                      0.5,
+                      2.5
+                    ],
+                    "places": 1,
+                    "A": 1.5
+                  },
+                  "xr": {
+                    "int": [
+                      4,
+                      12
+                    ],
+                    "A": 8
+                  },
+                  "yr": {
+                    "int": [
+                      10,
+                      50
+                    ],
+                    "A": 26
+                  }
+                },
+                "derived": {
+                  "pred": "d0 + d1*xr"
+                },
+                "constraints": [
+                  "abs(yr - pred) >= 0.5",
+                  "abs(yr - pred) <= 6"
+                ],
+                "distinct": [
+                  "{{yr - pred|2}}",
+                  "{{pred - yr|2}}"
+                ],
+                "fields": {
+                  "prompt": "The least-squares line $\\hat{y} = {{d0}} + {{d1}}x$ was fit to some data. One data point is ({{xr}}, {{yr}}). Find the residual of this point.",
+                  "answer": "{{yr - pred|2}}",
+                  "math": {
+                    "type": "evaluate",
+                    "expr": "{{yr}} - ({{d0}} + {{d1}}*{{xr}})"
+                  },
+                  "why": "Predicted: {{d0}} + {{d1}}({{xr}}) = {{pred|2}}. Residual = actual − predicted = {{yr}} − {{pred|2}} = {{yr - pred|2}}."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "blind": [],
+    "wilco": [],
+    "solver": [],
+    "facts": []
+  },
+  "log": [],
+  "audit": {
+    "notes": [],
+    "briefChanges": []
+  }
+}

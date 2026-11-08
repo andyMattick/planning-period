@@ -18,6 +18,7 @@
      10. "Paste a link": scripts/test-fetch-page.mjs (the server's address guard, limits and text extraction).
      12. The interactive format: samples/_cap-interactive (quiz, guided notes, review game) passes keys, test-wise, cross-item and checks/interactive-format.mjs.
      11. The weekly test's offline self-test: scripts/weekly-test.mjs --self-test (fixtures import, the order picker).
+     13. Script-made number versions: scripts/test-versions.mjs (B and C from a made-up version A; every refusal bites).
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -372,6 +373,13 @@ else {
 {
   const r = spawnSync(process.execPath, [join(ROOT, 'scripts/weekly-test.mjs'), '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 60000 });
   if (r.status === 0) ok(r.stdout.trim().split('\n').pop()); else fail(`scripts/weekly-test.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
+}
+
+/* 13. Script-made number versions (scripts/versions.mjs, docs/KINDS-MATH.md §4): B and C made from the made-up version A
+   in checks/fixtures/versions pass keys, test-wise, cross-item and SymPy, and every refusal bites (about 15 seconds) */
+{
+  const r = spawnSync(process.execPath, [join(ROOT, 'scripts/test-versions.mjs')], { cwd: ROOT, encoding: 'utf8', timeout: 300000 });
+  if (r.status === 0) ok(r.stdout.trim().split('\n').pop() + ' (scripts/test-versions.mjs)'); else fail(`scripts/test-versions.mjs failed:\n${r.stdout}${r.stderr}`);
 }
 
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');

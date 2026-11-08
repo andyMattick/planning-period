@@ -136,6 +136,27 @@ never average a fail away (try d proposal 4, adopted Nov 7, 2026: at 8 items cha
 the time). A version that fails is not previewed without telling the owner. Log each probe
 (about $0.27 a version; the lead's scoring is not a session).
 
+## 4b. Number versions made by script (owner, Nov 8, 2026)
+
+For "same questions, different numbers" (docs/KINDS-MATH.md §4; `agents/maker.md`, "Same questions, different
+numbers"), the maker writes version A with a `gen` spec and runs `scripts/versions.mjs` itself. The lead (or
+`scripts/run-order.mjs`) runs it again as the record, before any checker:
+```
+node $REPO/scripts/versions.mjs "$WORK/pack.json" --write          # B, C… from A; refuses bad numbers; SymPy on every key
+```
+Then the checks split by version:
+- **Version A gets the full checks:** the blind tester (step 5) on A's student view
+  (`student-view.mjs --only "<every where in A, | between>"`), and the solver (step 6) on A.
+- **B, C… get the script and a solver:** `versions.mjs` (constraints, distractors, SymPy on every key it made) plus a
+  **fresh solver session that works every number in B, C… from their student view** before it reads the key (the
+  independent check that a formula and its key agree with the problem a student reads). Their wording is A's word for
+  word except the numbers, so a second blind read adds nothing the A read and the solver don't catch. Items without
+  `gen` (written by hand per version) get the blind tester in every version, as before.
+- **Wilco on every version** (step 7), as always.
+- After a FIX round, `versions.mjs` remakes B, C… from the fixed A; the recheck covers the changed items in A and the
+  solver rechecks the changed items in every version. Before the preview, `versions.mjs --verify` proves B, C… still
+  come from A's formulas.
+
 ## 5. Fresh blind tester for the subject (at the same time as 6 and 7)
 
 ```
