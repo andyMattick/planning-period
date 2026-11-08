@@ -4,6 +4,10 @@
 //
 //   node scripts/notify-order.mjs <order id>            reads the order (orders.mjs show) and sends the email
 //   node scripts/notify-order.mjs <order id> --dry-run  prints the email instead of sending it
+//   node scripts/notify-order.mjs <order id> --handoff "<reason>" [--dry-run]
+//                                                       "Needs you": the runner handed the order to the owner (a bigger
+//                                                       order, the cost stop, an open FIX…); run-order.yml sends it when
+//                                                       scripts/run-order.mjs exits 3, with the reason it wrote
 //   node scripts/notify-order.mjs --self-test           checks the email text against a made-up order (no network)
 //
 // The email says what was ordered (grade, subject, topic, items, tokens) and links to the site. It never carries her
@@ -29,7 +33,7 @@ function itemName(id) {
 
 const oneLine = (s) => String(s ?? '').replace(/[\r\n]+/g, ' ').trim();
 
-export function emailFor(row, { from, to } = {}) {
+export function emailFor(row, { from, to, handoff = null } = {}) {
   const oj = row.order_json || {};
   const o = oj.order || oj; // the site saves {id, lines, order, replyTo, …}; older rows hold the order itself
   const subject = oneLine(o.subjectOther || o.subject || '');
@@ -40,9 +44,16 @@ export function emailFor(row, { from, to } = {}) {
     const bits = [spec.format, spec.versions ? `${spec.versions} version${spec.versions === 1 ? '' : 's'}` : '', spec.questions ? `${spec.questions} questions` : ''].filter(Boolean);
     return `  - ${itemName(id)}${n > 1 ? ` ×${n}` : ''}${bits.length ? ` (${bits.join(', ')})` : ''}`;
   });
-  const title = `New order: ${oneLine(o.teacher) || 'a teacher'}, grade ${oneLine(o.grade) || '?'} ${subject}`.trim();
+  const title = handoff != null
+    ? `Needs you: ${row.id}, grade ${oneLine(o.grade) || '?'} ${subject}`.trim()
+    : `New order: ${oneLine(o.teacher) || 'a teacher'}, grade ${oneLine(o.grade) || '?'} ${subject}`.trim();
   const body = [
-    `${oneLine(o.teacher) || 'A teacher'} sent an order on ${brand.name}.`,
+    ...(handoff != null ? [
+      `The order runner handed this order to you. She has a note in My orders that it will be ready within 24 hours.`,
+      '',
+      `Why:     ${oneLine(handoff).slice(0, 500) || '(no reason given)'}`,
+      `Next:    node scripts/orders.mjs work-get ${row.id}, then docs/RUNBOOK.md`,
+    ] : [`${oneLine(o.teacher) || 'A teacher'} sent an order on ${brand.name}.`]),
     '',
     `Order:   ${row.id}`,
     ...(oj.replyTo ? [`Teacher: ${oneLine(o.teacher) || '?'} <${oneLine(oj.replyTo)}>`] : []),
@@ -59,7 +70,7 @@ export function emailFor(row, { from, to } = {}) {
     'This email lists only what was ordered. Her files and requests stay in the app.',
   ].join('\r\n');
   const headers = [
-    `From: ${brand.name} orders <${from}>`,
+    `From: ${brand.name} ${handoff != null ? 'runner' : 'orders'} <${from}>`,
     `To: <${to}>`,
     `Subject: ${title.replace(/[^\x20-\x7e]/g, '')}`,
     `Date: ${new Date().toUTCString()}`,
@@ -85,6 +96,13 @@ function selfTest() {
     ['saved-order shape: teacher, email, subject, item label', t2.includes('Mr. Lee <t@example.org>') && t2.includes('Subject: Statistics') && t2.includes('- Unit test (interactive)')],
     ['saved-order shape: no requests text', !t2.includes('SECRET')],
   ];
+  const h = emailFor(row2, { from: 'a@example.com', to: 'b@example.com', handoff: 'build: bigger than the automatic path (One version per student)\r\nBcc: x@y' });
+  cases.push(
+    ['hand-off: subject says "Needs you" with the order id', h.subject.startsWith('Needs you: pp-2026-01-03-abcdef') && /\r\nSubject: Needs you: pp-2026-01-03-abcdef/.test(h.text)],
+    ['hand-off: the reason, the 24-hour promise and the next step', h.text.includes('Why:     build: bigger than the automatic path (One version per student)') && /within 24 hours/.test(h.text) && h.text.includes('work-get pp-2026-01-03-abcdef')],
+    ['hand-off: no header injection from the reason', !/\r\nBcc:/i.test(h.text)],
+    ['hand-off: what was ordered, without her requests text', h.text.includes('- Unit test (interactive)') && !h.text.includes('SECRET')],
+  );
   let bad = 0;
   for (const [name, pass] of cases) { console.log(`${pass ? '✓' : '✗'} ${name}`); if (!pass) bad++; }
   process.exit(bad ? 1 : 0);
@@ -93,15 +111,17 @@ function selfTest() {
 const args = process.argv.slice(2);
 if (args.includes('--self-test')) selfTest();
 else {
-  const id = args.find((a) => !a.startsWith('--'));
-  if (!id || !/^pp-\d{4}-\d{2}-\d{2}-[a-z0-9]+$/.test(id)) { console.error('usage: notify-order.mjs <order id> [--dry-run]'); process.exit(2); }
+  const hi = args.indexOf('--handoff');
+  const handoff = hi >= 0 ? String(args[hi + 1] ?? '') : null;
+  const id = args.find((a, i) => !a.startsWith('--') && !(hi >= 0 && i === hi + 1));
+  if (!id || !/^pp-\d{4}-\d{2}-\d{2}-[a-z0-9]+$/.test(id)) { console.error('usage: notify-order.mjs <order id> [--handoff "<reason>"] [--dry-run]'); process.exit(2); }
   const dry = args.includes('--dry-run');
   const { PP_NOTIFY_FROM: from, PP_NOTIFY_TO: to, PP_NOTIFY_APP_PASSWORD: pass } = process.env;
   if (!dry && (!from || !to || !pass)) { console.log('Order email not set up (PP_NOTIFY_FROM, PP_NOTIFY_TO, PP_NOTIFY_APP_PASSWORD; docs/BACKEND.md). Nothing sent.'); process.exit(0); }
   const show = spawnSync(process.execPath, [join(ROOT, 'scripts', 'orders.mjs'), 'show', id], { encoding: 'utf8' });
   if (show.status !== 0) { console.error(`Could not read order ${id}:\n${show.stderr}`); process.exit(1); }
   const row = JSON.parse(show.stdout.slice(show.stdout.indexOf('{')));
-  const mail = emailFor(row, { from: from || 'sender@example.com', to: to || 'owner@example.com' });
+  const mail = emailFor(row, { from: from || 'sender@example.com', to: to || 'owner@example.com', handoff });
   if (dry) { console.log(mail.text); process.exit(0); }
   const dir = mkdtempSync(join(tmpdir(), 'pp-mail-'));
   try {

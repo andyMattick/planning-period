@@ -4,6 +4,8 @@
 # approved by her in My orders (order-approved: the final files against her approval, final_ready, the purge, then the
 # auditor through scripts/auditor-gate.mjs). Secrets come from the repository's Actions secrets, never from the code.
 # Nothing here deploys anything; the only push is the gated auditor commit to main, with PP_AUDIT_TOKEN (final only).
+# A hand-off (exit 3: a bigger order than the automatic path, the cost stop, an open FIX…) emails the owner "Needs you"
+# with the reason (scripts/notify-order.mjs --handoff; the PP_NOTIFY_* settings of order-email.yml; not set up = nothing).
 name: Run order
 
 on:
@@ -45,6 +47,7 @@ jobs:
           fi
           case "$STAGE" in onboard|build|final|auto) ;; *) echo "bad stage"; exit 2 ;; esac
           echo "PP_WORK_ROOT=$RUNNER_TEMP/pp-work" >> "$GITHUB_ENV"
+          echo "PP_HANDOFF_FILE=$RUNNER_TEMP/handoff.txt" >> "$GITHUB_ENV"
 
       - uses: actions/checkout@v4
         with:
@@ -93,7 +96,24 @@ jobs:
           esac
           exit $code
 
+      # every hand-off: "Needs you: <id>" to the owner, with the reason run-order.mjs wrote (no files, no requests text)
+      - name: Email the owner about the hand-off
+        if: always() && vars.PP_NOTIFY_ENABLED != 'false'
+        env:
+          PP_SUPABASE_URL: ${{ secrets.PP_SUPABASE_URL }}
+          PP_SUPABASE_SERVICE_KEY: ${{ secrets.PP_SUPABASE_SERVICE_KEY }}
+          PP_NOTIFY_FROM: ${{ vars.PP_NOTIFY_FROM }}
+          PP_NOTIFY_TO: ${{ vars.PP_NOTIFY_TO }}
+          PP_NOTIFY_APP_PASSWORD: ${{ secrets.PP_NOTIFY_APP_PASSWORD }}
+        run: |
+          if [ -z "$PP_HANDOFF_FILE" ] || [ ! -s "$PP_HANDOFF_FILE" ]; then exit 0; fi   # not handed off
+          if [ -z "$PP_SUPABASE_URL" ] || [ -z "$PP_SUPABASE_SERVICE_KEY" ]; then
+            echo "Hand-off email not sent: no PP_SUPABASE_URL / PP_SUPABASE_SERVICE_KEY secrets." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          node scripts/notify-order.mjs "$ORDER_ID" --handoff "$(head -c 500 "$PP_HANDOFF_FILE")" | tee -a "$GITHUB_STEP_SUMMARY" || true
+
       # GitHub-hosted runners are thrown away after the job; this also clears them on a self-hosted runner
       - name: Delete working copies and session transcripts
         if: always()
-        run: rm -rf "$PP_WORK_ROOT" "$HOME/.claude/projects"
+        run: rm -rf "$PP_WORK_ROOT" "$HOME/.claude/projects" "$PP_HANDOFF_FILE"
