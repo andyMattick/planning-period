@@ -5,6 +5,7 @@ import {
   PageNumber, BorderStyle, ShadingType, TabStopType,
 } from 'docx';
 import { docxRuns as mr, plainMath } from './math.mjs';
+import { needsHowToGrade, gradingRows, gradingIntro } from './grading.mjs';
 import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel, passagePlan, passageByline } from './util.mjs';
 
 const PAGE = { size: { width: 12240, height: 15840 }, margin: { top: 1008, bottom: 1008, left: 1008, right: 1008, footer: 500 } };
@@ -206,6 +207,20 @@ async function skillsMap(doc, ver, accent, ctx) {
   ];
 }
 
+// How to grade (scripts/render/grading.mjs), the same table as the PDF.
+async function howToGrade(doc, ver, accent, ctx) {
+  const rows = gradingRows(doc, ver, ctx.pack);
+  const body = await Promise.all(rows.map(async (r) => [
+    String(r.n), `${r.points}${r.given ? '' : '*'}`, P(await mr(r.full, { bold: true }, ctx)), r.partial,
+    P(await mr([...(r.accept.length ? [`Also accept: ${r.accept.join('; ')}`] : []), ...r.notes].join(' · ') || '—', {}, ctx)),
+  ]));
+  return [
+    heading(`How to grade${ver ? ` · version ${ver}` : ''}`, accent, { pageBreakBefore: true }),
+    P(runs(gradingIntro(rows), { size: 20 }), { spacing: { after: 120 } }),
+    table([['#', 'Points', 'Full credit', 'Partial credit', 'Also accept · look for'], ...body], [0.4, 0.6, 2.6, 2.4, 2.6]),
+  ];
+}
+
 function docShell(ctx, label, children) {
   return new Document({
     creator: ctx.brand.shortName || ctx.brand.name,
@@ -276,6 +291,7 @@ export async function copyDocx(doc, ver, ctx, teacher) {
   }
   if (doc.rubric) kids.push(heading(doc.rubric.title || 'Rubric', accent), ...rubricTable(doc.rubric));
   if (teacher && items.length) kids.push(...(await skillsMap(doc, ver, accent, ctx)));
+  if (teacher && needsHowToGrade(doc)) kids.push(...(await howToGrade(doc, ver, accent, ctx)));
   const label = `${doc.title} · ${teacher ? 'Teacher' : 'Student'} copy${ver ? ` ${ver}` : ''}`;
   return Packer.toBuffer(docShell(ctx, label, kids));
 }
