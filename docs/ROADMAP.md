@@ -70,4 +70,18 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
   fence and size limit; the link becomes a `.txt` source. Signed out: File → Save page as, and drop in the .html file.
   docs/BACKEND.md, "Paste a link".
 - **Status:** web-page upload, A and B built Nov 6, 2026; paste a link Nov 7, 2026 (docs/BACKEND.md; needs the owner's new Supabase project,
-  steps there); B2, C, C2, D next.
+  steps there); **C built Nov 8, 2026, pending the owner's setup** (below); B2, C2, D next.
+- **C, the automatic runner (built Nov 8, 2026, branch `speed-ups`; owner: "if this is going to be feasible, we have
+  got to make this shorter"):** a database trigger (`supabase/runner/dispatch.sql`, pg_net + Vault) sends a GitHub
+  `repository_dispatch` when an order is sent (onboarding, the follow-up) and when she answers (the build, up to
+  `preview_ready`); `.github/workflows/run-order.yml` runs `scripts/run-order.mjs` with the secrets from the
+  repository's Actions secrets, one run per order at a time. The build checks in parallel, rechecks only changed items,
+  makes number versions by script (`scripts/versions.mjs`) and has a cost stop. Target: about 14 minutes from her answer
+  to the preview for a test like the first real order (31 before; docs/audits/TIME-2026-11-08.md).
+  **Pending the owner:** the Actions secrets and variables, a fine-grained token, pg_net and the Vault secrets, running
+  `dispatch.sql`, one made-up order end to end (docs/BACKEND.md, "The automatic runner"). **Open:** change requests
+  after a preview, the final render after approval and the daily purge still run by hand; reading items, apps, puzzles
+  and practice games are handed back to the owner; per-student numbers (docs/KINDS-MATH.md §4, "Per-student numbers
+  later"). **The auditor still reviews every order's findings and her comments, but its brief changes stay proposals
+  the owner approves**: the runner never edits `agents/`, and nothing it runs commits to the repository (its token is
+  read-only).

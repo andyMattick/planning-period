@@ -174,6 +174,30 @@ when the blind check is skipped (rounded to 5: `test` 70 → 65, `quiz` 40 → 3
 most of the measured saving and keeps the cushion for the FIX rounds it can no longer prevent. Decide after three orders
 with it unticked show what they really cost (a skipped blind check can mean more change requests after the preview).
 
+## 2d. The fast path (Nov 8, 2026): what it should cost
+
+From the first real online order (pp-2026-11-08-a20840: a grade 12 statistics test, 16 items, 3 number-versions, 70
+tokens = $7.00; docs/audits/TIME-2026-11-08.md): **$5.56** by hand. The same order on the fast path (docs/RUNBOOK.md),
+step by step, from that order's session records:
+
+| Step | Was | Expected | Why |
+|---|---|---|---|
+| Style notes; test calls | $0.09; $0.16 | $0.09; $0 | the runner makes no test calls |
+| Maker, round 1 | $2.07 | $1.00–1.30 | version A plus `gen` specs, about half the output of three hand-made versions (77,574 output tokens) |
+| Versions B, C | (in the maker) | $0 | `scripts/versions.mjs`, under a second |
+| Blind tester, round 1 | $0.63 | $0.30–0.40 | version A's 16 rows instead of 48 |
+| Solver, round 1 | $0.65 | $0.75–1.00 | a solver on A and **a second on every number in B and C**: a little more, the price of checking script-made numbers independently |
+| Maker, FIX round | $0.70 | $0.45–0.70 | fixes A only; the script remakes B and C |
+| Recheck: blind; solver | $0.30; $0.69 | $0.15–0.30; $0.45–0.70 | the changed rows only (blind: A only) |
+| Reporter | $0.26 | $0.08–0.10 | the faster setting, writing only the story (the log rows come from the records) |
+| **Total** | **$5.56** | **about $3.3–4.6** | **17–41% less, about $4.0 typical**; $0.6–1.7 less again with no FIX round |
+
+Not counted above: the onboarding session (about $0.33, unchanged) and the runner's machine time (GitHub Actions: about
+2 minutes of setup plus the run, roughly 15–20 minutes an order; inside the free minutes for a few dozen orders a month,
+then about $0.01 a minute). **The menu doesn't change yet** (section 3, rule 4: a saving is passed on only after two
+orders' logs show it). If the next two number-version tests come in under $4.5, the auditor may propose `test` at 60
+(owner decides).
+
 ## 3. How to recalibrate (after each 5 orders)
 
 1. From `records/*.json`, add each order's `log[].cost` (exact rows as reported; estimated rows as the reporter
