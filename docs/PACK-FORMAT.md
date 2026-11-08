@@ -200,7 +200,8 @@ and the order page offers it only with Interactive.
 - **Teacher:** the teacher copy is version A (the one the checkers read in full); `<doc>-all-versions-key.pdf` prints
   every version's key under its code; `<doc>-teacher-key.html` (final only, never with the students' pages) shows one
   version's key from its code or the student's name. A document with 2 or more letter versions gets the same two
-  files, by letter.
+  files, by letter, **only when the order bought the all-versions key** (`itemSpecs.<item>.keyPack: true`, or
+  `keyPack: true` on the document; +5 tokens, docs/PRICING.md §2e); each version's teacher copy is always made.
 - `pool.blindSample` (optional): the codes the blind tester solved (`checks/student-view.mjs --pool-sample 3`); the
   audit report says how many versions there are and which ones a fresh agent solved.
 
@@ -300,7 +301,7 @@ no word from its denylist, and the owner copy kept out of every delivery.
 | File | What |
 |---|---|
 | `<doc>-student[-A|-B].pdf` and `.docx` | Student copies, in the teacher's style |
-| `<doc>-all-versions-key.pdf`, `<doc>-teacher-key.html` | A document with 2+ versions or one per student: every version's key to print, and (final only) the teacher's key page that finds one version's key by its letter, code or a student's name |
+| `<doc>-all-versions-key.pdf`, `<doc>-teacher-key.html` | One per student (always), or 2+ versions with the all-versions key bought (`itemSpecs.<item>.keyPack`): every version's key to print, and (final only) the teacher's key page that finds one version's key by its letter, code or a student's name |
 | `<doc>-teacher[-A|-B].pdf` and `.docx` | Teacher copies: the key in bold, `why` under each answer, the skills map, and for a quiz or test graded by hand (paper, or an interactive page printed for grading) a **How to grade** page: points, full and partial credit and what else to accept, per question |
 | `<doc>.pptx` | Slides, review games and bell ringers (title slide, one slide per entry, speaker notes; a review game or bell ringer puts the answer in the notes) |
 | `<doc>-handout.pdf` | Slides: a printable handout with room for notes |

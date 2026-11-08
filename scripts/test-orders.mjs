@@ -177,12 +177,24 @@ try {
     assert.deepEqual((await opts('quiz')).filter((v) => v), ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], 'a printable quiz offers 1 to 10 versions');
     await page.selectOption('#sp-quiz-versions', '5');
     assert.match(await page.textContent('#cost-lines'), /5 versions, \+6 tokens\s*46 tokens/, '5 versions of a quiz: 40 + 3 × 2');
+    // the all-versions key: a paid extra with 2+ versions (owner, Nov 8, 2026), off to start
+    assert.ok(!(await page.isChecked('#sp-quiz-keyPack')), 'the all-versions key is off to start');
+    await page.check('#sp-quiz-keyPack');
+    assert.match(await page.textContent('#cost-lines'), /5 versions, \+6 tokens · all-versions key, \+5 tokens\s*51 tokens/, 'with the all-versions key: 46 + 5');
+    await page.selectOption('#sp-quiz-versions', '1');
+    assert.equal(await page.$('#sp-quiz-keyPack'), null, 'no all-versions key for 1 version');
+    assert.match(await page.textContent('#cost-lines'), /1 version\s*40 tokens/, 'one version drops the key pack');
+    await page.selectOption('#sp-quiz-versions', '3');
+    assert.ok(!(await page.isChecked('#sp-quiz-keyPack')), 'the key pack stays off after going back to 3 versions');
+    await page.check('#sp-quiz-keyPack');
     await page.check('#fmt-test-format-interactive');
     assert.ok((await opts('test')).includes('student'), 'an interactive test offers "one per student"');
     await page.selectOption('#sp-test-versions', 'student');
     assert.equal(await page.inputValue('#sp-test-students'), '30', 'how many students: 30 to start');
     assert.ok(await page.isChecked('#fmt-test-grading-print') && !(await page.$('#fmt-test-grading-auto')), 'one per student is printed for grading (no automatic grading: the page holds no keys)');
     assert.match(await page.textContent('[data-format-box="test"]'), /each student's name picks her own numbers/);
+    assert.equal(await page.$('#sp-test-keyPack'), null, 'one per student: no key pack box (it is included)');
+    assert.match(await page.textContent('[data-item-spec="test"]'), /Included with one per student/);
     assert.match(await page.textContent('#cost-lines'), /one version per student \(30 students\), \+15 tokens\s*85 tokens/);
     await page.fill('#sp-test-students', '24');
     assert.match(await page.textContent('#cost-lines'), /one version per student \(24 students\)/);
@@ -193,7 +205,7 @@ try {
     assert.equal(await page.$('#sp-test-students'), null, 'and the number of students');
     await c.close();
   }
-  ok('versions: one setting, a number (1 to 10, +2 tokens a quiz version past 2) or "one per student" (interactive only, printed for grading, how many students, +15 tokens a test); going back to printable drops it');
+  ok('versions: one setting, a number (1 to 10, +2 tokens a quiz version past 2; the all-versions key +5, only with 2+ versions) or "one per student" (interactive only, printed for grading, how many students, key pack included, +15 tokens a test); going back to printable drops it');
 
   // ===== 1d. email + password sign-in (owner, Nov 8, 2026): create an account, confirm, sign in, stay signed in, reset =====
   {

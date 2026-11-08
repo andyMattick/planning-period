@@ -126,7 +126,8 @@ name and presses **Get my questions**: her name picks her version (the same name
 its 5-letter **version code** shows at the top and on her answer sheet, and a reload keeps it. "Start over for a new
 student" clears it. The teacher grades with the code: `<doc>-all-versions-key.pdf`, or `<doc>-teacher-key.html` (final
 files only; for the teacher; type the code, or the name, to see that version's key; one offline file with the same
-Content-Security-Policy). Not a hidden key behind a keystroke in the student page: there is no key in it at all.
+Content-Security-Policy; with one per student these two are always included, while for numbered versions they are the
+paid all-versions key, `itemSpecs.<item>.keyPack`). Not a hidden key behind a keystroke in the student page: there is no key in it at all.
 
 Checks: `checks/interactive-format.mjs` fails a pool page holding any answer, why, accept, checklist, math check or hash,
 or any version's key as text; `--browser` types three made-up names, checks each gets the version its name gives (worked

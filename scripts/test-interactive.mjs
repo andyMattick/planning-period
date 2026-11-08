@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { checkPack, checkBrowser, buildPages } from '../checks/interactive-format.mjs';
 import { classCodesOf, modeOf, poolSalt } from './render/interactive-format.mjs';
 import { checkBrowser as _cb, poolIndexOf, dataOf } from '../checks/interactive-format.mjs';
-import { keyVersions } from './render/keys.mjs';
+import { keyVersions, needsAllKeys } from './render/keys.mjs';
 import { copyHtml } from './render/html.mjs';
 import { questionsOf, keyText, hasPool, poolDocs, partsOf, flatVersion, layoutOf } from './render/util.mjs';
 import { plainMath } from './render/math.mjs';
@@ -166,7 +166,12 @@ try {
 
     // every version's key (owner, Nov 8, 2026): a document with 2+ versions or one per student gets the all-versions key
     // (preview and final) and the teacher key page (final only), never listed with the students' pages
-    if ((doc0.versions || []).length > 1 || doc0.pool) {
+    // 2+ versions without the paid key pack: no all-versions key and no key page (the per-version teacher copies only)
+    if (!needsAllKeys(doc0, pack)) {
+      assert.ok(!fs.readdirSync(out).some((f) => /all-versions-key\.pdf$|-teacher-key\.html$/.test(f)), 'no all-versions key or key page without the key pack');
+      if ((doc0.versions || []).length > 1) ok(`${g}: ${doc0.versions.length} versions without the key pack: a teacher copy per version, no all-versions key or key page`);
+    }
+    if (needsAllKeys(doc0, pack)) {
       assert.ok(fs.existsSync(path.join(prev, `${base}-all-versions-key.pdf`)) && fs.existsSync(path.join(out, `${base}-all-versions-key.pdf`)), 'the all-versions key is in the preview and the final');
       assert.ok(fs.existsSync(path.join(out, `${base}-teacher-key.html`)), 'the teacher key page is in the final');
       assert.ok(!fs.readFileSync(path.join(out, 'HOW-TO-SHARE-THE-INTERACTIVE-PAGES.txt'), 'utf8').includes('teacher-key'), 'the share notes never list the teacher key page');
@@ -182,6 +187,30 @@ try {
     assert.match(r.stderr, new RegExp(`${pages[0]} changed after`));
     fs.writeFileSync(pf, keep);
     ok(`${g}: render --final refuses when a preview page changed after the teacher saw it`);
+  }
+  // the all-versions key is a paid extra for numbered versions (owner, Nov 8, 2026): a printable 3-version quiz (A from
+  // the versions fixture, B and C made by script) gets it only with itemSpecs.quiz.keyPack; its key page is in the final
+  {
+    const dir = path.join(TMP, 'three'); fs.mkdirSync(dir);
+    fs.copyFileSync(path.join(ROOT, 'checks/fixtures/versions/version-a.pack.json'), path.join(dir, 'pack.json'));
+    const mk = spawnSync(process.execPath, [path.join(ROOT, 'scripts/versions.mjs'), path.join(dir, 'pack.json'), '--no-math'], { encoding: 'utf8' });
+    assert.equal(mk.status, 0, mk.stdout + mk.stderr);
+    const set = (on) => { const p = JSON.parse(fs.readFileSync(path.join(dir, 'pack.json'), 'utf8')); p.order.itemSpecs = { quiz: on ? { versions: 3, keyPack: true } : { versions: 3 } }; fs.writeFileSync(path.join(dir, 'pack.json'), JSON.stringify(p)); return p; };
+    set(false);
+    let r = render(dir, '--preview'); assert.equal(r.status, 0, r.stdout + r.stderr);
+    let files = fs.readdirSync(path.join(dir, 'out-preview'));
+    assert.deepEqual(files.filter((f) => /-teacher-[ABC]\.pdf$/.test(f)).length, 3, 'a teacher copy per version');
+    assert.ok(!files.some((f) => /all-versions-key/.test(f)), 'no all-versions key without the key pack');
+    const p = set(true);
+    r = render(dir, '--preview'); assert.equal(r.status, 0, r.stdout + r.stderr);
+    files = fs.readdirSync(path.join(dir, 'out-preview'));
+    assert.ok(files.includes('two-variable-data-quiz-all-versions-key.pdf'), 'the all-versions key with the key pack');
+    const D = JSON.parse(fs.readFileSync(path.join(dir, 'out-preview', 'REVIEW.html'), 'utf8').match(/var D = (\{.*\});/)[1]);
+    fs.writeFileSync(path.join(dir, 'approval.json'), JSON.stringify({ orderId: D.orderId, name: 'Mr. Example (made-up)', date: new Date().toISOString(), statement: STATEMENT, packHash: D.packHash, documents: D.documents }));
+    r = render(dir, '--final'); assert.equal(r.status, 0, r.stdout + r.stderr);
+    assert.ok(fs.existsSync(path.join(dir, 'out', 'two-variable-data-quiz-teacher-key.html')), 'the key page in the final with the key pack');
+    await keyPage(path.join(dir, 'out', 'two-variable-data-quiz-teacher-key.html'), p.documents[0], p, 'two-variable-data-quiz');
+    ok('3 versions: without the key pack, a teacher copy per version and no all-versions key; with it (itemSpecs.quiz.keyPack), the all-versions key PDF and, in the final, the key page (A and C give their own keys)');
   }
   // every question type (mc, tf, numeric, short, open, match): the renderer's fixture made interactive, both modes
   {

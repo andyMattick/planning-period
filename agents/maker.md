@@ -229,6 +229,7 @@ Nothing else changes; never write a key into the prompt or a choice to make the 
   one version per student: an interactive page graded on paper, written as version A with a `gen` spec on every item and
   data set whose numbers change, plus `"pool": {"students": N}`; then run `node scripts/versions.mjs pack.json`, which
   makes the pool and checks every key. Never put a key, why or checklist anywhere a student page could carry it.
+  `itemSpecs.<item>.keyPack: true` (the all-versions key, a paid extra for 2+ versions) is the renderer's job: nothing to write.
 
 ## Your dollar cap (owner, option 1, Nov 6, 2026)
 The lead starts you with a cap (`docs/RUNBOOK.md` step 4: a first draft one third of the order's budget, a redesign one
@@ -293,4 +294,5 @@ have it) and the number of questions per document.
   owner's request, not by the auditor.
 - v12, Nov 8, 2026 (owner: five things from his own Unit 4 test page): shared data sets with at most 4 questions and
   no chaining, segmented bar graphs and estimate-r scatter plots, multi-part long answers with full-credit checklists,
-  and versions as one setting (a number, or one per student made by `scripts/versions.mjs` as a pool). Changed at the owner's request, not by the auditor.
+  and versions as one setting (a number, or one per student made by `scripts/versions.mjs` as a pool; the all-versions
+  key is a paid extra for numbered versions, `keyPack`). Changed at the owner's request, not by the auditor.
