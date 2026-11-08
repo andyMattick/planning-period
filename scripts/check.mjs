@@ -14,6 +14,8 @@
      5e. Every sample passes checks/cross-item.mjs (no key printed in another item), except a shrink-only known-failing list.
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
+     6b. The audit report (scripts/test-audit.mjs): teacher report ≤ 3 pages, no AI cost, no internal words; the owner
+        copy is never delivered.
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
      10. "Paste a link": scripts/test-fetch-page.mjs (the server's address guard, limits and text extraction).
      12. The interactive format: samples/_cap-interactive (quiz, guided notes, review game) passes keys, test-wise, cross-item and checks/interactive-format.mjs.
@@ -266,6 +268,16 @@ else {
   else fail(`render-pack.mjs could not render samples/_fixture (exit ${r.status}, ${made} files):\n${(r.stdout || '').slice(-2000)}${(r.stderr || '').slice(-2000)}`);
 }
 
+/* 6b. the audit report's two copies (owner, Nov 8, 2026): scripts/test-audit.mjs on every sample: the teacher report is
+   at most 3 pages, has no AI cost and none of the internal words on its denylist; judgment calls show our pick (and old
+   packs fall back); the owner copy (AUDIT-REPORT-OWNER.pdf) is never in out-preview/, a zip or orders.mjs's uploads. */
+{
+  const r = spawnSync(process.execPath, [join(ROOT, 'scripts', 'test-audit.mjs')], { cwd: ROOT, encoding: 'utf8', timeout: 900000 });
+  const n = (r.stdout.match(/^✓/gm) || []).length;
+  if (r.status === 0) ok(`scripts/test-audit.mjs: the teacher report and the owner copy pass (${n} checks)`);
+  else fail(`scripts/test-audit.mjs failed:\n${(r.stdout || '').split('\n').filter((l) => !l.startsWith('✓')).join('\n')}${r.stderr || ''}`);
+}
+
 /* 7. the app: the manifest is generated from brand.config.json (never typed), and its icons and the service worker exist */
 const BUILD_MANIFEST = join(ROOT, 'scripts', 'build-manifest.mjs');
 if (!existsSync(BUILD_MANIFEST)) skip('scripts/build-manifest.mjs is not here yet: app check skipped');
@@ -360,6 +372,28 @@ else {
   const st = spawnSync(process.execPath, [IF, '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
   const n = (st.stdout.match(/✓ catches/g) || []).length;
   if (st.status === 0) ok(`checks/interactive-format.mjs catches all ${n} broken copies, and samples/_fixture passes as interactive (every question type, both modes)`); else fail(`checks/interactive-format.mjs --self-test failed:\n${st.stdout}${st.stderr}`);
+}
+
+/* 12b. Subject "Other (say which)": the teacher's own words (order.subjectOther) print, never "Other (say which)"
+   (the renderer's subject line on every copy, the audit report and the interactive page all read subjectLabelOf). */
+{
+  const { subjectLabelOf } = await import('../scripts/render/util.mjs');
+  const menu = readJSON('menu.json');
+  const errs = [];
+  if (subjectLabelOf(menu, { subject: 'other', subjectOther: ' Statistics ' }) !== 'Statistics') errs.push('subject other + subjectOther does not give "Statistics"');
+  if (subjectLabelOf(menu, { subject: 'math', subjectOther: 'Statistics' }) !== menu.subjects.find((s) => s.id === 'math').label) errs.push('subjectOther changed a non-other subject');
+  if (subjectLabelOf(menu, { subject: 'other' }) !== menu.subjects.find((s) => s.id === 'other').label) errs.push('subject other with no subjectOther lost the menu label');
+  const PRINT = join(ROOT, 'samples/_cap-interactive/print/pack.json');
+  if (existsSync(PRINT)) {
+    const { buildPages } = await import('../checks/interactive-format.mjs');
+    const pack = JSON.parse(readFileSync(PRINT, 'utf8'));
+    pack.order = { ...pack.order, subject: 'other', subjectOther: 'Statistics' };
+    for (const pg of buildPages(pack)) {
+      if (!pg.html.includes('Statistics')) errs.push(`${pg.name}: the page doesn't print "Statistics"`);
+      if (/say which/i.test(pg.html)) errs.push(`${pg.name}: the page prints "say which"`);
+    }
+  }
+  if (errs.length) fail(`subject "other": ${errs.join('; ')}`); else ok('subject "other" prints the teacher\'s own subject (subjectOther) on the copies and the interactive page');
 }
 
 /* 10. "Paste a link" (scripts/fetch-page.mjs): the address guard, redirects, size/time/type limits, the sign-in check and

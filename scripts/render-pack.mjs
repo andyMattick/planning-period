@@ -11,7 +11,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { slug, questionsOf, layoutOf, scrubSecrets, cleanSvg, kindOf } from './render/util.mjs';
+import { slug, questionsOf, layoutOf, scrubSecrets, cleanSvg, kindOf, subjectLabelOf } from './render/util.mjs';
 import { copyHtml, rubricHtml, handoutHtml, cardsHtml, footerTemplate, headerTemplate, watermark, PREVIEW_MARK } from './render/html.mjs';
 import { copyDocx, rubricDocx } from './render/docx.mjs';
 import { deckPptx } from './render/pptx.mjs';
@@ -28,6 +28,25 @@ const require = createRequire(import.meta.url);
 const DECK_ITEMS = new Set(['slides', 'reviewgame', 'bellringer']);
 
 export class RenderError extends Error {}
+
+// The owner's copy of the audit report: in the order folder only, never delivered (scripts/orders.mjs skips it too).
+export const OWNER_AUDIT = 'AUDIT-REPORT-OWNER.pdf';
+export const isOwnerOnly = (f) => /AUDIT-REPORT-OWNER/i.test(String(f));
+
+// Tokens charged for the order: the pack's order, else the order file next to it (samples: order.json; work folders:
+// in/order.json, from scripts/orders.mjs pull).
+function tokenTotalOf(pack, folder) {
+  const direct = pack.order?.tokenTotal ?? pack.tokenTotal;
+  if (direct != null && !Number.isNaN(Number(direct))) return Number(direct);
+  for (const f of ['order.json', path.join('in', 'order.json')]) {
+    try {
+      const o = JSON.parse(fs.readFileSync(path.join(folder, f), 'utf8'));
+      const t = o.tokenTotal ?? o.order?.tokenTotal;
+      if (t != null && !Number.isNaN(Number(t))) return Number(t);
+    } catch {}
+  }
+  return null;
+}
 
 function loadPlaywright() {
   try {
@@ -97,13 +116,14 @@ export async function renderPack(folder, { mode } = {}) {
   const menu = JSON.parse(fs.readFileSync(path.join(ROOT, 'menu.json'), 'utf8'));
   const style = pack.style || {};
   const order = pack.order || {};
-  const subjectLabel = menu.subjects.find((s) => s.id === order.subject)?.label || order.subject || '';
+  const subjectLabel = subjectLabelOf(menu, order);
   const date = pack.date || order.date || (pack.id?.match(/\d{4}-\d{2}-\d{2}/) || [])[0] || new Date().toISOString().slice(0, 10);
 
   const outDir = path.join(folder, preview ? 'out-preview' : 'out');
   const zipPath = path.join(folder, preview ? 'preview.zip' : 'out.zip');
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.rmSync(zipPath, { force: true });
+  fs.rmSync(path.join(folder, OWNER_AUDIT), { force: true });
   fs.mkdirSync(outDir, { recursive: true });
 
   const { chromium } = loadPlaywright();
@@ -117,6 +137,7 @@ export async function renderPack(folder, { mode } = {}) {
     setMathEnabled(pack);
     const ctx = {
       packHash: packHashOf(pack),
+      tokenTotal: tokenTotalOf(pack, folder),
       pack, brand, style, layout: layoutOf(style), subjectLabel, date, preview, approval,
       mathPng: mathPngMaker(figPage), // typeset math as a PNG: Word's fallback and PowerPoint (docs/KINDS-MATH.md)
       async figurePng(svgText) {
@@ -138,7 +159,7 @@ export async function renderPack(folder, { mode } = {}) {
       await page.pdf({
         path: path.join(outDir, file), format: 'Letter', printBackground: true, displayHeaderFooter: true,
         headerTemplate: headerTemplate(preview ? `${PREVIEW_MARK} · order ${pack.id || ''}` : ''),
-        footerTemplate: footerTemplate(label, brand),
+        footerTemplate: footerTemplate(label, brand, { preview }),
         margin: { top: '0.6in', bottom: '0.7in', left: '0.7in', right: '0.7in' },
       });
       made.push({ file, what, title: title || label });
@@ -230,7 +251,17 @@ export async function renderPack(folder, { mode } = {}) {
       }
     }
     const audit = auditHtml(pack, ctx);
-    await pdf('AUDIT-REPORT.pdf', audit.html, 'Audit report', 'The audit report: every agent, every round, every catch and fix, time and cost', 'Audit report');
+    await pdf('AUDIT-REPORT.pdf', audit.html, 'Audit report', 'The audit report: what was made, who checked it, what was fixed, your decisions and how to grade; then the full log', 'Audit report');
+    // The owner copy (costs, token and cache detail) goes in the order folder, never in out-preview/, out/ or a zip:
+    // it is for the owner and the auditor, and is never delivered to the teacher.
+    const ownerAudit = auditHtml(pack, ctx, { owner: true });
+    await page.setContent(preview ? watermark(ownerAudit.html) : ownerAudit.html, { waitUntil: 'load' });
+    await page.pdf({
+      path: path.join(folder, OWNER_AUDIT), format: 'Letter', printBackground: true, displayHeaderFooter: true,
+      headerTemplate: headerTemplate(`OWNER COPY · never send to the teacher · order ${pack.id || ''}`),
+      footerTemplate: footerTemplate('Audit report · owner copy', brand, { preview }),
+      margin: { top: '0.6in', bottom: '0.7in', left: '0.7in', right: '0.7in' },
+    });
 
     let files;
     if (preview) {
@@ -269,7 +300,7 @@ export async function renderPack(folder, { mode } = {}) {
     }
 
     execFileSync('zip', ['-q', '-r', '-X', zipPath, '.'], { cwd: outDir });
-    return { mode, outDir, zipPath, files, stats: audit.stats };
+    return { mode, outDir, zipPath, files, stats: audit.stats, ownerAudit: path.join(folder, OWNER_AUDIT) };
   } finally {
     await browser.close();
   }
