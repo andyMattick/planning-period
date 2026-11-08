@@ -234,35 +234,11 @@
   }
   // The page's bytes (storage hands an interactive page back as text/plain, so it never runs on the storage site).
   function pageBytes(o, file) { return backend.signedUrl('deliverables', base(o) + 'preview/' + file, 600).then(backend.fetchBytes); }
-  // Open full screen: a new tab that shows the page in a sandboxed frame filling the screen (phones included). The tab
-  // is opened in the tap itself (so it isn't blocked as a pop-up) and filled once the page has loaded.
-  function fullPage(b) {
-    var o = orderOf(b); if (!o) return;
-    var file = b.getAttribute('data-file'), w = window.open('', '_blank');
-    if (!w) { b.textContent = 'Allow pop-ups, then try again'; return; }
-    w.document.title = file; w.document.body.style.margin = '0'; w.document.body.textContent = 'Loading…';
-    pageBytes(o, file).then(function (bytes) {
-      var f = w.document.createElement('iframe');
-      f.setAttribute('sandbox', 'allow-scripts allow-modals allow-downloads');
-      f.setAttribute('title', 'Interactive page, as a student sees it');
-      f.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0';
-      f.srcdoc = new TextDecoder().decode(bytes);
-      w.document.body.textContent = ''; w.document.body.appendChild(f);
-    }, function () { w.document.body.textContent = 'This page could not be opened. Go back and refresh My orders.'; });
-  }
-  // Download: build the file here as a real web page (text/html), so phones and computers save it as an .html file
-  // that opens in a browser, instead of the plain text storage serves.
-  function downloadPage(b) {
-    var o = orderOf(b); if (!o) return;
-    var file = b.getAttribute('data-file'), label = b.textContent;
-    b.textContent = 'Preparing…';
-    pageBytes(o, file).then(function (bytes) {
-      var url = URL.createObjectURL(new Blob([bytes], { type: 'text/html' })), a = document.createElement('a');
-      a.href = url; a.download = file; document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
-      b.textContent = label;
-    }, function () { b.textContent = 'Could not download: refresh the page'; });
-  }
+  // Open full screen / Download: a small page of our own (page.html) loads the file itself in a new tab, so a phone that
+  // pauses this tab can't cut the download short, and its Download button is a real tap (phones allow that).
+  function pageLink(o, file, dl) { return 'page.html?p=' + encodeURIComponent(base(o) + 'preview/' + file) + '&n=' + encodeURIComponent(file) + (dl ? '&dl=1' : ''); }
+  function fullPage(b) { var o = orderOf(b); if (o) window.open(pageLink(o, b.getAttribute('data-file')), '_blank'); }
+  function downloadPage(b) { var o = orderOf(b); if (o) window.open(pageLink(o, b.getAttribute('data-file'), true), '_blank'); }
   function reviewState(o) {
     var d = draft(o.id);
     var all = CHECKS.every(function (c) { return d.checks[c[0]]; });
