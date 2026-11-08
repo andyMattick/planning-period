@@ -374,6 +374,22 @@ and no secrets send nothing); both workflows with `actionlint`. **Not tested:** 
 run, real Claude Code sessions in it, a real push with the fine-grained token (or branch protection), the schedule
 firing, and pg_net on a real Supabase project: do step 9 before telling teachers.
 
+### Order emails (owner, Nov 8, 2026)
+When a teacher sends an order, `.github/workflows/order-email.yml` emails the owner a short note: who sent it (name and
+reply-to email), grade, subject, topic, items, tokens, how many files, and a link to the site. It never carries her
+files, her requests text or her style examples. It starts from the same `order-sent` dispatch as the runner, so it needs
+steps 2 (the two Supabase secrets), 4 and 5 above; it runs even when `PP_RUNNER_ENABLED` is off.
+1. Gmail (the account that sends; it can send to itself): **Google Account → Security → 2-Step Verification** on, then
+   **App passwords** → name it "order emails" → copy the 16-letter password.
+2. GitHub → this repository → **Settings → Secrets and variables → Actions → Secrets → New repository secret**
+   `PP_NOTIFY_APP_PASSWORD` = that password.
+3. Same page, **Variables**: `PP_NOTIFY_FROM` = the Gmail address, `PP_NOTIFY_TO` = where the email goes.
+4. Try it: **Actions → Order email → Run workflow** with an existing order id. Off switch: variable
+   `PP_NOTIFY_ENABLED` = `false`.
+
+Tested: `node scripts/notify-order.mjs --self-test` (the text, no header injection from a name, no requests text) and a
+`--dry-run` against a real order. Not tested: a real Gmail send.
+
 ## Tested, and how
 
 - `node scripts/test-orders.mjs [--shots <folder>]`: a fake Supabase (`scripts/test-orders/fake-supabase.mjs`: the Auth,
