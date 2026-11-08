@@ -173,9 +173,17 @@
     var docs = rv.documents || [];
     return '<div class="review" id="rv-' + id + '" tabindex="-1"><div class="paper-pane">' +
       '<h4>1. Look over your preview</h4><ul class="dl-list">' + docs.map(function (x, i) {
+        // an interactive page (docs/KINDS-INTERACTIVE-FORMAT.md): tried here in a sandboxed frame, or downloaded
+        if (/\.html$/i.test(x.file)) {
+          return '<li class="is-page"><button type="button" class="btn" data-try="' + i + '" data-file="' + esc(x.file) + '">Try it here</button> <span>' + esc(x.title || x.file) + ' <span class="tag-int">interactive page</span><br><span class="small muted">' + esc(x.file) + '</span></span>' +
+            '<a class="btn link" data-sign="deliverables:' + esc(base(o) + 'preview/' + x.file) + '" data-name="' + esc(x.file) + '" href="#">Download</a></li>';
+        }
         return '<li><a class="btn" target="_blank" rel="noopener" data-doc="' + i + '" data-sign="deliverables:' + esc(base(o) + 'preview/' + x.file) + '" href="#">Open</a> <span>' + esc(x.title || x.file) + '<br><span class="small muted">' + esc(x.file) + '</span></span>' +
           (/\.pdf$/i.test(x.file) ? '<button type="button" class="btn link show-doc" data-show="' + i + '" aria-pressed="' + (i === 0) + '">Show here</button>' : '') + '</li>';
       }).join('') + '</ul>' +
+      (docs.some(function (x) { return /\.html$/i.test(x.file); }) ? '<div class="try-frame" hidden><p class="small muted" data-try-label></p>' +
+        '<iframe data-try-frame sandbox="allow-scripts allow-modals" title="Interactive page, as a student sees it"></iframe>' +
+        '<p class="small muted">Answer it as a student would; nothing you type here is saved or sent. The watermark goes away in the final file.</p></div>' : '') +
       (docs.some(function (x) { return /\.pdf$/i.test(x.file); }) ? '<div class="paper-frame"><iframe data-viewer title="Your preview" loading="lazy"></iframe>' +
         '<p class="small muted">If the page doesn\'t show here, use Open.</p></div>' : '') +
       (zip ? '<p class="small"><a data-sign="deliverables:' + esc(base(o) + zip) + '" data-name="' + esc(o.id + '-preview.zip') + '" href="#">Download the whole preview</a> (a zip with REVIEW.html, for looking it over offline)</p>' : '') +
@@ -201,6 +209,20 @@
     if (!a || !f || !a.getAttribute('href') || a.getAttribute('href') === '#') return;
     f.src = a.href;
     review.querySelectorAll('[data-show]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-show') === String(i))); });
+  }
+  // An interactive page opens in a sandboxed frame (its own scripts run, but it can't reach this page, its storage or
+  // the network: the page's own Content-Security-Policy forbids requests). Storage hands it back as text/plain.
+  function tryPage(b) {
+    var rv = b.closest('.review'), o = orderOf(b); if (!rv || !o) return;
+    var box = rv.querySelector('.try-frame'), f = rv.querySelector('[data-try-frame]'), file = b.getAttribute('data-file');
+    box.hidden = false;
+    rv.querySelector('[data-try-label]').textContent = 'Loading ' + file + '…';
+    backend.signedUrl('deliverables', base(o) + 'preview/' + file, 600).then(backend.fetchBytes).then(function (bytes) {
+      f.srcdoc = new TextDecoder().decode(bytes);
+      rv.querySelector('[data-try-label]').textContent = file;
+      rv.querySelectorAll('[data-try]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      box.scrollIntoView({ block: 'nearest' });
+    }, function () { rv.querySelector('[data-try-label]').textContent = 'This page could not be opened. Refresh the page.'; });
   }
   function reviewState(o) {
     var d = draft(o.id);
@@ -298,6 +320,7 @@
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-refresh]')) { loadAll(); return; }
     var b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-try')) { tryPage(b); return; }
     if (b.hasAttribute('data-show')) {
       var rv = b.closest('.review');
       if (wide()) showDoc(rv, b.getAttribute('data-show')); else { var a = rv.querySelector('a[data-doc="' + b.getAttribute('data-show') + '"]'); if (a) a.click(); }

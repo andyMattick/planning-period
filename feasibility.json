@@ -371,5 +371,29 @@
       "bellringer"
     ],
     "_why": "owner call delegated Nov 5, 2026: in math the same skill with new numbers is a fair new practice question, so practice items can draw more from a page; tests and quizzes keep questionsPerPage"
+  },
+  "format": {
+    "_note": "Owner, Nov 8, 2026 (docs/KINDS-INTERACTIVE-FORMAT.md): menu items with interactive: true can be made printable or as an interactive page. Same tokens and the same question counts either way: the format changes how students answer, not how much the source supports.",
+    "default": "printable",
+    "gradingDefault": "auto",
+    "items": [
+      "worksheet",
+      "homework",
+      "quiz",
+      "test",
+      "readingquiz",
+      "studyguide",
+      "versions"
+    ],
+    "typesAutoScored": [
+      "mc",
+      "tf",
+      "numeric",
+      "match"
+    ],
+    "typesForTheTeacher": [
+      "short",
+      "open"
+    ]
   }
 }

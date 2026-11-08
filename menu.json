@@ -1,5 +1,5 @@
 {
-  "_note": "The order menu. tokens = pilot estimate (see docs/PRICING.md); every item is made by a maker agent, checked by a fresh blind tester for its subject and by Wilco's test-wise bots, and logged by the reporter.",
+  "_note": "The order menu. tokens = pilot estimate (see docs/PRICING.md); every item is made by a maker agent, checked by a fresh blind tester for its subject and by Wilco's test-wise bots, and logged by the reporter. interactive: true = the order page offers Printable (PDF, Word) or Interactive (one offline page students answer on a device, graded in the page or printed for grading later; same tokens): docs/KINDS-INTERACTIVE-FORMAT.md.",
   "grades": [
     "K",
     "1",
@@ -53,7 +53,8 @@
         "pdf",
         "docx"
       ],
-      "versions": false
+      "versions": false,
+      "interactive": true
     },
     {
       "id": "notes",
@@ -75,7 +76,8 @@
         "pdf",
         "docx"
       ],
-      "versions": true
+      "versions": true,
+      "interactive": true
     },
     {
       "id": "readingquiz",
@@ -94,7 +96,8 @@
         "pdf",
         "docx"
       ],
-      "versions": true
+      "versions": true,
+      "interactive": true
     },
     {
       "id": "test",
@@ -105,7 +108,8 @@
         "pdf",
         "docx"
       ],
-      "versions": true
+      "versions": true,
+      "interactive": true
     },
     {
       "id": "studyguide",
@@ -116,7 +120,8 @@
         "pdf",
         "docx"
       ],
-      "versions": false
+      "versions": false,
+      "interactive": true
     },
     {
       "id": "slides",
@@ -195,7 +200,8 @@
         "pdf",
         "docx"
       ],
-      "versions": false
+      "versions": false,
+      "interactive": true
     },
     {
       "id": "versions",
@@ -206,7 +212,8 @@
         "pdf",
         "docx"
       ],
-      "versions": true
+      "versions": true,
+      "interactive": true
     },
     {
       "id": "unitfull",
