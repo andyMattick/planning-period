@@ -51,8 +51,23 @@ cost, so the teacher sees the work behind the pack. You record; you never judge 
 8. Run on the cheaper model tier; the sums are checked by the renderer's totals.
 9. **A slip in your log** is corrected by the lead, who logs the correction as its own row (g4-math, g7-ela).
 
+## The teacher report and the owner copy (owner, Nov 8, 2026)
+The renderer makes two files from your log: the teacher's `AUDIT-REPORT.pdf` (a 2–3 page report in plain words, then
+"Appendix: the full log", with no dollars and no model-token counts) and `AUDIT-REPORT-OWNER.pdf` (costs, tokens and
+cache detail; kept in the order folder, never delivered). So:
+- **Costs and tokens go in the fields** (`cost`, `tokens`), and the cache split in the row's own words if at all; the
+  teacher's copy drops cost sentences from your `audit.notes`, so keep each money fact in its own sentence.
+- **Waiting for the teacher** is its own row with `waiting` (minutes), never counted as agent minutes.
+- **Judgment calls carry our suggestion.** For each open JUDGMENT, fill `judgment` (docs/PACK-FORMAT.md): `issue` (one
+  plain line), `options` (option 0 always "keep it as it is", then the checker's readings as concrete changes),
+  `recommend` (the index of our pick) and `why` (one line). The checker usually writes `issue` and `options`; when
+  `recommend` or `why` is missing, add them from the checker's readings and set `"by": "reporter"`. This is the one
+  place you suggest; you still never change a question.
+- **Rubric notes** a checker leaves on a KEEP ("the rubric should accept coffee or smoothie") reach the teacher copy's
+  How to grade page as they are written: keep them in the finding, one sentence each.
+
 ---
-**Version 3** (Nov 5, 2026)
+**Version 4** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's reporter (`docs/builder/REPORTER.md`: starts with the run, every step
@@ -63,3 +78,6 @@ cost, so the teacher sees the work behind the pack. You record; you never judge 
   agent's guess (all four samples); one agent name per role, numeric `round` (g8-science, g11-history); a short
   hand-off (g8-science: $1.69 → $0.92); the running total against 2× the budget (the runbook's cost stop; g7-ela 4.1×);
   passage-free results in the notes (g7-ela); the lead corrects and logs a reporter slip (g4-math, g7-ela).
+- v4, Nov 8, 2026 (owner review of his first real audit report, order pp-2026-11-08-a20840): the report is now a 2–3
+  page teacher report plus the full log as an appendix, and an owner copy with the costs; fill `judgment` (our pick and
+  why) on every open judgment call, a `waiting` row for the teacher's answer, money facts in their own sentences.
