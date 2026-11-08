@@ -3,6 +3,9 @@
 One report per audit, newest first (`agents/auditor.md` step 6). Each says what the orders cost against their token
 budgets, what the checkers caught, every brief change and why, price recommendations and ways to make it cheaper.
 
+- [TIME-2026-11-08.md](TIME-2026-11-08.md): time report of the first real online order (grade 12 statistics test, 3
+  number-versions): 31 min from her answer to the preview, 17.9 on agents (the maker's A/B/C draft 9.9) and 13.1 in
+  coordinator gaps; target about 14 min with script-made versions, parallel checks and the automatic runner.
 - [AUDIT-2026-11-07-ela-try-d.md](AUDIT-2026-11-07-ela-try-d.md): g7-ela2 "try d" (no mc pairs, cross-item check;
   proposals only): $12.63 of $16.50, gate still open (A 4, B 7 of 8); item cues about halved; proposals: probes name
   every right item, rewrite a reused story's turn, blind solve after round 1, two final probes per version. **Adopted Nov 7, 2026** (1, 2, 3, 4, 6), with reading quizzes sold as short answer + RACE and passage

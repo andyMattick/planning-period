@@ -1,0 +1,85 @@
+# The automatic runner (docs/ROADMAP.md step C; setup and how to turn it off: docs/BACKEND.md, "The automatic runner").
+# A database trigger in the Supabase project (supabase/runner/dispatch.sql) sends a repository_dispatch when an order
+# is sent (order-sent: onboarding, posts the follow-up) or answered (order-answered: the build, stops at preview_ready).
+# Secrets come from the repository's Actions secrets, never from the code. Nothing here deploys or merges anything.
+name: Run order
+
+on:
+  repository_dispatch:
+    types: [order-sent, order-answered]
+  workflow_dispatch:
+    inputs:
+      id:
+        description: Order id (pp-YYYY-MM-DD-xxxxxx)
+        required: true
+      stage:
+        description: onboard, build or auto (from its status)
+        required: false
+        default: auto
+
+permissions:
+  contents: read
+
+concurrency:
+  # one run per order at a time; a second event for the same order waits for the first
+  group: order-${{ github.event.client_payload.id || inputs.id }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    # the off switch: repository variable PP_RUNNER_ENABLED must be "true"
+    if: vars.PP_RUNNER_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      ORDER_ID: ${{ github.event.client_payload.id || inputs.id }}
+      STAGE: ${{ github.event.action == 'order-sent' && 'onboard' || github.event.action == 'order-answered' && 'build' || inputs.stage || 'auto' }}
+    steps:
+      - name: Check the order id
+        run: |
+          if ! printf '%s' "$ORDER_ID" | grep -Eq '^pp-[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9]{6}$'; then
+            echo "not an order id"; exit 2
+          fi
+          case "$STAGE" in onboard|build|auto) ;; *) echo "bad stage"; exit 2 ;; esac
+          echo "PP_WORK_ROOT=$RUNNER_TEMP/pp-work" >> "$GITHUB_ENV"
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        env:
+          CLAUDE_CODE_VERSION: ${{ vars.PP_CLAUDE_CODE_VERSION || 'latest' }}
+        run: |
+          npm ci
+          npm install -g "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" playwright@1.63.0
+          npx --yes playwright@1.63.0 install --with-deps chromium
+          python3 -m pip install --quiet sympy
+          sudo apt-get install -y -qq unzip > /dev/null
+
+      - name: Run the order
+        id: run
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PP_SUPABASE_URL: ${{ secrets.PP_SUPABASE_URL }}
+          PP_SUPABASE_SERVICE_KEY: ${{ secrets.PP_SUPABASE_SERVICE_KEY }}
+          PP_MODEL_STANDARD: ${{ vars.PP_MODEL_STANDARD }}
+          PP_MODEL_FAST: ${{ vars.PP_MODEL_FAST }}
+        run: |
+          set +e
+          node scripts/run-order.mjs "$ORDER_ID" --stage "$STAGE"
+          code=$?
+          case $code in
+            0) echo "Done: $ORDER_ID ($STAGE)" >> "$GITHUB_STEP_SUMMARY" ;;
+            3) echo "Handed to the owner: $ORDER_ID ($STAGE). Status unchanged, with a note for her; files in deliverables/<teacher>/$ORDER_ID/work/ (orders.mjs work-get)." >> "$GITHUB_STEP_SUMMARY" ;;
+            *) echo "Failed: $ORDER_ID ($STAGE). Status failed, with a note for her." >> "$GITHUB_STEP_SUMMARY" ;;
+          esac
+          exit $code
+
+      # GitHub-hosted runners are thrown away after the job; this also clears them on a self-hosted runner
+      - name: Delete working copies and session transcripts
+        if: always()
+        run: rm -rf "$PP_WORK_ROOT" "$HOME/.claude/projects"

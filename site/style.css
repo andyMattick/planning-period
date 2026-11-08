@@ -495,3 +495,5 @@ main:focus { outline: none; }
 /* the follow-up's Other choice: a radio with its own text box */
 .fu-other .fu-other-text { width: 100%; margin-top: 6px; min-height: 40px; font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg, #fff); color: inherit; }
 .fu-other > span { flex: 1; }
+.blind-check { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.blind-check input { width: 20px; height: 20px; margin-top: 2px; flex: none; }

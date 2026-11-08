@@ -3,7 +3,7 @@
 Roadmap A and B ("Streamline the order loop", docs/ROADMAP.md). A teacher signs in with her email and password (or an email link), Send uploads her
 files straight to private storage, and **My orders** (`site/orders.html`) shows each order's status, the onboarding
 follow-up with one-tap answers, the preview to review (Approve / Request changes / Cancel) and the final files. No zips
-or email in between. The owner moves orders along with `scripts/orders.mjs` until the automatic runner (C) does it.
+or email in between. The owner moves orders along with `scripts/orders.mjs`, or the automatic runner (C, below) does it once it is set up.
 
 The backend is **its own Supabase project** (never Pet World's). Without it the site works exactly as before
 (**local mode**): Send makes a zip on the device to email, and the preview is reviewed with REVIEW.html.
@@ -19,6 +19,13 @@ The backend is **its own Supabase project** (never Pet World's). Without it the 
 | My orders | `site/orders.html`, `site/orders.js` | Her orders with status and history; the follow-up; the review; the final files |
 | The owner's side | `scripts/orders.mjs` | `list`, `pull`, `follow-up`, `answer`, `preview`, `approval`, `final`, `purge`, `status` (docs/RUNBOOK.md) |
 | The test | `scripts/test-orders.mjs` | The whole loop with a fake Supabase and Playwright (below) |
+
+### The teacher's blind-check choice
+
+`order_json.order.checks.blind` (owner, Nov 8, 2026): `false` when she unticked "Blind check by a fresh agent" on the
+order page. It is hers to change only by sending the order; the team reads it from her order, never from the maker's
+pack (`scripts/run-order.mjs` copies it into `pack.order.checks`). `orders.mjs preview` passes `review.blindSkipped`
+so My orders shows the warning above the preview. What is skipped and what still runs: docs/RUNBOOK.md step 5.
 
 ### Order status
 
@@ -217,6 +224,84 @@ the next deploy picks up `api/fetch-page.js` by itself. To check it after deploy
 public article's address in step 2, press **Get the page**, and see the preview. (Vercel → the project → **Logs**,
 filter `fetchPage`, shows one line per request: host, status, bytes.) To switch links off, delete `api/fetch-page.js`
 and redeploy: the box then says it couldn't read the page and to upload the saved page instead.
+
+## The automatic runner (roadmap C, built Nov 8, 2026; needs the owner's setup below)
+
+Owner, Nov 8, 2026: "if this is going to be feasible, we have got to make this shorter" (docs/audits/TIME-2026-11-08.md:
+31 minutes from her answer to the preview, 13 of them gaps between steps). The runner does what the owner did with
+`orders.mjs` and `claude -p`, as soon as she acts:
+
+```
+she sends an order ──► orders row inserted (sent) ──► trigger ──► GitHub repository_dispatch "order-sent"
+                                                                     └► Actions: run-order.mjs <id> --stage onboard
+                                                                          onboarding + style notes ─► follow-up posted (needs_answer)
+she answers in My orders ──► status building ──► trigger ──► "order-answered"
+                                                                     └► Actions: run-order.mjs <id> --stage build
+                                                                          maker → versions → parallel checks → FIX rounds →
+                                                                          final check + reporter → preview posted (preview_ready)
+```
+
+| Piece | Where | What |
+|---|---|---|
+| The trigger | `supabase/runner/dispatch.sql` | On a new `sent` order or a change to `building`, `pg_net` posts `{event_type, client_payload: {id}}` to GitHub's dispatches API with a token from Supabase Vault. Not set up = does nothing |
+| The workflow | `.github/workflows/run-order.yml` | Checks the id, installs (npm, Claude Code, Playwright's Chromium, SymPy), runs `scripts/run-order.mjs`, deletes the working copies; one run per order at a time (`concurrency`), 75-minute limit, `contents: read` only |
+| The coordinator | `scripts/run-order.mjs` | docs/RUNBOOK.md, "The fast path". Exit 3 = handed to the owner (status unchanged with a note for her, files kept in `deliverables/<teacher>/<id>/work/`); exit 1 = failed (status `failed` with a note she sees) |
+| The test | `scripts/test-run-order.mjs` | `--dry-run` end to end against the fake Supabase (in `npm run check`) |
+
+**What it doesn't do yet** (the owner, by hand, as before): her change requests after a preview (`changes_requested`),
+the final files after she approves (`orders.mjs approval`, `render-pack.mjs --final`, `orders.mjs final`), `purge`,
+the auditor, and orders it hands back: reading items (the no-passage probe's short answers are scored by the lead),
+apps, puzzles and practice games, an unknown subject. A hand-off or failure shows in the Actions tab (a red run) and,
+with GitHub's default notifications, in the owner's email.
+
+### The owner's setup, step by step
+
+Nothing here is done for you: no secret, token or trigger exists until you make it.
+
+1. **An API key for the runner.** console.anthropic.com → **API keys** → Create key (a workspace just for the runner
+   is best) and set a **monthly spend limit** on that workspace (Limits). Each order is capped by its own cost stop
+   (2× its tokens × $0.10), but the workspace limit is the backstop.
+2. **The repository's Actions secrets.** GitHub → the repository → **Settings → Secrets and variables → Actions →
+   Secrets → New repository secret**, three times:
+   - `ANTHROPIC_API_KEY`: the key from step 1;
+   - `PP_SUPABASE_URL`: the Project URL (the same as in `~/.pp-owner.env`);
+   - `PP_SUPABASE_SERVICE_KEY`: the service_role (secret) key. It only ever lives here and on your computer.
+3. **The repository's Actions variables** (same page, **Variables** tab):
+   - `PP_RUNNER_ENABLED` = `true` (the on/off switch);
+   - `PP_MODEL_FAST` = the alias of the faster model setting, as Claude Code's `/model` list names it (the reporter uses
+     it); `PP_MODEL_STANDARD` = the standard one, or leave it unset for Claude Code's default;
+   - optional `PP_CLAUDE_CODE_VERSION` = a Claude Code version to pin (default: the latest).
+4. **A token for the trigger.** GitHub → your avatar → **Settings → Developer settings → Personal access tokens →
+   Fine-grained tokens → Generate new token**: name "order runner dispatch", expiry 90 days (put a reminder in your
+   calendar), **Repository access: Only select repositories** → this repository, **Permissions → Repository
+   permissions → Contents: Read and write** (what the dispatches API needs; nothing else). Copy it.
+5. **Supabase.** In the project: **Database → Extensions** → enable **pg_net**. Then **SQL Editor → New query**:
+   ```sql
+   select vault.create_secret('OWNER/REPO', 'pp_github_repo');        -- this repository, e.g. someone/some-repo
+   select vault.create_secret('THE TOKEN FROM STEP 4', 'pp_github_token');
+   ```
+   (or Project Settings → Vault → Add secret), then paste and run all of `supabase/runner/dispatch.sql`.
+6. **Try it.** Send a made-up order from the order page (a made-up name, a sample source). Within a minute the
+   **Actions** tab shows "Run order" running; a few minutes later My orders shows the follow-up. Answer it and the
+   build runs; the preview arrives in My orders. To rerun one by hand: Actions → Run order → **Run workflow** with the
+   order id (stage `auto`). On your computer: `source ~/.pp-owner.env && node scripts/run-order.mjs <id>`.
+7. **Privacy.** The runner prints only ids, step names, times and costs, never her files, questions or answers; the
+   runner's machine is thrown away after each job and the workflow deletes the working copies and session
+   transcripts anyway. Keep the repository **private** all the same (Actions logs of a public repository are public).
+   Uploads are still deleted by `orders.mjs purge --due` (run it daily).
+
+**Turn it off** (any one of these): set the variable `PP_RUNNER_ENABLED` to `false` (runs start and skip at once);
+Actions → Run order → **⋯ → Disable workflow**; or in the SQL Editor
+`alter table public.orders disable trigger orders_dispatch_runner;` (`enable trigger` turns it back on). To remove it:
+`drop trigger if exists orders_dispatch_runner on public.orders; drop function if exists public.dispatch_order_runner();`,
+delete the Vault secrets and revoke the token. With it off, everything works as before: `orders.mjs` by hand.
+
+**Tested:** `scripts/test-run-order.mjs` (the coordinator, dry run, against the fake Supabase: both stages, a FIX round
+with a changed-items recheck, the cost stop, a crash, the blind check skipped); `dispatch.sql` against plain Postgres
+with stand-ins for `vault` and `net` (a new `sent` order dispatches `order-sent`; `building` dispatches
+`order-answered` once; other statuses, a note change, the same status again and a disabled trigger send nothing; no
+secrets = nothing); the workflow with `actionlint`. **Not tested:** a real GitHub dispatch, a real Actions run, real
+Claude Code sessions in it, and pg_net on a real Supabase project: do step 6 before telling teachers.
 
 ## Tested, and how
 

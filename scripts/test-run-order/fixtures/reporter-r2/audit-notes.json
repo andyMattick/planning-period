@@ -1,0 +1,6 @@
+{
+  "notes": [
+    "The blind tester answered 10 rows without the key and agreed with all 10; 1 FIX (A q4, a shared phrase), fixed in round 2 and confirmed by a fresh recheck.",
+    "Versions B and C were made by script from version A and every number in them was worked by a fresh solver."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "order": {
+    "items": [
+      "quiz"
+    ]
+  },
+  "summary": "A two-variable data quiz, 3 number-versions (made-up sample).",
+  "source": [
+    {
+      "kind": "notes",
+      "pages": 2,
+      "ideas": 8
+    }
+  ],
+  "whatWeWillMake": [
+    {
+      "item": "quiz",
+      "questions": 8,
+      "versions": [
+        "A",
+        "B",
+        "C"
+      ],
+      "note": "same questions, different numbers"
+    }
+  ],
+  "assumptions": [],
+  "questions": [
+    {
+      "id": "q1",
+      "ask": "Same questions with different numbers in each version?",
+      "options": [
+        "A Yes, numbers only",
+        "B New questions in each version"
+      ],
+      "recommended": "A",
+      "why": "Numbers only keeps the versions equally hard."
+    }
+  ],
+  "warnings": [],
+  "tokens": {
+    "asked": 40,
+    "recomputed": 40,
+    "lines": [
+      {
+        "item": "quiz",
+        "quantity": 1,
+        "tokensEach": 40,
+        "tokens": 40
+      }
+    ]
+  },
+  "notesForOwner": []
+}

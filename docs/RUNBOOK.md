@@ -18,6 +18,49 @@ STYLE=~/pp-styles/$TEACHER             # the teacher's style notes: kept for the
 (`source ~/.pp-owner.env` first); `TEACHER` is then her account id (the order's `teacher`). **Zip orders** (local
 mode, or a teacher who didn't sign in) use the email steps marked "zip:". Everything else is the same.
 
+## The fast path: `scripts/run-order.mjs` (owner, Nov 8, 2026)
+
+"If this is going to be feasible, we have got to make this shorter." The first real online order took 31 minutes from
+her answer to the preview, 13 of them gaps between steps (docs/audits/TIME-2026-11-08.md). The coordinator runs the
+steps below for one online order with no gaps, and the automatic runner (docs/BACKEND.md) starts it when she sends and
+when she answers. By hand:
+```
+source ~/.pp-owner.env
+node $REPO/scripts/run-order.mjs $ORDER                 # auto: onboarding for sent, the build for building
+node $REPO/scripts/run-order.mjs $ORDER --dry-run --keep --no-post   # canned sessions, nothing spent (a rehearsal)
+```
+
+| Stage | Runbook steps | What runs, in order (⫽ = at the same time) | Target |
+|---|---|---|---|
+| onboard (`sent`) | 1, 2, 3 | pull, text copies; 🧭 onboarding ⫽ 🎨 style notes (first order); script checks on the follow-up (≤ 3 questions with options, ≤ 400 words, a token total); post it | 2–3 min |
+| build (`building`) | 1, 4, 4b | pull; 📝 maker (version A only when the numbers change: `agents/maker.md` v11); `versions.mjs --write` | 5 min |
+| | 5, 6, 7 | 🤖 Wilco scripts first (seconds), then 🙈 blind tester (A) ⫽ 🧮 solver (A) ⫽ 🧮 solver (B, C…) or 🔎 fact checker; entries merged by the script | 2 min |
+| | 8, 9 | a new 📝 maker session on the FIX list (whole-version wording, step 8) → `versions.mjs` → a recheck of **only the changed rows**: a fresh blind tester (A rows of script-made items, every version of hand-written ones) ⫽ a fresh solver or fact checker (every version of the changed rows, plus a sweep of every `why`) ⫽ Wilco | 3.5 min a round |
+| | 9, 10 | **one scripted whole-version check of every version** (`versions.mjs --verify`, keys, test-wise, cross-item, `math.mjs`, `interactive-format.mjs --browser`) ⫽ 🧾 reporter (faster setting; the script writes the log rows from each session's record, the reporter writes the story) | 1 min |
+| | 11 | render the watermarked preview, browser check, `orders.mjs preview` | 1.5 min |
+
+**What keeps the quality the same:**
+- Every check is still a fresh session that never saw the pack being made; a recheck is a new session, not the round 1
+  one; the blind tester and solver answer in a folder with the student view and no `pack.json`, and get the key only in
+  their second phase (the same session, resumed). The maker never writes `checks`, `log` or `audit`.
+- Parallel changes who waits, not who checks: each checker writes its own entry file; only the script merges.
+- A recheck covers every row the FIX round changed (found by comparing every version's rows before and after, so a
+  change the FIX list didn't ask for is rechecked too), and the final scripted check covers every row of every version.
+- Judgment roles (onboarding, style notes, maker, blind tester, solver, fact checker, probe) run on the standard
+  setting; only the reporter, which records numbers it is handed, runs on the faster setting (`agents/reporter.md` rule
+  8 already says so).
+- Caps: maker r1 budget/3, FIX rounds budget/6 (step 4), each checker 15% of the budget, onboarding $1, style notes
+  $0.50, reporter 6%, and none more than half of what is left below the **cost stop (2× the budget)**, split over the
+  sessions running together. Past the stop the script hands the order to the owner (step 9, "Cost stop").
+- After round 3 with a FIX open, a final check that fails, or an order kind it doesn't do yet (reading items, apps,
+  puzzles, practice games), it stops: **exit 3**, the status stays where it was with a note for her ("needs a quick look
+  from us"), and `pack.json`, `run-log.jsonl` and `HANDOFF.md` are kept in `deliverables/<teacher>/<id>/work/`
+  (`orders.mjs work-get $ORDER`). Carry on by hand from the step it names. A crash: **exit 1**, status `failed` with a
+  note she sees.
+- Her uploads are read as text only (`html-text.mjs`; Word and PowerPoint from their XML; PDFs as they are); the
+  working folder and the sessions' transcripts are deleted after the run (`--keep` keeps the folder).
+- Her blind-check choice (step 5) comes from her order, never from the maker's pack.
+
 ## 1. Receive the order
 
 Online:
@@ -136,7 +179,37 @@ never average a fail away (try d proposal 4, adopted Nov 7, 2026: at 8 items cha
 the time). A version that fails is not previewed without telling the owner. Log each probe
 (about $0.27 a version; the lead's scoring is not a session).
 
+## 4b. Number versions made by script (owner, Nov 8, 2026)
+
+For "same questions, different numbers" (docs/KINDS-MATH.md §4; `agents/maker.md`, "Same questions, different
+numbers"), the maker writes version A with a `gen` spec and runs `scripts/versions.mjs` itself. The lead (or
+`scripts/run-order.mjs`) runs it again as the record, before any checker:
+```
+node $REPO/scripts/versions.mjs "$WORK/pack.json" --write          # B, C… from A; refuses bad numbers; SymPy on every key
+```
+Then the checks split by version:
+- **Version A gets the full checks:** the blind tester (step 5) on A's student view
+  (`student-view.mjs --only "<every where in A, | between>"`), and the solver (step 6) on A.
+- **B, C… get the script and a solver:** `versions.mjs` (constraints, distractors, SymPy on every key it made) plus a
+  **fresh solver session that works every number in B, C… from their student view** before it reads the key (the
+  independent check that a formula and its key agree with the problem a student reads). Their wording is A's word for
+  word except the numbers, so a second blind read adds nothing the A read and the solver don't catch. Items without
+  `gen` (written by hand per version) get the blind tester in every version, as before.
+- **Wilco on every version** (step 7), as always.
+- After a FIX round, `versions.mjs` remakes B, C… from the fixed A; the recheck covers the changed items in A and the
+  solver rechecks the changed items in every version. Before the preview, `versions.mjs --verify` proves B, C… still
+  come from A's formulas.
+
 ## 5. Fresh blind tester for the subject (at the same time as 6 and 7)
+
+**Skipped when the teacher asked** (owner, Nov 8, 2026: `order.checks.blind` is `false`, the order page's "Blind
+check by a fresh agent (recommended)" unticked). Then no blind tester runs in any round, and the log says so: a row
+"Blind check skipped at the teacher's request" (`scripts/run-order.mjs` writes it). Everything else still runs, each as a
+fresh agent or a script: the solver or fact checker (steps 6, 9), Wilco, keys, cross-item and the interactive checks
+(step 7), `versions.mjs`, and **the ELA no-passage probe for reading items** (step 4a: a gate on the questions, not the
+blind check). The audit report's first page, REVIEW.html, My orders' review and every teacher copy say "Blind check
+skipped at your request — please work through the test yourself before students see it." (`scripts/render/util.mjs`
+`BLIND_SKIPPED_LINE`). This is the teacher's own opt-out, never the lead's: the lead never skips a check to save time.
 
 ```
 node $REPO/checks/student-view.mjs "$WORK/pack.json" --out "$WORK/view.md"
