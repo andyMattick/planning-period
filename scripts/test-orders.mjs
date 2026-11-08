@@ -528,7 +528,7 @@ try {
   assert.match(await page.textContent(`#o-${orderId} fieldset.jcall`), /our pick/);
   ok('review: the owner copy of the audit report stays in the order folder (not uploaded); the judgment call shows its choices with our pick chosen');
   const href = await page.getAttribute(`#o-${orderId} .dl-list a`, 'href');
-  assert.match(href, /\/storage\/v1\/object\/sign\/deliverables\/.+token=/, 'preview files open through signed links');
+  assert.match(href || '', /\/storage\/v1\/object\/sign\/deliverables\/.+token=/, 'preview files open through signed links: ' + href);
   assert.equal((await fetch(href)).status, 200);
   // the interactive page: listed with the PDFs, tried here in a sandboxed frame (its own scripts run, nothing else)
   const pageFile = o.review.documents.find((d) => d.file.endsWith('.html'))?.file;

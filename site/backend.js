@@ -224,6 +224,9 @@
       remove: function (bucket, paths) { return call('DELETE', '/storage/v1/object/' + bucket, { prefixes: paths }); },
       signedUrl: function (bucket, path, seconds, downloadName) {
         return call('POST', '/storage/v1/object/sign/' + bucket + '/' + encPath(path), { expiresIn: seconds || 3600 }).then(function (r) {
+          // Storage labels this JSON answer with the stored file's type (text/plain for an interactive page), so it can
+          // arrive as raw bytes: read it as JSON either way.
+          if (r instanceof ArrayBuffer) { try { r = JSON.parse(new TextDecoder().decode(r)); } catch (_) { r = null; } }
           var s = (r && (r.signedURL || r.signedUrl)) || '';
           // no link back means storage refused quietly: say so, instead of fetching the storage root ("Route GET:/ not found")
           if (!s) { var e = new Error('The file link could not be made (' + (r && (r.message || r.error) || (r == null ? 'empty answer' : JSON.stringify(r).slice(0, 120))) + ').'); e.code = 'no_signed_url'; throw e; }
