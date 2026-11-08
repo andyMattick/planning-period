@@ -71,6 +71,15 @@ flags are what make the pack good.
   student view); for a review app also read every card: a back that doesn't answer its front, or two cards that are
   really the same, is FIX. The browser test (`checks/apps.mjs`) is Wilco's, not yours.
 
+## Shared data, parts and one version per student (owner, Nov 8, 2026)
+- A data set prints once before its group. Solve the group in order, then ask: did any question's choices or stem give
+  away another question's answer (a key shown as another question's choice, a number to copy, a later stem that
+  restates an earlier answer)? Flag it as `giveaway` naming both questions.
+- A multi-part answer: answer each part; flag a part whose checklist (teacher copy only) you couldn't meet from the prompt.
+- One version per student: you solve **a sample of 3 pool versions** (`node checks/student-view.mjs pack.json
+  --pool-sample 3`), each named by its code. Record the codes in `documents[].pool.blindSample` so the audit report says
+  which ones a fresh agent solved.
+
 ## Output (`pack.json`)
 One entry for `checks.blind`: `{"round", "agent": "🙈 Blind tester (science)", "matched", "of", "byLevel",
 "findings": [{"where", "kind": "FIX"|"KEEP"|"JUDGMENT", "what"}]}`. Describe problems in your own words; quote no
@@ -87,7 +96,7 @@ words>", "options": ["Keep it as it is (…)", "<one concrete change>"], "recomm
 The teacher picks one with a tap in her review, so write the options as she would read them (no level codes).
 
 ---
-**Version 3** (Nov 8, 2026)
+**Version 4** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's blind review (`docs/BLIND-REVIEW.md` steps 2–4) and the traps its
@@ -100,3 +109,4 @@ The teacher picks one with a tap in her review, so write the options as she woul
 - v3, Nov 8, 2026 (owner review of the first real audit report, order pp-2026-11-08-a20840): a JUDGMENT adds
   `judgment` (issue, options with "keep it" first, an optional pick and why), so the teacher report and her review
   show one-tap choices.
+- v4, Nov 8, 2026 (owner): shared data sets (chaining is a `giveaway`), multi-part answers, and a sample of 3 versions for one version per student (`--pool-sample 3`, `pool.blindSample`). Changed at the owner's request, not by the auditor.

@@ -212,6 +212,24 @@ checks run on them. In addition:
   fewer is scored by the page, so give it full `accept`; longer ones go to the teacher.
 Nothing else changes; never write a key into the prompt or a choice to make the page work.
 
+## Shared data, statistics graphs, parts and versions (owner, Nov 8, 2026; docs/PACK-FORMAT.md, docs/KINDS-MATH.md)
+- **Shared data sets** (`stimuli`, `stimulus` on a question) where they fit: statistics, science data, a map or chart in
+  social studies. Write the data once (a table and/or a graph as data, with a one-sentence intro). **At most 4 questions
+  a data set**, next to each other. Chaining: no question's choices or stem may give away another question's answer in
+  the group (a key as another question's choice, or a number key printed in another stem: `checks/cross-item.mjs`
+  catches the plain cases, so read the group as a student for the rest), and no question may need another's answer to
+  start.
+- **Statistics graphs:** a segmented bar graph (`kind: "segmentedBar"`, with the counts, never only rounded percents) and
+  "estimate r" questions on a scatter plot made from a target r (`kind: "scatter"`, `r`, `n`, `seed`, no `points`). An
+  estimate-r question's choices are numbers from −1 to 1, the key the r you set, every other choice at least 0.2 away
+  (e.g. r, −r, 0.35r, −0.35r). Never print r or a segment's percent on the graph when a question asks for it.
+- **Multi-part long answers:** where a written answer fits, make it (a)–(d) `parts`, each with a prompt, a strong answer,
+  a short full-credit `checklist` and `points`.
+- **Versions** come from the order (`itemSpecs.<item>.versions`): a number N means exactly N letters; `"student"` means
+  one version per student: an interactive page graded on paper, written as version A with a `gen` spec on every item and
+  data set whose numbers change, plus `"pool": {"students": N}`; then run `node scripts/versions.mjs pack.json`, which
+  makes the pool and checks every key. Never put a key, why or checklist anywhere a student page could carry it.
+
 ## Your dollar cap (owner, option 1, Nov 6, 2026)
 The lead starts you with a cap (`docs/RUNBOOK.md` step 4: a first draft one third of the order's budget, a redesign one
 quarter, a FIX round one sixth; reading quiz plus rubric: $5.50, $4.10, $2.75). g7-ela2's uncapped makers cost $7.32
@@ -224,7 +242,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 11** (Nov 8, 2026)
+**Version 12** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -273,3 +291,6 @@ have it) and the number of questions per document.
   for "same questions, different numbers" orders, write version A with a `gen` spec and let `scripts/versions.mjs`
   make B, C… (pp-2026-11-08-a20840: three versions by hand took 9.9 of 31 minutes and $2.07 of $5.56). Changed at the
   owner's request, not by the auditor.
+- v12, Nov 8, 2026 (owner: five things from his own Unit 4 test page): shared data sets with at most 4 questions and
+  no chaining, segmented bar graphs and estimate-r scatter plots, multi-part long answers with full-credit checklists,
+  and versions as one setting (a number, or one per student made by `scripts/versions.mjs` as a pool). Changed at the owner's request, not by the auditor.
