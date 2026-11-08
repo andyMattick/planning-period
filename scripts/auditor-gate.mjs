@@ -125,7 +125,7 @@ export function gate({ repo, cause, report = null, commit = false, push = false,
     } else keep.push(c.path);
   }
   const check = () => {
-    const r = spawnSync('sh', ['-c', `${checkCmd} 2>&1`], { cwd: repo, encoding: 'utf8', maxBuffer: 64 << 20, timeout: 1800000 });
+    const r = spawnSync('sh', ['-c', `${checkCmd} 2>&1`], { cwd: repo, encoding: 'utf8', maxBuffer: 64 << 20, timeout: 1800000, env: { ...process.env, PP_AUDIT_TOKEN: '' } });
     const pass = r.status === 0 && /All checks pass/.test(r.stdout || '');
     return { pass, tail: (r.stdout || '').trim().split('\n').filter((l) => /✗|fail|FAIL/.test(l)).slice(0, 8).join(' | ') || (r.stdout || '').trim().split('\n').slice(-3).join(' | ') };
   };
@@ -186,12 +186,15 @@ export function gate({ repo, cause, report = null, commit = false, push = false,
         '-c', 'user.email=' + (process.env.GIT_AUTHOR_EMAIL || git(repo, 'config', 'user.email').stdout.trim() || 'runner@localhost'), 'commit', '-q', '-m', msg);
       sha = gitOk(repo, 'rev-parse', 'HEAD').trim();
       if (push) {
-        let r = git(repo, 'push', '-q', 'origin', 'HEAD:main');
+        // the runner's push token (PP_AUDIT_TOKEN: fine-grained, Contents: write on this repository) is given to git here
+        // only, never stored in .git/config and never in the auditor session's environment
+        const tok = process.env.PP_AUDIT_TOKEN, auth = tok ? ['-c', `http.https://github.com/.extraheader=AUTHORIZATION: basic ${Buffer.from(`x-access-token:${tok}`).toString('base64')}`] : [];
+        let r = git(repo, ...auth, 'push', '-q', 'origin', 'HEAD:main');
         if (r.status !== 0) {
-          gitOk(repo, 'fetch', '-q', 'origin', 'main'); gitOk(repo, 'rebase', '-q', 'FETCH_HEAD');
+          gitOk(repo, ...auth, 'fetch', '-q', 'origin', 'main'); gitOk(repo, 'rebase', '-q', 'FETCH_HEAD');
           const c = check(); if (!c.pass) throw new Error(`after rebasing on main, npm run check fails: ${c.tail}`);
           sha = gitOk(repo, 'rev-parse', 'HEAD').trim();
-          r = git(repo, 'push', '-q', 'origin', 'HEAD:main');
+          r = git(repo, ...auth, 'push', '-q', 'origin', 'HEAD:main');
           if (r.status !== 0) throw new Error(`push to main failed twice: ${(r.stderr || '').trim().split('\n').pop()}`);
         }
       }

@@ -69,6 +69,9 @@ const WORK = resolve(workOpt && workOpt !== true ? workOpt : join(process.env.PP
 const FIXTURES = dry ? resolve(dry === true ? join(ROOT, 'scripts/test-run-order/fixtures') : dry) : null;
 const childEnv = { ...process.env };
 if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_USE_ENV_PROXY) childEnv.NODE_USE_ENV_PROXY = '1';
+// the auditor's push token goes only to scripts/auditor-gate.mjs, never to an agent session
+const AUDIT_TOKEN = process.env.PP_AUDIT_TOKEN || '';
+delete childEnv.PP_AUDIT_TOKEN;
 const MODEL = { standard: process.env.PP_MODEL_STANDARD || '', fast: process.env.PP_MODEL_FAST || '' };
 
 /* ---------- small helpers ---------- */
@@ -601,7 +604,7 @@ records/${ID}.json's audit.briefChanges. Don't run git. Work only in this folder
   for (const f of before.keys()) if (!after.includes(f) && f !== `records/${ID}.json`) { rmSync(join(repo, f), { force: true }); n++; }
   if (!existsSync(join(repo, 'records', `${ID}.json`))) { mkdirSync(join(repo, 'records'), { recursive: true }); writeJSON(join(repo, 'records', `${ID}.json`), record); }
   say(`the auditor changed ${n} file${n === 1 ? '' : 's'}; the gate decides`);
-  const g = await nodeRun('scripts/auditor-gate.mjs', ['--repo', repo, '--cause', ID, '--report', report, '--commit', ...(AUDIT_PUSH ? ['--push'] : [])], { timeout: 2400000 });
+  const g = await nodeRun('scripts/auditor-gate.mjs', ['--repo', repo, '--cause', ID, '--report', report, '--commit', ...(AUDIT_PUSH ? ['--push'] : [])], { timeout: 2400000, env: { ...childEnv, ...(AUDIT_TOKEN ? { PP_AUDIT_TOKEN: AUDIT_TOKEN } : {}) } });
   let res = null;
   try { res = JSON.parse(g.out.trim().split('\n').pop()); } catch {}
   if (!res) throw new Error(`the gate gave no result: ${(g.err || g.out).trim().split('\n').pop()}`);
