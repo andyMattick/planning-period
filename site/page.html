@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>Interactive page</title>
+<style>
+  :root { --bg: #ffffff; --ink: #1c2026; --line: #d8dde3; --accent: #1f6f5c; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #1c2026; --ink: #eef1f4; --line: #3a414b; --accent: #7fd3bd; } }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .bar { position: fixed; top: 0; left: 0; right: 0; height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-bottom: 1px solid var(--line); background: var(--bg); box-sizing: border-box; }
+  .bar .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+  .bar a, .bar button { font: inherit; font-size: 15px; color: var(--accent); background: none; border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; min-height: 40px; cursor: pointer; text-decoration: none; }
+  iframe { position: fixed; top: 52px; left: 0; width: 100%; height: calc(100% - 52px); border: 0; background: #fff; }
+  .msg { padding: 72px 16px 16px; max-width: 640px; }
+</style>
+</head>
+<body>
+<div class="bar"><a href="orders.html">← My orders</a><span class="name" id="name">Loading…</span><button type="button" id="dl" hidden>Download</button></div>
+<p class="msg" id="msg">Loading the page…</p>
+<script src="common.js"></script>
+<script src="backend.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

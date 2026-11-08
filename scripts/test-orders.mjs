@@ -520,17 +520,27 @@ try {
   assert.equal(await page.getAttribute(`#o-${orderId} [data-try-frame]`, 'sandbox'), 'allow-scripts allow-modals');
   await noSideways(page, 'My orders with an interactive page (desktop)');
   await shot(page, 'orders-desktop-review-interactive');
-  // Open full screen: a new tab with the page filling a sandboxed frame (phones open it this way)
+  // Open full screen: page.html in a new tab loads the file itself (phones pause the My orders tab) into a sandboxed frame
   const [tab] = await Promise.all([page.waitForEvent('popup'), page.click(`#o-${orderId} [data-full][data-file="${pageFile}"]`)]);
+  assert.match(tab.url(), /\/page\.html\?p=/);
   await tab.waitForSelector('iframe[sandbox]');
   assert.equal(await tab.getAttribute('iframe', 'sandbox'), 'allow-scripts allow-modals allow-downloads');
   await tab.frameLocator('iframe').locator('#pp-name').waitFor();
-  await tab.close();
-  // Download: saved as a real .html web page (made in the browser from the stored bytes)
-  const [dl] = await Promise.all([page.waitForEvent('download'), page.click(`#o-${orderId} [data-dl-page][data-file="${pageFile}"]`)]);
+  await noSideways(tab, 'full-screen interactive page');
+  // Download: a real tap on page.html's Download button saves the whole page as an .html file
+  const [dl] = await Promise.all([tab.waitForEvent('download'), tab.click('#dl')]);
   assert.equal(dl.suggestedFilename(), pageFile);
   const saved = readFileSync(await dl.path(), 'utf8');
   assert.ok(/^<!doctype html>/i.test(saved.trimStart()) && saved.includes('id="pp-name"'), 'the download is the whole page');
+  await tab.close();
+  // My orders' Download button opens the same page ready to save
+  const [tab2] = await Promise.all([page.waitForEvent('popup'), page.click(`#o-${orderId} [data-dl-page][data-file="${pageFile}"]`)]);
+  assert.match(tab2.url(), /&dl=1$/);
+  await tab2.waitForSelector('#dl:not([hidden])');
+  await tab2.close();
+  // a link that isn't an order's page is refused
+  const bad = await page.context().newPage(); await bad.goto(ONLINE + 'page.html?p=' + encodeURIComponent('../../etc/passwd'));
+  assert.match(await bad.textContent('#msg'), /not a page from your orders/); await bad.close();
   ok('review: the interactive page is listed next to the PDFs: "Try it here" (sandboxed frame), "Open full screen" (a new tab) and "Download" (an .html file)');
   for (const [kind, scheme] of [['phone', 'light'], ['phone', 'dark'], ['desktop', 'dark']]) {
     const c2 = await ctx(kind, scheme), p2 = await c2.newPage();
