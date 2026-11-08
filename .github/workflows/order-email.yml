@@ -1,0 +1,48 @@
+# Emails the owner when a teacher sends an order (owner, Nov 8, 2026). The same database trigger that starts the order
+# runner (supabase/runner/dispatch.sql, event 'order-sent') starts this; it reads the order and sends a short email
+# through Gmail (scripts/notify-order.mjs). The email lists what was ordered, never her files or requests.
+# Setup (docs/BACKEND.md, "Order emails"): variables PP_NOTIFY_FROM and PP_NOTIFY_TO, secret PP_NOTIFY_APP_PASSWORD
+# (a Gmail app password for PP_NOTIFY_FROM), plus the runner's PP_SUPABASE_URL and PP_SUPABASE_SERVICE_KEY secrets.
+# Off switch: repository variable PP_NOTIFY_ENABLED = false. Not set up: it says so and sends nothing.
+name: Order email
+
+on:
+  repository_dispatch:
+    types: [order-sent]
+  workflow_dispatch:
+    inputs:
+      id:
+        description: Order id (pp-YYYY-MM-DD-xxxxxx)
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  email:
+    if: vars.PP_NOTIFY_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Email the owner
+        env:
+          ORDER_ID: ${{ github.event.client_payload.id || inputs.id }}
+          PP_SUPABASE_URL: ${{ secrets.PP_SUPABASE_URL }}
+          PP_SUPABASE_SERVICE_KEY: ${{ secrets.PP_SUPABASE_SERVICE_KEY }}
+          PP_NOTIFY_FROM: ${{ vars.PP_NOTIFY_FROM }}
+          PP_NOTIFY_TO: ${{ vars.PP_NOTIFY_TO }}
+          PP_NOTIFY_APP_PASSWORD: ${{ secrets.PP_NOTIFY_APP_PASSWORD }}
+        run: |
+          if [ -z "$PP_SUPABASE_URL" ] || [ -z "$PP_SUPABASE_SERVICE_KEY" ]; then
+            echo "Not set up: no PP_SUPABASE_URL / PP_SUPABASE_SERVICE_KEY secrets (docs/BACKEND.md). Nothing sent." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          node scripts/notify-order.mjs "$ORDER_ID" | tee -a "$GITHUB_STEP_SUMMARY"
