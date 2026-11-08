@@ -44,14 +44,14 @@ function readerSettings(pack, doc) {
 export const saltOf = (pack, base) => sha(`PPA1|${pack.id || 'pack'}|${base}`).toString('hex').slice(0, 16);
 export const storageKeyOf = (pack, base) => `pp-app:${pack.id || 'pack'}:${base}:v1`;
 
-function lock(salt, id, canon, obj) {
+export function lock(salt, id, canon, obj) {
   const pt = Buffer.from('PPA:' + JSON.stringify(obj), 'utf8');
   const key = `PPA1x|${salt}|${id}|${canon}`;
   const out = Buffer.alloc(pt.length);
   for (let i = 0; i * 32 < pt.length; i++) { const ks = sha(key + '#' + i); for (let j = 0; j < 32 && i * 32 + j < pt.length; j++) out[i * 32 + j] = pt[i * 32 + j] ^ ks[j]; }
   return out.toString('base64');
 }
-const hashOf = (salt, id, canon) => sha(`PPA1|${salt}|${id}|${canon}`).toString('hex');
+export const hashOf = (salt, id, canon) => sha(`PPA1|${salt}|${id}|${canon}`).toString('hex');
 
 // The right forms of one question, as the teacher wrote them: the answer first, then `accept`.
 export function rightForms(q) {
