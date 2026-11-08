@@ -21,6 +21,13 @@ export function vv(x, ver) {
   return x[Object.keys(x)[0]];
 }
 
+/* The subject as the teacher wrote it: "Other (say which)" plus her own words (order.subjectOther) prints her words. */
+export function subjectLabelOf(menu, order = {}) {
+  const other = typeof order.subjectOther === 'string' ? order.subjectOther.trim() : '';
+  if (order.subject === 'other' && other) return other;
+  return menu?.subjects?.find((s) => s.id === order.subject)?.label || order.subject || '';
+}
+
 export function slug(s) {
   return (
     String(s || 'document')
