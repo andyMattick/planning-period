@@ -1,5 +1,7 @@
 // The interactive format (owner, Nov 8, 2026; docs/KINDS-INTERACTIVE-FORMAT.md): a worksheet, homework, quiz, test,
-// reading quiz or study guide made as ONE self-contained HTML page per version, which students answer on a device.
+// reading quiz, study guide, guided notes or review game made as ONE self-contained HTML page per version, which
+// students answer on a device. Guided notes (mode "notes") show the notes' text with a typed box for each blank and a
+// "Check my notes"; a review game (mode "game") is played one card at a time, alone or as a class on a projector.
 //
 //   documents[].format  = "interactive"            (missing or "printable": the usual PDF and Word copies)
 //   documents[].grading = "auto" | "print"
@@ -17,7 +19,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { esc, vv, cleanSvg, kindOf, questionsOf, tfValue, passagePlan, passageByline, fontStack, letter } from './util.mjs';
+import { esc, vv, cleanSvg, kindOf, questionsOf, tfValue, passagePlan, passageByline, fontStack, letter, keyText } from './util.mjs';
 import { mathHtml, katexCss, plainMath } from './math.mjs';
 import { saltOf, hashOf, lock } from './apps.mjs';
 import { rubricTableHtml, PREVIEW_MARK } from './html.mjs';
@@ -25,11 +27,35 @@ import { rubricTableHtml, PREVIEW_MARK } from './html.mjs';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const read = (f) => fs.readFileSync(path.join(HERE, f), 'utf8');
 
-export const FORMAT_KINDS = ['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide'];
+export const FORMAT_KINDS = ['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide', 'notes', 'reviewgame'];
 export const FORMAT_TYPES = ['mc', 'tf', 'numeric', 'short', 'open', 'match'];
 export const OBJECTIVE_TYPES = ['mc', 'tf', 'numeric', 'match'];
 export const GRADINGS = ['auto', 'print'];
 export const isInteractiveFormat = (doc) => !!doc && doc.format === 'interactive';
+// How the page plays: "notes" (guided notes: blanks in the text), "game" (a review game: one card at a time) or "doc".
+export const modeOf = (doc) => ({ notes: 'notes', reviewgame: 'game' })[kindOf(doc)] || 'doc';
+// A blank in guided notes: a run of 3 or more underscores in a short or number question's prompt.
+export const BLANK_RE = /_{3,}/g;
+export const blanksIn = (prompt) => (String(prompt ?? '').match(BLANK_RE) || []).length;
+// Several blanks in one prompt: the key and each accepted form name them in order, separated by ; (or , / and).
+export const splitBlanks = (s, k) => (k === 1 ? [String(s).trim()] : String(s).split(/\s*(?:;|,|\/|\band\b)\s*/i).map((x) => x.trim()).filter(Boolean));
+// In guided notes and review games a short answer of a few words (every accepted form 4 words or fewer) is checked by
+// the page, forgiving case, plurals and a leading a/an/the; a longer one goes to the teacher, as in the other kinds.
+export const WORDS_MAX = 4;
+export function wordChecked(q, ver, mode) {
+  if (mode === 'doc' || (q.type || 'short') !== 'short') return false;
+  const forms = [vv(q.answer, ver), ...(vv(q.accept, ver) || [])].filter((a) => a != null && String(a).trim() !== '');
+  return forms.length > 0 && forms.every((f) => String(f).trim().split(/\s+/).length <= WORDS_MAX);
+}
+// Is this page item scored by the page (auto)? Multiple choice, true/false, numbers, matching, notes blanks, short words.
+export const scoredHere = (it) => OBJECTIVE_TYPES.includes(it.type) || it.type === 'fill' || !!it.words;
+// The class-mode code (review games graded in the page): printed only on the teacher copy; it unlocks "Reveal answer"
+// on the projector. Made from the whole pack, so the page (which holds only its first 8 hex digits) can't rebuild it.
+const CODE_LETTERS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+export function classCode(pack, file) {
+  const h = crypto.createHash('sha256').update(`PPT1|${JSON.stringify(pack)}|${file}`, 'utf8').digest();
+  return Array.from(h.subarray(0, 6), (b) => CODE_LETTERS[b % CODE_LETTERS.length]).join('');
+}
 export const versionsOfDoc = (doc) => (Array.isArray(doc.versions) && doc.versions.length ? doc.versions : [null]);
 export const pageFile = (base, ver) => `${base}-interactive${ver ? `-${ver}` : ''}.html`;
 export const storageKey = (pack, file) => `pp-int:${pack.id || 'pack'}:${file.replace(/\.html$/, '')}:v1`;
@@ -76,11 +102,16 @@ export function formatProblems(pack, doc) {
 }
 
 /* One question, for one version: what the page shows, and (auto only) the hashes it checks against. */
-function pageItem(pack, doc, q, n, ver, salt, R, problems, auto) {
-  const type = q.type || 'short';
+function pageItem(pack, doc, q, n, ver, salt, R, problems, { auto, mode, code }) {
+  let type = q.type || 'short';
   const id = String(q.id);
   const where = `${doc.title} ${ver ? ver + ' ' : ''}${id}`;
-  const it = { t: 'q', id, n, type, prompt: mathHtml(vv(q.prompt, ver) ?? '') };
+  const raw = vv(q.prompt, ver) ?? '';
+  const it = { t: 'q', id, n, type, prompt: mathHtml(raw) };
+  // guided notes: a short or number question with blanks in its text is a line of the notes, one box per blank
+  const k = mode === 'notes' && ['short', 'numeric'].includes(type) ? blanksIn(raw) : 0;
+  if (k) { it.type = 'fill'; it.ftype = type; it.k = k; it.parts = String(raw).split(BLANK_RE).map((x) => mathHtml(x)); delete it.prompt; }
+  if (wordChecked(q, ver, mode) && !k) it.words = true;
   const fig = cleanSvg(vv(q.figure, ver)); if (fig) it.figure = fig;
   const unit = vv(q.unit, ver); if (unit && type !== 'open') { it.unit = mathHtml(unit); it.unitText = plainMath(unit); }
   if (type === 'mc') it.choices = (vv(q.choices, ver) || []).map((c) => mathHtml(c));
@@ -91,7 +122,9 @@ function pageItem(pack, doc, q, n, ver, salt, R, problems, auto) {
     it.choicesText = ch.map((c) => plainMath(c));
   }
   if (q.points != null) it.points = Number(q.points) || 1;
-  if (!auto || !OBJECTIVE_TYPES.includes(type)) return it;
+  if (mode === 'game') it.pts = Number(q.points) || Number(q.level) || 1;   // a card is worth its points, else its level
+  if (code) it.rv = lock(salt, id, `reveal:${code}`, { answer: plainMath(keyText(q, ver)), why: plainMath(String(vv(q.why, ver) ?? '')) });
+  if (!auto || !scoredHere(it)) return it;
   if (q.hint) it.hint = mathHtml(vv(q.hint, ver));
   const why = String(vv(q.why, ver) ?? '');
   const ans = vv(q.answer, ver);
@@ -101,11 +134,29 @@ function pageItem(pack, doc, q, n, ver, salt, R, problems, auto) {
     if (!Number.isInteger(i) || i < 0 || i >= n2) problems.push(`${where}: the answer ${JSON.stringify(ans)} is not one of the ${n2} choices`);
     canons = [`opt:${i}`];
   } else if (type === 'tf') canons = [`tf:${tfValue(ans) ? 'true' : 'false'}`];
-  else if (type === 'numeric') {
+  else if (it.type === 'fill') {
+    // each blank: its own hashes (to mark it ✓ or ✗); the whole line: hashes of every accepted combination, with the why
+    const ft = type === 'numeric' ? 'numeric' : 'short', forms = [ans, ...(vv(q.accept, ver) || [])].filter((a) => a != null && String(a).trim() !== '');
+    const per = Array.from({ length: k }, () => []);
+    for (const f of forms) {
+      const parts = splitBlanks(f, k);
+      if (parts.length !== k) { problems.push(`${where}: the accepted form “${f}” doesn't name ${k} blanks in order (separate them with ;)`); continue; }
+      let combos = [[]];
+      parts.forEach((p, i) => {
+        const cs = [...R.F.keyForms(p, ft, { round: q.round, tol: q.tol })];
+        if (!cs.length) problems.push(`${where}: “${p}” (blank ${i + 1}) can't be read${ft === 'numeric' ? ' as a number' : ''}`);
+        cs.forEach((c) => { if (!per[i].includes(c)) per[i].push(c); });
+        combos = combos.flatMap((cmb) => cs.map((c) => [...cmb, c]));
+      });
+      for (const cmb of combos) { const t = 'fill:' + cmb.join('|'); if (!canons.includes(t)) canons.push(t); }
+    }
+    if (canons.length > 2000) problems.push(`${where}: ${canons.length} accepted combinations (2000 at most)`);
+    it.blanks = per.map((cs, i) => cs.map((c) => hashOf(salt, `${id}.${i}`, c)));
+  } else if (type === 'numeric' || it.words) {
     const forms = [ans, ...(vv(q.accept, ver) || [])].filter((a) => a != null && String(a).trim() !== '');
     for (const f of forms) {
-      const cs = [...R.F.keyForms(f, 'numeric', { round: q.round, tol: q.tol })];
-      if (!cs.length) problems.push(`${where}: the accepted form “${f}” doesn't read as a number`);
+      const cs = [...R.F.keyForms(f, type, { round: q.round, tol: q.tol })];
+      if (!cs.length) problems.push(`${where}: the accepted form “${f}” doesn't read as ${type === 'numeric' ? 'a number' : 'words'}`);
       for (const c of cs) if (!canons.includes(c)) canons.push(c);
     }
     if (canons.length > 401) problems.push(`${where}: ${canons.length} accepted values (tol is too wide for this many places; 401 at most)`);
@@ -120,6 +171,7 @@ function pageItem(pack, doc, q, n, ver, salt, R, problems, auto) {
   it.acc = canons.map((c) => ({ h: hashOf(salt, id, c), x: lock(salt, id, c, { why }) }));
   it.miss = {};
   for (const m of q.miss || []) {
+    if (it.type === 'fill') continue;   // a notes blank has no wrong-answer messages (the word bank is the help)
     const cs = type === 'mc' ? [`opt:${Number(m.answer)}`] : type === 'tf' ? [`tf:${tfValue(m.answer)}`] : [...R.F.keyForms(m.answer, type, {})];
     for (const c of cs) {
       if (canons.includes(c)) { problems.push(`${where}: the wrong answer “${m.answer}” is also a right answer`); continue; }
@@ -139,6 +191,8 @@ export function pageData(pack, doc, ver, base, ctx = {}) {
   const R = loadForms({ salt: salt || 'x', ...reader });
   const o = pack.order || {};
   const brand = ctx.brand || {};
+  const mode = modeOf(doc);
+  const code = auto && mode === 'game' ? classCode(pack, file) : null;
   const data = {
     title: String(doc.title || ''), ver: ver || null, grading: auto ? 'auto' : 'print', preview: !!ctx.preview,
     sub: [o.grade && `Grade ${o.grade}`, ctx.subjectLabel || o.subject, o.topic].filter(Boolean).join(' · '),
@@ -148,18 +202,23 @@ export function pageData(pack, doc, ver, base, ctx = {}) {
     build: `Build ${(ctx.build || '').slice(0, 8)} · ${pack.id || ''}${ver ? ` · version ${ver}` : ''}`,
     blocks: [],
   };
+  if (mode !== 'doc') data.mode = mode;
+  if (code) data.tc = hashOf(salt, '_class', `code:${code}`);   // checks a typed class-mode code; the code itself is not here
   const plan = passagePlan(doc, ver);
   const passage = (p) => ({ t: 'passage', title: String(p.title || 'Passage'), byline: passageByline(p), paras: (vv(p.paragraphs, ver) || []).map((x) => mathHtml(x)) });
   plan.top.forEach((p) => data.blocks.push(passage(p)));
   let n = 0;
   (doc.sections || []).forEach((sec, si) => {
+    const cat = String(sec.heading || '');   // a review game's category
     (plan.before.get(si) || []).forEach((p) => data.blocks.push(passage(p)));
     if (sec.heading || sec.directions) data.blocks.push({ t: 'section', heading: String(sec.heading || ''), directions: sec.directions ? mathHtml(vv(sec.directions, ver)) : '' });
     for (const q of sec.questions || []) {
       (plan.beforeQ.get(q) || []).forEach((p) => data.blocks.push(passage(p)));
       n++;
       if (!FORMAT_TYPES.includes(q.type || 'short')) continue;
-      data.blocks.push(pageItem(pack, doc, q, n, ver, salt, R, problems, auto));
+      const it = pageItem(pack, doc, q, n, ver, salt, R, problems, { auto, mode, code });
+      if (mode === 'game' && cat) it.cat = cat;
+      data.blocks.push(it);
     }
   });
   if (doc.rubric) data.rubric = rubricTableHtml(doc.rubric);
@@ -184,33 +243,57 @@ export function pageHtml(pack, doc, ver, base, ctx = {}) {
 <meta name="pp-format" content="interactive; grading=${auto ? 'auto' : 'print'}">
 <title>${esc(data.title)}${ver ? ` (version ${esc(ver)})` : ''}</title>
 <style>${font}${read('interactive-format/page.css')}</style>${math}
-</head><body>${ctx.preview ? `<div class="pv-mark" aria-hidden="true">${esc(PREVIEW_MARK)}</div>` : ''}<a class="skip" href="#main">Skip to the questions</a>
+</head><body>${ctx.preview ? `<div class="pv-mark" aria-hidden="true">${esc(PREVIEW_MARK)}</div>` : ''}<a class="skip" href="#main">Skip to the ${data.mode === 'notes' ? 'notes' : data.mode === 'game' ? 'game' : 'questions'}</a>
 <main class="wrap" id="app"><noscript>This page needs JavaScript turned on. Ask your teacher for a paper copy.</noscript></main>
 <script>window.PPA_DATA=${jsonForScript(engine)};window.PPI_DATA=${jsonForScript(data)};</script>
 <script>${read('apps/engine.js')}</script>
-${auto ? `<script>${read('interactive-format/forms.js')}</script>\n` : ''}<script>${read('interactive-format/page.js')}</script>
+${auto ? `<script>${read('interactive-format/forms.js')}</script>\n` : ''}${data.mode ? `<script>${read(`interactive-format/${data.mode}.js`)}</script>\n` : ''}<script>${read('interactive-format/page.js')}</script>
 </body></html>
 `;
   return { html, data, problems, auto };
 }
 
-/* For the teacher copy and README: what the page does, and what the hashes can and can't do. */
-export function teacherNoteLines(doc) {
-  const auto = doc.grading === 'auto';
-  return [
-    `Students answer this on a device: one HTML file per version (${versionsOfDoc(doc).map((v) => '…-interactive' + (v ? '-' + v : '') + '.html').join(', ')}). It works offline in any browser, needs no accounts and sends nothing anywhere; answers are saved only in that browser, so a student can close it and come back.`,
-    auto
+/* For the teacher copy and README: what the page does, and what the hashes can and can't do. codes: [{ver, code}], the
+   class-mode codes of an auto-graded review game (classCodesOf). */
+export function teacherNoteLines(doc, codes = []) {
+  const auto = doc.grading === 'auto', mode = modeOf(doc);
+  const files = `one HTML file per version (${versionsOfDoc(doc).map((v) => '…-interactive' + (v ? '-' + v : '') + '.html').join(', ')})`;
+  const lines = [];
+  if (mode === 'notes') {
+    lines.push(`Students fill in these notes on a device: ${files}. Each blank is a box in the text of the notes. It works offline in any browser, needs no accounts and sends nothing anywhere; the notes are saved only in that browser, so a student can close it and come back.`);
+    lines.push(auto
+      ? '"Check my notes" marks each blank right or not (forgiving capital letters, spaces and plurals) so the student can fix it and check again; a right blank shows its explanation, and when every blank is right the page shows the completed notes. "Print my notes" prints her filled-in notes for her binder. Stop-and-think and other written answers are left for you.'
+      : 'The page holds no answers at all. When the student presses Finish it shows her filled-in notes with her name and the date, ready to print or save as a PDF; check them with this teacher copy.');
+  } else if (mode === 'game') {
+    lines.push(`Students play this review game on a device, one card at a time: ${files}. It works offline in any browser, needs no accounts and sends nothing anywhere; progress is saved only in that browser.`);
+    lines.push(auto
+      ? 'Played alone: the page checks each card (multiple choice, true/false, numbers, matching and answers of a few words; capital letters and plurals are forgiven), gives the card\'s points for a right first try and half for a right second try, shows the explanation for a right answer, and ends with a results page the student can print. Longer written answers are left for you.'
+      : 'Played alone: the page holds no answers. The student answers every card, then gets an answer sheet (name, date, every card with her answer and its points) to print or save as a PDF; grade it with this teacher copy.');
+    lines.push(auto
+      ? `Played as a class: "Play as a class" puts the cards on a projector with a scoreboard for 2 to 6 teams; you give each card's points to a team. "Reveal answer" shows the answer and why once you type the class code${codes.length ? ` (${codes.map((c) => `${c.ver ? `version ${c.ver}: ` : ''}${c.code}`).join(', ')})` : ''}, which is printed only here.`
+      : 'Played as a class: "Play as a class" puts the cards on a projector with a scoreboard for 2 to 6 teams; read the answers from this teacher copy and give each card\'s points to a team.');
+  } else {
+    lines.push(`Students answer this on a device: ${files}. It works offline in any browser, needs no accounts and sends nothing anywhere; answers are saved only in that browser, so a student can close it and come back.`);
+    lines.push(auto
       ? 'Graded automatically: when the student presses Finish, the page scores multiple choice, true/false, number and matching questions, shows which were right, and shows the explanation for each right answer. Short and written answers are listed as "needs your teacher" and are never scored by the page. The student can print the results.'
-      : 'Printed for grading later: the page holds no answers at all. When the student presses Finish it shows an answer sheet (name, date, every question with the student\'s answer, room for points and notes) to print or save as a PDF. Grade it with this teacher copy.',
-    ...(auto ? ['How the answers are protected: the file stores each right answer only as a salted SHA-256 code, never as text, and the explanations are locked with the right answer. This stops casual peeking (view source, the browser\'s tools). It is not test security: a student who knows programming can try every choice of a multiple-choice question against its code, and short number answers can be guessed the same way. Use it for practice and low-stakes checks; for a graded test, choose "print the results" or paper.'] : []),
-    'On a shared device, "Start over for a new student" clears the saved answers (two taps).',
-  ];
+      : 'Printed for grading later: the page holds no answers at all. When the student presses Finish it shows an answer sheet (name, date, every question with the student\'s answer, room for points and notes) to print or save as a PDF. Grade it with this teacher copy.');
+  }
+  if (auto) lines.push(`How the answers are protected: the file stores each right answer only as a salted SHA-256 code, never as text, and the explanations are locked with the right answer${mode === 'game' ? ' (and, for the projector, with the class code)' : ''}. This stops casual peeking (view source, the browser\'s tools). It is not test security: a student who knows programming can try every choice of a multiple-choice question against its code, and short answers can be guessed the same way. Use it for practice and low-stakes checks; for a graded test, choose "print the results" or paper.`);
+  lines.push('On a shared device, "Start over for a new student" clears the saved answers (two taps).');
+  return lines;
 }
 
-export function teacherNoteHtml(doc) {
+// The class-mode codes of one document (auto-graded review games only; empty otherwise).
+export function classCodesOf(pack, doc, base) {
+  if (doc.grading !== 'auto' || modeOf(doc) !== 'game') return [];
+  return versionsOfDoc(doc).map((ver) => ({ ver, code: classCode(pack, pageFile(base, ver)) }));
+}
+
+export function teacherNoteHtml(doc, codes = []) {
   return `<div class="keep" style="border:1.5pt solid #000;border-radius:3pt;padding:6pt 9pt;margin:10pt 0">
   <b>About the interactive page (${doc.grading === 'auto' ? 'graded automatically' : 'results printed for grading later'})</b>
-  ${teacherNoteLines(doc).map((l) => `<p style="margin:4pt 0;font-size:10pt">${esc(l)}</p>`).join('')}</div>`;
+  ${teacherNoteLines(doc, codes).map((l) => `<p style="margin:4pt 0;font-size:10pt">${esc(l)}</p>`).join('')}${codes.length ? `
+  <p style="margin:6pt 0 2pt;font-size:12pt"><b>Class code for "Reveal answer":</b> ${codes.map((c) => `${c.ver ? `version ${esc(c.ver)} ` : ''}<b style="font-family:monospace;letter-spacing:1pt">${esc(c.code)}</b>`).join(' · ')}</p>` : ''}</div>`;
 }
 
 /* The renderer's hook: the HTML pages of one interactive document (the teacher copies are made by render-pack.mjs).
@@ -221,8 +304,12 @@ export async function renderInteractivePages(doc, base, ctx, io) {
     const file = pageFile(base, ver);
     const { html, problems } = pageHtml(ctx.pack, doc, ver, base, { brand: ctx.brand, subjectLabel: ctx.subjectLabel, preview: ctx.preview, build: ctx.packHash });
     if (problems.length) throw new Error(`${doc.title}: ${problems.join('; ')}`);
-    const how = doc.grading === 'auto' ? 'graded automatically when the student finishes' : 'prints an answer sheet to grade later';
-    await io.html(file, html, `${doc.title}: interactive page for students${ver ? `, version ${ver}` : ''} (one offline file; ${how})`, doc.title);
+    const mode = modeOf(doc), auto = doc.grading === 'auto';
+    const how = mode === 'notes' ? (auto ? 'students fill in the blanks and check them; prints the filled-in notes' : 'students fill in the blanks; Finish prints the filled-in notes to check')
+      : mode === 'game' ? (auto ? 'one card at a time, scored as they play, or as a class on a projector' : 'one card at a time, then an answer sheet to grade; or as a class on a projector')
+        : auto ? 'graded automatically when the student finishes' : 'prints an answer sheet to grade later';
+    const what = mode === 'notes' ? 'interactive guided notes' : mode === 'game' ? 'interactive review game' : 'interactive page';
+    await io.html(file, html, `${doc.title}: ${what} for students${ver ? `, version ${ver}` : ''} (one offline file; ${how})`, doc.title);
     files.push(file);
   }
   return files;

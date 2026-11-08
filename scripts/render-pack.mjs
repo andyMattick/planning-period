@@ -21,7 +21,7 @@ import { mathPngMaker, setMathEnabled } from './render/math.mjs';
 import { GAME_KINDS, renderGame } from './render/games.mjs';
 import { isAppDoc, renderAppDoc } from './render/apps.mjs';
 import { isPracticeGameDoc, renderPracticeGameDoc } from './render/practicegames.mjs';
-import { isInteractiveFormat, formatProblems, renderInteractivePages, teacherNoteHtml, teacherNoteLines, versionsOfDoc, howToShareText } from './render/interactive-format.mjs';
+import { isInteractiveFormat, formatProblems, renderInteractivePages, teacherNoteHtml, teacherNoteLines, versionsOfDoc, howToShareText, classCodesOf } from './render/interactive-format.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -156,12 +156,14 @@ export async function renderPack(folder, { mode } = {}) {
       made.push({ file, what, title: title || file });
     };
     const interactiveFiles = [];
+    const baseOf = new Map();   // document → its file name base (the README needs a review game's class codes)
 
     const used = new Set();
     for (const doc of pack.documents) {
       let base = slug(doc.title || doc.item);
       for (let i = 2; used.has(base); i++) base = `${slug(doc.title || doc.item)}-${i}`;
       used.add(base);
+      baseOf.set(doc, base);
       // review apps and interactive worksheets: docs/KINDS-APPS.md
       if (isAppDoc(doc)) { await renderAppDoc(doc, base, ctx, { pdf, write, browser }).catch((e) => { throw e instanceof RenderError ? e : new RenderError(e.message); }); continue; }
       // practice games: docs/KINDS-PRACTICEGAMES.md
@@ -173,7 +175,7 @@ export async function renderPack(folder, { mode } = {}) {
       if (isInteractiveFormat(doc)) {
         // one HTML page per version for students, and the teacher copy (the key) as a PDF, plus Word in the final
         try { interactiveFiles.push(...await renderInteractivePages(doc, base, ctx, { html })); } catch (e) { throw new RenderError(e.message); }
-        const note = teacherNoteHtml(doc);
+        const note = teacherNoteHtml(doc, classCodesOf(pack, doc, base));
         for (const ver of versionsOfDoc(doc)) {
           const name = `${base}-teacher${ver ? `-${ver}` : ''}`;
           const what = `${doc.title}: teacher copy${ver ? `, version ${ver}` : ''} (key, why, skills map; the key for the interactive page)`;
@@ -250,7 +252,7 @@ export async function renderPack(folder, { mode } = {}) {
         'CHECK IT BEFORE STUDENTS SEE IT',
         `  ${brand.aiNotice}`,
         '  Every page says "Made with AI · check before use" in the footer.',
-        ...pack.documents.filter(isInteractiveFormat).flatMap((d) => ['', `INTERACTIVE: ${d.title}`, ...teacherNoteLines(d).map((l) => '  ' + l)]),
+        ...pack.documents.filter(isInteractiveFormat).flatMap((d) => ['', `INTERACTIVE: ${d.title}`, ...teacherNoteLines(d, classCodesOf(pack, d, baseOf.get(d))).map((l) => '  ' + l)]),
         '',
         'TO CHANGE OR REPRINT IT',
         '  Upload project.json with a new order and say what to change (a new version C, easier level 1,',

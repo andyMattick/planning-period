@@ -113,8 +113,32 @@
     });
   }
   function judgeTyped(id, entry, raw, type) { return judgeForms(id, entry, typedForms(raw, type)); }
+  /* a line of guided notes with k blanks: each blank marked against its own hashes, and the line right only when the
+     whole combination is an accepted one (so "either order" keys stay paired). {res: 'ok'|'no', marks: [bool], own: each blank by its own hashes, ex} */
+  function judgeFill(id, entry, raws, type) {
+    var t = type === 'numeric' ? 'numeric' : 'short', k = entry.k || 1, per = [], i;
+    for (i = 0; i < k; i++) per.push(typedForms((raws || [])[i], t));
+    var marks = Promise.all(per.map(function (fs, j) {
+      return Promise.all(fs.map(function (c) { return P.hashOf(id + '.' + j, c); })).then(function (hs) {
+        for (var x = 0; x < hs.length; x++) if ((entry.blanks[j] || []).indexOf(hs[x]) >= 0) return true;
+        return false;
+      });
+    }));
+    var combos = [[]];
+    per.forEach(function (fs) { var next = []; combos.forEach(function (cmb) { fs.forEach(function (c) { if (next.length < 256) next.push(cmb.concat([c])); }); }); combos = next; });
+    return marks.then(function (ms) {
+      if (!combos.length) return { res: 'no', marks: ms };
+      return Promise.all(combos.map(function (cmb) { return P.hashOf(id, 'fill:' + cmb.join('|')); })).then(function (hs) {
+        for (var x = 0; x < hs.length; x++) {
+          var a = accFind(entry, hs[x]);
+          if (a) { var canon = 'fill:' + combos[x].join('|'); return P.unlock(id, canon, a.x).then(function (o) { return { res: 'ok', marks: ms.map(function () { return true; }), own: ms, ex: o || {} }; }); }
+        }
+        return { res: 'no', marks: ms, mixed: ms.length > 1 && ms.every(Boolean) };
+      });
+    });
+  }
 
   window.PPI_FORMS = {
-    textForm: textForm, numForms: numForms, keyForms: keyForms, typedForms: typedForms, judgeForms: judgeForms, judgeTyped: judgeTyped,
+    textForm: textForm, numForms: numForms, keyForms: keyForms, typedForms: typedForms, judgeForms: judgeForms, judgeTyped: judgeTyped, judgeFill: judgeFill,
   };
 })();

@@ -69,11 +69,41 @@ select { max-width: 100%; }
 .pv-banner { background: #fff3c4; color: #3a2a00; border: 2px solid #7a5a00; border-radius: 8px; padding: 6px 10px; margin-bottom: 10px; }
 .pv-mark { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-32deg); font: 800 clamp(22px, 7vw, 54px) Arial, sans-serif; color: rgba(128, 128, 128, .22); white-space: nowrap; pointer-events: none; z-index: 50; }
 .katex { font-size: 1.05em; } .katex-display { overflow-x: auto; overflow-y: hidden; }
+/* guided notes (notes.js): the text with a box per blank, marks after a check, the filled-in notes */
+.notes .sec { margin-top: 26px; }
+.bank { border: 2px dashed var(--line); border-radius: 8px; padding: 8px 10px; font-weight: 700; }
+.nline { display: flex; gap: 8px; margin: 10px 0; padding: 4px 0; } .ntext { margin: 0; line-height: 2.2; flex: 1; min-width: 0; }
+.nline .nfb { display: none; } .nline:has(.nfb:not(:empty)) { flex-wrap: wrap; } .nline .nfb:not(:empty) { display: block; flex-basis: 100%; padding-left: 2.2em; }
+input.blank { display: inline-block; width: 9em; max-width: 100%; padding: 3px 6px; margin: 0 2px; border-width: 0 0 2px; border-radius: 4px 4px 0 0; background: var(--soft); min-height: 36px; vertical-align: baseline; }
+input.blank.is-ok { border-color: var(--ok); } input.blank.is-no { border-color: var(--no); border-bottom-style: dashed; }
+.mk { font-weight: 800; margin: 0 4px 0 1px; } .mk.ok { color: var(--ok); } .mk.no { color: var(--no); }
+.qfb { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; } .qfb p { margin: 4px 0 0; }
+.okline { font-weight: 700; color: var(--ok); }
+.fsec { margin: 18px 0 4px; font-size: 18px; border-bottom: 1px solid var(--line); }
+.fline { display: flex; flex-wrap: wrap; gap: 0 8px; margin: 6px 0; } .fline p { margin: 0; flex: 1; min-width: 0; } .fline .rwhy { flex-basis: 100%; padding-left: 2.2em; font-size: 15px; }
+u.filled { text-decoration-thickness: 2px; text-underline-offset: 3px; font-weight: 700; padding: 0 2px; }
+.fq { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; margin: 10px 0; break-inside: avoid; }
+/* the review game (game.js): a card at a time, alone or as a class on a projector */
+.gcard { border: 2px solid var(--ink); border-radius: 14px; padding: 14px; margin: 10px 0; }
+.gcard .q { border: 0; padding: 0; margin: 8px 0; }
+.cardhead { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.chip { border: 2px solid var(--accent); color: var(--ink); border-radius: 999px; padding: 1px 10px; font-weight: 700; font-size: 15px; } .chip.pts { background: var(--soft); }
+.cnum { margin-left: auto; color: var(--muted); font-size: 15px; }
+.gscore { color: var(--muted); margin: 0; } .fbk { font-size: 19px; margin: 8px 0 2px; } .fbk.ok { color: var(--ok); } .fbk.no { color: var(--no); } .fbk.part { color: var(--part); } .fbk.tch { color: var(--tch); }
+.csetup .field { margin: 10px 0; max-width: 26em; }
+.board { list-style: none; padding: 0; margin: 0 0 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+.board li { border: 2px solid var(--ink); border-radius: 10px; padding: 4px 12px; } .board .ts { font-size: 1.2em; margin-left: 6px; }
+.board.final { flex-direction: column; } .award .btn { min-width: 6.5em; } .award-h { font-weight: 700; margin: 14px 0 0; }
+.canswer { font-size: 1.15em; font-weight: 700; color: var(--ok); }
+.cchoices, .cmatch { font-size: 1.05em; } .cmatch { display: grid; grid-template-columns: repeat(auto-fit, minmax(14em, 1fr)); gap: 0 16px; }
+body.big .wrap { max-width: 1100px; } body.big .cprompt, body.big .cchoices, body.big .cmatch { font-size: 26px; line-height: 1.35; } body.big .canswer { font-size: 26px; }
+@media (max-width: 600px) { body.big .cprompt, body.big .cchoices, body.big .cmatch, body.big .canswer { font-size: 20px; } }
 @media print {
   :root { --bg: #fff; --ink: #000; --muted: #222; --line: #555; --soft: #fff; --ok: #000; --no: #000; --part: #000; --tch: #000; }
   body { font-size: 12pt; } .wrap { max-width: none; padding: 0; }
   .noprint, .btn, .skip { display: none !important; }
-  .q, .r, .sq { break-inside: avoid; }
+  .q, .r, .sq, .fq, .fline { break-inside: avoid; }
+  input.blank { background: none; border-bottom: 1px solid #000; }
   .ch { border-width: 1px; min-height: 0; padding: 4px 8px; }
   .pv-mark { position: fixed; color: rgba(0, 0, 0, .14); }
   a { color: inherit; }
