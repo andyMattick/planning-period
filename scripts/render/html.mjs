@@ -2,7 +2,7 @@
 // Letter size, black-and-white safe: color is only ever a second signal next to weight, borders or text.
 
 import { mathHtml as mh, withMathCss, plainMath } from './math.mjs';
-import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel, passagePlan, passageByline } from './util.mjs';
+import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped } from './util.mjs';
 
 const qLabel = (n, ctx) => (ctx.dayLabels ? `Day ${n}` : numLabel(n, ctx.layout));
 
@@ -192,7 +192,7 @@ export function rubricTableHtml(rubric) {
 function headerHtml(doc, ver, ctx, teacher) {
   const o = ctx.pack.order || {};
   const sub = [o.grade && `Grade ${o.grade}`, ctx.subjectLabel, o.topic].filter(Boolean).join(' · ');
-  return `${teacher ? `<div class="tbanner">TEACHER COPY${ver ? ` · VERSION ${esc(ver)}` : ''} · the key is in bold, with why under each answer</div>` : fieldsHtml(ctx.layout)}
+  return `${teacher ? `<div class="tbanner">TEACHER COPY${ver ? ` · VERSION ${esc(ver)}` : ''} · the key is in bold, with why under each answer</div>${blindSkipped(ctx.pack) ? `<div class="tbanner">${esc(BLIND_SKIPPED_LINE)}</div>` : ''}` : fieldsHtml(ctx.layout)}
   <div class="titlerow"><div><h1>${esc(doc.title)}</h1>${teacher && sub ? `<p class="sub">${esc(sub)}</p>` : ''}</div>${ver ? `<div class="ver">Version ${esc(ver)}</div>` : ''}</div>
   ${doc.directions ? `<p class="directions${ctx.layout.boldDirections ? ' bold' : ''}">${mh(vv(doc.directions, ver))}</p>` : ''}`;
 }

@@ -158,6 +158,46 @@ onboarding agent moves the quiz to `readingquiz` (or adds the surcharge to the t
 before charging more (`agents/onboarding.md` step 7). A grammar, vocabulary or writing quiz with no passage stays `quiz`.
 The order page doesn't apply the surcharge itself yet (an owner change to `site/`).
 
+## 2c. Skipping the blind check (owner, Nov 8, 2026): same tokens for now, a discount proposed
+
+The order page lets the teacher untick "Blind check by a fresh agent (recommended)" (docs/RUNBOOK.md step 5). What it
+saves, measured on the first real online order (pp-2026-11-08-a20840, docs/audits/TIME-2026-11-08.md):
+- **Dollars:** the blind tester's sessions were **$0.93 of $5.56** (round 1 $0.63, recheck $0.30): about **17%** of
+  the order's cost, 13% of its $7.00 budget. With script-made versions the blind tester reads version A only, so on
+  the fast path it is about $0.35 + $0.15, roughly 12% of an expected $4.1.
+- **Minutes:** about **1** on the fast path (it runs beside the solver, so only the part it runs longer than the solver
+  comes off the clock), and **about 5** when it would have found something: in this order both FIXes came from it, and
+  the FIX round plus recheck took 4.4 minutes.
+
+**The price stays the same** until the owner decides. **Proposal for the owner:** take about 10% off an item's tokens
+when the blind check is skipped (rounded to 5: `test` 70 → 65, `quiz` 40 → 35, `worksheet` 30 → 25), which passes on
+most of the measured saving and keeps the cushion for the FIX rounds it can no longer prevent. Decide after three orders
+with it unticked show what they really cost (a skipped blind check can mean more change requests after the preview).
+
+## 2d. The fast path (Nov 8, 2026): what it should cost
+
+From the first real online order (pp-2026-11-08-a20840: a grade 12 statistics test, 16 items, 3 number-versions, 70
+tokens = $7.00; docs/audits/TIME-2026-11-08.md): **$5.56** by hand. The same order on the fast path (docs/RUNBOOK.md),
+step by step, from that order's session records:
+
+| Step | Was | Expected | Why |
+|---|---|---|---|
+| Style notes; test calls | $0.09; $0.16 | $0.09; $0 | the runner makes no test calls |
+| Maker, round 1 | $2.07 | $1.00–1.30 | version A plus `gen` specs, about half the output of three hand-made versions (77,574 output tokens) |
+| Versions B, C | (in the maker) | $0 | `scripts/versions.mjs`, under a second |
+| Blind tester, round 1 | $0.63 | $0.30–0.40 | version A's 16 rows instead of 48 |
+| Solver, round 1 | $0.65 | $0.75–1.00 | a solver on A and **a second on every number in B and C**: a little more, the price of checking script-made numbers independently |
+| Maker, FIX round | $0.70 | $0.45–0.70 | fixes A only; the script remakes B and C |
+| Recheck: blind; solver | $0.30; $0.69 | $0.15–0.30; $0.45–0.70 | the changed rows only (blind: A only) |
+| Reporter | $0.26 | $0.08–0.10 | the faster setting, writing only the story (the log rows come from the records) |
+| **Total** | **$5.56** | **about $3.3–4.6** | **17–41% less, about $4.0 typical**; $0.6–1.7 less again with no FIX round |
+
+Not counted above: the onboarding session (about $0.33, unchanged) and the runner's machine time (GitHub Actions: about
+2 minutes of setup plus the run, roughly 15–20 minutes an order; inside the free minutes for a few dozen orders a month,
+then about $0.01 a minute). **The menu doesn't change yet** (section 3, rule 4: a saving is passed on only after two
+orders' logs show it). If the next two number-version tests come in under $4.5, the auditor may propose `test` at 60
+(owner decides).
+
 ## 3. How to recalibrate (after each 5 orders)
 
 1. From `records/*.json`, add each order's `log[].cost` (exact rows as reported; estimated rows as the reporter

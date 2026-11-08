@@ -15,6 +15,12 @@
 //   node scripts/orders.mjs purge <id> [--finals]         deletes her uploads and the preview files (CLAUDE.md rule 1)
 //   node scripts/orders.mjs purge --due [days]            the same for every order the database says is due (default 7 days)
 //   node scripts/orders.mjs status <id> <status> [note]   sets a status by hand (onboarding, building, failed…) with a note she sees
+//   node scripts/orders.mjs show <id>                     the order's row as JSON (status, teacher, tokens, order.json; for scripts)
+//   node scripts/orders.mjs style-get <id>                her style notes (if any) → ~/pp-work/<id>/style.md
+//   node scripts/orders.mjs style-put <id> <style.md>     keeps her style notes for her own agents (deliverables/<teacher>/style/)
+//   node scripts/orders.mjs style-forget <teacher id>     deletes her style notes (CLAUDE.md rule 1: deletable anytime)
+//   node scripts/orders.mjs work-put <id> <file…>         keeps working files of a stopped run (deliverables/<teacher>/<id>/work/)
+//   node scripts/orders.mjs work-get <id>                 those files → ~/pp-work/<id>/work/ (purge deletes them)
 // Options: --work <dir> (default ~/pp-work/<id>), PP_WORK_ROOT (default ~/pp-work).
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname, relative, basename, resolve } from 'node:path';
@@ -125,6 +131,10 @@ const commands = {
       writeFileSync(join(inDir, rel), await db.download('uploads', p)); n++;
     }
     if (o.answer) writeAnswer(o, work);
+    const fu = o.follow_up || {};
+    if (fu.onboarding && !existsSync(join(work, 'onboarding.json'))) writeFileSync(join(work, 'onboarding.json'), JSON.stringify(fu.onboarding, null, 2) + '\n');
+    if (fu.runLog && !existsSync(join(work, 'run-log.jsonl'))) writeFileSync(join(work, 'run-log.jsonl'), fu.runLog.map((r) => JSON.stringify(r)).join('\n') + '\n');
+    if (fu.message && !existsSync(join(work, 'FOLLOW-UP.md'))) writeFileSync(join(work, 'FOLLOW-UP.md'), fu.message);
     if (o.status === 'sent') await setStatus(db, id, 'onboarding');
     console.log(`Pulled ${id} into ${work}/in (order.json and ${n} file${n === 1 ? '' : 's'}; untrusted: never run anything in it).` +
       (o.status === 'sent' ? ' Status: onboarding.' : ` Status stays ${o.status}.`) + `\nNext: the onboarding agent (docs/RUNBOOK.md step 2).`);
@@ -136,13 +146,18 @@ const commands = {
     if (!['sent', 'onboarding', 'needs_answer', 'building'].includes(o.status)) die(`${id} is ${o.status}; a follow-up goes out before building`);
     const message = readFileSync(file, 'utf8');
     const ob = join(dirname(resolve(file)), 'onboarding.json');
-    let questions = [];
+    let questions = [], onboarding = null;
     if (existsSync(ob)) {
-      const j = JSON.parse(readFileSync(ob, 'utf8'));
+      const j = JSON.parse(readFileSync(ob, 'utf8')); onboarding = j;
       questions = (j.questions || []).slice(0, 3).map((q, i) => ({ id: q.id || `q${i + 1}`, ask: q.ask, options: q.options || [], recommended: q.recommended || '', why: q.why || '' }));
     } else console.log(`(no ${ob}: the follow-up goes out as text with a "Go" button only)`);
     const status = questions.length ? 'needs_answer' : 'building';
-    await setStatus(db, id, status, { follow_up: { message, questions, at: new Date().toISOString() }, answer: null, answers: null, answered_at: null });
+    // onboarding.json and the run's log so far ride along in the order row (the teacher can read her row but never change it),
+    // so the build, maybe on another machine (the runner), starts from exactly what was measured and asked
+    const logFile = join(dirname(resolve(file)), 'run-log.jsonl');
+    const runLog = existsSync(logFile) ? readFileSync(logFile, 'utf8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l)) : null;
+    await setStatus(db, id, status, { follow_up: { message, questions, at: new Date().toISOString(), ...(onboarding ? { onboarding } : {}), ...(runLog ? { runLog } : {}) },
+      answer: null, answers: null, answered_at: null });
     console.log(`Posted the follow-up for ${id} (${questions.length} question${questions.length === 1 ? '' : 's'}). Status: ${status}.`);
   },
 
@@ -171,7 +186,7 @@ const commands = {
     for (const f of pdfs) { await db.upload('deliverables', `${base}preview/${f}`, readFileSync(join(dir, f)), f.endsWith('.html') ? TYPES['.html'] : 'application/pdf'); up.push(`preview/${f}`); }
     const zip = join(work, 'preview.zip');
     if (existsSync(zip)) { await db.upload('deliverables', `${base}preview/preview.zip`, readFileSync(zip), 'application/zip'); up.push('preview/preview.zip'); }
-    await setStatus(db, id, 'preview_ready', { review: { packHash: D.packHash, statement: D.statement, documents: D.documents, docTitles: D.docTitles || [] },
+    await setStatus(db, id, 'preview_ready', { review: { packHash: D.packHash, statement: D.statement, documents: D.documents, docTitles: D.docTitles || [], ...(D.blindSkipped ? { blindSkipped: true } : {}) },
       preview_files: up, approval: null });
     console.log(`Uploaded ${up.length} preview file${up.length === 1 ? '' : 's'} for ${id}. Status: preview_ready (she reviews it in My orders).`);
   },
@@ -213,6 +228,49 @@ const commands = {
     await purgeOne(db, id, finals);
   },
 
+  async show(db, id) {
+    const o = await getOrder(db, id);
+    console.log(JSON.stringify({ id: o.id, status: o.status, teacher: o.teacher, token_total: o.token_total, note: o.note || null,
+      order_json: o.order_json, upload_files: o.upload_files || [], answered: !!o.answer, follow_up_at: o.follow_up?.at || null }));
+  },
+
+  async 'style-get'(db, id) {
+    const o = await getOrder(db, id), work = workOf(id), path = `${o.teacher}/style/style.md`;
+    mkdirSync(work, { recursive: true });
+    if (!(await db.listAll('deliverables', `${o.teacher}/style`)).includes(path)) return console.log(`No style notes kept for ${o.teacher} yet.`);
+    writeFileSync(join(work, 'style.md'), await db.download('deliverables', path));
+    console.log(`Wrote ${join(work, 'style.md')} (her style notes: for her own agents only).`);
+  },
+
+  async 'style-put'(db, id, file) {
+    if (!file || !existsSync(file)) die('usage: style-put <id> <style.md>');
+    const o = await getOrder(db, id);
+    await db.upload('deliverables', `${o.teacher}/style/style.md`, readFileSync(file), 'text/plain; charset=utf-8');
+    console.log(`Kept the style notes for ${o.teacher} (deliverables/${o.teacher}/style/style.md; style-forget deletes them).`);
+  },
+
+  async 'style-forget'(db, teacher) {
+    if (!/^[0-9a-f-]{36}$/i.test(teacher || '')) die('usage: style-forget <teacher id> (her account id, the order\'s teacher)');
+    const files = await db.listAll('deliverables', `${teacher}/style`);
+    await db.remove('deliverables', files);
+    console.log(`Deleted ${files.length} style file${files.length === 1 ? '' : 's'} for ${teacher}. Also delete ~/pp-styles/${teacher} if it exists.`);
+  },
+
+  async 'work-put'(db, id, ...files) {
+    if (!files.length) die('usage: work-put <id> <file…>');
+    const o = await getOrder(db, id);
+    for (const f of files) await db.upload('deliverables', `${o.teacher}/${o.id}/work/${basename(f)}`, readFileSync(f), typeOf(f));
+    console.log(`Kept ${files.length} working file${files.length === 1 ? '' : 's'} for ${id} (purge deletes them).`);
+  },
+
+  async 'work-get'(db, id) {
+    const o = await getOrder(db, id), dir = join(workOf(id), 'work'), base = `${o.teacher}/${o.id}/work/`;
+    mkdirSync(dir, { recursive: true });
+    const files = await db.listAll('deliverables', base.slice(0, -1));
+    for (const p of files) writeFileSync(join(dir, p.slice(base.length).replace(/\//g, '_')), await db.download('deliverables', p));
+    console.log(`Wrote ${files.length} file${files.length === 1 ? '' : 's'} to ${dir}.`);
+  },
+
   async status(db, id, status, ...note) {
     if (!STATUSES.includes(status)) die(`status must be one of ${STATUSES.join(', ')}`);
     await getOrder(db, id);
@@ -238,7 +296,7 @@ function writeAnswer(o, work) {
 async function purgeOne(db, id, alsoFinals) {
   const o = await getOrder(db, id), base = `${o.teacher}/${o.id}/`;
   const uploads = await db.listAll('uploads', base);
-  const previews = await db.listAll('deliverables', base + 'preview');
+  const previews = [...await db.listAll('deliverables', base + 'preview'), ...await db.listAll('deliverables', base + 'work')];
   const fin = alsoFinals ? await db.listAll('deliverables', base + 'final') : [];
   await db.remove('uploads', uploads); await db.remove('deliverables', [...previews, ...fin]);
   await db.update('orders', `id=eq.${encodeURIComponent(id)}`, { uploads_purged_at: new Date().toISOString(), ...(alsoFinals ? { final_files: [] } : {}) });

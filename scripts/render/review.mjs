@@ -1,7 +1,7 @@
 // REVIEW.html: the teacher's offline sign-off page that ships in the preview zip.
 // It works with no network: plain HTML, inline CSS and JS, files saved with a Blob download.
 
-import { esc } from './util.mjs';
+import { esc, BLIND_SKIPPED_LINE, blindSkipped } from './util.mjs';
 
 export const CHECKLIST = [
   'I checked the answers.',
@@ -18,7 +18,7 @@ export const STATEMENT =
 export function reviewHtml(pack, ctx, pdfs, packHash) {
   const id = pack.id || 'order';
   const docs = (pack.documents || []).map((d) => d.title);
-  const data = { orderId: id, packHash, statement: STATEMENT, documents: pdfs, docTitles: docs };
+  const data = { orderId: id, packHash, statement: STATEMENT, documents: pdfs, docTitles: docs, ...(blindSkipped(pack) ? { blindSkipped: true } : {}) };
   const json = JSON.stringify(data).replace(/</g, '\\u003c');
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Review your pack</title>
@@ -49,7 +49,8 @@ export function reviewHtml(pack, ctx, pdfs, packHash) {
 <div class="brand">${esc(ctx.brand.name)} · Preview for your OK</div>
 <h1>Review your pack before it is released</h1>
 <p>${esc([pack.order?.topic, pack.order?.grade && `grade ${pack.order.grade}`, pack.order?.teacher && `for ${pack.order.teacher}`].filter(Boolean).join(' · '))} · order ${esc(id)}</p>
-<div class="card"><b>Nothing is released until you agree.</b> These preview files are watermarked (PDFs, and any interactive page, which opens in your browser: try it as a student would) and there are no Word or PowerPoint files yet. Read every page, then tick the boxes below. If anything needs a change, write it in the comments and press <b>Request changes</b>.</div>
+${blindSkipped(pack) ? `<div class="card" style="border-color:#8a5a00;background:#fff6e0"><b>${esc(BLIND_SKIPPED_LINE)}</b></div>
+` : ''}<div class="card"><b>Nothing is released until you agree.</b> These preview files are watermarked (PDFs, and any interactive page, which opens in your browser: try it as a student would) and there are no Word or PowerPoint files yet. Read every page, then tick the boxes below. If anything needs a change, write it in the comments and press <b>Request changes</b>.</div>
 
 <h2>1. Read the preview files</h2>
 <div class="card files"><ul>${pdfs.map((p) => `<li><a href="${esc(p.file)}" target="_blank">${esc(p.file)}</a> · ${esc(p.title)}</li>`).join('')}</ul>
