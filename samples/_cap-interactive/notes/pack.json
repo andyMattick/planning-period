@@ -1,0 +1,581 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-08-g8-science-interactive-notes",
+  "date": "2026-11-08",
+  "order": {
+    "teacher": "Mr. Okafor (made-up sample)",
+    "grade": "8",
+    "subject": "science",
+    "topic": "Chemical reactions and conservation of mass",
+    "items": [
+      "notes"
+    ],
+    "extras": [
+      "styleSetup"
+    ],
+    "requests": "Follow my lesson notes. I never want a key or explanation that says mass disappears or that gas has no mass. Use the counting table I use for atoms.",
+    "itemRequests": {
+      "notes": "Fill-in blanks like my old notes, with a word bank and a Stop and think box per section.",
+      "slides": "One slide per big idea, plus a closed vs. open flask slide. Speaker notes should tell me what to ask the class.",
+      "quiz": "10 questions, my Know it / Use it / Explain it parts. At least one balancing question and one open vs. closed mass problem. Include a picture with no answer labels."
+    },
+    "quantities": {
+      "notes": 1
+    },
+    "sources": [
+      "unit4-lesson3-notes.md"
+    ],
+    "styleExamples": [
+      "unit3-density-quiz-A.md",
+      "unit3-guided-notes-states.md"
+    ],
+    "itemSpecs": {
+      "notes": {
+        "format": "interactive",
+        "grading": "auto"
+      }
+    }
+  },
+  "style": {
+    "notes": [
+      "Name, Date and Period lines across the top, then the title and a \"Science 8 · Mr. Okafor\" line",
+      "Bold directions in one or two short sentences right under the title",
+      "Questions numbered 1), 2), 3) straight through the whole document, across parts",
+      "Multiple-choice letters in parentheses: (A) (B) (C) (D); circle the letter",
+      "Quizzes split into three parts: Part 1 · Know it, Part 2 · Use it, Part 3 · Explain it; Explain it asks for complete sentences and names the words to use in bold",
+      "Guided notes: ⭐ Key idea headings, short fill-in sentences with one blank each, a 🤔 Stop and think question, and a word bank used \"only if you get stuck\"",
+      "Plain, short grade 8 sentences; everyday contexts (a rubber duck, popcorn, a named student who makes a claim to check)",
+      "Teacher key: the letter, a short reason in parentheses for math steps, and \"Look for:\" points for written answers"
+    ],
+    "font": "Arial",
+    "accent": "#2b6cb0",
+    "layout": {
+      "nameBox": false,
+      "boldDirections": true,
+      "fields": [
+        "Name",
+        "Date",
+        "Period"
+      ],
+      "numbering": "1)",
+      "choiceStyle": "(A)",
+      "workLines": 3
+    }
+  },
+  "documents": [
+    {
+      "item": "notes",
+      "title": "Guided Notes: Chemical Reactions and Conservation of Mass",
+      "directions": "Fill in each blank as we go. Use the word bank only if you get stuck.",
+      "sections": [
+        {
+          "heading": "⭐ Key idea 1: Atoms are rearranged",
+          "directions": "Word bank: rearranged · created · destroyed · after · somewhere",
+          "questions": [
+            {
+              "id": "n1",
+              "level": 1,
+              "skill": "conservation of mass",
+              "type": "short",
+              "prompt": "In a chemical reaction, atoms are ______________ into new substances.",
+              "answer": "rearranged",
+              "accept": [
+                "rearranged",
+                "re-arranged",
+                "rearrange"
+              ],
+              "why": "Atoms trade partners to make new substances."
+            },
+            {
+              "id": "n2",
+              "level": 1,
+              "skill": "conservation of mass",
+              "type": "short",
+              "prompt": "No atoms are ______________ and none are ______________.",
+              "answer": "created; destroyed",
+              "accept": [
+                "created, destroyed",
+                "created and destroyed",
+                "created / destroyed",
+                "made; destroyed",
+                "created; lost",
+                "destroyed; created",
+                "destroyed, created",
+                "destroyed and created",
+                "destroyed / created",
+                "destroyed; made",
+                "lost; created"
+              ],
+              "why": "Either order of the two words is fine: \"created ... destroyed\" or \"destroyed ... created\"."
+            },
+            {
+              "id": "n3",
+              "level": 1,
+              "skill": "conservation of mass",
+              "type": "short",
+              "prompt": "So the total mass before a reaction equals the total mass ______________ it.",
+              "answer": "after",
+              "accept": [
+                "after"
+              ],
+              "why": "Same atoms before and after, so the same mass."
+            },
+            {
+              "id": "n4",
+              "level": 1,
+              "skill": "conservation of mass",
+              "type": "short",
+              "prompt": "When it looks like mass changed, the atoms went ______________: something got in or got out (usually a gas).",
+              "answer": "somewhere",
+              "accept": [
+                "somewhere",
+                "somewhere else"
+              ],
+              "why": "Mr. Okafor's rule: we say \"the atoms went somewhere.\""
+            },
+            {
+              "id": "n5",
+              "level": 2,
+              "skill": "conservation of mass",
+              "type": "open",
+              "prompt": "🤔 Stop and think: A friend says, \"When the candle burned, some of the mass just disappeared.\" How would you fix that sentence? Use the word atoms.",
+              "answer": "The atoms did not disappear; they went somewhere. They joined into new substances, like gases that went into the air, so the mass is still there, just not on the table.",
+              "why": "Look for: atoms named, the idea that they went somewhere (into the air as gas), never \"the mass disappeared.\"",
+              "space": 3
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 2: Reactants and products",
+          "directions": "Word bank: reactants · products · left · right · yields",
+          "questions": [
+            {
+              "id": "n6",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "short",
+              "prompt": "______________ are the substances you start with.",
+              "answer": "reactants",
+              "accept": [
+                "reactants",
+                "reactant",
+                "the reactants"
+              ],
+              "why": "Reactants go in."
+            },
+            {
+              "id": "n7",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "short",
+              "prompt": "They are written on the ______________ side of a chemical equation.",
+              "answer": "left",
+              "accept": [
+                "left",
+                "left side",
+                "the left"
+              ],
+              "why": "\"Left is what we start with.\""
+            },
+            {
+              "id": "n8",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "short",
+              "prompt": "______________ are the new substances that form. They are written on the ______________ side.",
+              "answer": "products; right",
+              "accept": [
+                "products, right",
+                "products and right",
+                "product; right",
+                "products / right"
+              ],
+              "why": "Products come out, on the right of the arrow."
+            },
+            {
+              "id": "n9",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "short",
+              "prompt": "The arrow (→) means \"react to form\" or \"______________.\"",
+              "answer": "yields",
+              "accept": [
+                "yields",
+                "yield",
+                "makes",
+                "produces"
+              ],
+              "why": "A plus sign separates two reactants or two products."
+            },
+            {
+              "id": "n10",
+              "level": 2,
+              "skill": "reactants and products",
+              "type": "open",
+              "prompt": "🤔 Stop and think: In 2H₂ + O₂ → 2H₂O, name the reactants and the product. How do you know which is which?",
+              "answer": "Reactants: H₂ (hydrogen) and O₂ (oxygen). Product: H₂O (water). The reactants are on the left of the arrow and the product is on the right.",
+              "why": "Look for: H₂ and O₂ as reactants, H₂O as the product, and \"left / right of the arrow\" as the reason.",
+              "space": 3
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 3: Signs of a chemical change",
+          "directions": "Word bank: new · precipitate · color · temperature · proof · physical",
+          "questions": [
+            {
+              "id": "n11",
+              "level": 1,
+              "skill": "signs of a chemical change",
+              "type": "short",
+              "prompt": "A chemical change makes a ______________ substance.",
+              "answer": "new",
+              "accept": [
+                "new",
+                "different"
+              ],
+              "why": "That is the test for every example: is there a new substance?"
+            },
+            {
+              "id": "n12",
+              "level": 1,
+              "skill": "signs of a chemical change",
+              "type": "short",
+              "prompt": "A solid that forms when two clear liquids are mixed is called a ______________.",
+              "answer": "precipitate",
+              "accept": [
+                "precipitate",
+                "a precipitate"
+              ],
+              "why": "Clue 2 on the list."
+            },
+            {
+              "id": "n13",
+              "level": 1,
+              "skill": "signs of a chemical change",
+              "type": "short",
+              "prompt": "Other clues: a gas forms, an unexpected ______________ change, a ______________ change without outside heating or cooling, or light or a new odor.",
+              "answer": "color; temperature",
+              "accept": [
+                "color, temperature",
+                "colour; temperature",
+                "color and temperature",
+                "color / temperature"
+              ],
+              "why": "The five clues: gas, precipitate, color, temperature, light or odor."
+            },
+            {
+              "id": "n14",
+              "level": 1,
+              "skill": "signs of a chemical change",
+              "type": "short",
+              "prompt": "One clue alone is not ______________.",
+              "answer": "proof",
+              "accept": [
+                "proof",
+                "enough",
+                "enough proof"
+              ],
+              "why": "Bubbles from boiling water are a clue, but no new substance forms."
+            },
+            {
+              "id": "n15",
+              "level": 1,
+              "skill": "physical vs. chemical change",
+              "type": "short",
+              "prompt": "Boiling water, melting ice and crushing a can are ______________ changes, because no new substance forms.",
+              "answer": "physical",
+              "accept": [
+                "physical"
+              ],
+              "why": "Changes of state and changes of shape are physical."
+            },
+            {
+              "id": "n16",
+              "level": 2,
+              "skill": "physical vs. chemical change",
+              "type": "open",
+              "prompt": "🤔 Stop and think: Water boiling on the stove makes bubbles. Is it a chemical change? Explain.",
+              "answer": "No. It is a physical change (a change of state). The bubbles are still water, just as a gas; no new substance forms.",
+              "why": "Look for: \"physical\", \"no new substance\", and that bubbles alone are not proof.",
+              "space": 3
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 4: Reading a formula and counting atoms",
+          "directions": "Word bank: subscript · coefficient · one · everything · table",
+          "questions": [
+            {
+              "id": "n17",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "The ______________ is the small number after a symbol. It tells how many atoms of that element are in one molecule.",
+              "answer": "subscript",
+              "accept": [
+                "subscript",
+                "a subscript",
+                "the subscript"
+              ],
+              "why": "H₂O: the small 2 means 2 hydrogen atoms."
+            },
+            {
+              "id": "n18",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "No subscript means ______________ atom.",
+              "answer": "one",
+              "accept": [
+                "one",
+                "1"
+              ],
+              "why": "The O in H₂O has no subscript, so there is 1 oxygen atom."
+            },
+            {
+              "id": "n19",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "The ______________ is the big number in front. It tells how many molecules.",
+              "answer": "coefficient",
+              "accept": [
+                "coefficient",
+                "a coefficient",
+                "the coefficient"
+              ],
+              "why": "3H₂O means 3 molecules of water."
+            },
+            {
+              "id": "n20",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "In Ca(OH)₂, the 2 after the parentheses applies to ______________ inside them.",
+              "answer": "everything",
+              "accept": [
+                "everything",
+                "all",
+                "all of it",
+                "each atom",
+                "all the atoms",
+                "all atoms",
+                "all of the atoms"
+              ],
+              "why": "Ca(OH)₂: 1 Ca, 2 O, 2 H."
+            },
+            {
+              "id": "n21",
+              "level": 1,
+              "skill": "counting atoms",
+              "type": "short",
+              "prompt": "We always count atoms with a ______________: element, reactant side, product side.",
+              "answer": "table",
+              "accept": [
+                "table",
+                "counting table",
+                "a table",
+                "chart"
+              ],
+              "why": "Mr. Okafor's counting table."
+            },
+            {
+              "id": "n22",
+              "level": 2,
+              "skill": "counting atoms",
+              "type": "open",
+              "prompt": "🤔 Stop and think: Fill in the counting table for 3H₂O (just this one formula, in the \"Reactant side\" column). Show the multiplying.",
+              "answer": "H: 3 × 2 = 6 hydrogen atoms. O: 3 × 1 = 3 oxygen atoms.",
+              "why": "Look for: coefficient times subscript for each element; 6 H and 3 O.",
+              "space": 3,
+              "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 126\" width=\"360\" height=\"126\" role=\"img\" aria-label=\"Empty atom counting table: H, O\" font-family=\"Arial, sans-serif\"><text x=\"180\" y=\"22\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">3H₂O</text><rect x=\"0.5\" y=\"34\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"64\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"84\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">H</text><rect x=\"0.5\" y=\"94\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"114\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">O</text><line x1=\"100\" y1=\"34\" x2=\"100\" y2=\"124\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"124\" stroke=\"#1f2933\"/></svg>"
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 5: Balancing simple equations",
+          "directions": "Word bank: same · coefficients · subscript · recount · conservation",
+          "questions": [
+            {
+              "id": "n23",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "A balanced equation has the ______________ number of atoms of each element on both sides.",
+              "answer": "same",
+              "accept": [
+                "same",
+                "equal"
+              ],
+              "why": "Atoms, not molecules: every row of the table matches."
+            },
+            {
+              "id": "n24",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "A balanced equation is ______________ of mass written in symbols.",
+              "answer": "conservation",
+              "accept": [
+                "conservation"
+              ],
+              "why": "Same atoms on both sides means the same mass."
+            },
+            {
+              "id": "n25",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "Balance by changing ______________ only.",
+              "answer": "coefficients",
+              "accept": [
+                "coefficients",
+                "coefficient",
+                "the coefficients",
+                "big numbers in front"
+              ],
+              "why": "Coefficients change how many molecules, not what the substance is."
+            },
+            {
+              "id": "n26",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "Never change a ______________: that changes the substance (H₂O₂ is hydrogen peroxide, not water).",
+              "answer": "subscript",
+              "accept": [
+                "subscript",
+                "subscripts",
+                "small number"
+              ],
+              "why": "The most common balancing mistake."
+            },
+            {
+              "id": "n27",
+              "level": 1,
+              "skill": "balancing equations",
+              "type": "short",
+              "prompt": "Steps: count atoms in a table → pick an element that doesn't match → change a coefficient → ______________ everything → repeat until every row matches.",
+              "answer": "recount",
+              "accept": [
+                "recount",
+                "re-count",
+                "count again",
+                "count"
+              ],
+              "why": "Changing one coefficient can change more than one row, so recount all of them."
+            },
+            {
+              "id": "n28",
+              "level": 2,
+              "skill": "balancing equations",
+              "type": "open",
+              "prompt": "🤔 Stop and think: Balance N₂ + H₂ → NH₃ by writing coefficients. Use the counting table to check it.",
+              "answer": "N₂ + 3H₂ → 2NH₃. N: 2 on the reactant side, 2 on the product side. H: 6 on the reactant side, 6 on the product side.",
+              "why": "Look for: coefficients only (no subscripts changed), 1, 3, 2, and a table where both rows match.",
+              "space": 3,
+              "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 126\" width=\"360\" height=\"126\" role=\"img\" aria-label=\"Empty atom counting table: N, H\" font-family=\"Arial, sans-serif\"><text x=\"180\" y=\"22\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">N₂ + H₂ → NH₃</text><rect x=\"0.5\" y=\"34\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"64\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"84\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">N</text><rect x=\"0.5\" y=\"94\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"114\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">H</text><line x1=\"100\" y1=\"34\" x2=\"100\" y2=\"124\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"124\" stroke=\"#1f2933\"/></svg>"
+            }
+          ]
+        },
+        {
+          "heading": "⭐ Key idea 6: Closed and open systems",
+          "directions": "Word bank: closed · open · escape · more · same",
+          "questions": [
+            {
+              "id": "n29",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "A ______________ system lets nothing in or out, like a sealed flask or a zip bag.",
+              "answer": "closed",
+              "accept": [
+                "closed"
+              ],
+              "why": "Nothing in, nothing out: the balance reading stays the same."
+            },
+            {
+              "id": "n30",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "In a closed system, the mass on the balance stays the ______________ before and after the reaction.",
+              "answer": "same",
+              "accept": [
+                "same",
+                "equal",
+                "the same"
+              ],
+              "why": "Zip bag lab: 150.0 g before, 150.0 g after."
+            },
+            {
+              "id": "n31",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "An ______________ system lets matter in or out, like an open cup.",
+              "answer": "open",
+              "accept": [
+                "open"
+              ],
+              "why": "Gas can leave, or a gas from the air can join in."
+            },
+            {
+              "id": "n32",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "In an open cup, a gas product can ______________, so the balance shows less mass after.",
+              "answer": "escape",
+              "accept": [
+                "escape",
+                "leave",
+                "get out"
+              ],
+              "why": "Open cup lab: the CO₂ gas left the cup."
+            },
+            {
+              "id": "n33",
+              "level": 1,
+              "skill": "closed and open systems",
+              "type": "short",
+              "prompt": "When steel wool burns on a balance, iron atoms join with oxygen atoms from the air. The balance shows ______________ mass after the burning than before.",
+              "answer": "more",
+              "accept": [
+                "more",
+                "greater",
+                "a greater",
+                "larger",
+                "a larger",
+                "bigger",
+                "a bigger",
+                "higher"
+              ],
+              "why": "Mass of steel wool + mass of oxygen used = mass of the iron oxide made."
+            },
+            {
+              "id": "n34",
+              "level": 2,
+              "skill": "closed and open systems",
+              "type": "open",
+              "prompt": "🤔 Stop and think: Baking soda and vinegar in an open cup: 150.0 g before, 148.9 g after. What mass of gas escaped, and where did it go?",
+              "answer": "150.0 g − 148.9 g = 1.1 g of carbon dioxide gas. It left the cup and went into the air. The atoms went somewhere; the mass did not disappear.",
+              "why": "Look for: 1.1 g, CO₂ (a gas) leaving the open cup, and gas having mass.",
+              "space": 3
+            }
+          ]
+        }
+      ],
+      "format": "interactive",
+      "grading": "auto"
+    }
+  ],
+  "checks": {},
+  "log": [],
+  "audit": {
+    "notes": [
+      "Capability fixture: the g8-science sample guided notes (made-up teacher and students) in the interactive format, grading auto (the checks also build it graded \"print\"). Not a gallery sample; its content was checked as part of samples/g8-science."
+    ]
+  }
+}

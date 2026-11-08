@@ -1,9 +1,11 @@
 #!/usr/bin/env node
-// The interactive format end to end (docs/KINDS-INTERACTIVE-FORMAT.md), on samples/_cap-interactive (auto and print):
+// The interactive format end to end (docs/KINDS-INTERACTIVE-FORMAT.md), on samples/_cap-interactive: the quiz (auto and
+// print), guided notes and a review game (each also built in the other grading mode for the browser):
 //   1. render the preview: the pages carry the PREVIEW mark, REVIEW.html lists them with their SHA-256 next to the PDFs
 //   2. checks/interactive-format.mjs on the pack and the rendered pages, then the browser: every item right → 100%,
 //      every item wrong → 0% (auto), the answer sheet with every answer and no score (print), no page errors, no outside
-//      requests, no sideways scroll at 375 px, works with storage blocked
+//      requests, no sideways scroll at 375 px, works with storage blocked; notes: check, fix and check again, the
+//      completed and the printed notes; the review game: played alone, and as a class with the class code
 //   3. sign-off: an approval made from REVIEW.html's own data → render --final makes the pages without the mark and
 //      HOW-TO-SHARE-THE-INTERACTIVE-PAGES.txt; a changed preview page is refused
 //   node scripts/test-interactive.mjs [--shots <folder>]
@@ -13,7 +15,8 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { checkPack, checkBrowser } from '../checks/interactive-format.mjs';
+import { checkPack, checkBrowser, buildPages } from '../checks/interactive-format.mjs';
+import { classCodesOf, modeOf } from './render/interactive-format.mjs';
 import { STATEMENT } from './render/review.mjs';
 import { PREVIEW_MARK } from './render/html.mjs';
 
@@ -26,31 +29,37 @@ const ok = (m) => { passed++; console.log(`✓ ${m}`); };
 const render = (dir, mode) => spawnSync(process.execPath, [path.join(ROOT, 'scripts/render-pack.mjs'), dir, mode], { encoding: 'utf8', timeout: 300000 });
 
 try {
-  for (const g of ['auto', 'print']) {
+  for (const g of ['auto', 'print', 'notes', 'reviewgame']) {
     const dir = path.join(TMP, g);
     fs.mkdirSync(dir);
     fs.copyFileSync(path.join(ROOT, `samples/_cap-interactive/${g}/pack.json`), path.join(dir, 'pack.json'));
     const pack = JSON.parse(fs.readFileSync(path.join(dir, 'pack.json'), 'utf8'));
+    const built = buildPages(pack), doc0 = pack.documents[0], base = built[0].base, mode = modeOf(doc0);
+    const firstTeacher = `${base}-teacher${built[0].ver ? '-' + built[0].ver : ''}`;
 
     // 1. preview
     let r = render(dir, '--preview');
     assert.equal(r.status, 0, r.stdout + r.stderr);
     const prev = path.join(dir, 'out-preview');
-    const pages = fs.readdirSync(prev).filter((f) => /-interactive-[AB]\.html$/.test(f)).sort();
-    assert.deepEqual(pages, ['chemical-reactions-quiz-interactive-A.html', 'chemical-reactions-quiz-interactive-B.html']);
-    assert.ok(!fs.readdirSync(prev).some((f) => /-student/.test(f)), 'no student PDF or Word for an interactive document');
-    assert.ok(fs.existsSync(path.join(prev, 'chemical-reactions-quiz-teacher-A.pdf')), 'the teacher copy is there');
+    const pages = fs.readdirSync(prev).filter((f) => /-interactive(-[AB])?\.html$/.test(f)).sort();
+    assert.deepEqual(pages, built.map((p) => p.file).sort());
+    if (g === 'auto' || g === 'print') assert.deepEqual(pages, ['chemical-reactions-quiz-interactive-A.html', 'chemical-reactions-quiz-interactive-B.html']);
+    assert.ok(!fs.readdirSync(prev).some((f) => /-student|\.pptx$|-cards\.pdf$/.test(f)), 'no student PDF or Word (and for a review game no slides or cards) for an interactive document');
+    assert.ok(fs.existsSync(path.join(prev, `${firstTeacher}.pdf`)), 'the teacher copy is there');
     for (const f of pages) assert.ok(fs.readFileSync(path.join(prev, f), 'utf8').includes(`class="pv-mark" aria-hidden="true">${PREVIEW_MARK}`), `${f} has the preview mark`);
     const D = JSON.parse(fs.readFileSync(path.join(prev, 'REVIEW.html'), 'utf8').match(/var D = (\{.*\});/)[1]);
     for (const f of pages) assert.ok(D.documents.some((d) => d.file === f && /^[0-9a-f]{64}$/.test(d.sha256)), `REVIEW.html lists ${f} with its SHA-256`);
-    ok(`${g}: the preview has the two pages (watermarked), the teacher copies and no student PDF; REVIEW.html lists the pages with their SHA-256`);
+    ok(`${g}: the preview has the ${pages.length} page(s) (watermarked), the teacher copies and no student PDF; REVIEW.html lists the pages with their SHA-256`);
 
     // 2. checks and browser
     const res = await checkPack(pack, dir);
     assert.deepEqual(res.errors, [], res.errors.join('\n'));
-    assert.equal(res.rendered, 2);
+    assert.equal(res.rendered, pages.length);
     ok(`${g}: checks/interactive-format.mjs passes on the pack and on the rendered preview pages`);
-    const br = await checkBrowser(res.pages, pack, { shotsDir: SHOTS });
+    // notes and the review game: the browser runs both grading modes (the quiz has its own auto and print folders)
+    const both = mode !== 'doc' ? await checkPack(pack, null, { both: true }) : res;
+    assert.deepEqual(both.errors, [], both.errors.join('\n'));
+    const br = await checkBrowser(both.pages, pack, { shotsDir: SHOTS });
     if (br.skipped) console.log(`⏭️  ${br.skipped}`);
     else { assert.deepEqual(br.errors, [], br.errors.join('\n')); ok(`${g}: browser: ${br.notes.join('; ')}`); }
 
@@ -65,8 +74,16 @@ try {
       const h = fs.readFileSync(path.join(out, f), 'utf8');
       assert.ok(!h.includes(PREVIEW_MARK), `${f} in the final has no preview mark`);
     }
-    for (const f of ['HOW-TO-SHARE-THE-INTERACTIVE-PAGES.txt', 'chemical-reactions-quiz-teacher-A.docx', 'README.txt']) assert.ok(fs.existsSync(path.join(out, f)), f);
-    assert.match(fs.readFileSync(path.join(out, 'README.txt'), 'utf8'), /INTERACTIVE: Chemical Reactions Quiz/);
+    for (const f of ['HOW-TO-SHARE-THE-INTERACTIVE-PAGES.txt', `${firstTeacher}.docx`, 'README.txt']) assert.ok(fs.existsSync(path.join(out, f)), f);
+    const readme = fs.readFileSync(path.join(out, 'README.txt'), 'utf8');
+    assert.ok(readme.includes(`INTERACTIVE: ${doc0.title}`), 'the README explains the interactive page');
+    // an auto-graded review game: the class code is on the teacher copy and in the README, never in the page
+    for (const { code } of classCodesOf(pack, doc0, base)) {
+      assert.ok(readme.includes(code), 'the README names the class code');
+      const pdfText = spawnSync('pdftotext', [path.join(out, `${firstTeacher}.pdf`), '-'], { encoding: 'utf8' });   // skipped where pdftotext isn't installed
+      if (!pdfText.error) assert.ok(pdfText.stdout.includes(code), 'the teacher copy names the class code');
+      for (const f of pages) assert.ok(!fs.readFileSync(path.join(out, f), 'utf8').includes(code), `${f} does not hold the class code`);
+    }
     const fin = await checkPack(pack, dir);
     assert.deepEqual(fin.errors, [], fin.errors.join('\n'));
     ok(`${g}: the approval covers the pages; --final makes them without the mark, plus the share notes and the Word teacher copies`);
