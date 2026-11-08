@@ -88,7 +88,7 @@ try {
     // versionPricing (owner, Nov 8, 2026: versions are one setting): a number of versions or one per student, priced in docs/PRICING.md
     if (it.versionPricing != null) {
       const vp = it.versionPricing;
-      for (const k of ['included', 'perExtra', 'maxVersions', 'perStudent', 'defaultStudents', 'maxStudents']) if (!Number.isInteger(vp[k]) || vp[k] < 0) errs.push(`${it.id}: versionPricing.${k} must be a whole number, 0 or more`);
+      for (const k of ['included', 'perExtra', 'maxVersions', 'perStudent', 'defaultStudents', 'maxStudents', 'keyPack']) if (!Number.isInteger(vp[k]) || vp[k] < 0) errs.push(`${it.id}: versionPricing.${k} must be a whole number, 0 or more`);
       if (!(vp.maxVersions >= vp.included && vp.maxVersions <= 26)) errs.push(`${it.id}: versionPricing.maxVersions must be from included to 26`);
       if (!(vp.defaultStudents >= 2 && vp.defaultStudents <= vp.maxStudents && vp.maxStudents <= 150)) errs.push(`${it.id}: versionPricing students must be 2 ≤ default ≤ max ≤ 150`);
       if (!it.interactive) errs.push(`${it.id}: one version per student needs interactive: true`);

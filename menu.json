@@ -85,7 +85,8 @@
         "maxVersions": 10,
         "perStudent": 10,
         "defaultStudents": 30,
-        "maxStudents": 150
+        "maxStudents": 150,
+        "keyPack": 5
       }
     },
     {
@@ -125,7 +126,8 @@
         "maxVersions": 10,
         "perStudent": 15,
         "defaultStudents": 30,
-        "maxStudents": 150
+        "maxStudents": 150,
+        "keyPack": 5
       }
     },
     {

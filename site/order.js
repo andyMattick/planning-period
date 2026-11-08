@@ -449,6 +449,7 @@
         (picked[id].qty > 1 ? ' <span class="muted">× ' + picked[id].qty + '</span>' : '') + '</h3>' +
         formatHTML(id, spec) +
         (fields.length ? '<div class="spec-grid">' + fields.map(function (f) { return fieldHTML(id, f, spec, d); }).join('') + '</div>' : '') +
+        keyPackHTML(id, spec) +
         (def ? '<p class="small muted spec-default">' + esc(PPFeas.fill(tmpl, { default: def })) + '</p>' : '') +
         '<div class="spec-notes" data-notes="' + esc(id) + '">' + notesHTML(id, spec, limits[id]) + '</div>' +
         '<div class="field"><label for="req-' + esc(id) + '">Anything else for this item</label>' +
@@ -467,20 +468,32 @@
     return f;
   }
   function versionPricing(id) { return (itemById(id) || {}).versionPricing || null; }
+  // The all-versions key (owner, Nov 8, 2026: "if they want more keys, they can pay for it"): with 2 or more versions,
+  // one PDF of every version's key plus a key lookup page, as a paid extra (itemSpecs.<item>.keyPack). Each version's
+  // teacher copy is always included; with one per student the key pack is included (the only way to grade a pool).
+  function keyPackOffered(id, spec) { var vp = versionPricing(id); return !!vp && spec.versions !== 'student' && (spec.versions === '' || spec.versions == null || Number(spec.versions) >= 2); }
+  function keyPackHTML(id, spec) {
+    var vp = versionPricing(id); if (!vp) return '';
+    if (spec.versions === 'student') return '<p class="small muted" data-keypack-note>Included with one per student: a key for every version (one PDF) and a key lookup page.</p>';
+    if (!keyPackOffered(id, spec)) return '';
+    return '<label class="inline-check spec-keypack"><input type="checkbox" id="sp-' + esc(id) + '-keyPack" data-spec="' + esc(id) + ':keyPack"' + (spec.keyPack ? ' checked' : '') + '> ' +
+      '<span><b>All-versions key</b> (one PDF + a key lookup page), +' + vp.keyPack + ' tokens. <span class="small muted">Each version\'s teacher copy is always included.</span></span></label>';
+  }
   // The tokens for one of an item: the menu price, plus the versions it asks for (docs/PRICING.md, "Versions").
   function itemTokens(id) {
     var it = itemById(id), vp = versionPricing(id), sp = (picked[id] && picked[id].spec) || {};
     if (!vp) return it.tokens;
     if (sp.versions === 'student') return it.tokens + vp.perStudent;
     var n = Number(sp.versions) || vp.included;
-    return it.tokens + Math.max(0, n - vp.included) * vp.perExtra;
+    return it.tokens + Math.max(0, n - vp.included) * vp.perExtra + (sp.keyPack && n >= 2 ? vp.keyPack : 0);
   }
   function versionsLabel(id) {
     var vp = versionPricing(id), sp = (picked[id] && picked[id].spec) || {};
-    if (!vp || !sp.versions) return '';
+    if (!vp || (!sp.versions && !sp.keyPack)) return '';
     if (sp.versions === 'student') return 'one version per student (' + (Number(sp.students) || vp.defaultStudents) + ' students), +' + vp.perStudent + ' tokens';
-    var n = Number(sp.versions), extra = Math.max(0, n - vp.included) * vp.perExtra;
-    return n + ' version' + (n === 1 ? '' : 's') + (extra ? ', +' + extra + ' tokens' : '');
+    var n = Number(sp.versions) || vp.included, extra = Math.max(0, n - vp.included) * vp.perExtra;
+    var kp = sp.keyPack && n >= 2 ? 'all-versions key, +' + vp.keyPack + ' tokens' : '';
+    return [sp.versions ? n + ' version' + (n === 1 ? '' : 's') + (extra ? ', +' + extra + ' tokens' : '') : '', kp].filter(Boolean).join(' · ');
   }
   // Printable or interactive (owner, Nov 8, 2026; docs/KINDS-INTERACTIVE-FORMAT.md): for a menu item with
   // "interactive": true, how students get it, and, for an interactive page, how it is graded. Stored in the order as
@@ -548,7 +561,9 @@
     if (key === 'types') { spec.types = spec.types || {}; spec.types[parts[2]] = e.target.value; }
     else if (e.target.type === 'radio' && !e.target.checked) return;
     else spec[key] = e.target.value;
+    if (key === 'keyPack') { if (e.target.checked) spec.keyPack = true; else delete spec.keyPack; renderCost(); return; }
     if (key === 'versions' || key === 'students' || (key === 'format' && spec.versions === 'student')) {
+      if (!keyPackOffered(item, spec)) delete spec.keyPack;
       if (spec.versions === 'student') {
         if (spec.format !== 'interactive' && key === 'format') { delete spec.versions; delete spec.students; delete spec.grading; }   // paper: a number of versions only
         else { spec.format = 'interactive'; spec.grading = 'print'; if (!spec.students) spec.students = String(versionPricing(item) ? versionPricing(item).defaultStudents : 30); }
@@ -573,7 +588,7 @@
     if (notes) notes.innerHTML = notesHTML(item, spec, lim[item]);
     renderFeas();
   });
-  $('item-requests').addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'radio') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+  $('item-requests').addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'radio' || e.target.type === 'checkbox') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
 
   // ---------- cost ----------
   function costLines() {
@@ -641,6 +656,7 @@
         var t = {}, anyT = false;
         Object.keys(v || {}).forEach(function (tk) { if (v[tk] !== '' && v[tk] != null) { t[tk] = Number(v[tk]); anyT = true; } });
         if (anyT) { out.types = t; any = true; }
+      } else if (v === true) { out[k] = true; any = true;
       } else if (v !== '' && v != null) {
         out[k] = /^\d+$/.test(String(v)) && k !== 'file' && k !== 'turnIn' ? Number(v) : String(v).trim(); any = true;
       }
