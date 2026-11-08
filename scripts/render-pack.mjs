@@ -180,9 +180,10 @@ export async function renderPack(folder, { mode } = {}) {
     };
     const interactiveFiles = [];
     // every version's key (scripts/render/keys.mjs): a printable all-versions key (preview and final) and, in the final,
-    // the teacher's key page (by letter, version code or a student's name); never with the students' pages
+    // the teacher's key page (by letter, version code or a student's name); never with the students' pages. Always for one
+    // version per student; for 2+ versions only with the paid key pack (itemSpecs.<item>.keyPack)
     const allKeys = async (doc, base) => {
-      if (!needsAllKeys(doc)) return;
+      if (!needsAllKeys(doc, pack)) return;
       const n = keyVersions(doc).length, what = hasPool(doc) ? `${n} versions, one per student` : `${n} versions`;
       await pdf(`${base}-all-versions-key.pdf`, allVersionsKeyHtml(doc, ctx), `${doc.title} · All keys`, `${doc.title}: every version's key (${what}), to print`, doc.title);
       write(`${base}-teacher-key.html`, teacherKeyPageHtml(pack, doc, base, ctx), `${doc.title}: your key page (type a version${hasPool(doc) ? ' code or a student\'s name' : ''} to see its key; ${what}). For you only: never share it with students`);

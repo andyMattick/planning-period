@@ -1,5 +1,6 @@
 // Every version's key in one place (owner, Nov 8, 2026: "we print out the correct number of keys"): for a document with
 // several versions (A, B, C…) or one version per student (doc.pool), the teacher gets
+// (one version per student: always; 2+ versions: only when the order bought the key pack, itemSpecs.<item>.keyPack)
 //   <doc>-all-versions-key.pdf   every version's key, printable (preview and final), one block per version
 //   <doc>-teacher-key.html       a key page for the teacher only (final only, never shared with students): she types a
 //                                version letter, a 5-letter version code or a student's name and gets that version's
@@ -21,8 +22,11 @@ export function keyVersions(doc) {
   if (hasPool(doc)) return poolDocs(doc).map(({ code, doc: d }) => ({ label: `Version code ${code}`, code, ver: null, doc: d }));
   return (Array.isArray(doc.versions) ? doc.versions : []).map((v) => ({ label: `Version ${v}`, code: v, ver: v, doc }));
 }
-// A document gets the all-versions key and the key page when it has more than one version, or one per student.
-export const needsAllKeys = (doc) => questionsOf(doc).length > 0 && (hasPool(doc) || (Array.isArray(doc.versions) && doc.versions.length >= 2));
+// A document gets the all-versions key and the key page when it has one version per student (always: the only way to
+// grade a pool), or 2+ versions and the order bought the key pack (owner, Nov 8, 2026: "if they want more keys, they can
+// pay for it": itemSpecs.<item>.keyPack, or keyPack: true on the document). Per-version teacher copies are always made.
+export const keyPackAsked = (doc, pack) => doc.keyPack === true || pack?.order?.itemSpecs?.[doc.item]?.keyPack === true;
+export const needsAllKeys = (doc, pack) => questionsOf(doc).length > 0 && (hasPool(doc) || (Array.isArray(doc.versions) && doc.versions.length >= 2 && keyPackAsked(doc, pack)));
 
 function keyRows(d, ver) {
   return questionsOf(d).map(({ q, n }) => {

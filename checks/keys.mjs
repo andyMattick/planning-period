@@ -44,6 +44,10 @@ export function checkKeys(pack) {
     const oneAsked = Number(asked) === 1 || asked === 'student';
     if (VERSIONED_KINDS.includes(kind) && !doc.pool && !oneAsked && (vers.length < 2 || vers[0] === null)) err(`${name}: a ${kind} needs versions ["A", "B"]`);
     if (Number(asked) >= 2 && Number(asked) <= 26 && vers[0] !== null && vers.length !== Number(asked)) err(`${name}: the order asked for ${asked} versions, the document has ${vers.length}`);
+    // the all-versions key pack (a paid extra, owner Nov 8, 2026): only for 2+ letter versions (a pool always has it)
+    const kp = pack.order?.itemSpecs?.[doc.item]?.keyPack === true || doc.keyPack === true;
+    if (kp && (asked === 'student' || doc.pool)) warn(`${name}: the key pack is already included with one version per student`);
+    else if (kp && (vers.length < 2 || vers[0] === null)) err(`${name}: the all-versions key pack needs 2 or more versions`);
     if (vers.length > 10) err(`${name}: ${vers.length} versions (10 at most; for more, use one version per student)`);
     // one version per student (docs/PACK-FORMAT.md): an interactive page only, printed for grading (it holds no keys)
     if (doc.pool || asked === 'student') {
