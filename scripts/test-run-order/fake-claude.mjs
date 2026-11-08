@@ -7,9 +7,12 @@
 //   PP_FAKE_FIXTURES  the fixtures folder        PP_FAKE_CALLS  a .jsonl file to record each call in (optional)
 //   PP_FAKE_COST_SCALE multiply every cost        PP_FAKE_FAIL_ROLE  this role exits 1 with no record
 //   PP_FAKE_TOKENS    rewrites onboarding.json's token total (the cost-stop test)
+// A fixture folder may hold _edit.mjs instead of (or beside) files: its default export runs with the session's folder
+// (the auditor's edits to the briefs; PP_FAKE_AUDIT picks the variant).
 import { readdirSync, readFileSync, writeFileSync, appendFileSync, cpSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
 
 const role = process.env.PP_RUN_ROLE || 'unknown', fx = process.env.PP_FAKE_FIXTURES, cwd = process.cwd();
 const a = process.argv.slice(2), val = (n) => { const i = a.indexOf(n); return i >= 0 ? a[i + 1] : null; };
@@ -21,7 +24,8 @@ await new Promise((r) => setTimeout(r, 400));   // long enough for the test to s
 const dir = fx && join(fx, role);
 let result = { cost: 0.1, ms: 30000 };
 if (dir && existsSync(dir)) {
-  for (const f of readdirSync(dir)) if (f !== '_result.json') cpSync(join(dir, f), join(cwd, f), { recursive: true });
+  for (const f of readdirSync(dir)) if (!['_result.json', '_edit.mjs'].includes(f)) cpSync(join(dir, f), join(cwd, f), { recursive: true });
+  if (existsSync(join(dir, '_edit.mjs'))) await (await import(pathToFileURL(join(dir, '_edit.mjs')).href)).default(cwd);
   if (existsSync(join(dir, '_result.json'))) result = { ...result, ...JSON.parse(readFileSync(join(dir, '_result.json'), 'utf8')) };
 }
 if (process.env.PP_FAKE_TOKENS && existsSync(join(cwd, 'onboarding.json'))) {
