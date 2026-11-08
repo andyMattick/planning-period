@@ -75,7 +75,43 @@ try {
     const x = node([join(ROOT, 'scripts/versions.mjs'), join(ROOT, 'checks/fixtures/good.pack.json'), '--no-math', '--out', join(tmp, 'none.json')]);
     ok(x.status === 0 && /nothing to make/.test(x.stdout), `a pack with no gen spec: ${x.stdout}`);
   }
+  /* 4. one version per student (owner, Nov 8, 2026): a pool from version A, on the made-up stats sample */
+  {
+    const { scatterPoints, corrOf, segmentPercents } = await import('./render/graph.mjs');
+    const { poolDocs } = await import('./render/util.mjs');
+    const SP = join(ROOT, 'samples/_cap-interactive/stats/pack.json');
+    const fresh = () => { const p = JSON.parse(readFileSync(SP, 'utf8')); p.documents[0].pool = { students: 30 }; return p; };
+    const x = run(fresh());
+    ok(x.status === 0 && /30 one per student/.test(x.out), `the pool wasn't made:\n${x.out}`);
+    const p = JSON.parse(readFileSync(x.file, 'utf8')), d = p.documents[0];
+    ok(d.pool.size === 30 && d.pool.versions.length === 30 && d.pool.codes.length === 30, 'the pool has 30 versions and 30 codes');
+    ok(new Set(d.pool.codes).size === 30 && d.pool.codes.every((c) => /^[A-Z]{5}$/.test(c)), 'every pool code is 5 letters and unique');
+    ok(JSON.stringify(d.pool) === JSON.stringify(JSON.parse(readFileSync(SP, 'utf8')).documents[0].pool), 'the same A and seed give the sample\'s pool');
+    ok(/SymPy checked (\d+) keys/.test(x.out) && Number(/SymPy checked (\d+)/.exec(x.out)[1]) >= 62, `SymPy didn't check every pool key:\n${x.out}`);
+    let worstR = 0, sums = 0, keysRight = 0;
+    for (const { code, doc } of poolDocs(d)) {
+      const qs = doc.sections.flatMap((s) => s.questions), s1 = doc.stimuli.find((t) => t.id === 's1'), s2 = doc.stimuli.find((t) => t.id === 's2');
+      const g = s2.figure.graph, r = corrOf(scatterPoints(g));
+      worstR = Math.max(worstR, Math.abs(r - g.r));
+      const q4 = qs.find((q) => q.id === 'q4');
+      ok(Math.abs(Number(q4.choices[q4.answer]) - r) <= 0.02, `${code} q4: the key ${q4.choices[q4.answer]} is not the plotted r ${r.toFixed(3)}`);
+      for (const b of s1.figure.graph.bars) { const t = segmentPercents(b).reduce((a, c) => a + c, 0); ok(Math.abs(t - 100) < 1e-9, `${code}: a segmented bar adds to ${t}`); sums++; }
+      const [, [, a, b, c], [, dd, e, f]] = [null, ...s1.table.rows].map((row) => row && row.map(Number));
+      const q2 = qs.find((q) => q.id === 'q2');
+      ok(q2.answer === String(Math.round((f / (c + f)) * 1000) / 10), `${code} q2: ${q2.answer} isn't ${f}/(${c}+${f}) from its own table`);
+      ok(s1.figure.graph.bars[0].counts.join() === [a, b, c].join() && s1.figure.graph.bars[1].counts.join() === [dd, e, f].join(), `${code}: the graph's counts are not the table's`);
+      keysRight++;
+    }
+    ok(worstR <= 0.02, `a pool scatter plot is ${worstR.toFixed(3)} off its r`);
+    ok(keysRight === 30, 'every pool version checked');
+    console.log(`  pool: 30 versions, worst r ${worstR.toFixed(4)} off (limit 0.02), ${sums} segmented bars add to 100`);
+    // --verify catches a pool that no longer comes from A; a pool on a printable document is refused
+    { const t = JSON.parse(readFileSync(x.file, 'utf8')); t.documents[0].pool.versions[3].questions.q2.answer = '50';
+      const v2 = node([join(ROOT, 'scripts/versions.mjs'), save('pool-tampered.json', t), '--verify']); ok(v2.status === 1 && /pool/.test(v2.stdout), `--verify missed a changed pool key:\n${v2.stdout}`); }
+    { const t = fresh(); t.documents[0].format = 'printable'; delete t.documents[0].grading; const v3 = run(t); ok(v3.status === 1 && /only for an interactive page/.test(v3.out), `a pool on a printable document wasn't refused:\n${v3.out}`); }
+    { const t = fresh(); t.documents[0].pool = { students: 151 }; const v4 = run(t); ok(v4.status === 1 && /2 to 150/.test(v4.out), `a 151-student pool wasn't refused:\n${v4.out}`); }
+  }
 } finally { rmSync(tmp, { recursive: true, force: true }); }
 
 if (bad) { console.log(`versions: ${bad} of ${n} checks failed`); process.exit(1); }
-console.log(`versions: all ${n} checks pass (B and C made from A, keys recomputed and SymPy-checked; 9 kinds of refusal)`);
+console.log(`versions: all ${n} checks pass (B and C made from A, keys recomputed and SymPy-checked; 9 kinds of refusal; a 30-version pool: r within 0.02, bars to 100, every key from its own numbers)`);
