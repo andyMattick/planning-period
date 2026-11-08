@@ -2,7 +2,8 @@
 // End-to-end test of online orders (docs/BACKEND.md), with a fake Supabase (scripts/test-orders/fake-supabase.mjs)
 // and Playwright: the order page signed out (local mode: Send makes a zip) and signed in (Send uploads), My orders in
 // every status, the follow-up answered with one tap, the online review (request changes, then approve), and the
-// owner's scripts/orders.mjs in between. The approval the browser makes must satisfy the real render-pack.mjs --final.
+// owner's scripts/orders.mjs in between. Sign-in: email + password (create an account, confirm, wrong password, rate
+// limit, stay signed in across reloads and expired tokens, forgot password, set a password in My orders) and the email link. The approval the browser makes must satisfy the real render-pack.mjs --final.
 // Phone (iPhone 13) and desktop (1280 px), light and dark; no page may scroll sideways.
 //   node scripts/test-orders.mjs [--shots <folder>]        (screenshots; default: a temporary folder)
 import { spawn, spawnSync, execFileSync } from 'node:child_process';
@@ -165,6 +166,178 @@ try {
   }
   ok('guided notes and the review game: Printable or Interactive, worded for notes and for a game; the summary says "notes printed to check later" and "scored automatically" at the same price (25 and 35 tokens)');
 
+  // ===== 1d. email + password sign-in (owner, Nov 8, 2026): create an account, confirm, sign in, stay signed in, reset =====
+  {
+    const T = 'pass@example.org', PW1 = 'river-maple-42', PW2 = 'new-harbor-77';
+    const get = async (p) => (await fetch(fake.url + p)).json();
+    const c = await ctx('desktop'), page = await c.newPage();
+    await page.goto(ONLINE);
+    await page.waitForSelector('#account:not([hidden]) #signin-form[data-mode="signin"]');
+    assert.equal(await page.getAttribute('#signin-email', 'autocomplete'), 'username');
+    assert.equal(await page.getAttribute('#signin-password', 'autocomplete'), 'current-password');
+    assert.equal(await page.getAttribute('#signin-password', 'type'), 'password');
+    assert.equal(await page.textContent('label[for="signin-email"]'), 'Email');
+    assert.equal(await page.textContent('label[for="signin-password"]'), 'Password');
+    assert.equal((await page.textContent('#signin-btn')).trim(), 'Sign in');
+    for (const s of ['[data-mode-go="forgot"]', '[data-mode-go="signup"]', '[data-mode-go="link"]']) assert.ok(await page.isVisible(s), s);
+    await page.fill('#signin-password', 'peekaboo');
+    await page.click('[data-pw-toggle="signin-password"]');
+    assert.equal(await page.getAttribute('#signin-password', 'type'), 'text');
+    assert.equal(await page.getAttribute('[data-pw-toggle="signin-password"]', 'aria-pressed'), 'true');
+    await page.click('[data-pw-toggle="signin-password"]');
+    assert.equal(await page.getAttribute('#signin-password', 'type'), 'password');
+    ok('sign-in box: email + password first (labelled, autocomplete username/current-password, Show/Hide), with Forgot password?, Create an account and Email me a sign-in link');
+
+    // create an account → the confirmation email → signed in
+    await page.click('[data-mode-go="signup"]');
+    await page.waitForSelector('#signin-form[data-mode="signup"]');
+    assert.equal(await page.getAttribute('#signin-password', 'autocomplete'), 'new-password');
+    assert.match(await page.textContent('#signin-password-rule'), /At least 8 characters/);
+    await page.fill('#signin-email', T); await page.fill('#signin-password', 'short7!');
+    await page.click('#signin-btn');
+    assert.match(await page.textContent('#signin-err'), /at least 8 characters/);
+    await page.fill('#signin-password', PW1);
+    await page.press('#signin-password', 'Enter');
+    await page.waitForSelector('#signin-form[data-mode="signin"] #signin-sent:not(:empty)');
+    assert.match(await page.textContent('#signin-sent'), /Check your email \(pass@example\.org\) once to confirm your account, then sign in here with your password/);
+    assert.equal(await page.inputValue('#signin-email'), T, 'her email stays filled in');
+    await page.fill('#signin-password', PW1); await page.click('#signin-btn');
+    await page.waitForSelector('#signin-err [data-resend]');
+    assert.match(await page.textContent('#signin-err'), /confirm your email first/);
+    await page.click('#signin-err [data-resend]');
+    await page.waitForFunction(() => /again/.test(document.getElementById('signin-sent').textContent));
+    assert.equal((await get('/__test/confirm-link?email=' + T)).sent, 2, 'the confirmation email was sent again');
+    await page.goto((await get('/__test/confirm-link?email=' + T)).link);
+    await page.waitForSelector('#acct-in:not([hidden])');
+    assert.match(await page.textContent('#acct-note'), /email is confirmed and you're signed in/);
+    assert.ok(!page.url().includes('access_token'));
+    await page.click('#signout-btn');
+    await page.waitForSelector('#acct-out:not([hidden]) #signin-form[data-mode="signin"]');
+    ok('create an account: the 8-character rule, "check your email once to confirm, then sign in with your password"; signing in before confirming says so and resends the email; the confirmation link signs her in');
+
+    // wrong password, rate limit, then the right one
+    await page.fill('#signin-email', T); await page.fill('#signin-password', 'not-my-password');
+    await page.click('#signin-btn');
+    await page.waitForSelector('#signin-err:not(:empty)');
+    assert.match(await page.textContent('#signin-err'), /don't match an account/);
+    await shot(page, 'auth-desktop-light-wrong-password');
+    await fetch(fake.url + '/__test/rate-limit?n=1');
+    await page.fill('#signin-password', PW1); await page.click('#signin-btn');
+    await page.waitForFunction(() => /Too many tries/.test(document.getElementById('signin-err').textContent));
+    await page.click('#signin-btn');
+    await page.waitForSelector('#acct-in:not([hidden])');
+    assert.equal(await page.textContent('#acct-email'), T);
+    const saved = await page.evaluate(() => JSON.stringify(localStorage));
+    assert.ok(!saved.includes(PW1) && !saved.includes('not-my-password'), 'no password is stored in the browser');
+    assert.equal(JSON.parse(await page.evaluate(() => localStorage.getItem('pp-session'))).method, 'password');
+    ok('wrong password: "That email and password don\'t match an account"; a rate limit: "Too many tries"; the right password signs her in, and only the tokens are stored');
+
+    // stay signed in: a reload, an access token that has run out (known and unknown to the browser), single-use refresh tokens
+    await page.reload();
+    await page.waitForSelector('#acct-in:not([hidden])');
+    const tok = () => page.evaluate(() => JSON.parse(localStorage.getItem('pp-session')).access_token);
+    const t0 = await tok();
+    await fetch(fake.url + '/__test/expire?email=' + T);
+    await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('pp-session')); s.expires_at = Math.floor(Date.now() / 1000) - 5; localStorage.setItem('pp-session', JSON.stringify(s)); });
+    await page.reload();
+    await page.waitForSelector('#acct-in:not([hidden])');
+    await page.waitForFunction((t) => JSON.parse(localStorage.getItem('pp-session')).access_token !== t, t0);
+    assert.equal(await page.textContent('#acct-email'), T);
+    const t1 = await tok();
+    await fetch(fake.url + '/__test/expire?email=' + T);   // the server stops taking it before the browser expects (a wrong clock)
+    await page.goto(ONLINE + 'orders.html');
+    await page.waitForSelector('.empty');
+    assert.notEqual(await tok(), t1, 'a 401 got one refresh and a retry');
+    assert.ok(await page.isVisible('#acct-in'));
+    ok('stays signed in: across a reload, after the access token runs out (refreshed before the call) and when the server refuses it early (refresh and retry once)');
+
+    // forgot password → the reset link → set a new password → sign in with it
+    await page.click('#signout-btn');
+    await page.waitForSelector('#signin-form');
+    await page.click('[data-mode-go="forgot"]');
+    await page.fill('#signin-email', T); await page.click('#signin-btn');
+    await page.waitForSelector('#signin-sent:not(:empty)');
+    assert.match(await page.textContent('#signin-sent'), /emailed it a link to set a new password/);
+    await page.goto((await get('/__test/recovery-link?email=' + T)).link);
+    await page.waitForSelector('#acct-reset:not([hidden]) #reset-password');
+    assert.equal(await page.getAttribute('#reset-password', 'autocomplete'), 'new-password');
+    assert.equal(await page.getAttribute('#reset-form input[autocomplete="username"]', 'value'), T, 'the hidden username lets the phone save the new password for this email');
+    assert.ok(!(await page.isVisible('#acct-pass')), 'no second password box while she sets the new one');
+    await page.reload();   // still asked after a reload
+    await page.waitForSelector('#acct-reset:not([hidden]) #reset-password');
+    await page.fill('#reset-password', PW1); await page.click('#reset-save');
+    await page.waitForSelector('#reset-err:not(:empty)');
+    assert.match(await page.textContent('#reset-err'), /already your password/);
+    await page.fill('#reset-password', PW2); await page.press('#reset-password', 'Enter');
+    await page.waitForSelector('#acct-reset[hidden]', { state: 'attached' });
+    assert.match(await page.textContent('#acct-note'), /new password is saved/);
+    await page.click('#signout-btn');
+    await page.fill('#signin-email', T); await page.fill('#signin-password', PW1); await page.click('#signin-btn');
+    await page.waitForSelector('#signin-err:not(:empty)');
+    await page.fill('#signin-password', PW2); await page.click('#signin-btn');
+    await page.waitForSelector('#acct-in:not([hidden])');
+    ok('forgot password: the reset email → "Set a new password" (kept after a reload; the same password refused) → the old password no longer works, the new one does');
+
+    // a teacher who used email links before sets a password in My orders
+    await page.click('#signout-btn');
+    await page.click('[data-mode-go="link"]');
+    await page.fill('#signin-email', 'linkonly@example.org'); await page.click('#signin-btn');
+    await page.waitForSelector('#signin-sent:not(:empty)');
+    await page.goto((await get('/__test/magic-link?email=linkonly@example.org')).link);
+    await page.waitForSelector('#acct-pass:not([hidden]) .pass-prompt');
+    assert.match(await page.textContent('#acct-pass'), /Set a password so you don't need an email next time/);
+    await page.click('#setpw-open');
+    await page.fill('#setpw-password', 'chalk-board-9'); await page.click('#setpw-save');
+    await page.waitForFunction(() => /password is saved/.test(document.getElementById('acct-note').textContent));
+    assert.match(await page.textContent('#acct-pass'), /Change password/);
+    assert.equal((await get('/__test/user?email=linkonly@example.org')).password, 'chalk-board-9');
+    await page.click('#signout-btn');
+    await page.fill('#signin-email', 'linkonly@example.org'); await page.fill('#signin-password', 'chalk-board-9'); await page.click('#signin-btn');
+    await page.waitForSelector('#acct-in:not([hidden])');
+    assert.match(await page.textContent('#acct-pass'), /Change password/, 'she has a password now (kept on her account)');
+    ok('My orders: a teacher who signed in with a link sets a password ("so you don\'t need an email next time"), then signs in with it');
+    await c.close();
+
+    // screenshots: 375 px and 1280 px, light and dark
+    for (const [w, scheme] of [[375, 'light'], [375, 'dark'], [1280, 'light'], [1280, 'dark']]) {
+      const c2 = await browser.newContext({ ...(w === 375 ? { ...devices['iPhone SE'] } : DESK), colorScheme: scheme, serviceWorkers: 'block' });
+      const p2 = await c2.newPage(), tag = `${w}-${scheme}`;
+      const boxShot = async (name) => {
+        await noSideways(p2, `${name} (${tag})`);
+        // the box alone, cut from a full-page shot (an element shot can catch the phone page mid-scroll)
+        await p2.addStyleTag({ content: '.tabbar { display: none !important; } .top { position: static !important; }' });   // the fixed tab bar and sticky top bar would sit on the box
+        const clip = await p2.evaluate(() => { document.activeElement?.blur(); const r = document.getElementById('account').getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, width: r.width, height: r.height }; });
+        await p2.screenshot({ path: join(SHOTS, `auth-${tag}-${name}.png`), fullPage: true, clip });
+      };
+      await p2.goto(ONLINE);
+      await p2.waitForSelector('#signin-form[data-mode="signin"]');
+      await p2.fill('#signin-email', T);
+      await boxShot('sign-in');
+      await p2.click('[data-mode-go="signup"]'); await p2.fill('#signin-password', 'hunter2');
+      await p2.click('#signin-btn'); await p2.waitForSelector('#signin-err:not(:empty)');
+      await boxShot('create-account');
+      await p2.click('[data-mode-go="signin"]'); await p2.click('[data-mode-go="forgot"]');
+      await p2.click('#signin-btn'); await p2.waitForSelector('#signin-sent:not(:empty)');
+      await boxShot('forgot-password');
+      await p2.click('[data-mode-go="signin"]'); await p2.click('[data-mode-go="link"]');
+      await boxShot('email-link');
+      await p2.goto((await get('/__test/recovery-link?email=' + T)).link);
+      await p2.waitForSelector('#reset-password');
+      await boxShot('set-new-password');
+      await p2.click('#reset-cancel');
+      await p2.click('#signout-btn');
+      const who = `link-${tag}@example.org`;   // a teacher who has only used email links
+      await fetch(fake.url + '/auth/v1/otp?redirect_to=' + encodeURIComponent(ONLINE + 'orders.html'), { method: 'POST', headers: { apikey: ANON, 'Content-Type': 'application/json' }, body: JSON.stringify({ email: who }) });
+      await p2.goto((await get('/__test/magic-link?email=' + who)).link);
+      await p2.waitForSelector('#acct-pass:not([hidden]) .pass-prompt');
+      await boxShot('my-orders-set-password-prompt');
+      await p2.click('#setpw-open');
+      await boxShot('my-orders-set-password');
+      await c2.close();
+    }
+    ok('screenshots of the sign-in box, create account, forgot password, email link, set a new password and My orders "Set a password" at 375 and 1280 px, light and dark, with no sideways scroll');
+  }
+
   // ===== 2. sign in and send online =====
   const c = await ctx('desktop'), page = await c.newPage();
   page.on('dialog', (d) => d.accept());
@@ -175,6 +348,7 @@ try {
   assert.equal((await page.textContent('[data-link="sources"] [data-link-hint]')).trim(), 'Sign in to add links, or save the page (File → Save page as) and upload it.');
   assert.equal(await page.isVisible('#fence'), true, 'the source notice stays visible');
   ok('signed out: "Paste a link" is off, with the hint to sign in or save the page and upload it');
+  await page.click('[data-mode-go="link"]');   // the email link is still there, as the second way
   await page.fill('#signin-email', 'ortiz@example.org');
   await page.click('#signin-btn');
   await page.waitForSelector('#signin-sent:not(:empty)');
@@ -185,7 +359,7 @@ try {
   assert.equal(await page.textContent('#acct-email'), 'ortiz@example.org');
   assert.ok(!page.url().includes('access_token'), 'the token is cleared from the address bar');
   assert.match(await page.textContent('#send-note'), /uploads your files/);
-  ok('sign-in: email link → back on the order page signed in, the token taken out of the address bar');
+  ok('sign-in by email link (still offered): back on the order page signed in, the token taken out of the address bar');
 
   // ===== 2b. paste a link: preview → Use this (a blocked address shows the friendly error) =====
   assert.equal(await page.isVisible('[data-link="sources"] [data-link-hint]'), false);
@@ -346,7 +520,18 @@ try {
   assert.equal(await page.getAttribute(`#o-${orderId} [data-try-frame]`, 'sandbox'), 'allow-scripts allow-modals');
   await noSideways(page, 'My orders with an interactive page (desktop)');
   await shot(page, 'orders-desktop-review-interactive');
-  ok('review: the interactive page is listed next to the PDFs and opens in a sandboxed frame ("Try it here")');
+  // Open full screen: a new tab with the page filling a sandboxed frame (phones open it this way)
+  const [tab] = await Promise.all([page.waitForEvent('popup'), page.click(`#o-${orderId} [data-full][data-file="${pageFile}"]`)]);
+  await tab.waitForSelector('iframe[sandbox]');
+  assert.equal(await tab.getAttribute('iframe', 'sandbox'), 'allow-scripts allow-modals allow-downloads');
+  await tab.frameLocator('iframe').locator('#pp-name').waitFor();
+  await tab.close();
+  // Download: saved as a real .html web page (made in the browser from the stored bytes)
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.click(`#o-${orderId} [data-dl-page][data-file="${pageFile}"]`)]);
+  assert.equal(dl.suggestedFilename(), pageFile);
+  const saved = readFileSync(await dl.path(), 'utf8');
+  assert.ok(/^<!doctype html>/i.test(saved.trimStart()) && saved.includes('id="pp-name"'), 'the download is the whole page');
+  ok('review: the interactive page is listed next to the PDFs: "Try it here" (sandboxed frame), "Open full screen" (a new tab) and "Download" (an .html file)');
   for (const [kind, scheme] of [['phone', 'light'], ['phone', 'dark'], ['desktop', 'dark']]) {
     const c2 = await ctx(kind, scheme), p2 = await c2.newPage();
     await p2.goto(ONLINE + 'orders.html');
@@ -449,6 +634,7 @@ try {
   {
     const c2 = await ctx('desktop'), p2 = await c2.newPage();
     await p2.goto(ONLINE + 'orders.html');
+    await p2.click('[data-mode-go="link"]');
     await p2.fill('#signin-email', 'other@example.org'); await p2.click('#signin-btn');
     await p2.waitForSelector('#signin-sent:not(:empty)');
     await p2.goto((await (await fetch(`${fake.url}/__test/magic-link?email=other@example.org`)).json()).link);
@@ -462,6 +648,7 @@ try {
     await shot(p2, 'orders-desktop-empty');
     await fetch(`${fake.url}/__test/admin?email=owner@example.org`);
     await p2.click('#signout-btn');
+    await p2.click('[data-mode-go="link"]');
     await p2.fill('#signin-email', 'owner@example.org'); await p2.click('#signin-btn');
     await p2.waitForSelector('#signin-sent:not(:empty)');
     await p2.goto((await (await fetch(`${fake.url}/__test/magic-link?email=owner@example.org`)).json()).link);

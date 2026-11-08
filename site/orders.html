@@ -39,17 +39,12 @@
   <section class="account" id="account" hidden aria-label="Sign in">
     <div id="acct-out">
       <h2 class="h3">Sign in to see your orders</h2>
-      <p class="small">We email you a link. Open it on this device and you're signed in: no password.</p>
-      <div class="signin-row">
-        <label class="sr-only" for="signin-email">Your email</label>
-        <input type="email" id="signin-email" autocomplete="email" placeholder="you@school.org">
-        <button type="button" class="btn primary" id="signin-btn">Email me a sign-in link</button>
-      </div>
-      <div class="ok small" id="signin-sent" role="status"></div>
-      <div class="error" id="signin-err" role="alert"></div>
+      <p class="small">Sign in with your email and password. New here? Create an account. You can also get a one-time sign-in link by email.</p>
+      <div id="signin-forms"></div>
     </div>
     <div id="acct-in" hidden>
       <p class="small"><b>Signed in</b> as <span id="acct-email"></span> · <a href="./">New order</a> · <button type="button" class="btn link" id="signout-btn">Sign out</button></p>
+      <div id="acct-pass" hidden></div>
     </div>
   </section>
 

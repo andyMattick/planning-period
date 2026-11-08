@@ -83,11 +83,17 @@ and status), not before.
 
 ## The backend (built Nov 6, 2026)
 
-Online orders are in: sign-in by email link, Send uploads, **My orders** (`site/orders.html`, the Orders tab) with the
+Online orders are in: sign-in with email and password (or an email link; docs/BACKEND.md, "Sign-in"), Send uploads, **My orders** (`site/orders.html`, the Orders tab) with the
 follow-up, the online review and the final files. Setup, rules and tests: **docs/BACKEND.md**. With no
 `backend.config.json` (local mode) everything below "Offline" still holds: Send makes the zip. `site/backend.js` is a
 small fetch client, so nothing loads from a CDN; Supabase is another origin, so the service worker never touches or
 caches sign-in, uploads, orders or signed file links.
+
+**Installed app vs browser (iPhone):** an app added to the iPhone Home Screen keeps its own storage, so its sign-in is
+separate from Safari's. A link opened from Gmail or Mail opens in Safari (or the mail app's own browser), not in the
+home-screen app, so an email link signs in the *browser*, not the app. That's the main reason passwords are the first
+way to sign in: in the app she types (or her phone fills in) her email and password and stays signed in there. Android
+and desktop installs share the browser's storage, so a sign-in in Chrome is a sign-in in the installed app too.
 
 **Paste a link** (Nov 7, 2026) is the site's first server code: `api/fetch-page.js`, a Vercel function the order page
 calls with a POST, so the service worker never touches it (it only handles GETs). Online and signed in only.
