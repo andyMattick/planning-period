@@ -41,6 +41,7 @@ import { create, all } from 'mathjs';
 import { loadPack, perVersion, pick, norm, valueOf, sameValue, nextRound } from '../checks/pack-lib.mjs';
 import { checkMath } from '../checks/math.mjs';
 import { plainMath } from './render/math.mjs';
+import { checkPack } from '../checks/interactive-format.mjs';
 
 /* ---------- a safe mathjs (no import, no parse/evaluate from inside a template) ---------- */
 const math = create(all, { number: 'number' });
@@ -306,7 +307,21 @@ if (isMain) {
   let pack, fixed = null;
   try { pack = loadPack(file); fixed = values ? JSON.parse(values) : null; } catch (e) { console.error(`versions: ${e.message}`); process.exit(2); }
   const t0 = Date.now();
-  const res = makeVersions(pack, { targets: vOpt ? vOpt.split(',').map((s) => s.trim()).filter(Boolean) : null, seed, fixed });
+  const targets = vOpt ? vOpt.split(',').map((s) => s.trim()).filter(Boolean) : null;
+  // --verify remakes with the seed the pack was made with (a redraw adds #k to it; checks.wilco records it)
+  const recorded = [...((pack.checks && pack.checks.wilco) || [])].reverse().find((e) => e.check === 'versions' && e.seed);
+  const seed0 = seed || (verify && recorded ? recorded.seed : null);
+  let res = makeVersions(pack, { targets, seed: seed0, fixed }), usedSeed = seed0 || pack.id || 'pack';
+  // an interactive page holds no key as text (checks/interactive-format.mjs): new numbers whose key happens to be
+  // printed elsewhere in the page's file (a style value, another item) are redrawn with the next seed, up to 8 times
+  if (!res.errors.length && !verify && res.pack.documents.some((d) => d.format === 'interactive')) {
+    const made = new Set(res.summary.flatMap((x) => x.versions));
+    const leaks = async (p) => (await checkPack(p, null)).errors.filter((e) => /the key .* is in the file as text/.test(e) && [...made].some((v) => e.includes(` ${v}: `)));
+    let k = 0, left = await leaks(res.pack);
+    while (left.length && k < 8) { k++; usedSeed = `${seed || pack.id || 'pack'}#${k}`; res = makeVersions(pack, { targets, seed: usedSeed, fixed }); if (res.errors.length) break; left = await leaks(res.pack); }
+    if (left.length) res.errors.push(...left.map((e) => `page: ${e} (8 redraws)`));
+    else if (k) res.warnings.push(`redrew ${k} time${k === 1 ? '' : 's'} so no key is printed elsewhere in an interactive page's file (seed ${usedSeed})`);
+  }
   const report = { errors: res.errors, warnings: res.warnings, summary: res.summary, math: null, verify: null };
   if (!res.errors.length && !res.summary.length) { console.log('versions: no item has a gen spec: nothing to make.'); process.exit(0); }
   if (verify && !res.errors.length) {
@@ -334,7 +349,7 @@ if (isMain) {
     if (write) {
       const p = res.pack; p.checks = p.checks || {}; p.checks.wilco = p.checks.wilco || [];
       p.checks.wilco.push({ check: 'versions', round: nextRound(p, 'versions'), agent: '🤖 Wilco (scripts/versions.mjs)', pass: true,
-        rows: res.summary.reduce((n, s) => n + s.items.length * s.versions.length, 0), problems: [], seed: seed || p.id || 'pack',
+        rows: res.summary.reduce((n, s) => n + s.items.length * s.versions.length, 0), problems: [], seed: usedSeed,
         made: res.summary.map((s) => `${s.document}: ${s.versions.join(', ')} (${s.items.length} items)`) });
     }
     writeFileSync(outFile || file, JSON.stringify(res.pack, null, 2) + '\n');

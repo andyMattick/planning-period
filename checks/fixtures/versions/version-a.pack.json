@@ -361,9 +361,9 @@
               "choices": {
                 "A": [
                   "Because 0.74 is above 0 and −0.81 is below 0, the study relationship is the stronger one",
-                  "Because one r is positive and one is negative, the two can't be compared for strength",
-                  "Because −0.81 is farther from 0 than 0.74 is, the TV relationship is the stronger one",
-                  "Because a negative r shows a weaker pattern, the TV relationship is the weaker one"
+                  "Because one r is positive and one is negative, 0.74 and −0.81 can't be compared for their strength",
+                  "Because −0.81 is farther from 0 than 0.74 is, the TV relationship is the stronger of the two",
+                  "Because a negative r shows a weaker pattern, the TV relationship at −0.81 is the weaker one"
                 ]
               },
               "answer": {
@@ -398,9 +398,9 @@
                   "prompt": "Hours studied and quiz score have r = {{rs}}. Hours of TV watched and quiz score have r = {{-rt|u}}. Which statement is correct?",
                   "choices": [
                     "Because {{rs}} is above 0 and {{-rt|u}} is below 0, the study relationship is the stronger one",
-                    "Because one r is positive and one is negative, the two can't be compared for strength",
-                    "Because {{-rt|u}} is farther from 0 than {{rs}} is, the TV relationship is the stronger one",
-                    "Because a negative r shows a weaker pattern, the TV relationship is the weaker one"
+                    "Because one r is positive and one is negative, {{rs}} and {{-rt|u}} can't be compared for their strength",
+                    "Because {{-rt|u}} is farther from 0 than {{rs}} is, the TV relationship is the stronger of the two",
+                    "Because a negative r shows a weaker pattern, the TV relationship at {{-rt|u}} is the weaker one"
                   ],
                   "why": "Strength is how far r is from 0: |{{-rt|u}}| = {{rt}} is more than {{rs}}, so the TV relationship is stronger (and negative)."
                 }
