@@ -141,6 +141,30 @@ try {
   }
   ok('reading quiz: short answers + RACE by default; picking "multiple choice on passages (in testing)" shows the in-testing warning (phone)');
 
+  // ===== 1c. guided notes and the review game can be interactive too (owner, Nov 8, 2026), at the same price =====
+  {
+    const c = await ctx('phone'), page = await c.newPage();
+    await page.goto(LOCAL);
+    await page.waitForSelector('#items .card', { state: 'attached' });
+    for (const id of ['notes', 'reviewgame']) assert.match(await page.textContent(`#items [data-item="${id}"]`), /or interactive/, `${id} is marked "or interactive"`);
+    await page.evaluate(() => { for (const id of ['notes', 'reviewgame']) { const b = document.querySelector(`#items [data-item="${id}"] input[type=checkbox]`); b.checked = true; b.dispatchEvent(new Event('change', { bubbles: true })); } window.PPShowStep(3); });
+    for (const id of ['notes', 'reviewgame']) {
+      assert.ok(await page.isChecked(`#fmt-${id}-format-printable`), `${id}: printable is chosen to start`);
+      await page.check(`#fmt-${id}-format-interactive`);
+      assert.ok(await page.isChecked(`#fmt-${id}-grading-auto`), `${id}: checked automatically to start`);
+    }
+    assert.match(await page.textContent('[data-format-box="notes"]'), /fill in the blanks of the notes/);
+    assert.match(await page.textContent('[data-format-box="reviewgame"]'), /as a class on a projector/);
+    await page.check('#fmt-notes-grading-print');
+    const lines = await page.textContent('#cost-lines');
+    assert.match(lines, /interactive, notes printed to check later · same price as printable\s*25 tokens/);
+    assert.match(lines, /interactive, scored automatically · same price as printable\s*35 tokens/);
+    await noSideways(page, 'order page, interactive notes and review game (phone)');
+    await shot(page, 'local-phone-notes-reviewgame-interactive');
+    await c.close();
+  }
+  ok('guided notes and the review game: Printable or Interactive, worded for notes and for a game; the summary says "notes printed to check later" and "scored automatically" at the same price (25 and 35 tokens)');
+
   // ===== 2. sign in and send online =====
   const c = await ctx('desktop'), page = await c.newPage();
   page.on('dialog', (d) => d.accept());

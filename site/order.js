@@ -470,17 +470,31 @@
         '<span><b>' + esc(o[1]) + '</b><span class="small muted">' + esc(o[2]) + '</span></span></label>';
     }).join('') + '</fieldset>';
   }
+  // Guided notes and the review game (owner, Nov 8, 2026: "I want it for guided notes and review"): the same two choices,
+  // worded for what students do with them.
+  var FORMATS_FOR = {
+    notes: [FORMATS[0], ['interactive', 'Interactive', 'Students fill in the blanks of the notes on any device (one offline file, no accounts), then print their notes for their binder. You also get the teacher copy with the key.']],
+    reviewgame: [['printable', 'Printable', 'Question cards and projector slides, as always, with your key.'], ['interactive', 'Interactive', 'The cards played on any device, one at a time with categories and points, or as a class on a projector with team scores (one offline file, no accounts). You also get the teacher copy with the key.']],
+  };
+  var GRADINGS_FOR = {
+    notes: [['auto', 'Check the blanks automatically', '"Check my notes" marks each blank right or not (capital letters and plurals forgiven) so she can fix it; stop-and-think answers are left for you.'],
+      ['print', 'Print the notes to check later', 'No answers in the file at all. Finish prints her filled-in notes with her name and the date, for you to check with the key.']],
+    reviewgame: [['auto', 'Score the cards automatically', 'Each card is scored as she plays (half points on a second try), with a results page to print. On a projector, the class code on your teacher copy reveals the answers.'],
+      ['print', 'Print the answers to grade later', 'No answers in the file at all. She answers every card, then prints an answer sheet for you to grade with the key.']],
+  };
   function formatHTML(id, spec) {
     if (!(itemById(id) || {}).interactive) return '';
     var f = spec.format === 'interactive' ? 'interactive' : 'printable';
-    return '<div class="format-box" data-format-box="' + esc(id) + '">' + radioGroup(id, 'format', 'Format', FORMATS, f) +
-      (f === 'interactive' ? radioGroup(id, 'grading', 'Grading', GRADINGS, spec.grading === 'print' ? 'print' : 'auto') +
+    return '<div class="format-box" data-format-box="' + esc(id) + '">' + radioGroup(id, 'format', 'Format', FORMATS_FOR[id] || FORMATS, f) +
+      (f === 'interactive' ? radioGroup(id, 'grading', id === 'notes' ? 'Checking' : 'Grading', GRADINGS_FOR[id] || GRADINGS, spec.grading === 'print' ? 'print' : 'auto') +
         '<p class="small muted">Interactive costs the same tokens as printable. ' + (spec.grading === 'print' ? '' : 'Answers are stored as scrambled codes, not text: enough to stop peeking, not a determined student with programming tools, so use it for practice, not for a graded test.') + '</p>' : '') + '</div>';
   }
   function formatLabel(id) {
     var sp = picked[id] && picked[id].spec;
     if (!(itemById(id) || {}).interactive || !sp) return '';
     if (sp.format !== 'interactive') return 'printable';
+    if (id === 'notes') return 'interactive, ' + (sp.grading === 'print' ? 'notes printed to check later' : 'blanks checked automatically');
+    if (id === 'reviewgame') return 'interactive, ' + (sp.grading === 'print' ? 'answers printed to grade later' : 'scored automatically');
     return 'interactive, ' + (sp.grading === 'print' ? 'results printed to grade later' : 'graded automatically');
   }
   // A menu item's options (menu.json items[].options): a Yes/No choice each; one marked "testing" shows its note as a
