@@ -267,7 +267,10 @@ export function startFake({ port = 0 } = {}) {
         if (req.method === 'POST') {
           if (!canStorage(w, 'read', bucket, name) || !db.objects.has(objKey(bucket, name))) return send(400, { statusCode: '404', error: 'not_found', message: 'Object not found' });
           const t = randomBytes(12).toString('hex'); db.signed.set(t, { key: objKey(bucket, name), exp: Date.now() + (json().expiresIn || 60) * 1000 });
-          return send(200, { signedURL: `/object/sign/${bucket}/${m[2]}?token=${t}` });
+          // like real Supabase Storage: the JSON answer carries the stored file's type (text/plain for an interactive page)
+          const ot = (db.objects.get(objKey(bucket, name)).type || 'application/json').split(';')[0];
+          const ans = { signedURL: `/object/sign/${bucket}/${m[2]}?token=${t}` };
+          return ot === 'text/plain' ? send(200, JSON.stringify(ans), 'text/plain') : send(200, ans);
         }
         const s = db.signed.get(url.searchParams.get('token'));
         if (!s || s.key !== objKey(bucket, name) || s.exp < Date.now()) return send(400, { message: 'invalid signature' });
