@@ -3,8 +3,8 @@
 // outputs (scripts/test-run-order/fixtures, made-up teacher and quiz), everything else real (orders.mjs, versions.mjs,
 // Wilco's checks, SymPy, the renderer, the browser check). It spends nothing.
 //   node scripts/test-run-order.mjs        (about a minute; part of npm run check)
-import { spawn } from 'node:child_process';
-import { mkdtempSync, readFileSync, existsSync, rmSync, writeFileSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, existsSync, rmSync, writeFileSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -30,13 +30,13 @@ await fetch(`${fake.url}/auth/v1/otp?redirect_to=http://x/`, { method: 'POST', h
 const link = await (await fetch(`${fake.url}/__test/magic-link?email=teacher@example.test`)).json();
 const teacher = link.user.id, token = /access_token=([^&]+)/.exec(link.link)[1];
 
-async function newOrder(id) {
+async function newOrder(id, extra = {}) {
   const files = { [`${teacher}/${id}/sources/made-up-notes.txt`]: 'Two-way tables, conditional percents, correlation, least-squares lines, residuals (made-up notes).\n',
     [`${teacher}/${id}/training/made-up-past-quiz.html`]: '<html><body><h1>Past Quiz</h1><ol><li>Question one?</li></ol><script>alert(1)</script></body></html>' };
   for (const [p, body] of Object.entries(files)) await api('POST', `/storage/v1/object/uploads/${p}`, Buffer.from(body), { 'Content-Type': 'text/plain', 'x-upsert': 'true' });
   await api('POST', '/rest/v1/orders', { id, teacher, status: 'sent', token_total: 40, upload_files: Object.keys(files),
     order_json: { order: { teacher: 'Mr. Example (made-up)', grade: '12', subject: 'math', topic: 'Two-variable data', items: ['quiz'], requests: 'Same questions, different numbers',
-      itemSpecs: { quiz: { format: 'interactive', grading: 'print', versions: 3 } }, sources: ['made-up-notes.txt'], styleExamples: ['made-up-past-quiz.html'] } } });
+      itemSpecs: { quiz: { format: 'interactive', grading: 'print', versions: 3 } }, sources: ['made-up-notes.txt'], styleExamples: ['made-up-past-quiz.html'], ...extra } } });
 }
 function run(id, args, extraEnv = {}) {
   return new Promise((res) => {
@@ -129,7 +129,32 @@ try {
   o = await orderOf(ID4);
   ok(r4.code === 1 && o.status === 'failed' && /went wrong/.test(o.note || ''), `a crash: exit ${r4.code}, ${o.status}`);
 
-  /* 5. nothing to do for an order in another status; a bad id is refused */
+  /* 5. the teacher skipped the blind check: no blind tester, every other check, and every page says so */
+  const ID5 = 'pp-2026-11-08-test05', calls5 = join(tmp, 'calls5.jsonl'), work5 = join(tmp, 'w5');
+  await newOrder(ID5, { checks: { blind: false } });
+  ok((await run(ID5, ['--work', join(tmp, 'w5a')], { PP_FAKE_CALLS: calls5 })).code === 0, 'onboard (blind check off)');
+  await fetch(`${fake.url}/rest/v1/rpc/answer_follow_up`, { method: 'POST', headers: { apikey: ANON, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_order: ID5, p_answer: 'go' }) });
+  const r5 = await run(ID5, ['--work', work5, '--keep'], { PP_FAKE_CALLS: calls5 });
+  ok(r5.code === 0 && (await orderOf(ID5)).status === 'preview_ready', `blind off: exit ${r5.code}\n${r5.out}`);
+  const roles5 = callsOf(calls5).map((x) => x.role);
+  ok(!roles5.some((r) => r.startsWith('blind')) && ['solver-r1a', 'solver-bc-r1a', 'reporter-r1'].every((r) => roles5.includes(r)), `blind off: no blind tester, the solvers and reporter ran (${roles5.join(', ')})`);
+  const p5 = JSON.parse(readFileSync(join(work5, 'pack.json'), 'utf8'));
+  ok(p5.order.checks?.blind === false && p5.log.some((r) => /Blind check skipped at the teacher's request/.test(r.what)) && !(p5.checks.blind || []).length, 'blind off: recorded in the pack and the log, no blind entries');
+  const line = 'Blind check skipped at your request — please work through the test yourself before students see it.';
+  ok(readFileSync(join(work5, 'out-preview', 'REVIEW.html'), 'utf8').includes(line), 'blind off: REVIEW.html says so');
+  ok((await orderOf(ID5)).review?.blindSkipped === true, 'blind off: My orders\' review is told');
+  { // the audit report's first page and each teacher copy (skipped where pdftotext isn't installed)
+    const pdfs = readdirSync(join(work5, 'out-preview')).filter((f) => f.endsWith('.pdf'));
+    const txt = (f) => spawnSync('pdftotext', ['-l', '1', join(work5, 'out-preview', f), '-'], { encoding: 'utf8' });
+    if (txt(pdfs[0]).status === 0) {
+      const flat = (f) => txt(f).stdout.replace(/\s+/g, ' ');
+      ok(flat('AUDIT-REPORT.pdf').includes(line.replace(/\s+/g, ' ')), 'blind off: the audit report\'s first page says so');
+      const tc = pdfs.filter((f) => /teacher/.test(f));
+      ok(tc.length === 3 && tc.every((f) => flat(f).includes('Blind check skipped at your request')), 'blind off: every teacher copy says so');
+    }
+  }
+
+  /* 6. nothing to do for an order in another status; a bad id is refused */
   ok((await run(ID, [])).code === 0, 'auto on a preview_ready order does nothing');
   ok((await run('pp-bad', [])).code === 2, 'a bad id is refused');
 } finally {

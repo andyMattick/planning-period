@@ -233,11 +233,14 @@ function rowSigs(pack) {
 const changedWheres = (before, after) => { const a = rowSigs(before), b = rowSigs(after); return [...b.keys()].filter((w) => a.get(w) !== b.get(w)); };
 
 // the maker writes documents and style; this script keeps checks, log and audit (the maker never writes them)
+let ORDER = null;
 function takeMakerPack(dir, prev) {
   const f = join(dir, 'pack.json');
   if (!existsSync(f)) throw new Error('the maker left no pack.json');
   const m = readJSON(f);
   if (!Array.isArray(m.documents) || !m.documents.length) throw new Error('the maker\'s pack.json has no documents');
+  const orderChecks = ORDER?.order?.checks;
+  if (orderChecks) m.order = { ...(m.order || {}), checks: orderChecks };   // her choices about checks come from her order, never the maker
   const pack = { ...m, id: ID, checks: prev?.checks || { blind: [], solver: [], facts: [], wilco: [] }, log: prev?.log || [], audit: prev?.audit || { notes: [], briefChanges: [] } };
   writeJSON(join(WORK, 'pack.json'), pack);
   return pack;
@@ -322,12 +325,14 @@ async function checksRound(round, order, changed) {
   const verOf = (r) => r.ver || 'A';
   const pool = changed ? all.filter((r) => changed.includes(r.where)) : all;
   // blind: version A of script-made items, every version of hand-written ones
-  const blindRows = pool.filter((r) => !gen.has(r.id) || verOf(r) === 'A');
+  // the teacher may skip the blind check (order.checks.blind = false): then no blind tester runs, every other check does
+  const blindRows = order?.order?.checks?.blind === false ? [] : pool.filter((r) => !gen.has(r.id) || verOf(r) === 'A');
   // solver: A (and hand-written items), and a second solver for B, C… of script-made items in round 1
   const solverA = changed ? pool : pool.filter((r) => !gen.has(r.id) || verOf(r) === 'A');
   const solverBC = changed ? [] : pool.filter((r) => gen.has(r.id) && verOf(r) !== 'A');
   const subj = order?.order?.subject || pack.order?.subject;
   const brief = blindBrief(pack, order);
+  if (blindRows.length && !brief) throw new HandOff(`no blind tester brief for subject ${subj}: run it by hand`);
   blindName = `🙈 Blind tester (${brief === 'math' ? 'math' : brief || subj})`;
   const useFacts = ['science', 'social'].includes(subj);
   const useSolver = hasMath(pack) || subj === 'math';
@@ -402,6 +407,8 @@ async function build() {
   if (o.status !== 'building') throw new HandOff(`the order is ${o.status}, not building`);
   await orders('pull', ID);
   const order = readJSON(join(WORK, 'in', 'order.json'));
+  ORDER = order;
+  const blindOff = order.order?.checks?.blind === false;
   const ob = existsSync(join(WORK, 'onboarding.json')) ? readJSON(join(WORK, 'onboarding.json')) : null;
   if (!existsSync(join(WORK, 'followup-answer.md'))) writeFileSync(join(WORK, 'followup-answer.md'), 'no questions asked: started\n');
   const items = order.order?.items || [], subj = order.order?.subject;
@@ -412,6 +419,7 @@ async function build() {
   const unsupported = items.filter((i) => !KINDS_BY_RUNNER.includes(i));
   if (reading || unsupported.length || !SUBJECTS_BY_RUNNER.includes(subj)) throw new HandOff(`the runner doesn't build ${reading ? 'reading items (the no-passage probe is scored by the lead)' : unsupported.length ? unsupported.join(', ') : `subject ${subj}`} yet: run it by hand (docs/RUNBOOK.md)`);
   if (!(BUDGET > 0)) throw new HandOff('the order has no token total');
+  if (blindOff) logRow({ who: 'Runner', what: 'Blind check skipped at the teacher\'s request (her order page); the solver or fact checker, Wilco and every scripted check still run' });
   const text = await textCopies();
   await orders('style-get', ID);
   if (!existsSync(join(WORK, 'style.md')) && readdirSync(join(text, 'training')).length) {
@@ -505,11 +513,11 @@ function cleanup() {
   if (!keep) rmSync(WORK, { recursive: true, force: true });
 }
 
-let code = 0;
+let code = 0, STAGE = null;
 try {
   mkdirSync(WORK, { recursive: true });
   const o = await show();
-  const stage = stageOpt !== 'auto' ? stageOpt : ['sent', 'onboarding'].includes(o.status) ? 'onboard' : o.status === 'building' ? 'build' : null;
+  const stage = STAGE = stageOpt !== 'auto' ? stageOpt : ['sent', 'onboarding'].includes(o.status) ? 'onboard' : o.status === 'building' ? 'build' : null;
   if (!stage) { say(`${ID} is ${o.status}: nothing to run`); }
   else {
     say(`${ID}: ${stage}${dry ? ' (dry run: canned sessions)' : ''}`);
@@ -519,7 +527,10 @@ try {
   if (e instanceof HandOff) {
     code = 3; say(`handed to the owner: ${e.message}`);
     await keepWork(e.message, e.cause);
-    try { await orders('status', ID, 'building', 'Your order needs a quick look from us before the preview. We will post it as soon as it is ready.'); } catch (x) { say(`could not set the note: ${x.message}`); }
+    // the status stays where the stage left it (a status change would start the runner again): only the note changes
+    const onboarding = STAGE === 'onboard';
+    try { await orders('status', ID, onboarding ? 'onboarding' : 'building', onboarding ? 'We are taking a quick look at your order before we send our questions.'
+      : 'Your order needs a quick look from us before the preview. We will post it as soon as it is ready.'); } catch (x) { say(`could not set the note: ${x.message}`); }
   } else {
     code = 1; say(`failed: ${e.message}`);
     await keepWork(`failed: ${e.message}`);
