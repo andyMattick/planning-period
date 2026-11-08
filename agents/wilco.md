@@ -42,7 +42,10 @@ copied unchanged to `checks/test-wise-cues.mjs`, the notes bots, and the course 
 unchanged (keys, test-wise, cross-item, no-passage read every document). Also run
 `node checks/interactive-format.mjs pack.json` (self-contained page, no answer data in a print page, no plain-text key
 in an auto page, every hash verifies against the key) and, before the preview, `--browser` (all right → 100%, all
-wrong → 0%, the answer sheet, 375 px). A fail is fixed in the pack (forms, `tol`, a key typed into a prompt), never by
+wrong → 0%, the answer sheet, 375 px). For guided notes it also checks every blank (each accepted form right, typed in
+capitals too, a made-up word wrong; in the browser: Check my notes, fix and check again, the printed notes), and for a
+review game the class code (it opens every card's answer, a wrong code doesn't; in the browser: played alone and as a
+class). A fail is fixed in the pack (forms, `tol`, a key typed into a prompt), never by
 loosening the check.
 
 ## Output (`pack.json`)
@@ -73,7 +76,7 @@ reporter each run's result and the worst strategy before and after (the audit re
 - `keys` rows have no chance and no line: report them as passed or not, never as a percentage.
 
 ---
-**Version 5** (Nov 8, 2026)
+**Version 6** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's `docs/FAIRNESS.md` (the rule, the cues, converge counted on printed
@@ -91,3 +94,5 @@ reporter each run's result and the worst strategy before and after (the audit re
   every pack before any paid probe (a key printed in another item of the version; self-test and a shrink-only known-
   failing list in `npm run check`: g11-history, g7-ela2, g8-science when it came in); its limit (words, not meaning).
 - v5, Nov 8, 2026: interactive documents get every check above plus `checks/interactive-format.mjs` (and `--browser`).
+- v6, Nov 8, 2026: interactive guided notes and review games: what `checks/interactive-format.mjs` checks on them (notes
+  blanks, the class code) and the browser runs (check, fix and recheck; class mode).

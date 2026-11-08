@@ -4,17 +4,23 @@
 [page] OR pdf/word etc. If interactive, I want the option to grade it automatically when I'm done OR print out the
 results for someone else to grade later."
 
-This is a **format**, not a new menu item: a worksheet, homework, quiz, test, reading quiz, study guide or "versions"
-order can be made printable (PDF and Word, as always) or interactive. The interactive worksheet and review app items
+**Owner, Nov 8, 2026 (later):** "I want it for guided notes and review." So guided notes (`notes`) and the review game
+(`reviewgame`) can be interactive too: see "Guided notes" and "Review game" below.
+
+This is a **format**, not a new menu item: a worksheet, homework, quiz, test, reading quiz, study guide, guided notes,
+review game or "versions" order can be made printable (PDF and Word, as always) or interactive. The interactive worksheet and review app items
 (docs/KINDS-APPS.md) are separate products that check answers as students go; this format is the same questions as the
 paper copy, answered on a device and handed in.
 
 Code: `scripts/render/interactive-format.mjs` (the build, called by `scripts/render-pack.mjs`) and
-`scripts/render/interactive-format/` (`page.js` the student page, `page.css`, `forms.js` the answer forms). It reuses
+`scripts/render/interactive-format/` (`page.js` the student page, `page.css`, `forms.js` the answer forms; `notes.js`
+and `game.js` the guided-notes and review-game screens, inlined only in those pages). It reuses
 the apps' engine (`scripts/render/apps/engine.js`: storage that never throws, SHA-256 with a built-in fallback, the
 forgiving number reader) and the apps' salted hashes. `forms.js` is ported from the unmerged lesson engine on the
 `istd-build` branch (percent forms, `round` and `tol`, words with plurals and units), trimmed to the answer forms.
-Checks: `checks/interactive-format.mjs`. Fixtures: `samples/_cap-interactive/auto` and `…/print` (the g8-science quiz).
+Checks: `checks/interactive-format.mjs`. Fixtures: `samples/_cap-interactive/auto` and `…/print` (the g8-science quiz),
+`…/notes` (the g8-science guided notes) and `…/reviewgame` (a review game made from the g8-science quiz's questions, plus
+four short made-up cards); the checks build each in both grading modes.
 
 ## On the order page
 
@@ -27,8 +33,11 @@ Every menu item with `"interactive": true` (`menu.json`) shows, under step 4's d
 
 The order stores `itemSpecs.<item>.format` (`"printable"` or `"interactive"`) and `.grading` (`"auto"` or `"print"`);
 each line in `lines` carries a `format` text, shown in the summary and the token total ("interactive, graded
-automatically · same price as printable"). **Same tokens:** see docs/PRICING.md, "Interactive format". Slides, rubrics,
-games, guided notes and unit packs stay printable. The onboarding agent (v10, step 5b) says it in "what we will make"
+automatically · same price as printable"). **Same tokens:** see docs/PRICING.md, "Interactive format". Guided notes
+and the review game word the two choices for what students do ("fill in the blanks… print their notes"; "played on a
+device… or as a class on a projector"; Checking: "Check the blanks automatically" or "Print the notes to check later")
+and their summary lines say "blanks checked automatically", "notes printed to check later", "scored automatically" or
+"answers printed to grade later". Slides, rubrics, quiz-show and puzzle games and unit packs stay printable. The onboarding agent (v10, step 5b) says it in "what we will make"
 and warns in two cases: an auto-graded order that is mostly short or written answers, and auto grading on a test.
 
 ## In the pack
@@ -40,8 +49,8 @@ and warns in two cases: an auto-graded order that is mostly short or written ans
   "sections": [ … the usual questions … ] }
 ```
 
-- Kinds: `worksheet`, `homework`, `quiz`, `test`, `readingquiz`, `studyguide` (a `versions` order's documents are quiz or
-  test). Types: `mc`, `tf`, `numeric`, `short`, `open`, `match`. Every question needs an `id` that never changes (it
+- Kinds: `worksheet`, `homework`, `quiz`, `test`, `readingquiz`, `studyguide`, `notes`, `reviewgame` (a `versions`
+  order's documents are quiz or test). Types: `mc`, `tf`, `numeric`, `short`, `open`, `match`. Every question needs an `id` that never changes (it
   keys the student's saved answers).
 - Optional question fields read only by the page: `tol: {"within": 0.1, "places": 1}` (any value within 0.1, typed to
   1 decimal place; at most 401 accepted values), `round: 2` (or `[2, 3]`: the key rounded to those places is right too;
@@ -94,10 +103,66 @@ Accessibility: native controls with labels, every question a labelled group, res
 results, AA contrast in light and dark (follows the device), 44 px targets, no sideways scroll from 320 px, print CSS
 (buttons hidden; the results or the sheet print on their own; Name and Date on the sheet).
 
+## Guided notes (`notes`)
+
+The page is the notes, not a quiz: a name box and the date, the directions, then each section's heading and its word
+bank (a section `directions` that starts "Word bank:" shows in a dashed box), and every line of the notes in order.
+
+- **Blanks.** A `short` or `numeric` item whose prompt has runs of 3 or more underscores (`______`) is a line of the
+  notes: the text with a typed box for each run (Enter moves to the next blank). Its `answer` and every `accept` entry
+  name the blanks in order, separated by `;` (`,`, `/` and "and" also split): `"created; destroyed"`, and
+  `"destroyed; created"` when either order is fine. Every other item (a stop-and-think `open`, a check question in
+  `mc`, `tf`, `match` or `numeric`) shows as a question box with its figure, so tables and diagrams stay inline.
+- **"auto": Check my notes.** Each blank is checked against its own salted hashes (`SHA-256("PPA1|<salt>|<id>.<i>|<form>")`),
+  and the line against the hashes of every accepted combination (`fill:<form>|<form>`), so an "either order" pair stays
+  paired: two words that each fit but don't go together are both marked ✗ with "not together like this". Forms are
+  forgiving the same way as everywhere (`forms.js`: capitals, spaces, punctuation, plurals, a leading a/an/the, number
+  words and digits in math and science). A blank shows ✓ or ✗; a right line shows its `why` (locked with the right
+  combination); a changed line loses its marks until the next check. The score counts each blank and each scored
+  question as a point ("12 of 34 blanks and checks right (35%)"); stop-and-think answers are "for your teacher". When
+  every blank is right the page shows **the completed notes** ("Every blank is right"). **Print my notes** (any time)
+  shows the filled-in notes (her answers underlined, ✓/✗, the explanations she unlocked) with her name and the date,
+  and opens the print window.
+- **"print": Finish.** No answer data in the file (no salt, hashes or checker). Finish (name required; a second press
+  finishes with blanks) shows her filled-in notes with her name, the date, "Checked by" and "Score" lines, and opens
+  the print window; **Save as PDF**, **Back to my notes**.
+- Saved like every page (S1–S3); "Start over for a new student" clears it.
+
+## Review game (`reviewgame`)
+
+The printed review game is numbered question cards (with a level) and projector slides, so the page plays the same
+cards one at a time; each section is a **category** (its `heading`), and a card is worth its `points`, else its
+`level`, else 1. (The quiz-show board is its own item, `quizshow`, docs/KINDS-GAMES.md, and stays printable.)
+
+- **Alone, "auto".** A start screen (name, the number of cards, the categories, the points to win), then one card at a
+  time: category, points, "Card 3 of 16", the card's question and answer box, and **Check**. A right first try earns the
+  card's points, a right second try half (a matching card: its share of pairs); a wrong first try says "Try once more"
+  with the `miss` message or `hint` if there is one; after the second the card's points are lost and the page says the
+  teacher can go over it. A right answer shows its `why`. Answers of a few words (every accepted form 4 words or fewer)
+  are checked like notes blanks; longer `short` and `open` answers are saved for the teacher and not scored. The end is
+  the results page (score in points and percent, every card with its result) with **Print my results**, **Play again**
+  and **Start over for a new student**. A reload picks up at the same card.
+- **Alone, "print".** No answers in the file: **Save and next** (and **Back**) through the cards, then an answer sheet
+  (name, date, every card with its category, points, her answer, "Points: __ / n" and grader notes, a total line), to
+  print or save as a PDF.
+- **As a class ("Play as a class").** For a projector: pick 2 to 6 teams; a scoreboard; the card in large print
+  (choices listed, no answer boxes); give the card's points to a team (a second tap takes them back) or "No points";
+  Next, Back; final scores with the winner and **Print the scores**. In an "auto" page **Reveal answer** shows the
+  answer and why once the teacher types the **class code**, a 6-character code printed only on the teacher copy (and
+  in the README). Each card's answer and why are locked with it (`lock(salt, id, "reveal:<code>")`) and the page
+  holds only a salted hash of the code to say "that code doesn't match"; the code is made from the whole pack, so the
+  page (which shows only the first 8 hex digits of the pack's hash) can't rebuild it, and it is kept in memory, never
+  saved. A "print" page has no reveal: the teacher reads the answers from the teacher copy.
+- An interactive review game is the page and the teacher copy (PDF, plus Word in the final): **no slides or printed
+  cards** (the owner's "OR"; the class mode is the projector version).
+
 ## How the keys are protected, and the limits
 
 - **"print":** the file holds **no key and no hash at all**; the answer checker isn't even included. The teacher copy is
   the key.
+- **Notes and games, "auto":** the same scheme per blank and per card; the class code adds a second lock on each card's
+  answer, so a student who doesn't have the teacher copy can't open it (short of trying every code: about a billion,
+  which a programmer could do; the same limit as below).
 - **"auto":** each accepted form is normalized (a choice `opt:2`, `tf:true`, a number as an exact reduced fraction
   `n:17/1`, a percent also as its fraction, the `tol`/`round` values) and stored as
   `SHA-256("PPA1|<salt>|<question id>|<form>")`, the salt made from the order id and the file name. The explanation is
@@ -113,7 +178,7 @@ results, AA contrast in light and dark (follows the device), 44 px targets, no s
 ## Checks (`checks/interactive-format.mjs`)
 
 Fast, in `npm run check` (every sample with an interactive document, the fixtures in both modes, and `--self-test`,
-whose 14 broken copies must fail):
+whose 23 broken copies must fail):
 
 - the pack fields (format, grading, kind, types, `tol`), every typed key readable as a number, no `miss` that is a
   right answer;
@@ -123,15 +188,30 @@ whose 14 broken copies must fail):
 - **auto:** no explanation or accepted form in the file as text unless the student can already see it; every objective
   item's hashes verify against the pack's key through the page's own reader run in Node (every accepted form right with
   its explanation unlocked, every other choice and a far-off number wrong, each matching pair);
+- guided notes: every blank has its hashes; every accepted form, blank by blank (and in capitals with extra spaces), is
+  marked right by the line's combination hash and by each blank's own hashes and opens the why; a made-up word is
+  wrong; an accepted form that doesn't name the line's blanks fails the build;
+- review games: short-word cards verify like number answers (a made-up word is wrong); the class code from the pack
+  matches the page's code check and opens every card's answer and why, and a wrong code opens none; a print page has
+  no code check and no reveal locks;
+- the scripts every page shares (engine, forms, page, notes, game) are left out of the plain-text search only when
+  byte-identical to the repo's files (a key word such as "greater" in the code is not a leak);
 - rendered pages next to the pack (`out-preview/`, `out/`) get the same checks and must equal a fresh build.
 
 Browser (`--browser`, and `npm run test:interactive`; Chromium from Playwright): opened from a file with every outside
 request blocked and counted: no page error, no outside request, no sideways scroll at 375 px; a reload keeps the name
 and answers; auto: every item right (numbers typed in another equivalent form, e.g. `17` for `17.0`) → 100%, every item
 wrong on a fresh device → 0%; print: the sheet with her name and every answer and no score, buttons hidden in print; at
-1280 px with storage blocked the warning shows and Finish still works. `test:interactive` also renders the fixtures'
+1280 px with storage blocked the warning shows and Finish still works. Guided notes: every blank box is there; all
+right → Check → the completed notes at 100%; all wrong → 0% with a ✗ on every blank; half fixed → a mix; all fixed →
+100%; "Print my notes" and print-mode Finish open the print window (counted, no dialog) with the name and every line
+and, in print mode, no score or marks. Review game: alone, every card right (with a reload in the middle) → 100%, every
+card wrong twice → 0%, the answer sheet in print mode; class mode at 1280 px with 3 teams, a wrong class code refused,
+Reveal answer showing the key (auto) or no reveal (print), points to a team and the winner named. `test:interactive` also renders the fixtures'
 preview and final (the approval covers the pages; a changed page is refused) and runs every question type
-(samples/_fixture made interactive). `npm run test:orders` covers the order page's choices and the online review.
+(samples/_fixture made interactive), and the notes and review-game fixtures in both modes (the class code is on the
+teacher copy and in the README, and in no page). `npm run test:orders` covers the order page's choices (guided notes
+and the review game too) and the online review.
 
 ## The interactive standard (docs/INTERACTIVE-STANDARD.md): what applies to a format page
 
@@ -139,7 +219,7 @@ The standard was written for interactive lessons and notes. A format page is a w
 
 | Rule | Here |
 |---|---|
-| L1–L8 (lesson design), N1–N3, T1–T3, A1–A4 | Not applicable: no lesson, notes page or teacher question. A lesson is its own product |
+| L1–L8 (lesson design), N1–N3, T1–T3, A1–A4 | Not applicable: no lesson, notes page or teacher question. A lesson is its own product. Guided notes: L6 (every blank of the notes is a fill-in) holds by construction; the filled-in notes are the printable notes page (N1's spirit), with no own-notes box (N2, N3) yet |
 | Q1 hint, wrong-answer message, explanation after right | auto: the explanation after a right answer; `miss` and `hint` on the results page when the pack has them (optional: a quiz checks, it doesn't coach mid-way). print: none, by design |
 | Q2 shuffled at display | Kept in the pack's order so the letters match the teacher copy and a printed sheet; Wilco's position bots already check the order (Q2a–d). Q2e: saved answers keep the original option numbers |
 | Q3 length cues | Wilco's test-wise bots, as for paper |
@@ -155,6 +235,9 @@ The standard was written for interactive lessons and notes. A format page is a w
 ## Not done yet
 
 - Ordering questions (the pack format has no ordering type yet).
+- Guided notes: no own-notes box or "where I got stuck" list (N2, N3); a blank's width doesn't follow the printed blank.
+- Review game: no quiz-show board here (that is `quizshow`, printable); team names are "Team 1…6" (not editable); the
+  class game and a student's game share the device's saved work for that page.
 - No backup file or save code, and no teacher view of a class's results (each result lives on one device; the student
   prints it or saves it as a PDF).
 - The Word teacher copy has no "About the interactive page" box (the PDF and README.txt do).
