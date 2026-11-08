@@ -566,7 +566,7 @@ async function final() {
 const summary = (line) => { if (process.env.GITHUB_STEP_SUMMARY) try { appendFileSync(process.env.GITHUB_STEP_SUMMARY, line + '\n'); } catch {} };
 function treeFiles(dir, base = dir, out = []) {
   for (const f of readdirSync(dir)) {
-    if (dir === base && (f.startsWith('.') || f === 'node_modules' || f === 'TASK.md')) continue;
+    if (dir === base && ['.git', '.claude', 'node_modules', 'TASK.md'].includes(f)) continue;   // anything else it edits goes to the gate
     const p = join(dir, f), st = statSync(p, { throwIfNoEntry: false });
     if (!st) continue;
     if (st.isDirectory()) { if (f !== 'node_modules') treeFiles(p, base, out); } else if (st.isFile()) out.push(p.slice(base.length + 1));

@@ -149,7 +149,7 @@ export function gate({ repo, cause, report = null, commit = false, push = false,
   };
   if (refused.length) undo('see the list');
   else if (briefs.length) {
-    log(`gate: ${briefs.length} brief change${briefs.length === 1 ? '' : 's'} pass the rules; running the checks (${checkCmd})`);
+    log(`gate: ${briefs.length} brief change${briefs.length === 1 ? ' passes' : 's pass'} the rules; running the checks (${checkCmd})`);
     const r = check();
     if (!r.pass) { refused.push({ file: briefs.map((b) => b.file).join(', '), why: `npm run check failed on the change: ${r.tail}` }); undo('npm run check failed'); }
     else for (const b of briefs) applied.push({ file: b.file, from: b.from, to: b.to, cause: b.cause });
