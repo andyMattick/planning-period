@@ -89,6 +89,21 @@ label. The checker fails a graph whose visible label is the key (`checks/math.mj
 | `histogram` | `bins: [[lo, hi, count], …]` or `data` + `start` + `binWidth`; `axisLabels`, `yMax`, `yStep` |
 | `boxPlot` | `min, q1, median, q3, max` or `data` (quartiles: median of each half); `from`, `to`, `step`, `axisLabel`, `outliers`, `lowWhisker`, `highWhisker` |
 | `dotPlot` | `values`, `from`, `to`, `step`, `axisLabel` |
+| `scatter` made from r | `r` (−1 to 1), `n` (default 25), `seed`, `x`, `y`, `places`, and no `points`: n points whose correlation is r, the same every time for the same seed (an "estimate r" question; the r is never printed) |
+| `segmentedBar` | `categories: ["Bus", "Car", "Walk"]`, `bars: [{label: "Grade 9", counts: [12, 30, 8]}, …]` (or `percents` that add to 100), `axisLabels`, `title`, `labels: true` to print each segment's percent (leave it off when a question asks for one). Segments are told apart by fill pattern and the legend |
+
+**Statistics graphs (owner, Nov 8, 2026).** A segmented (stacked 100%) bar graph and a scatter plot made from a target
+r. Both are drawn as SVG with a `<title>` and a `<desc>` holding what a student reads off them (each bar's percents; the
+plotted points, never the r), the same text as the Word picture's alt text, and the interactive page puts a data table
+under them ("Data table", folded) for screen readers. `checks/math.mjs` (run by the solver, and on every sample in
+`npm run check`):
+- a scatter plot with `r` must have that r, recomputed from the points drawn, within **0.02**;
+- an "estimate r" question (multiple choice whose choices are all numbers from −1 to 1, on such a scatter plot): the key
+  is within 0.02 of the points' r and every other choice is at least 0.2 away from it;
+- a segmented bar: counts are whole numbers with one per category, each bar's percents add to 100, and stated
+  `percents` match the counts (within half a point).
+The same checks run on graphs in a shared data set (`stimuli`, docs/PACK-FORMAT.md). In a `gen` spec, write r as
+`"r": "{{=rr}}"` so each version gets its own cloud of points.
 
 Example (the intersection is the asked answer, so its label is hidden):
 
@@ -216,12 +231,12 @@ solver still works every number in B and C from the student copy** (docs/RUNBOOK
 every version. Tested by `scripts/test-versions.mjs` on the made-up fixture `checks/fixtures/versions/version-a.pack.json`
 (in `npm run check`).
 
-**Per-student numbers later** (the owner's wish in this order's request, "randomize the numbers, not the questions";
-`feasibility.json` says not supported yet). The spec is the whole recipe: a student's version is
-`versions.mjs --versions S --seed <order id>|<student code>`, with the same refusals and the same SymPy check. What it
-still needs: making them before the class (say 40 seats a class, about 1 s for 40 versions), a teacher copy per seat (or
-one answer table per seat), a solver sweep of a sample of seats plus SymPy on every seat, and the interactive page picking
-its seat from a class code. Nothing about the checked version A changes.
+**One version per student (owner, Nov 8, 2026; built).** A `doc.pool` (docs/PACK-FORMAT.md, "Versions") is made by the
+same script from the same spec: `pool.size` versions, 25 at a time, each with a 5-letter code; SymPy on every pool key,
+and the statistics-graph and data-set checks on every version. Numbers may repeat between two students but never equal
+version A's. A data set (`stimuli[]`) may carry its own `gen.fields` (its `table`, `figure`, `intro`) using the
+document's parameters, so the shared table and graph change with the numbers. The blind tester solves a sample of 3
+(`checks/student-view.mjs --pool-sample 3`); the solver works the same 3 by hand. Nothing about the checked version A changes.
 
 ## For the maker and solver briefs (the auditor adds these; nobody else edits `agents/`)
 

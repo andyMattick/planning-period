@@ -2,7 +2,8 @@
 // figurePng, a PNG (Word and PowerPoint). Spec: docs/KINDS-MATH.md.
 //
 // Kinds: "plane" (default: function plots, piecewise pieces, asymptotes, points, segments, polygons, inequalities,
-// shaded area under a curve, tangent lines, slope fields), "numberLine", "scatter", "histogram", "boxPlot", "dotPlot".
+// shaded area under a curve, tangent lines, slope fields), "numberLine", "scatter" (points given, or made from a target
+// r), "histogram", "boxPlot", "dotPlot", "segmentedBar" (stacked 100% bars).
 // Black-and-white safe: black and greys only, functions told apart by dash pattern and label, shading by hatching.
 // Nothing labels itself: only a `label` the maker wrote is drawn, and any element whose `id` is in `hide` loses its
 // label (so the asked answer is never printed on the picture).
@@ -418,15 +419,138 @@ function histogram(g) {
   return { W, H, svg: out.join('') };
 }
 
+/* ---------- a scatter plot made from a target r (owner, Nov 8, 2026: "estimate r from this scatterplot") ----------
+   `{kind: "scatter", r: -0.75, n: 25, seed: "q7", x: [0, 10], y: [0, 100]}` with no `points`: n points whose correlation
+   is r (exactly before rounding to `places`, default 1 place on the window's scale), repeatable from the seed. The
+   x values are spread over the middle 80% of the window; the noise is made perpendicular to x and scaled so that
+   corr(x, y) = r, then y is fitted into the middle 80% of the y window. checks/math.mjs recomputes r from the points
+   drawn and fails a graph more than 0.02 off. */
+function seeded(text) {
+  let h = 2166136261;
+  for (const ch of String(text)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); }
+  let a = h >>> 0;
+  return () => { a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+export function corrOf(points) {
+  const xs = points.map((p) => Number(Array.isArray(p) ? p[0] : p.at[0])), ys = points.map((p) => Number(Array.isArray(p) ? p[1] : p.at[1]));
+  const n = xs.length, mx = xs.reduce((s, v) => s + v, 0) / n, my = ys.reduce((s, v) => s + v, 0) / n;
+  let sxy = 0, sxx = 0, syy = 0;
+  xs.forEach((x, i) => { sxy += (x - mx) * (ys[i] - my); sxx += (x - mx) ** 2; syy += (ys[i] - my) ** 2; });
+  return sxy / Math.sqrt(sxx * syy);
+}
+export function scatterPoints(g) {
+  if (Array.isArray(g.points) && g.points.length) return g.points;
+  const r = Number(g.r);
+  if (!Number.isFinite(r) || Math.abs(r) > 1) throw new Error('a scatter plot made from r needs "r" between -1 and 1 (or "points")');
+  const n = Math.max(5, Math.min(200, Math.round(Number(g.n) || 25)));
+  const [x0, x1] = g.x || [0, 10], [y0, y1] = g.y || [0, 10];
+  const rand = seeded(`${g.seed ?? ''}|${r}|${n}|${x0},${x1}|${y0},${y1}`);
+  const normal = () => { const u = 1 - rand(), v = rand(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  const xs = Array.from({ length: n }, (_, i) => (i + rand()) / n);   // spread out, never two on top of each other
+  const mean = (a) => a.reduce((s, v) => s + v, 0) / a.length, center = (a) => { const m = mean(a); return a.map((v) => v - m); };
+  const xc = center(xs);
+  let z = center(Array.from({ length: n }, normal));
+  const dot = (a, b) => a.reduce((s, v, i) => s + v * b[i], 0);
+  const k = dot(z, xc) / dot(xc, xc);
+  z = z.map((v, i) => v - k * xc[i]);
+  const ux = xc.map((v) => v / Math.sqrt(dot(xc, xc))), uz = z.map((v) => v / Math.sqrt(dot(z, z)));
+  const ys = ux.map((v, i) => r * v + Math.sqrt(Math.max(0, 1 - r * r)) * uz[i]);
+  const lo = Math.min(...ys), hi = Math.max(...ys);
+  const places = Number.isInteger(g.places) ? g.places : Math.max(0, 3 - Math.floor(Math.log10(Math.max(1e-9, Math.max(x1 - x0, y1 - y0)))));
+  const rd = (v) => Math.round(v * 10 ** places) / 10 ** places;
+  return xs.map((x, i) => [rd(x0 + (x1 - x0) * (0.1 + 0.8 * x)), rd(y0 + (y1 - y0) * (0.1 + 0.8 * (hi > lo ? (ys[i] - lo) / (hi - lo) : 0.5)))]);
+}
+
+/* ---------- a segmented (stacked 100%) bar graph ----------
+   `{kind: "segmentedBar", categories: ["Bus", "Car", "Walk"], bars: [{label: "Grade 9", counts: [12, 30, 8]}, …],
+   axisLabels: {x, y}, title, labels: false}`. Each bar is its counts as percents of the bar's total (or `percents`
+   given straight, which must add to 100). Segments are told apart by fill pattern and the legend, never by colour
+   alone. `labels: true` prints each segment's percent inside it (leave it off when a question asks for one).
+   checks/math.mjs fails a bar whose percents don't add to 100, or whose stated `percents` don't match its `counts`. */
+export function segmentPercents(bar) {
+  if (Array.isArray(bar.counts) && bar.counts.length) {
+    const t = bar.counts.reduce((s, c) => s + Number(c), 0);
+    return bar.counts.map((c) => (t > 0 ? (Number(c) / t) * 100 : 0));
+  }
+  return (bar.percents || []).map(Number);
+}
+const FILLS = [
+  (id) => ({ def: '', fill: '#ffffff' }),
+  (id) => ({ def: `<pattern id="${id}" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#fff"/><line x1="0" y1="0" x2="0" y2="6" stroke="#000" stroke-width="1.3"/></pattern>`, fill: `url(#${id})` }),
+  (id) => ({ def: '', fill: '#9a9a9a' }),
+  (id) => ({ def: `<pattern id="${id}" patternUnits="userSpaceOnUse" width="6" height="6"><rect width="6" height="6" fill="#fff"/><circle cx="3" cy="3" r="1.3" fill="#000"/></pattern>`, fill: `url(#${id})` }),
+  (id) => ({ def: '', fill: '#d8d8d8' }),
+  (id) => ({ def: `<pattern id="${id}" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(-45)"><rect width="6" height="6" fill="#d8d8d8"/><line x1="0" y1="0" x2="0" y2="6" stroke="#000" stroke-width="1.3"/></pattern>`, fill: `url(#${id})` }),
+  (id) => ({ def: '', fill: '#4a4a4a' }),
+];
+function segmentedBar(g, uid) {
+  const cats = (g.categories || []).map(String), bars = g.bars || [];
+  if (!cats.length || !bars.length) throw new Error('a segmented bar graph needs categories and bars');
+  if (cats.length > FILLS.length) throw new Error(`a segmented bar graph has at most ${FILLS.length} categories`);
+  const W = Number(g.width) || Math.max(320, 120 + bars.length * 80), legendH = 18 * Math.ceil(cats.length / 3) + 8;
+  const H = Number(g.height) || 270 + legendH;
+  const pad = { l: 50, r: 14, t: g.title ? 28 : 12, b: 44 + legendH };
+  const Y = (p) => pad.t + ((100 - p) / 100) * (H - pad.t - pad.b);
+  const slot = (W - pad.l - pad.r) / bars.length, bw = Math.min(64, slot * 0.6);
+  const out = [], defs = [], fills = cats.map((_, i) => FILLS[i](`s${uid}${i}`));
+  fills.forEach((f) => f.def && defs.push(f.def));
+  if (g.title) out.push(text(W / 2, 17, g.title, { size: 12.5, weight: 700, halo: false }));
+  for (const v of [0, 20, 40, 60, 80, 100]) out.push(`<path d="M${pad.l - 4},${r2(Y(v))}H${W - pad.r}" stroke="${v ? '#d0d0d0' : '#000'}" stroke-width="${v ? 0.8 : 1.3}"/>`, text(pad.l - 7, Y(v) + 3.8, `${v}%`, { size: 10.5, anchor: 'end', halo: false }));
+  out.push(`<path d="M${pad.l},${r2(Y(0))}V${r2(Y(100))}" stroke="#000" stroke-width="1.3"/>`);
+  bars.forEach((b, i) => {
+    const ps = segmentPercents(b), cx = pad.l + slot * (i + 0.5);
+    let acc = 0;
+    ps.forEach((p, j) => {
+      const y1 = Y(acc), y2 = Y(acc + p);
+      out.push(`<rect x="${r2(cx - bw / 2)}" y="${r2(y2)}" width="${r2(bw)}" height="${r2(y1 - y2)}" fill="${fills[j].fill}" stroke="#000" stroke-width="1.2"/>`);
+      if (g.labels && p >= 7) out.push(text(cx, (y1 + y2) / 2 + 4, `${Math.round(p)}%`, { size: 10.5, weight: 700 }));
+      acc += p;
+    });
+    out.push(text(cx, Y(0) + 16, b.label ?? '', { size: 10.5, halo: false }));
+  });
+  if (g.axisLabels?.x) out.push(text((pad.l + W - pad.r) / 2, Y(0) + 33, g.axisLabels.x, { size: 11.5, weight: 700, halo: false }));
+  out.push(`<g transform="translate(13,${r2((Y(0) + Y(100)) / 2)}) rotate(-90)">${text(0, 0, g.axisLabels?.y || 'Percent', { size: 11.5, weight: 700, halo: false })}</g>`);
+  const ly = H - legendH + 4, colW = (W - pad.l) / 3;
+  cats.forEach((c, j) => {
+    const lx = pad.l + (j % 3) * colW, yy = ly + Math.floor(j / 3) * 18;
+    out.push(`<rect x="${r2(lx)}" y="${r2(yy)}" width="14" height="12" fill="${fills[j].fill}" stroke="#000" stroke-width="1"/>`, text(lx + 19, yy + 10.5, c, { size: 10.5, anchor: 'start', halo: false }));
+  });
+  return { W, H, svg: `<defs>${defs.join('')}</defs>${out.join('')}` };
+}
+
 /* ---------- entry points ---------- */
 export const isGraphFigure = (fig) => !!fig && typeof fig === 'object' && !Array.isArray(fig) && fig.graph && typeof fig.graph === 'object';
 
+// A scatter plot given by its r draws (and is described) from its generated points.
+const withPoints = (g) => ((g.kind === 'scatter' && !(Array.isArray(g.points) && g.points.length) && g.r != null) ? { ...g, points: scatterPoints(g) } : g);
+
 export function graphSvg(g) {
   const uid = 'g' + hashOf(g);
+  g = withPoints(g);
   const kind = g.kind || 'plane';
-  const r = kind === 'numberLine' ? numberLine(g, uid) : kind === 'boxPlot' ? boxPlot(g) : kind === 'dotPlot' ? dotPlot(g) : kind === 'histogram' ? histogram(g) : plane(g, uid);
-  const alt = xmlEsc(g.alt || graphText({ graph: g }));
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${r.W}" height="${r.H}" viewBox="0 0 ${r.W} ${r.H}" role="img" aria-label="${alt}"><rect width="${r.W}" height="${r.H}" fill="#fff"/>${r.svg}</svg>`;
+  const r = kind === 'numberLine' ? numberLine(g, uid) : kind === 'boxPlot' ? boxPlot(g) : kind === 'dotPlot' ? dotPlot(g) : kind === 'histogram' ? histogram(g) : kind === 'segmentedBar' ? segmentedBar(g, uid) : plane(g, uid);
+  // accessible: a short name (title) and the whole description (what a student reads off it: the data for a data plot)
+  const desc = graphText({ graph: g });
+  const alt = xmlEsc(g.alt || desc);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${r.W}" height="${r.H}" viewBox="0 0 ${r.W} ${r.H}" role="img" aria-label="${alt}"><title>${xmlEsc(plainMath(g.title || graphName(g)))}</title><desc>${xmlEsc(desc)}</desc><rect width="${r.W}" height="${r.H}" fill="#fff"/>${r.svg}</svg>`;
+}
+const graphName = (g) => ({ scatter: 'Scatter plot', numberLine: 'Number line', boxPlot: 'Box plot', dotPlot: 'Dot plot', histogram: 'Histogram', segmentedBar: 'Segmented bar graph' })[g.kind] || 'Graph';
+
+// The data behind a data plot, as a table for screen readers and the interactive page ({caption, head, rows}), or null.
+export function graphTable(fig) {
+  if (!isGraphFigure(fig)) return null;
+  const g = withPoints(fig.graph);
+  const pctTxt = (p) => `${Math.round(p * 10) / 10}%`;
+  if (g.kind === 'segmentedBar') {
+    return { caption: plainMath(g.title || 'Segmented bar graph'), head: ['', ...(g.categories || []).map((c) => plainMath(c))],
+      rows: (g.bars || []).map((b) => [plainMath(String(b.label ?? '')), ...segmentPercents(b).map(pctTxt)]) };
+  }
+  if (g.kind === 'scatter' && Array.isArray(g.points) && g.points.length) {
+    const ax = g.axisLabels || {};
+    return { caption: plainMath(g.title || 'Scatter plot'), head: [plainMath(ax.x || 'x'), plainMath(ax.y || 'y')],
+      rows: g.points.map((p) => (Array.isArray(p) ? p : p.at)).filter(Boolean).map((p) => [fmt(p[0]).replace('−', '-'), fmt(p[1]).replace('−', '-')]) };
+  }
+  return null;
 }
 export function figureToSvg(fig) {
   if (isGraphFigure(fig)) return graphSvg(fig.graph);
@@ -449,7 +573,7 @@ export function graphLabels(fig) {
 // What a student sees on the graph, in words (for the keyless student view a blind tester reads).
 export function graphText(fig) {
   if (!isGraphFigure(fig)) return '';
-  const g = fig.graph, kind = g.kind || 'plane', parts = [];
+  const g = withPoints(fig.graph), kind = g.kind || 'plane', parts = [];
   const labs = graphLabels(fig);
   if (kind === 'plane' || kind === 'scatter') {
     const [x0, x1] = g.x || [-10, 10], [y0, y1] = g.y || [-10, 10];
@@ -498,6 +622,7 @@ export function graphText(fig) {
     const s = g.data ? quartiles(g.data) : g;
     parts.push(`box plot: min ${s.min}, Q1 ${s.q1}, median ${s.median}, Q3 ${s.q3}, max ${s.max}`);
   } else if (kind === 'dotPlot') parts.push(`dot plot of ${(g.values || []).join(', ')}`);
+  else if (kind === 'segmentedBar') parts.push(`segmented bar graph (each bar adds to 100%): ${(g.bars || []).map((b) => `${plainMath(String(b.label ?? ''))}: ${segmentPercents(b).map((p, j) => `${plainMath(String((g.categories || [])[j] ?? ''))} ${Math.round(p * 10) / 10}%`).join(', ')}`).join('; ')}`);
   else if (kind === 'histogram') parts.push(`histogram: ${(g.bins || []).map((b) => `${b[0]}–${b[1]}: ${b[2]}`).join('; ') || `${(g.data || []).length} values`}`);
   if (labs.length) parts.push(`labels: ${labs.map(plainMath).join(' · ')}`);
   return parts.join('; ');

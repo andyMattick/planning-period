@@ -27,7 +27,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadPack, rows, pick, argsOf, savePack, versionsOf, docName } from './pack-lib.mjs';
 import { mathErrors, plainMath } from '../scripts/render/math.mjs';
-import { isGraphFigure, graphLabels, graphSvg, fn, cleanExpr } from '../scripts/render/graph.mjs';
+import { stimuliOf, stimulusRef } from '../scripts/render/util.mjs';
+import { isGraphFigure, graphLabels, graphSvg, fn, cleanExpr, scatterPoints, corrOf, segmentPercents } from '../scripts/render/graph.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const L = 'ABCDEF';
@@ -65,11 +66,60 @@ function graphProblems(fig, keyTexts) {
       if (!finite) out.push(`the graph's expression "${e}" gives no real value on the window`);
     } catch (err) { out.push(`the graph's expression "${e}" can't be read (${cleanExpr(e)}: ${err.message})`); }
   }
+  out.push(...statsGraphProblems(g));
   const labels = graphLabels(fig).map(normKey);
   for (const k of keyTexts.map(normKey).filter(Boolean)) {
     const hit = labels.find((l) => l === k || (k.length >= 4 && l.includes(k)));
     if (hit) out.push(`the graph's label "${hit}" gives the key away (put its id in "hide")`);
   }
+  return out;
+}
+
+// Statistics graphs (owner, Nov 8, 2026): a scatter plot that states its r has that r (computed from the points drawn,
+// within 0.02); a segmented bar's percents add to 100 and, when it states them, match its counts.
+export const R_TOLERANCE = 0.02;
+export function statsGraphProblems(g) {
+  const out = [];
+  if (g.kind === 'scatter' && g.r != null) {
+    let pts;
+    try { pts = scatterPoints(g); } catch (e) { return [`the scatter plot can't be made (${e.message})`]; }
+    const r = corrOf(pts);
+    if (!(Math.abs(r - Number(g.r)) <= R_TOLERANCE)) out.push(`the scatter plot says r = ${g.r}, but its ${pts.length} points have r = ${Number.isFinite(r) ? r.toFixed(3) : 'none'} (more than ${R_TOLERANCE} off)`);
+  }
+  if (g.kind === 'segmentedBar') {
+    const k = (g.categories || []).length;
+    for (const b of g.bars || []) {
+      const name = `bar "${b.label ?? '?'}"`;
+      if (Array.isArray(b.counts)) {
+        if (b.counts.length !== k) out.push(`${name} has ${b.counts.length} counts for ${k} categories`);
+        if (b.counts.some((c) => !Number.isInteger(Number(c)) || Number(c) < 0)) out.push(`${name}: counts must be whole numbers, 0 or more`);
+        if (!(b.counts.reduce((s2, c) => s2 + Number(c), 0) > 0)) out.push(`${name}: its counts add to 0`);
+      } else if (!Array.isArray(b.percents)) { out.push(`${name} has no counts or percents`); continue; }
+      const ps = segmentPercents(b), sum = ps.reduce((s2, p) => s2 + p, 0);
+      if (Math.abs(sum - 100) > (Array.isArray(b.counts) ? 1e-6 : 0.5)) out.push(`${name}: its percents add to ${Math.round(sum * 100) / 100}, not 100`);
+      if (Array.isArray(b.counts) && Array.isArray(b.percents)) {
+        if (b.percents.length !== ps.length) out.push(`${name}: ${b.percents.length} stated percents for ${ps.length} counts`);
+        b.percents.forEach((p, j) => { if (ps[j] != null && Math.abs(Number(p) - ps[j]) > 0.5) out.push(`${name}: the stated ${p}% for "${(g.categories || [])[j]}" doesn't match its count (${Math.round(ps[j] * 10) / 10}%)`); });
+      }
+    }
+  }
+  return out;
+}
+// "Estimate r from this scatterplot": an mc question whose figure states r, with number choices. The key is the choice
+// nearest the r of the points drawn (within 0.02 of it), and every other choice is at least 0.2 away, so it can be read.
+const numIn = (c) => { const m = plainMath(String(c ?? '')).replace(/[−–]/g, '-').match(/-?\d*\.?\d+/); return m ? Number(m[0]) : null; };
+function estimateRProblems(r) {
+  // the scatter plot is the question's picture, or the picture of the shared data set it reads
+  const sid = stimulusRef(r.q, r.ver), st = sid ? stimuliOf(r.doc, r.ver).find((x) => x.id === sid) : null;
+  const fig = isGraphFigure(r.figure) ? r.figure : st && isGraphFigure(st.figure) ? st.figure : null;
+  const g = fig ? fig.graph : null;
+  if (!g || g.kind !== 'scatter' || g.r == null || r.type !== 'mc' || !Array.isArray(r.choices)) return [];
+  const vals = r.choices.map(numIn);
+  if (vals.some((v) => v == null || Math.abs(v) > 1)) return [];   // not an "estimate r" question
+  let actual; try { actual = corrOf(scatterPoints(g)); } catch { return []; }
+  const out = [], k = Number(r.answer);
+  if (!(Math.abs(vals[k] - actual) <= R_TOLERANCE)) out.push(`estimate r: the key (${vals[k]}) is not the r of the points drawn (${actual.toFixed(3)})`);
+  vals.forEach((v, i) => { if (i !== k && Math.abs(v - actual) < 0.2) out.push(`estimate r: the wrong choice ${L[i]} (${v}) is within 0.2 of the points' r (${actual.toFixed(3)}), too close to tell apart`); });
   return out;
 }
 
@@ -91,12 +141,19 @@ export function checkMath(pack, { strict = false } = {}) {
         if (typeof text === 'string') for (const e of mathErrors(text)) errors.push(`${name}${v ? ' ' + v : ''} ${where}: bad LaTeX ${e}`);
       }
     }
+    // shared data sets (docs/PACK-FORMAT.md, "Stimuli"): their graphs draw and pass the statistics checks too
+    for (const v of versionsOf(doc)) for (const st of (Array.isArray(pick(doc.stimuli, v)) ? pick(doc.stimuli, v) : [])) {
+      const fig = pick(st.figure, v);
+      for (const p of graphProblems(fig, [])) errors.push(`${name}${v ? ' ' + v : ''} data set ${st.id}: ${p}`);
+      for (const t of [pick(st.intro, v), pick(st.title, v)]) if (typeof t === 'string') for (const e of mathErrors(t)) errors.push(`${name}${v ? ' ' + v : ''} data set ${st.id}: bad LaTeX ${e}`);
+    }
     (doc.slides || []).forEach((s, i) => [s.title, ...(s.bullets || [])].forEach((t) => { for (const e of mathErrors(t)) errors.push(`${name} slide ${i + 2}: bad LaTeX ${e}`); }));
   });
   for (const r of all) {
     for (const [field, text] of textsOf(r)) for (const e of mathErrors(text)) errors.push(`${r.where} ${field}: bad LaTeX ${e}`);
     const keyTexts = r.type === 'mc' ? (Array.isArray(r.choices) && Number.isInteger(r.answer) ? [r.choices[r.answer]] : []) : [stripUnit(r.answer, pick(r.q.unit, r.ver)), ...(Array.isArray(r.accept) ? r.accept : [])];
     for (const p of graphProblems(r.figure, keyTexts.filter((k) => typeof k === 'string' || typeof k === 'number').map(String))) errors.push(`${r.where}: ${p}`);
+    for (const p of estimateRProblems(r)) errors.push(`${r.where}: ${p}`);
     const check = checkOf(r.q, r.ver);
     if (!check) continue;
     const unit = pick(r.q.unit, r.ver);
