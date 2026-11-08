@@ -10,7 +10,8 @@ You make nothing and change nothing in the order.
 - `order.json`: grade, subject, topic, `items`, `quantities`, `requests`, `itemRequests` (free text per item),
   `itemSpecs` when the order page sent them (per item: `questions`, `types` {mc, short, open}, `choices`, `versions`,
   `pages`, `slides`, `days`, `lessons`, `quizzes`, `tests`; a reading quiz may carry `passages` and `mc: "testing"`, her
-  pick of the in-testing multiple-choice option), and the page's `feasibility` block (its own live warnings)
+  pick of the in-testing multiple-choice option; and, for items with `interactive: true` in `menu.json`, `format`
+  (`printable` or `interactive`) and, when interactive, `grading` (`auto` or `print`)), and the page's `feasibility` block (its own live warnings)
   if present, plus `lines` and `tokenTotal`.
 - The **sources** (`sources/`) and the **training files** (`training/`, the teacher's own past work).
 - `menu.json` (items, tokens) and `feasibility.json` (defaults, limits, questions per page, messages).
@@ -93,6 +94,19 @@ You make nothing and change nothing in the order.
    (`agents/maker.md`, `feasibility.json`). A clash is one of your questions, with our recommendation and her rule as an
    option, never a silent pick in `whatWeWillMake` (g7-ela2 remake: his "real sentences only" went into the plan note
    while option 1 puts an unmatched quote in each Part B).
+5b. **Printable or interactive** (owner, Nov 8, 2026; docs/KINDS-INTERACTIVE-FORMAT.md). An item with
+   `format: "interactive"` is made as one offline page per version that students answer on a device, plus the teacher
+   copy; it costs the same tokens and the same question counts apply. Never ask about the format again. Say it in
+   "what we will make" ("the quiz as an interactive page, graded when students finish"). Warn only when it matters:
+   - `grading: "auto"` scores only multiple choice, true/false, number and matching questions; when the order's mix is
+     mostly short or written answers, say that those go to her and the page scores only the rest, and offer "print the
+     results to grade later" (it needs no answer in the file) as the other choice;
+   - `grading: "auto"` on a **test** (or anything she calls graded): say plainly that the answers are stored as
+     scrambled codes, enough to stop peeking but not a student with programming tools, so for a grade "print the
+     results" or paper is safer; recommend that, never insist;
+   - a reading quiz made interactive keeps its passages on the page; nothing else changes.
+   Items without `interactive: true` (slides, rubrics, games, notes, unit packs) are always printable: if her request
+   asks for one of them "online", say which items can be interactive. Record it in `onboarding.json` `whatWeWillMake`.
 6. **Choose at most 3 questions.** Only things that change what we make and that you can't decide well yourself.
    Rank: an impossible or too-large ask first, then a choice between two reasonable readings, then anything else.
    Each question has 2–4 short options and a recommended default; each can be answered in one word ("A", "yes",
@@ -133,7 +147,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 9** (Nov 7, 2026)
+**Version 10** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -164,3 +178,5 @@ You make nothing and change nothing in the order.
   docs/audits/AUDIT-2026-11-07-ela-try-d.md): reading quizzes default to citing short answers plus a RACE, no multiple
   choice; multiple choice on passages is "in testing": warn (`inTesting`) in the menu's words when she picks it or asks
   for it, plan it with `readingquiz.mcInTesting`, and never claim it passes.
+- v10, Nov 8, 2026 (owner: "the option of creating an interactive [page] OR pdf/word … grade it automatically … OR
+  print out the results"): reads `itemSpecs.<item>.format` and `.grading`, step 5b (what to say, and the two warnings).

@@ -2,6 +2,21 @@
 
 Ideas the owner asked for, in his words, with what's planned. Newest first.
 
+## Printable or interactive, graded in the page or printed (owner, Nov 8, 2026)
+- **Owner:** "When I select something I want to make, I want to have the option of creating an interactive [page] OR
+  pdf/word etc. If interactive, I want the option to grade it automatically when I'm done OR print out the results for
+  someone else to grade later."
+- **Done (branch `interactive-format`):** a Format and a Grading choice on the order page for every item with
+  questions (`menu.json` `interactive: true`; same tokens), stored in `itemSpecs`; pack fields `format` and `grading`;
+  the renderer makes one self-contained offline page per version (grading "auto": salted hashes, the score and
+  explanations at Finish, written answers to the teacher; "print": no answer data, an answer sheet to print or save as
+  a PDF) plus the teacher copy; the preview watermarks the pages and the approval hashes them; My orders shows them in a
+  sandboxed frame; `checks/interactive-format.mjs` in `npm run check`, the browser run in `npm run test:interactive`
+  and `test:orders`; fixtures `samples/_cap-interactive`; onboarding v10, maker v9, wilco v5.
+  docs/KINDS-INTERACTIVE-FORMAT.md.
+- **Open:** ordering questions; a class view of results (each result stays on the student's device); the Word teacher
+  copy's note box; measure the price on the first five interactive orders.
+
 ## Reading quizzes: short answer + RACE; multiple choice on passages "in testing" (owner, Nov 7, 2026)
 - **Owner:** after four ELA tries (g7-ela2 remake, tries c and d) failed the fresh no-passage probe, reading quizzes are
   sold as citing short answers plus a RACE response until a passage-based multiple-choice version passes.

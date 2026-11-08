@@ -91,6 +91,11 @@ Start a fresh agent with `agents/maker.md`, `$WORK/onboarding.json` and `$WORK/f
 them the lead relayed bot output 8 times.) It writes `$WORK/pack.json`. Log its minutes, tokens and cost from the
 session's own record.
 
+**Interactive items** (`itemSpecs.<item>.format: "interactive"`; docs/KINDS-INTERACTIVE-FORMAT.md): the maker sets
+the document's `format` and `grading` (`agents/maker.md`, "The interactive format") and also runs
+`node checks/interactive-format.mjs pack.json`. Everything else in steps 4–10 is the same: the blind tester solves
+`student-view.mjs`, not the page.
+
 **Dollar cap on every maker session** (owner, option 1, Nov 6, 2026): the order's budget is tokens × $0.10; a first
 draft gets **one third** of it, a redesign **one quarter**, a FIX round (step 8) **one sixth**, and never more than half
 of what is left below the cost stop (2× the budget). A reading quiz with a rubric (165 tokens, $16.50): **$5.50,
@@ -164,7 +169,9 @@ node $REPO/checks/test-wise.mjs "$WORK/pack.json" --write          # add --pass 
 node $REPO/checks/no-passage.mjs "$WORK/pack.json" --write         # reading items
 node $REPO/checks/cross-item.mjs "$WORK/pack.json" --write         # every pack: no key printed in another item
 ```
-Both must exit 0 (plus `checks/apps.mjs` for apps and `checks/puzzles.mjs` for puzzles). On a fail, `--items` lists
+Both must exit 0 (plus `checks/apps.mjs` for apps, `checks/puzzles.mjs` for puzzles and, for interactive documents,
+`node $REPO/checks/interactive-format.mjs "$WORK/pack.json" --browser`: the pages are self-contained, a print page holds
+no answer data, an auto page no plain-text key, every hash verifies, all right → 100% and all wrong → 0%). On a fail, `--items` lists
 which bot picks each key, for the maker. The lead runs these scripts; no agent session is needed.
 
 ## 8. Round 2 on FIX
@@ -232,7 +239,8 @@ measured") and `audit.notes`: every round, every catch, every fix, Wilco before 
 
 ```
 # reading items first: two final whole-version no-passage probes per version (step 4a) and the fact recheck of the last round's fixes (step 9)
-node $REPO/scripts/render-pack.mjs "$WORK" --preview   # writes $WORK/out-preview/ and $WORK/preview.zip: watermarked PDFs, AUDIT-REPORT, REVIEW.html
+node $REPO/scripts/render-pack.mjs "$WORK" --preview   # writes $WORK/out-preview/ and $WORK/preview.zip: watermarked PDFs and interactive pages, AUDIT-REPORT, REVIEW.html
+node $REPO/checks/interactive-format.mjs "$WORK/pack.json"   # interactive documents: the rendered pages are up to date and pass
 cd "$WORK/preview" && zip -qr "$WORK/$ORDER-preview.zip" . && cd -
 ```
 (Modes: docs/PACK-FORMAT.md, "Preview, sign-off, final".) **`pack.json`'s `id` must be the order id** (the
@@ -270,7 +278,8 @@ node $REPO/scripts/render-pack.mjs "$WORK" --final     # writes $WORK/out/ and $
 ls "$WORK/out"                                                    # student/teacher copies, A/B, AUDIT-REPORT.pdf, project.json, README.txt
 cd "$WORK/out" && zip -qr "$WORK/$ORDER.zip" . && cd -
 ```
-Open two files at phone and print size before sending.
+Open two files at phone and print size before sending (an interactive page: answer it on a phone, press Finish).
+The final has `HOW-TO-SHARE-THE-INTERACTIVE-PAGES.txt` when the pack has interactive pages.
 Online: `node $REPO/scripts/orders.mjs final $ORDER` uploads `out/` and `out.zip` (status `final_ready`); she downloads
 them in My orders.
 

@@ -27,6 +27,7 @@
     "title": "Chemical reactions and conservation of mass",
     "grade": "8",
     "subject": "science",
-    "folder": "g8-science/"
+    "folder": "g8-science/",
+    "alsoInteractive": "the quiz can be made as one offline page students answer on a device, graded when they finish or printed for grading later (samples/_cap-interactive)."
   }
 ]

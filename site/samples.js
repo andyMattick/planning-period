@@ -63,6 +63,7 @@
         '<h3>The order</h3><dl class="order">' +
         row('Teacher', o.teacher) + row('Made', items.join(', ')) + row('Requests', o.requests) +
         row('Sources', (o.sources || []).join(', ')) + row('Style examples', (o.styleExamples || []).join(', ')) + '</dl>' +
+        (s.alsoInteractive ? '<p class="small"><b>Also available as an interactive page:</b> ' + esc(s.alsoInteractive) + '</p>' : '') +
         logTable(pack.log) +
         '<h3>Files</h3><div data-files>Loading…</div></article>';
       var el = document.createElement('div'); el.innerHTML = html;
