@@ -43,6 +43,17 @@
       "checker": "general"
     }
   ],
+  "automatic": {
+    "_note": "What the automatic runner builds by itself (owner, Nov 8, 2026). Items with \"auto\": true, these subjects, at most maxItems items (counting quantities) and maxTokens tokens, and no item set to one version per student; anything else is a bigger order a person on our team runs, within 24 hours. Read by site/scope.js (the order page) and scripts/run-order.mjs: docs/BACKEND.md, \"What runs automatically\".",
+    "subjects": [
+      "math",
+      "science",
+      "social",
+      "other"
+    ],
+    "maxItems": 3,
+    "maxTokens": 150
+  },
   "items": [
     {
       "id": "worksheet",
@@ -54,7 +65,8 @@
         "docx"
       ],
       "versions": false,
-      "interactive": true
+      "interactive": true,
+      "auto": true
     },
     {
       "id": "notes",
@@ -66,7 +78,8 @@
         "docx"
       ],
       "versions": false,
-      "interactive": true
+      "interactive": true,
+      "auto": true
     },
     {
       "id": "quiz",
@@ -87,7 +100,8 @@
         "defaultStudents": 30,
         "maxStudents": 150,
         "keyPack": 5
-      }
+      },
+      "auto": true
     },
     {
       "id": "readingquiz",
@@ -128,7 +142,8 @@
         "defaultStudents": 30,
         "maxStudents": 150,
         "keyPack": 5
-      }
+      },
+      "auto": true
     },
     {
       "id": "studyguide",
@@ -140,7 +155,8 @@
         "docx"
       ],
       "versions": false,
-      "interactive": true
+      "interactive": true,
+      "auto": true
     },
     {
       "id": "slides",
@@ -163,7 +179,8 @@
         "pptx"
       ],
       "versions": false,
-      "interactive": true
+      "interactive": true,
+      "auto": true
     },
     {
       "id": "rubric",
@@ -209,7 +226,8 @@
         "docx",
         "pptx"
       ],
-      "versions": false
+      "versions": false,
+      "auto": true
     },
     {
       "id": "homework",
@@ -221,7 +239,8 @@
         "docx"
       ],
       "versions": false,
-      "interactive": true
+      "interactive": true,
+      "auto": true
     },
     {
       "id": "versions",
@@ -233,7 +252,8 @@
         "docx"
       ],
       "versions": true,
-      "interactive": true
+      "interactive": true,
+      "auto": true
     },
     {
       "id": "unitfull",
