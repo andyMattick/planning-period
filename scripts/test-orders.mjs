@@ -217,6 +217,15 @@ try {
   const LINK_FILE = 'link - How volcanoes form.txt';
   await fillOrder(page, { sources, training: [join(FIX, 'my old quiz.txt')] });
   assert.equal(await page.inputValue('#reply'), 'ortiz@example.org', 'her email is filled in from the account');
+  // printable or interactive (docs/KINDS-INTERACTIVE-FORMAT.md): printable to start, grading only once interactive
+  assert.ok(await page.isChecked('#fmt-quiz-format-printable'), 'printable is chosen to start');
+  assert.equal(await page.$('#fmt-quiz-grading-auto'), null, 'no grading choice for a printable quiz');
+  await page.check('#fmt-quiz-format-interactive');
+  assert.ok(await page.isChecked('#fmt-quiz-grading-auto'), 'grade automatically is chosen to start');
+  await page.check('#fmt-quiz-grading-print');
+  assert.match(await page.textContent('#cost-lines'), /interactive, results printed to grade later · same price as printable\s*40 tokens/);
+  await noSideways(page, 'order page, format and grading (desktop)');
+  await shot(page, 'online-desktop-format-interactive-print');
   await page.click('#send');
   await page.waitForSelector('#done-online:not([hidden])');
   await shot(page, 'online-desktop-sent');
@@ -232,6 +241,9 @@ try {
   assert.ok(o.upload_files.every((p) => p.startsWith(`${o.teacher}/${orderId}/`) && st.objects.includes('uploads/' + p)), 'files are in uploads/<teacher>/<order>/');
   assert.deepEqual(o.order_json.order.sources, [LINK_FILE, ...sources.map((s) => s.split('/').pop().replace(/[^A-Za-z0-9._ ()-]+/g, '_'))]);
   assert.equal(o.order_json.delivery, 'online');
+  assert.deepEqual(o.order_json.order.itemSpecs.quiz, { format: 'interactive', grading: 'print' }, 'the format and grading are in the order');
+  assert.equal(o.order_json.lines.find((l) => l.id === 'quiz').format, 'interactive, results printed to grade later');
+  ok('format and grading: printable by default; Interactive opens Grading (auto by default); the order stores itemSpecs.quiz {format: interactive, grading: print} and the summary line says so at the same price');
   ok('the pasted link went up as sources/' + LINK_FILE + ' (a header with the address, title and date, then the text) and order.json lists it in links');
   ok(`Send uploaded ${o.upload_files.length} files to uploads/<teacher>/${orderId}/ and added the order (status sent); no zip`);
 
@@ -281,6 +293,7 @@ try {
   // ===== 5. preview → request changes → new preview → approve =====
   const pack = JSON.parse(readFileSync(join(ROOT, 'samples/_fixture/pack.json'), 'utf8'));
   pack.id = orderId;
+  pack.documents[0].format = 'interactive'; pack.documents[0].grading = 'auto';   // the worksheet as an interactive page, next to the PDFs
   writeFileSync(join(WORK, 'pack.json'), JSON.stringify(pack, null, 2));
   const render = (mode) => spawnSync(process.execPath, [join(ROOT, 'scripts/render-pack.mjs'), WORK, mode], { encoding: 'utf8', timeout: 600000 });
   let r = render('--preview');
@@ -294,6 +307,17 @@ try {
   const href = await page.getAttribute(`#o-${orderId} .dl-list a`, 'href');
   assert.match(href, /\/storage\/v1\/object\/sign\/deliverables\/.+token=/, 'preview files open through signed links');
   assert.equal((await fetch(href)).status, 200);
+  // the interactive page: listed with the PDFs, tried here in a sandboxed frame (its own scripts run, nothing else)
+  const pageFile = o.review.documents.find((d) => d.file.endsWith('.html'))?.file;
+  assert.equal(pageFile, 'ratios-and-rates-practice-interactive.html', 'the interactive page is in the review');
+  await page.click(`#o-${orderId} [data-try][data-file="${pageFile}"]`);
+  const frame = page.frameLocator(`#o-${orderId} [data-try-frame]`);
+  await frame.locator('#pp-name').fill('Ms. Ortiz');
+  await frame.locator('#pp-finish').waitFor();
+  assert.equal(await page.getAttribute(`#o-${orderId} [data-try-frame]`, 'sandbox'), 'allow-scripts allow-modals');
+  await noSideways(page, 'My orders with an interactive page (desktop)');
+  await shot(page, 'orders-desktop-review-interactive');
+  ok('review: the interactive page is listed next to the PDFs and opens in a sandboxed frame ("Try it here")');
   for (const [kind, scheme] of [['phone', 'light'], ['phone', 'dark'], ['desktop', 'dark']]) {
     const c2 = await ctx(kind, scheme), p2 = await c2.newPage();
     await p2.goto(ONLINE + 'orders.html');
@@ -339,7 +363,8 @@ try {
   assert.deepEqual(Object.keys(approval).sort(), ['date', 'documents', 'name', 'orderId', 'packHash', 'statement']);
   r = render('--final');
   assert.equal(r.status, 0, 'render-pack.mjs --final accepts the browser\'s approval:\n' + r.stdout + r.stderr);
-  ok(`approve: the browser hashed ${approval.documents.length} preview PDFs; render-pack.mjs --final accepts the approval it wrote`);
+  assert.ok(approval.documents.some((d) => d.file === pageFile && /^[0-9a-f]{64}$/.test(d.sha256)), 'the approval covers the interactive page');
+  ok(`approve: the browser hashed ${approval.documents.length} preview files (PDFs and the interactive page); render-pack.mjs --final accepts the approval it wrote`);
 
   // a changed pack is still refused by the renderer (the approval is tied to the pack she saw)
   const changed = { ...pack, documents: pack.documents.map((d, i) => (i ? d : { ...d, title: d.title + ' (changed)' })) };
