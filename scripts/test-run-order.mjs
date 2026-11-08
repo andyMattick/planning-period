@@ -100,6 +100,7 @@ try {
   ok(by['maker-r2'].files.includes('FIX.md') && !by['maker-r2'].files.includes('view.md'), 'the FIX maker gets the FIX list');
   const pack = JSON.parse(readFileSync(join(work2, 'pack.json'), 'utf8'));
   ok(pack.id === ID && JSON.stringify(pack.documents[0].versions) === '["A","B","C"]', 'pack id and versions');
+  ok(pack.order?.itemSpecs?.quiz?.versions === 3 && pack.order.itemSpecs.quiz.format === 'interactive', 'her item settings (itemSpecs: versions, format, the all-versions key) reach the renderer from her order');
   const q4 = pack.documents[0].sections[0].questions[3];
   ok(/practiced longer/.test(q4.choices.B.join(' ')) && q4.choices.B.join() !== q4.choices.A.join(), 'B was remade from the fixed A');
   const fix = pack.checks.blind.flatMap((e) => e.findings).find((f) => f.kind === 'FIX');
@@ -153,6 +154,42 @@ try {
       const tc = pdfs.filter((f) => /teacher/.test(f));
       ok(tc.length === 3 && tc.every((f) => flat(f).includes('Blind check skipped at your request')), 'blind off: every teacher copy says so');
     }
+  }
+
+  /* 5b. bigger orders (owner, Nov 8, 2026: "leave the runner for what we see as simple … within 24 hours for bigger"):
+     onboarding runs as usual; the build hands off before any session, with the 24-hour note for her, the reason for
+     the owner's email (PP_HANDOFF_FILE), and notify-order.mjs --handoff --dry-run prints a "Needs you" email */
+  const node = (args, env = {}) => new Promise((res) => {   // async: the fake Supabase runs in this process
+    const p = spawn(process.execPath, args, { env: { ...process.env, PP_SUPABASE_URL: fake.url, PP_SUPABASE_SERVICE_KEY: SERVICE, ...env } });
+    let out = ''; p.stdout.on('data', (d) => { out += d; }); p.stderr.on('data', (d) => { out += d; });
+    p.on('close', (code) => res({ code, out }));
+  });
+  const bigger = [
+    ['pp-2026-11-08-big001', 'one per student', { itemSpecs: { quiz: { format: 'interactive', grading: 'print', versions: 'student', students: 30 } } }, /One version per student/],
+    ['pp-2026-11-08-big002', 'a reading quiz', { subject: 'ela', items: ['readingquiz'], itemSpecs: { readingquiz: { versions: 2 } } }, /English \/ reading/],
+    ['pp-2026-11-08-big003', 'more than 3 items', { items: ['quiz', 'worksheet', 'homework', 'studyguide'] }, /More than 3 items/],
+  ];
+  for (const [bid, what, extra, why] of bigger) {
+    await newOrder(bid, extra);
+    const cb = join(tmp, `calls-${bid}.jsonl`), hf = join(tmp, `handoff-${bid}.txt`);
+    if (bid.endsWith('1')) {   // onboarding still runs for a bigger order: she gets her questions
+      ok((await run(bid, ['--work', join(tmp, `w-${bid}a`)], { PP_FAKE_CALLS: cb })).code === 0 && (await orderOf(bid)).status === 'needs_answer', `${what}: onboarding ran and posted the follow-up`);
+      await fetch(`${fake.url}/rest/v1/rpc/answer_follow_up`, { method: 'POST', headers: { apikey: ANON, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_order: bid, p_answer: 'go' }) });
+    } else await api('PATCH', `/rest/v1/orders?id=eq.${bid}`, { status: 'building' });
+    const rb = await run(bid, ['--work', join(tmp, `w-${bid}b`)], { PP_FAKE_CALLS: cb, PP_HANDOFF_FILE: hf });
+    o = await orderOf(bid);
+    ok(rb.code === 3 && /bigger than the automatic path/.test(rb.out), `${what}: handed off (exit ${rb.code})\n${rb.out}`);
+    ok(o.status === 'building' && o.note === 'This order is bigger than our automatic path, so a person on our team runs it with the agent team. Your preview will be ready within 24 hours of your answer.', `${what}: her note promises 24 hours (${o.status}, ${o.note})`);
+    ok(!callsOf(cb).some((x) => /^(maker|blind|solver|facts|reporter)/.test(x.role)), `${what}: nothing was built or spent before the hand-off`);
+    const reason = existsSync(hf) ? readFileSync(hf, 'utf8') : '';
+    ok(/^build: bigger than the automatic path/.test(reason) && why.test(reason), `${what}: the reason for the owner (${reason.trim()})`);
+    ok((await state()).objects.includes(`deliverables/${teacher}/${bid}/work/HANDOFF.md`), `${what}: HANDOFF.md kept for the owner`);
+    const mail = await node([join(ROOT, 'scripts/notify-order.mjs'), bid, '--handoff', reason.trim(), '--dry-run']);
+    ok(mail.code === 0 && /Subject: Needs you: pp-2026-11-08-big00\d/.test(mail.out) && why.test(mail.out) && !/Same questions, different numbers|made-up notes|Two-way tables/.test(mail.out), `${what}: the owner's "Needs you" email (dry run), with no requests text:\n${mail.out}`);
+  }
+  { // not set up: the hand-off email does nothing, quietly
+    const q = await node([join(ROOT, 'scripts/notify-order.mjs'), 'pp-2026-11-08-big001', '--handoff', 'x'], { PP_NOTIFY_FROM: '', PP_NOTIFY_TO: '', PP_NOTIFY_APP_PASSWORD: '' });
+    ok(q.code === 0 && /not set up.*Nothing sent/.test(q.out), `the hand-off email without PP_NOTIFY_* sends nothing and exits 0 (${q.code}: ${q.out})`);
   }
 
   /* 7. her approval → the final: rendered against her approval, posted (final_ready), uploads, preview and working files
@@ -246,5 +283,5 @@ try {
   if (process.env.PP_TEST_KEEP) console.log(`kept ${tmp}`); else rmSync(tmp, { recursive: true, force: true });
 }
 if (bad) { console.log(`run-order: ${bad} of ${n} checks failed`); process.exit(1); }
-console.log(`run-order: all ${n} checks pass (dry run: onboarding, a build with a FIX round and a targeted recheck, the cost stop, a crash, the final after her approval with the auditor through the gate, a refused audit, a changed preview file refused, the daily purge)`);
+console.log(`run-order: all ${n} checks pass (dry run: onboarding, a build with a FIX round and a targeted recheck, the cost stop, a crash, bigger orders handed off with the 24-hour note and the owner's email, the final after her approval with the auditor through the gate, a refused audit, a changed preview file refused, the daily purge)`);
 process.exit(0);
