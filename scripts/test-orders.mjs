@@ -346,7 +346,18 @@ try {
   assert.equal(await page.getAttribute(`#o-${orderId} [data-try-frame]`, 'sandbox'), 'allow-scripts allow-modals');
   await noSideways(page, 'My orders with an interactive page (desktop)');
   await shot(page, 'orders-desktop-review-interactive');
-  ok('review: the interactive page is listed next to the PDFs and opens in a sandboxed frame ("Try it here")');
+  // Open full screen: a new tab with the page filling a sandboxed frame (phones open it this way)
+  const [tab] = await Promise.all([page.waitForEvent('popup'), page.click(`#o-${orderId} [data-full][data-file="${pageFile}"]`)]);
+  await tab.waitForSelector('iframe[sandbox]');
+  assert.equal(await tab.getAttribute('iframe', 'sandbox'), 'allow-scripts allow-modals allow-downloads');
+  await tab.frameLocator('iframe').locator('#pp-name').waitFor();
+  await tab.close();
+  // Download: saved as a real .html web page (made in the browser from the stored bytes)
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.click(`#o-${orderId} [data-dl-page][data-file="${pageFile}"]`)]);
+  assert.equal(dl.suggestedFilename(), pageFile);
+  const saved = readFileSync(await dl.path(), 'utf8');
+  assert.ok(/^<!doctype html>/i.test(saved.trimStart()) && saved.includes('id="pp-name"'), 'the download is the whole page');
+  ok('review: the interactive page is listed next to the PDFs: "Try it here" (sandboxed frame), "Open full screen" (a new tab) and "Download" (an .html file)');
   for (const [kind, scheme] of [['phone', 'light'], ['phone', 'dark'], ['desktop', 'dark']]) {
     const c2 = await ctx(kind, scheme), p2 = await c2.newPage();
     await p2.goto(ONLINE + 'orders.html');
