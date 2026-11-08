@@ -10,3 +10,5 @@ site/manifest.webmanifest
 samples/*/*/approval.json
 samples/*/*/comments-*.json
 backend.config.json
+AUDIT-REPORT-OWNER.pdf
+**/AUDIT-REPORT-OWNER.pdf
