@@ -54,12 +54,14 @@ versions fields and the in-testing option (`site/feasibility.js`, `site/order.js
 
 ## Printable or interactive (owner, Nov 8, 2026)
 
-Items with `"interactive": true` in `menu.json` (worksheet, homework, quiz, test, reading quiz, study guide, versions)
-can be made as an interactive page (`feasibility.json` `format`; docs/KINDS-INTERACTIVE-FORMAT.md). The format changes
+Items with `"interactive": true` in `menu.json` (worksheet, homework, quiz, test, reading quiz, study guide, versions,
+and since the owner's Nov 8 follow-up guided notes and the review game) can be made as an interactive page (`feasibility.json` `format`; docs/KINDS-INTERACTIVE-FORMAT.md). The format changes
 how students answer, not how much a source supports, so the question counts and limits are the same either way. When
 the teacher picks Interactive with "grade automatically", only multiple choice, true/false, number and matching
 questions are scored by the page; short and written answers go to her. The onboarding agent says so when the order's
-mix is mostly short or written answers (`agents/onboarding.md`).
+mix is mostly short or written answers (`agents/onboarding.md`). Guided notes are the exception: their blanks are
+checked by the page (each blank against its accepted words), and in a review game answers of 4 words or fewer are too;
+the notes' pages and the game's question counts are the same either way.
 
 ## Recalibrate (after every 5 orders)
 

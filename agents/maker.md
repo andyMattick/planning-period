@@ -176,6 +176,16 @@ checks run on them. In addition:
 - short answers are never scored by the page: if the teacher wants it scored, write the item as `numeric` or `mc`.
 - word the directions for a screen as well as paper ("choose", not "circle"; "type your work" or "show your work on
   paper"): the same directions print on the teacher copy.
+- **guided notes** (`notes`; owner, Nov 8, 2026): write each blank as `______` (3 or more underscores) in a `short` (or
+  `numeric`) item's prompt, as for paper: the page turns each run into a box in the line. With `grading: "auto"` every
+  blank is checked, forgiving capitals, spaces, plurals and a leading a/an/the, so `accept` must hold every word a
+  student fairly writes (a synonym the source uses, a singular). A line with 2 or more blanks names them in order,
+  separated by `;`, in `answer` and in every `accept` entry (`"created; destroyed"`, and `"destroyed; created"` when
+  either order is fine): an entry that doesn't split into the line's blanks fails the check. Stop-and-think items stay
+  `open` (for the teacher). Put tables and diagrams in `figure`, as for paper.
+- **review game** (`reviewgame`): each section is a category (its `heading` shows on the card); a card is worth its
+  `points`, else its `level`. In a game (and in notes) a `short` answer whose key and accepted forms are all 4 words or
+  fewer is scored by the page, so give it full `accept`; longer ones go to the teacher.
 Nothing else changes; never write a key into the prompt or a choice to make the page work.
 
 ## Your dollar cap (owner, option 1, Nov 6, 2026)
@@ -190,7 +200,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 9** (Nov 8, 2026)
+**Version 10** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -232,3 +242,6 @@ have it) and the number of questions per document.
   drawing `type` cues gets a new turn, not just new items (try d proposal 2: B's type cues came back on try c's story).
 - v9, Nov 8, 2026: the interactive format (`format`, `grading`, stable ids, typed-answer forms, `tol`/`round`, `miss` and
   `hint` for the results page): docs/KINDS-INTERACTIVE-FORMAT.md.
+- v10, Nov 8, 2026 (owner: "I want it for guided notes and review"): interactive guided notes (blanks as `______`,
+  several blanks named in order with `;` in the key and every `accept`) and review games (sections as categories,
+  `points` or `level`; short answers of 4 words or fewer scored by the page).

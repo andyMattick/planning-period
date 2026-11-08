@@ -79,8 +79,8 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
 
 ## 2a. Interactive format (owner, Nov 8, 2026): same tokens as printable
 
-Items with `"interactive": true` (worksheet, homework, quiz, test, reading quiz, study guide, versions) can be made as
-an interactive page instead of PDF and Word (docs/KINDS-INTERACTIVE-FORMAT.md). **It costs the same tokens**, because
+Items with `"interactive": true` (worksheet, homework, quiz, test, reading quiz, study guide, versions; guided notes
+and the review game since Nov 8, 2026) can be made as an interactive page instead of PDF and Word (docs/KINDS-INTERACTIVE-FORMAT.md). **It costs the same tokens**, because
 the agent work is the same:
 - the maker writes the same questions; the extra fields are small (stable ids, which every pack already has, and for
   "grade automatically" the typed forms of number answers, which `accept` already holds for paper keys; `tol`, `hint`
@@ -88,6 +88,11 @@ the agent work is the same:
 - the checkers read the same student view; the page's own checks are code (`checks/interactive-format.mjs`: under a
   second fast, about 8 seconds in the browser for an A/B quiz in both modes on the build machine) and no agent session;
 - rendering is code too: the g8-science quiz's two pages and teacher copies render in about 1.5 seconds.
+- guided notes and the review game (Nov 8, 2026): **same tokens** (`notes` 25, `reviewgame` 35). The maker already writes
+  every blank's `accept` for the paper key; the only new rule is naming a line's blanks in order with `;`. The page's
+  checks are code: the g8-science notes in about 0.6 s fast and 4 s in the browser (both modes), the review-game fixture
+  0.5 s and 11 s (both modes, class mode included); the notes' preview renders in about 1.5 s. No order logs exist yet
+  to say otherwise; recalibrate with the rest of the interactive format after the first five orders.
 Measured nothing from a real order yet: recalibrate with section 3 after the first five interactive orders, and if the
 onboarding or maker logs show more than about 10% extra (for example follow-up questions about grading), propose a
 surcharge to the owner.

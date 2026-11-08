@@ -26,7 +26,7 @@
 import { loadPack, rows, norm, signature, valueOf, sameValue, pick, perVersion, versionsOf, kindOf, docName,
   TYPES, TEST_KINDS, VERSIONED_KINDS, SCORED_KINDS, nextRound, writeWilco, argsOf } from './pack-lib.mjs';
 import { writeFileSync } from 'node:fs';
-const INTERACTIVE_KINDS = ['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide'];   // = scripts/render/interactive-format.mjs FORMAT_KINDS
+const INTERACTIVE_KINDS = ['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide', 'notes', 'reviewgame'];   // = scripts/render/interactive-format.mjs FORMAT_KINDS
 import { pathToFileURL } from 'node:url';
 
 export function checkKeys(pack) {

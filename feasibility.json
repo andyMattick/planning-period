@@ -383,7 +383,9 @@
       "test",
       "readingquiz",
       "studyguide",
-      "versions"
+      "versions",
+      "notes",
+      "reviewgame"
     ],
     "typesAutoScored": [
       "mc",

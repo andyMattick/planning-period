@@ -13,6 +13,10 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
   a PDF) plus the teacher copy; the preview watermarks the pages and the approval hashes them; My orders shows them in a
   sandboxed frame; `checks/interactive-format.mjs` in `npm run check`, the browser run in `npm run test:interactive`
   and `test:orders`; fixtures `samples/_cap-interactive`; onboarding v10, maker v9, wilco v5.
+- **Done (branch `interactive-notes-review`, owner: "I want it for guided notes and review"):** guided notes (a box per
+  blank, Check my notes, the filled-in notes to print) and the review game (one card at a time with categories and
+  points, a results page or an answer sheet, and a class mode for a projector with a class code on the teacher copy);
+  fixtures `samples/_cap-interactive/notes` and `…/reviewgame`; onboarding v11, maker v10, wilco v6.
   docs/KINDS-INTERACTIVE-FORMAT.md.
 - **Open:** ordering questions; a class view of results (each result stays on the student's device); the Word teacher
   copy's note box; measure the price on the first five interactive orders.

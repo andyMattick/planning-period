@@ -104,8 +104,17 @@ You make nothing and change nothing in the order.
    - `grading: "auto"` on a **test** (or anything she calls graded): say plainly that the answers are stored as
      scrambled codes, enough to stop peeking but not a student with programming tools, so for a grade "print the
      results" or paper is safer; recommend that, never insist;
-   - a reading quiz made interactive keeps its passages on the page; nothing else changes.
-   Items without `interactive: true` (slides, rubrics, games, notes, unit packs) are always printable: if her request
+   - a reading quiz made interactive keeps its passages on the page; nothing else changes;
+   - **guided notes** made interactive (owner, Nov 8, 2026): "the notes as a page students fill in on a device" and,
+     with `grading: "auto"`, "each blank checked when they press Check my notes; they print their notes for their
+     binder". Stop-and-think and other written answers go to her. With `"print"`: "Finish prints their filled-in notes
+     for you to check";
+   - a **review game** made interactive: "the cards played on a device, one at a time with categories and points, or
+     as a class on a projector with team scores". With `"auto"` the page scores cards (answers of a few words too) and
+     the projector's "Reveal answer" needs the class code printed on her teacher copy; with `"print"` students get an
+     answer sheet and the projector has no reveal (she reads the teacher copy). No slides or printed cards are made
+     for an interactive review game: if she wants both, say so and offer two items.
+   Items without `interactive: true` (slides, rubrics, quiz-show and puzzle games, unit packs) are always printable: if her request
    asks for one of them "online", say which items can be interactive. Record it in `onboarding.json` `whatWeWillMake`.
 6. **Choose at most 3 questions.** Only things that change what we make and that you can't decide well yourself.
    Rank: an impossible or too-large ask first, then a choice between two reasonable readings, then anything else.
@@ -147,7 +156,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 10** (Nov 8, 2026)
+**Version 11** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -180,3 +189,6 @@ You make nothing and change nothing in the order.
   for it, plan it with `readingquiz.mcInTesting`, and never claim it passes.
 - v10, Nov 8, 2026 (owner: "the option of creating an interactive [page] OR pdf/word … grade it automatically … OR
   print out the results"): reads `itemSpecs.<item>.format` and `.grading`, step 5b (what to say, and the two warnings).
+- v11, Nov 8, 2026 (owner: "I want it [the interactive option] for guided notes and review"): step 5b says what an
+  interactive guided notes and review game are, the class code on the teacher copy, and that an interactive review
+  game comes without slides or printed cards.

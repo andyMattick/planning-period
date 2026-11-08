@@ -16,7 +16,7 @@
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
      10. "Paste a link": scripts/test-fetch-page.mjs (the server's address guard, limits and text extraction).
-     12. The interactive format: samples/_cap-interactive passes keys, test-wise, cross-item and checks/interactive-format.mjs.
+     12. The interactive format: samples/_cap-interactive (quiz, guided notes, review game) passes keys, test-wise, cross-item and checks/interactive-format.mjs.
      11. The weekly test's offline self-test: scripts/weekly-test.mjs --self-test (fixtures import, the order picker).
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
@@ -78,7 +78,7 @@ try {
     if (typeof it.versions !== 'boolean') errs.push(`${it.id}: versions must be true or false`);
     // interactive: true = the order page offers Printable or Interactive for it (docs/KINDS-INTERACTIVE-FORMAT.md)
     if (it.interactive !== undefined && it.interactive !== true) errs.push(`${it.id}: interactive must be true or left out`);
-    if (it.interactive && !['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide', 'versions'].includes(it.id)) errs.push(`${it.id}: only items with questions to answer can be interactive`);
+    if (it.interactive && !['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide', 'versions', 'notes', 'reviewgame'].includes(it.id)) errs.push(`${it.id}: only items with questions to answer can be interactive`);
   }
   if (!(menu.items || []).length) errs.push('no items');
   const pricing = existsSync(join(ROOT, 'docs/PRICING.md')) ? readFileSync(join(ROOT, 'docs/PRICING.md'), 'utf8') : '';

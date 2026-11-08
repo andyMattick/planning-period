@@ -1,5 +1,5 @@
 {
-  "_note": "The order menu. tokens = pilot estimate (see docs/PRICING.md); every item is made by a maker agent, checked by a fresh blind tester for its subject and by Wilco's test-wise bots, and logged by the reporter. interactive: true = the order page offers Printable (PDF, Word) or Interactive (one offline page students answer on a device, graded in the page or printed for grading later; same tokens): docs/KINDS-INTERACTIVE-FORMAT.md.",
+  "_note": "The order menu. tokens = pilot estimate (see docs/PRICING.md); every item is made by a maker agent, checked by a fresh blind tester for its subject and by Wilco's test-wise bots, and logged by the reporter. interactive: true = the order page offers Printable (PDF, Word) or Interactive (one offline page students answer on a device, graded in the page or printed for grading later; same tokens; guided notes and the review game too, since Nov 8, 2026): docs/KINDS-INTERACTIVE-FORMAT.md.",
   "grades": [
     "K",
     "1",
@@ -59,13 +59,14 @@
     {
       "id": "notes",
       "label": "Guided notes",
-      "detail": "Fill-in notes that follow your source, with a teacher copy.",
+      "detail": "Fill-in notes that follow your source, with a teacher copy. Or interactive: students fill in the blanks on a device and print their notes.",
       "tokens": 25,
       "formats": [
         "pdf",
         "docx"
       ],
-      "versions": false
+      "versions": false,
+      "interactive": true
     },
     {
       "id": "quiz",
@@ -137,13 +138,14 @@
     {
       "id": "reviewgame",
       "label": "Review game",
-      "detail": "A printable or projector review game (question cards or a board) with answers.",
+      "detail": "A printable or projector review game (question cards or a board) with answers. Or interactive: played on a device, alone or as a class with team scores.",
       "tokens": 35,
       "formats": [
         "pdf",
         "pptx"
       ],
-      "versions": false
+      "versions": false,
+      "interactive": true
     },
     {
       "id": "rubric",
