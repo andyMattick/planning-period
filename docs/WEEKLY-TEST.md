@@ -1,6 +1,6 @@
 # The weekly test
 
-Owner, Nov 7, 2026: "Set up a weekly test to import test docs or sites and try to create 2 random docs." Every Sunday
+Owner, Nov 7, 2026: "Set up a weekly test to import test docs or sites and try to create 2 random docs." Every Friday
 night a Claude cloud session follows this page from top to bottom: it runs the deterministic checks, then runs the
 **real agent team** on **2 random orders** built from made-up fixtures, renders the watermarked previews, has a fresh
 auditor **edit** the briefs from what the run found (straight to main, only through the gate
@@ -279,7 +279,7 @@ undo: git revert <sha>" (with the auditor commit's link), or "auditor changed no
 
 ## Setting up the schedule
 
-A scheduled task that starts a fresh cloud session every Sunday night with this prompt:
+A scheduled task that starts a fresh cloud session every Friday night (8:35 PM New York time; moved from Sunday on Nov 8, 2026) with this prompt:
 "Run the weekly test: follow docs/WEEKLY-TEST.md in andyMattick/planning-period from step 0 to step 10, with its
 hard rules (fresh agents for every check and for the audit, $3.75 an order, $0.50 for the spot check, $2 for the audit
 and $10 a run, previews only, never send anything, commit only the report paths to main, the auditor's brief changes
