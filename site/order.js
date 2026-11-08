@@ -509,6 +509,9 @@
     ((itemById(id) || {}).options || []).forEach(function (o) { if (spec && spec[o.id] && o.note) notes.push(o.note); });
     return notes.map(function (n) { return '<p class="warn small">' + esc(n) + '</p>'; }).join('');
   }
+  // ---------- the blind check (on by default; unchecking shows what it means) ----------
+  $('blind-check').addEventListener('change', function () { $('blind-off-note').hidden = this.checked; });
+
   $('item-requests').addEventListener('input', function (e) {
     var id = e.target.getAttribute('data-req'); if (id && picked[id]) { picked[id].req = e.target.value; return; }
     var sp = e.target.getAttribute('data-spec'); if (!sp) return;
@@ -665,6 +668,8 @@
         items: ids,
         extras: menu.extras.map(function (x) { return x.id; }).filter(function (id) { return extras[id]; }),
         requests: general,
+        // the teacher may skip the blind check (owner, Nov 8, 2026); every other check still runs (docs/RUNBOOK.md step 5)
+        checks: { blind: $('blind-check').checked },
         itemRequests: ids.reduce(function (o, id) { var r = (picked[id].req || '').trim(); if (r) o[id] = r; return o; }, {}),
         quantities: ids.reduce(function (o, id) { o[id] = picked[id].qty; return o; }, {}),
         itemSpecs: ids.reduce(function (o, id) { var sp = cleanSpec(picked[id].spec); if (sp) o[id] = sp; return o; }, {}),

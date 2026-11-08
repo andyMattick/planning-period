@@ -158,6 +158,22 @@ onboarding agent moves the quiz to `readingquiz` (or adds the surcharge to the t
 before charging more (`agents/onboarding.md` step 7). A grammar, vocabulary or writing quiz with no passage stays `quiz`.
 The order page doesn't apply the surcharge itself yet (an owner change to `site/`).
 
+## 2c. Skipping the blind check (owner, Nov 8, 2026): same tokens for now, a discount proposed
+
+The order page lets the teacher untick "Blind check by a fresh agent (recommended)" (docs/RUNBOOK.md step 5). What it
+saves, measured on the first real online order (pp-2026-11-08-a20840, docs/audits/TIME-2026-11-08.md):
+- **Dollars:** the blind tester's sessions were **$0.93 of $5.56** (round 1 $0.63, recheck $0.30): about **17%** of
+  the order's cost, 13% of its $7.00 budget. With script-made versions the blind tester reads version A only, so on
+  the fast path it is about $0.35 + $0.15, roughly 12% of an expected $4.1.
+- **Minutes:** about **1** on the fast path (it runs beside the solver, so only the part it runs longer than the solver
+  comes off the clock), and **about 5** when it would have found something: in this order both FIXes came from it, and
+  the FIX round plus recheck took 4.4 minutes.
+
+**The price stays the same** until the owner decides. **Proposal for the owner:** take about 10% off an item's tokens
+when the blind check is skipped (rounded to 5: `test` 70 → 65, `quiz` 40 → 35, `worksheet` 30 → 25), which passes on
+most of the measured saving and keeps the cushion for the FIX rounds it can no longer prevent. Decide after three orders
+with it unticked show what they really cost (a skipped blind check can mean more change requests after the preview).
+
 ## 3. How to recalibrate (after each 5 orders)
 
 1. From `records/*.json`, add each order's `log[].cost` (exact rows as reported; estimated rows as the reporter

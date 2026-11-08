@@ -5,7 +5,7 @@ import {
   PageNumber, BorderStyle, ShadingType, TabStopType,
 } from 'docx';
 import { docxRuns as mr, plainMath } from './math.mjs';
-import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel, passagePlan, passageByline } from './util.mjs';
+import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped } from './util.mjs';
 
 const PAGE = { size: { width: 12240, height: 15840 }, margin: { top: 1008, bottom: 1008, left: 1008, right: 1008, footer: 500 } };
 const TEXT_W = 12240 - 2 * 1008; // twips
@@ -245,6 +245,7 @@ export async function copyDocx(doc, ver, ctx, teacher) {
         spacing: { after: 160 },
       })
     );
+    if (blindSkipped(ctx.pack)) kids.push(P(runs(BLIND_SKIPPED_LINE, { bold: true, size: 21 }), { border: { top: line(2), bottom: line(2), left: line(2), right: line(2) }, spacing: { after: 160 } }));
   } else kids.push(...fieldsBlock(ctx.layout));
   kids.push(
     P([runs(doc.title, { bold: true, size: 40, color: accent.slice(1) }), ...(ver ? [runs(`\tVersion ${ver}`, { bold: true, size: 24 })] : [])], {

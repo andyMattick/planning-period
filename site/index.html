@@ -168,6 +168,11 @@
       <div id="item-requests"><p class="muted small" id="no-items-note">Pick something in step 3 to add a request just for that item.</p></div>
       <div id="feas" aria-live="polite"></div>
       <div class="field"><label for="req-general">For the whole order</label><textarea id="req-general" placeholder="Reading level, vocabulary to use, things to avoid, how long it should be…"></textarea></div>
+      <div class="field">
+        <label class="blind-check"><input type="checkbox" id="blind-check" checked> <b>Blind check by a fresh agent (recommended)</b></label>
+        <p class="small muted" style="margin:.2em 0 0">A fresh agent that never saw your pack being made takes it cold, with no key, and flags anything unclear, any question with two right answers and any level that is off.</p>
+        <div class="notice" id="blind-off-note" role="status" hidden><p>Skipping the blind check saves about 1 to 5 minutes. The answer key is still checked by our solver/fact checker and Wilco's bots, but no one takes the test cold — please check it yourself before students see it.</p></div>
+      </div>
     </section>
 
     <!-- 5. Cost and send -->

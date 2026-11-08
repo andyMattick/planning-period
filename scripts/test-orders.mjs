@@ -250,7 +250,14 @@ try {
   assert.ok(await page.isChecked('#fmt-quiz-grading-auto'), 'grade automatically is chosen to start');
   await page.check('#fmt-quiz-grading-print');
   assert.match(await page.textContent('#cost-lines'), /interactive, results printed to grade later · same price as printable\s*40 tokens/);
-  await noSideways(page, 'order page, format and grading (desktop)');
+  // the blind check (owner, Nov 8, 2026): on by default; unchecking shows what it means; stored as order.checks.blind
+  assert.ok(await page.isChecked('#blind-check'), 'the blind check is on to start');
+  assert.ok(await page.isHidden('#blind-off-note'), 'no warning while it is on');
+  assert.match(await page.textContent('label.blind-check'), /Blind check by a fresh agent \(recommended\)/);
+  await page.uncheck('#blind-check');
+  assert.ok(await page.isVisible('#blind-off-note'), 'unchecking shows the warning');
+  assert.equal((await page.textContent('#blind-off-note')).trim(), 'Skipping the blind check saves about 1 to 5 minutes. The answer key is still checked by our solver/fact checker and Wilco\'s bots, but no one takes the test cold — please check it yourself before students see it.');
+  await noSideways(page, 'order page, format and grading, blind check off (desktop)');
   await shot(page, 'online-desktop-format-interactive-print');
   await page.click('#send');
   await page.waitForSelector('#done-online:not([hidden])');
@@ -269,6 +276,8 @@ try {
   assert.equal(o.order_json.delivery, 'online');
   assert.deepEqual(o.order_json.order.itemSpecs.quiz, { format: 'interactive', grading: 'print' }, 'the format and grading are in the order');
   assert.equal(o.order_json.lines.find((l) => l.id === 'quiz').format, 'interactive, results printed to grade later');
+  assert.deepEqual(o.order_json.order.checks, { blind: false }, 'the blind check choice is in the order');
+  ok('blind check: on by default; unchecking shows the warning (about 1 to 5 minutes, the solver/fact checker and Wilco still run, check it yourself) and the order stores checks.blind = false');
   ok('format and grading: printable by default; Interactive opens Grading (auto by default); the order stores itemSpecs.quiz {format: interactive, grading: print} and the summary line says so at the same price');
   ok('the pasted link went up as sources/' + LINK_FILE + ' (a header with the address, title and date, then the text) and order.json lists it in links');
   ok(`Send uploaded ${o.upload_files.length} files to uploads/<teacher>/${orderId}/ and added the order (status sent); no zip`);
@@ -339,6 +348,7 @@ try {
   // the interactive page: listed with the PDFs, tried here in a sandboxed frame (its own scripts run, nothing else)
   const pageFile = o.review.documents.find((d) => d.file.endsWith('.html'))?.file;
   assert.equal(pageFile, 'ratios-and-rates-practice-interactive.html', 'the interactive page is in the review');
+  assert.match(await page.textContent(`#o-${orderId} [data-blind-skipped]`), /Blind check skipped at your request — please work through the test yourself before students see it\./, 'the review says the blind check was skipped');
   await page.click(`#o-${orderId} [data-try][data-file="${pageFile}"]`);
   const frame = page.frameLocator(`#o-${orderId} [data-try-frame]`);
   await frame.locator('#pp-name').fill('Ms. Ortiz');

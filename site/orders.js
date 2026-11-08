@@ -178,7 +178,9 @@
     if ((rv.documents || []).some(function (x) { return /AUDIT-REPORT/i.test(x.file); })) titles.push('Audit report');
     var zip = (o.preview_files || []).filter(function (f) { return /\.zip$/i.test(f); })[0];
     var docs = rv.documents || [];
+    var blindOff = rv.blindSkipped || (((o.order_json || {}).order || {}).checks || {}).blind === false;
     return '<div class="review" id="rv-' + id + '" tabindex="-1"><div class="paper-pane">' +
+      (blindOff ? '<div class="notice" data-blind-skipped><p><b>Blind check skipped at your request — please work through the test yourself before students see it.</b></p></div>' : '') +
       '<h4>1. Look over your preview</h4><ul class="dl-list">' + docs.map(function (x, i) {
         // an interactive page (docs/KINDS-INTERACTIVE-FORMAT.md): tried here in a sandboxed frame, or downloaded
         if (/\.html$/i.test(x.file)) {

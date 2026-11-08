@@ -20,6 +20,13 @@ The backend is **its own Supabase project** (never Pet World's). Without it the 
 | The owner's side | `scripts/orders.mjs` | `list`, `pull`, `follow-up`, `answer`, `preview`, `approval`, `final`, `purge`, `status` (docs/RUNBOOK.md) |
 | The test | `scripts/test-orders.mjs` | The whole loop with a fake Supabase and Playwright (below) |
 
+### The teacher's blind-check choice
+
+`order_json.order.checks.blind` (owner, Nov 8, 2026): `false` when she unticked "Blind check by a fresh agent" on the
+order page. It is hers to change only by sending the order; the team reads it from her order, never from the maker's
+pack (`scripts/run-order.mjs` copies it into `pack.order.checks`). `orders.mjs preview` passes `review.blindSkipped`
+so My orders shows the warning above the preview. What is skipped and what still runs: docs/RUNBOOK.md step 5.
+
 ### Order status
 
 `sent` → `onboarding` (the owner pulled it) → `needs_answer` (follow-up posted; she taps her answers) → `building` →

@@ -207,3 +207,8 @@ export function workLinesFor(q, ctx) {
   if (type === 'mc' && Number(q.level) === 3 && ctx.pack?.order?.subject === 'math') return 3;
   return 0;
 }
+
+// The teacher may skip the blind check (owner, Nov 8, 2026: order.checks.blind = false on the order page). Every place
+// she reads the pack says so on its first page: the audit report, the preview's review, the teacher copies.
+export const BLIND_SKIPPED_LINE = 'Blind check skipped at your request — please work through the test yourself before students see it.';
+export const blindSkipped = (pack) => !!(pack && pack.order && pack.order.checks && pack.order.checks.blind === false);

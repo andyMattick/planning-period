@@ -96,6 +96,12 @@ calls with a POST, so the service worker never touches it (it only handles GETs)
 listed next to the PDFs in My orders with **Try it here**, which shows the page in a sandboxed frame (`srcdoc`, scripts
 only: no access to the site, its storage or the network), and **Download**. Approve hashes them with the PDFs.
 
+**The blind check is the teacher's choice** (owner, Nov 8, 2026): step 4 of the order page has "Blind check by a fresh
+agent (recommended)", ticked to start. Unticking shows what it means ("saves about 1 to 5 minutes… no one takes the test
+cold — please check it yourself before students see it") and the order stores `order.checks.blind = false` (zip and
+online alike). The review in My orders and the preview say "Blind check skipped at your request" at the top. Same
+tokens (docs/PRICING.md); what still runs: docs/RUNBOOK.md step 5. Service worker `v13`.
+
 Still to come from the plan below: Background Sync for an order sent offline (today: the zip), push notifications.
 
 ## When there's a real backend (the plan, Nov 5, 2026)

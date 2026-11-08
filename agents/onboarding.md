@@ -148,6 +148,13 @@ You make nothing and change nothing in the order.
 - Under about 200 words: count them before you save (g7-ela2's was 217). No jargon (no "L3", "mc", "pack.json", agent names or bot names); no product name (it
   comes from `brand.config.json`, which you don't write).
 
+8. **The blind check** (owner, Nov 8, 2026). When `order.checks.blind` is `false`, she unticked "Blind check by a
+   fresh agent" on the order page: say in one line of the follow-up that we'll skip it as she asked, that the solver
+   or fact checker, Wilco's bots and every scripted check still run, and that she should work through the test
+   herself before students see it. Don't ask about it (it's her choice) and don't change the tokens (docs/PRICING.md,
+   "Skipping the blind check"). Put it in `assumptions`. A reading item's no-passage probe still runs: it is a gate,
+   not the blind check.
+
 ## Rules
 - Never more than 3 questions; never one already answered; none when nothing needs a decision.
 - Never promise more than `feasibility.json` and the source support. Be specific: "about 6–10 good questions",
@@ -156,7 +163,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 11** (Nov 8, 2026)
+**Version 12** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -192,3 +199,6 @@ You make nothing and change nothing in the order.
 - v11, Nov 8, 2026 (owner: "I want it [the interactive option] for guided notes and review"): step 5b says what an
   interactive guided notes and review game are, the class code on the teacher copy, and that an interactive review
   game comes without slides or printed cards.
+- v12, Nov 8, 2026 (owner: "make the blind checker optional (tell them it will save time, but they should check on
+  their own)"): step 8, `order.checks.blind = false` is said back in the follow-up, with no question and no token
+  change. Changed at the owner's request, not by the auditor.

@@ -159,6 +159,15 @@ Then the checks split by version:
 
 ## 5. Fresh blind tester for the subject (at the same time as 6 and 7)
 
+**Skipped when the teacher asked** (owner, Nov 8, 2026: `order.checks.blind` is `false`, the order page's "Blind
+check by a fresh agent (recommended)" unticked). Then no blind tester runs in any round, and the log says so: a row
+"Blind check skipped at the teacher's request" (`scripts/run-order.mjs` writes it). Everything else still runs, each as a
+fresh agent or a script: the solver or fact checker (steps 6, 9), Wilco, keys, cross-item and the interactive checks
+(step 7), `versions.mjs`, and **the ELA no-passage probe for reading items** (step 4a: a gate on the questions, not the
+blind check). The audit report's first page, REVIEW.html, My orders' review and every teacher copy say "Blind check
+skipped at your request — please work through the test yourself before students see it." (`scripts/render/util.mjs`
+`BLIND_SKIPPED_LINE`). This is the teacher's own opt-out, never the lead's: the lead never skips a check to save time.
+
 ```
 node $REPO/checks/student-view.mjs "$WORK/pack.json" --out "$WORK/view.md"
 ```

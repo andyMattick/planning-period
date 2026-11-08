@@ -186,7 +186,7 @@ const commands = {
     for (const f of pdfs) { await db.upload('deliverables', `${base}preview/${f}`, readFileSync(join(dir, f)), f.endsWith('.html') ? TYPES['.html'] : 'application/pdf'); up.push(`preview/${f}`); }
     const zip = join(work, 'preview.zip');
     if (existsSync(zip)) { await db.upload('deliverables', `${base}preview/preview.zip`, readFileSync(zip), 'application/zip'); up.push('preview/preview.zip'); }
-    await setStatus(db, id, 'preview_ready', { review: { packHash: D.packHash, statement: D.statement, documents: D.documents, docTitles: D.docTitles || [] },
+    await setStatus(db, id, 'preview_ready', { review: { packHash: D.packHash, statement: D.statement, documents: D.documents, docTitles: D.docTitles || [], ...(D.blindSkipped ? { blindSkipped: true } : {}) },
       preview_files: up, approval: null });
     console.log(`Uploaded ${up.length} preview file${up.length === 1 ? '' : 's'} for ${id}. Status: preview_ready (she reviews it in My orders).`);
   },

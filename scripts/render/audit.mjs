@@ -1,7 +1,7 @@
 // AUDIT-REPORT.pdf. Every number here is counted from the pack: nothing is estimated or rounded up.
 // Display formats are the same everywhere: minutes to 1 decimal, money to 2, percents whole (util.mjs).
 
-import { esc, money, int, mins, pct, questionsOf, inkAccent, fontStack } from './util.mjs';
+import { esc, money, int, mins, pct, questionsOf, inkAccent, fontStack, BLIND_SKIPPED_LINE, blindSkipped } from './util.mjs';
 import { gameItemCount } from './games.mjs';
 
 const CHECK_NAMES = { blind: '🙈 Blind tester', solver: '🧮 Solver', wilco: '🤖 Wilco', facts: '🔎 Fact checker' };
@@ -241,7 +241,7 @@ function frontPage(pack, ctx, st) {
     ${tile(mins(st.minutes), 'minutes of agent work', `${st.first ? `Logged from ${st.first} to ${st.last}` : 'Added up from the log'}${st.unlogged ? `; ${plural(st.unlogged, 'step')} not timed` : ''}.`)}
     ${tile(money(st.cost), 'AI cost of this pack', `${int(st.tokens)} tokens, added up from the log.`)}
   </div>
-  ${approvalLine(ctx)}
+  ${approvalLine(ctx)}${blindSkipped(ctx.pack) ? `<div class="notice"><b>${esc(BLIND_SKIPPED_LINE)}</b></div>` : ''}
   <h3>In this pack</h3><p>${docs}${orig ? `. We also checked your original${orig.file ? ` (${esc(orig.file)})` : ''}: ${plural((orig.findings || []).length, 'finding')}, on the page "What we found in your original".` : ''}</p>
   <div class="notice"><b>Check it before students see it.</b> ${esc(ctx.brand.aiNotice)}</div></section>`;
 }
