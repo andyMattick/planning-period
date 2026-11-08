@@ -462,7 +462,11 @@ function teacherPart(pack, ctx, st, owner) {
   const docLine = (d) => {
     const n = questionsOf(d).length || gameItemCount(d);
     if (!n && (d.slides || []).length) return `<li><b>${esc(d.title)}</b>: ${plural(d.slides.length + 1, 'slide')} with speaker notes, and a handout.</li>`;
-    const vers = (d.versions || []).length > 1 ? ` in ${d.versions.length} versions (${d.versions.join(', ')})` : '';
+    const pool = d.pool && Array.isArray(d.pool.versions) ? d.pool.versions.length : 0;
+    // one version per student: how many, how they were checked, and which ones a fresh agent solved without the key
+    const sample = pool && Array.isArray(d.pool.blindSample) ? d.pool.blindSample : [];
+    const vers = pool ? ` in ${pool} versions, one per student (each with a 5-letter code; every version's numbers and keys were made from version A by script and each key checked by the math checker; ${sample.length ? `a fresh agent solved ${plural(sample.length, 'sample version')} (${sample.map(esc).join(', ')}) without the key` : 'a fresh agent solves a sample of 3 versions without the key'}; your key page and the all-versions key cover all ${pool})`
+      : (d.versions || []).length > 1 ? ` in ${d.versions.length} versions (${d.versions.join(', ')})` : '';
     const fmt = d.format === 'interactive' ? (d.grading === 'auto' ? ', an interactive page graded on the page' : ', an interactive page students answer and you grade from print') : '';
     return `<li><b>${esc(d.title)}</b>${n ? `: ${plural(n, 'question')}` : ''}${vers}${fmt}${questionsOf(d).length ? ', with a teacher copy (the key, why, the skills map' + (needsHowToGrade(d) ? ' and how to grade' : '') + ')' : ''}.</li>`;
   };

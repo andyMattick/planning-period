@@ -42,6 +42,8 @@ import { loadPack, perVersion, pick, norm, valueOf, sameValue, nextRound } from 
 import { checkMath } from '../checks/math.mjs';
 import { plainMath } from './render/math.mjs';
 import { checkPack } from '../checks/interactive-format.mjs';
+import { poolDocs } from './render/util.mjs';
+import { stimulusHits } from '../checks/cross-item.mjs';
 
 /* ---------- a safe mathjs (no import, no parse/evaluate from inside a template) ---------- */
 const math = create(all, { number: 'number' });
@@ -169,16 +171,20 @@ function itemProblems(q, got, others, aGot) {
     const seen = new Map();
     q.gen.distinct.forEach((t, i) => { const s = got.__distinct[i]; if (seen.has(s)) out.push(`distinct ${seen.get(s) + 1} and ${i + 1} both print ${s}`); else seen.set(s, i); });
   }
-  const look = (g) => JSON.stringify([g.prompt ?? null, g.figure ?? null]);
+  // what the student sees: an item that reads a shared data set may keep its prompt and change only its choices
+  const look = (g) => JSON.stringify([g.prompt ?? null, g.figure ?? null, g.table ?? null, g.intro ?? null, g.choices ?? null, g.parts ?? null, g.answer ?? null]);
   if (others.some((o) => look(o) === look(got))) out.push('the prompt and picture repeat another version (no new numbers)');
   if (got.math !== undefined && aGot && JSON.stringify(got.math) === JSON.stringify(aGot.math) && look(got) !== look(aGot)) out.push('the math check is the same as A\'s although the numbers changed (a number typed into the check)');
   return out;
 }
 
 /* ---------- one document ---------- */
-function makeDoc(doc, d, targets, seed, fixedAll) {
-  const errors = [], made = {}, items = [];
-  for (const sec of doc.sections || []) for (const q of sec.questions || []) if (q.gen) items.push(q);
+const genItemsOf = (doc) => [
+  ...(Array.isArray(doc.stimuli) ? doc.stimuli : []).filter((x) => x && x.gen),   // a shared data set with new numbers (its table, graph, intro)
+  ...(doc.sections || []).flatMap((sec) => (sec.questions || []).filter((q) => q.gen)),
+];
+function makeDoc(doc, d, targets, seed, fixedAll, { pool = false } = {}) {
+  const errors = [], made = {}, items = genItemsOf(doc);
   if (!items.length) return { errors, made, items };
   const name = doc.title || `document ${d + 1}`;
   const vers = [...new Set(['A', ...(doc.versions || []), ...targets])];
@@ -230,7 +236,8 @@ function makeDoc(doc, d, targets, seed, fixedAll) {
           let got;
           try { got = itemRender(q, f.scope); got.__distinct = (q.gen.distinct || []).map((x) => render(x, f.scope)); }
           catch (e) { why.set(`${q.id}: ${e.message}`, (why.get(`${q.id}: ${e.message}`) || 0) + 1); continue; }
-          const p = itemProblems(q, got, renders.get(q), aRendered.get(q));
+          // a pool (one version per student) may repeat numbers between students; it must still differ from A
+          const p = itemProblems(q, got, pool ? [aRendered.get(q)] : renders.get(q), aRendered.get(q));
           if (p.length) { for (const x of p) why.set(`${q.id}: ${x}`, (why.get(`${q.id}: ${x}`) || 0) + 1); continue; }
           ok = got;
         }
@@ -268,14 +275,14 @@ function makeDoc(doc, d, targets, seed, fixedAll) {
   return { errors, made, items, vers };
 }
 
-export function makeVersions(pack, { targets = null, seed = null, fixed = null } = {}) {
+export function makeVersions(pack, { targets = null, seed = null, fixed = null, pool = false } = {}) {
   const errors = [], warnings = [], out = structuredClone(pack), summary = [];
   out.documents.forEach((doc, d) => {
     const want = targets || (doc.versions || []).filter((v) => v !== 'A');
-    const hasGen = (doc.sections || []).some((s) => (s.questions || []).some((q) => q.gen));
-    if (!hasGen) return;
+    const hasGen = genItemsOf(doc).length > 0;
+    if (!hasGen || (doc.pool && !pool)) return;   // a pool document's versions are made by makePool
     if (!want.length) { errors.push(`${doc.title || `document ${d + 1}`}: no versions to make (list them in versions, or --versions B,C)`); return; }
-    const res = makeDoc(doc, d, want, seed || out.id || 'pack', fixed);
+    const res = makeDoc(doc, d, want, seed || out.id || 'pack', fixed, { pool });
     errors.push(...res.errors);
     if (res.errors.length) return;
     doc.versions = res.vers;
@@ -292,6 +299,68 @@ export function makeVersions(pack, { targets = null, seed = null, fixed = null }
     summary.push({ document: doc.title || `document ${d + 1}`, versions: want, items: res.items.map((q) => q.id) });
   });
   return { pack: out, errors, warnings, summary };
+}
+
+/* ---------- one version per student: a pool (docs/PACK-FORMAT.md, "One version per student") ----------
+   doc.pool = {students: 30} (what the order asked) becomes {students, size, seed, codes, versions: [{code, questions,
+   stimuli}]}: `size` versions made from A's gen spec exactly like B, C… (the same refusals), 25 at a time, each with
+   a 5-letter code. The pool may repeat numbers between two students; every version differs from A. */
+const CODE_ABC = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+export const POOL_MAX = 150;
+export function poolCodes(seedText, n) {
+  const codes = [], seen = new Set();
+  for (let i = 0, k = 0; codes.length < n; k++) {
+    const h = createHash('sha256').update(`${seedText}|code|${i}|${k}`).digest();
+    const c = Array.from(h.subarray(0, 5), (b) => CODE_ABC[b % CODE_ABC.length]).join('');
+    if (seen.has(c)) continue;
+    seen.add(c); codes.push(c); i++; k = -1;
+  }
+  return codes;
+}
+export function makePool(pack, { seed = null } = {}) {
+  const errors = [], warnings = [], out = structuredClone(pack), summary = [];
+  out.documents.forEach((doc, d) => {
+    if (!doc.pool) return;
+    const name = doc.title || `document ${d + 1}`;
+    const size = Number(doc.pool.size || doc.pool.students);
+    if (!Number.isInteger(size) || size < 2 || size > POOL_MAX) { errors.push(`${name}: pool size ${JSON.stringify(doc.pool.size ?? doc.pool.students)} (2 to ${POOL_MAX} students)`); return; }
+    if (doc.format !== 'interactive') { errors.push(`${name}: one version per student is only for an interactive page (format "interactive")`); return; }
+    if (!genItemsOf(doc).length) { errors.push(`${name}: one version per student needs a gen spec on the items whose numbers change`); return; }
+    const s0 = doc.pool.seed || `${seed || out.id || 'pack'}|${d}`;
+    const codes = poolCodes(s0, size), versions = [];
+    const letters = 'BCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    for (let b = 0; versions.length < size && !errors.length; b++) {
+      const one = { ...out, documents: [{ ...structuredClone(doc), versions: ['A'], pool: undefined }] };
+      delete one.documents[0].pool;
+      const want = letters.slice(0, Math.min(letters.length, size - versions.length));
+      const res = makeVersions(one, { targets: want, seed: `${s0}|pool${b}`, pool: true });
+      if (res.errors.length) { errors.push(...res.errors.map((e) => `pool: ${e}`)); break; }
+      const made = res.pack.documents[0], items = genItemsOf(made);
+      for (const v of want) {
+        const code = codes[versions.length], questions = {}, stimuli = {};
+        for (const it of items) {
+          const fields = {};
+          for (const f of [...Object.keys(it.gen.fields || {}), 'answer']) {
+            const val = f === 'math' ? MATH_A(it, v) : pick(it[f], v);
+            if (val !== undefined) fields[f] = f === 'math' ? { ...(it.math || {}), check: val } : val;
+          }
+          if (fields.math) { const { A, B, C, ...rest } = fields.math; fields.math = rest; }
+          ((Array.isArray(made.stimuli) && made.stimuli.includes(it)) ? stimuli : questions)[it.id] = fields;
+        }
+        versions.push({ code, questions, ...(Object.keys(stimuli).length ? { stimuli } : {}) });
+      }
+    }
+    if (errors.length) return;
+    doc.pool = { ...doc.pool, students: doc.pool.students ?? size, size, seed: s0, codes, versions };
+    summary.push({ document: name, size, items: genItemsOf(doc).map((q) => q.id) });
+  });
+  return { pack: out, errors, warnings, summary };
+}
+// Every pool version as its own plain document, for the checks (SymPy on every key, the choice checks).
+export function poolPack(pack) {
+  const documents = [];
+  for (const doc of pack.documents) for (const { code, doc: d } of poolDocs(doc)) documents.push({ ...d, title: `${doc.title || 'Document'} ${code}`, kind: 'worksheet', item: 'worksheet', format: undefined, grading: undefined });
+  return { ...pack, documents, checks: {} };
 }
 
 /* ---------- the command line ---------- */
@@ -322,6 +391,22 @@ if (isMain) {
     if (left.length) res.errors.push(...left.map((e) => `page: ${e} (8 redraws)`));
     else if (k) res.warnings.push(`redrew ${k} time${k === 1 ? '' : 's'} so no key is printed elsewhere in an interactive page's file (seed ${usedSeed})`);
   }
+  // one version per student: the pools (doc.pool), made the same way from A (and kept, with --verify, only if unchanged)
+  let pooled = null;
+  if (!res.errors.length && res.pack.documents.some((d) => d.pool)) {
+    pooled = makePool(res.pack, { seed: seed || null });   // a pool keeps the seed it was made with (doc.pool.seed)
+    if (pooled.errors.length) res.errors.push(...pooled.errors);
+    else {
+      if (verify) res.pack.documents.forEach((doc, d) => {
+        if (!doc.pool) return;
+        if (JSON.stringify(doc.pool.versions || []) !== JSON.stringify(pooled.pack.documents[d].pool.versions)) res.errors.push(`verify: ${doc.title} pool: the pool in the pack is not what A's formulas make now (make it again with versions.mjs)`);
+      });
+      res.pack = pooled.pack;
+      // a data-set group in any pool version must not show one answer as another question's choice
+      for (const h of stimulusHits(poolPack(res.pack)).slice(0, 10)) res.errors.push(`pool ${h.where}: ${h.what} (add a constraint so the numbers differ)`);
+      res.summary.push(...pooled.summary.map((x) => ({ document: x.document, versions: [`${x.size} one per student`], items: x.items })));
+    }
+  }
   const report = { errors: res.errors, warnings: res.warnings, summary: res.summary, math: null, verify: null };
   if (!res.errors.length && !res.summary.length) { console.log('versions: no item has a gen spec: nothing to make.'); process.exit(0); }
   if (verify && !res.errors.length) {
@@ -339,6 +424,10 @@ if (isMain) {
   }
   if (!res.errors.length && !noMath) {
     const m = checkMath(res.pack);
+    if (pooled) {   // every pool version's keys, by SymPy, like any version
+      const pm = checkMath(poolPack(res.pack));
+      m.checked += pm.checked; m.opted += pm.opted; m.disagree += pm.disagree; m.errors.push(...pm.errors.map((e) => `pool ${e}`));
+    }
     report.math = { checked: m.checked, opted: m.opted, disagree: m.disagree, errors: m.errors };
     for (const e of m.errors) res.errors.push(`math: ${e}`);
   }
