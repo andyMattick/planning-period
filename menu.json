@@ -78,7 +78,15 @@
         "docx"
       ],
       "versions": true,
-      "interactive": true
+      "interactive": true,
+      "versionPricing": {
+        "included": 2,
+        "perExtra": 2,
+        "maxVersions": 10,
+        "perStudent": 10,
+        "defaultStudents": 30,
+        "maxStudents": 150
+      }
     },
     {
       "id": "readingquiz",
@@ -110,7 +118,15 @@
         "docx"
       ],
       "versions": true,
-      "interactive": true
+      "interactive": true,
+      "versionPricing": {
+        "included": 2,
+        "perExtra": 3,
+        "maxVersions": 10,
+        "perStudent": 15,
+        "defaultStudents": 30,
+        "maxStudents": 150
+      }
     },
     {
       "id": "studyguide",
