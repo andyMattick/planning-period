@@ -160,13 +160,15 @@ const commands = {
     if (!m) die(`${reviewFile} has no review data: render the preview again`);
     const D = JSON.parse(m[1]);
     if (D.orderId !== id) die(`the preview is for "${D.orderId}", not ${id}: set pack.json's id to the order id and render again`);
-    const pdfs = readdirSync(dir).filter((f) => f.endsWith('.pdf')).sort();
+    // every PDF and interactive page she reviews (docs/KINDS-INTERACTIVE-FORMAT.md); REVIEW.html is only in the zip
+    const pdfs = readdirSync(dir).filter((f) => f.endsWith('.pdf') || (f.endsWith('.html') && f !== 'REVIEW.html')).sort();
     const listed = (D.documents || []).map((d) => d.file).sort();
-    if (JSON.stringify(pdfs) !== JSON.stringify(listed)) die('out-preview/ PDFs differ from the ones REVIEW.html lists: render the preview again');
+    if (JSON.stringify(pdfs) !== JSON.stringify(listed)) die('out-preview/ PDFs and pages differ from the ones REVIEW.html lists: render the preview again');
     const base = `${o.teacher}/${o.id}/`;
     await db.remove('deliverables', (await db.listAll('deliverables', base + 'preview')));   // an older preview goes
     const up = [];
-    for (const f of pdfs) { await db.upload('deliverables', `${base}preview/${f}`, readFileSync(join(dir, f)), 'application/pdf'); up.push(`preview/${f}`); }
+    // an interactive page goes up as text/plain (storage never serves it as a live page); My orders shows it in a sandboxed frame
+    for (const f of pdfs) { await db.upload('deliverables', `${base}preview/${f}`, readFileSync(join(dir, f)), f.endsWith('.html') ? TYPES['.html'] : 'application/pdf'); up.push(`preview/${f}`); }
     const zip = join(work, 'preview.zip');
     if (existsSync(zip)) { await db.upload('deliverables', `${base}preview/preview.zip`, readFileSync(zip), 'application/zip'); up.push('preview/preview.zip'); }
     await setStatus(db, id, 'preview_ready', { review: { packHash: D.packHash, statement: D.statement, documents: D.documents, docTitles: D.docTitles || [] },

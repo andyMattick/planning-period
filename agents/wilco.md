@@ -38,6 +38,13 @@ copied unchanged to `checks/test-wise-cues.mjs`, the notes bots, and the course 
 5. Rerun after each maker round until all exit 0. Stop after round 3 and tell the owner. A rerun inside one maker
    round keeps that round's number (`--round N`) and says why in `note` (g7-ela: three runs in round 2).
 
+**Interactive documents** (`format: "interactive"`; docs/KINDS-INTERACTIVE-FORMAT.md): the steps above run on them
+unchanged (keys, test-wise, cross-item, no-passage read every document). Also run
+`node checks/interactive-format.mjs pack.json` (self-contained page, no answer data in a print page, no plain-text key
+in an auto page, every hash verifies against the key) and, before the preview, `--browser` (all right → 100%, all
+wrong → 0%, the answer sheet, 375 px). A fail is fixed in the pack (forms, `tol`, a key typed into a prompt), never by
+loosening the check.
+
 ## Output (`pack.json`)
 `--write` adds your rounds to `checks.wilco` (`{"check": "keys" | "test-wise", "round", "pass", …, "worst"}`). Tell the
 reporter each run's result and the worst strategy before and after (the audit report shows them).
@@ -66,7 +73,7 @@ reporter each run's result and the worst strategy before and after (the audit re
 - `keys` rows have no chance and no line: report them as passed or not, never as a percentage.
 
 ---
-**Version 4** (Nov 7, 2026)
+**Version 5** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's `docs/FAIRNESS.md` (the rule, the cues, converge counted on printed
@@ -83,3 +90,4 @@ reporter each run's result and the worst strategy before and after (the audit re
 - v4, Nov 7, 2026 (owner decision "D and 1-4", adopting docs/audits/AUDIT-2026-11-07-ela-try-c.md proposal 2): `checks/cross-item.mjs` on
   every pack before any paid probe (a key printed in another item of the version; self-test and a shrink-only known-
   failing list in `npm run check`: g11-history, g7-ela2, g8-science when it came in); its limit (words, not meaning).
+- v5, Nov 8, 2026: interactive documents get every check above plus `checks/interactive-format.mjs` (and `--browser`).

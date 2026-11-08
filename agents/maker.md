@@ -162,6 +162,22 @@ B 7 of 8), so:
   student really types, and `miss` for the 1–2 predictable wrong answers; card backs under 90 characters; memorize
   text quoted exactly from the source or a public-domain original, with `source`.
 
+## The interactive format (owner, Nov 8, 2026; docs/KINDS-INTERACTIVE-FORMAT.md)
+
+When `order.itemSpecs.<item>.format` is `"interactive"`, set the document's `format: "interactive"` and `grading`
+(`"auto"` or `"print"`, from the order; `"auto"` when it says nothing). Write the questions exactly as for paper: the same
+checks run on them. In addition:
+- give every question an `id` that never changes between rounds (it keys a student's saved answers);
+- types: `mc`, `tf`, `numeric`, `short`, `open`, `match` only;
+- with `grading: "auto"`, a `numeric` key plus `accept` must cover what students really type (`17`, `17.0`, `17 g`;
+  fractions, decimals and percents of the same value are read alike already). A measured or rounded value takes
+  `tol: {"within": 0.1, "places": 1}` or `round: 2`, never a list of near values. Add `miss` for one or two predictable
+  wrong answers and a `hint` where it helps: both show only on the results page, after Finish;
+- short answers are never scored by the page: if the teacher wants it scored, write the item as `numeric` or `mc`.
+- word the directions for a screen as well as paper ("choose", not "circle"; "type your work" or "show your work on
+  paper"): the same directions print on the teacher copy.
+Nothing else changes; never write a key into the prompt or a choice to make the page work.
+
 ## Your dollar cap (owner, option 1, Nov 6, 2026)
 The lead starts you with a cap (`docs/RUNBOOK.md` step 4: a first draft one third of the order's budget, a redesign one
 quarter, a FIX round one sixth; reading quiz plus rubric: $5.50, $4.10, $2.75). g7-ela2's uncapped makers cost $7.32
@@ -174,7 +190,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 8** (Nov 7, 2026)
+**Version 9** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -214,3 +230,5 @@ have it) and the number of questions per document.
   docs/audits/AUDIT-2026-11-07-ela-try-d.md): reading rule 0, short answers and RACE by default, multiple choice on
   passages only when the teacher picked the in-testing option, and never called passing; a reused story that keeps
   drawing `type` cues gets a new turn, not just new items (try d proposal 2: B's type cues came back on try c's story).
+- v9, Nov 8, 2026: the interactive format (`format`, `grading`, stable ids, typed-answer forms, `tol`/`round`, `miss` and
+  `hint` for the results page): docs/KINDS-INTERACTIVE-FORMAT.md.

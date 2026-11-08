@@ -16,6 +16,7 @@
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
      10. "Paste a link": scripts/test-fetch-page.mjs (the server's address guard, limits and text extraction).
+     12. The interactive format: samples/_cap-interactive passes keys, test-wise, cross-item and checks/interactive-format.mjs.
      11. The weekly test's offline self-test: scripts/weekly-test.mjs --self-test (fixtures import, the order picker).
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
@@ -75,6 +76,9 @@ try {
   for (const it of menu.items || []) {
     if (!Array.isArray(it.formats) || !it.formats.length || it.formats.some((f) => !FORMATS.includes(f))) errs.push(`${it.id}: formats must be some of ${FORMATS.join(', ')}`);
     if (typeof it.versions !== 'boolean') errs.push(`${it.id}: versions must be true or false`);
+    // interactive: true = the order page offers Printable or Interactive for it (docs/KINDS-INTERACTIVE-FORMAT.md)
+    if (it.interactive !== undefined && it.interactive !== true) errs.push(`${it.id}: interactive must be true or left out`);
+    if (it.interactive && !['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide', 'versions'].includes(it.id)) errs.push(`${it.id}: only items with questions to answer can be interactive`);
   }
   if (!(menu.items || []).length) errs.push('no items');
   const pricing = existsSync(join(ROOT, 'docs/PRICING.md')) ? readFileSync(join(ROOT, 'docs/PRICING.md'), 'utf8') : '';
@@ -138,6 +142,8 @@ if (existsSync(FIX)) {
   { const [p, q] = quiz(); q.sections[0].questions[4].level = { A: 2, B: 3 }; breaks.push(['keys.mjs', 'A and B at different levels', p]); }
   { const [p, q] = quiz(); delete q.versions; breaks.push(['keys.mjs', 'a quiz without versions', p]); }
   { const [p, q] = quiz(); q.sections[0].questions[0].passage = 'p9'; breaks.push(['keys.mjs', 'a question citing a passage that is not there', p]); }
+  { const [p, q] = quiz(); q.format = 'interactive'; breaks.push(['keys.mjs', 'an interactive document with no grading', p]); }
+  { const [p, q] = quiz(); q.grading = 'auto'; breaks.push(['keys.mjs', 'grading on a printable document', p]); }
   { const [p, q] = quiz(); q.item = 'test'; breaks.push(['keys.mjs', 'a test with too little or too much level 3', p]); q.sections[0].questions.forEach((x) => { x.level = 3; }); }
   { const [p, q] = quiz(); // every key moved to A and made the longest
     for (const x of q.sections[0].questions) for (const v of ['A', 'B']) { const c = x.choices[v], k = c.splice(x.answer[v], 1)[0]; c.unshift(`${k} (shown in the work)`); x.answer[v] = 0; }
@@ -333,6 +339,25 @@ else {
     const n = (r.stdout.match(/✓ catches/g) || []).length;
     if (r.status === 0) ok(`checks/practicegames.mjs catches all ${n} broken copies of samples/_cap-practicegame`); else fail(`checks/practicegames.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
   }
+}
+
+/* 12. The interactive format (docs/KINDS-INTERACTIVE-FORMAT.md): the fixtures in samples/_cap-interactive (the g8-science
+   quiz, graded in the page and printed for grading) pass keys, test-wise and cross-item like any pack; every pack with an
+   interactive document passes checks/interactive-format.mjs (self-contained, no key in a print page, no plain-text key
+   in an auto page, every hash verifies, rendered pages up to date); and broken copies fail it (--self-test). The
+   browser run (100% right, 0% wrong, the answer sheet, 375 px) is scripts/test-interactive.mjs (npm run test:interactive). */
+{
+  const IF = join(ROOT, 'checks', 'interactive-format.mjs'), CAPI = join(ROOT, 'samples/_cap-interactive');
+  const nested = existsSync(CAPI) ? readdirSync(CAPI).map((d) => join('samples/_cap-interactive', d, 'pack.json')).filter((p) => existsSync(join(ROOT, p))) : [];
+  for (const p of nested) for (const s of ['keys.mjs', 'test-wise.mjs', 'cross-item.mjs']) { const r = run(s, join(ROOT, p)); if (r.status === 0) ok(`${p} passes checks/${s}`); else fail(`${p} fails checks/${s}:\n${r.stdout}${r.stderr}`); }
+  const withIf = [...packs, ...nested].filter((p) => { try { return readJSON(p).documents.some((d) => d.format === 'interactive'); } catch { return false; } });
+  for (const p of withIf) {
+    const r = spawnSync(process.execPath, [IF, join(ROOT, p), '--both'], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
+    if (r.status === 0) ok(`${p} passes checks/interactive-format.mjs (both grading modes)`); else fail(`${p} fails checks/interactive-format.mjs:\n${r.stdout}${r.stderr}`);
+  }
+  const st = spawnSync(process.execPath, [IF, '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
+  const n = (st.stdout.match(/✓ catches/g) || []).length;
+  if (st.status === 0) ok(`checks/interactive-format.mjs catches all ${n} broken copies, and samples/_fixture passes as interactive (every question type, both modes)`); else fail(`checks/interactive-format.mjs --self-test failed:\n${st.stdout}${st.stderr}`);
 }
 
 /* 10. "Paste a link" (scripts/fetch-page.mjs): the address guard, redirects, size/time/type limits, the sign-in check and

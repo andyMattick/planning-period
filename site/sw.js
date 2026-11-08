@@ -8,7 +8,7 @@
 //   so they are never cached; the zips and JSON files the pages make are blob: downloads, also never cached.
 // Bump VERSION when the shell changes; old caches are deleted on activate.
 'use strict';
-var VERSION = 'v10';
+var VERSION = 'v11';
 var SHELL = 'shell-' + VERSION;
 var DATA = 'data-' + VERSION;
 

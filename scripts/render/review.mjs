@@ -14,7 +14,7 @@ export const STATEMENT =
   'I have reviewed every document listed in this approval. I checked the answers, the level fits my students, ' +
   'the wording and content are right for my class, and nothing needs a change. I agree to release my files.';
 
-// pdfs: [{file, title, sha256}] — every PDF in the preview, including the audit report.
+// pdfs: [{file, title, sha256}] — every PDF in the preview, including the audit report, and every interactive page.
 export function reviewHtml(pack, ctx, pdfs, packHash) {
   const id = pack.id || 'order';
   const docs = (pack.documents || []).map((d) => d.title);
@@ -49,7 +49,7 @@ export function reviewHtml(pack, ctx, pdfs, packHash) {
 <div class="brand">${esc(ctx.brand.name)} · Preview for your OK</div>
 <h1>Review your pack before it is released</h1>
 <p>${esc([pack.order?.topic, pack.order?.grade && `grade ${pack.order.grade}`, pack.order?.teacher && `for ${pack.order.teacher}`].filter(Boolean).join(' · '))} · order ${esc(id)}</p>
-<div class="card"><b>Nothing is released until you agree.</b> These preview PDFs are watermarked and there are no Word or PowerPoint files yet. Read every page, then tick the boxes below. If anything needs a change, write it in the comments and press <b>Request changes</b>.</div>
+<div class="card"><b>Nothing is released until you agree.</b> These preview files are watermarked (PDFs, and any interactive page, which opens in your browser: try it as a student would) and there are no Word or PowerPoint files yet. Read every page, then tick the boxes below. If anything needs a change, write it in the comments and press <b>Request changes</b>.</div>
 
 <h2>1. Read the preview files</h2>
 <div class="card files"><ul>${pdfs.map((p) => `<li><a href="${esc(p.file)}" target="_blank">${esc(p.file)}</a> · ${esc(p.title)}</li>`).join('')}</ul>

@@ -21,6 +21,7 @@ import { mathPngMaker, setMathEnabled } from './render/math.mjs';
 import { GAME_KINDS, renderGame } from './render/games.mjs';
 import { isAppDoc, renderAppDoc } from './render/apps.mjs';
 import { isPracticeGameDoc, renderPracticeGameDoc } from './render/practicegames.mjs';
+import { isInteractiveFormat, formatProblems, renderInteractivePages, teacherNoteHtml, teacherNoteLines, versionsOfDoc, howToShareText } from './render/interactive-format.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -50,7 +51,10 @@ function readPack(folder) {
   return pack;
 }
 
-// The approval must name this order, cover exactly the PDFs in the current preview (same SHA-256),
+// The files a teacher reviews and approves: every PDF in the preview and every interactive page (not REVIEW.html).
+export const reviewedFile = (f) => f.endsWith('.pdf') || (f.endsWith('.html') && f !== 'REVIEW.html');
+
+// The approval must name this order, cover exactly the PDFs and interactive pages in the current preview (same SHA-256),
 // and come from this exact pack. Anything else and the final files are not made.
 export function checkApproval(folder, pack) {
   const file = path.join(folder, 'approval.json');
@@ -70,10 +74,10 @@ export function checkApproval(folder, pack) {
   if (a.packHash !== packHashOf(pack)) throw new RenderError(`not approved: pack.json changed after ${a.name} approved it. Render a new preview and get a new approval.`);
   if (!fs.existsSync(previewDir)) throw new RenderError(`not approved: ${previewDir} is missing, so the PDFs ${a.name} saw can't be compared. ${how}`);
   const docs = Array.isArray(a.documents) ? a.documents : [];
-  const current = fs.readdirSync(previewDir).filter((f) => f.endsWith('.pdf')).sort();
+  const current = fs.readdirSync(previewDir).filter(reviewedFile).sort();
   const approved = docs.map((d) => d.file).sort();
   const missing = current.filter((f) => !approved.includes(f));
-  if (missing.length) throw new RenderError(`not approved: the preview has PDFs that weren't approved: ${missing.join(', ')}.`);
+  if (missing.length) throw new RenderError(`not approved: the preview has files that weren't approved: ${missing.join(', ')}.`);
   for (const d of docs) {
     const p = path.join(previewDir, path.basename(String(d.file || '')));
     if (!fs.existsSync(p)) throw new RenderError(`not approved: ${d.file} was approved but isn't in the current preview.`);
@@ -112,6 +116,7 @@ export async function renderPack(folder, { mode } = {}) {
     const figCache = new Map();
     setMathEnabled(pack);
     const ctx = {
+      packHash: packHashOf(pack),
       pack, brand, style, layout: layoutOf(style), subjectLabel, date, preview, approval,
       mathPng: mathPngMaker(figPage), // typeset math as a PNG: Word's fallback and PowerPoint (docs/KINDS-MATH.md)
       async figurePng(svgText) {
@@ -145,6 +150,12 @@ export async function renderPack(folder, { mode } = {}) {
       made.push({ file, what });
     };
     const later = async (fn) => (preview ? null : fn());
+    // An interactive page (docs/KINDS-INTERACTIVE-FORMAT.md) is in the preview (watermarked) and in the final, like a PDF.
+    const html = async (file, text, what, title) => {
+      fs.writeFileSync(path.join(outDir, file), text);
+      made.push({ file, what, title: title || file });
+    };
+    const interactiveFiles = [];
 
     const used = new Set();
     for (const doc of pack.documents) {
@@ -157,6 +168,21 @@ export async function renderPack(folder, { mode } = {}) {
       if (isPracticeGameDoc(doc)) { await renderPracticeGameDoc(doc, base, ctx, { pdf, write, browser }).catch((e) => { throw e instanceof RenderError ? e : new RenderError(e.message); }); continue; }
       const hasQs = questionsOf(doc).length > 0;
       const kind = kindOf(doc);
+      const fmtProblems = formatProblems(pack, doc);
+      if (fmtProblems.length) throw new RenderError(fmtProblems.join('; '));
+      if (isInteractiveFormat(doc)) {
+        // one HTML page per version for students, and the teacher copy (the key) as a PDF, plus Word in the final
+        try { interactiveFiles.push(...await renderInteractivePages(doc, base, ctx, { html })); } catch (e) { throw new RenderError(e.message); }
+        const note = teacherNoteHtml(doc);
+        for (const ver of versionsOfDoc(doc)) {
+          const name = `${base}-teacher${ver ? `-${ver}` : ''}`;
+          const what = `${doc.title}: teacher copy${ver ? `, version ${ver}` : ''} (key, why, skills map; the key for the interactive page)`;
+          const page = copyHtml(doc, ver, ctx, true).replace(/(<div class="tbanner">[\s\S]*?<\/div>)/, `$1${note}`);
+          await pdf(`${name}.pdf`, page, `${doc.title} · Teacher copy${ver ? ` ${ver}` : ''}`, what, doc.title);
+          write(`${name}.docx`, await later(() => copyDocx(doc, ver, ctx, true)), what + ' (Word)');
+        }
+        continue;
+      }
       if (GAME_KINDS.has(kind)) { await renderGame(doc, base, ctx, { pdf, write, later }); continue; } // docs/KINDS-GAMES.md
       const bell = kind === 'bellringer'; // one question a day: day cards for students, a slide a day
       const deck = DECK_ITEMS.has(kind) || DECK_ITEMS.has(doc.item) || (Array.isArray(doc.slides) && doc.slides.length > 0);
@@ -207,9 +233,10 @@ export async function renderPack(folder, { mode } = {}) {
     let files;
     if (preview) {
       const pdfs = made.map((m) => ({ file: m.file, title: m.title, sha256: sha256(fs.readFileSync(path.join(outDir, m.file))) }));
-      fs.writeFileSync(path.join(outDir, 'REVIEW.html'), reviewHtml(pack, ctx, pdfs, packHashOf(pack)));
+      fs.writeFileSync(path.join(outDir, 'REVIEW.html'), reviewHtml(pack, ctx, pdfs, packHashOf(pack)));   // pdfs: every PDF and interactive page
       files = [...made.map((m) => m.file), 'REVIEW.html'];
     } else {
+      if (interactiveFiles.length) write('HOW-TO-SHARE-THE-INTERACTIVE-PAGES.txt', howToShareText(brand, interactiveFiles), 'How to share the interactive pages (email, Google Drive or Classroom, any website)');
       write('project.json', JSON.stringify(scrubSecrets(pack), null, 2) + '\n', 'This pack as data: upload it again to change it, reprint it or make new versions');
       const readme = [
         `${brand.name}: your pack`,
@@ -223,6 +250,7 @@ export async function renderPack(folder, { mode } = {}) {
         'CHECK IT BEFORE STUDENTS SEE IT',
         `  ${brand.aiNotice}`,
         '  Every page says "Made with AI · check before use" in the footer.',
+        ...pack.documents.filter(isInteractiveFormat).flatMap((d) => ['', `INTERACTIVE: ${d.title}`, ...teacherNoteLines(d).map((l) => '  ' + l)]),
         '',
         'TO CHANGE OR REPRINT IT',
         '  Upload project.json with a new order and say what to change (a new version C, easier level 1,',

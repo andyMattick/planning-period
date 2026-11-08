@@ -52,6 +52,15 @@ raised it to 11 with at least 8 multiple choice and no Part A/Part B pairs (`pai
 story to a non-reader). Pricing: `docs/PRICING.md` section 2b. The order page shows the item's questions, passages and
 versions fields and the in-testing option (`site/feasibility.js`, `site/order.js`).
 
+## Printable or interactive (owner, Nov 8, 2026)
+
+Items with `"interactive": true` in `menu.json` (worksheet, homework, quiz, test, reading quiz, study guide, versions)
+can be made as an interactive page (`feasibility.json` `format`; docs/KINDS-INTERACTIVE-FORMAT.md). The format changes
+how students answer, not how much a source supports, so the question counts and limits are the same either way. When
+the teacher picks Interactive with "grade automatically", only multiple choice, true/false, number and matching
+questions are scored by the page; short and written answers go to her. The onboarding agent says so when the order's
+mix is mostly short or written answers (`agents/onboarding.md`).
+
 ## Recalibrate (after every 5 orders)
 
 From `records/<order>.json` (kept after delivery) and the blind tester's findings:

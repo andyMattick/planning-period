@@ -92,6 +92,10 @@ caches sign-in, uploads, orders or signed file links.
 **Paste a link** (Nov 7, 2026) is the site's first server code: `api/fetch-page.js`, a Vercel function the order page
 calls with a POST, so the service worker never touches it (it only handles GETs). Online and signed in only.
 
+**Interactive pages in the review** (Nov 8, 2026): a pack's interactive pages (docs/KINDS-INTERACTIVE-FORMAT.md) are
+listed next to the PDFs in My orders with **Try it here**, which shows the page in a sandboxed frame (`srcdoc`, scripts
+only: no access to the site, its storage or the network), and **Download**. Approve hashes them with the PDFs.
+
 Still to come from the plan below: Background Sync for an order sent offline (today: the zip), push notifications.
 
 ## When there's a real backend (the plan, Nov 5, 2026)

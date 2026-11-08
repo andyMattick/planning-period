@@ -21,6 +21,8 @@ Nothing else is hand-edited. Change the pack, then render again.
     "itemSpecs": {
       "quiz": { "questions": 12, "types": { "mc": 8, "short": 3, "open": 1 }, "choices": 4, "versions": 2 },
       "versions": { "file": "my-unit-test.docx", "versions": 3 },   // which uploaded file is the test
+      "worksheet": { "format": "interactive", "grading": "print" },   // items with interactive: true in menu.json:
+                                                                      // format printable | interactive; grading auto | print
       "notes": { "pages": 3 }, "slides": { "slides": 15 },          // studyguide too: pages
       "project": { "days": 5, "grouping": "groups", "turnIn": "a poster and a one-page reflection" },  // alone | groups | either
       "unitfull": { "days": 10, "lessons": 4, "quizzes": 2, "tests": 1, "bellringers": 10 }
@@ -111,6 +113,7 @@ All optional; a pack without them renders the same as before.
 | `rounds` | The order's number of rounds, when it should be stated outright. Otherwise the audit report uses the highest `round` across the blind, fact and solver checks; Wilco reruns after every change, so its runs are counted on their own ("N Wilco runs") and never set the rounds |
 | finding `forTeacher` | `true` leaves a finding for the teacher to decide even when it has text in `fixed` |
 | `originalReview` | For a `versions` order: findings about the teacher's own uploaded test, shown on the audit report's "What we found in your original" page and not counted with the pack's findings. `{ "file": "my-test.docx", "summary": "…", "findings": [{ "where", "kind": "FIX" \| "KEEP" \| "JUDGMENT", "what", "before", "suggestion", "inVersions" }], "notes": ["…"] }` (`inVersions`: what the A/B versions do instead) |
+| `format`, `grading` (document) | `"interactive"` with `"auto"` or `"print"`: the document is made as one offline HTML page per version for students, plus the teacher copy; `"printable"` or missing: as before. Question fields `tol`, `round`, `hint`, `miss`, `points` are read by the page. docs/KINDS-INTERACTIVE-FORMAT.md |
 | `math`, `mathText`, `figure: {graph}`, `$…$` LaTeX in any text | Math typesetting, graphs as data and the SymPy math check: docs/KINDS-MATH.md |
 
 ### Passages (reading items)
@@ -165,6 +168,7 @@ with no `minutes` shows a dash and counts as "not timed".
 | a document with only a `rubric` | `<doc>.pdf` and `<doc>.docx` |
 | `quizshow`, `crossword`, `wordsearch`, `logicpuzzle` | Games and puzzles: see [`docs/KINDS-GAMES.md`](KINDS-GAMES.md) |
 | `interactive`, `reviewapp` | One offline HTML app each (final only) plus content, solutions and screenshot PDFs: see [`docs/KINDS-APPS.md`](KINDS-APPS.md) |
+| any of `worksheet`, `homework`, `quiz`, `test`, `readingquiz`, `studyguide` with `format: "interactive"` | `<doc>-interactive[-A].html` per version (preview: watermarked; graded in the page or an answer sheet to print, by `grading`) and the teacher copy (PDF; Word in the final); no student PDF or Word: see [`docs/KINDS-INTERACTIVE-FORMAT.md`](KINDS-INTERACTIVE-FORMAT.md) |
 | `practicegame` | One offline HTML game each (final only: answer shooter, grid battle or fix-it desk, in the order's theme) plus a teacher sheet and screenshot PDFs: see [`docs/KINDS-PRACTICEGAMES.md`](KINDS-PRACTICEGAMES.md) |
 
 `project.json` drops any key that looks secret or internal: keys starting with `_`, `secret` or `private`, and keys
@@ -182,7 +186,7 @@ node scripts/render-pack.mjs <folder> --final    # only with a matching approval
 
 **1. Preview** → `<folder>/out-preview/` and `<folder>/preview.zip`
 
-- PDFs only: student and teacher copies (A/B), handouts, cards and rubrics, and `AUDIT-REPORT.pdf` ("Preview: not
+- Interactive pages (`<doc>-interactive[-A].html`, with a visible PREVIEW mark and banner) and PDFs: student and teacher copies (A/B), handouts, cards and rubrics, and `AUDIT-REPORT.pdf` ("Preview: not
   approved yet"). Every page has a diagonal "PREVIEW — not approved for use" mark and a header line with the order id.
 - `REVIEW.html`: an offline page (no network, nothing to install) with the sign-off checklist (I checked the answers;
   the level fits my students; the wording and content are right for my class; nothing needs a change), a comments box
@@ -190,14 +194,14 @@ node scripts/render-pack.mjs <folder> --final    # only with a matching approval
   - **Request changes** saves `comments-<order id>.json`: `{orderId, name, date, packHash, checklist, comments:[{title, comment}]}`.
   - **I agree — release my files** (only when every box is ticked and a name is typed) saves `approval-<order id>.json`:
     `{orderId, name, date (ISO), statement (the exact agreement text), packHash, documents:[{file, title, sha256}]}`,
-    one entry per preview PDF with the SHA-256 of the file they saw.
+    one entry per preview PDF and interactive page with the SHA-256 of the file they saw.
 - No Word, PowerPoint, `project.json` or README: nothing editable leaves before sign-off.
 
 **2. Final** → `<folder>/out/` and `<folder>/out.zip`
 
 Save the teacher's approval file as `<folder>/approval.json`. The final is made only when its `orderId` is the pack's
 `id`, its `statement` is the review page's text, its `packHash` matches the current `pack.json` (SHA-256 of the
-parsed pack, so any content change counts), and every PDF in `out-preview/` is listed with a matching SHA-256.
+parsed pack, so any content change counts), and every PDF and interactive page (`.html` other than `REVIEW.html`) in `out-preview/` is listed with a matching SHA-256.
 Otherwise the renderer refuses with the reason and makes nothing (`exit 1`); change the pack → new preview → new approval.
 The final has no watermark and has every file below; `README.txt` and the audit report say "Approved by <name> on <date>".
 

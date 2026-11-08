@@ -77,6 +77,21 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
    **about 90** after the first real tests confirm it; `quiz` on passages is now `readingquiz` (section 2b). Other
    items unchanged until five real orders (section 3).
 
+## 2a. Interactive format (owner, Nov 8, 2026): same tokens as printable
+
+Items with `"interactive": true` (worksheet, homework, quiz, test, reading quiz, study guide, versions) can be made as
+an interactive page instead of PDF and Word (docs/KINDS-INTERACTIVE-FORMAT.md). **It costs the same tokens**, because
+the agent work is the same:
+- the maker writes the same questions; the extra fields are small (stable ids, which every pack already has, and for
+  "grade automatically" the typed forms of number answers, which `accept` already holds for paper keys; `tol`, `hint`
+  and `miss` are optional). Guess: under 5% more maker output, inside the menu's 1.3–1.7× cushion;
+- the checkers read the same student view; the page's own checks are code (`checks/interactive-format.mjs`: under a
+  second fast, about 8 seconds in the browser for an A/B quiz in both modes on the build machine) and no agent session;
+- rendering is code too: the g8-science quiz's two pages and teacher copies render in about 1.5 seconds.
+Measured nothing from a real order yet: recalibrate with section 3 after the first five interactive orders, and if the
+onboarding or maker logs show more than about 10% extra (for example follow-up questions about grading), propose a
+surcharge to the owner.
+
 ## 2b. English reading quizzes and tests (owner, Nov 5, 2026; set by the first audit)
 
 The owner: English reading quizzes get their own, higher price, "since they cost more to do right". The numbers come

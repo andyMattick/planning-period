@@ -333,6 +333,7 @@
         '<p class="detail">' + esc(it.detail) + '</p>' +
         '<div class="tags"><span class="tag cost">' + it.tokens + ' tokens</span>' +
         (it.versions ? '<span class="tag ab">A/B versions</span>' : '') +
+        (it.interactive ? '<span class="tag int">or interactive</span>' : '') +
         (it.formats || []).map(function (f) { return '<span class="tag">' + esc(f) + '</span>'; }).join('') + '</div>' +
         '<div class="qty" hidden><label for="qty-' + esc(it.id) + '">How many</label>' +
         '<input type="number" id="qty-' + esc(it.id) + '" min="1" max="20" value="1" inputmode="numeric">' +
@@ -350,7 +351,7 @@
       var card = e.target.closest('[data-item]'); if (!card) return;
       var id = card.getAttribute('data-item');
       if (e.target.type === 'checkbox') {
-        if (e.target.checked) picked[id] = picked[id] || { qty: 1, req: '', spec: {} }; else delete picked[id];
+        if (e.target.checked) picked[id] = picked[id] || { qty: 1, req: '', spec: itemById(id).interactive ? { format: 'printable' } : {} }; else delete picked[id];
         card.classList.toggle('on', e.target.checked);
         card.querySelector('.qty').hidden = !e.target.checked;
         $('err-menu').textContent = '';
@@ -446,6 +447,7 @@
       var def = PPFeas.defaultText(id, d);
       return '<div class="item-spec req" data-item-spec="' + esc(id) + '"><h3>' + esc(itemById(id).label) +
         (picked[id].qty > 1 ? ' <span class="muted">× ' + picked[id].qty + '</span>' : '') + '</h3>' +
+        formatHTML(id, spec) +
         (fields.length ? '<div class="spec-grid">' + fields.map(function (f) { return fieldHTML(id, f, spec, d); }).join('') + '</div>' : '') +
         (def ? '<p class="small muted spec-default">' + esc(PPFeas.fill(tmpl, { default: def })) + '</p>' : '') +
         '<div class="spec-notes" data-notes="' + esc(id) + '">' + notesHTML(id, spec, limits[id]) + '</div>' +
@@ -453,6 +455,33 @@
         '<textarea data-req="' + esc(id) + '" id="req-' + esc(id) + '" rows="2" placeholder="For example: level 3 needs two steps">' + esc(picked[id].req) + '</textarea></div></div>';
     }).join('') : '<p class="muted small">Pick something in step 3 to tell us the details for that item.</p>';
     renderFeas();
+  }
+  // Printable or interactive (owner, Nov 8, 2026; docs/KINDS-INTERACTIVE-FORMAT.md): for a menu item with
+  // "interactive": true, how students get it, and, for an interactive page, how it is graded. Stored in the order as
+  // itemSpecs.<item>.format ("printable" | "interactive") and .grading ("auto" | "print"). Same tokens either way.
+  var FORMATS = [['printable', 'Printable', 'PDF and Word, student and teacher copies, as always.'],
+    ['interactive', 'Interactive', 'A page students open and answer on any device (one offline file, no accounts). You also get the teacher copy with the key.']];
+  var GRADINGS = [['auto', 'Grade automatically when the student finishes', 'Multiple choice, true/false, number and matching questions are scored when she presses Finish; short and written answers are listed for you. Good for practice and low-stakes checks.'],
+    ['print', 'Print the results to grade later', 'No answers in the file at all. Finish makes an answer sheet to print or save as a PDF, for you or someone else to grade with the key.']];
+  function radioGroup(id, key, legend, opts, value) {
+    return '<fieldset class="spec-format" data-format-group="' + esc(key) + '"><legend>' + esc(legend) + '</legend>' + opts.map(function (o) {
+      var rid = 'fmt-' + id + '-' + key + '-' + o[0];
+      return '<label class="radio-card" for="' + esc(rid) + '"><input type="radio" id="' + esc(rid) + '" name="fmt-' + esc(id + '-' + key) + '" value="' + esc(o[0]) + '" data-spec="' + esc(id + ':' + key) + '"' + (value === o[0] ? ' checked' : '') + '>' +
+        '<span><b>' + esc(o[1]) + '</b><span class="small muted">' + esc(o[2]) + '</span></span></label>';
+    }).join('') + '</fieldset>';
+  }
+  function formatHTML(id, spec) {
+    if (!(itemById(id) || {}).interactive) return '';
+    var f = spec.format === 'interactive' ? 'interactive' : 'printable';
+    return '<div class="format-box" data-format-box="' + esc(id) + '">' + radioGroup(id, 'format', 'Format', FORMATS, f) +
+      (f === 'interactive' ? radioGroup(id, 'grading', 'Grading', GRADINGS, spec.grading === 'print' ? 'print' : 'auto') +
+        '<p class="small muted">Interactive costs the same tokens as printable. ' + (spec.grading === 'print' ? '' : 'Answers are stored as scrambled codes, not text: enough to stop peeking, not a determined student with programming tools, so use it for practice, not for a graded test.') + '</p>' : '') + '</div>';
+  }
+  function formatLabel(id) {
+    var sp = picked[id] && picked[id].spec;
+    if (!(itemById(id) || {}).interactive || !sp) return '';
+    if (sp.format !== 'interactive') return 'printable';
+    return 'interactive, ' + (sp.grading === 'print' ? 'results printed to grade later' : 'graded automatically');
   }
   // A menu item's options (menu.json items[].options): a Yes/No choice each; one marked "testing" shows its note as a
   // warning when picked (owner, Nov 7, 2026: multiple choice on reading passages is in testing).
@@ -473,20 +502,29 @@
     if (!picked[item]) return;
     var spec = picked[item].spec = picked[item].spec || {};
     if (key === 'types') { spec.types = spec.types || {}; spec.types[parts[2]] = e.target.value; }
+    else if (e.target.type === 'radio' && !e.target.checked) return;
     else spec[key] = e.target.value;
+    if (key === 'format' || key === 'grading') {
+      if (spec.format === 'interactive' && !spec.grading) spec.grading = 'auto';
+      if (spec.format !== 'interactive') delete spec.grading;
+      var fb = $('item-requests').querySelector('[data-format-box="' + item + '"]');
+      if (fb) { fb.outerHTML = formatHTML(item, spec); var again = $('item-requests').querySelector('#fmt-' + item + '-' + key + '-' + e.target.value); if (again) again.focus(); }
+      renderCost();
+      return;
+    }
     if (feasChoice === 'lowered') feasChoice = null;
     var lim = (feas && feas.limits) || {};
     var notes = $('item-requests').querySelector('[data-notes="' + item + '"]');
     if (notes) notes.innerHTML = notesHTML(item, spec, lim[item]);
     renderFeas();
   });
-  $('item-requests').addEventListener('change', function (e) { if (e.target.tagName === 'SELECT') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+  $('item-requests').addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'radio') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
 
   // ---------- cost ----------
   function costLines() {
     var lines = pickedIds().map(function (id) {
       var it = itemById(id), q = picked[id].qty;
-      return { id: id, label: it.label, quantity: q, tokensEach: it.tokens, tokens: it.tokens * q };
+      return { id: id, label: it.label, format: formatLabel(id) || undefined, quantity: q, tokensEach: it.tokens, tokens: it.tokens * q };
     });
     menu.extras.forEach(function (x) {
       if (extras[x.id]) lines.push({ id: x.id, label: x.label, quantity: 1, tokensEach: x.tokens || 0, tokens: x.tokens || 0, extra: true });
@@ -497,14 +535,14 @@
     var lines = costLines();
     var sum = lines.reduce(function (s, l) { return s + l.tokens; }, 0);
     $('cost-lines').innerHTML = (lines.length ? lines.map(function (l) {
-      return '<tr><td>' + esc(l.label) + (l.quantity > 1 ? ' <span class="muted">× ' + l.quantity + '</span>' : '') + '</td>' +
+      return '<tr><td>' + esc(l.label) + (l.quantity > 1 ? ' <span class="muted">× ' + l.quantity + '</span>' : '') + (l.format ? '<br><span class="small muted" data-format-line="' + esc(l.id) + '">' + esc(l.format) + (/^interactive/.test(l.format) ? ' · same price as printable' : '') + '</span>' : '') + '</td>' +
         '<td class="n">' + (l.tokens ? l.tokens + ' tokens' : 'included') + '</td></tr>';
     }).join('') : '<tr><td class="muted">Nothing picked yet</td><td class="n">0</td></tr>') +
       '<tr class="total"><td>Total</td><td class="n">' + sum + ' tokens</td></tr>';
     // The summary card (desktop: right column) and the phone's bottom bar show the same total.
     var sl = $('sum-lines');
     if (sl) sl.innerHTML = lines.length ? lines.map(function (l) {
-      return '<li><span>' + esc(l.label) + (l.quantity > 1 ? ' × ' + l.quantity : '') + '</span><span class="n">' + (l.tokens ? l.tokens : 'incl.') + '</span></li>';
+      return '<li><span>' + esc(l.label) + (l.quantity > 1 ? ' × ' + l.quantity : '') + (l.format ? '<br><span class="small muted">' + esc(l.format) + '</span>' : '') + '</span><span class="n">' + (l.tokens ? l.tokens : 'incl.') + '</span></li>';
     }).join('') : '<li class="muted">Nothing picked yet</li>';
     document.querySelectorAll('[data-sum-total]').forEach(function (el) { el.textContent = sum + ' tokens'; });
     return sum;

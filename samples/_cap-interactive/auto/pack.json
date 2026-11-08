@@ -1,0 +1,403 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-08-g8-science-interactive-auto",
+  "date": "2026-11-08",
+  "order": {
+    "teacher": "Mr. Okafor (made-up sample)",
+    "grade": "8",
+    "subject": "science",
+    "topic": "Chemical reactions and conservation of mass",
+    "items": [
+      "quiz"
+    ],
+    "extras": [
+      "styleSetup"
+    ],
+    "requests": "Follow my lesson notes. I never want a key or explanation that says mass disappears or that gas has no mass. Use the counting table I use for atoms.",
+    "itemRequests": {
+      "notes": "Fill-in blanks like my old notes, with a word bank and a Stop and think box per section.",
+      "slides": "One slide per big idea, plus a closed vs. open flask slide. Speaker notes should tell me what to ask the class.",
+      "quiz": "10 questions, my Know it / Use it / Explain it parts. At least one balancing question and one open vs. closed mass problem. Include a picture with no answer labels."
+    },
+    "quantities": {
+      "quiz": 1
+    },
+    "sources": [
+      "unit4-lesson3-notes.md"
+    ],
+    "styleExamples": [
+      "unit3-density-quiz-A.md",
+      "unit3-guided-notes-states.md"
+    ],
+    "itemSpecs": {
+      "quiz": {
+        "format": "interactive",
+        "grading": "auto"
+      }
+    }
+  },
+  "style": {
+    "notes": [
+      "Name, Date and Period lines across the top, then the title and a \"Science 8 · Mr. Okafor\" line",
+      "Bold directions in one or two short sentences right under the title",
+      "Questions numbered 1), 2), 3) straight through the whole document, across parts",
+      "Multiple-choice letters in parentheses: (A) (B) (C) (D); circle the letter",
+      "Quizzes split into three parts: Part 1 · Know it, Part 2 · Use it, Part 3 · Explain it; Explain it asks for complete sentences and names the words to use in bold",
+      "Guided notes: ⭐ Key idea headings, short fill-in sentences with one blank each, a 🤔 Stop and think question, and a word bank used \"only if you get stuck\"",
+      "Plain, short grade 8 sentences; everyday contexts (a rubber duck, popcorn, a named student who makes a claim to check)",
+      "Teacher key: the letter, a short reason in parentheses for math steps, and \"Look for:\" points for written answers"
+    ],
+    "font": "Arial",
+    "accent": "#2b6cb0",
+    "layout": {
+      "nameBox": false,
+      "boldDirections": true,
+      "fields": [
+        "Name",
+        "Date",
+        "Period"
+      ],
+      "numbering": "1)",
+      "choiceStyle": "(A)",
+      "workLines": 3
+    }
+  },
+  "documents": [
+    {
+      "item": "quiz",
+      "title": "Chemical Reactions Quiz",
+      "directions": "Read each question all the way through. Circle the letter of the best answer. For the last part, write in complete sentences.",
+      "versions": [
+        "A",
+        "B"
+      ],
+      "sections": [
+        {
+          "heading": "Part 1 · Know it",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "reactants and products",
+              "type": "mc",
+              "prompt": {
+                "A": "In the equation CH₄ + 2O₂ → CO₂ + 2H₂O, which substances are the products?",
+                "B": "Magnesium reacts with oxygen to form magnesium oxide. Which list names the reactants?"
+              },
+              "choices": {
+                "A": [
+                  "CH₄ and O₂",
+                  "O₂ only",
+                  "CO₂ and H₂O",
+                  "all four substances"
+                ],
+                "B": [
+                  "magnesium and oxygen",
+                  "oxygen and magnesium oxide",
+                  "only the magnesium oxide",
+                  "magnesium and magnesium oxide"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 0
+              },
+              "why": {
+                "A": "Products are the new substances, written on the right of the arrow: CO₂ and H₂O.",
+                "B": "Reactants are what you start with: magnesium and oxygen. Magnesium oxide is the product."
+              }
+            },
+            {
+              "id": "q2",
+              "level": 1,
+              "skill": "subscripts and coefficients",
+              "type": "mc",
+              "prompt": {
+                "A": "In 3H₂O, what does the 3 tell you?",
+                "B": "In CO₂, what does the small 2 tell you?"
+              },
+              "choices": {
+                "A": [
+                  "There are 3 molecules of water.",
+                  "Each molecule has 3 hydrogen atoms.",
+                  "Each molecule has 3 oxygen atoms.",
+                  "The water has a mass of 3 grams."
+                ],
+                "B": [
+                  "There are 2 molecules of carbon dioxide in all.",
+                  "The carbon atom is counted two times.",
+                  "It took 2 grams of oxygen.",
+                  "One molecule holds 2 oxygen atoms."
+                ]
+              },
+              "answer": {
+                "A": 0,
+                "B": 3
+              },
+              "why": {
+                "A": "The big number in front is a coefficient: it tells how many molecules (3 water molecules).",
+                "B": "The small number after a symbol is a subscript: 2 oxygen atoms in one molecule of CO₂."
+              }
+            },
+            {
+              "id": "q3",
+              "level": 1,
+              "skill": "physical vs. chemical change",
+              "type": "mc",
+              "prompt": {
+                "A": "Which of these is a chemical change?",
+                "B": "Which of these is a physical change?"
+              },
+              "choices": {
+                "A": [
+                  "Ice melting into water",
+                  "Sugar dissolving in tea",
+                  "A glow stick lighting up",
+                  "Crushing an empty can"
+                ],
+                "B": [
+                  "Iron rusting on a bike",
+                  "Cutting paper into strips",
+                  "A cake baking in the oven",
+                  "Wood burning in a fire"
+                ]
+              },
+              "answer": {
+                "A": 2,
+                "B": 1
+              },
+              "why": {
+                "A": "A glow stick gives off light because a new substance forms. Melting, dissolving and crushing make no new substance.",
+                "B": "Cutting paper only changes its shape; it is still paper. Rusting, baking and burning make new substances."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Part 2 · Use it",
+          "questions": [
+            {
+              "id": "q4",
+              "level": 2,
+              "skill": "counting atoms",
+              "type": "mc",
+              "prompt": {
+                "A": "Use the counting table. How many atoms of each element are in 2Ca(OH)₂? Each answer lists Ca, O, H in that order.",
+                "B": "Use the counting table. How many atoms of each element are in 2Fe₂O₃? Each answer lists Fe, O in that order."
+              },
+              "figure": {
+                "A": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 156\" width=\"360\" height=\"156\" role=\"img\" aria-label=\"Empty atom counting table: Ca, O, H\" font-family=\"Arial, sans-serif\"><text x=\"180\" y=\"22\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">2Ca(OH)₂</text><rect x=\"0.5\" y=\"34\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"64\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"84\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Ca</text><rect x=\"0.5\" y=\"94\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"114\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">O</text><rect x=\"0.5\" y=\"124\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"144\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">H</text><line x1=\"100\" y1=\"34\" x2=\"100\" y2=\"154\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"154\" stroke=\"#1f2933\"/></svg>",
+                "B": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 126\" width=\"360\" height=\"126\" role=\"img\" aria-label=\"Empty atom counting table: Fe, O\" font-family=\"Arial, sans-serif\"><text x=\"180\" y=\"22\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">2Fe₂O₃</text><rect x=\"0.5\" y=\"34\" width=\"359\" height=\"30\" fill=\"#e8eef5\" stroke=\"#1f2933\"/><text x=\"50\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Element</text><text x=\"165\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Reactant side</text><text x=\"295\" y=\"54\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#1f2933\">Product side</text><rect x=\"0.5\" y=\"64\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"84\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Fe</text><rect x=\"0.5\" y=\"94\" width=\"359\" height=\"30\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"50\" y=\"114\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">O</text><line x1=\"100\" y1=\"34\" x2=\"100\" y2=\"124\" stroke=\"#1f2933\"/><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"124\" stroke=\"#1f2933\"/></svg>"
+              },
+              "choices": {
+                "A": [
+                  "1, 2, 2",
+                  "2, 2, 2",
+                  "4, 8, 8",
+                  "2, 4, 4"
+                ],
+                "B": [
+                  "4, 6",
+                  "2, 3",
+                  "4, 3",
+                  "4, 12"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 0
+              },
+              "why": {
+                "A": "The coefficient 2 multiplies everything: Ca 2 × 1 = 2; the parentheses hold O and H, each 2 × 2 = 4.",
+                "B": "Fe: 2 × 2 = 4. O: 2 × 3 = 6."
+              }
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "balancing equations",
+              "type": "mc",
+              "prompt": {
+                "A": "Which equation is balanced?",
+                "B": "Which equation for rust is balanced?"
+              },
+              "choices": {
+                "A": [
+                  "Mg + O₂ → MgO",
+                  "2Mg + O₂ → 2MgO",
+                  "2Mg + 2O₂ → 4MgO",
+                  "Mg + 2O₂ → MgO"
+                ],
+                "B": [
+                  "2Fe + 3O₂ → 2Fe₂O₃",
+                  "4Fe + O₂ → 2Fe₂O₃",
+                  "4Fe + 3O₂ → 2Fe₂O₃",
+                  "2Fe + 3O₂ → Fe₂O₃"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 2
+              },
+              "why": {
+                "A": "2Mg + O₂ → 2MgO: Mg 2 and 2, O 2 and 2. Every row of the table matches.",
+                "B": "4Fe + 3O₂ → 2Fe₂O₃: Fe 4 and 4, O 6 and 6. Every row of the table matches."
+              },
+              "space": 2
+            },
+            {
+              "id": "q6",
+              "level": 2,
+              "skill": "mass problems",
+              "type": "numeric",
+              "prompt": {
+                "A": "In a sealed flask, 12.0 g of substance A reacts with 5.0 g of substance B. Only one product forms. What is the mass of the product, in grams?",
+                "B": "In a sealed zip bag, 25.0 g of substance C reacts with 9.5 g of substance D. Only one product forms. What is the mass of the product, in grams?"
+              },
+              "answer": {
+                "A": "17.0",
+                "B": "34.5"
+              },
+              "accept": {
+                "A": [
+                  "17",
+                  "17 g",
+                  "17.0 g"
+                ],
+                "B": [
+                  "34.5 g"
+                ]
+              },
+              "why": {
+                "A": "Mass of reactants = mass of products: 12.0 g + 5.0 g = 17.0 g.",
+                "B": "Mass of reactants = mass of products: 25.0 g + 9.5 g = 34.5 g."
+              },
+              "space": 5
+            },
+            {
+              "id": "q7",
+              "level": 3,
+              "skill": "closed and open systems",
+              "type": "mc",
+              "prompt": {
+                "A": "Baking soda and vinegar react in the open cup in the picture. Predict the balance reading after the fizzing stops. Then choose a change to the setup that would make the after reading match the before reading.",
+                "B": "Baking soda and vinegar react in the sealed zip bag in the picture. Predict the balance reading after the fizzing stops. Then choose a change to the setup that would make the after reading lower than the before reading."
+              },
+              "figure": {
+                "A": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 256\" width=\"400\" height=\"256\" role=\"img\" aria-label=\"An open cup of baking soda and vinegar on a balance: 150.0 g before mixing, an unknown reading after the fizzing stops\" font-family=\"Arial, sans-serif\"><rect x=\"20\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"65\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"100\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">150.0 g</text><rect x=\"40\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 62 95 L 70 182 L 130 182 L 138 95\" fill=\"none\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><path d=\"M 67 140 L 71 180 L 129 180 L 133 140 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"100\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Before mixing</text><rect x=\"220\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"265\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"300\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">? g</text><rect x=\"240\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 262 95 L 270 182 L 330 182 L 338 95\" fill=\"none\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><path d=\"M 267 140 L 271 180 L 329 180 L 333 140 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"300\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">After the fizzing stops</text></svg>",
+                "B": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 256\" width=\"400\" height=\"256\" role=\"img\" aria-label=\"A sealed zip bag of baking soda and vinegar on a balance: flat at 150.0 g before mixing, puffed up with an unknown reading after the fizzing stops\" font-family=\"Arial, sans-serif\"><rect x=\"20\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"65\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"100\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">150.0 g</text><rect x=\"40\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 50 180 Q 46 160 54 146 L 146 146 Q 154 160 150 180 Z\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><rect x=\"52\" y=\"140\" width=\"96\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 60 178 Q 100 160 140 178 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"100\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">Before mixing</text><rect x=\"220\" y=\"190\" width=\"160\" height=\"34\" rx=\"4\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2\"/><rect x=\"265\" y=\"198\" width=\"70\" height=\"20\" rx=\"2\" fill=\"#fff\" stroke=\"#1f2933\"/><text x=\"300\" y=\"213\" text-anchor=\"middle\" font-size=\"13\" fill=\"#1f2933\">? g</text><rect x=\"240\" y=\"182\" width=\"120\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 250 180 Q 234 120 254 78 L 346 78 Q 366 120 350 180 Z\" fill=\"#e8eef5\" stroke=\"#1f2933\" stroke-width=\"2.5\"/><rect x=\"252\" y=\"72\" width=\"96\" height=\"8\" fill=\"#1f2933\"/><path d=\"M 260 178 Q 300 150 340 178 Z\" fill=\"#2b6cb0\" opacity=\"0.25\"/><text x=\"300\" y=\"246\" text-anchor=\"middle\" font-size=\"14\" fill=\"#1f2933\">After the fizzing stops</text></svg>"
+              },
+              "choices": {
+                "A": [
+                  "150.0 g; no change, since the cup keeps every atom",
+                  "Less than 150.0 g; add the vinegar slowly",
+                  "More than 150.0 g; set a loose lid with holes on top",
+                  "Less than 150.0 g; stretch a balloon over the cup"
+                ],
+                "B": [
+                  "Less than 150.0 g; squeeze the air out",
+                  "More than 150.0 g; use a bigger sealed bag",
+                  "150.0 g; leave the bag open while it reacts",
+                  "150.0 g; add more vinegar to the bag"
+                ]
+              },
+              "answer": {
+                "A": 3,
+                "B": 2
+              },
+              "why": {
+                "A": "Open system: the CO₂ gas escapes into the air, so the reading drops below 150.0 g. A balloon over the cup traps the gas (a closed system), so the after reading stays 150.0 g. The atoms went somewhere; gas has mass.",
+                "B": "Closed system: the CO₂ is trapped in the bag (that is why it puffs up), so the reading stays 150.0 g. Leaving the bag open lets the gas escape into the air, so the after reading would be lower. Gas has mass."
+              }
+            }
+          ]
+        },
+        {
+          "heading": "Part 3 · Explain it",
+          "directions": "Write in complete sentences.",
+          "questions": [
+            {
+              "id": "q8",
+              "level": 3,
+              "skill": "balancing: coefficients, not subscripts",
+              "type": "mc",
+              "prompt": {
+                "A": "Dev starts balancing Al + Cl₂ → AlCl₃ by writing a 2 in front of AlCl₃. He counts atoms and finds two rows that still don't match. Which change correctly finishes balancing it?",
+                "B": "Rosa starts balancing Fe + Cl₂ → FeCl₃ by writing a 2 in front of Fe. She counts atoms and finds two rows that still don't match. Which change correctly finishes balancing it?"
+              },
+              "choices": {
+                "A": [
+                  "Put a 2 before Al, then rewrite Cl₂ as Cl₆",
+                  "Write a 2 before Al and a 3 before Cl₂",
+                  "Write a 3 before Cl₂ but leave Al alone",
+                  "Write 6 in front of Cl₂, then a 2 before Al"
+                ],
+                "B": [
+                  "Give Cl₂ a 3 and leave FeCl₃ as it is",
+                  "Turn FeCl₃ into Fe₂Cl₂ so both sides have 2 Fe and 2 Cl",
+                  "Write 3FeCl₃ on the right and 2Cl₂ on the left",
+                  "Use 3Cl₂ on the left and 2FeCl₃ on the right"
+                ]
+              },
+              "answer": {
+                "A": 1,
+                "B": 3
+              },
+              "why": {
+                "A": "After the 2 on AlCl₃: Al 1 on the left, 2 on the right; Cl 2 on the left, 6 on the right. Two coefficients are needed: 2Al + 3Cl₂ → 2AlCl₃ gives Al 2 and 2, Cl 3 × 2 = 6 and 2 × 3 = 6. A 2 before Al with Cl₂ rewritten as Cl₆ makes the counts match (Al 2 and 2, Cl 6 and 6) but changes a subscript, so it is no longer chlorine gas. A 3 before Cl₂ alone fixes Cl (6 and 6) but leaves Al unmatched (1 vs 2). A 6 before Cl₂ puts 12 Cl on the left against 6 on the right: the 6 is the count of Cl atoms needed, not the number of Cl₂ molecules.",
+                "B": "After the 2 on Fe: Fe 2 on the left, 1 on the right; Cl 2 on the left, 3 on the right. Two coefficients are needed: 2Fe + 3Cl₂ → 2FeCl₃ gives Fe 2 and 2, Cl 3 × 2 = 6 and 2 × 3 = 6. A 3 on Cl₂ with no coefficient on FeCl₃ leaves Fe at 2 vs 1 and Cl at 6 vs 3. Turning FeCl₃ into Fe₂Cl₂ makes the counts match but changes subscripts, so it is a different substance. Swapping the numbers (3FeCl₃ and 2Cl₂) gives Fe 2 vs 3 and Cl 4 vs 9."
+              }
+            },
+            {
+              "id": "q9",
+              "level": 3,
+              "skill": "open-system mass problem",
+              "type": "open",
+              "prompt": {
+                "A": "A class does the baking soda and vinegar lab in an open cup. The balance reads 120.0 g before and 118.6 g after. (a) What mass of gas left the cup? (b) Explain why the same reaction in a sealed zip bag would read 120.0 g after. Use the words mass and gas.",
+                "B": "A pad of steel wool on a balance reads 5.0 g. It burns in open air, and afterward the balance reads 6.2 g. (a) What mass of oxygen joined the iron? (b) Kayla says the extra mass was created by the fire. Explain why she is wrong. Use the words mass and atoms."
+              },
+              "answer": {
+                "A": "(a) 120.0 g − 118.6 g = 1.4 g of carbon dioxide gas. (b) In the open cup the gas escaped into the air, so the balance no longer measured its mass; the 1.4 g of gas is now in the air. In a sealed bag the gas is trapped, so all of the mass stays on the balance and it reads 120.0 g.",
+                "B": "(a) 6.2 g − 5.0 g = 1.2 g of oxygen. (b) No mass was created. Iron atoms joined with oxygen atoms from the air, and those oxygen atoms have mass, so the iron oxide has more mass than the steel wool: 5.0 g of steel wool + 1.2 g of oxygen = 6.2 g of iron oxide."
+              },
+              "why": {
+                "A": "Look for: 1.4 g; the gas left the open cup; the gas has mass and stays in the closed bag. A full answer never says the mass disappeared.",
+                "B": "Look for: 1.2 g; oxygen atoms from the air joined the iron; atoms are not created. Steel wool + oxygen used = iron oxide made."
+              },
+              "space": 5
+            },
+            {
+              "id": "q10",
+              "level": 3,
+              "skill": "balanced means atoms, not molecules",
+              "type": "open",
+              "prompt": {
+                "A": "2H₂ + O₂ → 2H₂O has 3 molecules on the reactant side and 2 on the product side. Marcus says it can't be balanced. Is he right? Use a counting table to explain.",
+                "B": "N₂ + 3H₂ → 2NH₃ has 4 molecules on the reactant side and 2 on the product side. Lena says it can't be balanced. Is she right? Use a counting table to explain."
+              },
+              "answer": {
+                "A": "No. Balanced means the same number of atoms of each element, not the same number of molecules. H: 4 on the reactant side, 4 on the product side. O: 2 and 2. Every row matches, so it is balanced.",
+                "B": "No. Balanced means the same number of atoms of each element, not the same number of molecules. N: 2 on the reactant side, 2 on the product side. H: 6 and 6. Every row matches, so it is balanced."
+              },
+              "why": {
+                "A": "Look for: \"No\", a table with H 4/4 and O 2/2, and atoms (not molecules) as the reason.",
+                "B": "Look for: \"No\", a table with N 2/2 and H 6/6, and atoms (not molecules) as the reason."
+              },
+              "space": 5
+            }
+          ]
+        }
+      ],
+      "format": "interactive",
+      "grading": "auto"
+    }
+  ],
+  "checks": {},
+  "log": [],
+  "audit": {
+    "notes": [
+      "Capability fixture: the g8-science sample quiz (made-up teacher and students) in the interactive format, grading auto. Not a gallery sample; its content was checked as part of samples/g8-science."
+    ]
+  }
+}

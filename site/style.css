@@ -339,6 +339,10 @@ a.broken { opacity: .5; pointer-events: none; }
 /* The review: like grading a paper, the preview large and the checklist beside it */
 .review { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line); }
 .paper-frame { display: none; }
+.try-frame { margin-top: 10px; }
+.try-frame iframe { width: 100%; height: min(78vh, 900px); border: 1px solid var(--line-strong); border-radius: 8px; background: #fff; }
+.tag-int { display: inline-block; font-size: 12px; font-weight: 700; border: 1px solid var(--line-strong); border-radius: 999px; padding: 0 7px; margin-left: 4px; }
+.dl-list li.is-page .btn.link { margin-left: auto; }
 @media (min-width: 1100px) {
   body.shell main.wrap:has(.review) { max-width: 1240px; }
   .review { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); gap: 22px; align-items: start; }
@@ -465,3 +469,13 @@ h2[tabindex="-1"]:focus { outline: none; }
 .skip { position: absolute; left: 12px; top: -60px; z-index: 50; background: var(--accent); color: var(--accent-ink); padding: 10px 14px; border-radius: 8px; font-weight: 700; }
 .skip:focus { top: 8px; }
 main:focus { outline: none; }
+
+/* Printable or interactive (docs/KINDS-INTERACTIVE-FORMAT.md) */
+.tag.int { border-color: var(--accent); color: var(--accent); }
+.format-box { margin: 4px 0 12px; }
+.spec-format { border: 0; padding: 0; margin: 0 0 10px; min-width: 0; }
+.spec-format legend { font-weight: 700; margin-bottom: 6px; padding: 0; }
+.radio-card { display: flex; gap: 10px; align-items: flex-start; border: 1.5px solid var(--line-strong); border-radius: 10px; padding: 10px 12px; margin: 0 0 8px; cursor: pointer; min-width: 0; }
+.radio-card:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.radio-card input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
+.radio-card > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
