@@ -1,6 +1,6 @@
 # The online backend: sign-in, uploads, My orders, online review
 
-Roadmap A and B ("Streamline the order loop", docs/ROADMAP.md). A teacher signs in with an email link, Send uploads her
+Roadmap A and B ("Streamline the order loop", docs/ROADMAP.md). A teacher signs in with her email and password (or an email link), Send uploads her
 files straight to private storage, and **My orders** (`site/orders.html`) shows each order's status, the onboarding
 follow-up with one-tap answers, the preview to review (Approve / Request changes / Cancel) and the final files. No zips
 or email in between. The owner moves orders along with `scripts/orders.mjs` until the automatic runner (C) does it.
@@ -13,7 +13,7 @@ The backend is **its own Supabase project** (never Pet World's). Without it the 
 | Piece | Where | What |
 |---|---|---|
 | Tables, rules, functions, buckets | `supabase/migrations/20261106120000_orders.sql` | `teachers`, `orders`, `order_events`, `admins`; row level security; `answer_follow_up`, `request_changes`, `approve_order`, `cancel_order`, `orders_due_for_purge`; the private buckets `uploads` and `deliverables` with their rules |
-| The site's client | `site/backend.js` | A small fetch-based client (the site loads nothing from a CDN): email-link sign-in, tables, functions, uploads, signed links |
+| The site's client | `site/backend.js` | A small fetch-based client (the site loads nothing from a CDN): sign-in (password, email link, create an account, reset, set a password), tables, functions, uploads, signed links. `wireSignIn` draws the sign-in box on both pages |
 | The site's settings | `backend.config.json` (git-ignored) | `{ "supabaseUrl", "supabaseAnonKey" }`, written from the host's environment by `scripts/build-backend-config.mjs`; missing = local mode. `backend.config.example.json` shows the shape |
 | The order page | `site/index.html`, `site/order.js` | The "Send it online" sign-in box at the top. Signed in: Send uploads to `uploads/<teacher>/<order>/{training,sources}/` and adds the order (status `sent`). Signed out, offline or local mode: the zip, as before |
 | My orders | `site/orders.html`, `site/orders.js` | Her orders with status and history; the follow-up; the review; the final files |
@@ -62,15 +62,48 @@ reminder, a cron job on the owner's computer, or the runner in C).
    makes the tables, the rules, the functions and both storage buckets.
 3. **Check the buckets.** Left menu → **Storage**. You should see `uploads` and `deliverables`, both **Private** (no
    "Public" badge). Don't make either public.
-4. **Email sign-in.** Left menu → **Authentication** → **Sign In / Providers**: **Email** on, "Confirm email" on.
-   Then **Emails** (templates): the "Magic Link" email can say "Sign in to your orders". For real teachers, set up
-   **SMTP** (Authentication → Emails → SMTP settings) with the order email account's provider: Supabase's own sender is
-   for testing only and sends just a few emails an hour.
+4. **Email and password sign-in.** Left menu → **Authentication** → **Sign In / Providers** → **Email**:
+   - **Enable Email provider**: on. **Confirm email**: on (a new account must open one email before it can sign in).
+   - **Minimum password length**: **8**. Supabase's own default is 6; the site asks for 8 and says so, and this makes
+     the server refuse anything shorter too. **Password requirements**: leave at "No required characters" (the page
+     only shows the length rule; a longer phrase beats forced symbols).
+   - **Prevent use of leaked passwords** (it may say "Pro plan" or be missing on the free plan): turn it on if your plan
+     has it. A password found in a known data leak is then refused, and the page says "That password has shown up in a
+     data leak on another site. Please choose a different one."
+   - **Secure password change**: leave **off**. When on, Supabase wants a fresh sign-in (or a code) before a password
+     change, which would block "Set a password" in My orders for a teacher who signed in days ago with a link.
+   - Save. Then **Authentication → Sessions** (if your plan shows it): leave "Time-box user sessions" and "Inactivity
+     timeout" empty so teachers stay signed in; leave "Detect and revoke potentially compromised refresh tokens" on.
+
+   Then **Authentication → Emails** (templates). Write the product name from `brand.config.json` where it says
+   *the product name*; keep `{{ .ConfirmationURL }}` exactly as it is.
+   - **Confirm signup**: subject `Confirm your account for the product name`; body
+     `<p>Hi! Tap the link to confirm your email. It opens the site signed in, and from then on you sign in with your
+     email and password.</p><p><a href="{{ .ConfirmationURL }}">Confirm my email</a></p><p>Didn't make an account?
+     Ignore this email.</p>`
+   - **Reset password**: subject `Set a new password`; body `<p>Someone (we hope you) asked to reset the password for
+     this email. Open the link on the device you use for your orders and choose a new password.</p><p><a
+     href="{{ .ConfirmationURL }}">Set a new password</a></p><p>Didn't ask? Ignore this email: your password stays
+     the same.</p>`
+   - **Magic Link**: subject `Your sign-in link`; body `<p><a href="{{ .ConfirmationURL }}">Sign in to your
+     orders</a></p><p>Open it on the device you're ordering from. Tip: set a password in My orders and you won't need
+     this email next time.</p>`
+
+   For real teachers, set up **SMTP** (Authentication → Emails → SMTP settings) with the order email account's provider:
+   Supabase's own sender is for testing only and sends just a few emails an hour. With passwords, a teacher needs an
+   email only once (to confirm) and when she forgets her password, so the limit matters much less than with links.
+   **Authentication → Rate Limits** shows the limits; the defaults are fine (the page says "Too many tries in a short
+   time" or "We've sent several emails to this address already" when one is hit).
 5. **The web address.** Authentication → **URL Configuration**: **Site URL** = the site's address with `/site/`
    (for example the `website` in `brand.config.json` + `/site/`). Under **Redirect URLs** add
    `https://<your site>/site/index.html`, `https://<your site>/site/`, `https://<your site>/site/orders.html`, and for
    testing on your computer `http://localhost:4321/site/**`. The sign-in link only returns to addresses on this list.
-6. **Make yourself the owner.** Open the site, sign in once with your own email (My orders → Email me a sign-in link).
+   The confirmation and password-reset links come back to the page she asked from (the order page or My orders), so
+   these same addresses cover them: nothing to add. Only if the site also runs at another address (a custom domain
+   next to the vercel.app one, or Vercel preview links) add that address's three pages too, or the links fall back
+   to the Site URL.
+6. **Make yourself the owner.** Open the site, make your account once (My orders → Create an account, then open the
+   confirmation email).
    Then in the SQL Editor run:
    ```sql
    insert into public.admins (id, note) select id, 'owner' from auth.users where email = 'YOUR EMAIL';
@@ -94,6 +127,40 @@ reminder, a cron job on the owner's computer, or the runner in C).
 
 Locally: `PP_SUPABASE_URL=… PP_SUPABASE_ANON_KEY=… npm run serve` (or a `backend.config.json` copied from the example)
 switches online orders on at http://localhost:4321/site/.
+
+## Sign-in: passwords, email links and staying signed in (built Nov 8, 2026)
+
+The owner, Nov 8, 2026: "the sign-in email every time is really annoying." Email and password is now the main way;
+the email link is still there as the second.
+
+| What she does | What the page calls | What she sees |
+|---|---|---|
+| **Sign in** (email + password) | `POST /auth/v1/token?grant_type=password` | Signed in at once. Wrong password: "That email and password don't match an account…"; not confirmed yet: "Please confirm your email first…" with **Send the confirmation email again** (`POST /auth/v1/resend`) |
+| **Create an account** | `POST /auth/v1/signup?redirect_to=<this page>` (with `data.has_password`) | "Almost done. Check your email (…) once to confirm your account, then sign in here with your password." The link in that email brings her back signed in ("Your email is confirmed…"). For an address that already has an account Supabase sends nothing and answers the same, so nobody can test who has an account |
+| **Forgot password?** | `POST /auth/v1/recover?redirect_to=<this page>` | "If there's an account for …, we've emailed it a link…". The link brings her back signed in (`#…&type=recovery`) with **Set a new password** on top (kept after a reload until she saves or taps **Not now**) → `PUT /auth/v1/user {password}` |
+| **Email me a sign-in link instead** | `POST /auth/v1/otp` (as before) | As before |
+| **Set a password** (My orders, signed in) | `PUT /auth/v1/user {password, data.has_password}` | For a teacher who has used only links: "Set a password so you don't need an email next time." Afterwards (and for anyone with a password) it reads **Change password** |
+
+- **The rule**: at least 8 characters, shown under every new-password box and checked before sending; the server
+  checks it again (step 4). Leaked or reused passwords get their own message.
+- **Phones fill it in**: real `<form>`s with labelled inputs; `autocomplete="username"` on the email,
+  `current-password` to sign in, `new-password` to create or reset (with a hidden `username` field holding her email so
+  the phone saves the new password under the right account). **Show / Hide** switches the box between dots and text.
+- **Nothing secret is kept**: the password goes from the box to Supabase over HTTPS and the box is cleared. The browser
+  keeps only the session (`pp-session` in localStorage: access token, refresh token, expiry, her id and email, and
+  how she signed in), as before. Nothing logs a password.
+- **Staying signed in**: the access token lasts an hour; before any call within a minute of expiry the client trades the
+  refresh token for a new pair (`grant_type=refresh_token`). A 401 on a call (say the phone's clock is off) gets one
+  refresh and one retry. It signs her out only if Supabase refuses the refresh token itself, never because she was
+  offline or the server hiccuped. Refresh tokens are single use, so with two tabs open the second one picks up the
+  first one's new tokens from localStorage instead of reusing the old one (which Supabase would treat as stolen), and
+  every tab follows a sign-in or sign-out in another tab.
+- **The installed app (PWA)**: on Android and computers the installed app shares the browser's storage, so one sign-in
+  covers both. **An iPhone home-screen app keeps its own sign-in**: a link opened from Gmail or Mail opens in Safari (a
+  different "browser" as far as sign-in goes), so a link, a confirmation or a reset signs in Safari, not the app. With a
+  password she just signs in inside the app. The link form says so when it's opened from the iPhone app, and after a
+  reset in Safari she signs in in the app with the new password. The service worker never touches Supabase (another
+  origin), so none of this is cached.
 
 ## Paste a link (built Nov 7, 2026)
 
@@ -154,8 +221,14 @@ and redeploy: the box then says it couldn't read the page and to upload the save
 ## Tested, and how
 
 - `node scripts/test-orders.mjs [--shots <folder>]`: a fake Supabase (`scripts/test-orders/fake-supabase.mjs`: the Auth,
-  REST and Storage calls the site and the script make, with the same rules as the SQL) and Playwright, iPhone 13 and
-  1280 px, light and dark: local mode (the web page counted as text, Send downloads the zip), sign-in by link, Send
+  REST and Storage calls the site and the script make, with the same rules as the SQL; sign-up with email
+  confirmation, password grant, single-use refresh tokens, reset, `PUT /user`, access tokens a test can expire and a
+  rate limit it can trip) and Playwright, iPhone 13 and 1280 px, light and dark: local mode (the web page counted as
+  text, Send downloads the zip), passwords (create an account → the 8-character rule → sign in before confirming is
+  refused and the email resent → confirm → wrong password → rate limit → sign in, nothing but tokens stored → reload
+  → an expired access token is refreshed, and one the server refuses early gets a refresh and a retry → forgot
+  password → set a new password (the same one refused) → the old one fails and the new one works → a link-only
+  teacher sets a password in My orders and signs in with it; the boxes at 375 and 1280 px, light and dark), sign-in by link, Send
   online, My orders in every status, the follow-up with one tap, Request changes, a tampered preview file refused,
   Approve → the real `render-pack.mjs --final` accepts the approval the browser made (and refuses a changed pack),
   final files, another teacher sees nothing, the owner sees everything, and `purge --due`. It renders the made-up
@@ -176,5 +249,7 @@ and redeploy: the box then says it couldn't read the page and to upload the save
 - **Not tested on Vercel's real runtime or against real websites** (the sandbox has no direct internet): the function's
   bundling (`includeFiles`), the 20 s limit, real paywalls and sites that block bots. Try a few real articles after the
   first deploy.
-- **Not tested against a real Supabase project** (none exists yet): real email delivery, the real magic-link redirect,
-  real Storage limits and the exact error texts. Do step 9 before telling teachers.
+- **Not tested against a real Supabase project** (none exists yet): real email delivery, the real magic-link,
+  confirmation and reset redirects, real Storage limits and the exact error texts (the page matches Supabase's
+  `error_code`s and falls back to its older messages). Do step 9 before telling teachers, with a password: create an
+  account, confirm, sign out, sign in, Forgot password?, and on an iPhone sign in inside the home-screen app.

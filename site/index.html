@@ -36,15 +36,9 @@
   <section class="account" id="account" hidden aria-label="Sign in">
     <div id="acct-out">
       <h2 class="h3">Send it online</h2>
-      <p class="small">Sign in with your email and your files go straight to us: no zip to email. You follow the order, answer our questions and approve your preview in <a href="orders.html">My orders</a>.</p>
-      <div class="signin-row">
-        <label class="sr-only" for="signin-email">Your email</label>
-        <input type="email" id="signin-email" autocomplete="email" placeholder="you@school.org">
-        <button type="button" class="btn" id="signin-btn">Email me a sign-in link</button>
-      </div>
-      <div class="ok small" id="signin-sent" role="status"></div>
-      <div class="error" id="signin-err" role="alert"></div>
-      <p class="small muted">Sign in first: the link opens this page again, and files you picked before don't carry over. Not signing in? Send still works: it makes a zip on this device for you to email.</p>
+      <p class="small">Sign in and your files go straight to us: no zip to email. You follow the order, answer our questions and approve your preview in <a href="orders.html">My orders</a>.</p>
+      <div id="signin-forms"></div>
+      <p class="small muted">Sign in first: an email link opens this page again, and files you picked before don't carry over. Not signing in? Send still works: it makes a zip on this device for you to email.</p>
     </div>
     <div id="acct-in" hidden>
       <p class="small"><b>Signed in</b> as <span id="acct-email"></span> · <a href="orders.html">My orders</a> · <button type="button" class="btn link" id="signout-btn">Sign out</button></p>

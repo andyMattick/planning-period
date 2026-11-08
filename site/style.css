@@ -136,7 +136,7 @@ details.how[open] { padding-bottom: 16px; }
 label { font-weight: 600; display: block; margin-bottom: 4px; }
 .field { margin: 12px 0; }
 .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-input[type=text], input[type=email], input[type=url], input[type=number], select, textarea {
+input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], select, textarea {
   width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong);
   border-radius: 8px; padding: 9px 11px; min-height: 44px;
 }
@@ -277,6 +277,18 @@ details summary { cursor: pointer; font-weight: 600; padding: 6px 0; min-height:
 .signin-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .signin-row input { flex: 1 1 220px; }
 .signin-row .btn { flex: 0 1 auto; }
+.signin-form { max-width: 460px; }
+.signin-form h3 { font-size: 1rem; margin: 10px 0 4px; }
+.signin-form .field { margin: 10px 0; }
+.signin-form .hint { margin: 4px 0 0; }
+.pw-wrap { display: flex; gap: 6px; }
+.pw-wrap input { flex: 1 1 auto; min-width: 0; }
+.pw-wrap .pw-toggle { flex: 0 0 auto; min-width: 64px; padding: 9px 12px; }
+.signin-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 12px 0 0; }
+.signin-alt { margin: 8px 0 0; }
+.signin-alt .btn.link, .pass-prompt .btn.link { padding: 6px 2px; }
+.pass-prompt { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+#acct-reset { margin: 0 0 10px; }
 
 /* Paste a link (order page, steps 1 and 2): the box under each drop zone and the preview card */
 .linkbox { margin: 12px 0 0; }
