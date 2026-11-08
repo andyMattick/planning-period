@@ -143,6 +143,67 @@ A reading passage is its own field, not a section (g7-ela had to fake passages a
 - Older packs that put passages in sections render as before. A review app's memorize passages (`text`, no
   `paragraphs`) are a different thing: docs/KINDS-APPS.md.
 
+### Shared data sets (owner, Nov 8, 2026)
+
+Several questions can share one data set, the way AP exams do: a table and/or a graph with a short intro, written once.
+
+```jsonc
+"stimuli": [ { "id": "s1", "title": "Survey: how students get to school",
+               "intro": "A school asked 100 students …",                       // $…$ math allowed
+               "table": { "columns": ["Grade", "Bus", "Car", "Walk"], "rows": [["Grade 9", 18, 22, 10], …], "caption": "…" },
+               "figure": { "graph": { "kind": "segmentedBar", … } } } ],      // a graph as data (docs/KINDS-MATH.md) or SVG
+"sections": [ { "questions": [ { "id": "q1", "stimulus": "s1", … }, { "id": "q2", "stimulus": "s1", … } ] } ]
+```
+
+- `documents[].stimuli` (the list, or any field, may be `{ "A": …, "B": … }`; a `gen` spec on a data set makes its numbers
+  per version, docs/KINDS-MATH.md §4). A question cites one with `stimulus` (an id; may be per version).
+- **Print** (PDF and Word, student and teacher copies): the data set prints **once**, in a box just before its group's
+  first question, with "Use this for questions 1–3". **Interactive page:** it shows **with each of its questions** (the
+  data is in the page once). The keyless student view prints it once before the group.
+- `checks/keys.mjs`: ids unique and found, a table has rows, each data set has a table, graph or intro, its questions are
+  next to each other, and **at most about 4 a group** (5 is a warning, more an error). `checks/cross-item.mjs`: in a
+  group, no question's key is another question's choice (same text or number) or a 3+ character number in its stem.
+  `checks/math.mjs` checks the data set's graph like a question's.
+
+### Multi-part long answers (owner, Nov 8, 2026)
+
+A `short` or `open` question may have `parts: [{ "label": "a", "prompt": "…", "answer": "a strong answer",
+"checklist": ["what earns full credit", "…"], "points": 2 }, …]` (2 to 6 parts; any field may be per version; the
+question needs no `answer` of its own). Student copy: each part with its own work lines (4, or the question's `space`);
+interactive page: each part its own box; the answer sheet gives each part "Part (a) points: __ / 2". Teacher copy: each
+part's strong answer and its **full-credit checklist**; How to grade adds the parts' points (a part without points
+counts 2, marked as our suggestion). Model answers and checklists never reach a student page (checked).
+
+### Versions: a number, or one per student (owner, Nov 8, 2026)
+
+The order sets `itemSpecs.<quiz|test>.versions`: a number (1 to 10: the document's `versions` has exactly that many
+letters), or `"student"` with `itemSpecs.<item>.students` (2 to 150). **One per student is only for an interactive page
+graded on paper** (`format: "interactive"`, `grading: "print"`): `checks/keys.mjs` fails it on a printable document,
+and the order page offers it only with Interactive.
+
+```jsonc
+{ "item": "quiz", "format": "interactive", "grading": "print", "versions": ["A"],
+  "gen": { … }, "stimuli": [ … ],                       // version A with a gen spec, as for script-made versions
+  "pool": { "students": 30,                              // what the order asked; versions.mjs fills in the rest:
+            "size": 30, "seed": "…", "codes": ["JZUAR", …],
+            "versions": [ { "code": "JZUAR", "questions": { "q1": { "choices": […], "answer": 2, "why": "…" } },
+                            "stimuli": { "s1": { "table": …, "figure": … } } }, … ] } }
+```
+
+- `node scripts/versions.mjs pack.json` makes the pool from A's formulas (the same refusals as B, C…; numbers may repeat
+  between students but never equal A's), runs SymPy on **every** pool key, the estimate-r and segmented-bar checks on
+  every version's graphs, and the data-set check on every version. `--verify` fails when the pool isn't what A makes now.
+- **Student page:** one file, `<doc>-interactive.html`, holding every version's questions and **no key, why, accept,
+  checklist or hash** (checked: `checks/interactive-format.mjs` fails a pool page with any of them or any version's key
+  as text). The student types her name and presses "Get my questions"; `SHA-256("PPS1|<salt>|<name>")` picks her version,
+  and its 5-letter code shows at the top and on her answer sheet.
+- **Teacher:** the teacher copy is version A (the one the checkers read in full); `<doc>-all-versions-key.pdf` prints
+  every version's key under its code; `<doc>-teacher-key.html` (final only, never with the students' pages) shows one
+  version's key from its code or the student's name. A document with 2 or more letter versions gets the same two
+  files, by letter.
+- `pool.blindSample` (optional): the codes the blind tester solved (`checks/student-view.mjs --pool-sample 3`); the
+  audit report says how many versions there are and which ones a fresh agent solved.
+
 ### How the audit report counts findings
 
 One count, used in the front-page sentence, the catches tile and the findings pages:
@@ -239,6 +300,7 @@ no word from its denylist, and the owner copy kept out of every delivery.
 | File | What |
 |---|---|
 | `<doc>-student[-A|-B].pdf` and `.docx` | Student copies, in the teacher's style |
+| `<doc>-all-versions-key.pdf`, `<doc>-teacher-key.html` | A document with 2+ versions or one per student: every version's key to print, and (final only) the teacher's key page that finds one version's key by its letter, code or a student's name |
 | `<doc>-teacher[-A|-B].pdf` and `.docx` | Teacher copies: the key in bold, `why` under each answer, the skills map, and for a quiz or test graded by hand (paper, or an interactive page printed for grading) a **How to grade** page: points, full and partial credit and what else to accept, per question |
 | `<doc>.pptx` | Slides, review games and bell ringers (title slide, one slide per entry, speaker notes; a review game or bell ringer puts the answer in the notes) |
 | `<doc>-handout.pdf` | Slides: a printable handout with room for notes |

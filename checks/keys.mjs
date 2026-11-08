@@ -39,7 +39,33 @@ export function checkKeys(pack) {
     const name = docName(doc, d), kind = kindOf(doc), vers = versionsOf(doc);
     const qs = (doc.sections || []).flatMap((s) => s.questions || []);
     if (!doc.sections || !Array.isArray(doc.sections)) { if (!doc.slides && !doc.rubric) warn(`${name}: no sections, slides or rubric`); }
-    if (VERSIONED_KINDS.includes(kind) && (vers.length < 2 || vers[0] === null)) err(`${name}: a ${kind} needs versions ["A", "B"]`);
+    // versions are one setting on the order (owner, Nov 8, 2026): a number (1 to 10) or one per student (doc.pool)
+    const asked = pack.order?.itemSpecs?.[doc.item]?.versions;
+    const oneAsked = Number(asked) === 1 || asked === 'student';
+    if (VERSIONED_KINDS.includes(kind) && !doc.pool && !oneAsked && (vers.length < 2 || vers[0] === null)) err(`${name}: a ${kind} needs versions ["A", "B"]`);
+    if (Number(asked) >= 2 && Number(asked) <= 26 && vers[0] !== null && vers.length !== Number(asked)) err(`${name}: the order asked for ${asked} versions, the document has ${vers.length}`);
+    if (vers.length > 10) err(`${name}: ${vers.length} versions (10 at most; for more, use one version per student)`);
+    // one version per student (docs/PACK-FORMAT.md): an interactive page only, printed for grading (it holds no keys)
+    if (doc.pool || asked === 'student') {
+      if (doc.format !== 'interactive') err(`${name}: one version per student is only for an interactive page (format "interactive"); for paper, ask for a number of versions`);
+      else if (doc.grading !== 'print') err(`${name}: one version per student is graded on paper ("grading": "print"): the page can't hold keys`);
+      if (asked === 'student' && !doc.pool) err(`${name}: the order asked for one version per student, but the document has no pool`);
+      if (doc.pool) {
+        if (vers.length !== 1 || vers[0] !== 'A') err(`${name}: a pool document is written as version A only (versions ["A"])`);
+        const size = Number(doc.pool.size || doc.pool.students);
+        if (!(Number.isInteger(size) && size >= 2 && size <= 150)) err(`${name}: pool size ${JSON.stringify(size)} (2 to 150 students)`);
+        const pv = Array.isArray(doc.pool.versions) ? doc.pool.versions : [];
+        if (!pv.length) err(`${name}: the pool hasn't been made: run node scripts/versions.mjs on the pack`);
+        else {
+          if (pv.length !== size) err(`${name}: the pool has ${pv.length} versions, but ${size} were asked for`);
+          const codes = pv.map((x) => x.code);
+          if (codes.some((c) => !/^[A-Z]{5}$/.test(String(c)))) err(`${name}: every pool version needs a 5-letter code`);
+          if (new Set(codes).size !== codes.length) err(`${name}: two pool versions share a code`);
+          if (JSON.stringify(doc.pool.codes || []) !== JSON.stringify(codes)) err(`${name}: pool.codes doesn't list the versions' codes in order`);
+        }
+        if (asked === 'student' && pack.order?.itemSpecs?.[doc.item]?.students != null && Number(pack.order.itemSpecs[doc.item].students) !== size) err(`${name}: the order asked for ${pack.order.itemSpecs[doc.item].students} students, the pool has ${size}`);
+      }
+    }
     if (new Set(vers).size !== vers.length) err(`${name}: a version is listed twice`);
     // the format (docs/KINDS-INTERACTIVE-FORMAT.md): printable (the default) or an interactive page, graded in the page or printed
     if (doc.format != null && !['printable', 'interactive'].includes(doc.format)) err(`${name}: format must be "printable" or "interactive" (got ${JSON.stringify(doc.format)})`);
@@ -62,6 +88,44 @@ export function checkKeys(pack) {
     }
     const refsOf = (x) => vers.flatMap((v) => { const r = pick(x.passage, v); return Array.isArray(r) ? r : r ? [r] : []; }).map(String);
     for (const sec of doc.sections || []) for (const x of [sec, ...(sec.questions || [])]) for (const r of refsOf(x)) if (!pids.has(r)) err(`${name}${x.id ? ' ' + x.id : ''}: passage ${JSON.stringify(r)} is not in the document's passages`);
+    // shared data sets (docs/PACK-FORMAT.md, "Shared data sets"): ids, references, the group together and not too long
+    const sids = new Map();
+    for (const v of vers) for (const st of (Array.isArray(pick(doc.stimuli, v)) ? pick(doc.stimuli, v) : [])) {
+      const sid = String(st?.id ?? '');
+      if (!sid) { err(`${name}: a data set has no id`); continue; }
+      if (sids.get(sid) === v) err(`${name}: data set id ${sid} is used twice`);
+      sids.set(sid, v);
+      const t = pick(st.table, v), fig = pick(st.figure ?? st.plot, v);
+      if (!t && !fig && !pick(st.intro, v)) err(`${name} data set ${sid}: it needs a table, a graph or an intro`);
+      if (t && !(Array.isArray(t.rows) && t.rows.length)) err(`${name} data set ${sid}: a table needs rows`);
+    }
+    for (const v of vers) {
+      const order = qs.map((q) => { const r = pick(q.stimulus, v); return r == null || r === '' ? null : String(r); });
+      for (const [i, r] of order.entries()) if (r && !sids.has(r)) err(`${name} ${qs[i].id}: data set ${JSON.stringify(r)} is not in the document's stimuli`);
+      for (const sid of new Set(order.filter(Boolean))) {
+        const at = order.map((r, i) => (r === sid ? i : -1)).filter((i) => i >= 0);
+        if (at[at.length - 1] - at[0] + 1 !== at.length) err(`${name}${v ? ' ' + v : ''}: the questions on data set ${sid} are not next to each other (${at.map((i) => qs[i].id).join(', ')})`);
+        if (at.length > 5) err(`${name}${v ? ' ' + v : ''}: ${at.length} questions on data set ${sid} (at most about 4: a long chain lets one answer lean on another)`);
+        else if (at.length === 5) warn(`${name}${v ? ' ' + v : ''}: 5 questions on data set ${sid} (aim for at most 4)`);
+      }
+    }
+    // multi-part long answers: each part has a prompt and a strong answer or a checklist
+    for (const q of qs) {
+      const parts = q.parts;
+      if (parts == null) continue;
+      if (!['short', 'open'].includes(q.type)) err(`${name} ${q.id}: parts are for short or written (open) answers`);
+      for (const v of vers) {
+        const ps = pick(parts, v);
+        if (!Array.isArray(ps) || ps.length < 2 || ps.length > 6) { err(`${name} ${q.id}: parts needs 2 to 6 parts`); continue; }
+        const labels = ps.map((p, i) => String(p.label ?? String.fromCharCode(97 + i)));
+        if (new Set(labels).size !== labels.length) err(`${name} ${q.id}: two parts have the same label`);
+        ps.forEach((p, i) => {
+          if (!String(p.prompt ?? '').trim()) err(`${name} ${q.id} part ${labels[i]}: no prompt`);
+          if (!String(p.answer ?? '').trim() && !(Array.isArray(p.checklist) && p.checklist.length)) err(`${name} ${q.id} part ${labels[i]}: no strong answer or full-credit checklist for the teacher copy`);
+          if (p.points != null && !(Number(p.points) > 0)) err(`${name} ${q.id} part ${labels[i]}: points must be more than 0`);
+        });
+      }
+    }
     const ids = new Set();
     for (const q of qs) {
       const id = q.id || '(no id)';
@@ -69,7 +133,7 @@ export function checkKeys(pack) {
       else if (ids.has(q.id)) err(`${name}: id ${q.id} is used twice`);
       ids.add(q.id);
       if (!TYPES.includes(q.type)) err(`${name} ${id}: type ${JSON.stringify(q.type)} is not one of ${TYPES.join(', ')}`);
-      for (const f of ['prompt', 'choices', 'answer', 'accept', 'why', 'figure', 'level', 'skill']) {
+      for (const f of ['prompt', 'choices', 'answer', 'accept', 'why', 'figure', 'level', 'skill', 'parts', 'stimulus']) {
         if (!perVersion(q[f])) continue;
         if (vers[0] === null) { err(`${name} ${id}: ${f} is given per version, but the document has no versions`); continue; }
         for (const v of vers) if (!(v in q[f])) err(`${name} ${id}: ${f} has no version ${v}`);
@@ -97,7 +161,7 @@ export function checkKeys(pack) {
       if (r.figure && Number.isInteger(r.answer) && ch[r.answer] && String(r.figure).includes(`>${String(ch[r.answer]).trim()}<`)) warn(`${r.where}: the picture's text contains the key “${ch[r.answer]}”`);
     }
     if (r.type === 'tf' && ![true, false, 'true', 'false', 'True', 'False'].includes(r.answer)) err(`${r.where}: tf answer ${JSON.stringify(r.answer)} is not true or false`);
-    if (['short', 'numeric', 'open', 'match'].includes(r.type) && (r.answer === undefined || r.answer === null || r.answer === '')) (r.type === 'open' ? warn : err)(`${r.where}: no answer${r.type === 'open' ? ' (a model answer for the teacher copy)' : ''}`);
+    if (['short', 'numeric', 'open', 'match'].includes(r.type) && (r.answer === undefined || r.answer === null || r.answer === '') && !r.q.parts) (r.type === 'open' ? warn : err)(`${r.where}: no answer${r.type === 'open' ? ' (a model answer for the teacher copy)' : ''}`);
     if (r.accept !== undefined && !Array.isArray(r.accept)) err(`${r.where}: accept must be a list`);
     const acc = Array.isArray(r.accept) ? r.accept : [];
     if (r.type === 'numeric') {

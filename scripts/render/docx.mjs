@@ -5,8 +5,9 @@ import {
   PageNumber, BorderStyle, ShadingType, TabStopType,
 } from 'docx';
 import { docxRuns as mr, plainMath } from './math.mjs';
+import { isGraphFigure, graphText } from './graph.mjs';
 import { needsHowToGrade, gradingRows, gradingIntro } from './grading.mjs';
-import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped } from './util.mjs';
+import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped, stimulusPlan, groupLine, partsOf } from './util.mjs';
 
 const PAGE = { size: { width: 12240, height: 15840 }, margin: { top: 1008, bottom: 1008, left: 1008, right: 1008, footer: 500 } };
 const TEXT_W = 12240 - 2 * 1008; // twips
@@ -68,7 +69,9 @@ async function figurePara(fig, ctx) {
   const maxW = 430;
   const scale = Math.min(1, maxW / png.width);
   return [
-    P(new ImageRun({ type: 'png', data: png.data, transformation: { width: Math.round(png.width * scale), height: Math.round(png.height * scale) } }), {
+    // a graph drawn from data carries its description (the data a student reads off it) as the picture's alt text
+    P(new ImageRun({ type: 'png', data: png.data, transformation: { width: Math.round(png.width * scale), height: Math.round(png.height * scale) },
+      ...(isGraphFigure(fig) ? { altText: { name: 'Graph', title: plainMath(fig.graph.title || 'Graph'), description: (fig.graph.alt || graphText(fig)).slice(0, 2000) } } : {}) }), {
       spacing: { before: 80, after: 80 },
       indent: { left: 360 },
       keepNext: true,
@@ -134,6 +137,23 @@ async function questionParas(item, ver, ctx, teacher) {
         rows: rows.map((r) => new TableRow({ children: r.map((c) => cell(c, { borders: { top: none, bottom: none, left: none, right: none } })) })),
       })
     );
+  }
+  const parts = partsOf(q, ver);
+  if (parts.length) {
+    const each = q.space != null ? Number(q.space) || 0 : 4;
+    const keyOpts = { indent: { left: 360 }, border: { left: { style: BorderStyle.SINGLE, size: 18, color: '000000', space: 6 } }, shading: { type: ShadingType.CLEAR, fill: 'F4F4F4', color: 'auto' } };
+    for (const p of parts) {
+      out.push(P([runs(`(${p.label})  `, { bold: true }), ...(await mr(p.prompt, {}, ctx)), ...(p.points != null ? [runs(`  [${p.points} point${p.points === 1 ? '' : 's'}]`, { size: 18 })] : [])], { indent: { left: 720, hanging: 360 }, spacing: { before: 100, after: 40 }, keepNext: true }));
+      if (teacher) {
+        if (p.answer != null && p.answer !== '') out.push(P([runs('A strong answer: '), ...(await mr(String(p.answer), { bold: true }, ctx))], keyOpts));
+        if (p.checklist.length) {
+          out.push(P(runs(`Full credit for (${p.label}):`, { italics: true }), keyOpts));
+          for (const c of p.checklist) out.push(P([runs('•  '), ...(await mr(c, { size: 20 }, ctx))], { ...keyOpts, indent: { left: 720 } }));
+        }
+      } else for (let i = 0; i < each; i++) out.push(P(runs('\t', { color: '999999' }), { indent: { left: 720 }, spacing: { before: 200 }, tabStops: [{ type: TabStopType.RIGHT, position: TEXT_W, leader: 'dot' }] }));
+    }
+    if (teacher && q.why) out.push(P([runs('Why: ', { italics: true }), ...(await mr(vv(q.why, ver), { size: 20 }, ctx))], keyOpts));
+    return out;
   }
   if (!teacher) {
     const lines = workLinesFor(q, ctx);
@@ -249,6 +269,26 @@ async function passageParas(p, ver, ctx, accent) {
   return out;
 }
 
+// A shared data set: its title, which questions use it, the intro, the table and the graph, printed once before its group.
+async function stimulusParas(st, ns, ver, ctx) {
+  const box = { border: { left: { style: BorderStyle.SINGLE, size: 12, color: '000000', space: 6 } }, indent: { left: 240 } };
+  const out = [];
+  if (st.title) out.push(P(runs(plainMath(String(st.title)), { bold: true, size: 23 }), { ...box, spacing: { before: 200, after: 40 }, keepNext: true }));
+  if (ns && ns.length) out.push(P(runs(groupLine(ns), { italics: true, size: 19 }), { ...box, keepNext: true }));
+  if (st.intro) out.push(P(await mr(String(st.intro), {}, ctx), { ...box, spacing: { after: 80 }, keepNext: true }));
+  const t = st.table;
+  if (t && Array.isArray(t.rows)) {
+    if (t.caption) out.push(P(runs(plainMath(String(t.caption)), { size: 19 }), { ...box, keepNext: true }));
+    const cols = Array.isArray(t.columns) ? t.columns : [];
+    const rows = [...(cols.length ? [cols] : []), ...t.rows].map((r) => (Array.isArray(r) ? r : [r]).map((c) => plainMath(String(c ?? ''))));
+    const n = Math.max(...rows.map((r) => r.length));
+    out.push(table(rows.map((r) => Array.from({ length: n }, (_, i) => r[i] ?? '')), Array.from({ length: n }, (_, i) => (i === 0 ? 1.6 : 1)), cols.length > 0));
+  }
+  out.push(...(await figurePara(st.figure, ctx)));
+  out.push(P(runs(''), { spacing: { after: 60 } }));
+  return out;
+}
+
 export async function copyDocx(doc, ver, ctx, teacher) {
   const accent = inkAccent(ctx.style.accent);
   const kids = [];
@@ -275,7 +315,7 @@ export async function copyDocx(doc, ver, ctx, teacher) {
   }
   if (doc.directions) kids.push(P(await mr(vv(doc.directions, ver), { bold: ctx.layout.boldDirections }, ctx), { spacing: { before: 100, after: 120 } }));
   const items = questionsOf(doc);
-  const plan = passagePlan(doc, ver);
+  const plan = passagePlan(doc, ver), splan = stimulusPlan(doc, ver);
   for (const p of plan.top) kids.push(...(await passageParas(p, ver, ctx, accent)));
   for (const [si, sec] of (doc.sections || []).entries()) {
     for (const p of plan.before.get(si) || []) kids.push(...(await passageParas(p, ver, ctx, accent)));
@@ -287,6 +327,7 @@ export async function copyDocx(doc, ver, ctx, teacher) {
     if (sec.directions) kids.push(P(await mr(vv(sec.directions, ver), { bold: ctx.layout.boldDirections }, ctx), { keepNext: (sec.questions || []).length > 0, keepLines: true }));
     for (const [k, it] of secItems.entries()) {
       if (k > 0) await qPassages(it);
+      if (splan.first.has(it.q)) { const st = splan.first.get(it.q); kids.push(...(await stimulusParas(st, splan.groups.get(st.id), ver, ctx))); }
       kids.push(...(await questionParas(it, ver, ctx, teacher)));
     }
   }

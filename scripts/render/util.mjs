@@ -93,6 +93,69 @@ export function passagePlan(doc, ver) {
   return { top: ps.filter((p) => !done.has(String(p.id))), before, beforeQ };
 }
 
+// Shared data sets (docs/PACK-FORMAT.md, "Shared data sets"): documents[].stimuli = [{id, title, intro, table, figure}]
+// (the list, or any field, may be per version). A question cites one with `stimulus: <id>`; the questions that cite
+// it are its group. On paper the data set prints once, just before the group's first question; on the interactive page
+// it shows with each of its questions.
+export function stimuliOf(doc, ver) {
+  const list = vv(doc.stimuli, ver);
+  return (Array.isArray(list) ? list : []).filter((x) => x && x.id != null).map((x) => ({
+    id: String(x.id), title: vv(x.title, ver), intro: vv(x.intro, ver), table: vv(x.table, ver), figure: vv(x.figure ?? x.plot, ver),
+  }));
+}
+export const stimulusRef = (q, ver) => { const r = vv(q?.stimulus, ver); return r == null || r === '' ? null : String(r); };
+// {byId: Map(id -> stimulus), first: Map(question -> stimulus printed before it), groups: Map(id -> [question numbers])}
+export function stimulusPlan(doc, ver) {
+  const byId = new Map(stimuliOf(doc, ver).map((x) => [x.id, x]));
+  const first = new Map(), groups = new Map();
+  for (const { q, n } of questionsOf(doc)) {
+    const id = stimulusRef(q, ver);
+    if (!id || !byId.has(id)) continue;
+    if (!groups.has(id)) { groups.set(id, []); first.set(q, byId.get(id)); }
+    groups.get(id).push(n);
+  }
+  return { byId, first, groups };
+}
+// "Use this for questions 3–5." (consecutive) or "questions 3, 5 and 6."
+export function groupLine(ns) {
+  if (!ns || !ns.length) return '';
+  if (ns.length === 1) return `Use this for question ${ns[0]}.`;
+  const run = ns.every((n, i) => i === 0 || n === ns[i - 1] + 1);
+  return `Use this for questions ${run ? `${ns[0]}–${ns[ns.length - 1]}` : `${ns.slice(0, -1).join(', ')} and ${ns[ns.length - 1]}`}.`;
+}
+
+// Multi-part long answers (docs/PACK-FORMAT.md, "Multi-part answers"): a short or open question may have
+// parts: [{label: "a", prompt, answer, checklist: ["…"], points}]; each field may be per version.
+export const partsOf = (q, ver) => (Array.isArray(vv(q?.parts, ver)) ? vv(q.parts, ver) : []).map((p, i) => ({
+  label: String(vv(p.label, ver) ?? String.fromCharCode(97 + i)), prompt: vv(p.prompt, ver) ?? '', answer: vv(p.answer, ver),
+  checklist: (Array.isArray(vv(p.checklist, ver)) ? vv(p.checklist, ver) : []).map(String), points: p.points != null && !Number.isNaN(Number(p.points)) ? Number(p.points) : null,
+}));
+
+// One version per student (docs/PACK-FORMAT.md, "One version per student"): doc.pool = {students, size, seed, codes,
+// versions: [{code, questions: {<id>: {prompt, choices, answer, …}}, stimuli: {<id>: {intro, table, figure, …}}}]},
+// made by scripts/versions.mjs --pool from version A's gen spec. Each pool version as a plain document (no versions):
+// [{code, doc}]. Fields a pool version doesn't list are version A's.
+export const hasPool = (doc) => !!(doc && doc.pool && Array.isArray(doc.pool.versions) && doc.pool.versions.length);
+export function flatVersion(doc, ver = 'A') {
+  const d = structuredClone(doc);
+  delete d.versions; delete d.pool; delete d.gen;
+  const flat = (o) => { for (const [k, v] of Object.entries(o)) if (k !== 'gen' && isVersioned(v)) o[k] = vv(v, ver); delete o.gen; };
+  for (const sec of d.sections || []) { for (const k of ['directions', 'passage']) if (isVersioned(sec[k])) sec[k] = vv(sec[k], ver); for (const q of sec.questions || []) { flat(q); if (q.math && isVersioned(q.math.check)) q.math = { ...q.math, check: vv(q.math.check, ver) }; } }
+  if (isVersioned(d.directions)) d.directions = vv(d.directions, ver);
+  if (d.stimuli) { d.stimuli = vv(d.stimuli, ver); if (Array.isArray(d.stimuli)) d.stimuli.forEach(flat); }
+  return d;
+}
+export function poolDocs(doc) {
+  if (!hasPool(doc)) return [];
+  return doc.pool.versions.map((pv) => {
+    const d = flatVersion(doc, 'A');
+    for (const sec of d.sections || []) for (const q of sec.questions || []) Object.assign(q, structuredClone((pv.questions || {})[q.id] || {}));
+    for (const st of Array.isArray(d.stimuli) ? d.stimuli : []) Object.assign(st, structuredClone((pv.stimuli || {})[st.id] || {}));
+    d.title = doc.title; d.code = pv.code;
+    return { code: pv.code, doc: d };
+  });
+}
+
 // Every question, numbered straight through the document's sections.
 export function questionsOf(doc) {
   const out = [];
@@ -123,6 +186,8 @@ export function answerText(q, ver) {
     return arr.map((ci, i) => `${i + 1}–${letter(Number(ci))}`).join(', ');
   }
   if (Array.isArray(a)) return a.join('; ');
+  const parts = partsOf(q, ver);
+  if (parts.length && (a == null || a === '')) return parts.map((p) => `(${p.label}) ${p.answer ?? ''}`).join(' ');
   return String(a ?? '');
 }
 
