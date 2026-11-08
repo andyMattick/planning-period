@@ -57,8 +57,9 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
   - **B2.** 📁 My documents (opt-in, off by default): keep finished packs, project files and style examples under the
     account to reprint, edit or make versions; delete anytime (the delete notice changes to match).
   - **C.** The automatic runner: a server worker runs the same agent team on each new order (its own API key, a cost cap per
-    order, status updates); onboarding questions answered on the page. **The auditor still reviews every order's findings and
-    teacher comments, but its brief changes arrive as a proposal the owner approves** (never live automatically).
+    order, status updates); onboarding questions answered on the page. The auditor reviews every order's findings and
+    teacher comments; **since Nov 8, 2026 its brief changes go straight to main through a gate** (owner: "auditor makes
+    edits as they see fit"; `scripts/auditor-gate.mjs`), and only refused ones wait for the owner.
   - **C2.** 📚 Shared library (opt-in): after approving, a teacher may share a finished, checked pack (never their uploads)
     with credit and a license (e.g. CC BY); one more review before it's public; others use it as is or "make this mine"
     (remix through the team in their style, fewer tokens); a name scan keeps student information out; sharing earns tokens.
@@ -78,10 +79,18 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
   repository's Actions secrets, one run per order at a time. The build checks in parallel, rechecks only changed items,
   makes number versions by script (`scripts/versions.mjs`) and has a cost stop. Target: about 14 minutes from her answer
   to the preview for a test like the first real order (31 before; docs/audits/TIME-2026-11-08.md).
-  **Pending the owner:** the Actions secrets and variables, a fine-grained token, pg_net and the Vault secrets, running
-  `dispatch.sql`, one made-up order end to end (docs/BACKEND.md, "The automatic runner"). **Open:** change requests
-  after a preview, the final render after approval and the daily purge still run by hand; reading items, apps, puzzles
-  and practice games are handed back to the owner; per-student numbers (docs/KINDS-MATH.md §4, "Per-student numbers
-  later"). **The auditor still reviews every order's findings and her comments, but its brief changes stay proposals
-  the owner approves**: the runner never edits `agents/`, and nothing it runs commits to the repository (its token is
-  read-only).
+  **Pending the owner:** the Actions secrets and variables, two fine-grained tokens (dispatch; the auditor's commits),
+  pg_net and the Vault secrets, running `dispatch.sql` (or `dispatch-approved.sql`), one made-up order end to end
+  (docs/BACKEND.md, "The owner's setup: one checklist").
+  **The final, automatic (owner, Nov 8, 2026):** when she approves, the runner renders the final with
+  `render-pack.mjs --final` (refused if anything changed since she approved: `failed` with a note, nothing posted),
+  posts it (`final_ready`), deletes her uploads, the preview and the working files (finals and her style notes stay;
+  the owner copy of the audit report is never uploaded), and a daily workflow runs `purge --due 7`.
+  **The auditor, automatic (owner, Nov 8, 2026: "auditor makes edits as they see fit"):** after each delivered order
+  and in the weekly test a fresh auditor edits the briefs; `scripts/auditor-gate.mjs` puts on main only brief edits
+  with a version bump and a cause that remove or reword no hard rule, weaken no check and pass `npm run check`;
+  checks, scripts, CLAUDE.md, prices and thresholds stay the owner's. Applied changes: `docs/audits/BRIEF-CHANGES.md`
+  (`git revert <sha>` undoes one); refused ones are listed there for the owner.
+  **Still by hand:** her change requests after a preview (a changes round), the hard cases the runner hands back
+  (reading items, apps, puzzles and practice games, the cost stop, a FIX open after round 3), and what the gate
+  refuses; per-student numbers (docs/KINDS-MATH.md §4, "Per-student numbers later").

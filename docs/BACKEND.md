@@ -17,7 +17,7 @@ The backend is **its own Supabase project** (never Pet World's). Without it the 
 | The site's settings | `backend.config.json` (git-ignored) | `{ "supabaseUrl", "supabaseAnonKey" }`, written from the host's environment by `scripts/build-backend-config.mjs`; missing = local mode. `backend.config.example.json` shows the shape |
 | The order page | `site/index.html`, `site/order.js` | The "Send it online" sign-in box at the top. Signed in: Send uploads to `uploads/<teacher>/<order>/{training,sources}/` and adds the order (status `sent`). Signed out, offline or local mode: the zip, as before |
 | My orders | `site/orders.html`, `site/orders.js` | Her orders with status and history; the follow-up; the review; the final files |
-| The owner's side | `scripts/orders.mjs` | `list`, `pull`, `follow-up`, `answer`, `preview`, `approval`, `final`, `purge`, `status` (docs/RUNBOOK.md) |
+| The owner's side | `scripts/orders.mjs` | `list`, `pull`, `follow-up`, `answer`, `preview` (also keeps the reviewed `pack.json` in `work/`), `preview-get`, `approval`, `final`, `purge`, `status`, `work-get`/`work-put`, `style-*` (docs/RUNBOOK.md); the automatic runner calls the same commands |
 | The test | `scripts/test-orders.mjs` | The whole loop with a fake Supabase and Playwright (below) |
 
 ### The teacher's blind-check choice
@@ -31,8 +31,10 @@ so My orders shows the warning above the preview. What is skipped and what still
 
 `sent` → `onboarding` (the owner pulled it) → `needs_answer` (follow-up posted; she taps her answers) → `building` →
 `preview_ready` → `changes_requested` (her comments; back to `building` and a new preview) or `approved` → `final_ready`.
-`cancelled` (she cancels, any time before she approves) and `failed` (the owner, with a note she sees) end it. `draft`
-is reserved. Every change is logged in `order_events` by a trigger.
+`cancelled` (she cancels, any time before she approves) and `failed` (the owner or the runner, with a note she sees)
+end it. `draft` is reserved. With the automatic runner on, `sent`, `building` and `approved` each start it (the
+onboarding, the build, the final); `approved` → `final_ready` needs nobody, and a final refused by the approval check
+goes to `failed`. Every change is logged in `order_events` by a trigger.
 
 ### Who can do what (the row level security)
 
@@ -56,8 +58,10 @@ Supabase Storage files can only be deleted through its API, not from SQL, so the
 `orders_due_for_purge(days)` lists orders that are `final_ready`, `cancelled` or `failed`, were last changed more than
 `days` ago (default 7) and still have uploads, and `node scripts/orders.mjs purge --due` deletes their uploads and
 preview files and sets `uploads_purged_at`. Final files stay for her to download (`purge <id> --finals` deletes them
-too). Run `purge <id>` as soon as she confirms she has her pack (runbook step 13), and `purge --due` once a day (a
-reminder, a cron job on the owner's computer, or the runner in C).
+too). The runner runs `purge <id>` right after it posts her final files, and `.github/workflows/purge-due.yml` runs
+`purge --due 7` every day (08:23 UTC) for cancelled, failed and older orders, so nothing waits on the owner (by hand:
+`orders.mjs purge <id>`, `purge --due`). Her style notes (`deliverables/<teacher>/style/`) are never purged: they are
+hers, kept for her own agents, deleted with `orders.mjs style-forget <teacher id>` when she asks.
 
 ## The owner's setup, step by step (in the Supabase website)
 
@@ -228,8 +232,9 @@ and redeploy: the box then says it couldn't read the page and to upload the save
 ## The automatic runner (roadmap C, built Nov 8, 2026; needs the owner's setup below)
 
 Owner, Nov 8, 2026: "if this is going to be feasible, we have got to make this shorter" (docs/audits/TIME-2026-11-08.md:
-31 minutes from her answer to the preview, 13 of them gaps between steps). The runner does what the owner did with
-`orders.mjs` and `claude -p`, as soon as she acts:
+31 minutes from her answer to the preview, 13 of them gaps between steps), and the same day: make the final step
+automatic too, and "auditor makes edits as they see fit". The runner does what the owner did with `orders.mjs` and
+`claude -p`, as soon as she acts:
 
 ```
 she sends an order ──► orders row inserted (sent) ──► trigger ──► GitHub repository_dispatch "order-sent"
@@ -239,38 +244,74 @@ she answers in My orders ──► status building ──► trigger ──► "
                                                                      └► Actions: run-order.mjs <id> --stage build
                                                                           maker → versions → parallel checks → FIX rounds →
                                                                           final check + reporter → preview posted (preview_ready)
+                                                                          (the pack she reviews is kept in work/ beside it)
+she presses Approve ──► approve_order: status approved ──► trigger ──► "order-approved"
+                                                                     └► Actions: run-order.mjs <id> --stage final
+                                                                          her approval + the kept pack + the preview files she saw →
+                                                                          render-pack.mjs --final (refuses if anything changed) →
+                                                                          finals posted (final_ready) → purge (uploads, preview, work/) →
+                                                                          🔎 auditor → scripts/auditor-gate.mjs → main (or refused, listed)
+every day 08:23 UTC ──► .github/workflows/purge-due.yml ──► orders.mjs purge --due 7
 ```
 
 | Piece | Where | What |
 |---|---|---|
-| The trigger | `supabase/runner/dispatch.sql` | On a new `sent` order or a change to `building`, `pg_net` posts `{event_type, client_payload: {id}}` to GitHub's dispatches API with a token from Supabase Vault. Not set up = does nothing |
-| The workflow | `.github/workflows/run-order.yml` | Checks the id, installs (npm, Claude Code, Playwright's Chromium, SymPy), runs `scripts/run-order.mjs`, deletes the working copies; one run per order at a time (`concurrency`), 75-minute limit, `contents: read` only |
+| The trigger | `supabase/runner/dispatch.sql` (and `dispatch-approved.sql`, the same function, for an owner who ran the first version) | On a new `sent` order, or a status change to `building` or `approved`, `pg_net` posts `{event_type, client_payload: {id}}` to GitHub's dispatches API with a token from Supabase Vault. Not set up = does nothing |
+| The workflow | `.github/workflows/run-order.yml` | Checks the id, installs (npm, Claude Code, Playwright's Chromium, SymPy), runs `scripts/run-order.mjs`, deletes the working copies; one run per order at a time (`concurrency`), 75 minutes (45 for the final), `contents: read`; the final alone gets `PP_AUDIT_TOKEN`, handed only to the gate's `git push` |
+| The daily purge | `.github/workflows/purge-due.yml` | `orders.mjs purge --due 7` every day: uploads, preview files and kept working files of `final_ready`, `cancelled` and `failed` orders a week old (finals and style notes stay). Off: variable `PP_PURGE_ENABLED` = `false` |
 | The coordinator | `scripts/run-order.mjs` | docs/RUNBOOK.md, "The fast path". Exit 3 = handed to the owner (status unchanged with a note for her, files kept in `deliverables/<teacher>/<id>/work/`); exit 1 = failed (status `failed` with a note she sees) |
-| The test | `scripts/test-run-order.mjs` | `--dry-run` end to end against the fake Supabase (in `npm run check`) |
+| The auditor's gate | `scripts/auditor-gate.mjs` | Briefs only (one version bump and a cause each, no hard rule removed or reworded, nothing skipped), then `npm run check`; commits and pushes to main what passes, lists the rest for the owner (`docs/audits/BRIEF-CHANGES.md`, `docs/audits/refused/`) |
+| The tests | `scripts/test-run-order.mjs`, `scripts/auditor-gate.mjs --self-test` | `--dry-run` end to end against the fake Supabase, and the gate in made-up repositories (both in `npm run check`) |
 
-**What it doesn't do yet** (the owner, by hand, as before): her change requests after a preview (`changes_requested`),
-the final files after she approves (`orders.mjs approval`, `render-pack.mjs --final`, `orders.mjs final`), `purge`,
-the auditor, and orders it hands back: reading items (the no-passage probe's short answers are scored by the lead),
-apps, puzzles and practice games, an unknown subject. A hand-off or failure shows in the Actions tab (a red run) and,
-with GitHub's default notifications, in the owner's email.
+**The final, step by step** (`run-order.mjs --stage final`, docs/RUNBOOK.md steps 11–14): `orders.mjs work-get` (the
+`pack.json` and `run-log.jsonl` that `orders.mjs preview` kept beside the preview: the exact pack she reviewed) →
+`orders.mjs preview-get` (the preview files she saw, from storage) → `orders.mjs approval` (`approval.json`) →
+`render-pack.mjs --final`, which refuses unless the approval names this order and this exact pack and every preview
+file still has the SHA-256 she approved; **on a refusal the order goes to `failed` with a note for her ("We did not
+release your final files: the preview we have on file no longer matches the one you approved…"), nothing is posted,
+and the runner stops** → `orders.mjs final` (status `final_ready`; the owner copy of the audit report,
+`AUDIT-REPORT-OWNER.pdf`, is never uploaded: it stays in the working folder, which is deleted) → `orders.mjs purge
+<id>` (her uploads, the preview files and `work/`; the finals stay for her to download, her style notes stay) → the
+order's record (`records/<id>.json`: checks, log, audit and counts; no documents, uploads, style notes, name or
+requests) → a fresh 🔎 auditor session, capped at $1.00, in a copy of the repository without `.git` → the gate. The
+order is delivered whatever the auditor does; an auditor or gate failure is a line in the run's summary. Every step is
+a line in the run log and the Actions summary (ids, steps, counts and costs; never her content).
 
-### The owner's setup, step by step
+**What stays manual** (the owner, by hand, as before):
+- **Request changes.** Her comments after a preview (`changes_requested`): the owner writes `comments/<id>.md` and runs
+  a maker round, a fresh recheck and a new preview (docs/RUNBOOK.md step 11). `orders.mjs preview` keeps the new pack,
+  so when she then approves, the final runs automatically.
+- **Hard cases the runner hands off** (exit 3): reading items (the no-passage probe's short answers are scored by the
+  lead), apps, puzzles and practice games, an unknown subject, the cost stop, a FIX still open after round 3, a final
+  whose pack wasn't kept (a preview posted by hand before Nov 8, 2026). The status stays where it was, with a note for
+  her; `orders.mjs work-get <id>` fetches the files. A hand-off or failure shows in the Actions tab (a red run) and,
+  with GitHub's default notifications, in the owner's email.
+- **What the gate refuses.** A brief change the gate refuses (or any change to checks, scripts, prices or thresholds the
+  auditor recommends) is listed for the owner in the audit report, `docs/audits/BRIEF-CHANGES.md` and
+  `docs/audits/refused/<date>-<cause>.patch`; the owner applies it by hand if he agrees. Applied changes need nothing:
+  each is a line in `BRIEF-CHANGES.md`, and `git revert <sha>` undoes one.
 
-Nothing here is done for you: no secret, token or trigger exists until you make it.
+### The owner's setup: one checklist, once, in this order
 
-1. **An API key for the runner.** console.anthropic.com → **API keys** → Create key (a workspace just for the runner
-   is best) and set a **monthly spend limit** on that workspace (Limits). Each order is capped by its own cost stop
-   (2× its tokens × $0.10), but the workspace limit is the backstop.
-2. **The repository's Actions secrets.** GitHub → the repository → **Settings → Secrets and variables → Actions →
+Nothing here is done for you: no secret, token, trigger or schedule exists until you make it. Steps 1–6 turn on the
+whole path (send → follow-up → preview → final → purge); 7–8 turn on the auditor; 9 tries it.
+
+1. **An API key for the runner.** console.anthropic.com → **API keys** → **Create key** (a workspace just for the
+   runner is best), then on that workspace **Limits** → set a **monthly spend limit**. Each order is capped by its own
+   cost stop (2× its tokens × $0.10) and each audit at $1.00, but the workspace limit is the backstop.
+2. **The repository's Actions secrets.** GitHub → this repository → **Settings → Secrets and variables → Actions →
    Secrets → New repository secret**, three times:
    - `ANTHROPIC_API_KEY`: the key from step 1;
    - `PP_SUPABASE_URL`: the Project URL (the same as in `~/.pp-owner.env`);
    - `PP_SUPABASE_SERVICE_KEY`: the service_role (secret) key. It only ever lives here and on your computer.
-3. **The repository's Actions variables** (same page, **Variables** tab):
-   - `PP_RUNNER_ENABLED` = `true` (the on/off switch);
+   (The daily purge uses the last two.)
+3. **The repository's Actions variables** (same page, **Variables** tab → **New repository variable**):
+   - `PP_RUNNER_ENABLED` = `true` (the on/off switch for the order runner);
    - `PP_MODEL_FAST` = the alias of the faster model setting, as Claude Code's `/model` list names it (the reporter uses
      it); `PP_MODEL_STANDARD` = the standard one, or leave it unset for Claude Code's default;
-   - optional `PP_CLAUDE_CODE_VERSION` = a Claude Code version to pin (default: the latest).
+   - optional `PP_CLAUDE_CODE_VERSION` = a Claude Code version to pin (default: the latest);
+   - nothing to set for the daily purge or the auditor (they are on once their secrets exist; `PP_PURGE_ENABLED` =
+     `false` or `PP_AUDITOR_ENABLED` = `false` turns one off).
 4. **A token for the trigger.** GitHub → your avatar → **Settings → Developer settings → Personal access tokens →
    Fine-grained tokens → Generate new token**: name "order runner dispatch", expiry 90 days (put a reminder in your
    calendar), **Repository access: Only select repositories** → this repository, **Permissions → Repository
@@ -280,28 +321,58 @@ Nothing here is done for you: no secret, token or trigger exists until you make 
    select vault.create_secret('OWNER/REPO', 'pp_github_repo');        -- this repository, e.g. someone/some-repo
    select vault.create_secret('THE TOKEN FROM STEP 4', 'pp_github_token');
    ```
-   (or Project Settings → Vault → Add secret), then paste and run all of `supabase/runner/dispatch.sql`.
-6. **Try it.** Send a made-up order from the order page (a made-up name, a sample source). Within a minute the
-   **Actions** tab shows "Run order" running; a few minutes later My orders shows the follow-up. Answer it and the
-   build runs; the preview arrives in My orders. To rerun one by hand: Actions → Run order → **Run workflow** with the
-   order id (stage `auto`). On your computer: `source ~/.pp-owner.env && node scripts/run-order.mjs <id>`.
-7. **Privacy.** The runner prints only ids, step names, times and costs, never her files, questions or answers; the
-   runner's machine is thrown away after each job and the workflow deletes the working copies and session
-   transcripts anyway. Keep the repository **private** all the same (Actions logs of a public repository are public).
-   Uploads are still deleted by `orders.mjs purge --due` (run it daily).
+   (or **Project Settings → Vault → Add secret**), then **New query**, paste all of `supabase/runner/dispatch.sql` and
+   **Run**. If you already ran `dispatch.sql` before Nov 8, 2026, run `supabase/runner/dispatch-approved.sql` instead
+   (it adds the approved trigger; running it again changes nothing). Check: **Database → Triggers** lists
+   `orders_dispatch_runner` on `orders`.
+6. **The daily purge.** Nothing more to do: with the secrets from step 2 it runs every day. To see it once now:
+   **Actions → Daily purge → Run workflow**; the run's summary says what it deleted ("Nothing is due for deletion." on
+   a new project).
+7. **A token for the auditor's commits** (the runner commits the auditor's gated brief changes to main). GitHub →
+   **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**: name "order
+   runner auditor", expiry 90 days (calendar reminder), **Only select repositories** → this repository, **Repository
+   permissions → Contents: Read and write** and nothing else. Copy it.
+8. **Its secret.** This repository → **Settings → Secrets and variables → Actions → New repository secret**:
+   `PP_AUDIT_TOKEN` = the token from step 7. Only the final stage gets it, and only the gate's `git push` sees it. If
+   `main` has branch protection that blocks direct pushes, allow this token's owner to push (**Settings → Branches**,
+   the rule for `main`), or the gate's push fails and the audit is listed as not applied. Without this secret the final
+   still runs; the auditor is skipped.
+9. **Try it**, with made-up material only. Send a made-up order from the order page (a made-up name, a sample source).
+   Within a minute **Actions** shows "Run order" running; a few minutes later My orders shows the follow-up. Answer it:
+   the build runs and the preview arrives in My orders. Approve it: a third run makes the final; My orders shows
+   **Ready** with the zip; the run's summary ends with the auditor's digest ("auditor changed: …; to undo: git revert
+   <sha>" or "auditor changed nothing"). In Supabase **Storage**, `uploads/<teacher>/<order>/` and
+   `deliverables/<teacher>/<order>/preview/` and `work/` are gone and `final/` is there. To rerun one by hand: **Actions
+   → Run order → Run workflow** with the order id (stage `auto`; `final` to include the auditor). On your computer:
+   `source ~/.pp-owner.env && node scripts/run-order.mjs <id>`.
+
+**Privacy.** The runner prints only ids, step names, times and costs, never her files, questions or answers; the
+runner's machine is thrown away after each job and the workflow deletes the working copies and session transcripts
+anyway. Keep the repository **private** all the same (Actions logs of a public repository are public). The record the
+auditor commits holds no documents, uploads, style notes, names or requests.
 
 **Turn it off** (any one of these): set the variable `PP_RUNNER_ENABLED` to `false` (runs start and skip at once);
 Actions → Run order → **⋯ → Disable workflow**; or in the SQL Editor
-`alter table public.orders disable trigger orders_dispatch_runner;` (`enable trigger` turns it back on). To remove it:
+`alter table public.orders disable trigger orders_dispatch_runner;` (`enable trigger` turns it back on). The auditor
+alone: `PP_AUDITOR_ENABLED` = `false`, or delete the `PP_AUDIT_TOKEN` secret. The daily purge: `PP_PURGE_ENABLED` =
+`false` or Actions → Daily purge → **Disable workflow**. To remove the trigger:
 `drop trigger if exists orders_dispatch_runner on public.orders; drop function if exists public.dispatch_order_runner();`,
-delete the Vault secrets and revoke the token. With it off, everything works as before: `orders.mjs` by hand.
+delete the Vault secrets and revoke the tokens. With it off, everything works as before: `orders.mjs` by hand.
 
-**Tested:** `scripts/test-run-order.mjs` (the coordinator, dry run, against the fake Supabase: both stages, a FIX round
-with a changed-items recheck, the cost stop, a crash, the blind check skipped); `dispatch.sql` against plain Postgres
-with stand-ins for `vault` and `net` (a new `sent` order dispatches `order-sent`; `building` dispatches
-`order-answered` once; other statuses, a note change, the same status again and a disabled trigger send nothing; no
-secrets = nothing); the workflow with `actionlint`. **Not tested:** a real GitHub dispatch, a real Actions run, real
-Claude Code sessions in it, and pg_net on a real Supabase project: do step 6 before telling teachers.
+**Tested:** `scripts/test-run-order.mjs` (the coordinator, dry run, against the fake Supabase: both early stages, a
+FIX round with a changed-items recheck, the cost stop, a crash, the blind check skipped; her approval → the final
+rendered and posted (`final_ready`), uploads, preview and working files deleted, finals and style notes kept, the
+owner copy never uploaded, the auditor's change through the gate on main in a made-up copy of the repository with its
+record; an auditor that also edits `checks/` refused and listed, the order delivered anyway; a preview file changed
+after her approval → `failed` with a note and nothing posted; the daily `purge --due`); `scripts/auditor-gate.mjs
+--self-test` (a good change lands; checks/, scripts/, CLAUDE.md, prices, thresholds, a removed or reworded rule, a
+skipped check, no bump, no cause, an edited change log and a failing `npm run check` refused; a lost push race rebased);
+`dispatch.sql` and `dispatch-approved.sql` against plain Postgres 16 with stand-ins for `vault` and `net` (the old
+trigger sends nothing on approved; after `dispatch-approved.sql`, run twice, `sent` → `order-sent`, `building` →
+`order-answered`, `approved` → `order-approved` once; the same status again, `final_ready`, `failed`, a disabled trigger
+and no secrets send nothing); both workflows with `actionlint`. **Not tested:** a real GitHub dispatch, a real Actions
+run, real Claude Code sessions in it, a real push with the fine-grained token (or branch protection), the schedule
+firing, and pg_net on a real Supabase project: do step 9 before telling teachers.
 
 ## Tested, and how
 
