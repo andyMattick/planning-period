@@ -14,6 +14,8 @@
      5e. Every sample passes checks/cross-item.mjs (no key printed in another item), except a shrink-only known-failing list.
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
+     6b. The audit report (scripts/test-audit.mjs): teacher report ≤ 3 pages, no AI cost, no internal words; the owner
+        copy is never delivered.
      9. Practice games: the packs in samples/_cap-practicegame pass keys, test-wise and checks/practicegames.mjs, and broken copies fail it.
      10. "Paste a link": scripts/test-fetch-page.mjs (the server's address guard, limits and text extraction).
      12. The interactive format: samples/_cap-interactive (quiz, guided notes, review game) passes keys, test-wise, cross-item and checks/interactive-format.mjs.
@@ -262,6 +264,16 @@ else {
   const made = existsSync(out) ? readdirSync(out, { recursive: true }).length : 0;
   if (r.status === 0 && made) ok(`render-pack.mjs rendered samples/_fixture (${made} files)`);
   else fail(`render-pack.mjs could not render samples/_fixture (exit ${r.status}, ${made} files):\n${(r.stdout || '').slice(-2000)}${(r.stderr || '').slice(-2000)}`);
+}
+
+/* 6b. the audit report's two copies (owner, Nov 8, 2026): scripts/test-audit.mjs on every sample: the teacher report is
+   at most 3 pages, has no AI cost and none of the internal words on its denylist; judgment calls show our pick (and old
+   packs fall back); the owner copy (AUDIT-REPORT-OWNER.pdf) is never in out-preview/, a zip or orders.mjs's uploads. */
+{
+  const r = spawnSync(process.execPath, [join(ROOT, 'scripts', 'test-audit.mjs')], { cwd: ROOT, encoding: 'utf8', timeout: 900000 });
+  const n = (r.stdout.match(/^✓/gm) || []).length;
+  if (r.status === 0) ok(`scripts/test-audit.mjs: the teacher report and the owner copy pass (${n} checks)`);
+  else fail(`scripts/test-audit.mjs failed:\n${(r.stdout || '').split('\n').filter((l) => !l.startsWith('✓')).join('\n')}${r.stderr || ''}`);
 }
 
 /* 7. the app: the manifest is generated from brand.config.json (never typed), and its icons and the service worker exist */
