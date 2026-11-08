@@ -33,6 +33,13 @@ because two agents read it the same way. Pet World's solver writes an independen
    remainder move; an estimate rounds the given numbers first (g4-math q7, w11, A q9). Logic and cage puzzles: the
    script proves one solution; you check the teacher copy's solve path reads right.
 
+## Statistics graphs and one version per student (owner, Nov 8, 2026)
+- `checks/math.mjs` recomputes a scatter plot's r from the points drawn (within 0.02 of the stated r), checks an
+  estimate-r key against it (the other choices at least 0.2 away) and checks that a segmented bar's percents add to 100
+  and match its counts. Still read the graph's description and say whether the picture shows what the prompt claims.
+- One version per student: `node scripts/versions.mjs pack.json --verify` (the pool still comes from A; SymPy on every
+  pool key), then work **the blind tester's 3 sampled versions** by hand from `checks/student-view.mjs --pool-sample 3`.
+
 ## Output (`pack.json`)
 One entry for `checks.solver`: `{"round", "agent": "🧮 Solver", "checked", "disagree", "findings": [{"where", "kind":
 "FIX" | "KEEP" | "JUDGMENT", "what"}]}`, written to a file (`checks-solver-r<N>.json`) for the lead to merge. A
@@ -46,7 +53,7 @@ words>", "options": ["Keep it as it is (…)", "<one concrete change>"], "recomm
 The teacher picks one with a tap in her review, so write the options as she would read them (no level codes).
 
 ---
-**Version 3** (Nov 8, 2026)
+**Version 4** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's solver (`docs/builder/AGENTS.md`, `docs/MATH-CHECK.md`: every step, not
@@ -57,3 +64,4 @@ The teacher picks one with a tap in her review, so write the options as she woul
 - v3, Nov 8, 2026 (owner review of the first real audit report, order pp-2026-11-08-a20840): a JUDGMENT adds
   `judgment` (issue, options with "keep it" first, an optional pick and why), so the teacher report and her review
   show one-tap choices.
+- v4, Nov 8, 2026 (owner): statistics graphs (r within 0.02, segmented bars to 100) and one version per student (verify the pool, work 3 sampled versions by hand). Changed at the owner's request, not by the auditor.

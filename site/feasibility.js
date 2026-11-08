@@ -14,9 +14,15 @@
     { key: 'choices', label: 'Choices per multiple-choice question', type: 'number' }
   ];
   var VERSIONS = { key: 'versions', label: 'Versions (A, B, C)', type: 'number', min: 1, max: 3 };
+  // Quiz and test (owner, Nov 8, 2026): versions are one setting: a number of versions (1 to 10, A, B, C…), or one per
+  // student (interactive pages only: each student's name picks her own numbers), with how many students.
+  var VERSION_PICK = { key: 'versions', label: 'Versions', type: 'select', options: [['', 'Choose'], ['1', '1 version'], ['2', '2 versions (A, B)'],
+    ['3', '3 versions (A, B, C)'], ['4', '4 versions'], ['5', '5 versions'], ['6', '6 versions'], ['7', '7 versions'], ['8', '8 versions'], ['9', '9 versions'],
+    ['10', '10 versions'], ['student', 'One per student (interactive)']], min: 1, max: 10 };
+  var STUDENTS = { key: 'students', label: 'How many students', type: 'number', min: 2, max: 150, onlyFor: { versions: 'student' } };
   var SPECS = {
     worksheet: Q_FIELDS, homework: Q_FIELDS, bellringer: Q_FIELDS, reviewgame: Q_FIELDS,
-    quiz: Q_FIELDS.concat([VERSIONS]), test: Q_FIELDS.concat([VERSIONS]),
+    quiz: Q_FIELDS.concat([VERSION_PICK, STUDENTS]), test: Q_FIELDS.concat([VERSION_PICK, STUDENTS]),
     readingquiz: [Q_FIELDS[0], { key: 'passages', label: 'Passages', type: 'number' }, VERSIONS],
     versions: [
       { key: 'file', label: 'Which uploaded file is the test?', type: 'file' },
@@ -52,7 +58,7 @@
       parts.push(plural(d.questions, 'question') + (t.length ? ' (' + t.join(', ') + ')' : ''));
       if (d.passages) parts.push('on ' + plural(d.passages, 'passage'));
       if (d.choices && (!d.types || d.types.mc)) parts.push(d.choices + ' choices each');
-      if (d.versions) parts.push(plural(d.versions, 'version'));
+      if (d.versions) parts.push(d.versions === 'student' ? 'one version per student' : plural(d.versions, 'version'));
     } else if (id === 'versions') {
       parts.push(plural(d.versions, 'version') + ', with the same number and types of questions as your test');
     } else if (id === 'studyguide') {

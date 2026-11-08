@@ -3,7 +3,7 @@
 
 import { mathHtml as mh, withMathCss, plainMath } from './math.mjs';
 import { needsHowToGrade, gradingRows, gradingIntro } from './grading.mjs';
-import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped } from './util.mjs';
+import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped, stimulusPlan, groupLine, partsOf } from './util.mjs';
 
 const qLabel = (n, ctx) => (ctx.dayLabels ? `Day ${n}` : numLabel(n, ctx.layout));
 
@@ -68,6 +68,14 @@ export function baseCss(ctx) {
   .para { display: grid; grid-template-columns: 22pt 1fr; gap: 0 4pt; margin: 0 0 6pt; break-inside: avoid; line-height: 1.5; }
   .para .pn { font-weight: 700; font-size: 9.5pt; text-align: right; padding-right: 4pt; padding-top: 1.5pt; }
   .para p { margin: 0; }
+  h2 + .stim { break-before: avoid; }
+  .stim { border: 1.5pt solid #000; border-radius: 3pt; padding: 6pt 9pt; margin: 6pt 0 10pt; break-inside: avoid; }
+  .stim h3 { margin: 0 0 3pt; font-size: 11.5pt; } .stim .use { font-size: 9.5pt; font-style: italic; margin: 0 0 4pt; }
+  .stim p { margin: 0 0 4pt; } .stim table { width: auto; min-width: 50%; margin: 4pt 0; } .stim caption { text-align: left; font-size: 9.5pt; padding-bottom: 2pt; }
+  .stim td, .stim th { text-align: center; } .stim td:first-child, .stim th:first-child { text-align: left; }
+  .part { margin: 6pt 0 0; break-inside: avoid; } .part .pl { font-weight: 700; margin-right: 4pt; }
+  .part .pts { font-size: 9pt; margin-left: 4pt; }
+  .key ul { margin: 2pt 0 0 0; padding-left: 14pt; }
   `;
 }
 
@@ -107,6 +115,21 @@ function figureHtml(fig) {
   return svg ? `<div class="fig">${svg}</div>` : '';
 }
 
+// A data table given as data: {columns: [...], rows: [[...], ...], caption}. Header cells and the first column are
+// headers for screen readers.
+export function dataTableHtml(t, mhf = mh) {
+  if (!t || !Array.isArray(t.rows)) return '';
+  const cols = Array.isArray(t.columns) ? t.columns : [];
+  return `<table class="data">${t.caption ? `<caption>${mhf(String(t.caption))}</caption>` : ''}${cols.length ? `<thead><tr>${cols.map((c) => `<th scope="col">${mhf(String(c ?? ''))}</th>`).join('')}</tr></thead>` : ''}<tbody>${t.rows
+    .map((r) => `<tr>${(Array.isArray(r) ? r : [r]).map((c, i) => (i === 0 && cols.length ? `<th scope="row">${mhf(String(c ?? ''))}</th>` : `<td>${mhf(String(c ?? ''))}</td>`)).join('')}</tr>`)
+    .join('')}</tbody></table>`;
+}
+// A shared data set, printed once before the first question of its group.
+export function stimulusHtml(st, ns) {
+  return `<div class="stim" role="group" aria-label="${esc(st.title || 'Data')}">${st.title ? `<h3>${mh(String(st.title))}</h3>` : ''}${ns && ns.length ? `<p class="use">${esc(groupLine(ns))}</p>` : ''}${
+    st.intro ? `<p>${mh(String(st.intro))}</p>` : ''}${dataTableHtml(st.table)}${figureHtml(st.figure)}</div>`;
+}
+
 function choiceCols(choices) {
   const longest = Math.max(0, ...choices.map((c) => plainMath(c).length));
   if (choices.length === 4 && longest <= 14) return 'c4';
@@ -137,6 +160,15 @@ function questionHtml(item, ver, ctx, teacher) {
     inner += `<div class="match"><div>${left
       .map((x, i) => `<div class="row"><span class="blank">${teacher && a[i] != null ? letter(Number(a[i])) : '&nbsp;'}</span><span>${i + 1}. ${mh(x)}</span></div>`)
       .join('')}</div><div>${right.map((x, i) => `<div class="row"><b>${letter(i)}.</b> <span>${mh(x)}</span></div>`).join('')}</div></div>`;
+  }
+  const parts = partsOf(q, ver);
+  if (parts.length) {
+    const each = q.space != null ? Number(q.space) || 0 : 4;
+    inner += parts.map((p) => `<div class="part"><p><span class="pl">(${esc(p.label)})</span>${mh(p.prompt)}${p.points != null ? `<span class="pts">[${p.points} point${p.points === 1 ? '' : 's'}]</span>` : ''}</p>${
+      teacher ? `<div class="key"><div>${p.answer != null && p.answer !== '' ? `A strong answer: <b>${mh(String(p.answer), { bold: true })}</b>` : ''}</div>${p.checklist.length ? `<div>Full credit for (${esc(p.label)}):<ul>${p.checklist.map((c) => `<li>${mh(c)}</li>`).join('')}</ul></div>` : ''}</div>`
+        : `<div class="work">${'<div class="wl"></div>'.repeat(each)}</div>`}</div>`).join('');
+    if (teacher && q.why) inner += `<div class="key"><div class="why">Why: ${mh(vv(q.why, ver))}</div></div>`;
+    return `<div class="q${ctx.dayLabels ? ' day' : ''}"><div class="num">${qLabel(n, ctx)}</div><div class="body">${inner}</div></div>`;
   }
   if (!teacher) {
     const lines = workLinesFor(q, ctx);
@@ -221,7 +253,7 @@ function passageHtml(p, ver) {
 
 export function copyHtml(doc, ver, ctx, teacher) {
   const items = questionsOf(doc);
-  const plan = passagePlan(doc, ver);
+  const plan = passagePlan(doc, ver), splan = stimulusPlan(doc, ver);
   let body = headerHtml(doc, ver, ctx, teacher);
   body += plan.top.map((p) => passageHtml(p, ver)).join('');
   (doc.sections || []).forEach((sec, si) => {
@@ -234,9 +266,13 @@ export function copyHtml(doc, ver, ctx, teacher) {
     const qs = secItems.map((it) => questionHtml(it, ver, ctx, teacher));
     // A passage a question cites (and no earlier one did) prints just before that question.
     const pre = secItems.map((it) => (plan.beforeQ.get(it.q) || []).map((p) => passageHtml(p, ver)).join(''));
+    // a shared data set prints once, just before its group's first question (after the part's heading)
+    const stim = secItems.map((it) => (splan.first.has(it.q) ? stimulusHtml(splan.first.get(it.q), splan.groups.get(splan.first.get(it.q).id)) : ''));
     if (pre[0]) { body += pre[0]; pre[0] = ''; }
-    const q = qs.map((x, i) => pre[i] + x);
-    body += head ? `<div class="keep">${head}${q[0] || ''}</div>${q.slice(1).join('')}` : q.join('');
+    const q = qs.map((x, i) => pre[i] + stim[i] + x);
+    // the heading never sits alone at the foot of a page: kept with the first question, or (a data set's box is long)
+    // printed straight before the box, whose own heading can't break away from it
+    body += head ? (stim[0] ? `${head}${q.join('')}` : `<div class="keep">${head}${q[0] || ''}</div>${q.slice(1).join('')}`) : q.join('');
   });
   if (doc.rubric) body += `<h2>${esc(doc.rubric.title || 'Rubric')}</h2>${rubricTableHtml(doc.rubric)}`;
   if (teacher && items.length) body += skillsMapHtml(doc, ver);

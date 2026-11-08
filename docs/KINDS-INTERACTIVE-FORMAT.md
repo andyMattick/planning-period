@@ -103,6 +103,37 @@ Accessibility: native controls with labels, every question a labelled group, res
 results, AA contrast in light and dark (follows the device), 44 px targets, no sideways scroll from 320 px, print CSS
 (buttons hidden; the results or the sheet print on their own; Name and Date on the sheet).
 
+### Navigation, shared data, parts, graphs (owner, Nov 8, 2026)
+
+- **Question navigation** (worksheets, quizzes, tests…; not notes or the review game): a bar under the name box with
+  **Previous**, a numbered button per question and **Next**; it stays at the top while she scrolls (the numbers scroll
+  sideways inside the bar on a phone, never the page). Each button is a real button (Tab, Enter), says "Question 3,
+  answered" or "not answered yet" to a screen reader and shows ✓ and a filled border when answered (never colour
+  alone); the question she is on is outlined (`aria-current`). A jump scrolls to the question and moves focus to it.
+- **Finish with blanks:** the first press lists the unanswered questions as buttons that jump to each, and says "You can
+  still print your answer sheet: press Finish again" ("finish" when graded in the page); the second press finishes.
+- **Shared data sets** show in a box at the top of each question that uses them (docs/PACK-FORMAT.md).
+- **Multi-part answers:** a box per part, labelled (a), (b)…; the answer sheet lists each part's answer with "Part (a)
+  points: __ / n". Never scored by the page.
+- **Graphs** drawn from data (a segmented bar graph, a scatter plot) have a `<title>` and `<desc>`, and a folded
+  "Data table" under them with the numbers, for screen readers and anyone who wants them.
+
+### One version per student (owner, Nov 8, 2026)
+
+Only for a quiz or test made interactive and **printed for grading** (the page holds no keys). One page,
+`<doc>-interactive.html`, holds every pool version's questions (docs/PACK-FORMAT.md, "Versions"). The student types her
+name and presses **Get my questions**: her name picks her version (the same name gives the same version on any device),
+its 5-letter **version code** shows at the top and on her answer sheet, and a reload keeps it. "Start over for a new
+student" clears it. The teacher grades with the code: `<doc>-all-versions-key.pdf`, or `<doc>-teacher-key.html` (final
+files only; for the teacher; type the code, or the name, to see that version's key; one offline file with the same
+Content-Security-Policy; with one per student these two are always included, while for numbered versions they are the
+paid all-versions key, `itemSpecs.<item>.keyPack`). Not a hidden key behind a keystroke in the student page: there is no key in it at all.
+
+Checks: `checks/interactive-format.mjs` fails a pool page holding any answer, why, accept, checklist, math check or hash,
+or any version's key as text; `--browser` types three made-up names, checks each gets the version its name gives (worked
+out in Node), answers it, and finds the code on the sheet. `scripts/test-interactive.mjs` greps the rendered student
+page for every version's keys and opens the teacher key page: a code and a name each give the right version's key.
+
 ## Guided notes (`notes`)
 
 The page is the notes, not a quiz: a name box and the date, the directions, then each section's heading and its word

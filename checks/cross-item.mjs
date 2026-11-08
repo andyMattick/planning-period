@@ -19,7 +19,36 @@
    the key. FAIL on any hit. Documents with fewer than 4 keyed items in a version are skipped. */
 import { pathToFileURL } from 'node:url';
 import { words, content } from './test-wise-cues.mjs';
-import { loadPack, rows, nextRound, writeWilco, argsOf } from './pack-lib.mjs';
+import { loadPack, rows, nextRound, writeWilco, argsOf, norm, valueOf, sameValue, pick } from './pack-lib.mjs';
+
+/* Shared data sets (owner, Nov 8, 2026; docs/PACK-FORMAT.md, "Shared data sets"): in a group of questions on one data set,
+   no question's key may be printed as another question's choice (the same text, or the same number), and a number key
+   of 3 or more characters may not be printed in another question's stem: a student could read one answer off another.
+   Every group is checked, however small the document (the general check above needs 4 keyed items). */
+const keyOf = (r) => (r.type === 'mc' && Array.isArray(r.choices) && Number.isInteger(r.answer) ? String(r.choices[r.answer] ?? '') : ['numeric', 'short'].includes(r.type) && r.answer != null ? String(r.answer) : null);
+export function stimulusHits(pack) {
+  const hits = [], groups = new Map();
+  for (const r of rows(pack)) {
+    const sid = pick(r.q.stimulus, r.ver);
+    if (sid == null || sid === '') continue;
+    const k = `${r.d}|${r.ver}|${sid}`;
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(r);
+  }
+  for (const list of groups.values()) for (const r of list) {
+    const key = keyOf(r); if (!key || !norm(key)) continue;
+    const val = (x) => valueOf(String(x ?? '').replace(/\s*%\s*$/, '').replace(/^\$/, ''));   // 44.4% and 44.4 are the same number here
+    const kv = val(key);
+    for (const o of list) {
+      if (o === r) continue;
+      (Array.isArray(o.choices) ? o.choices : []).forEach((c, i) => {
+        if (norm(c) === norm(key) || (kv && sameValue(kv, val(c)))) hits.push({ where: r.where, other: o.where, how: 'stimulus', what: `its key "${key}" is choice ${'ABCDEF'[i]} of ${o.id} (same data set)` });
+      });
+      if (kv && norm(key).length >= 3 && ` ${norm(o.prompt)} `.match(new RegExp(`[^0-9.]${norm(key).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^0-9]`))) hits.push({ where: r.where, other: o.where, how: 'stimulus', what: `its key "${key}" is printed in ${o.id}'s question (same data set)` });
+    }
+  }
+  return hits;
+}
 
 const plain = (s) => String(s ?? '').replace(/\[\d+\]|\((?:paragraph|para\.?|¶)\s*\d+\)/gi, ' ');
 const SKIPW = new Set(['part', 'paragraph', 'quotation', 'passage', 'story', 'article', 'author', 'best', 'support', 'supports', 'answer', 'question', 'which', 'most', 'likely']);
@@ -64,7 +93,8 @@ export function crossItem(pack) {
       }
     }
   }
-  return { checked, hits, pass: hits.length === 0 };
+  hits.push(...stimulusHits(pack));
+  return { checked: checked || (hits.length ? 1 : rows(pack).filter((r) => r.q.stimulus != null).length), hits, pass: hits.length === 0 };
 }
 
 function report(f, res, flags) {
@@ -103,6 +133,13 @@ function selfTest() {
     if (leak.hits.some((h) => h.how === how && h.where.endsWith(from) && h.other.endsWith(to))) console.log(`✓ catches ${how}: ${from}'s key in ${to}`);
     else { bad++; console.log(`✗ missed ${how}: ${from}'s key in ${to} (${JSON.stringify(leak.hits)})`); }
   }
+  // a data-set group: q2's key printed as a choice of q3 (same data set) is caught; the clean group passes
+  const grp = (leak) => ({ format: 1, id: 'st', order: { subject: 'math' }, documents: [{ item: 'quiz', title: 'Data', stimuli: [{ id: 's1', intro: 'x', table: { rows: [['a', 1]] } }], sections: [{ questions: [
+    { id: 'q1', type: 'mc', stimulus: 's1', prompt: 'What percent of grade 9 walk?', choices: ['20%', '10%', '55.6%', '44%'], answer: 0 },
+    { id: 'q2', type: 'numeric', stimulus: 's1', prompt: 'What percent of walkers are in grade 12?', answer: '44.4' },
+    { id: 'q3', type: 'mc', stimulus: 's1', prompt: 'Which is closest?', choices: ['12%', leak ? '44.4%' : '30%', '61%', '8%'], answer: 0 }] }] }] });
+  if (stimulusHits(grp(false)).length) { bad++; console.log('✗ flagged a clean data-set group'); } else console.log('✓ passes a data-set group whose items never show each other\'s keys');
+  if (stimulusHits(grp(true)).some((h) => h.where.endsWith('q2') && h.other.endsWith('q3'))) console.log('✓ catches stimulus: q2\'s key as a choice of q3 in the same data set'); else { bad++; console.log('✗ missed q2\'s key as a choice of q3 (same data set)'); }
   return bad;
 }
 

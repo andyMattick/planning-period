@@ -85,6 +85,14 @@ try {
     if (typeof it.versions !== 'boolean') errs.push(`${it.id}: versions must be true or false`);
     // interactive: true = the order page offers Printable or Interactive for it (docs/KINDS-INTERACTIVE-FORMAT.md)
     if (it.interactive !== undefined && it.interactive !== true) errs.push(`${it.id}: interactive must be true or left out`);
+    // versionPricing (owner, Nov 8, 2026: versions are one setting): a number of versions or one per student, priced in docs/PRICING.md
+    if (it.versionPricing != null) {
+      const vp = it.versionPricing;
+      for (const k of ['included', 'perExtra', 'maxVersions', 'perStudent', 'defaultStudents', 'maxStudents', 'keyPack']) if (!Number.isInteger(vp[k]) || vp[k] < 0) errs.push(`${it.id}: versionPricing.${k} must be a whole number, 0 or more`);
+      if (!(vp.maxVersions >= vp.included && vp.maxVersions <= 26)) errs.push(`${it.id}: versionPricing.maxVersions must be from included to 26`);
+      if (!(vp.defaultStudents >= 2 && vp.defaultStudents <= vp.maxStudents && vp.maxStudents <= 150)) errs.push(`${it.id}: versionPricing students must be 2 ≤ default ≤ max ≤ 150`);
+      if (!it.interactive) errs.push(`${it.id}: one version per student needs interactive: true`);
+    }
     if (it.interactive && !['worksheet', 'homework', 'quiz', 'test', 'readingquiz', 'studyguide', 'versions', 'notes', 'reviewgame'].includes(it.id)) errs.push(`${it.id}: only items with questions to answer can be interactive`);
   }
   if (!(menu.items || []).length) errs.push('no items');
@@ -242,6 +250,33 @@ if (existsSync(CAP_MATH)) {
   rmSync(tmp, { recursive: true, force: true });
 }
 
+// the statistics graphs (owner, Nov 8, 2026): broken copies of the stats sample fail checks/math.mjs
+const STATS = join(ROOT, 'samples/_cap-interactive/stats/pack.json');
+if (existsSync(STATS)) {
+  const tmp = mkdtempSync(join(tmpdir(), 'pp-stats-'));
+  const base = JSON.parse(readFileSync(STATS, 'utf8'));
+  const st = (p, id) => p.documents[0].stimuli.find((x) => x.id === id);
+  const q = (p, id) => p.documents[0].sections.flatMap((x) => x.questions).find((x) => x.id === id);
+  const breaks = [];
+  { const p = structuredClone(base); const k = q(p, 'q4'); k.answer.A = (k.answer.A + 1) % 4; breaks.push(['an estimate-r key that is not the plotted r', p]); }
+  { const p = structuredClone(base); const g = st(p, 's2').figure.A.graph; g.points = [[1, 50], [2, 60], [3, 55], [4, 70], [5, 65], [6, 80]]; breaks.push(['a scatter plot whose points don\'t have its stated r', p]); }
+  { const p = structuredClone(base); st(p, 's1').figure.A.graph.bars[0].percents = [30, 50, 20]; breaks.push(['segmented bar percents that don\'t match the counts', p]); }
+  { const p = structuredClone(base); const b = st(p, 's1').figure.A.graph.bars[1]; delete b.counts; b.percents = [20, 50, 20]; breaks.push(['segmented bar percents that don\'t add to 100', p]); }
+  breaks.forEach(([what, p], i) => {
+    const f = join(tmp, `broken-stats-${i}.json`); writeFileSync(f, JSON.stringify(p));
+    const r = run('math.mjs', f);
+    if (r.status === 1) ok(`checks/math.mjs catches ${what}`); else fail(`checks/math.mjs did not catch ${what} (exit ${r.status}):\n${r.stdout}${r.stderr}`);
+  });
+  for (const [what, edit] of [['a data set with 6 questions', (p) => { const qs = p.documents[0].sections[0].questions; qs.forEach((x) => { x.stimulus = 's1'; }); p.documents[0].sections[1].questions[0].stimulus = 's1'; }],
+    ['one version per student on a printable document', (p) => { p.documents[0].format = 'printable'; delete p.documents[0].grading; }],
+    ['a pool missing a version', (p) => { p.documents[0].pool.versions.pop(); p.documents[0].pool.codes.pop(); }]]) {
+    const p = structuredClone(base); edit(p); const f = join(tmp, `broken-stats-keys-${what.length}.json`); writeFileSync(f, JSON.stringify(p));
+    const r = run('keys.mjs', f);
+    if (r.status === 1) ok(`checks/keys.mjs catches ${what}`); else fail(`checks/keys.mjs did not catch ${what} (exit ${r.status}):\n${r.stdout}${r.stderr}`);
+  }
+  rmSync(tmp, { recursive: true, force: true });
+}
+
 /* 5c. the puzzle checks still bite: break the games fixture one way at a time (checks/puzzles.mjs --self-test) */
 const GAMES = join(ROOT, 'samples/_cap-games/pack.json');
 if (existsSync(GAMES)) {
@@ -269,6 +304,24 @@ else {
   const made = existsSync(out) ? readdirSync(out, { recursive: true }).length : 0;
   if (r.status === 0 && made) ok(`render-pack.mjs rendered samples/_fixture (${made} files)`);
   else fail(`render-pack.mjs could not render samples/_fixture (exit ${r.status}, ${made} files):\n${(r.stdout || '').slice(-2000)}${(r.stderr || '').slice(-2000)}`);
+}
+
+// the five features in one made-up sample (shared data, statistics graphs, parts, navigation, one version per student):
+// samples/_cap-interactive/stats renders, with one student page, the teacher copy and every version's key
+{
+  const SDIR = join(ROOT, 'samples/_cap-interactive/stats');
+  if (existsSync(join(SDIR, 'pack.json'))) {
+    const tmp = mkdtempSync(join(tmpdir(), 'pp-stats-render-'));
+    writeFileSync(join(tmp, 'pack.json'), readFileSync(join(SDIR, 'pack.json')));
+    const r = spawnSync(process.execPath, [RENDER, tmp, '--preview'], { cwd: ROOT, encoding: 'utf8', timeout: 300000 });
+    const out = join(tmp, 'out-preview'), files = existsSync(out) ? readdirSync(out) : [];
+    const want = ['two-variable-data-quiz-interactive.html', 'two-variable-data-quiz-teacher.pdf', 'two-variable-data-quiz-all-versions-key.pdf'];
+    if (r.status === 0 && want.every((f) => files.includes(f))) ok(`render-pack.mjs rendered samples/_cap-interactive/stats (${files.length} files: one student page for 30 versions, the teacher copy, every version's key)`);
+    else fail(`render-pack.mjs could not render samples/_cap-interactive/stats (exit ${r.status}; ${files.join(', ')}):\n${(r.stdout || '').slice(-1500)}${(r.stderr || '').slice(-1500)}`);
+    const v = spawnSync(process.execPath, [join(ROOT, 'scripts/versions.mjs'), join(SDIR, 'pack.json'), '--verify'], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
+    if (v.status === 0) ok(`samples/_cap-interactive/stats: ${v.stdout.trim().split('\n').pop()}`); else fail(`samples/_cap-interactive/stats: versions.mjs --verify failed:\n${v.stdout}${v.stderr}`);
+    rmSync(tmp, { recursive: true, force: true });
+  }
 }
 
 /* 6b. the audit report's two copies (owner, Nov 8, 2026): scripts/test-audit.mjs on every sample: the teacher report is

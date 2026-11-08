@@ -48,6 +48,12 @@ review game the class code (it opens every card's answer, a wrong code doesn't; 
 class). A fail is fixed in the pack (forms, `tol`, a key typed into a prompt), never by
 loosening the check.
 
+## Shared data sets and one version per student (owner, Nov 8, 2026)
+- `checks/cross-item.mjs` also checks every data-set group, however small: no question's key may be another question's
+  choice (same text or number) or a number printed in another question's stem.
+- A pool (one version per student) is checked by script when it is made (`scripts/versions.mjs`); run the bots on
+  version A as usual.
+
 ## Output (`pack.json`)
 `--write` adds your rounds to `checks.wilco` (`{"check": "keys" | "test-wise", "round", "pass", …, "worst"}`). Tell the
 reporter each run's result and the worst strategy before and after (the audit report shows them).
@@ -76,7 +82,7 @@ reporter each run's result and the worst strategy before and after (the audit re
 - `keys` rows have no chance and no line: report them as passed or not, never as a percentage.
 
 ---
-**Version 6** (Nov 8, 2026)
+**Version 7** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's `docs/FAIRNESS.md` (the rule, the cues, converge counted on printed
@@ -96,3 +102,4 @@ reporter each run's result and the worst strategy before and after (the audit re
 - v5, Nov 8, 2026: interactive documents get every check above plus `checks/interactive-format.mjs` (and `--browser`).
 - v6, Nov 8, 2026: interactive guided notes and review games: what `checks/interactive-format.mjs` checks on them (notes
   blanks, the class code) and the browser runs (check, fix and recheck; class mode).
+- v7, Nov 8, 2026 (owner): data-set groups in `checks/cross-item.mjs`; pools checked by `scripts/versions.mjs`. Changed at the owner's request, not by the auditor.

@@ -3,7 +3,7 @@
 // partial credit is the question's `credit.partial`, or a plain default by type. "Also accept" is the key's `accept`
 // list plus the rubric notes the checkers left on KEEP findings about that question (e.g. "accept coffee or smoothie").
 
-import { vv, questionsOf, kindOf, keyText } from './util.mjs';
+import { vv, questionsOf, kindOf, keyText, partsOf } from './util.mjs';
 
 const GRADED_KINDS = new Set(['quiz', 'test', 'readingquiz']);
 // A quiz or test that is graded by hand: on paper, or an interactive page printed for grading (not one graded in the page).
@@ -12,6 +12,9 @@ export const needsHowToGrade = (doc) => GRADED_KINDS.has(kindOf(doc)) && !(doc.f
 const DEFAULT_POINTS = { mc: 1, tf: 1, numeric: 2, short: 2, open: 4 };
 export function pointsOf(q) {
   if (q.points != null && !Number.isNaN(Number(q.points))) return { points: Number(q.points), given: true };
+  // a multi-part answer: the parts' points added up (a part without points counts 2, marked as our suggestion)
+  const parts = partsOf(q);
+  if (parts.length) return { points: parts.reduce((s, p) => s + (p.points ?? 2), 0), given: parts.every((p) => p.points != null) };
   const type = q.type || 'short';
   if (type === 'match') return { points: (q.left && (Array.isArray(q.left) ? q.left.length : Object.values(q.left)[0]?.length)) || 1, given: false };
   return { points: DEFAULT_POINTS[type] ?? 1, given: false };
@@ -23,6 +26,7 @@ function defaultPartial(q, points) {
   if (type === 'match') return 'A point for each right pair.';
   if (points < 2) return 'None.';
   if (type === 'numeric') return `Half (${points / 2}): the right setup or method with a slip in the arithmetic.`;
+  if (partsOf(q).length) return 'Part by part: each part earns its own points; a part gets partial points for some of its checklist.';
   if (type === 'open') return 'A point for each part of the strong answer the student gets (look for every part the question asks for).';
   return `Half (${points / 2}): part of it right, for example the value without the explanation, or the idea without the context.`;
 }
@@ -74,7 +78,9 @@ export function gradingRows(doc, ver, pack) {
   return questionsOf(doc).map(({ q, n }) => {
     const { points, given } = pointsOf(q);
     const accept = vv(q.accept, ver);
-    const full = vv(q.credit?.full, ver) || keyText(q, ver);
+    const parts = partsOf(q, ver);
+    // a multi-part answer: full credit part by part, from each part's checklist (else its strong answer)
+    const full = vv(q.credit?.full, ver) || (parts.length ? parts.map((p) => `(${p.label})${p.points != null ? ` ${p.points} pt${p.points === 1 ? '' : 's'}:` : ''} ${p.checklist.length ? p.checklist.join('; ') : String(p.answer ?? '')}`).join(' · ') : keyText(q, ver));
     const same = (a) => String(a).replace(/−/g, '-').replace(/\s+/g, ' ').trim().toLowerCase();
     return {
       n, q, points, given,

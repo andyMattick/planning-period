@@ -443,18 +443,57 @@
     var defaults = (feas && feas.defaults) || {}, limits = (feas && feas.limits) || {};
     var tmpl = (feas && feas.messages && feas.messages.defaultUsed) || 'If you leave this blank, we\'ll use: {default}.';
     box.innerHTML = ids.length ? ids.map(function (id) {
-      var spec = picked[id].spec = picked[id].spec || {}, d = defaults[id], fields = (PPFeas.SPECS[id] || []).concat(optionFields(id));
+      var spec = picked[id].spec = picked[id].spec || {}, d = defaults[id], fields = (PPFeas.SPECS[id] || []).concat(optionFields(id)).map(function (f) { return fieldFor(f, spec); }).filter(Boolean);
       var def = PPFeas.defaultText(id, d);
       return '<div class="item-spec req" data-item-spec="' + esc(id) + '"><h3>' + esc(itemById(id).label) +
         (picked[id].qty > 1 ? ' <span class="muted">× ' + picked[id].qty + '</span>' : '') + '</h3>' +
         formatHTML(id, spec) +
         (fields.length ? '<div class="spec-grid">' + fields.map(function (f) { return fieldHTML(id, f, spec, d); }).join('') + '</div>' : '') +
+        keyPackHTML(id, spec) +
         (def ? '<p class="small muted spec-default">' + esc(PPFeas.fill(tmpl, { default: def })) + '</p>' : '') +
         '<div class="spec-notes" data-notes="' + esc(id) + '">' + notesHTML(id, spec, limits[id]) + '</div>' +
         '<div class="field"><label for="req-' + esc(id) + '">Anything else for this item</label>' +
         '<textarea data-req="' + esc(id) + '" id="req-' + esc(id) + '" rows="2" placeholder="For example: level 3 needs two steps">' + esc(picked[id].req) + '</textarea></div></div>';
     }).join('') : '<p class="muted small">Pick something in step 3 to tell us the details for that item.</p>';
     renderFeas();
+  }
+  // Versions (owner, Nov 8, 2026): a number of versions, or "One per student", which is offered only for an interactive
+  // page (each student's name picks her own numbers; the page holds no keys, so it is printed for grading). "How many
+  // students" shows only with it.
+  function fieldFor(f, spec) {
+    if (f.onlyFor && Object.keys(f.onlyFor).some(function (k) { return spec[k] !== f.onlyFor[k]; })) return null;
+    if (f.key === 'versions' && f.options && spec.format !== 'interactive') {
+      return { key: f.key, label: f.label, type: f.type, options: f.options.filter(function (o) { return o[0] !== 'student'; }) };
+    }
+    return f;
+  }
+  function versionPricing(id) { return (itemById(id) || {}).versionPricing || null; }
+  // The all-versions key (owner, Nov 8, 2026: "if they want more keys, they can pay for it"): with 2 or more versions,
+  // one PDF of every version's key plus a key lookup page, as a paid extra (itemSpecs.<item>.keyPack). Each version's
+  // teacher copy is always included; with one per student the key pack is included (the only way to grade a pool).
+  function keyPackOffered(id, spec) { var vp = versionPricing(id); return !!vp && spec.versions !== 'student' && (spec.versions === '' || spec.versions == null || Number(spec.versions) >= 2); }
+  function keyPackHTML(id, spec) {
+    var vp = versionPricing(id); if (!vp) return '';
+    if (spec.versions === 'student') return '<p class="small muted" data-keypack-note>Included with one per student: a key for every version (one PDF) and a key lookup page.</p>';
+    if (!keyPackOffered(id, spec)) return '';
+    return '<label class="inline-check spec-keypack"><input type="checkbox" id="sp-' + esc(id) + '-keyPack" data-spec="' + esc(id) + ':keyPack"' + (spec.keyPack ? ' checked' : '') + '> ' +
+      '<span><b>All-versions key</b> (one PDF + a key lookup page), +' + vp.keyPack + ' tokens. <span class="small muted">Each version\'s teacher copy is always included.</span></span></label>';
+  }
+  // The tokens for one of an item: the menu price, plus the versions it asks for (docs/PRICING.md, "Versions").
+  function itemTokens(id) {
+    var it = itemById(id), vp = versionPricing(id), sp = (picked[id] && picked[id].spec) || {};
+    if (!vp) return it.tokens;
+    if (sp.versions === 'student') return it.tokens + vp.perStudent;
+    var n = Number(sp.versions) || vp.included;
+    return it.tokens + Math.max(0, n - vp.included) * vp.perExtra + (sp.keyPack && n >= 2 ? vp.keyPack : 0);
+  }
+  function versionsLabel(id) {
+    var vp = versionPricing(id), sp = (picked[id] && picked[id].spec) || {};
+    if (!vp || (!sp.versions && !sp.keyPack)) return '';
+    if (sp.versions === 'student') return 'one version per student (' + (Number(sp.students) || vp.defaultStudents) + ' students), +' + vp.perStudent + ' tokens';
+    var n = Number(sp.versions) || vp.included, extra = Math.max(0, n - vp.included) * vp.perExtra;
+    var kp = sp.keyPack && n >= 2 ? 'all-versions key, +' + vp.keyPack + ' tokens' : '';
+    return [sp.versions ? n + ' version' + (n === 1 ? '' : 's') + (extra ? ', +' + extra + ' tokens' : '') : '', kp].filter(Boolean).join(' · ');
   }
   // Printable or interactive (owner, Nov 8, 2026; docs/KINDS-INTERACTIVE-FORMAT.md): for a menu item with
   // "interactive": true, how students get it, and, for an interactive page, how it is graded. Stored in the order as
@@ -486,7 +525,8 @@
     if (!(itemById(id) || {}).interactive) return '';
     var f = spec.format === 'interactive' ? 'interactive' : 'printable';
     return '<div class="format-box" data-format-box="' + esc(id) + '">' + radioGroup(id, 'format', 'Format', FORMATS_FOR[id] || FORMATS, f) +
-      (f === 'interactive' ? radioGroup(id, 'grading', id === 'notes' ? 'Checking' : 'Grading', GRADINGS_FOR[id] || GRADINGS, spec.grading === 'print' ? 'print' : 'auto') +
+      (f === 'interactive' ? radioGroup(id, 'grading', id === 'notes' ? 'Checking' : 'Grading', spec.versions === 'student' ? [GRADINGS[1]] : GRADINGS_FOR[id] || GRADINGS, spec.grading === 'print' ? 'print' : 'auto') +
+        (spec.versions === 'student' ? '<p class="small muted" data-student-note>One version per student: each student\'s name picks her own numbers, and the page holds no answers, so it prints an answer sheet with her version code. You get a key page that finds any student\'s key by her code or name, and a printable key for every version.</p>' : '') +
         '<p class="small muted">Interactive costs the same tokens as printable. ' + (spec.grading === 'print' ? '' : 'Answers are stored as scrambled codes, not text: enough to stop peeking, not a determined student with programming tools, so use it for practice, not for a graded test.') + '</p>' : '') + '</div>';
   }
   function formatLabel(id) {
@@ -521,11 +561,24 @@
     if (key === 'types') { spec.types = spec.types || {}; spec.types[parts[2]] = e.target.value; }
     else if (e.target.type === 'radio' && !e.target.checked) return;
     else spec[key] = e.target.value;
+    if (key === 'keyPack') { if (e.target.checked) spec.keyPack = true; else delete spec.keyPack; renderCost(); return; }
+    if (key === 'versions' || key === 'students' || (key === 'format' && spec.versions === 'student')) {
+      if (!keyPackOffered(item, spec)) delete spec.keyPack;
+      if (spec.versions === 'student') {
+        if (spec.format !== 'interactive' && key === 'format') { delete spec.versions; delete spec.students; delete spec.grading; }   // paper: a number of versions only
+        else { spec.format = 'interactive'; spec.grading = 'print'; if (!spec.students) spec.students = String(versionPricing(item) ? versionPricing(item).defaultStudents : 30); }
+      } else delete spec.students;
+      if (key !== 'students') { renderRequests(); var back = document.getElementById(key === 'versions' ? 'sp-' + item + '-versions' : 'fmt-' + item + '-' + key + '-' + e.target.value); if (back) back.focus(); }
+      renderCost();
+      return;
+    }
     if (key === 'format' || key === 'grading') {
       if (spec.format === 'interactive' && !spec.grading) spec.grading = 'auto';
       if (spec.format !== 'interactive') delete spec.grading;
       var fb = $('item-requests').querySelector('[data-format-box="' + item + '"]');
-      if (fb) { fb.outerHTML = formatHTML(item, spec); var again = $('item-requests').querySelector('#fmt-' + item + '-' + key + '-' + e.target.value); if (again) again.focus(); }
+      // a quiz or test: the Versions choices follow the format ("one per student" is for interactive only)
+      if (fb && key === 'format' && versionPricing(item)) { renderRequests(); var f2 = document.getElementById('fmt-' + item + '-' + key + '-' + e.target.value); if (f2) f2.focus(); }
+      else if (fb) { fb.outerHTML = formatHTML(item, spec); var again = $('item-requests').querySelector('#fmt-' + item + '-' + key + '-' + e.target.value); if (again) again.focus(); }
       renderCost();
       return;
     }
@@ -535,13 +588,14 @@
     if (notes) notes.innerHTML = notesHTML(item, spec, lim[item]);
     renderFeas();
   });
-  $('item-requests').addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'radio') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+  $('item-requests').addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'radio' || e.target.type === 'checkbox') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
 
   // ---------- cost ----------
   function costLines() {
     var lines = pickedIds().map(function (id) {
       var it = itemById(id), q = picked[id].qty;
-      return { id: id, label: it.label, format: formatLabel(id) || undefined, quantity: q, tokensEach: it.tokens, tokens: it.tokens * q };
+      var each = itemTokens(id);
+      return { id: id, label: it.label, format: formatLabel(id) || undefined, versions: versionsLabel(id) || undefined, quantity: q, tokensEach: each, tokens: each * q };
     });
     menu.extras.forEach(function (x) {
       if (extras[x.id]) lines.push({ id: x.id, label: x.label, quantity: 1, tokensEach: x.tokens || 0, tokens: x.tokens || 0, extra: true });
@@ -552,7 +606,7 @@
     var lines = costLines();
     var sum = lines.reduce(function (s, l) { return s + l.tokens; }, 0);
     $('cost-lines').innerHTML = (lines.length ? lines.map(function (l) {
-      return '<tr><td>' + esc(l.label) + (l.quantity > 1 ? ' <span class="muted">× ' + l.quantity + '</span>' : '') + (l.format ? '<br><span class="small muted" data-format-line="' + esc(l.id) + '">' + esc(l.format) + (/^interactive/.test(l.format) ? ' · same price as printable' : '') + '</span>' : '') + '</td>' +
+      return '<tr><td>' + esc(l.label) + (l.quantity > 1 ? ' <span class="muted">× ' + l.quantity + '</span>' : '') + (l.format || l.versions ? '<br><span class="small muted" data-format-line="' + esc(l.id) + '">' + esc(l.format || '') + (/^interactive/.test(l.format || '') ? ' · same price as printable' : '') + (l.versions ? (l.format ? ' · ' : '') + '<span data-versions-line>' + esc(l.versions) + '</span>' : '') + '</span>' : '') + '</td>' +
         '<td class="n">' + (l.tokens ? l.tokens + ' tokens' : 'included') + '</td></tr>';
     }).join('') : '<tr><td class="muted">Nothing picked yet</td><td class="n">0</td></tr>') +
       '<tr class="total"><td>Total</td><td class="n">' + sum + ' tokens</td></tr>';
@@ -602,6 +656,7 @@
         var t = {}, anyT = false;
         Object.keys(v || {}).forEach(function (tk) { if (v[tk] !== '' && v[tk] != null) { t[tk] = Number(v[tk]); anyT = true; } });
         if (anyT) { out.types = t; any = true; }
+      } else if (v === true) { out[k] = true; any = true;
       } else if (v !== '' && v != null) {
         out[k] = /^\d+$/.test(String(v)) && k !== 'file' && k !== 'turnIn' ? Number(v) : String(v).trim(); any = true;
       }

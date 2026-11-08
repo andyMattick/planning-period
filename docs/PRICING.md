@@ -198,6 +198,22 @@ then about $0.01 a minute). **The menu doesn't change yet** (section 3, rule 4: 
 orders' logs show it). If the next two number-version tests come in under $4.5, the auditor may propose `test` at 60
 (owner decides).
 
+## 2e. Versions: a number, or one per student (owner approved Nov 8, 2026; recalibrate after the first three orders)
+
+On the order page a quiz or a test has one **Versions** setting (`menu.json` `versionPricing`, `itemSpecs.<item>.versions`):
+a number from 1 to 10 (A, B, C…), or **One per student** (interactive pages only; `itemSpecs.<item>.students`, 2 to 150,
+default 30). The menu price covers 2 versions, as before.
+
+| Choice | `quiz` | `test` | Why (method: section 3, step 2: extra typical cost ÷ $0.10 × 1.5, rounded) |
+|---|---|---|---|
+| 1 or 2 versions | 40 | 70 | the menu price (one version is not cheaper yet: the blind tester and solver read A either way on the fast path) |
+| each version past 2 | +2 | +3 | with script-made versions (section 2d) an extra version costs no maker time; it adds the second solver's pass over its numbers (about $0.10–0.15 for a quiz, $0.15–0.20 for a test) and a Wilco run |
+| all-versions key (`keyPack`, 2+ versions) | +5 | +5 | one PDF of every version's key plus a key lookup page. Rendering is code (about a second, no agent work), so this is a convenience extra, not a cost: "if they want more keys, they can pay for it" (owner, Nov 8, 2026). Each version's own teacher copy is always included |
+| one per student (any class size) | +10 | +15 | the maker writes every changing number as a parameter (about $0.20–0.40 more than A/B), the solver works a sample of 3 pool versions by hand and SymPy checks every pool key (about $0.25–0.35), the blind tester solves 3 sampled versions instead of A (about $0.15–0.30): about $0.6–1.0 a quiz, $0.9–1.1 a test. The pool itself is made and checked by script in about a second, so a bigger class costs no more. The all-versions key and the key page are included: they are the only way to grade a pool |
+
+Owner approved these numbers on Nov 8, 2026. No order with more than 3 versions or a pool has run yet: recalibrate after
+the first three (if the sampled solver work runs over, raise `perStudent` first).
+
 ## 3. How to recalibrate (after each 5 orders)
 
 1. From `records/*.json`, add each order's `log[].cost` (exact rows as reported; estimated rows as the reporter

@@ -21,6 +21,8 @@ import { mathPngMaker, setMathEnabled } from './render/math.mjs';
 import { GAME_KINDS, renderGame } from './render/games.mjs';
 import { isAppDoc, renderAppDoc } from './render/apps.mjs';
 import { isPracticeGameDoc, renderPracticeGameDoc } from './render/practicegames.mjs';
+import { needsAllKeys, keyVersions, allVersionsKeyHtml, teacherKeyPageHtml } from './render/keys.mjs';
+import { hasPool } from './render/util.mjs';
 import { isInteractiveFormat, formatProblems, renderInteractivePages, teacherNoteHtml, teacherNoteLines, versionsOfDoc, howToShareText, classCodesOf } from './render/interactive-format.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -177,6 +179,15 @@ export async function renderPack(folder, { mode } = {}) {
       made.push({ file, what, title: title || file });
     };
     const interactiveFiles = [];
+    // every version's key (scripts/render/keys.mjs): a printable all-versions key (preview and final) and, in the final,
+    // the teacher's key page (by letter, version code or a student's name); never with the students' pages. Always for one
+    // version per student; for 2+ versions only with the paid key pack (itemSpecs.<item>.keyPack)
+    const allKeys = async (doc, base) => {
+      if (!needsAllKeys(doc, pack)) return;
+      const n = keyVersions(doc).length, what = hasPool(doc) ? `${n} versions, one per student` : `${n} versions`;
+      await pdf(`${base}-all-versions-key.pdf`, allVersionsKeyHtml(doc, ctx), `${doc.title} · All keys`, `${doc.title}: every version's key (${what}), to print`, doc.title);
+      write(`${base}-teacher-key.html`, teacherKeyPageHtml(pack, doc, base, ctx), `${doc.title}: your key page (type a version${hasPool(doc) ? ' code or a student\'s name' : ''} to see its key; ${what}). For you only: never share it with students`);
+    };
     const baseOf = new Map();   // document → its file name base (the README needs a review game's class codes)
 
     const used = new Set();
@@ -204,6 +215,7 @@ export async function renderPack(folder, { mode } = {}) {
           await pdf(`${name}.pdf`, page, `${doc.title} · Teacher copy${ver ? ` ${ver}` : ''}`, what, doc.title);
           write(`${name}.docx`, await later(() => copyDocx(doc, ver, ctx, true)), what + ' (Word)');
         }
+        await allKeys(doc, base);
         continue;
       }
       if (GAME_KINDS.has(kind)) { await renderGame(doc, base, ctx, { pdf, write, later }); continue; } // docs/KINDS-GAMES.md
@@ -229,6 +241,7 @@ export async function renderPack(folder, { mode } = {}) {
             if (!deck || bell) write(`${name}.docx`, await later(() => copyDocx(doc, ver, ctx, teacher)), what + ' (Word)');
           }
         }
+        if (!deck) await allKeys(doc, base);
       } else if (doc.rubric) {
         await pdf(`${base}.pdf`, rubricHtml(doc, ctx), `${doc.title} · Rubric`, `${doc.title}: rubric`, doc.title);
         write(`${base}.docx`, await later(() => rubricDocx(doc, ctx)), `${doc.title}: rubric (Word)`);
