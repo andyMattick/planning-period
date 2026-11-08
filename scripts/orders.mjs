@@ -9,10 +9,12 @@
 //   node scripts/orders.mjs follow-up <id> <FOLLOW-UP.md> posts the onboarding follow-up (questions from onboarding.json
 //                                                         next to it) → needs_answer (no questions: building)
 //   node scripts/orders.mjs answer <id>                   her answer → ~/pp-work/<id>/followup-answer.md
-//   node scripts/orders.mjs preview <id>                  uploads out-preview/ (+ preview.zip) → preview_ready
+//   node scripts/orders.mjs preview <id>                  uploads out-preview/ (+ preview.zip) → preview_ready; keeps the pack
+//                                                         she reviews (pack.json, run-log.jsonl) in work/ for the final
+//   node scripts/orders.mjs preview-get <id>              the preview files she saw → ~/pp-work/<id>/out-preview/ (for --final)
 //   node scripts/orders.mjs approval <id>                 her approval → approval.json (or her comments → comments-<id>.json)
 //   node scripts/orders.mjs final <id>                    uploads out/ + out.zip → final_ready (only after her approval)
-//   node scripts/orders.mjs purge <id> [--finals]         deletes her uploads and the preview files (CLAUDE.md rule 1)
+//   node scripts/orders.mjs purge <id> [--finals]         deletes her uploads, the preview files and work/ (CLAUDE.md rule 1)
 //   node scripts/orders.mjs purge --due [days]            the same for every order the database says is due (default 7 days)
 //   node scripts/orders.mjs status <id> <status> [note]   sets a status by hand (onboarding, building, failed…) with a note she sees
 //   node scripts/orders.mjs show <id>                     the order's row as JSON (status, teacher, tokens, order.json; for scripts)
@@ -22,9 +24,10 @@
 //   node scripts/orders.mjs work-put <id> <file…>         keeps working files of a stopped run (deliverables/<teacher>/<id>/work/)
 //   node scripts/orders.mjs work-get <id>                 those files → ~/pp-work/<id>/work/ (purge deletes them)
 // Options: --work <dir> (default ~/pp-work/<id>), PP_WORK_ROOT (default ~/pp-work).
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync, rmSync } from 'node:fs';
 import { join, dirname, relative, basename, resolve } from 'node:path';
 import { homedir } from 'node:os';
+import { createHash } from 'node:crypto';
 
 const STATUSES = ['draft', 'sent', 'onboarding', 'needs_answer', 'building', 'preview_ready', 'changes_requested', 'approved', 'final_ready', 'cancelled', 'failed'];
 const TYPES = { '.pdf': 'application/pdf', '.zip': 'application/zip', '.json': 'application/json', '.txt': 'text/plain; charset=utf-8',
@@ -42,7 +45,7 @@ function env() {
 function api() {
   const { url, key } = env();
   const headers = (extra = {}) => ({ apikey: key, ...(/^eyJ/.test(key) ? { Authorization: `Bearer ${key}` } : {}), ...extra });
-  async function call(method, path, body, extra = {}) {
+  async function call(method, path, body, extra = {}, raw = false) {
     const opts = { method, headers: headers(extra) };
     if (body !== undefined) {
       if (Buffer.isBuffer(body) || body instanceof Uint8Array) opts.body = body;
@@ -55,7 +58,7 @@ function api() {
     }
     if (res.status === 204) return null;
     const ct = res.headers.get('content-type') || '';
-    if (/json/.test(ct)) { const t = await res.text(); return t ? JSON.parse(t) : null; }
+    if (!raw && /json/.test(ct)) { const t = await res.text(); return t ? JSON.parse(t) : null; }
     return Buffer.from(await res.arrayBuffer());
   }
   const enc = (p) => p.split('/').map(encodeURIComponent).join('/');
@@ -63,7 +66,7 @@ function api() {
     select: (table, q) => call('GET', `/rest/v1/${table}?${q}`),
     update: (table, q, patch) => call('PATCH', `/rest/v1/${table}?${q}`, patch, { Prefer: 'return=minimal' }),
     rpc: (fn, args) => call('POST', `/rest/v1/rpc/${fn}`, args || {}),
-    download: (bucket, path) => call('GET', `/storage/v1/object/${bucket}/${enc(path)}`),
+    download: (bucket, path) => call('GET', `/storage/v1/object/${bucket}/${enc(path)}`, undefined, {}, true),   // the bytes as stored (a .json file too)
     upload: (bucket, path, buf, type) => call('POST', `/storage/v1/object/${bucket}/${enc(path)}`, buf, { 'Content-Type': type || 'application/octet-stream', 'x-upsert': 'true' }),
     remove: (bucket, paths) => paths.length ? call('DELETE', `/storage/v1/object/${bucket}`, { prefixes: paths }) : [],
     // Every file under a folder (the Storage API lists one level at a time; folders come back with id null).
@@ -91,6 +94,10 @@ const safeId = (id) => { if (!/^pp-\d{4}-\d{2}-\d{2}-[a-z0-9]{6}$/.test(id || ''
 const typeOf = (f) => TYPES[(f.match(/\.[^.]+$/) || [''])[0].toLowerCase()] || 'application/octet-stream';
 // The owner's copy of the audit report (costs, token detail) is never delivered, even if one lands in out/ by mistake.
 const deliverable = (f) => !/AUDIT-REPORT-OWNER/i.test(String(f));
+// the pack's fingerprint, as scripts/render-pack.mjs's packHashOf computes it (her approval names it)
+const packHash = (file) => createHash('sha256').update(JSON.stringify(JSON.parse(readFileSync(file, 'utf8')))).digest('hex');
+// the files she reviews and approves (render-pack.mjs's reviewedFile): every PDF and interactive page, not REVIEW.html
+const reviewed = (f) => f.endsWith('.pdf') || (f.endsWith('.html') && f !== 'REVIEW.html');
 const filesIn = (dir) => readdirSync(dir, { recursive: true }).map(String).filter((f) => statSync(join(dir, f)).isFile()).sort();
 
 async function getOrder(db, id) {
@@ -181,6 +188,9 @@ const commands = {
     const pdfs = readdirSync(dir).filter((f) => f.endsWith('.pdf') || (f.endsWith('.html') && f !== 'REVIEW.html')).filter(deliverable).sort();
     const listed = (D.documents || []).map((d) => d.file).sort();
     if (JSON.stringify(pdfs) !== JSON.stringify(listed)) die('out-preview/ PDFs and pages differ from the ones REVIEW.html lists: render the preview again');
+    const pj = join(work, 'pack.json');
+    if (!existsSync(pj)) die(`${pj} is missing: the final is rendered from the pack she reviews`);
+    if (packHash(pj) !== D.packHash) die('pack.json changed after the preview was rendered: render the preview again');
     const base = `${o.teacher}/${o.id}/`;
     await db.remove('deliverables', (await db.listAll('deliverables', base + 'preview')));   // an older preview goes
     const up = [];
@@ -188,9 +198,22 @@ const commands = {
     for (const f of pdfs) { await db.upload('deliverables', `${base}preview/${f}`, readFileSync(join(dir, f)), f.endsWith('.html') ? TYPES['.html'] : 'application/pdf'); up.push(`preview/${f}`); }
     const zip = join(work, 'preview.zip');
     if (existsSync(zip)) { await db.upload('deliverables', `${base}preview/preview.zip`, readFileSync(zip), 'application/zip'); up.push('preview/preview.zip'); }
+    // the pack she reviews (and the run's log) stay beside it, so the final can be rendered from exactly this pack after
+    // she approves, by the runner on another machine (run-order.mjs --stage final); purge deletes them
+    for (const f of ['pack.json', 'run-log.jsonl', 'onboarding.json'].filter((f) => existsSync(join(work, f))))
+      await db.upload('deliverables', `${base}work/${f}`, readFileSync(join(work, f)), typeOf(f));
     await setStatus(db, id, 'preview_ready', { review: { packHash: D.packHash, statement: D.statement, documents: D.documents, docTitles: D.docTitles || [], judgments: D.judgments || [], ...(D.blindSkipped ? { blindSkipped: true } : {}) },
       preview_files: up, approval: null });
     console.log(`Uploaded ${up.length} preview file${up.length === 1 ? '' : 's'} for ${id}. Status: preview_ready (she reviews it in My orders).`);
+  },
+
+  async 'preview-get'(db, id) {
+    const o = await getOrder(db, id), dir = join(workOf(id), 'out-preview'), base = `${o.teacher}/${o.id}/preview/`;
+    rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
+    const files = (await db.listAll('deliverables', base.slice(0, -1))).filter((p) => !p.slice(base.length).includes('/') && reviewed(p));
+    if (!files.length) die(`${id} has no preview files in storage`);
+    for (const p of files) writeFileSync(join(dir, p.slice(base.length)), await db.download('deliverables', p));
+    console.log(`Wrote the ${files.length} preview file${files.length === 1 ? '' : 's'} she reviewed to ${dir} (render-pack.mjs --final compares them with her approval).`);
   },
 
   async approval(db, id) {
@@ -214,10 +237,11 @@ const commands = {
     const base = `${o.teacher}/${o.id}/`, up = [];
     for (const f of filesIn(dir).filter(deliverable)) { await db.upload('deliverables', `${base}final/${f}`, readFileSync(join(dir, f)), typeOf(f)); up.push(`final/${f}`); }
     const zip = existsSync(join(work, 'out.zip')) ? join(work, 'out.zip') : null;
+    if (zip && readFileSync(zip).includes('AUDIT-REPORT-OWNER')) die('out.zip holds the owner copy of the audit report: it is never delivered; render the final again');
     if (zip) { await db.upload('deliverables', `${base}final/out.zip`, readFileSync(zip), 'application/zip'); up.unshift('final/out.zip'); }
     else console.log('(no out.zip: she gets the files one by one)');
     await setStatus(db, id, 'final_ready', { final_files: up });
-    console.log(`Uploaded ${up.length} final file${up.length === 1 ? '' : 's'} for ${id}. Status: final_ready.\nWhen she has them: purge ${id} (and delete ${work}).`);
+    console.log(`Uploaded ${up.length} final file${up.length === 1 ? '' : 's'} for ${id}. Status: final_ready.\nNext: purge ${id} (her uploads, the preview and work/; the runner does it right away) and delete ${work}.`);
   },
 
   async purge(db, id, days) {
