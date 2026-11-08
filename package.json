@@ -8,6 +8,8 @@
     "serve": "node scripts/serve.mjs",
     "test:orders": "node scripts/test-orders.mjs",
     "test:interactive": "node scripts/test-interactive.mjs",
+    "test:run-order": "node scripts/test-run-order.mjs",
+    "run-order": "node scripts/run-order.mjs",
     "orders": "node scripts/orders.mjs",
     "weekly": "node scripts/weekly-test.mjs"
   },

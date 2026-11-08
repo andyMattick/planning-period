@@ -1,0 +1,18 @@
+{
+  "round": 1,
+  "agent": "🙈 Blind tester (math)",
+  "checked": 10,
+  "matched": 10,
+  "findings": [
+    {
+      "where": "Two-Variable Data Quiz A q4",
+      "kind": "FIX",
+      "what": "Choice D reverses x and y, but its wording ('one more hour a week') echoes the key's 'extra hour': a student can rule the others out by the shared phrase. Reword D without the hour phrase."
+    },
+    {
+      "where": "Two-Variable Data Quiz A q6",
+      "kind": "KEEP",
+      "what": "Two choices without numbers repeat in every version; Wilco passes, the stem decides."
+    }
+  ]
+}
