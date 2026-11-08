@@ -1,8 +1,8 @@
 # The weekly test
 
-Owner, Nov 7, 2026: "Set up a weekly test to import test docs or sites and try to create 2 random docs." Every Sunday
+Owner, Nov 7, 2026: "Set up a weekly test to import test docs or sites and try to create 2 random docs." Every Friday
 night a Claude cloud session follows this page from top to bottom: it runs the deterministic checks, then runs the
-**real agent team** on **2 random orders** built from made-up fixtures, renders the watermarked previews, has a fresh
+**real agent team** on **1 random order** (owner, Nov 8, 2026: one order, $5 a run; it was 2 orders and $10) built from made-up fixtures, renders the watermarked previews, has a fresh
 auditor **edit** the briefs from what the run found (straight to main, only through the gate
 `scripts/auditor-gate.mjs`; owner, Nov 8, 2026: "auditor makes edits as they see fit"), and reports pass or fail to the
 owner, with a digest of what the auditor changed and how to undo it. Budget: about $5–10 a week. The same steps every week, so two runs can be compared.
@@ -26,11 +26,11 @@ expected and the picker is repeatable. The full weekly run is never part of `npm
 1. **Fresh agents for every check, never the maker.** The blind tester, the solver or fact checker, the recheck and the
    reporter are each a new session that has not seen the maker's session (CLAUDE.md: the builder never checks its own
    work). A checker never sees the key before it has answered. Wilco is scripts, run by the lead.
-2. **Dollar caps, $10 a run in all:** **$3.75 an order** (two orders: $7.50, everything included: onboarding, style
-   notes, maker, checkers, round 2, reporter), **$0.50** for the onboarding spot check and **$2.00** for the weekly
-   audit. The per-order cap is $3.75, not $4, so the audit's $2 always fits under $10. Keep a ledger (step 2) and look
+2. **Dollar caps, $5 a run in all:** **$3.25 for the order** (everything included: onboarding, style notes, maker,
+   checkers, round 2, reporter), **$0.25** for the onboarding spot check and **$1.50** for the weekly audit
+   ($3.25 + $0.25 + $1.50 = $5). Keep a ledger (step 2) and look
    at it before every session. If the next session could take an order (or the spot check, or the audit) over its
-   cap, stop it where it is and report "stopped at the cap after <step>". If the run reaches $10, stop everything and
+   cap, stop it where it is and report "stopped at the cap after <step>". If the run reaches $5, stop everything and
    report. Money an order doesn't spend is not passed on to the audit: each cap stands alone.
 3. **Previews only.** Never the approval or the final step (RUNBOOK steps 11–13): no `approval.json`, no
    `render-pack.mjs --final`, no final zip. There is no real teacher. The weekly session plays the teacher only by
@@ -82,11 +82,11 @@ It does, in order, and writes `$OUT/weekly-report.md` (a pass/fail table with ti
    not a failure: fetchPage found no DNS or no connection and the egress proxy refused `CONNECT` to the host (or a
    `403` came back and the proxy refuses that host). When the proxy does let the host through, the site's own status
    is checked through it; a mismatch there is only a warning, because the proxy can answer in the site's place.
-4. **Picks 2 random orders** from the seed it prints: a menu item of at most 40 tokens (so its budget, tokens ×
-   $0.10, is at most $4, close to the order's $3.75 spending cap), with options where the menu allows them (number of questions, A/B versions, pages), a
+4. **Picks 1 random order** from the seed it prints: a menu item of at most 30 tokens (so its budget, tokens ×
+   $0.10, is at most $3, under the order's $3.25 spending cap), with options where the menu allows them (number of questions, A/B versions, pages), a
    compatible fixture (an old test only for "Make versions of my test", a word list for the crossword and word
-   search), a made-up teacher, a style example and a short request. The two orders differ in item, source and, when
-   it can, subject, and **never repeat a pair the last run in `tests/weekly/history.json` used**. Each is written as an
+   search), a made-up teacher, a style example and a short request. It **never repeats the item and source pair the
+   last run in `tests/weekly/history.json` used**. It is written as an
    order folder in the RUNBOOK layout: `$OUT/<order id>/in/order.json` (filled as the order page fills it: lines,
    token total, specs, its live feasibility record, the notices), `in/sources/`, `in/training/`.
 5. **Picks one onboarding spot check:** a source that should make the onboarding agent warn (the scanned PDF:
@@ -112,7 +112,7 @@ from the session's own record (`duration_ms`, `usage`, `total_cost_usd`; a subag
 samples: onboarding $0.35, maker $0.80–1.50, blind tester $0.30–0.60, solver or fact checker $0.30–0.60, reporter
 $0.10–0.20, auditor $0.60–1.50.
 
-### 3. Each of the 2 orders: docs/RUNBOOK.md with the real team
+### 3. The order: docs/RUNBOOK.md with the real team
 
 For each order in `weekly-plan.json` (`WORK=<its folder>`, `ORDER=<its id>`, `STYLE=$OUT/styles/$ORDER`, never
 `~/pp-styles`), follow docs/RUNBOOK.md with these changes:
@@ -123,7 +123,7 @@ For each order in `weekly-plan.json` (`WORK=<its folder>`, `ORDER=<its id>`, `ST
 | 2. Onboarding | A fresh session, exactly as the RUNBOOK. Don't send `FOLLOW-UP.md`: read it, note whether its warnings and questions make sense for the order, then write `go` in `$WORK/followup-answer.md` (our recommendations). |
 | 3. Style notes | A fresh session on `in/training/`, written to `$STYLE/style.md`. |
 | 4. Maker | A fresh session, with a copy of `checks/` in its folder, running `keys.mjs` and `test-wise.mjs` (and `math.mjs` / `puzzles.mjs` / `apps.mjs` when they apply) until they pass. |
-| 4a. ELA reading probe | Only for a reading item (not picked under the 40-token cap; run it if the cap is raised). |
+| 4a. ELA reading probe | Only for a reading item (not picked under the 30-token cap; run it if the cap is raised). |
 | 5. Blind tester | A **fresh** session for the order's subject (`menu.json` subjects → `agents/blind-<checker>.md`), with `view.md` and the sources, no key until it has answered; score with `checks/score-blind.mjs`. |
 | 6. Solver or fact checker | Math: a fresh solver (`agents/solver-math.md`, starting with `checks/math.mjs`). Science and social studies: a fresh fact checker (`agents/facts.md`). ELA: a fact checker only for nonfiction claims. Other: none. |
 | 7. Wilco | The lead runs `checks/keys.mjs --write` and `checks/test-wise.mjs --write` (both must exit 0), plus `apps.mjs` / `puzzles.mjs` when they apply. Note the results before and after round 2. |
@@ -131,7 +131,7 @@ For each order in `weekly-plan.json` (`WORK=<its folder>`, `ORDER=<its id>`, `ST
 | 10. Reporter | A fresh, cheaper-tier session with the ledger lines for this order and `pack.json` without `documents`; it fills `log` and `audit.notes`. |
 | 11. Preview | `node $REPO/scripts/render-pack.mjs "$WORK" --preview` (`pack.json`'s `id` must be the order id). **Stop here.** |
 | 12–13 | Never in the weekly run (no final render, no delivery, no records). |
-| 14. Auditor | Once for the whole run, after both orders and the spot check, **applied to main only through the gate**: steps 5 and 9 below. |
+| 14. Auditor | Once for the whole run, after the order and the spot check, **applied to main only through the gate**: steps 5 and 9 below. |
 
 **An order passes** when the preview rendered, Wilco's scripts exit 0 at the end, and no FIX is open. A FIX found and
 fixed in round 2 is a catch (that is the team working), not a failure. An order **fails** at the first step that
@@ -148,7 +148,7 @@ showed, for comparison. Pass or fail, one line in the report.
 
 ### 5. The weekly audit (applied through the gate)
 
-A **fresh** session (never one that made or checked these orders) with `agents/auditor.md`, capped at **$2.00**
+A **fresh** session (never one that made or checked these orders) with `agents/auditor.md`, capped at **$1.50**
 (rule 2). There are no teacher comments in a test run, so it works from what the team found. Give it only:
 - each order's `pack.json` without `documents` (`checks`: every FIX, KEEP and JUDGMENT, every Wilco round; `log`),
   its `onboarding.json` and `FOLLOW-UP.md`;
@@ -186,7 +186,7 @@ Write `$OUT/summary.md`, the same text as the reply to the owner. Plain words, n
 
 **Result: PASS** (or **Result: FAIL (<what, in a few words>)**)
 
-Seed <seed> (replay: node scripts/weekly-test.mjs --seed <seed> --out <dir>). Cost $<total> of the $10 cap; <minutes> minutes.
+Seed <seed> (replay: node scripts/weekly-test.mjs --seed <seed> --out <dir>). Cost $<total> of the $5 cap; <minutes> minutes.
 
 ## Deterministic part
 <one line each: repo tests, imports, links (how many ok / network blocked here / failed), order folders>
@@ -271,18 +271,18 @@ undo: git revert <sha>" (with the auditor commit's link), or "auditor changed no
 - **No big fixes in the weekly run.** No edits to scripts, checks or fixtures; brief changes only by the auditor
   through the gate (step 9); no other commits to main than the report and the gate's (rule 7). The owner decides what
   to fix.
-- **Keep going where it makes sense.** One order failing doesn't stop the other; a failing link doesn't stop the
-  orders. Stop everything only at the $10 cap or when the repo can't build the previews at all.
+- **Keep going where it makes sense.** A failing order doesn't stop the report; a failing link doesn't stop the
+  orders. Stop everything only at the $5 cap or when the repo can't build the previews at all.
 - **Network:** "network blocked here" on links is the machine, not a failure. A link that fails on a machine with a
   route to the site is a real failure (the site changed): note it and suggest a new link in "Notes".
 - **A session that goes over its estimate** still counts in full: write the real number in the ledger.
 
 ## Setting up the schedule
 
-A scheduled task that starts a fresh cloud session every Sunday night with this prompt:
+A scheduled task that starts a fresh cloud session every Friday night (8:35 PM New York time; moved from Sunday on Nov 8, 2026) with this prompt:
 "Run the weekly test: follow docs/WEEKLY-TEST.md in andyMattick/planning-period from step 0 to step 10, with its
-hard rules (fresh agents for every check and for the audit, $3.75 an order, $0.50 for the spot check, $2 for the audit
-and $10 a run, previews only, never send anything, commit only the report paths to main, the auditor's brief changes
+hard rules (fresh agents for every check and for the audit, $3.25 for the order, $0.25 for the spot check, $1.50 for the
+audit and $5 a run, previews only, never send anything, commit only the report paths to main, the auditor's brief changes
 only through scripts/auditor-gate.mjs), and reply with the summary and the gate's digest ('auditor changed: …; to
 undo: git revert <sha>', or 'auditor changed nothing' and why)." The session needs the GitHub repository with push
 access to `main`, the `claude` CLI (or subagents), Node 20+, and Chromium for Playwright.

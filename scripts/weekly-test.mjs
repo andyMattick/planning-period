@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // The weekly test's deterministic part (docs/WEEKLY-TEST.md). No AI runs here.
-//   node scripts/weekly-test.mjs [--out <dir>] [--seed N] [--quick] [--max-tokens 40]
+//   node scripts/weekly-test.mjs [--out <dir>] [--seed N] [--quick] [--max-tokens 30]
 //     1. the repo's own tests: npm run check, scripts/test-fetch-page.mjs, scripts/test-orders.mjs (--quick skips them);
 //     2. imports every fixture in tests/weekly/sources/ the way the order page (site/feasibility.js) and the onboarding
 //        agent (scripts/html-text.mjs) read it, and checks the text and counts against tests/weekly/sources/index.json;
 //     3. reads every page in tests/weekly/links.json with the real fetchPage (scripts/fetch-page.mjs). Where this machine
 //        has no direct internet, a link is "network blocked here" (no DNS, or the egress proxy refused CONNECT), which is
 //        not a failure; a site's own answer (through the proxy when that's the only way out) is checked against `expect`;
-//     4. picks 2 random orders (a menu item with its options, a compatible fixture, a made-up teacher) from a seed it
+//     4. picks 1 random order (a menu item with its options, a compatible fixture, a made-up teacher) from a seed it
 //        prints, never a pair the last run in tests/weekly/history.json used, and writes each as an order folder in the
 //        docs/RUNBOOK.md layout (<out>/<order id>/in/order.json, sources/, training/), order.json filled as the order page does;
 //     5. writes <out>/weekly-report.md and <out>/weekly-plan.json; exits 1 on any real failure.
@@ -326,7 +326,7 @@ function specsFor(r, id, fz, fx) {
   return spec;
 }
 
-export function pickOrders({ seed, menu, fixtures, history, maxTokens = 40, n = 2, date = today() }) {
+export function pickOrders({ seed, menu, fixtures, history, maxTokens = 30, n = 1, date = today() }) {
   const r = rng(seed), fz = readJSON(join(ROOT, 'feasibility.json'));
   const avoid = lastPairs(history);
   let pool = eligiblePairs(menu, fixtures, maxTokens).filter((p) => !avoid.has(pairKey(p)));
@@ -449,7 +449,7 @@ async function run() {
   const out = resolve(arg('--out', join(homedir(), 'pp-weekly', date)));
   if (!relative(ROOT, out).startsWith('..') && relative(ROOT, out) !== out) { console.error(`--out must be outside the repository (${out})`); process.exit(2); }
   const seed = argv.includes('--seed') ? Number(arg('--seed')) : randomInt(1, 2 ** 31 - 1);
-  const maxTokens = Number(arg('--max-tokens', 40));
+  const maxTokens = Number(arg('--max-tokens', 30));
   mkdirSync(out, { recursive: true });
   const started = Date.now(), steps = [];
   console.log(`weekly test ${date}, seed ${seed}, out ${out}`);
@@ -476,10 +476,10 @@ async function run() {
   const spot = pickSpotCheck({ seed, menu, fixtures: idx.fixtures, date });
   const spotW = spot ? (await writeOrders([spot], join(out, 'spot-check')))[0] : null;
   if (spotW) orderRows.push({ ...spotW, spot: true, problems: checkOrderFolder(spotW.dir, menu) });
-  if (orders.length < 2) orderRows.push({ problems: [`only ${orders.length} order(s) could be picked`] });
+  if (orders.length < 1) orderRows.push({ problems: ['no order could be picked'] });
 
   const plan = {
-    date, seed, maxTokens, capPerOrderUsd: 3.75, capSpotCheckUsd: 0.5, capAuditUsd: 2, capPerRunUsd: 10,
+    date, seed, maxTokens, capPerOrderUsd: 3.25, capSpotCheckUsd: 0.25, capAuditUsd: 1.5, capPerRunUsd: 5,
     replay: `node scripts/weekly-test.mjs --seed ${seed} --out ${out}`,
     orders: written.map(({ o, oj, dir }) => ({
       id: o.id, folder: dir, item: o.item, label: o.label, source: o.fixture.file, grade: o.fixture.grade, subject: o.fixture.subject,
@@ -506,7 +506,7 @@ async function run() {
   L.push('', '## 3. Links (the real fetchPage)', '', '| Address | Expected | Got | Result | Time | Detail |', '|---|---|---|---|---|---|');
   for (const r of linkRows) L.push(`| ${cell(r.link.url)} | ${[].concat(r.link.expect).join(' or ')} | ${r.got || ''} | ${MARK[r.result]} | ${secs(r.ms)} | ${cell(r.detail)} |`);
   L.push('', '"network blocked here" is this machine (no direct DNS, or the egress proxy refused the host), not the site: not a failure.', '');
-  L.push('## 4. The two orders for the agent team, and the onboarding spot check', '', '| Order | Item | Source | Grade, subject | Specs | Tokens (budget) | Folder check |', '|---|---|---|---|---|---|---|');
+  L.push('## 4. The order for the agent team, and the onboarding spot check', '', '| Order | Item | Source | Grade, subject | Specs | Tokens (budget) | Folder check |', '|---|---|---|---|---|---|---|');
   for (const r of orderRows) {
     if (!r.o) { L.push(`| — | — | — | — | — | — | FAIL: ${cell(r.problems.join('; '))} |`); continue; }
     if (r.spot) { L.push(`| ${r.o.id} (onboarding spot check: expect ${cell(r.o.expectOnboarding)}) | ${r.o.item} | ${cell(r.o.fixture.file)} | ${r.o.fixture.grade}, ${r.o.fixture.subject} | ${cell(JSON.stringify(r.o.spec))} | onboarding only (~$0.35) | ${r.problems.length ? 'FAIL: ' + cell(r.problems.join('; ')) : 'PASS'} |`); continue; }
@@ -531,15 +531,17 @@ async function selfTest() {
   const a = pickOrders({ seed: 1, menu, fixtures: idx.fixtures, history: empty, date: '2026-01-04' });
   const b = pickOrders({ seed: 1, menu, fixtures: idx.fixtures, history: empty, date: '2026-01-04' });
   assert.deepEqual(a.map((o) => [o.id, o.item, o.fixture.file]), b.map((o) => [o.id, o.item, o.fixture.file]), 'the same seed must give the same orders');
-  assert.equal(a.length, 2);
-  assert.notEqual(a[0].item, a[1].item); assert.notEqual(a[0].fixture.file, a[1].fixture.file);
-  for (const o of a) assert.ok(menu.items.find((i) => i.id === o.item).tokens <= 40, `${o.item} is over the weekly cap`);
+  assert.equal(a.length, 1, 'one order a week (owner, Nov 8, 2026)');
+  const a2 = pickOrders({ seed: 1, menu, fixtures: idx.fixtures, history: empty, date: '2026-01-04', n: 2 }); // the picker still spreads more than one
+  assert.equal(a2.length, 2);
+  assert.notEqual(a2[0].item, a2[1].item); assert.notEqual(a2[0].fixture.file, a2[1].fixture.file);
+  for (const o of a) assert.ok(menu.items.find((i) => i.id === o.item).tokens <= 30, `${o.item} is over the weekly cap`);
   // never last run's pairs: every seed for a while, against a history that used seed 1's
   const hist = { runs: [{ date: '2026-01-04', seed: 1, orders: a.map((o) => ({ item: o.item, source: o.fixture.file })) }] };
   for (let s = 1; s <= 200; s++) {
     const c = pickOrders({ seed: s, menu, fixtures: idx.fixtures, history: hist });
     for (const o of c) assert.ok(!hist.runs[0].orders.some((p) => p.item === o.item && p.source === o.fixture.file), `seed ${s} repeated last run's pair`);
-    for (const o of c) assert.ok(eligiblePairs(menu, idx.fixtures, 40).some((p) => p.item === o.item && p.source === o.fixture.file), `seed ${s}: an ineligible pair`);
+    for (const o of c) assert.ok(eligiblePairs(menu, idx.fixtures, 30).some((p) => p.item === o.item && p.source === o.fixture.file), `seed ${s}: an ineligible pair`);
   }
   const tmp = mkdtempSync(join(tmpdir(), 'pp-weekly-self-'));
   try {
