@@ -225,6 +225,8 @@
       signedUrl: function (bucket, path, seconds, downloadName) {
         return call('POST', '/storage/v1/object/sign/' + bucket + '/' + encPath(path), { expiresIn: seconds || 3600 }).then(function (r) {
           var s = (r && (r.signedURL || r.signedUrl)) || '';
+          // no link back means storage refused quietly: say so, instead of fetching the storage root ("Route GET:/ not found")
+          if (!s) { var e = new Error('The file link could not be made (' + (r && (r.message || r.error) || (r == null ? 'empty answer' : JSON.stringify(r).slice(0, 120))) + ').'); e.code = 'no_signed_url'; throw e; }
           var full = /^https?:/.test(s) ? s : url + '/storage/v1' + (s.charAt(0) === '/' ? '' : '/') + s;
           return downloadName ? full + (full.indexOf('?') >= 0 ? '&' : '?') + 'download=' + encodeURIComponent(downloadName) : full;
         });

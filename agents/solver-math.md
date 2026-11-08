@@ -39,8 +39,14 @@ One entry for `checks.solver`: `{"round", "agent": "🧮 Solver", "checked", "di
 disagreement is FIX unless you find your own mistake (then KEEP, one line). A suggested fix is a direction, with the
 numbers in it worked out. Never edit `documents`. The reporter takes your minutes from your session's record.
 
+
+**A JUDGMENT adds its choices** (owner, Nov 8, 2026; docs/PACK-FORMAT.md): `"judgment": {"issue": "<one line, plain
+words>", "options": ["Keep it as it is (…)", "<one concrete change>"], "recommend": <index, or leave it out>, "why":
+"<one line>"}`. Option 0 is always keeping it as it is; each other option is one of your readings as a concrete change.
+The teacher picks one with a tap in her review, so write the options as she would read them (no level codes).
+
 ---
-**Version 2** (Nov 5, 2026)
+**Version 3** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's solver (`docs/builder/AGENTS.md`, `docs/MATH-CHECK.md`: every step, not
@@ -48,3 +54,6 @@ numbers in it worked out. Never edit `documents`. The reporter takes your minute
 - v2, Nov 5, 2026 (first audit, docs/audits/AUDIT-2026-11-05.md): run `checks/math.mjs` and check each `math.check`
   against the prompt, graphs, record with `--write` (docs/KINDS-MATH.md); remainders and estimates (g4-math); an
   entry file; suggested fixes as directions (g11-history q21).
+- v3, Nov 8, 2026 (owner review of the first real audit report, order pp-2026-11-08-a20840): a JUDGMENT adds
+  `judgment` (issue, options with "keep it" first, an optional pick and why), so the teacher report and her review
+  show one-tap choices.

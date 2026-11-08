@@ -506,6 +506,9 @@ try {
   const pack = JSON.parse(readFileSync(join(ROOT, 'samples/_fixture/pack.json'), 'utf8'));
   pack.id = orderId;
   pack.documents[0].format = 'interactive'; pack.documents[0].grading = 'auto';   // the worksheet as an interactive page, next to the PDFs
+  // a judgment call with our pick (agents/reporter.md): option 0 keeps it, option 1 asks for a change
+  pack.checks.blind[0].findings.push({ where: 'Ratios Quiz A q3', kind: 'JUDGMENT', what: 'Reading 1: keep. Reading 2: use smaller numbers.',
+    judgment: { issue: 'The numbers in question 3 are larger than in the rest of the quiz.', options: ['Keep the numbers', 'Use smaller numbers'], recommend: 1, why: 'Matches the rest of the quiz.' } });
   writeFileSync(join(WORK, 'pack.json'), JSON.stringify(pack, null, 2));
   const render = (mode) => spawnSync(process.execPath, [join(ROOT, 'scripts/render-pack.mjs'), WORK, mode], { encoding: 'utf8', timeout: 600000 });
   let r = render('--preview');
@@ -513,9 +516,17 @@ try {
   await owner('preview', orderId);
   o = (await state()).orders.find((x) => x.id === orderId);
   assert.equal(o.status, 'preview_ready');
+  assert.ok(existsSync(join(WORK, 'AUDIT-REPORT-OWNER.pdf')), 'the owner copy is in the order folder');
+  assert.ok(!(await state()).objects.some((k) => /OWNER/i.test(k)) && !(o.preview_files || []).some((f) => /OWNER/i.test(f)), 'the owner copy is never uploaded');
+  assert.equal(o.review.judgments.length, 1, 'the review carries the judgment call');
   await page.reload();
   await page.waitForSelector(`[data-approve="${orderId}"]`);
-  assert.ok(await page.isDisabled(`[data-approve="${orderId}"]`) && await page.isDisabled(`[data-changes="${orderId}"]`));
+  // our pick asks for a change, so Request changes is ready from the start and Approve is not
+  assert.ok(await page.isDisabled(`[data-approve="${orderId}"]`) && !(await page.isDisabled(`[data-changes="${orderId}"]`)));
+  const jName = `jc-${orderId}-${o.review.judgments[0].id}`;
+  assert.ok(await page.isChecked(`input[name="${jName}"][value="1"]`), 'our pick is chosen to start');
+  assert.match(await page.textContent(`#o-${orderId} fieldset.jcall`), /our pick/);
+  ok('review: the owner copy of the audit report stays in the order folder (not uploaded); the judgment call shows its choices with our pick chosen');
   const href = await page.getAttribute(`#o-${orderId} .dl-list a`, 'href');
   assert.match(href, /\/storage\/v1\/object\/sign\/deliverables\/.+token=/, 'preview files open through signed links');
   assert.equal((await fetch(href)).status, 200);
@@ -575,6 +586,9 @@ try {
   const comments = JSON.parse(readFileSync(join(WORK, `comments-${orderId}.json`), 'utf8'));
   assert.equal(comments.orderId, orderId); assert.equal(comments.comments[0].comment, 'Question 4: say "kilometres", not "miles".');
   assert.equal(comments.checklist.length, 4);
+  assert.ok(comments.comments.some((c) => c.title === 'Your decisions' && /Use smaller numbers/.test(c.comment)), 'a pick that asks for a change goes with the comments');
+  assert.equal(comments.judgments[0].option, 1); assert.equal(comments.judgments[0].change, true);
+  ok('review: her judgment-call pick (a change) went out with Request changes, in the comments the next maker round reads');
   ok('review: signed links to the preview PDFs; Request changes saved her comments (status changes_requested); orders.mjs approval wrote comments-<id>.json');
 
   await owner('preview', orderId);   // the "new preview" after a maker round (same pack here)
@@ -586,6 +600,10 @@ try {
   await fetch(`${fake.url}/storage/v1/object/deliverables/${key.split('/').map(encodeURIComponent).join('/')}`, { method: 'POST', headers: { apikey: SERVICE, 'x-upsert': 'true', 'Content-Type': 'application/pdf' }, body: Buffer.concat([good, Buffer.from('tampered')]) });
   for (const k of ['answers', 'level', 'content', 'noChanges']) await page.check(`#o-${orderId} [data-key="${k}"]`);
   await page.fill(`[data-who="${orderId}"]`, 'Ms. Ortiz');
+  assert.ok(await page.isDisabled(`[data-approve="${orderId}"]`), 'approve stays off while a decision asks for a change');
+  assert.match(await page.textContent(`#o-${orderId} [data-why]`), /decisions asks for a change/);
+  await page.check(`input[name="${jName}"][value="0"]`);   // one tap: keep it as it is
+  assert.ok(!(await page.isDisabled(`[data-approve="${orderId}"]`)), 'keeping the question as it is lets her approve');
   await page.click(`[data-approve="${orderId}"]`);
   await page.waitForSelector(`#o-${orderId} [data-err]:not(:empty)`);
   assert.match(await page.textContent(`#o-${orderId} [data-err]`), /not the file the preview was made with/);
@@ -597,7 +615,8 @@ try {
   await page.waitForFunction((id) => /Approved/.test(document.querySelector('#o-' + id + ' .status-chip')?.textContent || ''), orderId);
   await owner('approval', orderId);
   const approval = JSON.parse(readFileSync(join(WORK, 'approval.json'), 'utf8'));
-  assert.deepEqual(Object.keys(approval).sort(), ['date', 'documents', 'name', 'orderId', 'packHash', 'statement']);
+  assert.deepEqual(Object.keys(approval).sort(), ['date', 'documents', 'judgments', 'name', 'orderId', 'packHash', 'statement']);
+  assert.deepEqual(approval.judgments.map((j) => [j.option, j.change]), [[0, false]], 'the approval records her decision (keep)');
   r = render('--final');
   assert.equal(r.status, 0, 'render-pack.mjs --final accepts the browser\'s approval:\n' + r.stdout + r.stderr);
   assert.ok(approval.documents.some((d) => d.file === pageFile && /^[0-9a-f]{64}$/.test(d.sha256)), 'the approval covers the interactive page');

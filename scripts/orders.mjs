@@ -89,6 +89,8 @@ const workOpt = opt('--work');
 const workOf = (id) => resolve(workOpt || join(process.env.PP_WORK_ROOT || join(homedir(), 'pp-work'), id));
 const safeId = (id) => { if (!/^pp-\d{4}-\d{2}-\d{2}-[a-z0-9]{6}$/.test(id || '')) die(`"${id}" is not an order id (pp-YYYY-MM-DD-xxxxxx)`); return id; };
 const typeOf = (f) => TYPES[(f.match(/\.[^.]+$/) || [''])[0].toLowerCase()] || 'application/octet-stream';
+// The owner's copy of the audit report (costs, token detail) is never delivered, even if one lands in out/ by mistake.
+const deliverable = (f) => !/AUDIT-REPORT-OWNER/i.test(String(f));
 const filesIn = (dir) => readdirSync(dir, { recursive: true }).map(String).filter((f) => statSync(join(dir, f)).isFile()).sort();
 
 async function getOrder(db, id) {
@@ -176,7 +178,7 @@ const commands = {
     const D = JSON.parse(m[1]);
     if (D.orderId !== id) die(`the preview is for "${D.orderId}", not ${id}: set pack.json's id to the order id and render again`);
     // every PDF and interactive page she reviews (docs/KINDS-INTERACTIVE-FORMAT.md); REVIEW.html is only in the zip
-    const pdfs = readdirSync(dir).filter((f) => f.endsWith('.pdf') || (f.endsWith('.html') && f !== 'REVIEW.html')).sort();
+    const pdfs = readdirSync(dir).filter((f) => f.endsWith('.pdf') || (f.endsWith('.html') && f !== 'REVIEW.html')).filter(deliverable).sort();
     const listed = (D.documents || []).map((d) => d.file).sort();
     if (JSON.stringify(pdfs) !== JSON.stringify(listed)) die('out-preview/ PDFs and pages differ from the ones REVIEW.html lists: render the preview again');
     const base = `${o.teacher}/${o.id}/`;
@@ -186,7 +188,7 @@ const commands = {
     for (const f of pdfs) { await db.upload('deliverables', `${base}preview/${f}`, readFileSync(join(dir, f)), f.endsWith('.html') ? TYPES['.html'] : 'application/pdf'); up.push(`preview/${f}`); }
     const zip = join(work, 'preview.zip');
     if (existsSync(zip)) { await db.upload('deliverables', `${base}preview/preview.zip`, readFileSync(zip), 'application/zip'); up.push('preview/preview.zip'); }
-    await setStatus(db, id, 'preview_ready', { review: { packHash: D.packHash, statement: D.statement, documents: D.documents, docTitles: D.docTitles || [], ...(D.blindSkipped ? { blindSkipped: true } : {}) },
+    await setStatus(db, id, 'preview_ready', { review: { packHash: D.packHash, statement: D.statement, documents: D.documents, docTitles: D.docTitles || [], judgments: D.judgments || [], ...(D.blindSkipped ? { blindSkipped: true } : {}) },
       preview_files: up, approval: null });
     console.log(`Uploaded ${up.length} preview file${up.length === 1 ? '' : 's'} for ${id}. Status: preview_ready (she reviews it in My orders).`);
   },
@@ -210,7 +212,7 @@ const commands = {
     if (!existsSync(join(work, 'approval.json'))) die(`${work}/approval.json is missing: run "approval ${id}" and render-pack.mjs --final first`);
     if (!existsSync(dir)) die(`${dir} is missing: render-pack.mjs "${work}" --final`);
     const base = `${o.teacher}/${o.id}/`, up = [];
-    for (const f of filesIn(dir)) { await db.upload('deliverables', `${base}final/${f}`, readFileSync(join(dir, f)), typeOf(f)); up.push(`final/${f}`); }
+    for (const f of filesIn(dir).filter(deliverable)) { await db.upload('deliverables', `${base}final/${f}`, readFileSync(join(dir, f)), typeOf(f)); up.push(`final/${f}`); }
     const zip = existsSync(join(work, 'out.zip')) ? join(work, 'out.zip') : null;
     if (zip) { await db.upload('deliverables', `${base}final/out.zip`, readFileSync(zip), 'application/zip'); up.unshift('final/out.zip'); }
     else console.log('(no out.zip: she gets the files one by one)');

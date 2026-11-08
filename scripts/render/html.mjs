@@ -2,6 +2,7 @@
 // Letter size, black-and-white safe: color is only ever a second signal next to weight, borders or text.
 
 import { mathHtml as mh, withMathCss, plainMath } from './math.mjs';
+import { needsHowToGrade, gradingRows, gradingIntro } from './grading.mjs';
 import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped } from './util.mjs';
 
 const qLabel = (n, ctx) => (ctx.dayLabels ? `Day ${n}` : numLabel(n, ctx.layout));
@@ -57,6 +58,7 @@ export function baseCss(ctx) {
   table { border-collapse: collapse; width: 100%; font-size: 10pt; }
   th, td { border: 1pt solid #000; padding: 4pt 6pt; text-align: left; vertical-align: top; }
   th { background: #e6e6e6; }
+  table.grade { font-size: 9pt; } table.grade tr { break-inside: avoid; } td.n, th.n { text-align: right; }
   .pb { break-before: page; }
   .keep { break-inside: avoid; page-break-inside: avoid; }
   .small { font-size: 9.5pt; color: #222; }
@@ -75,21 +77,21 @@ function page(title, css, body) {
 
 export const PREVIEW_MARK = 'PREVIEW — not approved for use';
 
-// Preview pages: a diagonal mark on every page (fixed elements repeat on each printed page).
+// Preview pages (owner, Nov 8, 2026: a softer mark): nothing across the body. The mark is a light band in the top
+// margin (headerTemplate) and a "PREVIEW" word in the footer, on every page; the body is left as the final will print.
 export function watermark(html) {
-  const mark = `<style>.pp-wm{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-38deg);font:800 34pt Arial,sans-serif;color:rgba(0,0,0,.13);white-space:nowrap;pointer-events:none;z-index:9999;letter-spacing:.02em}</style><div class="pp-wm">${esc(PREVIEW_MARK)}</div>`;
-  return html.replace('</body>', mark + '</body>');
+  return html.replace('<body>', '<body data-preview="1">');
 }
 
 export function headerTemplate(text) {
   if (!text) return '<span></span>';
-  return `<div style="width:100%;font-family:Arial,'Liberation Sans',sans-serif;font-size:8pt;font-weight:700;color:#000;padding:0 0.7in;text-align:center;letter-spacing:.04em;">${esc(text)}</div>`;
+  return `<div style="width:100%;margin:0 0.45in;padding:3pt 0;background:#ececec;border-top:1.5pt solid #000;border-bottom:1.5pt solid #000;-webkit-print-color-adjust:exact;font-family:Arial,'Liberation Sans',sans-serif;font-size:8pt;font-weight:700;color:#000;text-align:center;letter-spacing:.06em;">${esc(text)}</div>`;
 }
 
-export function footerTemplate(label, brand) {
+export function footerTemplate(label, brand, { preview = false } = {}) {
   // Chromium's footer: inline styles only, explicit font size.
   return `<div style="width:100%;font-family:Arial,'Liberation Sans',sans-serif;font-size:7.5pt;color:#333;padding:0 0.7in;display:flex;justify-content:space-between;align-items:center;">
-  <span>${esc(label)}</span>
+  <span>${preview ? '<b style="color:#000;letter-spacing:.06em">PREVIEW</b> · ' : ''}${esc(label)}</span>
   <span>${esc(brand.shortName || brand.name)} · Made with AI · check before use</span>
   <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span></div>`;
 }
@@ -180,6 +182,17 @@ function skillsMapHtml(doc, ver) {
     .join('')}</table>`;
 }
 
+// How to grade (scripts/render/grading.mjs): points, full and partial credit, and what else to accept, per question.
+function howToGradeHtml(doc, ver, ctx) {
+  const rows = gradingRows(doc, ver, ctx.pack);
+  const list = (r) => [...(r.accept.length ? [`Also accept: ${r.accept.map((a) => mh(a)).join('; ')}`] : []), ...r.notes.map((x) => esc(x))].join('<br>');
+  return `<h2 class="pb">How to grade${ver ? ` · version ${esc(ver)}` : ''}</h2>
+  <p class="small">${esc(gradingIntro(rows))}</p>
+  <table class="grade"><tr><th style="width:5%">#</th><th class="n" style="width:7%">Points</th><th style="width:30%">Full credit</th><th style="width:28%">Partial credit</th><th>Also accept · look for</th></tr>${rows
+    .map((r) => `<tr><td>${r.n}</td><td class="n">${r.points}${r.given ? '' : '*'}</td><td><b>${mh(r.full, { bold: true })}</b></td><td>${esc(r.partial)}</td><td>${list(r) || '—'}</td></tr>`)
+    .join('')}</table>`;
+}
+
 export function rubricTableHtml(rubric) {
   if (!rubric?.criteria?.length) return '';
   const n = Math.max(...rubric.criteria.map((c) => (c.levels || []).length));
@@ -227,6 +240,7 @@ export function copyHtml(doc, ver, ctx, teacher) {
   });
   if (doc.rubric) body += `<h2>${esc(doc.rubric.title || 'Rubric')}</h2>${rubricTableHtml(doc.rubric)}`;
   if (teacher && items.length) body += skillsMapHtml(doc, ver);
+  if (teacher && needsHowToGrade(doc)) body += howToGradeHtml(doc, ver, ctx);
   return page(doc.title, baseCss(ctx), body);
 }
 

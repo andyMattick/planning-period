@@ -112,6 +112,12 @@ All optional; a pack without them renders the same as before.
 | finding `sameAs` | `{ "check": "blind", "round": 2, "where": "Quiz A q8" }`: this finding is the same real problem as that earlier one (found again in a later round). It is counted once everywhere and shown under the earlier finding as "found again in round N". If the earlier one has no `fixed`, this one's `fixed` counts for it. `check` and `where` default to this finding's own |
 | `rounds` | The order's number of rounds, when it should be stated outright. Otherwise the audit report uses the highest `round` across the blind, fact and solver checks; Wilco reruns after every change, so its runs are counted on their own ("N Wilco runs") and never set the rounds |
 | finding `forTeacher` | `true` leaves a finding for the teacher to decide even when it has text in `fixed` |
+| finding `judgment` | On a JUDGMENT: `{ "issue": "one line", "options": ["Keep it as it is", "Reword it so …"], "recommend": 1, "why": "one line", "by": "reporter" }`. **Option 0 is always "keep it as it is"**; any other pick asks for a change. The checker that raised it writes `issue` and `options` (and may recommend); the reporter adds `recommend` and `why` when they are missing and sets `by: "reporter"` (agents/reporter.md). The teacher report shows the options with our pick and why; REVIEW.html and My orders show them as one-tap choices with our pick chosen. A pick other than 0 goes out with Request changes (a "Your decisions" comment plus `judgments` in `comments-<id>.json`) and blocks Approve; the approval records her picks in `judgments`. Without it (older packs) the checker's own words are shown and she writes her choice in the comments |
+| question `points` | Points for How to grade; without them the teacher copy suggests mc/tf 1, number and short 2, written 4 (marked `*`) |
+| question `credit` | How to grade, by hand: `{ "full": "…", "partial": "…", "notes": ["…"] }` (each may be per version). Without it: full credit is the key, partial credit a plain default by type, and the notes are the rubric sentences checkers left on KEEP findings about that question ("the rubric should accept coffee or smoothie") |
+| question `lesson` (or `source`) | The lesson or source section a question covers, shown on the audit report's coverage page next to its skill |
+| log row `waiting` | Minutes spent waiting for the teacher (her follow-up answer), shown as "Waiting for your answer" next to agent minutes. Without it, "15 minutes waiting" in a row's `what` is read |
+| `order.tokenTotal` | Tokens charged for the order, shown in the teacher report. Without it the renderer reads `tokenTotal` from `order.json` or `in/order.json` next to `pack.json` |
 | `originalReview` | For a `versions` order: findings about the teacher's own uploaded test, shown on the audit report's "What we found in your original" page and not counted with the pack's findings. `{ "file": "my-test.docx", "summary": "…", "findings": [{ "where", "kind": "FIX" \| "KEEP" \| "JUDGMENT", "what", "before", "suggestion", "inVersions" }], "notes": ["…"] }` (`inVersions`: what the A/B versions do instead) |
 | `format`, `grading` (document) | `"interactive"` with `"auto"` or `"print"`: the document is made as one offline HTML page per version for students, plus the teacher copy; `"printable"` or missing: as before. Question fields `tol`, `round`, `hint`, `miss`, `points` are read by the page. Guided notes: a line with several `______` blanks names them in order with `;` in `answer` and every `accept`. Review game: sections are categories; a card is worth `points`, else `level`. docs/KINDS-INTERACTIVE-FORMAT.md |
 | `math`, `mathText`, `figure: {graph}`, `$…$` LaTeX in any text | Math typesetting, graphs as data and the SymPy math check: docs/KINDS-MATH.md |
@@ -187,7 +193,9 @@ node scripts/render-pack.mjs <folder> --final    # only with a matching approval
 **1. Preview** → `<folder>/out-preview/` and `<folder>/preview.zip`
 
 - Interactive pages (`<doc>-interactive[-A].html`, with a visible PREVIEW mark and banner) and PDFs: student and teacher copies (A/B), handouts, cards and rubrics, and `AUDIT-REPORT.pdf` ("Preview: not
-  approved yet"). Every page has a diagonal "PREVIEW — not approved for use" mark and a header line with the order id.
+  approved yet"). Every page has a light "PREVIEW — not approved for use · order <id>" band in the top margin and
+  "PREVIEW" in the footer; nothing is printed across the body (owner, Nov 8, 2026). The interactive pages keep their own
+  PREVIEW banner and mark.
 - `REVIEW.html`: an offline page (no network, nothing to install) with the sign-off checklist (I checked the answers;
   the level fits my students; the wording and content are right for my class; nothing needs a change), a comments box
   per document, and two buttons:
@@ -205,17 +213,38 @@ parsed pack, so any content change counts), and every PDF and interactive page (
 Otherwise the renderer refuses with the reason and makes nothing (`exit 1`); change the pack → new preview → new approval.
 The final has no watermark and has every file below; `README.txt` and the audit report say "Approved by <name> on <date>".
 
+## The audit report: two copies (owner, Nov 8, 2026)
+
+`render-pack.mjs` makes two audit reports from one pack (`scripts/render/audit.mjs`):
+
+- **`out-preview/AUDIT-REPORT.pdf` / `out/AUDIT-REPORT.pdf`** (the teacher's). Pages 1–3, in plain words (easier,
+  middle, harder; no check names, file names or bot names): what was made; who checked it and how (fresh agents,
+  rounds, the blind tester's and solver's results, the key check, and one line on guessing: "the best guessing trick
+  scored 35%, right at the 35% we allow"); what was caught and fixed (one line each, before → after; an open fix or a
+  failed check is said plainly at the top); her decisions (each judgment call with its options, our pick and why);
+  how to grade (points; the full table is in the teacher copy); time ("Agent work" and "Waiting for your answer" as two
+  bars) and effort (tokens charged, agents, rounds, checks); the notices; then one page: each question's skill, level
+  and type, the level mix, and for versions the key per version and what changes. Then **"Appendix: the full log"**:
+  every step, every finding (kept ones one line each), every check round, the auditor's notes. Agent log lines and
+  notes are cleaned of costs ("cap $2.33", token and cache detail) for this copy; dollars inside questions stay.
+- **`AUDIT-REPORT-OWNER.pdf`** in the order folder itself (never in `out-preview/`, `out/` or a zip;
+  `scripts/orders.mjs` also refuses to upload it): the same plus costs per step and per agent, model tokens, the
+  budget and the agents' own words unedited. For the owner and the auditor only; never delivered.
+
+`scripts/test-audit.mjs` (in `npm run check`) holds every sample to this: the teacher part at most 3 pages, no cost,
+no word from its denylist, and the owner copy kept out of every delivery.
+
 ## What `render-pack.mjs` makes (one zip per order)
 
 | File | What |
 |---|---|
 | `<doc>-student[-A|-B].pdf` and `.docx` | Student copies, in the teacher's style |
-| `<doc>-teacher[-A|-B].pdf` and `.docx` | Teacher copies: the key in bold, `why` under each answer |
+| `<doc>-teacher[-A|-B].pdf` and `.docx` | Teacher copies: the key in bold, `why` under each answer, the skills map, and for a quiz or test graded by hand (paper, or an interactive page printed for grading) a **How to grade** page: points, full and partial credit and what else to accept, per question |
 | `<doc>.pptx` | Slides, review games and bell ringers (title slide, one slide per entry, speaker notes; a review game or bell ringer puts the answer in the notes) |
 | `<doc>-handout.pdf` | Slides: a printable handout with room for notes |
 | `<doc>-cards.pdf`, `<doc>-teacher.pdf` | Review games: printable question cards (no answers) and the key |
 | `<doc>.pdf` and `.docx` | A document that is only a rubric: the rubric table |
-| `AUDIT-REPORT.pdf` | The reporter's report: what each agent did, every round, every catch and fix, time and cost |
+| `AUDIT-REPORT.pdf` | The teacher's report (below): a 2–3 page report in plain words, then "Appendix: the full log". No dollars and no model-token counts anywhere |
 | `project.json` | The pack itself, so the teacher can upload it again to change, reprint or make new versions |
 | `README.txt` | What's inside, the AI notice, "check before students see it", and the delete notice |
 

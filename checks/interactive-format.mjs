@@ -36,7 +36,7 @@ import { fileURLToPath } from 'node:url';
 import { loadPack, docName, argsOf } from './pack-lib.mjs';
 import { basesOf } from './apps.mjs';
 import { isInteractiveFormat, formatProblems, pageHtml, pageFile, versionsOfDoc, loadForms, OBJECTIVE_TYPES, scoredHere, splitBlanks, classCode } from '../scripts/render/interactive-format.mjs';
-import { vv, tfValue, keyText } from '../scripts/render/util.mjs';
+import { vv, tfValue, keyText, subjectLabelOf } from '../scripts/render/util.mjs';
 import { plainMath } from '../scripts/render/math.mjs';
 import { packHashOf } from '../scripts/render-pack.mjs';
 
@@ -215,7 +215,7 @@ export async function checkHashes(pack, doc, ver, html, file) {
 const withGrading = (doc, g) => (g === doc.grading ? doc : { ...doc, grading: g });
 export function buildPages(pack, { both = false, preview = false } = {}) {
   const bases = basesOf(pack), out = [];
-  const subjectLabel = menu.subjects.find((s) => s.id === pack.order?.subject)?.label;
+  const subjectLabel = subjectLabelOf(menu, pack.order);
   for (const doc0 of pack.documents.filter(isInteractiveFormat)) {
     for (const g of both ? ['auto', 'print'] : [doc0.grading]) {
       const doc = withGrading(doc0, g);

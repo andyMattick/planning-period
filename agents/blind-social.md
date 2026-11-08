@@ -78,8 +78,14 @@ with `"sameAs": {"check", "round", "where"}` naming the earlier one. **Write the
 (`checks-blind-r<N>.json` in your folder); the lead merges it, since other checkers run at the same time (g11-history).
 Never edit `documents`. The reporter takes your minutes from your session's record, not from your estimate.
 
+
+**A JUDGMENT adds its choices** (owner, Nov 8, 2026; docs/PACK-FORMAT.md): `"judgment": {"issue": "<one line, plain
+words>", "options": ["Keep it as it is (…)", "<one concrete change>"], "recommend": <index, or leave it out>, "why":
+"<one line>"}`. Option 0 is always keeping it as it is; each other option is one of your readings as a concrete change.
+The teacher picks one with a tap in her review, so write the options as she would read them (no level codes).
+
 ---
-**Version 2** (Nov 5, 2026)
+**Version 3** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's blind review (`docs/BLIND-REVIEW.md` steps 2–4) and the traps its
@@ -89,3 +95,6 @@ Never edit `documents`. The reporter takes your minutes from your session's reco
   the rubric is read (g7-ela); `fixed`/`sameAs` on earlier findings and an entry file the lead merges (g8, g11);
   `--only` takes `|` (g11); step counts for difficulty and the quiz L3 share (g4, g8); crossword, logic puzzle,
   quiz-show and app checks (docs/KINDS-GAMES.md, KINDS-APPS.md); myths, true-of-a-real-case wrong choices and anachronisms (g11-history).
+- v3, Nov 8, 2026 (owner review of the first real audit report, order pp-2026-11-08-a20840): a JUDGMENT adds
+  `judgment` (issue, options with "keep it" first, an optional pick and why), so the teacher report and her review
+  show one-tap choices.

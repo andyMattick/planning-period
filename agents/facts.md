@@ -41,8 +41,14 @@ the lead to merge (checkers run at the same time). Every **off** is FIX, one fin
 **judgment** is JUDGMENT for the teacher. In a recheck, set `fixed` on each earlier finding you confirm, `sameAs` on a
 repeat. Never edit `documents`. The reporter takes your minutes from your session's record.
 
+
+**A JUDGMENT adds its choices** (owner, Nov 8, 2026; docs/PACK-FORMAT.md): `"judgment": {"issue": "<one line, plain
+words>", "options": ["Keep it as it is (…)", "<one concrete change>"], "recommend": <index, or leave it out>, "why":
+"<one line>"}`. Option 0 is always keeping it as it is; each other option is one of your readings as a concrete change.
+The teacher picks one with a tap in her review, so write the options as she would read them (no level codes).
+
 ---
-**Version 2** (Nov 5, 2026)
+**Version 3** (Nov 8, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's accuracy rules (`CONTENT-RULES.md` §4: facts current and not
@@ -53,3 +59,6 @@ repeat. Never edit `documents`. The reporter takes your minutes from your sessio
   g8-science Cl₃); rechecks on changed text each round (g11-history: no fact recheck until round 4); figures read as
   SVG (g8-science); true-of-a-real-case wrong choices (g11-history); puzzle clues with `because`, quiz-show clues, card
   backs and memorize passages (docs/KINDS-GAMES.md, KINDS-APPS.md); an entry file, `fixed`/`sameAs`.
+- v3, Nov 8, 2026 (owner review of the first real audit report, order pp-2026-11-08-a20840): a JUDGMENT adds
+  `judgment` (issue, options with "keep it" first, an optional pick and why), so the teacher report and her review
+  show one-tap choices.
