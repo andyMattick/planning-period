@@ -4,7 +4,9 @@
 --
 -- When an order is sent (a new row with status 'sent') it asks GitHub to start .github/workflows/run-order.yml with
 -- event type 'order-sent' (onboarding: the follow-up). When an order's status changes to 'building' (her answer, or a
--- follow-up with no questions) it sends 'order-answered' (the build, up to the preview). Nothing else starts it.
+-- follow-up with no questions) it sends 'order-answered' (the build, up to the preview). When it changes to 'approved'
+-- (she pressed Approve in My orders: approve_order) it sends 'order-approved' (the final files, then the purge and the
+-- auditor). Nothing else starts it. Ran this file before Nov 8, 2026 (without 'approved')? Run dispatch-approved.sql.
 -- The request goes out through pg_net after the transaction commits; a failed request never blocks her order.
 --
 -- Vault secrets (Project Settings → Vault, or select vault.create_secret('<value>', '<name>')):
@@ -25,8 +27,8 @@ declare
 begin
   if tg_op = 'INSERT' and new.status = 'sent' then
     kind := 'order-sent';
-  elsif tg_op = 'UPDATE' and new.status is distinct from old.status and new.status in ('sent', 'building') then
-    kind := case new.status when 'sent' then 'order-sent' else 'order-answered' end;
+  elsif tg_op = 'UPDATE' and new.status is distinct from old.status and new.status in ('sent', 'building', 'approved') then
+    kind := case new.status when 'sent' then 'order-sent' when 'building' then 'order-answered' else 'order-approved' end;
   else
     return new;
   end if;
