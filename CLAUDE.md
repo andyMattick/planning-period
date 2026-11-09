@@ -40,6 +40,17 @@ the work.
    changes (a maker round, a fresh recheck, a new preview) or agrees; only then are the final files rendered and sent
    (`approval.json` in the order folder; `docs/RUNBOOK.md` step 11).
 
+## One pass, one fix, then get smarter (owner, Nov 9, 2026)
+Checks are worth paying for once, not forever.
+1. Every scripted check runs every time (`npm run check`, Wilco's bots, the solver scripts): they cost no tokens.
+2. One round of fresh checking agents, then **one** maker fix round, worst first; rerun the scripts, don't re-check the
+   fixes with new agents (the order's own recheck rules in docs/RUNBOOK.md still apply to what goes to a teacher).
+3. **Never leave a bad answer:** a wrong or doubtful key, two right answers, no right answer, a giveaway or a factual
+   error is fixed now, never deferred.
+4. Anything else left is written down with a one-line reason for the next weekly run or audit.
+5. **Get smarter:** when an agent finds a problem the scripts missed, add a pattern for it to the bots or checks
+   (`checks/`, Wilco's bots) with a self-test that catches it, so a script finds it next time. Never weaken a check.
+
 ## Before every commit
 `npm run check` (brand name in one place, menu and pack files valid, the renderer builds the samples, Wilco's bots pass
 the samples). Commit messages are plain and specific.
