@@ -1,0 +1,42 @@
+# The owner gate (owner, Nov 9, 2026: "auto-merge when green"). A pull request merges by itself once every required check
+# passes; this check holds back the ones that change a sensitive area until the owner adds the label `owner-ok`.
+# The list of sensitive paths is OWNER_PATHS below (docs/AUTOMERGE.md). Plain bash and git: no install, no secrets.
+name: Owner gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  owner-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Sensitive paths need the owner-ok label
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+          OWNER_OK: ${{ contains(github.event.pull_request.labels.*.name, 'owner-ok') }}
+        run: |
+          OWNER_PATHS='^(CLAUDE\.md|\.github/|supabase/|brand\.config\.json|site/backend\.js|scripts/auditor-gate\.mjs)'
+          changed=$(git diff --name-only "$BASE...$HEAD")
+          hits=$(printf '%s\n' "$changed" | grep -E "$OWNER_PATHS" || true)
+          if [ -z "$hits" ]; then
+            echo "No sensitive paths changed: this pull request can merge by itself when the other checks pass." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          { echo "This pull request changes sensitive paths:"; printf -- '- %s\n' $hits; } | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$OWNER_OK" = "true" ]; then
+            echo "The owner added owner-ok: cleared." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "Waiting for the owner: add the label owner-ok to let it merge (docs/AUTOMERGE.md)." | tee -a "$GITHUB_STEP_SUMMARY"
+          exit 1

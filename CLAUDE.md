@@ -51,6 +51,11 @@ Checks are worth paying for once, not forever.
 5. **Get smarter:** when an agent finds a problem the scripts missed, add a pattern for it to the bots or checks
    (`checks/`, Wilco's bots) with a self-test that catches it, so a script finds it next time. Never weaken a check.
 
+## Auto-merge when green (owner, Nov 9, 2026)
+Open a pull request and turn on auto-merge (squash): it merges by itself when CI (`check`) and the owner gate pass. A
+change to a sensitive path (`CLAUDE.md`, `.github/`, `supabase/`, `brand.config.json`, `site/backend.js`,
+`scripts/auditor-gate.mjs`) waits for the owner's `owner-ok` label. Say which in the pull request. docs/AUTOMERGE.md.
+
 ## Before every commit
 `npm run check` (brand name in one place, menu and pack files valid, the renderer builds the samples, Wilco's bots pass
 the samples). Commit messages are plain and specific.
