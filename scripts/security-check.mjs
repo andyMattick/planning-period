@@ -39,6 +39,20 @@ export const CHECKS = [
     return [!/const env = sessionEnv\(/.test(t) && 'sessions are not given sessionEnv', !/'-u', AGENT_USER/.test(t) && 'sessions do not run as the agent user',
       !/function takeDir/.test(t) && 'session folders are not taken back from the agent user', /env: \{ \.\.\.childEnv, PP_RUN_ROLE/.test(t) && 'a session gets the full environment'].filter(Boolean);
   }],
+  ['supabase: every function is revoked from authenticated or granted to it on purpose; security definer sets search_path (finding 3)', (f) => {
+    const sql = Object.entries(f).filter(([p]) => /^supabase\/.*\.sql$/.test(p)).sort(([a], [b]) => a.localeCompare(b)).map(([, t]) => t).join('\n').replace(/--[^\n]*/g, '');
+    const out = [];
+    for (const m of sql.matchAll(/create or replace function public\.(\w+)\s*\(([^)]*)\)[\s\S]*?\$\$/gi)) {
+      const name = m[1], head = m[0];
+      if (/security definer/i.test(head) && !/set search_path/i.test(head)) out.push(`${name}: security definer without set search_path`);
+      const revoked = new RegExp(`revoke all on function[^;]*\\b${name}\\b[^;]*from[^;]*\\bauthenticated\\b`, 'i').test(sql);
+      const granted = new RegExp(`grant execute on function[^;]*\\b${name}\\b[^;]*to authenticated`, 'i').test(sql);
+      if (!revoked && !granted) out.push(`${name}: never revoked from authenticated (Supabase grants every new function to it by default)`);
+    }
+    if (!/revoke all on public\.teachers[^;]*from anon, authenticated/i.test(sql)) out.push('the default table grants are not taken back from authenticated');
+    if (!/create trigger orders_check_new before insert on public\.orders/i.test(sql)) out.push('no orders_check_new trigger (her own folder, order limits)');
+    return out;
+  }],
 ];
 
 /* Finding 2: checks/math_check.py reads pack text with SymPy's parse_expr, which runs eval. Each payload must be refused
@@ -69,6 +83,7 @@ export function files() {
   const f = {};
   for (const w of readdirSync(join(ROOT, '.github/workflows'))) f[`.github/workflows/${w}`] = read(`.github/workflows/${w}`);
   for (const p of ['scripts/run-order.mjs']) if (existsSync(join(ROOT, p))) f[p] = read(p);
+  for (const d of ['supabase/migrations', 'supabase/runner']) for (const x of readdirSync(join(ROOT, d))) if (x.endsWith('.sql')) f[`${d}/${x}`] = read(`${d}/${x}`);
   return f;
 }
 
@@ -83,6 +98,7 @@ const BREAK = [
   ['.github/workflows/ci.yml', (t) => t + '\n  x:\n    runs-on: ubuntu-latest\n    steps:\n      - run: |\n          echo "${{ github.event.client_payload.id }}"\n'],
   ['.github/workflows/run-order.yml', (t) => t.replace(/PP_AGENT_USER=ppagent/g, 'PP_AGENT_USER=')],
   ['scripts/run-order.mjs', (t) => t.replace('const env = sessionEnv(', 'const env = (')],
+  ['supabase/migrations/20261109120000_security.sql', (t) => t.replace(/revoke all on function public\.orders_due_for_purge[^;]*;/, '')],
 ];
 
 if (import.meta.url === `file://${process.argv[1]}`) {

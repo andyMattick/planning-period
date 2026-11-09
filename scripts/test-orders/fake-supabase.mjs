@@ -241,6 +241,14 @@ export function startFake({ port = 0 } = {}) {
             const ok = r.teacher === w.uid && r.status === 'sent' && ['follow_up', 'answer', 'answers', 'review', 'comments', 'approval', 'note', 'uploads_purged_at'].every((k) => r[k] == null)
               && (r.preview_files == null || !r.preview_files.length) && (r.final_files == null || !r.final_files.length);
             if (!ok) return send(403, { code: '42501', message: 'new row violates row-level security policy for table "orders"' });
+            // supabase/migrations/20261109120000_security.sql: orders_check_new (not for the owner)
+            if (!isAdmin(w.uid)) {
+              const inFolder = new RegExp(`^${w.uid}/${String(r.id).replace(/[^a-z0-9-]/g, '')}/(sources|training)/[^/]+$`);
+              if ((r.upload_files || []).some((f) => !inFolder.test(f) || /(^|\/)\.\.?(\/|$)/.test(f))) return send(403, { code: '42501', message: 'an upload path is outside this order\'s folder' });
+              const mine = db.orders.filter((o) => o.teacher === w.uid);
+              if (mine.filter((o) => Date.parse(o.created_at) > Date.now() - 864e5).length >= 10) return send(400, { code: 'P0001', message: 'That\'s a lot of orders in one day. Please wait a bit, or email us.' });
+              if (mine.filter((o) => !['final_ready', 'cancelled', 'failed'].includes(o.status)).length >= 5) return send(400, { code: 'P0001', message: 'You have 5 orders in progress. Please wait for one to finish (or cancel one) before sending another.' });
+            }
           }
           if (!/^pp-\d{4}-\d{2}-\d{2}-[a-z0-9]{6}$/.test(r.id)) return send(400, { code: '23514', message: 'new row violates check constraint "orders_id_check"' });
           if (db.orders.some((o) => o.id === r.id)) return send(409, { code: '23505', message: 'duplicate key value violates unique constraint "orders_pkey"' });
