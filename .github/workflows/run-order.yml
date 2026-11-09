@@ -46,7 +46,7 @@ jobs:
             echo "not an order id"; exit 2
           fi
           case "$STAGE" in onboard|build|final|auto) ;; *) echo "bad stage"; exit 2 ;; esac
-          echo "PP_WORK_ROOT=$RUNNER_TEMP/pp-work" >> "$GITHUB_ENV"
+          echo "PP_WORK_ROOT=/tmp/pp-work" >> "$GITHUB_ENV"   # outside the runner's home, so the agent user can reach its session folders
           echo "PP_HANDOFF_FILE=$RUNNER_TEMP/handoff.txt" >> "$GITHUB_ENV"
 
       - uses: actions/checkout@v4
@@ -67,12 +67,33 @@ jobs:
         env:
           CLAUDE_CODE_VERSION: ${{ vars.PP_CLAUDE_CODE_VERSION || 'latest' }}
         run: |
+          # browsers where the agent user can run them too (not under the runner's home)
+          sudo mkdir -p /opt/pp-shared && sudo chown "$(id -u):$(id -g)" /opt/pp-shared
+          echo "PLAYWRIGHT_BROWSERS_PATH=/opt/pp-shared/ms-playwright" >> "$GITHUB_ENV"
+          export PLAYWRIGHT_BROWSERS_PATH=/opt/pp-shared/ms-playwright
           npm ci
           npm install -g "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" playwright@1.63.0
           npx --yes playwright@1.63.0 install --with-deps chromium
           python -m pip install --quiet sympy
           python -c 'import sympy'
           sudo apt-get install -y -qq unzip > /dev/null
+
+      # Agent sessions read her uploads, which are untrusted: a prompt hidden in one could tell an agent to run code. They
+      # run as this user (scripts/run-order.mjs, PP_AGENT_USER): no sudo, no docker, no secrets but the model's API key,
+      # and it can't read the runner's environment or memory, where the service key and the push token are
+      # (docs/security/2026-11-09.md, finding 1). Off switch (not recommended): repository variable PP_AGENT_ISOLATION = false.
+      - name: The agent user
+        if: vars.PP_AGENT_ISOLATION != 'false'
+        run: |
+          id ppagent > /dev/null 2>&1 || sudo useradd --create-home --shell /bin/bash ppagent
+          cp -a node_modules /opt/pp-shared/node_modules
+          chmod -R a+rX /opt/pp-shared
+          sudo -n -u ppagent -H true
+          if sudo -n -u ppagent -H sudo -n true 2>/dev/null; then echo "the agent user can use sudo: stopping"; exit 1; fi
+          if sudo -n -u ppagent -H test -r /var/run/docker.sock -a -w /var/run/docker.sock; then echo "the agent user can use docker: stopping"; exit 1; fi
+          if sudo -n -u ppagent -H cat "/proc/$$/environ" > /dev/null 2>&1; then echo "the agent user can read the runner's environment: stopping"; exit 1; fi
+          echo "PP_AGENT_USER=ppagent" >> "$GITHUB_ENV"
+          echo "PP_AGENT_NODE_MODULES=/opt/pp-shared/node_modules" >> "$GITHUB_ENV"
 
       - name: Run the order
         id: run
@@ -123,4 +144,6 @@ jobs:
       # GitHub-hosted runners are thrown away after the job; this also clears them on a self-hosted runner
       - name: Delete working copies and session transcripts
         if: always()
-        run: rm -rf "$PP_WORK_ROOT" "$HOME/.claude/projects" "$PP_HANDOFF_FILE"
+        run: |
+          if [ -n "$PP_AGENT_USER" ]; then sudo pkill -KILL -u "$PP_AGENT_USER" || true; sudo rm -rf "/home/$PP_AGENT_USER/.claude/projects"; fi
+          sudo rm -rf "$PP_WORK_ROOT"; rm -rf "$HOME/.claude/projects" "$PP_HANDOFF_FILE"

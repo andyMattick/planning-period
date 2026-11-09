@@ -37,6 +37,7 @@ let cost = result.cost * (Number(process.env.PP_FAKE_COST_SCALE) || 1), subtype 
 if (cost > cap) { cost = cap; subtype = 'error_max_budget_usd'; }
 const session_id = val('--resume') || randomUUID();
 if (process.env.PP_FAKE_CALLS) appendFileSync(process.env.PP_FAKE_CALLS, JSON.stringify({ role, start, end: Date.now(), cwd, files, view,
-  cap: val('--max-budget-usd'), model: val('--model'), resume: val('--resume'), mode: val('--permission-mode'), tools: val('--allowedTools'), session_id }) + '\n');
+  cap: val('--max-budget-usd'), model: val('--model'), resume: val('--resume'), mode: val('--permission-mode'), tools: val('--allowedTools'), session_id,
+  secretEnv: Object.keys(process.env).filter((k) => /SERVICE_KEY|_TOKEN$|PASSWORD|SECRET|^PP_SUPABASE_/i.test(k)) }) + '\n');
 console.log(JSON.stringify({ type: 'result', subtype, is_error: subtype !== 'success', duration_ms: result.ms, total_cost_usd: cost, session_id, num_turns: 3,
   usage: { input_tokens: 10, output_tokens: 1000, cache_read_input_tokens: 50000, cache_creation_input_tokens: 5000 } }));

@@ -172,10 +172,26 @@ NAMES = {'e': sp.E, 'E': sp.E, 'pi': sp.pi, 'oo': sp.oo, 'sqrt': sp.sqrt, 'root'
 UNIT_WORDS = r'\b(units?|square|cubic|sq|cm|mm|m|km|in|ft|yd|mi|inches|feet|foot|yards?|miles?|meters?|centimeters?|g|kg|lb|lbs|oz|s|sec|seconds?|min|minutes?|h|hr|hours?|days?|degrees?|dollars?|cents?|per)\b'
 
 
+# parse_expr runs Python's eval on the text it builds, and pack text comes from agents that read her uploads: a string
+# like __import__('os').system(…) would run (docs/security/2026-11-09.md, finding 2). So the text may hold no dunder,
+# quote, attribute access, statement or Python keyword, and eval sees SymPy's names with no builtins at all.
+UNSAFE = re.compile(r"__|\b(lambda|import|exec|eval|open|globals|locals|getattr|setattr|delattr|vars|compile|input|breakpoint|"
+                    r"subclasses|class|mro|base|builtins|system|popen|os|sys|subprocess)\b|[\"'`;:{}@#$\\]|\.\s*[A-Za-z_]")
+# Only math that returns math: nothing that makes a string (srepr, latex, str…) or parses one (sympify, parse_expr).
+SAFE_GLOBALS = {name: getattr(sp, name) for name in (
+    'Symbol Integer Float Rational Function Max Min Abs E pi oo zoo nan I Matrix sqrt root cbrt exp log ln sin cos tan sec csc '
+    'cot asin acos atan atan2 acot asec acsc sinh cosh tanh asinh acosh atanh floor ceiling factorial binomial gcd lcm Mod '
+    'sign re im conjugate arg Piecewise Eq Ne Lt Le Gt Ge Interval Union FiniteSet Sum Product Integral Derivative diff '
+    'integrate limit Rational nsimplify simplify expand factor Poly').split() if hasattr(sp, name)}
+SAFE_GLOBALS.update({'__builtins__': {}, 'max': sp.Max, 'min': sp.Min})
+
+
 def expr_of(text, evaluate=True):
     t = text.strip()
     if not t:
         raise Unread('empty')
+    if UNSAFE.search(t):
+        raise Unread('cannot read "%s" (not plain math)' % t[:80])
     t = re.sub(r'\|([^|]+)\|', r'Abs(\1)', t)
     t = re.sub(r'\+\s*C\b', '+ C', t)
     t = re.sub(UNIT_WORDS, ' ', t) if re.search(r'\d', t) else t
@@ -183,7 +199,7 @@ def expr_of(text, evaluate=True):
     t = re.sub(r'(?<=\d)\s*%', '/100', t)
     t = t.replace('±', '+')  # handled by the caller; here just readable
     try:
-        return parse_expr(t, local_dict=dict(NAMES), transformations=TRANSFORMS, evaluate=evaluate)
+        return parse_expr(t, local_dict=dict(NAMES), global_dict=dict(SAFE_GLOBALS), transformations=TRANSFORMS, evaluate=evaluate)
     except Exception as e:
         raise Unread('cannot read "%s" (%s)' % (text.strip(), type(e).__name__))
 
@@ -256,7 +272,7 @@ def answer_parts(raw):
 
 # ---------- comparing ----------
 def same(a, b, tol=None):
-    a, b = sp.sympify(a), sp.sympify(b)
+    a, b = (x if isinstance(x, sp.Basic) else sp.sympify(x, strict=True) for x in (a, b))   # never a string through eval
     if a.is_Matrix or b.is_Matrix:
         return a.shape == b.shape and all(same(x, y, tol) for x, y in zip(a, b))
     if a == b:

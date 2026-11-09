@@ -25,6 +25,7 @@
          the build, the final after her approval with the auditor through the gate, a changed preview refused, the daily purge).
      15. The auditor's gate: scripts/auditor-gate.mjs --self-test (a good brief change lands on main; checks/, scripts/,
          CLAUDE.md, prices, thresholds, a removed or reworded rule, a skipped check, no version bump and a failing check are refused).
+     16. 🛡️ Dominyk's security self-test: scripts/security-check.mjs --self-test (each fixed weakness stays fixed; docs/security/).
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -510,6 +511,12 @@ else {
 {
   const r = spawnSync(process.execPath, [join(ROOT, 'scripts/auditor-gate.mjs'), '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
   if (r.status === 0) ok(r.stdout.trim().split('\n').pop()); else fail(`scripts/auditor-gate.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
+}
+
+/* 16. 🛡️ Dominyk's security self-test (docs/security/README.md): each fixed weakness stays fixed, and each check bites */
+{
+  const r = spawnSync(process.execPath, [join(ROOT, 'scripts/security-check.mjs'), '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
+  if (r.status === 0) ok(r.stdout.trim().split('\n').pop()); else fail(`scripts/security-check.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
 }
 
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');

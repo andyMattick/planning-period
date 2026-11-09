@@ -44,10 +44,14 @@
 
    Environment: PP_SUPABASE_URL and PP_SUPABASE_SERVICE_KEY (a real key, or a placeholder the network proxy replaces:
    NODE_USE_ENV_PROXY=1 is set for child processes when HTTPS_PROXY is set), ANTHROPIC_API_KEY (or a signed-in Claude
-   Code), PP_CLAUDE_BIN (default claude), PP_WORK_ROOT (default ~/pp-work).
+   Code), PP_CLAUDE_BIN (default claude), PP_WORK_ROOT (default ~/pp-work), PP_AGENT_USER (an OS user with no sudo and
+   no secrets: every agent session runs as that user through `sudo -n -u`, so a prompt injected through her uploads
+   can't read the runner's keys from its environment or memory, or change the code that runs with them; run-order.yml
+   sets it; docs/security/2026-11-09.md, finding 1). Agent sessions never get the service key, the push token or any
+   other secret in their environment (sessionEnv), with or without PP_AGENT_USER.
    --dry-run uses scripts/test-run-order/fake-claude.mjs with canned role outputs (no spending); everything else is real. */
 import { spawn } from 'node:child_process';
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync, cpSync, rmSync, symlinkSync, appendFileSync, copyFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync, lstatSync, readlinkSync, chmodSync, unlinkSync, cpSync, rmSync, symlinkSync, appendFileSync, copyFileSync } from 'node:fs';
 import { join, dirname, resolve, basename, extname } from 'node:path';
 import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -75,6 +79,23 @@ if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_US
 // the auditor's push token goes only to scripts/auditor-gate.mjs, never to an agent session
 const AUDIT_TOKEN = process.env.PP_AUDIT_TOKEN || '';
 delete childEnv.PP_AUDIT_TOKEN;
+// What an agent session may see of the environment: never a key, token or password but the model's own API key
+// (sessions read her untrusted uploads; a prompt hidden in one could ask for `node -e "…process.env…"`).
+const SECRET_ENV = /(SERVICE_KEY|_TOKEN$|TOKEN_|PASSWORD|SECRET|^PP_SUPABASE_|^ACTIONS_(RUNTIME|ID_TOKEN|CACHE|RESULTS)|^GITHUB_TOKEN$)/i;
+function sessionEnv(extra = {}) {
+  const e = {};
+  for (const [k, v] of Object.entries(childEnv)) if (!SECRET_ENV.test(k)) e[k] = v;
+  return { ...e, ...extra };
+}
+// The agent user (PP_AGENT_USER): sessions run as it, with only these variables carried across sudo.
+const AGENT_USER = process.env.PP_AGENT_USER || '';
+if (AGENT_USER && !/^[a-z_][a-z0-9_-]{0,31}$/.test(AGENT_USER)) { console.error('PP_AGENT_USER is not a user name'); process.exit(2); }
+const SUDO = process.env.PP_SUDO_BIN ? [process.execPath, process.env.PP_SUDO_BIN] : ['sudo'];   // PP_SUDO_BIN: tests only
+// the agent user can't reach the checkout under the runner's home: run-order.yml copies node_modules here for it
+const NODE_MODULES = process.env.PP_AGENT_NODE_MODULES || join(ROOT, 'node_modules');
+const SUDO_ENV = { PATH: process.env.PATH || '/usr/bin:/bin', ...(process.env.PP_FAKE_SUDO_LOG ? { PP_FAKE_SUDO_LOG: process.env.PP_FAKE_SUDO_LOG } : {}) };
+const AGENT_KEEP = ['ANTHROPIC_API_KEY', 'PP_RUN_ROLE', 'PP_FAKE_FIXTURES', 'PP_FAKE_CALLS', 'PP_FAKE_COST_SCALE', 'PP_FAKE_FAIL_ROLE', 'PP_FAKE_TOKENS', 'PP_FAKE_AUDIT',
+  'HTTPS_PROXY', 'https_proxy', 'HTTP_PROXY', 'http_proxy', 'NO_PROXY', 'no_proxy', 'NODE_USE_ENV_PROXY', 'NODE_EXTRA_CA_CERTS', 'SSL_CERT_FILE', 'LANG', 'PLAYWRIGHT_BROWSERS_PATH', 'PP_CHROMIUM'];
 const MODEL = { standard: process.env.PP_MODEL_STANDARD || '', fast: process.env.PP_MODEL_FAST || '' };
 
 /* ---------- small helpers ---------- */
@@ -127,8 +148,15 @@ async function session(role, round, phase, dir, { setting = 'standard', cap, too
     ...(model ? ['--model', model] : []), ...(resume ? ['--resume', resume] : [])];
   const t0 = Date.now();
   say(`start ${key} (${setting} setting, cap ${money(cap)})`);
-  const r = await sh(CLAUDE[0], [...CLAUDE.slice(1), ...args], { cwd: dir, timeout: minutes * 60000,
-    env: { ...childEnv, PP_RUN_ROLE: key, ...(FIXTURES ? { PP_FAKE_FIXTURES: FIXTURES } : {}) } });
+  const env = sessionEnv({ PP_RUN_ROLE: key, ...(FIXTURES ? { PP_FAKE_FIXTURES: FIXTURES } : {}) });
+  let r;
+  if (AGENT_USER) {
+    lendDir(dir);
+    const keepVars = AGENT_KEEP.filter((k) => env[k] != null);
+    r = await sh(SUDO[0], [...SUDO.slice(1), '-n', '-u', AGENT_USER, '-H', `--preserve-env=${keepVars.join(',')}`, '--', 'env', `PATH=${process.env.PATH || '/usr/bin:/bin'}`,
+      ...CLAUDE, ...args], { cwd: dir, timeout: minutes * 60000, env: { ...Object.fromEntries(keepVars.map((k) => [k, env[k]])), ...SUDO_ENV } });
+    await takeDir(dir);
+  } else r = await sh(CLAUDE[0], [...CLAUDE.slice(1), ...args], { cwd: dir, timeout: minutes * 60000, env });
   let rec = null;
   for (const line of r.out.trim().split('\n').reverse()) { try { const j = JSON.parse(line); if (j && typeof j === 'object' && !Array.isArray(j)) { rec = j; break; } } catch {} }
   if (!rec) { try { const j = JSON.parse(r.out); rec = Array.isArray(j) ? j.filter((x) => x.type === 'result').pop() : j; } catch {} }
@@ -145,6 +173,31 @@ async function session(role, round, phase, dir, { setting = 'standard', cap, too
 }
 const capFor = (frac, parallel = 1, floor = 0) => Math.max(0, Math.min(Math.max(BUDGET * frac, floor), room() / 2 / parallel));
 
+/* ---------- the agent user's folders (PP_AGENT_USER) ---------- */
+// Before a session: the session folder is the agent user's to write (and WORK only to pass through, not to list).
+function lendDir(dir) {
+  for (const d of [WORK, SESS()]) try { chmodSync(d, 0o711); } catch {}
+  (function walk(p) {
+    const st = lstatSync(p);
+    if (st.isSymbolicLink()) return;
+    chmodSync(p, st.isDirectory() ? 0o777 : 0o666);
+    if (st.isDirectory()) for (const f of readdirSync(p)) walk(join(p, f));
+  })(dir);
+}
+// After it: every file is the runner's again (sudo chown, never following a link), and every link the session made is
+// removed, so nothing the runner reads or writes there later can point at its own files.
+async function takeDir(dir) {
+  const r = await sh(SUDO[0], [...SUDO.slice(1), '-n', '--', 'chown', '-R', '-P', `${process.getuid()}:${process.getgid()}`, dir], { env: SUDO_ENV });
+  if (r.code) throw new Error(`could not take back the session folder from ${AGENT_USER}: ${(r.err || r.out).trim().split('\n').pop()}`);
+  (function walk(p) {
+    for (const f of readdirSync(p)) {
+      const q = join(p, f), st = lstatSync(q);
+      if (st.isSymbolicLink()) { if (!(q === join(dir, 'node_modules') && readlinkSync(q) === NODE_MODULES)) unlinkSync(q); }
+      else if (st.isDirectory()) { chmodSync(q, 0o755); walk(q); }
+    }
+  })(dir);
+}
+
 /* ---------- folders ---------- */
 const SESS = () => join(WORK, 'sess');
 function toolkit(dir, { pack = null, extra = [] } = {}) {
@@ -152,7 +205,7 @@ function toolkit(dir, { pack = null, extra = [] } = {}) {
   cpSync(join(ROOT, 'checks'), join(dir, 'checks'), { recursive: true });
   cpSync(join(ROOT, 'scripts'), join(dir, 'scripts'), { recursive: true, filter: (s) => !/test-run-order|test-orders/.test(s) });
   for (const f of ['brand.config.json', 'menu.json', 'feasibility.json', 'package.json']) copyFileSync(join(ROOT, f), join(dir, f));
-  try { symlinkSync(join(ROOT, 'node_modules'), join(dir, 'node_modules'), 'dir'); } catch {}
+  try { symlinkSync(NODE_MODULES, join(dir, 'node_modules'), 'dir'); } catch {}
   if (pack) copyFileSync(pack, join(dir, 'pack.json'));
   for (const [from, to] of extra) if (existsSync(from)) cpSync(from, join(dir, to), { recursive: true });
   return dir;
@@ -590,7 +643,7 @@ async function auditor(record) {
   rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
   // a copy of the repository (no .git): the gate, not the session, decides what reaches the repository
   cpSync(repo, dir, { recursive: true, filter: (s) => !/(^|\/)(\.git|node_modules)(\/|$)/.test(s.slice(repo.length)) });
-  try { symlinkSync(join(ROOT, 'node_modules'), join(dir, 'node_modules'), 'dir'); } catch {}
+  try { symlinkSync(NODE_MODULES, join(dir, 'node_modules'), 'dir'); } catch {}
   mkdirSync(join(dir, 'records'), { recursive: true });
   writeJSON(join(dir, 'records', `${ID}.json`), record);
   const before = new Map(treeFiles(dir).map((f) => [f, readFileSync(join(dir, f))]));
@@ -630,12 +683,19 @@ async function keepWork(reason, open) {
   const files = ['pack.json', 'run-log.jsonl', 'HANDOFF.md', 'onboarding.json'].map((f) => join(WORK, f)).filter(existsSync);
   try { await orders('work-put', ID, ...files); } catch (e) { say(`could not keep the working files: ${e.message}`); }
 }
-function cleanup() {
+async function cleanup() {
   // session transcripts of this order's folders hold her content: delete them (CLAUDE.md rule 1), then the work folder
   const projects = join(homedir(), '.claude', 'projects');
   if (existsSync(SESS()) && existsSync(projects)) for (const d of readdirSync(SESS())) {
     const slug = join(SESS(), d).replace(/[^a-zA-Z0-9]/g, '-');
     rmSync(join(projects, slug), { recursive: true, force: true });
+  }
+  if (AGENT_USER) {
+    // the agent user's leftovers: any process it left running, and its transcripts (they hold her content)
+    const bare = { env: SUDO_ENV };
+    await sh(SUDO[0], [...SUDO.slice(1), '-n', '--', 'pkill', '-KILL', '-u', AGENT_USER], bare);
+    await sh(SUDO[0], [...SUDO.slice(1), '-n', '-u', AGENT_USER, '-H', '--', 'sh', '-c', 'rm -rf "$HOME/.claude/projects"'], bare);
+    await sh(SUDO[0], [...SUDO.slice(1), '-n', '--', 'chown', '-R', '-P', `${process.getuid()}:${process.getgid()}`, WORK], bare);
   }
   if (!keep) rmSync(WORK, { recursive: true, force: true });
 }
@@ -673,6 +733,6 @@ try {
     try { await orders('status', ID, 'failed', 'Something went wrong while we were making your order. We have been told and will be in touch.'); } catch (x) { say(`could not set the status: ${x.message}`); }
   }
 } finally {
-  cleanup();
+  await cleanup();
 }
 process.exit(code);

@@ -778,6 +778,19 @@ try {
       return r.status;
     }, [fake.url, o.upload_files[0]]);
     assert.notEqual(signed, 200, "another teacher can't open her uploads");
+    // docs/security/2026-11-09.md, finding 3: her own folder only, at most 5 open orders, and no purge list
+    const tries = await p2.evaluate(async ([u, victimPath]) => {
+      const s = JSON.parse(localStorage.getItem('pp-session')), me = s.user.id, out = [];
+      const h = { apikey: 'fake-anon-key', Authorization: 'Bearer ' + s.access_token, 'Content-Type': 'application/json' };
+      const send = (id, files) => fetch(u + '/rest/v1/orders', { method: 'POST', headers: h, body: JSON.stringify({ id, teacher: me, status: 'sent', order_json: { id }, token_total: 1, upload_files: files }) }).then((r) => r.status);
+      out.push(await send('pp-2026-11-09-steal1', [victimPath]));
+      for (let i = 0; i < 6; i++) out.push(await send('pp-2026-11-09-many0' + i, []));
+      out.push(await fetch(u + '/rest/v1/rpc/orders_due_for_purge', { method: 'POST', headers: h, body: '{}' }).then((r) => r.status));
+      return out;
+    }, [fake.url, o.upload_files[0]]);
+    assert.equal(tries[0], 403, `an order naming another teacher's upload is refused (${tries})`);
+    assert.deepEqual(tries.slice(1, 7).map((x) => x < 300), [true, true, true, true, true, false], `the sixth open order is refused (${tries})`);
+    assert.ok(tries[7] >= 400, `a teacher can't list the orders due for purge (${tries})`);
     await shot(p2, 'orders-desktop-empty');
     await fetch(`${fake.url}/__test/admin?email=owner@example.org`);
     await p2.click('#signout-btn');

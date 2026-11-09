@@ -66,6 +66,7 @@ try {
   ok(overlap(ob, st), 'onboarding and style notes ran at the same time');
   ok(ob && ob.mode === 'dontAsk' && ob.cap === '1.00' && ob.model === 'standard-alias', `onboarding session args: ${JSON.stringify(ob)}`);
   ok(st && st.files.includes('training') && !st.files.includes('order.json'), 'the style session sees only her examples');
+  ok(c.length && c.every((x) => Array.isArray(x.secretEnv) && !x.secretEnv.length), `no agent session sees a key, token or password (${c.map((x) => x.secretEnv).flat().join(', ')})`);
   ok(!existsSync(work1), 'the working folder is deleted after the run');
   ok(!/Two-way tables|Question one/.test(r1.out), 'the run\'s output shows none of her content');
 
@@ -274,6 +275,17 @@ try {
   const left = (await state()).objects.filter((k) => k.includes(`/${ID6}/`));
   ok(pr.status === 0 && !left.length && (await orderOf(ID6)).uploads_purged_at, `purge --due deleted the failed order's files (${pr.stdout}${pr.stderr}; left ${left})`);
   ok((await state()).objects.includes(`deliverables/${teacher}/style/style.md`), 'her style notes survive the daily purge');
+
+  /* 11. PP_AGENT_USER: every session runs as the agent user through sudo, with no secret carried across */
+  const ID11 = 'pp-2026-11-09-agent1', calls11 = join(tmp, 'calls11.jsonl'), sudoLog = join(tmp, 'sudo.jsonl');
+  await newOrder(ID11);
+  const r11 = await run(ID11, ['--work', join(tmp, 'w11')], { PP_FAKE_CALLS: calls11, PP_AGENT_USER: 'ppagent', PP_SUDO_BIN: join(ROOT, 'scripts/test-run-order/fake-sudo.mjs'), PP_FAKE_SUDO_LOG: sudoLog, PP_AUDIT_TOKEN: 'made-up-push-token' });
+  ok(r11.code === 0 && (await orderOf(ID11)).status === 'needs_answer', `onboarding as the agent user: exit ${r11.code}\n${r11.out}`);
+  const su = callsOf(sudoLog), asAgent = su.filter((x) => x.user === 'ppagent'), c11 = callsOf(calls11);
+  const viaEnv = asAgent.filter((x) => x.cmd[0] === 'env');
+  ok(c11.length >= 1 && viaEnv.length === c11.length && viaEnv.every((x) => !/KEY|TOKEN|PASSWORD|SECRET|SUPABASE/.test(x.preserve.replace('ANTHROPIC_API_KEY', ''))), `every session ran as ppagent with no secret kept: ${JSON.stringify(su)}`);
+  ok(c11.every((x) => !x.secretEnv.length), 'the agent user\'s sessions see no key, token or password');
+  ok(su.filter((x) => x.cmd[0] === 'chown').length > c11.length && su.some((x) => x.cmd[0] === 'pkill'), 'each session folder is taken back (chown) and the agent user\'s leftovers are stopped');
 
   /* 6. nothing to do for an order in another status; a bad id is refused */
   ok((await run(ID, [])).code === 0, 'auto on a preview_ready order does nothing');
