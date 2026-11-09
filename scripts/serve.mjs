@@ -30,6 +30,11 @@ const fetchPageHandler = createHandler({
   allowAddress: testAllow ? (host, port) => `${host}:${port}` === testAllow : undefined,
 });
 try { writeManifest(); } catch (e) { console.warn('manifest: ' + e.message); }
+// vercel.json's headers, so the local site behaves like the real one (the security headers among them: a test that
+// opens a page here sees the same frame and sniffing rules; docs/security/2026-11-09.md, finding 4)
+const VERCEL_HEADERS = (() => { try { return JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8')).headers || []; } catch { return []; } })()
+  .map((r) => ({ re: new RegExp('^' + r.source.split('(.*)').map((x) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('.*') + '$'), headers: r.headers }));
+const vercelHeaders = (path) => Object.fromEntries(VERCEL_HEADERS.filter((r) => r.re.test(path)).flatMap((r) => r.headers.map((h) => [h.key, h.value])));
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 createServer(async (req, res) => {
@@ -70,7 +75,7 @@ createServer(async (req, res) => {
       }
     }
     const body = await readFile(path);
-    res.writeHead(200, { 'Content-Type': TYPES[extname(path).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+    res.writeHead(200, { ...vercelHeaders(url.pathname), 'Content-Type': TYPES[extname(path).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-store' });
     res.end(body);
   } catch (e) {
     res.writeHead(e && e.code === 'ENOENT' ? 404 : 500, { 'Content-Type': 'text/plain; charset=utf-8' });

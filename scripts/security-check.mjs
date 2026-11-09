@@ -53,6 +53,12 @@ export const CHECKS = [
     if (!/create trigger orders_check_new before insert on public\.orders/i.test(sql)) out.push('no orders_check_new trigger (her own folder, order limits)');
     return out;
   }],
+  ['vercel.json: every page refuses to be framed, never sniffs types, keeps referrers short (finding 4)', (f) => {
+    let j; try { j = JSON.parse(f['vercel.json'] || '{}'); } catch { return ['vercel.json is not JSON']; }
+    const all = Object.fromEntries((j.headers || []).filter((r) => r.source === '/(.*)').flatMap((r) => r.headers.map((h) => [h.key.toLowerCase(), h.value])));
+    return [!/^deny$/i.test(all['x-frame-options'] || '') && 'no X-Frame-Options: DENY', !/frame-ancestors 'none'/.test(all['content-security-policy'] || '') && "no frame-ancestors 'none'",
+      all['x-content-type-options'] !== 'nosniff' && 'no X-Content-Type-Options: nosniff', !all['referrer-policy'] && 'no Referrer-Policy'].filter(Boolean);
+  }],
 ];
 
 /* Finding 2: checks/math_check.py reads pack text with SymPy's parse_expr, which runs eval. Each payload must be refused
@@ -82,7 +88,7 @@ print(json.dumps(out))`;
 export function files() {
   const f = {};
   for (const w of readdirSync(join(ROOT, '.github/workflows'))) f[`.github/workflows/${w}`] = read(`.github/workflows/${w}`);
-  for (const p of ['scripts/run-order.mjs']) if (existsSync(join(ROOT, p))) f[p] = read(p);
+  for (const p of ['scripts/run-order.mjs', 'vercel.json']) if (existsSync(join(ROOT, p))) f[p] = read(p);
   for (const d of ['supabase/migrations', 'supabase/runner']) for (const x of readdirSync(join(ROOT, d))) if (x.endsWith('.sql')) f[`${d}/${x}`] = read(`${d}/${x}`);
   return f;
 }
@@ -98,6 +104,7 @@ const BREAK = [
   ['.github/workflows/ci.yml', (t) => t + '\n  x:\n    runs-on: ubuntu-latest\n    steps:\n      - run: |\n          echo "${{ github.event.client_payload.id }}"\n'],
   ['.github/workflows/run-order.yml', (t) => t.replace(/PP_AGENT_USER=ppagent/g, 'PP_AGENT_USER=')],
   ['scripts/run-order.mjs', (t) => t.replace('const env = sessionEnv(', 'const env = (')],
+  ['vercel.json', (t) => t.replace('"DENY"', '"SAMEORIGIN"')],
   ['supabase/migrations/20261109120000_security.sql', (t) => t.replace(/revoke all on function public\.orders_due_for_purge[^;]*;/, '')],
 ];
 
