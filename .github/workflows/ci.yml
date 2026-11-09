@@ -1,0 +1,47 @@
+# Every pull request and every push to main: the repository's own checks (CLAUDE.md, "Before every commit"). With the
+# owner gate (owner-gate.yml) these are the required checks for auto-merge (docs/AUTOMERGE.md). No secrets are used.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: |
+          npm ci
+          npm install --no-save playwright@1.63.0
+          npx --yes playwright@1.63.0 install --with-deps chromium
+          python3 -m pip install --quiet sympy
+
+      - name: npm run check
+        run: |
+          npm run check 2>&1 | tee check.txt
+          grep -q "All checks pass" check.txt
+
+      - name: Order page tests
+        run: node scripts/test-orders.mjs
+
+      - name: Interactive page tests
+        run: node scripts/test-interactive.mjs
