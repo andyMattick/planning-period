@@ -7,8 +7,9 @@
   var esc = PP.esc, fmtBytes = PP.fmtBytes;
   var MB = 1024 * 1024;
   var LIMITS = { training: 25 * MB, sources: 25 * MB };
-  var DEFAULT_TURNAROUND = 'This is a pilot. A person runs every order with the agent team, so please allow about 3 school days. ' +
-    'If yours will take longer, we will email you and say so. Every pack includes the audit report. Please check the pack before students see it.';
+  // The turnaround for what she picked (owner, Nov 8, 2026): simple orders run automatically, bigger ones within 24 hours
+  // by a person with the agent team. The rule is menu.json's "automatic", read by site/scope.js (the runner reads it too).
+  var TURNAROUND_TAIL = ' Every pack includes the audit report. Please check the pack before students see it.';
 
   var brand = {}, menu = { grades: [], subjects: [], items: [], extras: [] };
   var files = { training: [], sources: [] };
@@ -325,6 +326,7 @@
       $('other-wrap').hidden = !other;
       if (other) $('subject-other').focus();
       renderFeas();   // math practice draws more from a page
+      renderCost();   // the turnaround depends on the subject
     });
 
     $('items').innerHTML = menu.items.map(function (it) {
@@ -616,7 +618,52 @@
       return '<li><span>' + esc(l.label) + (l.quantity > 1 ? ' × ' + l.quantity : '') + (l.format ? '<br><span class="small muted">' + esc(l.format) + '</span>' : '') + '</span><span class="n">' + (l.tokens ? l.tokens : 'incl.') + '</span></li>';
     }).join('') : '<li class="muted">Nothing picked yet</li>';
     document.querySelectorAll('[data-sum-total]').forEach(function (el) { el.textContent = sum + ' tokens'; });
+    renderTurnaround(sum);
+    renderPlans(sum);
     return sum;
+  }
+
+  // ---------- plans (owner, Nov 8, 2026; menu.json "plans", docs/PRICING.md section 4): shown, nothing to buy yet ----------
+  function usd(x) { return '$' + (Math.round(x * 100) % 100 ? x.toFixed(2) : String(Math.round(x))); }
+  function oneTimePrice(tokens, ot) { return '$' + Math.max(ot.minimum, tokens * ot.perToken).toFixed(2); }
+  function renderPlans(sum) {
+    var pl = menu.plans, list = $('plans-list');
+    if (!list) return;
+    $('plans').hidden = !pl;
+    if (!pl) return;
+    var t = function (id) { return (itemById(id) || {}).tokens || 0; };
+    var ot = pl.oneTime;
+    list.innerHTML = pl.monthly.map(function (p) {
+      var buys = [[t('test'), 'tests'], [t('quiz'), 'quizzes'], [t('worksheet'), 'worksheets']].filter(function (x) { return x[0]; })
+        .map(function (x) { return Math.floor(p.tokens / x[0]) + ' ' + x[1]; }).join(', or ');
+      return '<li data-plan="' + esc(p.id) + '"><b>' + esc(p.label) + '</b>: ' + usd(p.price) + '/month for ' + p.tokens + ' tokens a month (' + usd(p.annual) + ' a year). About ' + esc(buys) + ' a month.</li>';
+    }).join('') +
+      '<li data-plan="one-time"><b>One-time</b>: ' + Math.round(ot.perToken * 100) + '¢ a token, ' + usd(ot.minimum) + ' minimum an order (a test ' +
+      oneTimePrice(t('test'), ot) + ', a quiz ' + oneTimePrice(t('quiz'), ot) + ', a worksheet ' + oneTimePrice(t('worksheet'), ot) + ').</li>';
+    $('plans-order').textContent = sum > 0
+      ? 'This order: ' + oneTimePrice(sum, ot) + ' one-time, or ' + sum + ' of your ' + pl.monthly.map(function (p) { return p.tokens; }).join(' / ') + ' monthly tokens'
+      : 'What an order would cost';
+  }
+
+  // ---------- turnaround (before Send, and on the done screens) ----------
+  function scopeNow(sum) {
+    var ids = pickedIds();
+    var sc = PPScope.check({ subject: $('subject').value, items: ids, tokens: sum,
+      quantities: ids.reduce(function (o, id) { o[id] = picked[id].qty; return o; }, {}),
+      itemSpecs: ids.reduce(function (o, id) { o[id] = picked[id].spec || {}; return o; }, {}) }, menu);
+    // an order sent as a zip by email is always run by a person
+    if (!sendsOnline()) { sc.auto = false; sc.reasons.unshift({ code: 'email', text: 'Sent by email' }); }
+    return sc;
+  }
+  function turnaroundText(sc) { return (sc.auto ? PPScope.TURNAROUND.auto : PPScope.TURNAROUND.bigger) + TURNAROUND_TAIL; }
+  function renderTurnaround(sum) {
+    var el = $('turnaround-before'); if (!el) return;
+    var sc = scopeNow(sum);
+    el.setAttribute('data-auto', sc.auto ? 'true' : 'false');
+    el.textContent = turnaroundText(sc);
+    var why = $('turnaround-why');
+    why.hidden = sc.auto;
+    why.textContent = sc.auto ? '' : 'Why: ' + sc.reasons.map(function (r) { return r.text; }).join(' · ') + '.';
   }
 
   // ---------- send ----------
@@ -818,7 +865,7 @@
   function showDoneOnline(orderJson, n) {
     $('online-id').textContent = orderJson.id;
     $('online-count').textContent = n + ' file' + (n === 1 ? '' : 's');
-    $('online-turnaround').textContent = brand.turnaround || DEFAULT_TURNAROUND;
+    $('online-turnaround').textContent = turnaroundText(scopeNow(orderJson.tokenTotal));
     $('online-link').href = 'orders.html?order=' + encodeURIComponent(orderJson.id);
     $('order').hidden = true;
     $('done-online').hidden = false;
@@ -831,6 +878,7 @@
       : 'Nothing is uploaded. Send makes one zip file on this device for you to email' + (backend ? ' (or sign in at the top to send it online).' : '.');
     if (u && u.email && !$('reply').value.trim()) $('reply').value = u.email;
     renderLinkAccess();
+    renderCost();   // signed in or not changes the turnaround (an emailed zip is run by a person)
   }
 
   function download() {
@@ -846,7 +894,7 @@
     $('order-email').innerHTML = brand.orderEmailIsPlaceholder ? esc(mail) : '<a href="mailto:' + esc(mail) + '?subject=' +
       encodeURIComponent('Order ' + lastZip.name) + '">' + esc(mail) + '</a>';
     $('ph-tag').hidden = !brand.orderEmailIsPlaceholder;
-    $('turnaround').textContent = brand.turnaround || DEFAULT_TURNAROUND;
+    $('turnaround').textContent = turnaroundText({ auto: false });   // a zip by email: a person runs it
     $('order').hidden = true;
     $('done').hidden = false;
     $('done').focus();

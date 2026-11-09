@@ -223,22 +223,28 @@ the first three (if the sampled solver work runs over, raise `perStudent` first)
 4. The auditor's savings (fewer rounds, cheaper tiers where a check covers a slip) lower the typical cost; pass them on
    only after they show in two orders' logs.
 
-## 4. Subscription and token packs (PLACEHOLDER: the owner decides)
+## 4. Subscription and token packs (owner decided Nov 8, 2026)
 
-> **Not decided. Every number in this section is a placeholder for the owner.**
+The numbers live in `menu.json` (`plans`); the order page shows them beside the token total, and `npm run check` fails
+if this table and the data disagree.
 
-| Plan | Monthly tokens | Price | Per token | Example |
+| Plan | Price | Tokens | Per token | What it buys (menu tokens) |
 |---|---|---|---|---|
-| Pay as you go | — | **$?** a token (placeholder: $0.20–0.25) | — | a worksheet at 30 tokens = $6.00–7.50 |
-| Teacher monthly | **? tokens** (placeholder: 300) | **$?** (placeholder: $49) | about $0.16 | a unit pack plus a quiz a month |
-| Department / homeschool co-op | **? tokens** (placeholder: 1,200) | **$?** (placeholder: $159) | about $0.13 | several teachers' packs |
-| Extra token pack | **? tokens** (placeholder: 100) | **$?** (placeholder: $20) | $0.20 | top-up, doesn't expire (?) |
+| Teacher | $25/month | 250 a month | 10¢ | 3 tests (70), or 6 quizzes (40), or 8 worksheets (30) |
+| Teacher Plus | $49/month | 500 a month | about 9.8¢ | 7 tests, or 12 quizzes, or a full 4-lesson unit (420) plus a homework set (20) |
+| One-time | 15¢ a token | per order | 15¢ | $5 minimum an order: a test $10.50, a quiz $6.00, a worksheet $5.00 |
 
-What the owner needs to decide: the price per token (it must cover the $0.10 cost budget, the owner's own time to run
-and review an order in the pilot, card fees of about 3% + $0.30 a sale, failed or redone runs, and first-of-kind
-orders), whether unused monthly tokens roll over, refunds when a pack can't pass its checks, and a minimum order to
-cover the fixed per-order cost. Pet World's marketer's notes (`docs/marketing/MONETIZATION-2026-11-04.md`) guess
-the owner's time at about 2 hours a unit; the pilot should time it.
+- Unused monthly tokens reset each month. Annual plans are 2 months free: $250 a year (Teacher), $490 a year (Teacher Plus).
+- Orders handed to a person (the 24-hour path, docs/BACKEND.md "What runs automatically") cost the same tokens.
+
+Why: the real cost was about 8¢ a token by hand (pp-2026-11-08-a20840: $5.56 for 70 tokens) and about 6¢ is expected
+on the fast path (§2d). Both plans stay above cost at full use after card fees (about 3% + 30¢ a charge: Teacher
+$23.95 left against $20 at 8¢, Plus $47.23 against $40). One-time is 50% more a token, to cover the card fee and make
+the plans the better deal; the $5 minimum covers the flat card fee on a tiny order.
+
+Not built yet: payments (Stripe) and counting each teacher's monthly tokens. Until they are, the order page shows the
+plans and what an order would cost, with no way to buy, and orders are not charged. Still open: refunds when a pack
+can't pass its checks, and a department or co-op plan.
 
 ## Owner direction (Nov 5, 2026)
 

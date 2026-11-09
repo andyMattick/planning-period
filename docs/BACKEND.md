@@ -259,7 +259,7 @@ every day 08:23 UTC ──► .github/workflows/purge-due.yml ──► orders.m
 | The trigger | `supabase/runner/dispatch.sql` (and `dispatch-approved.sql`, the same function, for an owner who ran the first version) | On a new `sent` order, or a status change to `building` or `approved`, `pg_net` posts `{event_type, client_payload: {id}}` to GitHub's dispatches API with a token from Supabase Vault. Not set up = does nothing |
 | The workflow | `.github/workflows/run-order.yml` | Checks the id, installs (npm, Claude Code, Playwright's Chromium, SymPy), runs `scripts/run-order.mjs`, deletes the working copies; one run per order at a time (`concurrency`), 75 minutes (45 for the final), `contents: read`; the final alone gets `PP_AUDIT_TOKEN`, handed only to the gate's `git push` |
 | The daily purge | `.github/workflows/purge-due.yml` | `orders.mjs purge --due 7` every day: uploads, preview files and kept working files of `final_ready`, `cancelled` and `failed` orders a week old (finals and style notes stay). Off: variable `PP_PURGE_ENABLED` = `false` |
-| The coordinator | `scripts/run-order.mjs` | docs/RUNBOOK.md, "The fast path". Exit 3 = handed to the owner (status unchanged with a note for her, files kept in `deliverables/<teacher>/<id>/work/`); exit 1 = failed (status `failed` with a note she sees) |
+| The coordinator | `scripts/run-order.mjs` | docs/RUNBOOK.md, "The fast path". Exit 3 = handed to the owner (status unchanged with a note for her, files kept in `deliverables/<teacher>/<id>/work/`); exit 1 = failed (status `failed` with a note she sees). Every hand-off also emails the owner "Needs you" (below, "What runs automatically") |
 | The auditor's gate | `scripts/auditor-gate.mjs` | Briefs only (one version bump and a cause each, no hard rule removed or reworded, nothing skipped), then `npm run check`; commits and pushes to main what passes, lists the rest for the owner (`docs/audits/BRIEF-CHANGES.md`, `docs/audits/refused/`) |
 | The tests | `scripts/test-run-order.mjs`, `scripts/auditor-gate.mjs --self-test` | `--dry-run` end to end against the fake Supabase, and the gate in made-up repositories (both in `npm run check`) |
 
@@ -281,11 +281,47 @@ a line in the run log and the Actions summary (ids, steps, counts and costs; nev
 - **Request changes.** Her comments after a preview (`changes_requested`): the owner writes `comments/<id>.md` and runs
   a maker round, a fresh recheck and a new preview (docs/RUNBOOK.md step 11). `orders.mjs preview` keeps the new pack,
   so when she then approves, the final runs automatically.
-- **Hard cases the runner hands off** (exit 3): reading items (the no-passage probe's short answers are scored by the
-  lead), apps, puzzles and practice games, an unknown subject, the cost stop, a FIX still open after round 3, a final
-  whose pack wasn't kept (a preview posted by hand before Nov 8, 2026). The status stays where it was, with a note for
-  her; `orders.mjs work-get <id>` fetches the files. A hand-off or failure shows in the Actions tab (a red run) and,
-  with GitHub's default notifications, in the owner's email.
+- **Bigger orders and hard cases the runner hands off** (exit 3): every order that isn't simple (below), the cost stop,
+  a FIX still open after round 3, a final whose pack wasn't kept (a preview posted by hand before Nov 8, 2026). The
+  status stays where it was, with a note for her that promises 24 hours; `orders.mjs work-get <id>` fetches the files.
+  Every hand-off emails the owner "Needs you: <id>" with the reason (below), and shows in the Actions tab (a red run).
+
+### What runs automatically (owner, Nov 8, 2026)
+
+"Let's leave the runner for what we see as simple and tell them it will be within 24 hours for bigger." One rule, in
+`menu.json`, read by both the order page and the runner through `site/scope.js` (`PPScope.check`):
+
+- **Simple** (automatic): every item has `"auto": true` (worksheet, guided notes, quiz, unit test, study guide,
+  homework, bell ringers, review game, versions of my test), the subject is in `automatic.subjects` (math, science,
+  social studies, other), no item is set to one version per student (`itemSpecs.<item>.versions = "student"`: the
+  runner doesn't build pools yet), at most **3 items** (`automatic.maxItems`, counting quantities) and at most **150
+  tokens** (`automatic.maxTokens`: a quiz, a unit test and a worksheet with extra versions still fit; a whole unit pack
+  doesn't). The all-versions key (`itemSpecs.<item>.keyPack`) stays simple: the runner copies her `itemSpecs` into
+  `pack.order`, and the renderer makes it.
+- **Bigger** (a person, within 24 hours): anything else: reading items and English / reading (the no-passage probe is
+  scored by the lead), slides, rubrics, projects, unit packs, puzzles, apps, practice games, one version per student,
+  more than 3 items or 150 tokens. An order sent as a zip by email is always by hand.
+
+What she sees before Send (`#turnaround-before`, step 5): simple → "Usually ready in under an hour: the preview comes to
+My orders after you answer our questions."; bigger → "Ready within 24 hours: a person on our team runs bigger orders
+with the agent team." with a "Why:" line (e.g. "One version per student", "Reading quiz", "More than 3 items"); both end
+"Every pack includes the audit report. Please check the pack before students see it." The same line is on the done
+screens after Send. (The old `brand.config.json` `turnaround` override is no longer read: one honest text per path.)
+
+What the runner does: onboarding runs for every order (she gets her questions as usual). The build checks the rule
+first, before any session or spending; a bigger order is handed off (exit 3) with her note "This order is bigger than
+our automatic path, so a person on our team runs it with the agent team. Your preview will be ready within 24 hours of
+your answer." Other build hand-offs say "Your order needs a quick look from a person on our team before the preview.
+Your preview will be ready within 24 hours of your answer."; a final hand-off says "…your final files … will be ready
+within 24 hours of your approval." The final after her approval runs automatically for every order whose pack was kept
+(a bigger order posted by hand with `orders.mjs preview` too).
+
+**The owner's email on every hand-off:** `run-order.mjs` writes the reason (ids, steps, counts, menu names; never her
+content) to `PP_HANDOFF_FILE`; `run-order.yml`'s next step runs `scripts/notify-order.mjs <id> --handoff "<reason>"`,
+which emails "Needs you: <id>, grade … subject" with the reason, what was ordered and the next step (`orders.mjs
+work-get`), under the same rules as the order email (no files, no requests text). It uses the order email's settings
+(`PP_NOTIFY_FROM`, `PP_NOTIFY_TO`, `PP_NOTIFY_APP_PASSWORD`; off with `PP_NOTIFY_ENABLED` = `false`) and does nothing,
+quietly, when they aren't set.
 - **What the gate refuses.** A brief change the gate refuses (or any change to checks, scripts, prices or thresholds the
   auditor recommends) is listed for the owner in the audit report, `docs/audits/BRIEF-CHANGES.md` and
   `docs/audits/refused/<date>-<cause>.patch`; the owner applies it by hand if he agrees. Applied changes need nothing:
@@ -387,8 +423,9 @@ steps 2 (the two Supabase secrets), 4 and 5 above; it runs even when `PP_RUNNER_
 4. Try it: **Actions → Order email → Run workflow** with an existing order id. Off switch: variable
    `PP_NOTIFY_ENABLED` = `false`.
 
-Tested: `node scripts/notify-order.mjs --self-test` (the text, no header injection from a name, no requests text) and a
-`--dry-run` against a real order. Not tested: a real Gmail send.
+Tested: `node scripts/notify-order.mjs --self-test` (the text, no header injection from a name or a hand-off reason, no
+requests text, the "Needs you" hand-off email) and `--dry-run` (scripts/test-run-order.mjs runs `--handoff --dry-run`
+for each bigger order it hands off). Not tested: a real Gmail send.
 
 ## Tested, and how
 

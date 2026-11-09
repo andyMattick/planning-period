@@ -36,9 +36,11 @@
    no pack.json; the key arrives only in the second phase (the same session, resumed). The maker never writes checks,
    log or audit: this script keeps them. Every session's minutes, tokens and dollars come from its own record.
 
-   Exit 0 done (follow-up, preview or final posted) · 3 handed to the owner (cost stop, an open FIX after the last round, an
-   order kind the runner doesn't do yet; status stays building with a note, the working files are kept in
-   deliverables/<teacher>/<id>/work/) · 1 failed (status failed with a note) · 2 usage.
+   Exit 0 done (follow-up, preview or final posted) · 3 handed to the owner (a bigger order than the automatic path, by
+   the one rule in menu.json's "automatic" that the order page also shows her (site/scope.js); the cost stop; an open FIX
+   after the last round; status stays where it was with a note for her that promises 24 hours, the working files are
+   kept in deliverables/<teacher>/<id>/work/, and the reason is written to PP_HANDOFF_FILE when set, for the owner's
+   email: scripts/notify-order.mjs --handoff) · 1 failed (status failed with a note) · 2 usage.
 
    Environment: PP_SUPABASE_URL and PP_SUPABASE_SERVICE_KEY (a real key, or a placeholder the network proxy replaces:
    NODE_USE_ENV_PROXY=1 is set for child processes when HTTPS_PROXY is set), ANTHROPIC_API_KEY (or a signed-in Claude
@@ -50,6 +52,7 @@ import { join, dirname, resolve, basename, extname } from 'node:path';
 import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { rows, pick } from '../checks/pack-lib.mjs';
+import '../site/scope.js';   // globalThis.PPScope: what runs automatically (the order page reads the same rule)
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ID_RE = /^pp-\d{4}-\d{2}-\d{2}-[a-z0-9]{6}$/;
@@ -76,6 +79,7 @@ const MODEL = { standard: process.env.PP_MODEL_STANDARD || '', fast: process.env
 
 /* ---------- small helpers ---------- */
 class HandOff extends Error {}
+class BiggerOrder extends HandOff {}   // not simple (site/scope.js): a person runs it with the agent team, within 24 hours
 const say = (m) => console.log(`[${new Date().toISOString().slice(11, 19)}] ${m}`);   // never prints her content: ids, steps, counts
 const hhmm = () => new Date().toISOString().slice(11, 16);
 const readJSON = (f) => JSON.parse(readFileSync(f, 'utf8'));
@@ -228,8 +232,12 @@ no student names. These notes are only for this teacher's own agents.\n`);
 }
 
 /* =================== build =================== */
-const SUBJECTS_BY_RUNNER = ['math', 'science', 'social', 'other'];
-const KINDS_BY_RUNNER = ['worksheet', 'notes', 'quiz', 'test', 'studyguide', 'homework', 'bellringer', 'reviewgame', 'versions'];
+// simple or bigger: the one rule in menu.json ("automatic" and each item's "auto"), shared with the order page
+function scopeOf(row) {
+  const oj = row.order_json || {}, od = oj.order || oj;
+  const tokens = Number(row.token_total ?? oj.tokenTotal) || 0;
+  return globalThis.PPScope.check({ subject: od.subject, items: od.items || [], quantities: od.quantities, itemSpecs: od.itemSpecs, tokens }, readJSON(join(ROOT, 'menu.json')));
+}
 
 const genIds = (pack) => new Set(pack.documents.flatMap((d) => (d.sections || []).flatMap((s) => (s.questions || []).filter((q) => q.gen).map((q) => q.id))));
 const hasGen = (pack) => genIds(pack).size > 0;
@@ -254,6 +262,9 @@ function takeMakerPack(dir, prev) {
   if (!Array.isArray(m.documents) || !m.documents.length) throw new Error('the maker\'s pack.json has no documents');
   const orderChecks = ORDER?.order?.checks;
   if (orderChecks) m.order = { ...(m.order || {}), checks: orderChecks };   // her choices about checks come from her order, never the maker
+  // her item settings too (the renderer reads itemSpecs.<item>.keyPack, the all-versions key she paid for)
+  const orderSpecs = ORDER?.order?.itemSpecs;
+  if (orderSpecs && Object.keys(orderSpecs).length) m.order = { ...(m.order || {}), itemSpecs: orderSpecs };
   const pack = { ...m, id: ID, checks: prev?.checks || { blind: [], solver: [], facts: [], wilco: [] }, log: prev?.log || [], audit: prev?.audit || { notes: [], briefChanges: [] } };
   writeJSON(join(WORK, 'pack.json'), pack);
   return pack;
@@ -418,19 +429,18 @@ each exits 0. Write one line per item you changed in CHANGES.md, for the reporte
 async function build() {
   const o = await show();
   if (o.status !== 'building') throw new HandOff(`the order is ${o.status}, not building`);
+  // a bigger order goes to a person before anything is spent on it (she was told 24 hours on the order page)
+  const scope = scopeOf(o);
+  if (!scope.auto) throw new BiggerOrder(`bigger than the automatic path (${scope.reasons.map((r) => r.text).join('; ')}): run it by hand within 24 hours of her answer (docs/RUNBOOK.md)`);
   await orders('pull', ID);
   const order = readJSON(join(WORK, 'in', 'order.json'));
   ORDER = order;
   const blindOff = order.order?.checks?.blind === false;
   const ob = existsSync(join(WORK, 'onboarding.json')) ? readJSON(join(WORK, 'onboarding.json')) : null;
   if (!existsSync(join(WORK, 'followup-answer.md'))) writeFileSync(join(WORK, 'followup-answer.md'), 'no questions asked: started\n');
-  const items = order.order?.items || [], subj = order.order?.subject;
   const tokens = Number(ob?.tokens?.recomputed ?? ob?.tokens?.asked ?? o.token_total) || 0;
   BUDGET = tokens * 0.1;
   logRow({ who: 'Runner', what: `Picked up the answer and started the build (budget ${money(BUDGET)}: ${tokens} tokens; cost stop ${money(2 * BUDGET)})` });
-  const reading = subj === 'ela' || items.includes('readingquiz');
-  const unsupported = items.filter((i) => !KINDS_BY_RUNNER.includes(i));
-  if (reading || unsupported.length || !SUBJECTS_BY_RUNNER.includes(subj)) throw new HandOff(`the runner doesn't build ${reading ? 'reading items (the no-passage probe is scored by the lead)' : unsupported.length ? unsupported.join(', ') : `subject ${subj}`} yet: run it by hand (docs/RUNBOOK.md)`);
   if (!(BUDGET > 0)) throw new HandOff('the order has no token total');
   if (blindOff) logRow({ who: 'Runner', what: 'Blind check skipped at the teacher\'s request (her order page); the solver or fact checker, Wilco and every scripted check still run' });
   const text = await textCopies();
@@ -644,10 +654,13 @@ try {
   if (e instanceof HandOff) {
     code = 3; say(`handed to the owner: ${e.message}`);
     await keepWork(e.message, e.cause);
+    // the owner's email (run-order.yml → scripts/notify-order.mjs --handoff): the reason only, never her content
+    if (process.env.PP_HANDOFF_FILE) try { writeFileSync(process.env.PP_HANDOFF_FILE, `${STAGE || 'start'}: ${e.message}`.replace(/[\r\n]+/g, ' ').slice(0, 500) + '\n'); } catch (x) { say(`could not write the hand-off reason: ${x.message}`); }
     // the status stays where the stage left it (a status change would start the runner again): only the note changes
     const [st, note] = STAGE === 'onboard' ? ['onboarding', 'We are taking a quick look at your order before we send our questions.']
-      : STAGE === 'final' ? ['approved', 'Thank you for approving. Your final files need a quick look from us; we will post them as soon as they are ready.']
-      : ['building', 'Your order needs a quick look from us before the preview. We will post it as soon as it is ready.'];
+      : STAGE === 'final' ? ['approved', 'Thank you for approving. A person on our team is making your final files with the agent team. They will be ready within 24 hours of your approval.']
+      : e instanceof BiggerOrder ? ['building', 'This order is bigger than our automatic path, so a person on our team runs it with the agent team. Your preview will be ready within 24 hours of your answer.']
+      : ['building', 'Your order needs a quick look from a person on our team before the preview. Your preview will be ready within 24 hours of your answer.'];
     try { await orders('status', ID, st, note); } catch (x) { say(`could not set the note: ${x.message}`); }
   } else if (e instanceof Refused) {
     // render-pack.mjs --final refused (a preview file or the pack changed after she approved): nothing is posted

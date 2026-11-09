@@ -107,6 +107,12 @@ details.how > summary .h2 { font-size: 1.08rem; margin: 0; }
 .how-sum { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; }
 details.how > :not(summary) { margin-left: 18px; margin-right: 18px; }
 details.how[open] { padding-bottom: 16px; }
+.plans { border: 1px solid var(--line); border-radius: var(--radius); padding: 0; margin: 10px 0 14px; }
+.plans > summary { padding: 10px 14px; min-height: 44px; cursor: pointer; }
+.plans > :not(summary) { margin-left: 14px; margin-right: 14px; }
+.plans[open] { padding-bottom: 10px; }
+.plans-list { margin: 0 0 .6em; padding-left: 1.2em; }
+.plans-list li { margin: .3em 0; overflow-wrap: anywhere; }
 .team { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
 .team li { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: .93rem; }
 .team b { display: block; }

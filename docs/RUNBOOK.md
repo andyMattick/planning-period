@@ -55,11 +55,19 @@ node $REPO/scripts/run-order.mjs $ORDER --dry-run --keep --no-post   # canned se
 - Caps: maker r1 budget/3, FIX rounds budget/6 (step 4), each checker 15% of the budget, onboarding $1, style notes
   $0.50, reporter 6%, and none more than half of what is left below the **cost stop (2× the budget)**, split over the
   sessions running together. Past the stop the script hands the order to the owner (step 9, "Cost stop").
-- After round 3 with a FIX open, a final check that fails, or an order kind it doesn't do yet (reading items, apps,
-  puzzles, practice games), it stops: **exit 3**, the status stays where it was with a note for her ("needs a quick look
-  from us"), and `pack.json`, `run-log.jsonl` and `HANDOFF.md` are kept in `deliverables/<teacher>/<id>/work/`
-  (`orders.mjs work-get $ORDER`). Carry on by hand from the step it names. A crash: **exit 1**, status `failed` with a
-  note she sees.
+- **Simple runs automatically; bigger is yours within 24 hours** (owner, Nov 8, 2026). One rule, in `menu.json`
+  (`automatic` and each item's `auto`), read by the order page (`site/scope.js`, the turnaround she sees before Send)
+  and by the runner: simple = only `auto` items, a subject in `automatic.subjects`, no reading item, no "one per
+  student", at most 3 items and 150 tokens (docs/BACKEND.md, "What runs automatically"). Onboarding runs for every
+  order; a bigger order is handed off at the very start of the build, before any session, with the note "This order is
+  bigger than our automatic path, so a person on our team runs it with the agent team. Your preview will be ready within
+  24 hours of your answer." **The 24 hours start at her answer: run it by hand from step 4.**
+- After round 3 with a FIX open, a final check that fails, or the cost stop, it stops the same way. Every hand-off is
+  **exit 3**: the status stays where it was with a note for her that promises the preview within 24 hours of her answer
+  (the final within 24 hours of her approval), `pack.json`, `run-log.jsonl` and `HANDOFF.md` are kept in
+  `deliverables/<teacher>/<id>/work/` (`orders.mjs work-get $ORDER`), and **you get an email** ("Needs you: <id>" with
+  the reason; `scripts/notify-order.mjs --handoff`, the order-email settings). Carry on by hand from the step it names.
+  A crash: **exit 1**, status `failed` with a note she sees.
 - Her uploads are read as text only (`html-text.mjs`; Word and PowerPoint from their XML; PDFs as they are); the
   working folder and the sessions' transcripts are deleted after the run (`--keep` keeps the folder).
 - Her blind-check choice (step 5) comes from her order, never from the maker's pack.
@@ -68,8 +76,8 @@ node $REPO/scripts/run-order.mjs $ORDER --dry-run --keep --no-post   # canned se
 
 **Automatic now** (with the owner's setup in docs/BACKEND.md): send → follow-up, answer → preview, approve → final,
 purge and audit, and a daily `purge --due 7`. **Still by hand:** her **Request changes** (step 11: comments, a maker
-round, a fresh recheck, a new preview; when she then approves, the final is automatic), the orders the runner hands
-off (exit 3: carry on from the step it names), and anything the auditor's gate refuses (listed in
+round, a fresh recheck, a new preview; when she then approves, the final is automatic), bigger orders and the other
+orders the runner hands off (exit 3, with the "Needs you" email: within 24 hours, carry on from the step it names), and anything the auditor's gate refuses (listed in
 `docs/audits/BRIEF-CHANGES.md` and the audit report, with a patch in `docs/audits/refused/`, for the owner to apply or
 not).
 
@@ -101,7 +109,9 @@ ls -R in                                 # expect order.json, sources/, training
 - Check `order.json` against `menu.json` (items, grade, subject) and the token total the teacher saw.
 - **Source fence:** if a source is a whole copyrighted book or more than the order needs, use only the chapters the
   order names; say so to the teacher. Write the start time in the log (step 10's rows start now).
-- Tell the teacher the honest turnaround (pilot: same day for one item, 1–2 days for a unit pack, plus their review).
+- The honest turnaround (owner, Nov 8, 2026): the order page already told her: a simple order, usually under an hour
+  after her answer (automatic); a bigger one or an emailed zip, **within 24 hours** of her answer (by hand). Keep it; if
+  you can't, tell her before the 24 hours are up.
 
 ## 2. Onboarding and the follow-up (before anything is made)
 
