@@ -28,12 +28,22 @@ jobs:
           node-version: 22
           cache: npm
 
+      - uses: actions/setup-python@v5   # a Python whose pip can install SymPy (checks/math_check.py); the system one refuses
+        with:
+          python-version: '3.12'
+
       - name: Install
         run: |
           npm ci
           npm install --no-save playwright@1.63.0
           npx --yes playwright@1.63.0 install --with-deps chromium
-          python3 -m pip install --quiet sympy
+          python -m pip install --quiet sympy
+          python -c 'import sympy'
+
+      - name: A git name for the tests that commit (the auditor gate's self-test)
+        run: |
+          git config --global user.name 'CI'
+          git config --global user.email 'ci@example.invalid'
 
       - name: npm run check
         run: |
