@@ -3,7 +3,9 @@
    of npm run check (section 16). Each check names the finding in docs/security/ it guards.
      node scripts/security-check.mjs            exit 1 on any problem
      node scripts/security-check.mjs --self-test also shows that every check bites on a broken copy */
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, mkdtempSync, rmSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -39,6 +41,30 @@ export const CHECKS = [
   }],
 ];
 
+/* Finding 2: checks/math_check.py reads pack text with SymPy's parse_expr, which runs eval. Each payload must be refused
+   (and must leave no file behind); the self-test shows the same payload does run through plain parse_expr. */
+const PAYLOADS = ["__import__('os').mkdir(MARK)", "().__class__.__base__.__subclasses__()", "(lambda: __import__('os').mkdir(MARK))()"];
+export function mathEvalCheck({ plain = false } = {}) {
+  const dir = mkdtempSync(join(tmpdir(), 'pp-sec-')), mark = join(dir, 'ran');
+  const py = `import sys, json; sys.path.insert(0, ${JSON.stringify(join(ROOT, 'checks'))})
+import math_check as m
+from sympy.parsing.sympy_parser import parse_expr
+out = []
+for p in json.loads(sys.argv[1]):
+    p = p.replace('MARK', repr(sys.argv[2]))
+    try:
+        (parse_expr(p) if ${plain ? 'True' : 'False'} else m.expr_of(p)); out.append('read')
+    except m.Unread: out.append('refused')
+    except Exception as e: out.append('error ' + type(e).__name__)
+print(json.dumps(out))`;
+  const r = spawnSync('python3', ['-I', '-c', py, JSON.stringify(PAYLOADS), mark], { encoding: 'utf8', timeout: 60000 });
+  const ran = existsSync(mark);
+  rmSync(dir, { recursive: true, force: true });
+  if (r.status !== 0) return { ran, problems: [`python3 failed: ${(r.stderr || '').trim().split('\n').pop()}`] };
+  const res = JSON.parse(r.stdout.trim().split('\n').pop());
+  return { ran, problems: [...(ran ? ['a payload ran (it made a file)'] : []), ...PAYLOADS.filter((_, i) => res[i] !== 'refused').map((p, i) => `not refused: ${p}`)] };
+}
+
 export function files() {
   const f = {};
   for (const w of readdirSync(join(ROOT, '.github/workflows'))) f[`.github/workflows/${w}`] = read(`.github/workflows/${w}`);
@@ -61,12 +87,16 @@ const BREAK = [
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const problems = run();
+  const hasSympy = spawnSync('python3', ['-I', '-c', 'import sympy'], { encoding: 'utf8' }).status === 0;
+  if (hasSympy) for (const p of mathEvalCheck().problems) problems.push(`checks/math_check.py: untrusted text never reaches eval (finding 2): ${p}`);
+  else console.log('⏭️  no SymPy here: the math_check.py eval check is skipped');
   problems.forEach((p) => console.log(`✗ ${p}`));
   let missed = 0;
   if (process.argv.includes('--self-test')) for (const [p, broke] of BREAK) {
     const f = files(); f[p] = broke(f[p]);
     if (run(f).length === 0) { missed++; console.log(`✗ self-test: a broken ${p} was not caught`); }
   }
+  if (process.argv.includes('--self-test') && hasSympy && !mathEvalCheck({ plain: true }).ran) { missed++; console.log('✗ self-test: the payload did not run through plain parse_expr (the check would prove nothing)'); }
   if (problems.length || missed) process.exit(1);
   console.log(`security: all ${CHECKS.length} checks pass${process.argv.includes('--self-test') ? `, and each of ${BREAK.length} broken copies is caught` : ''} (scripts/security-check.mjs)`);
 }
