@@ -33,6 +33,12 @@ Puzzles: the maker's content, then `scripts/make-puzzles.mjs --write` and `check
 `because`, quiz-show clues). Apps: checked like a worksheet (the printable copy) plus `checks/apps.mjs`'s browser test.
 These are the team's steps; `docs/RUNBOOK.md` numbers the owner's steps (receive, onboarding, style notes, …) its own way.
 
+Outside the order, once a month:
+
+| Who | Procedure | Job |
+|---|---|---|
+| 🛡️ Dominyk | `docs/security/README.md` | The owner's security reviewer: Supabase rules and grants, the runner and its secrets, Vercel and the site, dependencies, rule 1. Fixes worst first, each with a check in `scripts/security-check.mjs`; reports in `docs/security/` |
+
 ## Who never checks whose work
 
 - The **onboarding agent** makes nothing and checks nothing: it measures the source, warns and asks. The maker
