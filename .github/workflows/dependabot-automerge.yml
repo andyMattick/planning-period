@@ -1,0 +1,37 @@
+# Dependabot's small updates merge themselves (owner, Nov 10, 2026: "yes" to auto-merging minor and patch updates when
+# every check passes). A minor or patch version bump from Dependabot gets auto-merge turned on, so it merges only after
+# the required checks (CI, the owner gate) pass, like any other pull request (docs/AUTOMERGE.md). Major version jumps are
+# left for a person to look at: they can change how a library behaves.
+name: Dependabot auto-merge
+
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Turn on auto-merge for minor and patch updates
+        if: steps.meta.outputs.update-type == 'version-update:semver-patch' || steps.meta.outputs.update-type == 'version-update:semver-minor'
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge --auto --squash "$PR_URL"
+
+      - name: A major update waits for a person
+        if: steps.meta.outputs.update-type == 'version-update:semver-major'
+        env:
+          FROM: ${{ steps.meta.outputs.previous-version }}
+          TO: ${{ steps.meta.outputs.new-version }}
+        run: |
+          echo "Major version update ($FROM to $TO): left for a person to review." | tee -a "$GITHUB_STEP_SUMMARY"
