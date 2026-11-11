@@ -44,7 +44,7 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
 | `worksheet` | 30 | $3.00 | $1.75–2.9 | one Pet World sheet all in (table above) |
 | `notes` | 25 | $2.50 | $1.5–2.0 | Pet World's note sheets are guided notes: $0.93–2.10 children a sheet, fewer scored items than a worksheet |
 | `quiz` | 40 | $4.00 | $2.5–3.0 | 8–12 questions × 2 versions ≈ 1.2–1.5 sheets of items, blind on both versions, two Wilco passes |
-| `readingquiz` | 150 | $15.00 | $9–13 | **measured** (g7-ela sample, the only ELA order): section 2b below. A quiz on passages costs 2–3 times a plain quiz to make right: passage-first design, a no-passage gate on each version, longer blind reads (added Nov 5, 2026, owner decision 4). Since Nov 7, 2026: citing short answers + RACE by default, passage multiple choice "in testing" at the same price |
+| `readingquiz` | 150 | $15.00 | $9–13 | **measured** (g7-ela sample, the only ELA order): section 2b below. A quiz on passages costs 2–3 times a plain quiz to make right: passage-first design, a no-passage gate on each version, longer blind reads (added Nov 5, 2026, owner decision 4). Since Nov 7, 2026: citing short answers + RACE; passage multiple choice retired Nov 11, 2026 (price unchanged) |
 | `test` | 70 | $7.00 | $5–7 | 20–30 × 2 ≈ 3 sheets of items at $1.4–2.1, 40% L3 (longer items), a skills map, plus the order share. **Thin margin: watch it first** |
 | `studyguide` | 25 | $2.50 | $1.5–2.0 | like notes, with a short practice set |
 | `slides` | 50 | $5.00 | $2.5–4 (**guess**) | no slide deck was measured in Pet World; speaker notes are output-heavy, the checker reads every slide for facts |

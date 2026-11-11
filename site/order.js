@@ -541,7 +541,7 @@
     return 'interactive, ' + (sp.grading === 'print' ? 'results printed to grade later' : 'graded automatically');
   }
   // A menu item's options (menu.json items[].options): a Yes/No choice each; one marked "testing" shows its note as a
-  // warning when picked (owner, Nov 7, 2026: multiple choice on reading passages is in testing).
+  // warning when picked. None at the moment (owner, Nov 11, 2026: multiple choice on reading passages, "in testing" since Nov 7, is retired).
   function optionFields(id) {
     return ((itemById(id) || {}).options || []).map(function (o) {
       return { key: o.id, label: o.label, type: 'select', options: [['', 'No'], [o.status || 'yes', 'Yes']] };

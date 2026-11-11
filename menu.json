@@ -106,15 +106,7 @@
     {
       "id": "readingquiz",
       "label": "Reading quiz on passages (A/B)",
-      "detail": "English reading: short answers that quote the passage and a RACE written response, on one to three short passages (yours, or written from your notes), two versions. Every question needs the passage: a reader who skips it is tested before anything else is checked. Multiple choice on passages is in testing: our checks can still sometimes answer it without reading. Short answers and RACE are fully checked.",
-      "options": [
-        {
-          "id": "mc",
-          "label": "Add multiple choice on passages (in testing)",
-          "status": "testing",
-          "note": "Multiple choice on passages is in testing: our checks can still sometimes answer it without reading. Short answers and RACE are fully checked."
-        }
-      ],
+      "detail": "English reading: short answers that quote the passage and a RACE written response, on one to three short passages (yours, or written from your notes), two versions. Every question needs the passage: a reader who skips it is tested before anything else is checked. Multiple choice on passages is not offered for now: our checks could still answer it without reading.",
       "tokens": 150,
       "formats": [
         "pdf",

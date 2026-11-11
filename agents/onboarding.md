@@ -67,13 +67,12 @@ You make nothing and change nothing in the order.
      **Recommend the reading defaults** (`feasibility.json` `readingquiz`; owner, Nov 7, 2026, after four ELA tries
      failed the fresh no-passage probe): **citing short answers plus a RACE response, no multiple choice** (about 3–4
      short answers a passage, each a claim plus a quote or a paragraph-specific detail; no Part A/Part B pairs).
-     **Multiple choice on passages is in testing.** When she picks the menu option (`itemSpecs.readingquiz.mc` is
-     `"testing"`) or asks for multiple choice on the passages in her requests, make it a `warnings` entry
-     (`kind: "inTesting"`) and say it in the follow-up in these words: "Multiple choice on passages is in testing: our
-     checks can still sometimes answer it without reading. Short answers and RACE are fully checked." Then plan it with
-     `readingquiz.mcInTesting` (at least 8 multiple choice a version, 4 choices, no pairs, plus 2 citing short answers
-     and the RACE) and ask one question only if her ask is unclear (A: short answers and RACE only, recommended; B: add
-     the multiple choice in testing). Never say or imply that the multiple choice passes our checks. A teacher who asks
+     **Multiple choice on passages is not offered** (retired Nov 11, 2026). When she asks for multiple choice on the
+     passages in her requests (or an old order carries `itemSpecs.readingquiz.mc`), make it a `warnings` entry
+     (`kind: "notOffered"`) and say it in the follow-up in these words: "Multiple choice on passages isn't offered for
+     now: our checks could still answer it without reading. We'll make short answers that quote the passage and a RACE
+     response, which are fully checked." Plan the default mix; no question is needed. Multiple choice with no passage
+     (grammar, vocabulary) is still a plain `quiz`. A teacher who asks
      for Part A/Part B pairs gets one plain question: our recommendation (the evidence skill in short answers that cite
      and the constructed response) or her pairs, with one line on why (step 5a).
      **Familiar topic:** when a nonfiction topic is a well-known textbook example (otters and kelp for keystone species,
@@ -135,7 +134,7 @@ You make nothing and change nothing in the order.
   "whatWeWillMake": [ { "item", "count", "questions", "types", "choices", "versions", "levels", "pages|slides|days|lessons", "note" } ],
   "assumptions": [ "…each default we used, and why" ],
   "questions": [ { "id": "q1", "ask": "…", "options": ["A …", "B …"], "recommended": "A", "why": "…" } ],
-  "warnings": [ { "item", "kind": "tooMany" | "tooFew" | "outsideLimits" | "noSource" | "unreadable" | "gradeMismatch" | "tooLong" | "inTesting",
+  "warnings": [ { "item", "kind": "tooMany" | "tooFew" | "outsideLimits" | "noSource" | "unreadable" | "gradeMismatch" | "tooLong" | "notOffered",
                   "asked", "feasible", "message" } ],
   "tokens": { "asked": 0, "recomputed": 0, "lines": [ { "item", "quantity", "tokensEach", "tokens" } ], "note": "" }
 }
@@ -163,7 +162,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 12** (Nov 8, 2026)
+**Version 13** (Nov 11, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -202,3 +201,5 @@ You make nothing and change nothing in the order.
 - v12, Nov 8, 2026 (owner: "make the blind checker optional (tell them it will save time, but they should check on
   their own)"): step 8, `order.checks.blind = false` is said back in the follow-up, with no question and no token
   change. Changed at the owner's request, not by the auditor.
+- v13, Nov 11, 2026: multiple choice on passages is retired: no menu option, no `mcInTesting` plan; a request for it
+  gets a `notOffered` warning and the short answer + RACE default. Changed at the owner's request (review of Nov 11, 2026, docs/audits/AUDIT-2026-11-07-ela-try-d.md: three tries cost about $35 and still failed the no-passage gate), not by the auditor.

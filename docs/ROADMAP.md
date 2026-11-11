@@ -21,7 +21,7 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
 - **Open:** ordering questions; a class view of results (each result stays on the student's device); the Word teacher
   copy's note box; measure the price on the first five interactive orders.
 
-## Reading quizzes: short answer + RACE; multiple choice on passages "in testing" (owner, Nov 7, 2026)
+## Reading quizzes: short answer + RACE; multiple choice on passages retired (owner, Nov 7 and Nov 11, 2026)
 - **Owner:** after four ELA tries (g7-ela2 remake, tries c and d) failed the fresh no-passage probe, reading quizzes are
   sold as citing short answers plus a RACE response until a passage-based multiple-choice version passes.
 - **Done:** `menu.json` (the item's text and an option the teacher sees: "Multiple choice on passages is in testing: our
@@ -33,7 +33,9 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
   probes** (the runbook's step 4a line, chance + 15 points; a version fails if either run fails, never averaged), with
   the keyless blind solve and the fact recheck of its last round's fixes clean. Then the owner decides whether to drop
   "in testing" and make multiple choice an ordinary option again.
-- **Status:** in testing. g7-ela2 stays hidden from the Samples page and on `checks/cross-item-debt.json` until a later
+- **Nov 11, 2026 (owner review):** retired, not sold even "in testing": the menu option, `mcInTesting` and the
+  `inTesting` warning are gone; onboarding v13 says it isn't offered (`notOffered`), maker v13 never writes it.
+- **Status:** retired. g7-ela2 stays hidden from the Samples page and on `checks/cross-item-debt.json` until a later
   attempt passes.
 
 ## Say or type what you want; the onboarding agent does the rest (owner, Nov 5, 2026)
