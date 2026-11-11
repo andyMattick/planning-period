@@ -37,13 +37,10 @@ detail, 1 RACE), 2 passages, A/B; 4–16 questions, 1–3 passages. A passage of
 citing short answers. Each short answer still faces the no-passage probe: one a reader could answer without the passage
 earns at most half its credit (`agents/blind-ela.md`, mode 1).
 
-**Multiple choice on passages is "in testing"**, offered only as the menu option the teacher sees on the item
-(`menu.json` `readingquiz.options`, shown as a Yes/No field in step 4 with this warning when picked): "Multiple choice on
-passages is in testing: our checks can still sometimes answer it without reading. Short answers and RACE are fully
-checked." When she picks it, `feasibility.json` `readingquiz.mcInTesting` gives the mix (at least 8 multiple choice a
-version, so the no-passage line, chance + 15 points, is fair; always 4 choices; no Part A/Part B pairs; 2 citing short
-answers and the RACE), and the onboarding agent warns in the follow-up (`agents/onboarding.md` step 4). We make no claim
-that it passes: g7-ela2's four tries failed the fresh probe (try d: A 4 and B 7 of 8, `docs/audits/AUDIT-2026-11-07-ela-try-d.md`).
+**Multiple choice on passages is retired** (owner review, Nov 11, 2026; it was "in testing" from Nov 7): no menu
+option and no `mcInTesting` mix. A teacher who asks for it gets the onboarding agent's `notOffered` warning and the
+short answer + RACE default. Why: three tries cost about $35 and still failed the fresh no-passage probe (try d: A 4 and
+B 7 of 8, `docs/audits/AUDIT-2026-11-07-ela-try-d.md`). The no-passage gate is unchanged.
 What lets it graduate: `docs/ROADMAP.md`.
 
 History: the first audit set 10 questions on 2 passages (the g7-ela sample sat at the top end, about 6 a passage, and

@@ -83,11 +83,10 @@ g7-ela: fresh testers answered 20 of 20 without the passages; g7-ela2, remade un
 that retold the story; the reader matched quotes to choices one-to-one; a textbook topic (otters and kelp) answered
 from general knowledge. Four tries at multiple choice on passages still failed the fresh probe (g7-ela2 try d: A 4,
 B 7 of 8), so:
-0. **Short answers and RACE by default; multiple choice only "in testing"** (owner, Nov 7, 2026). A reading quiz is
-   citing short answers (a claim plus a quote or a paragraph-specific detail, rule 4) and a RACE response, with no
-   multiple choice, unless `onboarding.json` or the teacher's answer says she picked "multiple choice on passages (in
-   testing)". Then the multiple-choice rules below apply in full (at least 8 a version, rules 1–8), and your hand-off
-   says the version's multiple choice is in testing; never write that it passed. Rules 1–3 and 6–8 apply to short
+0. **Short answers and RACE only; no multiple choice on passages** (owner, Nov 7, 2026; retired Nov 11, 2026). A
+   reading quiz is citing short answers (a claim plus a quote or a paragraph-specific detail, rule 4) and a RACE
+   response. Never write multiple choice on a passage, even when the teacher asks: onboarding has already told her it
+   isn't offered. The multiple-choice rules below are kept for the day it is retried (docs/ROADMAP.md). Rules 1–3 and 6–8 apply to short
    answers too: each needs the passage to earn more than half its credit.
 1. **Plan the passage and the questions together (passage-first design).** Before writing the passage, list each
    question's skill, its key reading and **2–3 rival readings a careless reader of this passage would make**; write the
@@ -243,7 +242,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 12** (Nov 8, 2026)
+**Version 13** (Nov 11, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -296,3 +295,4 @@ have it) and the number of questions per document.
   no chaining, segmented bar graphs and estimate-r scatter plots, multi-part long answers with full-credit checklists,
   and versions as one setting (a number, or one per student made by `scripts/versions.mjs` as a pool; the all-versions
   key is a paid extra for numbered versions, `keyPack`). Changed at the owner's request, not by the auditor.
+- v13, Nov 11, 2026: reading rule 0: no multiple choice on passages (retired; it was "in testing"). Changed at the owner's request (review of Nov 11, 2026, docs/audits/AUDIT-2026-11-07-ela-try-d.md: three tries cost about $35 and still failed the no-passage gate), not by the auditor.

@@ -34,7 +34,7 @@ doesn't test reading.
      8–9: 4 fails; 10–12: 5 fails). Part A and Part B count as two items.
    - **A short answer earning more than half its credit** without the passage (the lead scores it against its `accept`
      and `why`). This is the whole line for a version with no multiple choice, the default reading quiz since Nov 7,
-     2026 (citing short answers and a RACE); multiple choice on passages is "in testing" (`agents/maker.md` reading rule 0).
+     2026 (citing short answers and a RACE); multiple choice on passages is retired (Nov 11, 2026; `agents/maker.md` reading rule 0).
    - Every item you got right at confidence 4–5 from a cue you can name is a FIX, pass or fail.
    Why 15 points: it is Pet World's margin for a model-run check (the scripted bots, which are exact, get 10), and it
    is where the owner's line already sat (25% + 15 = 40%). A probe that only guesses clears it 89% of the time on 8 items
@@ -149,7 +149,7 @@ words>", "options": ["Keep it as it is (…)", "<one concrete change>"], "recomm
 The teacher picks one with a tap in her review, so write the options as she would read them (no level codes).
 
 ---
-**Version 7** (Nov 8, 2026)
+**Version 8** (Nov 11, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's blind review (`docs/BLIND-REVIEW.md` steps 2–4) and the traps its
@@ -180,3 +180,4 @@ The teacher picks one with a tap in her review, so write the options as she woul
 - v7, Nov 8, 2026 (owner review of the first real audit report, order pp-2026-11-08-a20840): a JUDGMENT adds
   `judgment` (issue, options with "keep it" first, an optional pick and why), so the teacher report and her review
   show one-tap choices.
+- v8, Nov 11, 2026: wording only: multiple choice on passages is retired, not "in testing". The line itself is unchanged. Changed at the owner's request (review of Nov 11, 2026, docs/audits/AUDIT-2026-11-07-ela-try-d.md: three tries cost about $35 and still failed the no-passage gate), not by the auditor.

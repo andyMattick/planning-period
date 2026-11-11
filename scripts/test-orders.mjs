@@ -139,23 +139,21 @@ try {
   ok('local mode: the turnaround before Send and on the done screen is 24 hours ("Why: Sent by email")');
   ok('local mode: the web page is counted as text (scripts never run), no sign-in box, the link box shows the save-and-upload hint, Send downloads the order zip (phone and desktop)');
 
-  // ===== 1b. reading quiz: short answer + RACE by default, multiple choice on passages only as an "in testing" option (owner, Nov 7, 2026) =====
+  // ===== 1b. reading quiz: short answer + RACE only; multiple choice on passages retired (owner, Nov 7 and Nov 11, 2026) =====
   {
     const c = await ctx('phone'), page = await c.newPage();
     await page.goto(LOCAL);
     await page.waitForSelector('#items .card', { state: 'attached' });
-    assert.match(await page.textContent('#items [data-item="readingquiz"]'), /Multiple choice on passages is in testing: our checks can still sometimes answer it without reading\. Short answers and RACE are fully checked\./);
+    assert.match(await page.textContent('#items [data-item="readingquiz"]'), /Multiple choice on passages is not offered for now: our checks could still answer it without reading\./);
     await page.evaluate(() => { const b = document.querySelector('#items [data-item="readingquiz"] input[type=checkbox]'); b.checked = true; b.dispatchEvent(new Event('change', { bubbles: true })); window.PPShowStep(3); });   // 0-based: step 4, the requests
     const spec = '[data-item-spec="readingquiz"]';
     assert.match(await page.textContent(spec), /7 questions \(6 short answer, 1 written response\), on 2 passages, 2 versions/, 'the default is short answers + RACE');
-    assert.doesNotMatch(await page.textContent(spec + ' .spec-notes'), /in testing/, 'no warning until she picks it');
-    await page.selectOption('#sp-readingquiz-mc', 'testing');
-    assert.match(await page.textContent(spec + ' .spec-notes'), /Multiple choice on passages is in testing/, 'picking it shows the warning');
-    await noSideways(page, 'order page, reading quiz option (phone)');
-    await shot(page, 'local-phone-readingquiz-in-testing');
+    assert.equal(await page.$('#sp-readingquiz-mc'), null, 'no "multiple choice on passages" option');
+    await noSideways(page, 'order page, reading quiz (phone)');
+    await shot(page, 'local-phone-readingquiz');
     await c.close();
   }
-  ok('reading quiz: short answers + RACE by default; picking "multiple choice on passages (in testing)" shows the in-testing warning (phone)');
+  ok('reading quiz: short answers + RACE, no "multiple choice on passages" option, and the card says it is not offered (phone)');
 
   // ===== 1c. guided notes and the review game can be interactive too (owner, Nov 8, 2026), at the same price =====
   {
