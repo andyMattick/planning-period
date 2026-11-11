@@ -280,6 +280,18 @@ details summary { cursor: pointer; font-weight: 600; padding: 6px 0; min-height:
 .account { border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: var(--radius); padding: 14px 16px; margin: 14px 0; background: var(--surface); box-shadow: var(--shadow); }
 .account .h3 { font-size: 1.08rem; margin-bottom: 4px; }
 .account p:last-child { margin-bottom: 0; }
+/* Sign-in: computers show the form; phones show one compact row that opens it (order.js openSignIn) */
+.acct-row { display: none; }
+@media (max-width: 640px) {
+  body.wizard .account { padding: 8px 12px; margin: 10px 0; border-left-width: 4px; }
+  body.wizard .acct-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  body.wizard .acct-row p { margin: 0; }
+  body.wizard .acct-row .btn { flex: none; }
+  body.wizard #acct-form:not(.open) { display: none; }
+  body.wizard #acct-form.open { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+}
+.wiz-total [data-sum-usd]:empty, .sum-total [data-sum-usd]:empty { display: none; }
+.lead-get { margin: .4em 0 0; }
 .signin-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .signin-row input { flex: 1 1 220px; }
 .signin-row .btn { flex: 0 1 auto; }
@@ -374,8 +386,12 @@ a.broken { opacity: .5; pointer-events: none; }
 /* ---------- App layer: the same pages look like an app on phones (≤ 640 px); a computer gets the sidebar ---------- */
 .tabbar, .install, .wizard-dots, .wizard-nav, .phone-only { display: none; }
 @media (max-width: 640px) {
-  :root { --top-h: 52px; }
-  body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  /* One height for the bottom menu, used by the body's padding and the order page's Back / Next bar, so nothing peeks
+     between them; scroll padding keeps a focused field above both bars (owner, Nov 11, 2026). */
+  :root { --top-h: 52px; --tabbar-h: 68px; --wiznav-h: 80px; }
+  html { scroll-padding-top: calc(var(--top-h) + 8px); scroll-padding-bottom: calc(var(--tabbar-h) + 8px + env(safe-area-inset-bottom)); }
+  html:has(body.wizard) { scroll-padding-bottom: calc(var(--tabbar-h) + var(--wiznav-h) + 8px + env(safe-area-inset-bottom)); }
+  body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   .wrap { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
   .top { padding-top: env(safe-area-inset-top); }
   .top .wrap { min-height: var(--top-h); padding-top: 6px; padding-bottom: 6px; flex-wrap: nowrap; }
@@ -395,6 +411,7 @@ a.broken { opacity: .5; pointer-events: none; }
 
   .tabbar {
     display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    box-sizing: border-box; height: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); align-items: center;
     background: var(--surface); border-top: 1px solid var(--line);
     padding: 4px max(4px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(4px, env(safe-area-inset-left));
   }
@@ -431,7 +448,7 @@ a.broken { opacity: .5; pointer-events: none; }
   .wizard-dots button[aria-current="step"] { color: var(--ink); font-weight: 700; }
   .wizard-dots button[aria-current="step"] .dot { background: var(--accent); border-color: var(--accent); transform: scale(1.25); }
   body.wizard .wizard-nav {
-    display: flex; gap: 8px; align-items: stretch; position: sticky; z-index: 15; bottom: calc(68px + env(safe-area-inset-bottom));
+    display: flex; gap: 8px; align-items: stretch; position: sticky; z-index: 15; bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
     padding: 8px 0; background: var(--bg); border-top: 1px solid var(--line); margin-top: 8px;
   }
   .wizard-nav .btn { flex: 1 1 0; min-height: 48px; }

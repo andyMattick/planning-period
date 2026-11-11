@@ -29,16 +29,19 @@
     <p class="eyebrow">Classroom packs</p>
     <h1>New order</h1>
     <p class="tagline" data-brand="tagline"></p>
-    <p class="phone-only small">Five quick steps, then you look over a preview before anything is final. <a href="about.html">How it works</a></p>
+    <p class="lead-get small"><b>You get</b> printable student and teacher copies with the answer key, checked by agents that didn't write them, and a report of every check. <a href="samples.html">See sample packs</a> · <a href="about.html">How it works</a></p>
     <div id="load-error" class="error" role="alert"></div>
   </section>
 
   <section class="account" id="account" hidden aria-label="Sign in">
     <div id="acct-out">
+      <div class="acct-row"><p class="small"><b>Have an account?</b> Sign in to send your files online.</p><button type="button" class="btn" id="acct-toggle" aria-expanded="false" aria-controls="acct-form">Sign in</button></div>
+      <div id="acct-form">
       <h2 class="h3">Send it online</h2>
       <p class="small">Sign in and your files go straight to us: no zip to email. You follow the order, answer our questions and approve your preview in <a href="orders.html">My orders</a>.</p>
       <div id="signin-forms"></div>
       <p class="small muted">Sign in first: an email link opens this page again, and files you picked before don't carry over. Not signing in? Send still works: it makes a zip on this device for you to email.</p>
+      </div>
     </div>
     <div id="acct-in" hidden>
       <p class="small"><b>Signed in</b> as <span id="acct-email"></span> · <a href="orders.html">My orders</a> · <button type="button" class="btn link" id="signout-btn">Sign out</button></p>
@@ -200,7 +203,7 @@
   <aside class="cost-summary" aria-labelledby="sum-h">
     <h2 class="h3" id="sum-h">Your order</h2>
     <ul class="sum-lines" id="sum-lines"><li class="muted">Nothing picked yet</li></ul>
-    <p class="sum-total"><span>Total</span> <b data-sum-total>0 tokens</b></p>
+    <p class="sum-total"><span>Total</span> <span><b data-sum-total>0 tokens</b> <span class="small muted" data-sum-usd></span></span></p>
     <p class="small muted">The total updates as you choose. You see it again in step 5 before you send.</p>
     <p><a class="btn primary" href="#s5-h" data-jump-send>Review cost and send</a></p>
     <p class="notice small" data-brand="aiNotice"></p>

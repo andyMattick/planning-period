@@ -118,6 +118,9 @@ try {
     assert.equal(await page.textContent('#turnaround-why'), 'Why: Sent by email.');
     // plans (owner, Nov 8, 2026; menu.json plans): what this order costs each way; nothing to buy
     assert.equal(await page.textContent('#plans-order'), 'This order: $6.00 one-time, or 40 of your 250 / 500 monthly tokens');
+    // dollars beside tokens (owner, Nov 11, 2026), from menu.json plans.oneTime
+    assert.equal(await page.textContent('#cost-lines [data-total-usd]'), '$6.00 one-time');
+    assert.deepEqual(await page.$$eval('[data-sum-usd]', (ls) => ls.map((l) => l.textContent)), ['$6.00', '$6.00']);
     await page.evaluate(() => { document.getElementById('plans').open = true; });
     const plans = await page.$$eval('#plans-list li', (ls) => ls.map((l) => l.textContent));
     assert.deepEqual(plans, ['Teacher: $25/month for 250 tokens a month ($250 a year). About 3 tests, or 6 quizzes, or 8 worksheets a month.',
@@ -366,6 +369,13 @@ try {
         await p2.screenshot({ path: join(SHOTS, `auth-${tag}-${name}.png`), fullPage: true, clip });
       };
       await p2.goto(ONLINE);
+      if (w === 375) {
+        // phones (owner, Nov 11, 2026): a compact "Sign in" row; the form opens from it and takes the focus
+        await p2.waitForSelector('#acct-toggle[aria-expanded="false"]');
+        assert.equal(await p2.isVisible('#signin-email'), false, 'phone: the sign-in form starts closed');
+        await p2.click('#acct-toggle');
+        assert.equal(await p2.evaluate(() => document.activeElement.id), 'signin-email', 'phone: opening it focuses the email box');
+      } else assert.equal(await p2.isVisible('#acct-toggle'), false, 'computer: the form shows, no toggle');
       await p2.waitForSelector('#signin-form[data-mode="signin"]');
       await p2.fill('#signin-email', T);
       await boxShot('sign-in');

@@ -252,6 +252,7 @@
       var b = linkBox(list); if (!b) return;
       b.querySelector('input').disabled = !on;
       b.querySelector('[data-link-get]').disabled = !on;
+      b.querySelector('.signin-row').hidden = !on;   // a disabled box and button are clutter: the hint says how to get them
       var hint = b.querySelector('[data-link-hint]');
       hint.hidden = on;
       hint.textContent = backend ? 'Sign in to add links, or save the page (File → Save page as) and upload it.'
@@ -611,13 +612,14 @@
       return '<tr><td>' + esc(l.label) + (l.quantity > 1 ? ' <span class="muted">× ' + l.quantity + '</span>' : '') + (l.format || l.versions ? '<br><span class="small muted" data-format-line="' + esc(l.id) + '">' + esc(l.format || '') + (/^interactive/.test(l.format || '') ? ' · same price as printable' : '') + (l.versions ? (l.format ? ' · ' : '') + '<span data-versions-line>' + esc(l.versions) + '</span>' : '') + '</span>' : '') + '</td>' +
         '<td class="n">' + (l.tokens ? l.tokens + ' tokens' : 'included') + '</td></tr>';
     }).join('') : '<tr><td class="muted">Nothing picked yet</td><td class="n">0</td></tr>') +
-      '<tr class="total"><td>Total</td><td class="n">' + sum + ' tokens</td></tr>';
+      '<tr class="total"><td>Total</td><td class="n">' + sum + ' tokens' + (usdFor(sum) ? '<br><span class="small" data-total-usd>' + usdFor(sum) + ' one-time</span>' : '') + '</td></tr>';
     // The summary card (desktop: right column) and the phone's bottom bar show the same total.
     var sl = $('sum-lines');
     if (sl) sl.innerHTML = lines.length ? lines.map(function (l) {
       return '<li><span>' + esc(l.label) + (l.quantity > 1 ? ' × ' + l.quantity : '') + (l.format ? '<br><span class="small muted">' + esc(l.format) + '</span>' : '') + '</span><span class="n">' + (l.tokens ? l.tokens : 'incl.') + '</span></li>';
     }).join('') : '<li class="muted">Nothing picked yet</li>';
     document.querySelectorAll('[data-sum-total]').forEach(function (el) { el.textContent = sum + ' tokens'; });
+    document.querySelectorAll('[data-sum-usd]').forEach(function (el) { el.textContent = usdFor(sum); });
     renderTurnaround(sum);
     renderPlans(sum);
     return sum;
@@ -626,6 +628,8 @@
   // ---------- plans (owner, Nov 8, 2026; menu.json "plans", docs/PRICING.md section 4): shown, nothing to buy yet ----------
   function usd(x) { return '$' + (Math.round(x * 100) % 100 ? x.toFixed(2) : String(Math.round(x))); }
   function oneTimePrice(tokens, ot) { return '$' + Math.max(ot.minimum, tokens * ot.perToken).toFixed(2); }
+  // Dollars beside the token total (owner, Nov 11, 2026): the one-time price from menu.json "plans", nothing typed here.
+  function usdFor(tokens) { var ot = menu && menu.plans && menu.plans.oneTime; return ot && tokens > 0 ? oneTimePrice(tokens, ot) : ''; }
   function renderPlans(sum) {
     var pl = menu.plans, list = $('plans-list');
     if (!list) return;
@@ -922,7 +926,7 @@
   var wnav = document.createElement('div');
   wnav.className = 'wizard-nav';
   wnav.innerHTML = '<button type="button" class="btn" data-back>Back</button>' +
-    '<button type="button" class="wiz-total" data-jump-send aria-label="Token total: go to step 5, review cost and send"><span class="small">Total</span><b data-sum-total>0 tokens</b></button>' +
+    '<button type="button" class="wiz-total" data-jump-send aria-label="Token total: go to step 5, review cost and send"><span class="small">Total</span><b data-sum-total>0 tokens</b><span class="small" data-sum-usd></span></button>' +
     '<button type="button" class="btn primary" data-next>Next</button>';
   $('order').appendChild(wnav);
 
@@ -956,6 +960,23 @@
   function applyLayout() { document.body.classList.toggle('wizard', !!(phoneQuery && phoneQuery.matches)); }
   if (phoneQuery) (phoneQuery.addEventListener ? phoneQuery.addEventListener('change', applyLayout) : phoneQuery.addListener(applyLayout));
   applyLayout(); showStep(0, false);
+
+  // ---------- sign-in: a compact row on phones that opens the form (owner, Nov 11, 2026); computers show the form ----------
+  function openSignIn(open, focus) {
+    var form = $('acct-form'), t = $('acct-toggle'); if (!form || !t) return;
+    form.classList.toggle('open', open);
+    t.setAttribute('aria-expanded', open ? 'true' : 'false');
+    t.textContent = open ? 'Close' : 'Sign in';
+    if (open && focus) { var f = $('signin-email'); if (f) f.focus(); }
+  }
+  if ($('acct-toggle')) {
+    $('acct-toggle').addEventListener('click', function () { openSignIn(!$('acct-form').classList.contains('open'), true); });
+    // A message for her (an email link that failed, "check your email", an error) opens the form so she sees it.
+    new MutationObserver(function () {
+      var m = document.querySelector('#signin-forms #signin-err, #signin-forms #signin-sent');
+      if (m && m.textContent.trim()) openSignIn(true, false);
+    }).observe($('signin-forms'), { childList: true, subtree: true, characterData: true });
+  }
 
   // ---------- start ----------
   PPBackend.load().then(function (b) { backend = b; if (b) PPBackend.wireSignIn(b, onUser); renderLinkAccess(); });
