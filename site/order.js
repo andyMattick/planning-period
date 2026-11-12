@@ -633,6 +633,7 @@
     document.querySelectorAll('[data-sum-usd]').forEach(function (el) { el.textContent = usdFor(sum); });
     renderTurnaround(sum);
     renderPlans(sum);
+    pilotNote(sum);
     return sum;
   }
 
@@ -893,8 +894,34 @@
       ? 'Send uploads your files and your order to us, privately: only you and our team can see them.'
       : 'Nothing is uploaded. Send makes one zip file on this device for you to email' + (backend ? ' (or sign in at the top to send it online).' : '.');
     if (u && u.email && !$('reply').value.trim()) $('reply').value = u.email;
+    renderPilot(u);
     renderLinkAccess();
     renderCost();   // signed in or not changes the turnaround (an emailed zip is run by a person)
+  }
+
+  // The pilot (owner, Nov 12, 2026; supabase/migrations/20261112120000_pilot_limit.sql): the owner approves each new
+  // teacher, who then has 150 tokens across all her orders. The database refuses anything past that; this only says where
+  // she stands, and warns when the order on the page is bigger than what she has left. Nothing shows for the owner (no
+  // limit), when signed out, or before the migration is run.
+  var pilot = null;
+  function renderPilot(u) {
+    pilot = null; pilotNote();
+    if (!u || !backend || !backend.rpc) return;
+    backend.rpc('my_pilot').then(function (p) {
+      if (!p || typeof p !== 'object' || (backend.user() || {}).id !== u.id) return;
+      pilot = p; pilotNote();
+    }).catch(function () {});
+  }
+  function pilotNote(sum) {
+    var note = $('pilot-note'); if (!note) return;
+    if (!pilot) { note.hidden = true; return; }
+    if (sum == null) sum = costLines().reduce(function (s, l) { return s + l.tokens; }, 0);
+    var left = Number(pilot.tokensLeft) || 0;
+    note.textContent = !pilot.approved
+      ? 'Your account is waiting for approval: we\u2019re letting teachers in a few at a time while we test. You can set up an order now and send it once you\u2019re approved.'
+      : left <= 0 ? 'You\u2019ve used your pilot tokens. Thank you for testing! Email us' + (brand && brand.orderEmail ? ' at ' + brand.orderEmail : '') + ' if you\u2019d like more.'
+      : 'Pilot: free while we test. You have ' + left + ' token' + (left === 1 ? '' : 's') + ' left.' + (sum > left ? ' This order is ' + sum + ' tokens: make it smaller to send it.' : '');
+    note.hidden = false;
   }
 
   function download() {

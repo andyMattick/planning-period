@@ -188,6 +188,16 @@ try {
     const mail = await node([join(ROOT, 'scripts/notify-order.mjs'), bid, '--handoff', reason.trim(), '--dry-run']);
     ok(mail.code === 0 && /Subject: Needs you: pp-2026-11-08-big00\d/.test(mail.out) && why.test(mail.out) && !/Same questions, different numbers|made-up notes|Two-way tables/.test(mail.out), `${what}: the owner's "Needs you" email (dry run), with no requests text:\n${mail.out}`);
   }
+  { // the pilot (supabase/migrations/20261112120000_pilot_limit.sql): sent as 40 tokens, but onboarding counts 90 → a person
+    // looks before anything is built (her page's total is what the database checked against her pilot tokens)
+    const uid = 'pp-2026-11-12-under1', cu = join(tmp, 'calls-under.jsonl'), hf = join(tmp, 'handoff-under.txt');
+    await newOrder(uid);
+    ok((await run(uid, ['--work', join(tmp, 'w-under-a')], { PP_FAKE_CALLS: cu, PP_FAKE_TOKENS: '90' })).code === 0, 'under-counted order: onboarding ran');
+    await fetch(`${fake.url}/rest/v1/rpc/answer_follow_up`, { method: 'POST', headers: { apikey: ANON, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_order: uid, p_answer: 'go' }) });
+    const ru = await run(uid, ['--work', join(tmp, 'w-under-b')], { PP_FAKE_CALLS: cu, PP_HANDOFF_FILE: hf });
+    ok(ru.code === 3 && /sent as 40 tokens, but onboarding counts 90/.test(ru.out), `under-counted order: handed off (exit ${ru.code})\n${ru.out}`);
+    ok(!callsOf(cu).some((x) => /^(maker|blind|solver|facts|reporter)/.test(x.role)), 'under-counted order: nothing was built or spent before the hand-off');
+  }
   { // not set up: the hand-off email does nothing, quietly
     const q = await node([join(ROOT, 'scripts/notify-order.mjs'), 'pp-2026-11-08-big001', '--handoff', 'x'], { PP_NOTIFY_FROM: '', PP_NOTIFY_TO: '', PP_NOTIFY_APP_PASSWORD: '' });
     ok(q.code === 0 && /not set up.*Nothing sent/.test(q.out), `the hand-off email without PP_NOTIFY_* sends nothing and exits 0 (${q.code}: ${q.out})`);

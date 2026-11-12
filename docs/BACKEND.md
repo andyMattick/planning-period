@@ -229,6 +229,26 @@ public article's address in step 2, press **Get the page**, and see the preview.
 filter `fetchPage`, shows one line per request: host, status, bytes.) To switch links off, delete `api/fetch-page.js`
 and redeploy: the box then says it couldn't read the page and to upload the saved page instead.
 
+## The pilot: you approve each teacher, and each gets 150 tokens (owner, Nov 12, 2026)
+While we test, a teacher who signs up can look around and set up an order, but can't send one until you approve her.
+An approved teacher has **150 tokens in all**, across every order she sends (cancelled ones count too: an order can be
+cancelled after the agents have worked on it). Orders are free during the pilot. You (a row in `admins`) are not limited.
+
+- **Turn it on (once):** Supabase → **SQL Editor** → New query → paste all of
+  `supabase/migrations/20261112120000_pilot_limit.sql` → **Run**. It changes no data. Until you run it, nothing changes:
+  anyone signed in can send orders, as before.
+- **Approve a teacher:** sign in to the site as yourself → **My orders** → **Teachers waiting for approval** → **Approve**
+  (150 tokens). Or Table Editor → `pilot_teachers` → Insert row: her id (from `teachers`) and `tokens`.
+- **Give someone more tokens:** Table Editor → `pilot_teachers` → change her `tokens`.
+- **Take approval back:** delete her row in `pilot_teachers`.
+- **What she sees:** at the top of the order page, "Your account is waiting for approval…", then "Pilot: free while we
+  test. You have N tokens left." (and a warning when the order on the page is bigger), then a thank-you when they're
+  used up. If she tries anyway, the database refuses the order with the same words.
+- **The total her page sends can't be trusted on its own**, so the runner checks it: when the onboarding agent's recount
+  is higher than what was sent, the order is handed to you before anything is built (`scripts/run-order.mjs`).
+- **Ending the pilot:** a later migration that drops the two checks in `orders_check_new` (keep the 10-a-day and 5-open
+  limits), once payments are in.
+
 ## The automatic runner (roadmap C, built Nov 8, 2026; needs the owner's setup below)
 
 Owner, Nov 8, 2026: "if this is going to be feasible, we have got to make this shorter" (docs/audits/TIME-2026-11-08.md:

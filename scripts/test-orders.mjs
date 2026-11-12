@@ -850,6 +850,57 @@ try {
   }
   ok("another teacher sees no orders and can't open her files; the owner (admins) sees every order, read-only");
 
+  // ===== 8b. the pilot (owner, Nov 12, 2026; supabase/migrations/20261112120000_pilot_limit.sql): the owner approves each
+  // new teacher, who then has 150 tokens across all her orders =====
+  {
+    await fetch(`${fake.url}/__test/pilot?on=1`);
+    const signIn = async (page, email, where = ONLINE) => {
+      await page.goto(where);
+      await page.click('[data-mode-go="link"]'); await page.fill('#signin-email', email); await page.click('#signin-btn');
+      await page.waitForSelector('#signin-sent:not(:empty)');
+      await page.goto((await (await fetch(`${fake.url}/__test/magic-link?email=${email}`)).json()).link);
+      await page.waitForSelector('#acct-in:not([hidden])');
+    };
+    const send = (page, id, tokens) => page.evaluate(async ([u, id, tokens]) => {
+      const s = JSON.parse(localStorage.getItem('pp-session'));
+      const h = { apikey: 'fake-anon-key', Authorization: 'Bearer ' + s.access_token, 'Content-Type': 'application/json' };
+      const r = await fetch(u + '/rest/v1/orders', { method: 'POST', headers: h, body: JSON.stringify({ id, teacher: s.user.id, status: 'sent', order_json: { id }, token_total: tokens, upload_files: [] }) });
+      return r.status < 300 ? 'ok' : (await r.json()).message;
+    }, [fake.url, id, tokens]);
+    const c3 = await ctx('desktop'), p3 = await c3.newPage();
+    await signIn(p3, 'pilot@example.org');
+    await p3.waitForSelector('#pilot-note:not([hidden])');
+    assert.match(await p3.textContent('#pilot-note'), /^Your account is waiting for approval: we’re letting teachers in a few at a time while we test\./);
+    assert.match(await send(p3, 'pp-2026-11-12-pilot0', 40), /waiting for approval/, 'a teacher who is not approved cannot send');
+    await p3.locator('#account').screenshot({ path: join(SHOTS, 'pilot-desktop-waiting.png') });
+    // the owner approves her in My orders
+    const c4 = await ctx('desktop'), p4 = await c4.newPage();
+    await signIn(p4, 'owner@example.org', ONLINE + 'orders.html');
+    await p4.waitForSelector('[data-approve-teacher]');
+    assert.match(await p4.textContent('.pending'), /Teachers waiting for approval \(\d+\)[\s\S]*pilot@example\.org/);
+    await p4.screenshot({ path: join(SHOTS, 'orders-desktop-owner-pending.png') });
+    await p4.locator('.pending li', { hasText: 'pilot@example.org' }).locator('[data-approve-teacher]').click();
+    await p4.waitForFunction(() => !/pilot@example\.org/.test(document.querySelector('.pending')?.textContent || ''));
+    await c4.close();
+    // approved: 150 tokens across her orders, cancelled ones too
+    await p3.reload(); await p3.waitForSelector('#pilot-note:not([hidden])');
+    assert.equal(await p3.textContent('#pilot-note'), 'Pilot: free while we test. You have 150 tokens left.');
+    assert.equal(await send(p3, 'pp-2026-11-12-pilot1', 100), 'ok');
+    assert.equal(await send(p3, 'pp-2026-11-12-pilot2', 60), 'This order is 60 tokens, and you have 50 left in the pilot. Make it smaller, or email us for more.');
+    await p3.reload(); await p3.waitForSelector('#items .card', { state: 'attached' });
+    await p3.evaluate(() => ['worksheet', 'quiz'].forEach((id) => { const b = document.querySelector(`#items [data-item="${id}"] input[type=checkbox]`); b.checked = true; b.dispatchEvent(new Event('change', { bubbles: true })); }));
+    await p3.waitForFunction(() => /This order is 70 tokens: make it smaller to send it\./.test(document.getElementById('pilot-note').textContent));
+    assert.match(await p3.textContent('#pilot-note'), /^Pilot: free while we test\. You have 50 tokens left\. This order is 70 tokens: make it smaller to send it\.$/, 'the page warns before Send');
+    await p3.locator('#account').screenshot({ path: join(SHOTS, 'pilot-desktop-tokens-left.png') });
+    assert.equal(await send(p3, 'pp-2026-11-12-pilot3', 50), 'ok');
+    assert.equal(await send(p3, 'pp-2026-11-12-pilot4', 0), 'An order needs at least one item.');
+    await p3.reload(); await p3.waitForSelector('#pilot-note:not([hidden])');
+    assert.match(await p3.textContent('#pilot-note'), /^You’ve used your pilot tokens\. Thank you for testing! Email us( at \S+)? if you’d like more\.$/);
+    await fetch(`${fake.url}/__test/pilot?on=0`);
+    await c3.close();
+  }
+  ok('pilot: a new sign-in waits for approval and cannot send; the owner approves her in My orders; then 150 tokens across her orders (60 tokens with 50 left refused with the numbers, the page warns before Send, 0-token orders refused, a used-up note at the end)');
+
   // ===== 9. retention: purge =====
   await fetch(`${fake.url}/__test/age?id=${orderId}`);
   await owner('purge', '--due', '7');

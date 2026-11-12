@@ -492,6 +492,10 @@ async function build() {
   const ob = existsSync(join(WORK, 'onboarding.json')) ? readJSON(join(WORK, 'onboarding.json')) : null;
   if (!existsSync(join(WORK, 'followup-answer.md'))) writeFileSync(join(WORK, 'followup-answer.md'), 'no questions asked: started\n');
   const tokens = Number(ob?.tokens?.recomputed ?? ob?.tokens?.asked ?? o.token_total) || 0;
+  // The pilot's token limit (supabase/migrations/20261112120000_pilot_limit.sql) is checked against the total her page
+  // sent. The onboarding agent prices the order again: when its count is higher, a person looks before anything is spent.
+  if (ob?.tokens?.recomputed != null && Number(ob.tokens.recomputed) > (Number(o.token_total) || 0))
+    throw new HandOff(`the order was sent as ${Number(o.token_total) || 0} tokens, but onboarding counts ${Number(ob.tokens.recomputed)}: check it against her pilot tokens before building`);
   BUDGET = tokens * 0.1;
   logRow({ who: 'Runner', what: `Picked up the answer and started the build (budget ${money(BUDGET)}: ${tokens} tokens; cost stop ${money(2 * BUDGET)})` });
   if (!(BUDGET > 0)) throw new HandOff('the order has no token total');
