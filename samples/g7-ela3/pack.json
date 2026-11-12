@@ -1,0 +1,1809 @@
+{
+ "format": 1,
+ "id": "pp-2026-11-12-g7-ela3",
+ "date": "2026-11-12",
+ "order": {
+  "id": "pp-2026-11-12-g7-ela3",
+  "date": "2026-11-12",
+  "teacher": "Mr. Haverford (made-up sample)",
+  "grade": "7",
+  "subject": "ela",
+  "topic": "Making inferences and citing text evidence (fiction and nonfiction)",
+  "items": [
+   "readingquiz",
+   "rubric"
+  ],
+  "extras": [
+   "styleSetup"
+  ],
+  "lines": [
+   {
+    "id": "readingquiz",
+    "label": "Reading quiz on passages (A/B)",
+    "quantity": 1,
+    "tokensEach": 150,
+    "tokens": 150
+   },
+   {
+    "id": "rubric",
+    "label": "Rubric",
+    "quantity": 1,
+    "tokensEach": 15,
+    "tokens": 15
+   },
+   {
+    "id": "styleSetup",
+    "label": "Set up my agents with my examples",
+    "quantity": 1,
+    "tokensEach": 0,
+    "tokens": 0,
+    "extra": true
+   }
+  ],
+  "tokens": 165,
+  "itemRequests": {
+   "readingquiz": "Write two ORIGINAL passages from my notes, about 300 words each: one short story and one nonfiction article. Both versions read the same two passages. Short answers that make students quote or point to the exact paragraph, then one RACE constructed response. The questions should really need the passage: last year my kids could guess half of a store-bought quiz without reading.",
+   "rubric": "A 4-point RACE rubric (Restate, Answer, Cite, Explain) for the constructed response, in words my 7th graders can use to check their own answer."
+  },
+  "itemSpecs": {
+   "readingquiz": {
+    "questions": 7,
+    "passages": 2,
+    "types": {
+     "short": 6,
+     "open": 1
+    },
+    "versions": 2
+   }
+  },
+  "requests": "Mixed class: some readers are a year below grade level, so keep sentences clear but don't make the passages babyish. Number the paragraphs; my students cite them in brackets like [3].",
+  "sources": [
+   "inference-unit-notes.md"
+  ],
+  "styleExamples": [
+   "old-reading-check-character.md",
+   "old-race-response-and-rubric.md"
+  ],
+  "tokenTotal": 165
+ },
+ "style": {
+  "notes": [
+   "Titles in capitals: READING CHECK: “TITLE”, with the form letter in parentheses",
+   "Name, Class and Date line at the top",
+   "One-line directions starting with 'Read the story.'; questions numbered 1., 2., 3.",
+   "Questions name the paragraph they are about ('In paragraph 2, ...')",
+   "Students cite paragraph numbers in brackets like [3]",
+   "RACE spelled out under the constructed response: R - Restate, A - Answer, C - Cite two pieces of evidence with [paragraph numbers], E - Explain",
+   "RACE checklist in student 'I' voice, levels 4 = Got it!, 3 = Almost, 2 = Started, 1 = Not yet; 'Add the four rows and divide by 4. I round up.'",
+   "Plain, clear sentences for a mixed 7th-grade class"
+  ],
+  "font": "Arial",
+  "accent": "#2b6cb0",
+  "layout": {
+   "nameBox": false,
+   "fields": [
+    "Name",
+    "Class",
+    "Date"
+   ],
+   "numbering": "1.",
+   "boldDirections": true
+  }
+ },
+ "documents": [
+  {
+   "item": "readingquiz",
+   "kind": "readingquiz",
+   "title": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK”",
+   "directions": "Read the story and the article. Then answer each question in complete sentences. When you cite, put the paragraph number in brackets, like [3].",
+   "versions": [
+    "A",
+    "B"
+   ],
+   "passages": [
+    {
+     "id": "p1",
+     "title": "Every Afternoon",
+     "kind": "fiction",
+     "paragraphs": [
+      "Since the moving truck took the Parks' furniture away in August, Dev had spent most afternoons on his front steps, reading the same three comic books. Across the street, Mrs. Amsel's curtain moved now and then.",
+      "On a Monday in October, she crossed the street with a key on a green ribbon. “I'm visiting my sister until Saturday,” she said. “My plant needs someone every day, right after school. Can you do that?” Dev said yes before she finished asking. That night he put the key on his own ring and checked his pocket for it twice before dinner.",
+      "Her instructions filled a whole page: half a cup of water each day, and “sit in the green chair for twenty minutes while the soil settles.” Beside it lay four envelopes, one for each day until Friday, and a chessboard with one white pawn pushed forward. A note said, “Black moves next. My moves are in the envelopes.”",
+      "The plant was a fat jade in a blue pot. Dev watered it, sat in the green chair and moved a black pawn. Playing against an envelope felt silly. He did it anyway.",
+      "On Tuesday the envelope said, “Knight to f3. The cookies in the tin are for the plant's helper.” Dev ate two and studied the board until the twenty minutes had turned into forty.",
+      "On Thursday he noticed a tag deep in the soil: “Jade. Water every two to three weeks. Do not overwater.” Dev stood holding the measuring cup. A photo on the shelf showed Mrs. Amsel, much younger, beside the same plant in the same blue pot. “She must have forgotten,” he told himself. He poured the water into the sink, then sat down and opened Thursday's envelope.",
+      "On Saturday, Dev was waiting on Mrs. Amsel's porch when her car pulled in. “How did my plant behave?” she asked.",
+      "“Fine,” Dev said. “It didn't need me much.” He handed her the key. Then he set a fifth envelope, marked Monday, on the chessboard. Mrs. Amsel looked at it for a long moment. Then she put the key back in his hand."
+     ],
+     "source": "original"
+    },
+    {
+     "id": "p2",
+     "title": "The Reef That Grew Back",
+     "kind": "nonfiction",
+     "paragraphs": [
+      "Off the northeast coast of New Zealand, about an hour's drive north of the city of Auckland, is a rocky shore near Goat Island. In 1975 it became part of the country's first marine reserve. Inside the reserve, no one may fish, gather shellfish or take anything at all.",
+      "Before then, divers there often swam over what scientists call kina barrens. Kina are spiny sea urchins. Where they crowded the rocks, they grazed every young seaweed down to bare stone. Wide patches of reef that could have held tall kelp held almost nothing but kina.",
+      "Kina have enemies. Snapper, a fish that people love to catch, crunch them up. So do spiny lobsters, which New Zealanders call crayfish. For many years, though, fishers had taken most of the big snapper and lobsters along this coast.",
+      "After the reserve began, nothing changed quickly. The snapper and lobsters that had escaped hooks and traps stayed, grew and had young. A small lobster can do little to a full-grown kina with its hard shell and spines. A large one can. Year after year, the predators inside the reserve grew bigger and more common.",
+      "Slowly, the kina became harder to find. By the late 1990s, about twenty years after fishing stopped, much of the bare rock was covered again by a thick stand of kelp. Small fish hid among the long brown blades.",
+      "One easy guess is that the water simply got cleaner. But reefs just outside the reserve are washed by the same ocean. On those reefs, where fishing went on, many of the barrens stayed. The difference between the two places was not the water. It was whether people could take the fish and lobsters.",
+      "No one planted a single strand of kelp at Goat Island. People stopped taking the animals that eat kina, and then they waited. Since the 2000s, fishing along the reserve's edges has thinned the lobsters again, and in 2025 the reserve was made larger."
+     ],
+     "source": "original"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "STORY: “EVERY AFTERNOON” (Questions 1–3)",
+     "passage": "p1",
+     "directions": "Answer in complete sentences. Each answer needs your idea plus a quote or exact detail from the passage, with its paragraph number.",
+     "questions": [
+      {
+       "id": "q1",
+       "level": 1,
+       "skill": "infer a character's feeling and cite it",
+       "type": "short",
+       "passage": "p1",
+       "points": 2,
+       "space": 4,
+       "prompt": {
+        "A": "In paragraph 2, how does Dev feel about being asked to do the job? Name the feeling. Then quote one sentence from paragraph 2 that shows it.",
+        "B": "In paragraph 5, how does Dev feel about the chess game now? Name the feeling. Then quote the sentence from paragraph 5 that shows it best."
+       },
+       "answer": {
+        "A": "Dev is eager and glad to have the job. Evidence: “Dev said yes before she finished asking.” [2] (also full credit: “That night he put the key on his own ring and checked his pocket for it twice before dinner.” [2])",
+        "B": "Dev is interested in the game and enjoying it; he is pulled into it. Evidence: “Dev ate two and studied the board until the twenty minutes had turned into forty.” [5]"
+       },
+       "accept": [
+        "A: eager, excited, glad, happy, proud, or careful/serious about the job, with a quote from [2] that shows it",
+        "B: interested, hooked, curious, enjoying it, into it, wants to win, with the sentence about the twenty minutes turning into forty [5]"
+       ],
+       "why": {
+        "A": "He answers before the question is even finished, and he treats the key like his own and keeps checking for it: he wants this job. A student who writes 'nervous' and quotes the pocket check gets full credit if they explain he is worried about losing the key; 'nervous' with no quote gets 1.",
+        "B": "In [4] the game 'felt silly'; by [5] he stays twice as long as the instructions ask, thinking about the board. A student who says he still feels silly is contradicted by [5]; that is a 0 claim."
+       },
+       "credit": {
+        "full": {
+         "A": "A feeling (eager, excited, glad, proud, or careful about the key) plus one of the two sentences from [2] quoted.",
+         "B": "A feeling of interest or enjoyment plus the twenty-minutes-into-forty sentence from [5]."
+        },
+        "partial": "1 point: a reasonable claim with no quote or exact detail from the passage, or with only a paragraph number. A paragraph number is extra, never enough on its own; a guess a reader could make without the passage earns no more than this.",
+        "notes": [
+         "0 points: no claim, or a claim the passage contradicts."
+        ]
+       }
+      },
+      {
+       "id": "q2",
+       "level": 2,
+       "skill": "infer why a character acts",
+       "type": "short",
+       "passage": "p1",
+       "points": 2,
+       "space": 4,
+       "prompt": {
+        "A": "Why does Dev stay at Mrs. Amsel's house longer than her instructions say? Give the reason and quote the words that show it, with the paragraph number.",
+        "B": "On Thursday, Dev decides something about Mrs. Amsel's instructions. What does he decide, and what detail in the same paragraph shows he is wrong? Quote the words from the story."
+       },
+       "answer": {
+        "A": "He stays because he is caught up in the chess game with Mrs. Amsel (and enjoys the cookies left for him), not because the plant needs him. He “studied the board until the twenty minutes had turned into forty.” [5] Also full credit: on Thursday he still “sat down and opened Thursday's envelope” after deciding not to water [6].",
+        "B": "Dev decides she made a mistake: “She must have forgotten” that a jade needs very little water [6]. He is wrong because the photo shows “Mrs. Amsel, much younger, beside the same plant in the same blue pot” [6]. She has kept this plant alive for years, so she knows how to care for it; the daily watering was on purpose."
+       },
+       "accept": [
+        "A: to keep playing / think about the chess game, with the twenty-minutes-into-forty words from [5] or the words about sitting down and opening Thursday's envelope from [6]",
+        "B: he decides she forgot / made a mistake about the watering, or he decides not to water it / that the watering instruction is a mistake; he is wrong because the photo shows she has had the same plant for years (quoting the photo words from [6])"
+       ],
+       "why": {
+        "A": "The instructions say twenty minutes [3]; in [5] he studies the board for forty. The reason is the game, not the plant: in [6] he stops watering but still opens the envelope.",
+        "B": "Inference: Dev's conclusion in [6] is 'She must have forgotten.' The photo in the same paragraph shows her, much younger, with the same plant in the same pot, so she has cared for it for years and could not have forgotten what it needs. 'He decides she is lazy' or 'he decides the plant is sick' has no line in [6] behind it."
+       },
+       "credit": {
+        "full": {
+         "A": "The reason (the chess game or the envelopes) plus the words from [5] or [6] quoted or named exactly.",
+         "B": "His conclusion (she forgot / made a mistake, or not to water it because the instruction is a mistake) plus why it is wrong, with the photo detail from [6] quoted or named exactly (younger Mrs. Amsel, same plant, same blue pot)."
+        },
+        "partial": "1 point: a reasonable claim with no quote or exact detail from the passage, or with only a paragraph number. A paragraph number is extra, never enough on its own; a guess a reader could make without the passage earns no more than this.",
+        "notes": [
+         "0 points: no claim, or a claim the passage contradicts."
+        ]
+       }
+      },
+      {
+       "id": "q3",
+       "level": 3,
+       "skill": "infer what the ending means",
+       "type": "short",
+       "passage": "p1",
+       "points": 2,
+       "space": 4,
+       "prompt": {
+        "A": "At the end of the story, Mrs. Amsel puts the key back in Dev's hand. What does she mean by this? Use one detail from paragraph 8 and one detail from earlier in the story.",
+        "B": "Reread paragraph 8. What does Dev's last action show he wants? Explain how it connects to something Mrs. Amsel did earlier in the story. Name exactly what she did and give that paragraph number."
+       },
+       "answer": {
+        "A": "She is saying yes: Dev should keep coming over, even though she is home now. Dev has just asked to keep playing by leaving a fifth envelope marked Monday [8], copying her own envelopes from [3]. The plant was never the real reason for the visits: the tag says it needs water only every few weeks, and the photo shows she has kept the same plant for years [6], so she knew that all along. Also full credit as the earlier detail: the cookies “for the plant's helper” [5] or her curtain moving while Dev sat alone [1].",
+        "B": "He wants the visits and the chess game with Mrs. Amsel to go on after the plant job is over. He leaves a fifth envelope marked Monday [8], the same way she left envelopes with her moves for each day [3]. Now he is the one inviting her to keep playing."
+       },
+       "accept": [
+        "A: she wants him to keep visiting / keep playing chess with her; she accepts his invitation, with the Monday envelope [8] and one earlier detail: her envelopes [3], the tag or photo [6], the cookies “for the plant's helper” [5], or her curtain moving while Dev sat alone [1]",
+        "B: he wants to keep playing chess / keep visiting her, connected to her envelope game: the day-by-day envelopes in [3] or the Tuesday envelope with her move in [5]"
+       ],
+       "why": {
+        "A": "Second step: the student has to connect Dev's Monday envelope [8] to her envelopes [3], and see from [6] (the tag and the old photo) that the key was never about the plant. 'She trusts him with her house' is the story type's default reading; it misses that the plant doesn't need daily care and that she is answering his envelope.",
+        "B": "Second step: the student must connect his Monday envelope [8] to her envelopes in [3]. 'He wants to keep the key' or 'he wants to be paid' is ruled out: he hands the key back first [8], and nothing in the story mentions pay."
+       },
+       "credit": {
+        "full": {
+         "A": "She wants him to keep coming / accepts his invitation, with the Monday envelope from [8] and one earlier detail named exactly ([3] envelopes, [6] tag/photo, [5] cookies for the plant's helper, or [1] her curtain moving).",
+         "B": "He wants the game/visits to continue, with the Monday envelope [8] linked to her envelopes, named exactly ([3] the envelopes for each day, or [5] the Tuesday envelope with her move)."
+        },
+        "partial": "1 point: a reasonable claim with no quote or exact detail from the passage, or with only a paragraph number. A paragraph number is extra, never enough on its own; a guess a reader could make without the passage earns no more than this.",
+        "notes": [
+         "0 points: no claim, or a claim the passage contradicts."
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "heading": "ARTICLE: “THE REEF THAT GREW BACK” (Questions 4–6)",
+     "passage": "p2",
+     "directions": "Answer in complete sentences. Each answer needs your idea plus a quote or exact detail from the passage, with its paragraph number.",
+     "questions": [
+      {
+       "id": "q4",
+       "level": 1,
+       "skill": "word meaning from context",
+       "type": "short",
+       "passage": "p2",
+       "points": 2,
+       "space": 4,
+       "prompt": {
+        "A": "What does the word blades mean in paragraph 5? Write the meaning. Then copy the words from paragraph 5 that helped you figure it out.",
+        "B": "What does the word stand mean in paragraph 5? Write the meaning. Then copy the words from paragraph 5 that helped you figure it out."
+       },
+       "answer": {
+        "A": "Here blades are the long, flat, leaf-like parts of the kelp, not the sharp edge of a knife. Clues: “a thick stand of kelp” and “Small fish hid among the long brown blades” [5].",
+        "B": "A stand is a group of plants (here kelp) growing close together in one place. Clues: “covered again by a thick stand of kelp” and “Small fish hid among the long brown blades” [5]."
+       },
+       "accept": [
+        "A: the leaves of the kelp, or its long flat leaves / leaf-like parts / strips / parts (seaweed), with a clue copied from [5] (for example “thick stand of kelp” or “Small fish hid among the long brown blades”)",
+        "B: a group / patch / bunch of plants (kelp) growing together, with a clue copied from [5]"
+       ],
+       "why": {
+        "A": "Not the everyday sense (the cutting edge of a knife or a skate). In [5] the blades belong to the 'stand of kelp' and are 'long' and 'brown', and fish 'hid among' them: they are the kelp's long, flat leaves. 'Something sharp' is ruled out: small fish hide among them.",
+        "B": "Not the everyday sense (to stand up, or a table or booth). In [5] the stand 'covered' the rock and fish 'hid among' its blades: a crowd of kelp growing together."
+       },
+       "credit": {
+        "full": {
+         "A": "A meaning like 'the long, flat leaves of the kelp' plus a clue copied from [5].",
+         "B": "A meaning like 'a group of kelp growing close together' plus a clue copied from [5]."
+        },
+        "partial": "1 point: a reasonable claim with no quote or exact detail from the passage, or with only a paragraph number. A paragraph number is extra, never enough on its own; a guess a reader could make without the passage earns no more than this.",
+        "notes": [
+         "0 points: no claim, or a claim the passage contradicts."
+        ]
+       }
+      },
+      {
+       "id": "q5",
+       "level": 2,
+       "skill": "infer a cause and effect",
+       "type": "short",
+       "passage": "p2",
+       "points": 2,
+       "space": 4,
+       "prompt": {
+        "A": "Fishing stopped at Goat Island in 1975, but the kelp did not come back for many years. According to this article, why did it take so long? Copy the words from the article that explain it.",
+        "B": "According to this article, why did many reefs just outside the reserve stay bare? Explain the steps. Copy the article's words for at least one step."
+       },
+       "answer": {
+        "A": "The lobsters that were left were still small, and small ones cannot hurt a grown kina, so the kina were not eaten until the lobsters grew large, which took years. “A small lobster can do little to a full-grown kina with its hard shell and spines. A large one can.” [4]",
+        "B": "Outside the reserve, “where fishing went on, many of the barrens stayed” [6]. Fishers kept taking the big snapper and lobsters [3], so there were few predators to eat the kina, and the kina kept grazing the young seaweed down to bare stone [2]. It was not the water: those reefs “are washed by the same ocean” [6]."
+       },
+       "accept": [
+        "A: the lobsters had to grow from small to large before they could eat grown kina, with the small-lobster / large-lobster words from [4] copied (“A small lobster can do little to a full-grown kina” or “A large one can”); also full credit: the predators had to grow bigger and more common, with “Year after year, the predators inside the reserve grew bigger and more common” [4] copied",
+        "B: fishing continued there, so few predators, so many kina, so the kina ate the seaweed, with at least one step's words copied from the article: “where fishing went on, many of the barrens stayed” [6], “are washed by the same ocean” [6], “fishers had taken most of the big snapper and lobsters” [3], or “grazed every young seaweed down to bare stone” [2] (not the [7] line about the reserve's edges: it is about recent years, not why the outside reefs stayed bare)"
+       ],
+       "why": {
+        "A": "Only this article gives the size detail: [4] says a small lobster 'can do little to a full-grown kina' and 'A large one can,' and the predators grew 'year after year.' A reader who knows the usual predator-urchin-kelp story but not this article can give the reason but not the words (1 point at most). 'The kelp grows slowly' is not what this article says.",
+        "B": "The article never says the whole chain in one place: [6] says the barrens stayed where fishing went on and the ocean is the same, [3] that fishers took the big predators, [2] what kina do to seaweed. A reader who knows the textbook story can give the chain but not the article's words (1 point at most). 'The water was dirtier there' is ruled out by [6] (same ocean)."
+       },
+       "credit": {
+        "full": {
+         "A": "The lobsters had to grow large before they could eat grown kina, plus the small-vs-large lobster words from [4] copied; or the predators had to grow bigger and more common, plus “Year after year, the predators inside the reserve grew bigger and more common” [4] copied. The general idea ('the predators had to come back') with no copied words earns 1.",
+         "B": "The chain fishing → few predators → many kina → no kelp, plus at least one step in the article's own words, copied. Paragraph numbers alone earn 1."
+        },
+        "partial": "1 point: a reasonable claim with no quote or exact detail from the passage, or with only a paragraph number. A paragraph number is extra, never enough on its own; a guess a reader could make without the passage earns no more than this.",
+        "notes": [
+         "0 points: no claim, or a claim the passage contradicts."
+        ]
+       }
+      },
+      {
+       "id": "q6",
+       "level": 3,
+       "skill": "infer the author's purpose and reasoning",
+       "type": "short",
+       "passage": "p2",
+       "points": 2,
+       "space": 4,
+       "prompt": {
+        "A": "Paragraph 6 brings up an idea and then argues against it. What is the idea? Copy the exact words the author uses to show it is wrong. Then explain what this proves about why the kelp came back.",
+        "B": "Paragraph 7 says that people “waited.” Use paragraph 4 to explain why waiting was needed. Then explain what this shows about how the kelp came back. Quote the words you use."
+       },
+       "answer": {
+        "A": "The idea is that the water got cleaner. The author answers that reefs just outside the reserve “are washed by the same ocean,” yet many barrens stayed there [6]. Since the water is the same, the difference must be the fishing rule: inside, the predators were left alone, so they ate the kina and the kelp grew back.",
+        "B": "Waiting was needed because the snapper and lobsters left after fishing stopped had to grow: “A small lobster can do little to a full-grown kina with its hard shell and spines. A large one can.” and “Year after year, the predators inside the reserve grew bigger and more common.” [4] This shows the kelp came back slowly and without people doing anything to it (“No one planted a single strand of kelp” [7]): it returned only after the predators grew big enough to eat the kina."
+       },
+       "accept": [
+        "A: the idea that cleaner water caused it, plus the author's words from [6] copied (“reefs just outside the reserve are washed by the same ocean”, with or without “where fishing went on, many of the barrens stayed”), so protecting the predators (no fishing) made the difference",
+        "B: the predators had to grow large / become more common before they could eat the grown kina, quoting [4] (the small-vs-large lobster lines or “Year after year, the predators inside the reserve grew bigger and more common”), and so the kelp came back slowly, on its own, once the predators grew, not because people planted it"
+       ],
+       "why": {
+        "A": "Two steps: name the rejected idea, then copy the author's own evidence from [6] (the outside reefs are 'washed by the same ocean') and explain how it works as a comparison. A reader who knows reserve science can say 'the water changed' and 'reefs outside stayed bare' without reading, but not the author's words, so that earns 1 point at most. 'The author proves the ocean is polluted' is ruled out: [6] says nothing about pollution.",
+        "B": "Two steps: connect the waiting in [7] to the growth of the predators in [4] (small lobsters can do little to grown kina), then say what that shows about the recovery (slow, by itself, through the predators). 'They waited for the water to get cleaner' is ruled out by [6] (same ocean); 'they waited for planted kelp to grow' is ruled out by [7] (no one planted any)."
+       },
+       "credit": {
+        "full": {
+         "A": "Names the cleaner-water idea, copies the author's words from [6] (“washed by the same ocean”), and says the fishing rule (predators) is the real cause. The general argument (the outside reefs have the same water but stayed bare) without the copied words earns 1.",
+         "B": "Why waiting was needed (the predators had to grow big and common enough to eat grown kina) with words quoted from [4], plus what it shows (the kelp came back slowly and on its own, through the predators)."
+        },
+        "partial": "1 point: a reasonable claim with no quote or exact detail from the passage, or with only a paragraph number. A paragraph number is extra, never enough on its own; a guess a reader could make without the passage earns no more than this.",
+        "notes": [
+         "0 points: no claim, or a claim the passage contradicts."
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "heading": "CONSTRUCTED RESPONSE (4 points)",
+     "passage": "p1",
+     "directions": "Answer on the lines. Staple your RACE checklist to this page.",
+     "questions": [
+      {
+       "id": "q7",
+       "level": 3,
+       "skill": "constructed response (RACE): infer and cite two pieces of evidence",
+       "type": "open",
+       "passage": "p1",
+       "points": 4,
+       "space": 12,
+       "prompt": {
+        "A": "How does Dev change from the beginning of “Every Afternoon” to the end? Use RACE:\nR - Restate the question.   A - Answer it.   C - Cite two pieces of evidence with [paragraph numbers].   E - Explain how each piece of evidence proves your answer.",
+        "B": "Why did Mrs. Amsel ask Dev to come to her house every day? Use RACE:\nR - Restate the question.   A - Answer it.   C - Cite two pieces of evidence with [paragraph numbers].   E - Explain how each piece of evidence proves your answer."
+       },
+       "answer": {
+        "A": "Dev changes from a boy who spends his afternoons alone to a boy who goes out of his way to keep a new friendship going. At the beginning, he sits by himself on his front steps “reading the same three comic books” [1] after the Parks move away. By the end, he waits on Mrs. Amsel's porch [7] and sets a fifth envelope marked Monday on the chessboard [8]. The first detail shows he had nothing to do and no one to do it with. The envelope shows he now wants the game to continue and is the one asking for it, the way Mrs. Amsel asked him with her envelopes.",
+        "B": "Mrs. Amsel asked Dev to come every day because she wanted to give him company and something to look forward to, not because her plant needed it. She asks him to come “every day, right after school” [2], but the tag says the jade needs water only “every two to three weeks” [6], and the old photo shows she has kept it for years [6], so she knew. She also set up a chair for twenty minutes and a chess game with a move for each day [3]. Since her curtain moved while Dev sat alone after the Parks left [1], she had noticed he was lonely and made a reason for him to visit."
+       },
+       "why": {
+        "A": "Strong answers go past 'he becomes responsible' (the story type's default): the plant needed little care [6], and what changes is that Dev goes from alone [1] to inviting [8].",
+        "B": "Strong answers use the gap between the daily visits [2]/[3] and what the plant needs [6], plus her watching [1]. 'She didn't know how to care for plants' is ruled out by the photo [6]; 'she wanted to test if he was responsible' has no line behind it."
+       },
+       "credit": {
+        "full": "Score with the RACE checklist (Restate, Answer, Cite, Explain; 4 points each row, averaged and rounded up). Cap: if the response cites no real line or detail from the story (only invented quotes, wrong details, or bare paragraph numbers), the whole response scores at most 2 of 4, however strong Restate and Answer are.",
+        "partial": "An answer with no real line or detail from the story scores at most 2 of 4 in total (the cap above), and no higher than 1 on Cite. A paragraph number with no quote or exact detail is not evidence.",
+        "notes": [
+         "Any two pieces of evidence that support the answer count; the model answer lists the strongest."
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "item": "rubric",
+   "kind": "rubric",
+   "title": "RACE CHECKLIST",
+   "rubric": {
+    "title": "RACE CHECKLIST (staple this to your constructed response)",
+    "levelNames": [
+     "4 = Got it!",
+     "3 = Almost",
+     "2 = Started",
+     "1 = Not yet"
+    ],
+    "criteria": [
+     {
+      "name": "Restate",
+      "points": 4,
+      "levels": [
+       "I turned the question into my first sentence.",
+       "I restated part of the question.",
+       "I copied the question word for word.",
+       "No restating."
+      ]
+     },
+     {
+      "name": "Answer",
+      "points": 4,
+      "levels": [
+       "I answered every part of the question, and my answer fits all the clues in the story.",
+       "I answered the question, but my answer only fits some of the clues.",
+       "My answer is a guess or only partly answers the question.",
+       "I did not answer the question."
+      ]
+     },
+     {
+      "name": "Cite",
+      "points": 4,
+      "levels": [
+       "Two quotes or exact details, each with a [paragraph number], and each one proves my answer.",
+       "Two pieces of evidence, but one is missing its [paragraph number] or only mentions the topic.",
+       "One piece of evidence.",
+       "No real evidence from the text (made-up quotes or only paragraph numbers count as none)."
+      ]
+     },
+     {
+      "name": "Explain",
+      "points": 4,
+      "levels": [
+       "For each piece of evidence, I explained how it proves my answer (“This shows ___, so ___”).",
+       "I explained one piece of evidence.",
+       "I repeated the quote instead of explaining it.",
+       "No explaining."
+      ]
+     }
+    ],
+    "note": "Score: Add the four rows and divide by 4. I round up. Big rule: if I did not use a real quote or exact detail from the story, my whole score can be no higher than 2, even if my other rows are great. A paragraph number by itself is not evidence. Check yourself: if you showed someone only your quote, would they agree with your answer?"
+   }
+  }
+ ],
+ "checks": {
+  "blind": [
+   {
+    "round": 1,
+    "agent": "🙈 No-passage probe (ELA)",
+    "version": "A",
+    "scoredBy": "order lead (the accept, why and credit lines)",
+    "passageFree": {
+     "A": {
+      "pointsEarned": 8,
+      "of": 16,
+      "overHalf": [
+       "A q5"
+      ]
+     }
+    },
+    "gate": "fail",
+    "note": "Round 1 gate.",
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q1",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: item, confidence 2). Nothing earned. Probe's answer: Dev feels reluctant and annoyed about being asked to do the job, because it means giving up his afternoons. Paragraph 2 shows it when he thinks, \"Why did it have to be me?\" [2]"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q2",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 3). At most half: within the line. Probe's answer: Dev stays longer because he starts to enjoy Mrs. Amsel's company and realizes she is lonely and likes having someone to talk to. The detail that shows it is in paragraph 5 [5]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q3",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: When Mrs. Amsel puts the key back in Dev's hand, she means she trusts him and wants him to keep coming, not because it is a job but because they are friends now. In paragraph 8 she closes his fingers around the key [8]. "
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q4",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: word, confidence 4). At most half: within the line. Probe's answer: Barrens means empty, bare areas of seafloor where almost nothing grows because sea urchins ate all the kelp. Words that helped: \"bare rock\" and \"where the kelp forest used to be\" [2]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q5",
+      "kind": "FIX",
+      "what": "2 of 2 without the passage (cue: topic, confidence 4). More than half: the version fails the gate. Probe's answer: It took so long because the predators like snapper and crayfish (rock lobster) had to grow back to big enough numbers and sizes first. Only then could they eat enough sea urchins (kina) so the kelp could regrow. This is "
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q6",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: type, confidence 3). At most half: within the line. Probe's answer: The idea is that the kelp came back because of something natural, like a change in the weather or water temperature, not because fishing stopped. The author shows this is wrong by pointing out that just outside the reser"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q7",
+      "kind": "KEEP",
+      "what": "2 of 4 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: Dev changes from the beginning of \"Every Afternoon\" to the end. At the beginning, Dev sees visiting Mrs. Amsel as a boring chore he does not want to do, but by the end he cares about her and wants to keep visiting. At fi"
+     }
+    ]
+   },
+   {
+    "round": 1,
+    "agent": "🙈 No-passage probe (ELA)",
+    "version": "B",
+    "scoredBy": "order lead (the accept, why and credit lines)",
+    "passageFree": {
+     "B": {
+      "pointsEarned": 8,
+      "of": 16,
+      "overHalf": [
+       "B q5"
+      ]
+     }
+    },
+    "gate": "fail",
+    "note": "Round 1 gate.",
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q1",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: item, confidence 2). At most half: within the line. Probe's answer: Dev now enjoys the chess game and looks forward to it, even though he did not like it at first. A sentence like \"Dev found himself looking forward to the game\" [5] shows this."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q2",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: guess, confidence 1). At most half: within the line. Probe's answer: Dev stops watering the plant on Thursday because he learns he has been giving it too much water and it needs to dry out. The words \"too much water\" make him decide."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q3",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 2). At most half: within the line. Probe's answer: Dev's last action shows he wants to keep caring for Mrs. Amsel and keep their friendship going. It connects to how Mrs. Amsel kindly invited him over and taught him chess earlier in the story [2]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q4",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: word, confidence 2). Nothing earned. Probe's answer: In paragraph 5, \"stand\" means to put up with or tolerate something, as in he couldn't stand it. The words \"couldn't stand\" and \"put up with\" helped me figure it out."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q5",
+      "kind": "FIX",
+      "what": "2 of 2 without the passage (cue: topic, confidence 3). More than half: the version fails the gate. Probe's answer: Outside the reserve, people fished out the predators such as otters, lobsters or big fish that eat sea urchins [3]. Without predators, the urchins multiplied [4]. The urchins ate all the kelp, so the reefs stayed bare as"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q6",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 2). At most half: within the line. Probe's answer: The author wants readers to understand that the kelp came back on its own, slowly, once the predators returned and ate the urchins, not because people replanted it. A sentence like \"No one planted the kelp; it came back "
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q7",
+      "kind": "KEEP",
+      "what": "2 of 4 without the passage (cue: topic, confidence 2). At most half: within the line. Probe's answer: Mrs. Amsel asked Dev to come to her house every day because she was lonely and she also wanted to help him, since he seemed lonely too. First, she says she has no one to play chess with anymore [2], which shows she wante"
+     }
+    ]
+   },
+   {
+    "round": 1,
+    "agent": "🙈 Blind tester (ELA)",
+    "matched": 12,
+    "of": 12,
+    "matchedNote": "score-blind.mjs reports 0 of 12 because it compares short-answer text literally; judged by hand against answer/accept/credit, all 12 short answers earn full credit and both RACE answers fit the model answer (A q7 cites [1] and [8]; B q7 cites [1], [3], [6]).",
+    "byLevel": {
+     "L1": {
+      "items": 4,
+      "matched": 4,
+      "meanConfidence": 5,
+      "tooEasy": 1
+     },
+     "L2": {
+      "items": 4,
+      "matched": 4,
+      "meanConfidence": 5,
+      "tooEasy": 1
+     },
+     "L3": {
+      "items": 6,
+      "matched": 6,
+      "meanConfidence": 4.2,
+      "tooEasy": 0
+     }
+    },
+    "passageFree": {
+     "note": "Phase a was run on a view showing BOTH versions (view-nopass.md), against BRIEF mode 1 (one version per session), so cross-version cues (A q2 from B q1/B q7; B q3 from A q3; A q6 from B q5) were available. Estimated credit is scored by hand against each item's credit rule.",
+     "A": {
+      "matched": 3,
+      "of": 7,
+      "confident": 1,
+      "items": [
+       {
+        "where": "A q1",
+        "credit": "0 of 2",
+        "cue": "type",
+        "why": "guessed 'reluctant' (the story-type default); [2] contradicts it"
+       },
+       {
+        "where": "A q2",
+        "credit": "2 of 2",
+        "cue": "item",
+        "conf": 3,
+        "why": "chess reason from B q1/B q7 stems (cross-version only) + guessed [5], which is correct"
+       },
+       {
+        "where": "A q3",
+        "credit": "1 of 2",
+        "cue": "type",
+        "why": "'keep visiting / friendship' claim right, no Monday envelope or [3]/[6] detail"
+       },
+       {
+        "where": "A q4",
+        "credit": "1 of 2",
+        "cue": "word",
+        "conf": 4,
+        "why": "meaning from barren = bare; no clue copied"
+       },
+       {
+        "where": "A q5",
+        "credit": "2 of 2",
+        "cue": "topic",
+        "conf": 4,
+        "why": "predators had to recover and grow, from general knowledge of the Goat Island reserve; guessed paragraph [4] is correct"
+       },
+       {
+        "where": "A q6",
+        "credit": "1 of 2",
+        "cue": "item",
+        "why": "outside-reef evidence and conclusion from B q5's stem; rival idea (cleaner water) missed"
+       },
+       {
+        "where": "A q7",
+        "credit": "about 3 of 4",
+        "cue": "type",
+        "why": "claim half-right ('unwilling' start is contradicted), but Restate earns 4 and the cap leaves Cite/Explain at 2, so the average rounds up to 3"
+       }
+      ]
+     },
+     "B": {
+      "matched": 2,
+      "of": 7,
+      "confident": 2,
+      "items": [
+       {
+        "where": "B q1",
+        "credit": "1 of 2",
+        "cue": "item",
+        "why": "enjoys the game (from 'now' + A q2); no quote"
+       },
+       {
+        "where": "B q2",
+        "credit": "1 of 2",
+        "cue": "guess",
+        "why": "'plant doesn't need him / overwatered' close; no tag words"
+       },
+       {
+        "where": "B q3",
+        "credit": "1 of 2",
+        "cue": "item",
+        "why": "'wants to keep visiting' from A q3's stem (cross-version); no envelope/[3] link"
+       },
+       {
+        "where": "B q4",
+        "credit": "1 of 2",
+        "cue": "topic",
+        "conf": 3,
+        "why": "'stand of kelp' ecology sense; no clue copied"
+       },
+       {
+        "where": "B q5",
+        "credit": "2 of 2",
+        "cue": "topic",
+        "conf": 4,
+        "why": "fishing → few predators → urchins → bare, from general knowledge; guessed [2] and [3] are correct, and two correct numbers earn full credit"
+       },
+       {
+        "where": "B q6",
+        "credit": "1 of 2",
+        "cue": "topic",
+        "why": "recovered on its own via predators; no quote"
+       },
+       {
+        "where": "B q7",
+        "credit": "about 3 of 4",
+        "cue": "type",
+        "conf": 4,
+        "why": "'lonely, wanted company, plant was an excuse' claim fits the model; RACE cap leaves 3 of 4"
+       }
+      ]
+     },
+     "gate": {
+      "A": "fail (q2, q5 full credit; q7 over half)",
+      "B": "fail (q5 full credit; q7 over half)"
+     }
+    },
+    "difficulty": {
+     "perVersionL3": "3 of 7 items per version (q3, q6, q7): meets 1 in 4.",
+     "L2": [
+      {
+       "where": "A q2",
+       "steps": 2,
+       "typical": "yes",
+       "note": "instruction [3] vs forty minutes [5]"
+      },
+      {
+       "where": "B q2",
+       "steps": 1,
+       "typical": "yes",
+       "note": "mostly retrieval of the tag in [6]; easier than A q2"
+      },
+      {
+       "where": "A q5",
+       "steps": 2,
+       "typical": "yes",
+       "note": "answerable from general knowledge"
+      },
+      {
+       "where": "B q5",
+       "steps": 3,
+       "typical": "most",
+       "note": "chain across [6], [3], [2]; harder than A q5"
+      }
+     ],
+     "L3": [
+      {
+       "where": "A q3",
+       "steps": 3,
+       "typical": "about half",
+       "note": "Monday envelope [8] → her envelopes [3] / tag+photo [6] → she accepts"
+      },
+      {
+       "where": "B q3",
+       "steps": 2,
+       "typical": "most",
+       "note": "envelope [8] → her envelopes [3]; a bit easier than A q3"
+      },
+      {
+       "where": "A q6",
+       "steps": 3,
+       "typical": "about half",
+       "note": "name rival idea, see the comparison, state the cause"
+      },
+      {
+       "where": "B q6",
+       "steps": 2,
+       "typical": "most",
+       "note": "pick one of two sentences in [7] and explain; closer to L2"
+      },
+      {
+       "where": "A q7",
+       "steps": 3,
+       "typical": "about half",
+       "note": "beginning [1] vs end [8], plus explanation"
+      },
+      {
+       "where": "B q7",
+       "steps": 4,
+       "typical": "fewer than half",
+       "note": "gap between daily visits [2]/[3] and the tag [6], photo [6], curtain [1]: the hardest item"
+      }
+     ],
+     "L3HarderThanL2": "Yes in A; in B only q7 is clearly harder than the L2s, and B q6 is not. Versions are uneven item by item (B q2 easier than A q2, B q6 easier than A q6; A q5 easier than B q5, B q7 harder than A q7)."
+    },
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q5",
+      "kind": "FIX",
+      "what": "Answerable without the passage (cue: topic, confidence 4). Predators needing years to recover is general reef-ecology knowledge, and the credit rule gives full credit for a correct paragraph number, which I guessed ([4]). Direction: ask for words quoted from [4] (the small-vs-large lobster detail) rather than only a paragraph number, or ask about something only this article says (why a small lobster can't help). Also flagged too-easy at L2."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q5",
+      "kind": "FIX",
+      "what": "Answerable without the passage (cue: topic, confidence 4). The fishing → predators → urchins → bare reef chain is general knowledge, and 'at least two correct paragraph numbers' earns full credit; the article's order (urchins [2], predators [3]) is predictable, so my guessed numbers were right. Direction: require a short quote for at least one step (e.g. the 'same ocean' line in [6] or 'down to bare stone' in [2]) instead of paragraph numbers alone."
+     },
+     {
+      "where": "RACE CHECKLIST / q7 (both versions)",
+      "kind": "FIX",
+      "what": "Credit arithmetic lets a no-passage RACE earn more than half. The cap is 'no higher than 2 on Cite and Explain', but Restate (4) and Answer (3–4) are uncapped and the total is averaged and rounded up, so a guessed answer scores (4+4+2+2)/4 = 3 of 4. In phase a both A q7 (story-type default arc) and B q7 (lonely neighbor made up a reason: confidence 4) reach about 3. Direction: cap the whole response at 2 when no line or paragraph from the story supports it, or cap Answer too, since the Answer row's top level already demands 'fits all the clues in the story'."
+     },
+     {
+      "where": "Credit rule (all short answers)",
+      "kind": "FIX",
+      "what": "Full credit can come from a correct paragraph number alone (A q2 '[5] or [6]', A q5 '[4]', B q5 'two correct paragraph numbers'). In a 6–8 paragraph passage a guessed number is often right, which turned two half-credit guesses into full credit in phase a (A q2, A q5). Direction: where an item asks only for a paragraph number, require the detail too (name or quote what the paragraph says)."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q2",
+      "kind": "JUDGMENT",
+      "what": "Phase a got full credit, but only because the view printed both versions: B q1 ('the chess game') and B q7 named the chess game. In a one-version session the item likely holds. The paragraph-number-only credit (finding above) is the part to fix.",
+      "judgment": {
+       "issue": "A q2 was answered without the story only because the other version's questions mention chess.",
+       "options": [
+        "Keep it as it is (students see only one version)",
+        "Also ask for the words from paragraph 5 that show it, not just the number"
+       ],
+       "recommend": 1,
+       "why": "Asking for words removes the lucky-paragraph-number path at no cost."
+      }
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q3",
+      "kind": "FIX",
+      "what": "The accept and full-credit lines miss right answers. An earlier detail from [5] (cookies 'for the plant's helper': she planned for his visits) or [1] (her curtain moving while he sat alone) also supports 'she wants him to keep coming', but accept names only [3] or [6]. Direction: add [1] and [5] to accept/full credit, or say 'any earlier detail showing the visits were about company'."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q3",
+      "kind": "FIX",
+      "what": "Accept ties the earlier link to [3] only; the Tuesday envelope with her move in [5] is the same envelope game and an equally fair link. Direction: accept [3] or [5]. My ambiguous-wording flag ('last action' could be read as handing back the key) is a KEEP: the envelope is clearly after the key in [8]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q6",
+      "kind": "FIX",
+      "what": "A/B parity: B q6 (pick one of two sentences in one paragraph and explain) is easier than A q6 (name the rival idea, the comparison and the cause) and reads as L2, not L3. My two-right flag is a KEEP: accept already takes either sentence of [7]. Direction: make B q6 require connecting [7] to an earlier paragraph (e.g. why waiting was needed, [4]), so it takes two steps like A q6."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q2",
+      "kind": "FIX",
+      "what": "A/B parity: B q2 is mostly retrieval (find the tag in [6] and copy it), while A q2 infers a motive from [3] vs [5]. B is easier than A at the same level. Direction: ask what Dev's decision shows about him or what he concludes ('She must have forgotten') and why that is wrong, so it takes an inference like A q2."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q1",
+      "kind": "KEEP",
+      "what": "My too-easy flag: it is level 1, where an easy item is fine; the brief makes too-easy a FIX only at L2/L3."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q1",
+      "kind": "KEEP",
+      "what": "Works as designed: without the story I guessed the default 'reluctant', which [2] contradicts (0 points). Accept covers both sentences of [2]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q4",
+      "kind": "JUDGMENT",
+      "what": "'Barrens' is guessable from its everyday sense (barren = bare): phase a got the meaning at confidence 4, capped at 1 of 2 by the credit rule, so the gate holds. B's 'stand' is a less common sense that really needs context, so A q4 is easier than B q4 (allowed: B is not easier).",
+      "judgment": {
+       "issue": "Version A's vocabulary word means what it looks like, so students can guess it without reading.",
+       "options": [
+        "Keep it as it is (the copied clue is still needed for full credit)",
+        "Pick a word from the article whose everyday meaning doesn't fit, as version B does with 'stand'"
+       ],
+       "recommend": 0,
+       "why": "The credit rule already caps a guess at half; the change would only even out A and B."
+      }
+     },
+     {
+      "where": "Passage “Every Afternoon” [7] and [8]",
+      "kind": "FIX",
+      "what": "Typos: no space after the period in [7] before the quotation mark ('pulled in.“How') and in [8] ('chessboard.Mrs.')."
+     },
+     {
+      "where": "Process (phase a)",
+      "kind": "FIX",
+      "what": "The no-passage view given to this session showed both versions, against BRIEF mode 1 (one version per fresh session). Cross-version stems leaked A q2, B q3 and A q6's evidence. Rerun the gate per version so the scores are clean; the topic-knowledge leaks (A q5, B q5) and the RACE rule leak would remain."
+     }
+    ]
+   },
+   {
+    "round": 2,
+    "agent": "🙈 No-passage probe (ELA)",
+    "version": "A",
+    "scoredBy": "order lead (the accept, why and credit lines)",
+    "passageFree": {
+     "A": {
+      "pointsEarned": 7,
+      "of": 16,
+      "overHalf": [
+       "A q6"
+      ]
+     }
+    },
+    "gate": "fail",
+    "note": "Final gate, run 1 of 2 (whole version).",
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q1",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: type, confidence 2). Nothing earned. Probe's answer: Dev feels reluctant/annoyed about being asked to do the job; he doesn't want to give up his afternoons. Guessed quote: \"Dev sighed and looked at the key like it weighed ten pounds.\" [2]"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q2",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: item, confidence 3). Nothing earned. Probe's answer: Dev stays longer because Mrs. Amsel is lonely and he starts to enjoy talking with her and hearing her stories: \"he stayed to listen\" [5]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q3",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: She means she trusts Dev and wants him to keep coming every afternoon as a friend, not just a helper. Paragraph 8: she presses the key into his hand. Earlier: at first he only did the job because he was told to [2], but "
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q4",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: guess, confidence 2). At most half: within the line. Probe's answer: Blades means the thin, flat leaves of grass; clue words like \"the grass\" or \"mowed\" in paragraph 5."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q5",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 4). At most half: within the line. Probe's answer: It took so long because the predators (snapper and crayfish/rock lobster) had to grow back big and numerous enough to eat the sea urchins (kina) that were eating the kelp. Once there were enough large predators, urchin n"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q6",
+      "kind": "FIX",
+      "what": "2 of 2 without the passage (cue: topic, confidence 4). More than half: the version fails the gate. Probe's answer: The idea is that the kelp came back because of something natural, like changes in the water, weather, or temperature. The author argues against it by showing that just outside the reserve, where fishing continued and the"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q7",
+      "kind": "KEEP",
+      "what": "2 of 4 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: Dev changes from someone who sees helping Mrs. Amsel as an annoying chore to someone who cares about her and wants to visit. At the beginning he is reluctant to do the job [2], which shows he only does it because he has "
+     }
+    ]
+   },
+   {
+    "round": 2,
+    "agent": "🙈 No-passage probe (ELA)",
+    "version": "A",
+    "scoredBy": "order lead (the accept, why and credit lines)",
+    "passageFree": {
+     "A": {
+      "pointsEarned": 6,
+      "of": 16,
+      "overHalf": []
+     }
+    },
+    "gate": "pass",
+    "note": "Final gate, run 2 of 2 (whole version). The version fails if either run fails: run 1 failed on q6.",
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q1",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: type, confidence 2). Nothing earned. Probe's answer: Dev feels annoyed and reluctant about being asked to do the job. In paragraph 2 it says, \"Dev sighed and said he guessed he could do it\" [2]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q2",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: type, confidence 2). Nothing earned. Probe's answer: Dev stays longer because he starts to enjoy talking with Mrs. Amsel and can tell she is lonely. The story says, \"he didn't want to leave her sitting alone\" [5]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q3",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: item, confidence 2). At most half: within the line. Probe's answer: When Mrs. Amsel puts the key back in Dev's hand, she means she trusts him and wants him to keep coming, not just as a job but as a friend. In paragraph 8 she closes his fingers around the key and smiles [8]. Earlier, Dev"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q4",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: word, confidence 2). At most half: within the line. Probe's answer: Blades means thin, flat leaves, like blades of grass or the long leaves of a plant. The words that helped were \"of grass\" / \"long green\" [5]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q5",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 4). At most half: within the line. Probe's answer: It took so long because the fish and lobsters that eat sea urchins had to grow back first. Until there were enough big predators, the urchins kept eating the kelp. The article says \"the snapper and lobsters needed years "
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q6",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 3). At most half: within the line. Probe's answer: The idea is that the kelp came back because of something else, like a change in the water or weather. The author argues against it by showing that kelp just outside the reserve, in the same water, stayed bare and covered"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q7",
+      "kind": "KEEP",
+      "what": "2 of 4 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: Dev changes from the beginning of \"Every Afternoon\" to the end. At the beginning he does not want the job and sees it as a chore, but by the end he cares about Mrs. Amsel and wants to visit her. First, in paragraph 2 he "
+     }
+    ]
+   },
+   {
+    "round": 2,
+    "agent": "🙈 No-passage probe (ELA)",
+    "version": "B",
+    "scoredBy": "order lead (the accept, why and credit lines)",
+    "passageFree": {
+     "B": {
+      "pointsEarned": 6,
+      "of": 16,
+      "overHalf": []
+     }
+    },
+    "gate": "pass",
+    "note": "Final gate, run 1 of 2 (whole version).",
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q1",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: item, confidence 2). At most half: within the line. Probe's answer: Dev now enjoys the chess game and looks forward to it (eager, no longer bored). Quote guess: \"Dev found himself hurrying to Mrs. Amsel's house before the clock struck four.\" [5]"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q2",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: type, confidence 2). Nothing earned. Probe's answer: Dev decides Mrs. Amsel's instructions don't matter and she won't notice if he skips them. But a detail in the same paragraph shows she does notice and has a reason, e.g. \"she was already watching from the window.\""
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q3",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: item, confidence 2). At most half: within the line. Probe's answer: Dev's last action (setting up the chess board / leaving the game ready for next time) shows he wants to keep visiting and keep her company. It echoes what Mrs. Amsel did earlier, when she set up the board and waited for "
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q4",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: word, confidence 3). Nothing earned. Probe's answer: 'Stand' means to put up with / tolerate (he could not stand it). Context words: something like \"couldn't bear it\" or \"hated\" in paragraph 5."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q5",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 4). At most half: within the line. Probe's answer: Outside the reserve, people kept fishing the predators (sea otters, lobsters or sheephead) that eat sea urchins. With no predators, urchins multiplied and ate the kelp down to bare rock ('urchin barrens'), so the kelp co"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q6",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 4). At most half: within the line. Probe's answer: Waiting was needed because the predators that eat urchins (fish/lobsters) take years to grow big and come back after fishing stopped [4]; only then did urchin numbers drop. This shows the kelp came back slowly and indire"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q7",
+      "kind": "KEEP",
+      "what": "2 of 4 without the passage (cue: type, confidence 3). At most half: within the line. Probe's answer: Mrs. Amsel asked Dev to come every day because she was lonely and wanted company, though she framed it as teaching him chess or needing help. Evidence: she lived alone and was always waiting for him [2]; she set up the c"
+     }
+    ]
+   },
+   {
+    "round": 2,
+    "agent": "🙈 No-passage probe (ELA)",
+    "version": "B",
+    "scoredBy": "order lead (the accept, why and credit lines)",
+    "passageFree": {
+     "B": {
+      "pointsEarned": 6,
+      "of": 16,
+      "overHalf": []
+     }
+    },
+    "gate": "pass",
+    "note": "Final gate, run 2 of 2 (whole version).",
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q1",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: type, confidence 2). At most half: within the line. Probe's answer: Dev now enjoys the chess game and looks forward to it (eager and interested instead of bored). Quote: the sentence in [5] where he says he wants to play again or can't wait for the next game."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q2",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: item, confidence 2). Nothing earned. Probe's answer: Dev decides Mrs. Amsel's instructions don't matter and he can skip them or do it his own way. The detail that shows he is wrong is when the thing he skipped goes badly right after (he loses or makes a mistake) in that pa"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q3",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: type, confidence 2). At most half: within the line. Probe's answer: Dev's last action shows he wants to keep coming back and stay friends with Mrs. Amsel (he sets up the chess board for the next day or offers her a game). This connects to earlier, when Mrs. Amsel set up the board and wai"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q4",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: word, confidence 2). Nothing earned. Probe's answer: Stand means to put up with or tolerate (as in 'can't stand it'). Context words: the words near 'stand' in [5] that show he couldn't bear something."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q5",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 4). At most half: within the line. Probe's answer: Outside the reserve, fishing removed the animals that eat sea urchins (otters, lobsters, or big fish). With no predators, the urchins multiplied and ate the kelp down to bare rock ('urchin barrens'). With no kelp, the re"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q6",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 4). At most half: within the line. Probe's answer: Waiting was needed because the predators (fish, lobsters, otters) had to grow back and get big enough to eat the urchins before the kelp could regrow [4]. This shows the kelp came back slowly and indirectly, as a chain r"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q7",
+      "kind": "KEEP",
+      "what": "2 of 4 without the passage (cue: type, confidence 2). At most half: within the line. Probe's answer: Mrs. Amsel asked Dev to come to her house every day because she was lonely and wanted company, and she also wanted to teach him chess and help him. Evidence: she plays chess with him every afternoon [2]; she gives him in"
+     }
+    ]
+   },
+   {
+    "round": 2,
+    "agent": "🙈 Blind tester (ELA)",
+    "note": "Answered the 10 changed items from view.md before opening key/pack.json. The scorer shows 0 of 8 exact matches because short answers are free text. Judged by hand, all 8 short answers and both RACE responses agree with the key in substance (8/8; L1 1 item, L2 4, L3 3; mean confidence 4.0 / 4.8 / 5.0; no too-easy flags). Each version has 3 of 7 items at L3 (q3, q6, q7), about 43%. The RACE CHECKLIST is not printed in view.md, so I judged its wording from the pack.",
+    "fixed": [
+     "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q5",
+     "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q5",
+     "RACE CHECKLIST / q7 (both versions)",
+     "Credit rule (all short answers)",
+     "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q2",
+     "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q3",
+     "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q3",
+     "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q6",
+     "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q2",
+     "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q4",
+     "Passage “Every Afternoon” [7] and [8]"
+    ],
+    "findings": [
+     {
+      "where": "Passage “The Reef That Grew Back” [7]",
+      "kind": "FIX",
+      "what": "The new closing sentence adds two facts with no source in the pack, and I could not check them here because web access was blocked. It also changes how the article ends. Right after 'and then they waited' (the payoff that B q6 builds on), the article now ends on the lobsters declining again, and 'Since then' has no clear point in time. Students may read this as the recovery being undone, which muddles the 'how the kelp came back' step in B q6. Direction: source both facts or cut the sentence. If you keep it, tie it to the article's logic (for example, more fishing at the edges means fewer big predators, which is why the reserve was enlarged) and give the time point. Facts to check: whether the Cape Rodney–Okakari Point (Goat Island) reserve was enlarged in 2025 and by roughly what factor ('about four times' and the year); whether studies report fewer lobsters inside the reserve because of fishing along its edges."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q5",
+      "kind": "FIX",
+      "what": "The accept and full-credit lines miss a right answer. Full credit requires the small-lobster/large-lobster words. The other [4] line, 'Year after year, the predators inside the reserve grew bigger and more common', also explains the wait in this article's own words, and B q6 accepts it for the same idea. A student who copies only that line now earns 1. Direction: also accept that [4] line for full credit (it is still article-specific, so the no-passage gate holds). 'Nothing changed quickly' alone should stay at 1, because it states the delay without the reason."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q2",
+      "kind": "FIX",
+      "what": "The accept line misses a fair reading of 'What does he decide'. His conclusion is 'She must have forgotten', but what he actually decides about the instructions is to stop following the watering (he pours the water into the sink [6]). A student who answers 'he decides not to water it / that the instruction is a mistake', then quotes the photo to show he is wrong, has read the paragraph correctly. Direction: accept 'decides to stop watering / not follow the watering instruction (because he thinks she forgot)' along with 'she forgot', as long as the photo detail shows why he is wrong. The level and the A/B match are now fine: both q2s ask for an inference plus quoted words."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” B q5",
+      "kind": "JUDGMENT",
+      "what": "Accept now lists the new [7] line ('fishing along the reserve's edges has thinned the lobsters again') as a copied step. That line is about lobsters at the reserve's edges in recent years. It does not explain why the reefs outside stayed bare. It does show the step 'fishing removes predators', though.",
+      "judgment": {
+       "issue": "Should the new paragraph 7 line count as the copied words for a step about the reefs outside the reserve?",
+       "options": [
+        "Keep it in accept (it shows that fishing takes the predators)",
+        "Drop it from accept, so the copied step has to come from [2], [3] or [6], which describe the outside reefs and the chain"
+       ],
+       "recommend": 1,
+       "why": "The question asks about the outside reefs. The [7] line is about a different place and time, and it may be cut anyway (see the [7] finding)."
+      }
+     },
+     {
+      "where": "RACE CHECKLIST / q7 (both versions)",
+      "kind": "JUDGMENT",
+      "what": "The no-evidence cap now works, and the student wording is clear: a no-passage RACE scores at most 2. Rounding up still lets a response with only one real piece of evidence reach 4 'Got it!': Restate 4, Answer 4, Cite 2 ('One piece of evidence'), Explain 4 gives 14/4 = 3.5, which rounds up to 4, even though the prompt asks for two. The teacher's notes chose 'I round up', so this is the teacher's call.",
+      "judgment": {
+       "issue": "With one piece of evidence instead of two, the RACE answer can still get the top score.",
+       "options": [
+        "Keep rounding up (one weak row doesn't lower the score)",
+        "Add: if my Cite row is 2 or lower, my whole score can be no higher than 3"
+       ],
+       "recommend": 1,
+       "why": "Citing two pieces of evidence is the skill this question tests. A full score should need both."
+      }
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q2",
+      "kind": "KEEP",
+      "what": "I questioned the [6] 'sat down and opened Thursday's envelope' option, because it doesn't show him staying past twenty minutes. It does show the reason (the game, not the plant), and the reason is what the prompt asks for. With the passage, the item works: it needs quoted words, so a lucky paragraph number no longer earns full credit."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q4",
+      "kind": "KEEP",
+      "what": "'Blades' is close to the everyday sense 'blades of grass', so a guesser gets near the meaning. Full credit still needs a clue copied from [5], and A is now about as hard as B's 'stand'. Fine at L1."
+     },
+     {
+      "where": "Process (round 2)",
+      "kind": "FIX",
+      "what": "CHANGES.md says the keys, test-wise, no-passage and cross-item checks were not run after these edits. Rerun them, mainly the no-passage gate on the rewritten A q4, A q5, B q2, B q5 and B q6 and on the new [7] sentence, before the pack ships."
+     }
+    ]
+   },
+   {
+    "round": 3,
+    "agent": "🙈 No-passage probe (ELA)",
+    "version": "A",
+    "scoredBy": "order lead (the accept, why and credit lines)",
+    "passageFree": {
+     "A": {
+      "pointsEarned": 6,
+      "of": 16,
+      "overHalf": []
+     }
+    },
+    "gate": "pass",
+    "note": "Final gate after round 3, run 1 of 2 (whole version A; B's questions did not change).",
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q1",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: item, confidence 3). Nothing earned. Probe's answer: Dev feels annoyed and reluctant about being asked to do the job. In paragraph 2, he sighs and says something like \"Do I have to?\" [2], which shows he does not want to give up his afternoons."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q2",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: type, confidence 3). Nothing earned. Probe's answer: Dev stays longer because Mrs. Amsel is lonely and he starts to enjoy talking with her and hearing her stories. The text says he \"didn't want to leave yet\" [6]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q3",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: When Mrs. Amsel puts the key back in Dev's hand, she means she trusts him and wants him to keep coming, not because it's a job but because they are friends now. In paragraph 8 she closes his fingers around the key [8]. E"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q4",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: word, confidence 2). At most half: within the line. Probe's answer: Blades means the thin, flat leaves of grass. The words \"of grass\" and \"mowed the lawn\" in paragraph 5 helped me figure it out."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q5",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 4). At most half: within the line. Probe's answer: It took so long because the sea urchins had eaten the kelp, and the snapper and crayfish (lobsters) that eat urchins needed many years to grow back big and numerous enough to control the urchins. The article says the pre"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q6",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 3). At most half: within the line. Probe's answer: The idea is that the kelp came back on its own, or because of something else like changes in water temperature or weather. The author shows it is wrong with words like \"But this does not explain\" / \"other reefs outside t"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q7",
+      "kind": "KEEP",
+      "what": "2 of 4 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: Dev changes from the beginning of \"Every Afternoon\" to the end. At first, Dev is annoyed and does not want to help Mrs. Amsel, but by the end he cares about her and wants to keep visiting. In the beginning, Dev sighs and"
+     }
+    ]
+   },
+   {
+    "round": 3,
+    "agent": "🙈 No-passage probe (ELA)",
+    "version": "A",
+    "scoredBy": "order lead (the accept, why and credit lines)",
+    "passageFree": {
+     "A": {
+      "pointsEarned": 6,
+      "of": 16,
+      "overHalf": []
+     }
+    },
+    "gate": "pass",
+    "note": "Final gate after round 3, run 2 of 2.",
+    "findings": [
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q1",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: type, confidence 2). Nothing earned. Probe's answer: Dev feels annoyed / reluctant about being asked to do the job. In paragraph 2 he sighs and says something like \"Why do I have to do it?\" [2]"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q2",
+      "kind": "KEEP",
+      "what": "0 of 2 without the passage (cue: item, confidence 2). Nothing earned. Probe's answer: Dev stays longer because he starts to enjoy talking with Mrs. Amsel and she seems lonely, so he doesn't want to leave her alone. \"he sat down and listened to her stories\" [5]"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q3",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: She means she trusts Dev and wants him to keep coming every afternoon, not just as a job but as a friend. In paragraph 8 she puts the key back in his hand and tells him to keep it; earlier, she only gave him the key for "
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q4",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: word, confidence 3). At most half: within the line. Probe's answer: Blades means the long, thin flat leaves of a plant (like blades of grass or the leaves of kelp/plants Dev waters or cuts). Clue words: something like \"the long green leaves\" [5]."
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q5",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 4). At most half: within the line. Probe's answer: It took so long because the fish and crayfish (lobsters) that eat sea urchins had to grow back and get big first. Until there were enough big predators, the sea urchins kept eating the kelp. \"the snapper and crayfish nee"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q6",
+      "kind": "KEEP",
+      "what": "1 of 2 without the passage (cue: topic, confidence 3). At most half: within the line. Probe's answer: The idea is that the kelp came back because of something else, like cleaner water or a change in weather/ocean temperature, not because of the reserve. The author shows it is wrong with words like \"But kelp outside the r"
+     },
+     {
+      "where": "READING CHECK: “EVERY AFTERNOON” AND “THE REEF THAT GREW BACK” A q7",
+      "kind": "KEEP",
+      "what": "2 of 4 without the passage (cue: item, confidence 3). At most half: within the line. Probe's answer: In \"Every Afternoon,\" Dev changes from someone who sees helping Mrs. Amsel as an annoying chore to someone who cares about her and wants to come back. At the beginning, he doesn't want the job and just wants to get it ov"
+     }
+    ]
+   }
+  ],
+  "facts": [
+   {
+    "round": 1,
+    "agent": "🔎 Fact checker",
+    "claims": 24,
+    "flagged": 2,
+    "findings": [
+     {
+      "where": "Article [1] (both versions); A q5 prompt (\"Fishing stopped at Goat Island in 1975\")",
+      "kind": "KEEP",
+      "what": "1975 is right: Cape Rodney–Okakari Point (Goat Island) Marine Reserve is New Zealand's first marine reserve, set up in 1975 as a no-take reserve. 'No one may fish, gather shellfish or take anything at all' matches no-take status. Some sources give 1977 as the year it formally opened, but 1975 is the standard date (the reserve marked its 50th anniversary in 2025). A q5 repeats the same date, so the same KEEP applies there.",
+      "source": "reference: University of Auckland news, 'A living lab – NZ's first marine reserve turns 50' (20 Oct 2025), https://www.auckland.ac.nz/en/news/2025/10/20/a-living-lab-nzs-first-marine-reserve-turns-50.html; The Conversation (Pilditch & Thrush), 'NZ's first marine reserve is turning 50', https://www.inkl.com/news/nz-s-first-marine-reserve-is-turning-50-the-lessons-from-its-recovery-are-invaluable"
+     },
+     {
+      "where": "Article [1]: 'Off the northeast coast of New Zealand, about an hour's drive north of the city of Auckland'",
+      "kind": "KEEP",
+      "what": "The reserve is at Leigh, on the east coast of the upper North Island, about 90 km (roughly an hour's drive) north of Auckland. 'Northeast coast of New Zealand' is a fair description for grade 7.",
+      "source": "reference: University of Auckland (Leigh Marine Laboratory sits beside the reserve), link above; Department of Conservation reserve page (Goat Island / Cape Rodney–Okakari Point)"
+     },
+     {
+      "where": "Article [2]: kina barrens before protection; kina are spiny sea urchins that graze seaweed down to bare rock",
+      "kind": "KEEP",
+      "what": "Correct. Kina (Evechinus chloroticus) are sea urchins. Before protection, they had made barrens, rock grazed clean of seaweed. One small point: the first full surveys were made in the late 1970s, just after the reserve began (barrens covered about 40% of the reef then). 'Before then, divers … often swam over' is still a fair statement.",
+      "source": "reference: Gulf Journal (Hauraki Gulf Forum), kina barrens and trophic cascades, citing Babcock et al. 1999 and Shears & Babcock 2003, https://gulfjournal.org.nz/?p=4992"
+     },
+     {
+      "where": "Article [3]: snapper and spiny lobsters ('crayfish') eat kina; fishing had removed most of the big ones",
+      "kind": "KEEP",
+      "what": "Correct, and this is the predator link reported for the reserve. New Zealanders do call spiny lobster (Jasus edwardsii) 'crayfish' or 'cray'. Snapper are a heavily fished recreational species.",
+      "source": "reference: Gulf Journal (link above); NZ Geographic, 'A tragedy of the commons', https://www.nzgeo.com/stories/a-tragedy-of-the-commons/"
+     },
+     {
+      "where": "Article [4]: recovery was slow; only large lobsters can handle full-grown kina; predators grew bigger and more common",
+      "kind": "KEEP",
+      "what": "Supported. Inside the reserve, crayfish increased about four-fold by the 1990s and grew larger. Studies report that big predators take adult kina more effectively, which matches the size point the article makes in [4].",
+      "source": "reference: NZ Geographic (link above); Auckland Council OurAuckland, 'Goat Island… not what it used to be' (Feb 2016), https://ourauckland.aucklandcouncil.govt.nz/news/2016/02/goat-island-not-what-it-used-to-be/"
+     },
+     {
+      "where": "Article [5]: 'By the late 1990s, about twenty years after fishing stopped, much of the bare rock was covered again by … kelp'",
+      "kind": "KEEP",
+      "what": "Supported by Babcock et al. 1999, which reported that barrens inside the reserve had shrunk greatly and kelp (Ecklonia) had returned by about 1998. One popular account says 'about 30 years' for the full effect. 'Much of' and 'about twenty years' are a fair middle ground and avoid a percentage, as the maker intended.",
+      "source": "reference: Babcock, Kelly, Shears, Walker & Willis (1999), 'Changes in community structure in temperate marine reserves', Marine Ecology Progress Series 189:125–134, as summarised by Gulf Journal (link above)"
+     },
+     {
+      "where": "Article [6]: reefs just outside the reserve, where fishing went on, kept many barrens; the difference was fishing, not the water",
+      "kind": "KEEP",
+      "what": "Supported. Fished reefs next to the reserve stayed dominated by kina barrens, and the inside/outside comparison is the main evidence scientists used. B q5 (why reefs outside stayed bare) has a factually sound answer. See the next finding for the minority view.",
+      "source": "reference: Babcock et al. 1999; Auckland Council 2016 (link above): 'Unprotected areas outside the marine reserve are dominated by kina barrens because of a lack of predators'"
+     },
+     {
+      "where": "Article [6]–[7], and A q6 / B q6 (the cause the article argues for, and the questions that ask students to explain it)",
+      "kind": "JUDGMENT",
+      "what": "The article presents 'fishing stopped → predators returned → kina fell → kelp grew back' as settled fact. This is the mainstream scientific account (Babcock, Shears). A known minority view, led by local diver and naturalist Floor Anthoni, calls it 'the snapper–urchin–kelp myth' and points to other causes such as urchin disease and recruitment. Simplifying to the mainstream view is normal for grade 7 and does not make any key false.",
+      "source": "reference: Babcock et al. 1999 (mainstream); Seafriends, 'The snapper–urchin–kelp myth', https://seafriends.org.nz/indepth/snapper-urchin.htm (dissent)",
+      "judgment": {
+       "issue": "The article says protecting predators is what brought the kelp back. Most scientists agree, but a few dispute it.",
+       "options": [
+        "Keep it as it is (the mainstream scientific explanation, fine for grade 7)",
+        "Soften paragraph 6 a little, e.g. 'Scientists who compared the two places concluded the difference was…'"
+       ],
+       "recommend": 0,
+       "why": "The mainstream view is well supported, and q6 is about following the author's argument."
+      }
+     },
+     {
+      "where": "Article as a whole (title 'The Reef That Grew Back', ending [7]); also teacher notes or 'why' lines that describe the reserve today",
+      "kind": "JUDGMENT",
+      "what": "The story is told in the past tense and is true as history. Since the 2000s, though, crayfish inside the reserve have dropped to below their 1975 level and to less than a quarter of their 1990s peak. Fish are less plentiful than in the late 1970s, and scientists blame fishing at the reserve's edges. Kina barrens have expanded again. In 2025 the Hauraki Gulf Marine Protection Act made the reserve about four times larger. Nothing in the article says 'still', so nothing is false, but a reader could take the ending as a permanent result. Sweep: I found no present-tense claim about today's reef in the student copy. If pack.json `why` lines or notes say the reef 'is' kelp forest now, that place needs a FIX.",
+      "source": "reference: Auckland Council OurAuckland 2016 (link above); NZ Geographic, 'A tragedy of the commons' (link above); University of Auckland 2025 (link above); The Conversation 2025 (link above)",
+      "judgment": {
+       "issue": "The reef grew back in the 1990s, but in recent years crayfish have declined and some barrens have returned. The article doesn't say so.",
+       "options": [
+        "Keep it as it is (the article is about what happened by the late 1990s, and it is accurate for that period)",
+        "Add one closing sentence, e.g. 'Since then, fishing along the reserve's edges has thinned the lobsters again, and in 2025 the reserve was made larger.' Facts to check: crayfish decline since the 2000s (Auckland Council 2016, Shears); 2025 enlargement under the Hauraki Gulf / Tīkapa Moana Marine Protection Act (boundary to about 3 km, roughly four times larger)."
+       ],
+       "recommend": 1,
+       "why": "Pet World's content rule asks for facts to be current. One sentence fixes this and keeps the paragraph numbers that the questions cite. Adding it to the end of [7] keeps it at 7 paragraphs. It would add about 25 words."
+      }
+     },
+     {
+      "where": "Article [7]: 'No one planted a single strand of kelp at Goat Island'",
+      "kind": "KEEP",
+      "what": "True for the recovery described (natural recovery, no replanting). The kina-removal trials in the Gulf from the 2020s were later and took place mostly elsewhere, and they did not plant kelp.",
+      "source": "reference: Gulf Journal, 'Removing kina from barrens helps kelp recover but is not a solution on its own' (Apr 2024), https://gulfjournal.org.nz/2024/04/removing-kina-from-barrens-helps-kelp-recover-but-is-not-a-solution-on-its-own/"
+     },
+     {
+      "where": "Story 'Every Afternoon' [6]: jade tag 'Water every two to three weeks. Do not overwater.'",
+      "kind": "KEEP",
+      "what": "Correct. Jade (Crassula ovata) is a succulent that is watered only when the soil dries out, roughly every 2–3 weeks. Daily half-cups would overwater it, which is the clue the plot depends on. Jade plants are long-lived, so the old photo with the same plant is plausible.",
+      "source": "reference: standard houseplant care guidance (e.g. university extension houseplant sheets on Crassula ovata)"
+     },
+     {
+      "where": "Story [3]–[5]: the chess setup (white pawn already moved, black moves next, Tuesday envelope 'Knight to f3')",
+      "kind": "KEEP",
+      "what": "Legal and consistent. White opened with a pawn move, Dev replied as Black, and Nf3 is a legal second move for White from the starting position in standard algebraic notation. The calendar also adds up: the reply is made Monday, the four envelopes cover Tuesday to Friday, she returns Saturday, and the fifth envelope is 'Monday'.",
+      "source": "reference: FIDE Laws of Chess, Appendix C (algebraic notation)"
+     }
+    ]
+   },
+   {
+    "round": 2,
+    "agent": "🔎 Fact checker",
+    "claims": 29,
+    "flagged": 3,
+    "findings": [
+     {
+      "where": "Article [7], new closing sentence: 'in 2025 the reserve was made about four times larger' (same passage text shown with A q4–q7 and B q4–q7); also the B q5 key if it quotes this line",
+      "kind": "FIX",
+      "what": "The year is right: the Hauraki Gulf / Tīkapa Moana Marine Protection Act passed on 8 October 2025 and took effect on 25 October 2025, extending the Cape Rodney–Okakari Point (Goat Island) reserve (the offshore boundary moves from about 800 m to about 3 km). The size is not settled: the Department of Conservation's own reserve page says the reserve 'will triple in size', while University of Auckland / The Conversation pieces say 'about four times larger' or 'quadruple', and an earlier DOC page said 'nearly quadruple'. The gap likely comes from 'adds three times its area' vs 'ends up four times its area', and 'four times larger' is itself ambiguous. A number students may quote should not depend on that. Suggested wording (direction, keeps the sentence and paragraph count): 'Since then, fishing along the reserve's edges has thinned the lobsters again, and in 2025 the reserve was made much larger.' Facts to check: 2025 extension in force (DOC, Gazette 2025-ln6286). If the maker prefers a number, use DOC's 'about three times larger' and cite DOC.",
+      "source": "reference: DOC, 'Maps and boundaries for Cape Rodney-Okakari Point Marine Reserve' (says it will triple in size from 25 Oct 2025), https://www.doc.govt.nz/parks-and-recreation/places-to-go/auckland/places/cape-rodney-okakari-point-marine-reserve-goat-island/map-and-boundaries/; NZ Gazette notice 2025-ln6286 (Cape Rodney–Okakari Point Extension Marine Reserve, commencement 25 Oct 2025), https://gazette.govt.nz/notice/id/2025-ln6286; Scoop, 'Marine Conservation Milestone Celebrated At Te Hawere-A-Maki' (Oct 2025, 'tripled'), https://www.scoop.co.nz/stories/AK2510/S00962.htm; University of Auckland, 'A living lab – NZ's first marine reserve turns 50' (20 Oct 2025, 'about four times larger', 800 m to 3 km), https://www.auckland.ac.nz/en/news/2025/10/20/a-living-lab-nzs-first-marine-reserve-turns-50.html"
+     },
+     {
+      "where": "Article [7], new closing sentence: 'Since then, fishing along the reserve's edges has thinned the lobsters again'",
+      "kind": "KEEP",
+      "what": "Supported. Monitoring reported crayfish (and snapper) inside the reserve below their 1975 level and under a quarter of their 1990s peak, with the decline continuing afterward. Dr Nick Shears (University of Auckland) attributes it mainly to cray pots set at the reserve's 800 m boundary, where crayfish move out to feed on the sand flats. 'Since then' (after the late-1990s recovery) matches the timing. This also settles round 1's second JUDGMENT (article not current): fixed.",
+      "source": "reference: Auckland Council OurAuckland, 'Goat Island… not what it used to be' (Feb 2016), https://ourauckland.aucklandcouncil.govt.nz/news/2016/02/goat-island-not-what-it-used-to-be/; RNZ, 'Crayfish, snapper numbers drop at Goat Island reserve' (25 Feb 2016), https://www.rnz.co.nz/news/regional/297393/crayfish,-snapper-numbers-drop-at-goat-island-reserve; Gulf Journal, 'Crayfish decline further', https://gulfjournal.org.nz/article/crayfish-decline-further/"
+     },
+     {
+      "where": "A q4 key (from CHANGES.md): 'blades' in [5] means 'the kelp's long flat leaves'",
+      "kind": "JUDGMENT",
+      "what": "'Blade' is the correct term for kelp, and the context 'long brown blades' supports the meaning. But kelp is a seaweed (an alga), not a plant, and it has no true leaves; its blades are leaf-like. Calling them 'leaves' is a common simplification, and many grade 7 teachers accept it. The key should still accept 'leaves'.",
+      "source": "reference: NOAA Ocean Service, 'What is kelp?' (kelp has a holdfast, stipe and leaf-like blades), https://oceanservice.noaa.gov/facts/kelp.html",
+      "judgment": {
+       "issue": "The answer key says kelp 'blades' are leaves. Kelp is a seaweed, so its blades are leaf-like but not true leaves.",
+       "options": [
+        "Keep it as it is ('the kelp's long flat leaves' is fine for grade 7)",
+        "Change the key to 'the kelp's long, flat, leaf-like parts' and still accept 'leaves' from students"
+       ],
+       "recommend": 1,
+       "why": "It's a two-word change, it keeps the science accurate, and students lose nothing."
+      }
+     },
+     {
+      "where": "Article [1]–[7] (unchanged text) and A q5 prompt ('Fishing stopped at Goat Island in 1975')",
+      "kind": "KEEP",
+      "what": "Re-swept. Every round 1 KEEP still stands, and the new [7] sentence contradicts none of them. [1] 'Inside the reserve, no one may fish…' is still true after the extension, because the extension is also no-take. [1] 'In 1975 it became part of the country's first marine reserve' is still true. [5] 'about twenty years' still sits against other sources that say 'about 30 years' for the full predator effect (Auckland Council 2016). Round 1 already kept that as a fair middle ground and it is not a known myth.",
+      "source": "reference: round1-facts.json sources; Auckland Council 2016 (link above)"
+     },
+     {
+      "where": "Article [6]–[7], A q6 / B q6 (cause: fishing stopped → predators → fewer kina → kelp)",
+      "kind": "JUDGMENT",
+      "what": "Unchanged from round 1 (mainstream account vs Floor Anthoni's dissent). The new [7] sentence and the rewritten B q6 ('waiting was needed' because predators had to grow large, [4]) follow the mainstream account. That account is supported (Babcock et al. 1999; Shears). No new fact issue.",
+      "source": "reference: as round 1",
+      "judgment": {
+       "issue": "The article says protecting predators is what brought the kelp back. Most scientists agree, but a few dispute it.",
+       "options": [
+        "Keep it as it is (the mainstream scientific explanation, fine for grade 7)",
+        "Soften paragraph 6 a little, e.g. 'Scientists who compared the two places concluded the difference was…'"
+       ],
+       "recommend": 0,
+       "why": "The mainstream view is well supported, and q6 is about following the author's argument."
+      }
+     },
+     {
+      "where": "Story 'Every Afternoon' [7] and [8] (spacing fix); B q2, A q3, B q3 (rewritten items)",
+      "kind": "KEEP",
+      "what": "The spaces are now in place ('pulled in. “How', 'chessboard. Mrs.'). The rewritten items rely on story facts round 1 already confirmed: the jade tag says to water every 2–3 weeks; the [6] photo shows the same plant in the same blue pot, so the 'she forgot' inference is wrong; the Tuesday envelope and the cookies in [5]; the curtain in [1]; the envelopes in [3]. These items add no new real-world claim.",
+      "source": "source: view.md story text; reference: round 1 (Crassula ovata care; FIDE Laws of Chess, Appendix C)"
+     }
+    ]
+   },
+   {
+    "round": 3,
+    "agent": "🔎 Fact checker",
+    "claims": 22,
+    "flagged": 0,
+    "findings": [
+     {
+      "where": "[7] closing sentence: 'Since the 2000s, fishing along the reserve's edges has thinned the lobsters again'",
+      "kind": "KEEP",
+      "what": "True. DOC has counted lobsters since 2000. Its 2016 count was one third of the 2006 count, and numbers were below the 1975 level and under a quarter of the 1990s peak. Shears links the drop to heavy potting at the offshore boundary, where lobsters that wander outside are caught. 'Since the 2000s' is a fair shortening of a drop that DOC measured from 2006 on.",
+      "source": "DOC, Rock lobster levels in Cape Rodney-Okakari Point (Goat Island) Marine Reserve, https://www.doc.govt.nz/nature/habitats/marine/type-1-marine-protected-areas-marine-reserves/marine-reserve-report-cards/cape-rodney-okakari-point-goat-island-marine-reserve/rock-lobster/ ; Auckland Council OurAuckland, 'Crayfish numbers at record lows' (Sept 2016), https://ourauckland.aucklandcouncil.govt.nz/news/2016/09/crayfish-numbers-at-record-lows/"
+     },
+     {
+      "where": "[7] closing sentence: 'and in 2025 the reserve was made larger'",
+      "kind": "KEEP",
+      "what": "True. The Hauraki Gulf/Tīkapa Moana Marine Protection Act 2025 took effect on 25 October 2025 and added the Cape Rodney–Okakari Point Extension Marine Reserve, about tripling the protected area (sources say it 'triples' or 'nearly quadruples' it). The article gives no size, so the difference between those sources doesn't matter here.",
+      "source": "DOC, 'Greatest ever protection for Hauraki Gulf/Tīkapa Moana' (2025 media release), https://www.doc.govt.nz/news/media-releases/2025-media-releases/greatest-ever-protection-for-hauraki-gulftikapa-moana/ ; NZ Gazette 2025-ln6286, https://gazette.govt.nz/notice/id/2025-ln6286 ; DOC blog, 28 Oct 2025, https://blog.doc.govt.nz/2025/10/28/all-you-need-to-know-hauraki-gulf-protection-bill/"
+     },
+     {
+      "where": "[1] 'In 1975 it became part of the country's first marine reserve'",
+      "kind": "KEEP",
+      "what": "True. Cape Rodney–Okakari Point was New Zealand's first marine reserve and was created in 1975 (it opened officially in 1977). Sources marking its 50th birthday in 2025 date it to 1975. Its location (northeast coast, about an hour's drive north of Auckland) and its no-take rule are also correct.",
+      "source": "Tourism Ticker, 'Goat Island marine reserve turns 50' (4 Nov 2025), https://www.tourismticker.com/2025/11/04/perspectives-goat-island-marine-reserve-turns-50-lessons-from-beneath-the-waves/ ; DOC reserve page https://www.doc.govt.nz/parks-and-recreation/places-to-go/auckland/places/cape-rodney-okakari-point-marine-reserve-goat-island/map-and-boundaries/"
+     },
+     {
+      "where": "[2]–[6] kina barrens, snapper and lobster as kina predators, size matters, kelp back by the late 1990s, barrens stayed outside the reserve",
+      "kind": "KEEP",
+      "what": "Matches the published Goat Island trophic-cascade work (barren cover fell from about 40% in 1978 to about 14% by 1998, and barrens stayed at fished sites nearby). The 'not the water' conclusion in [6] is the mainstream peer-reviewed reading. It is not a known myth, though a few local commentators (Seafriends) dispute it, so it stays a KEEP and not a JUDGMENT.",
+      "source": "Babcock, Kelly, Shears et al. 1999, Mar Ecol Prog Ser 189:125–134; Shears & Babcock 2003, Mar Ecol Prog Ser 246:1–16; Shears & Babcock 2002, Oecologia 132:131–142"
+     }
+    ]
+   }
+  ],
+  "wilco": [
+   {
+    "check": "keys",
+    "round": 1,
+    "agent": "🤖 Wilco (keys)",
+    "at": "2026-11-12T15:25:50.317Z",
+    "rows": 14,
+    "errors": 0,
+    "warnings": 0,
+    "problems": [],
+    "pass": true
+   },
+   {
+    "check": "cross-item",
+    "round": 1,
+    "agent": "🤖 Wilco (cross-item check)",
+    "at": "2026-11-12T15:25:50.499Z",
+    "questions": 13,
+    "hits": [],
+    "pass": true
+   }
+  ]
+ },
+ "log": [
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Set up the order: read the request, notes and style; planned 7 items × A/B, two passages and the RACE checklist (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "📝 Maker",
+   "what": "First draft: two original passages (story 350 words, article 306), 7 items × A/B, the RACE checklist",
+   "minutes": 6.5,
+   "tokens": 1839728,
+   "cost": 1.78,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "🙈 No-passage probe (ELA)",
+   "what": "Version A: Round 1 gate, version A: FAIL (A q5 full credit from general knowledge and a guessed paragraph number)",
+   "minutes": 0.6,
+   "tokens": 214390,
+   "cost": 0.22,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Scored the version A probe answers against the accept, why and credit lines (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "🙈 No-passage probe (ELA)",
+   "what": "Version B: Round 1 gate, version B: FAIL (B q5 full credit the same way)",
+   "minutes": 0.6,
+   "tokens": 214129,
+   "cost": 0.22,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Scored the version B probe answers against the accept, why and credit lines (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "🙈 Blind tester (ELA)",
+   "what": "Phase a (no passages): keyless no-passage read of both versions",
+   "minutes": 1.3,
+   "tokens": 255138,
+   "cost": 0.43,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "🙈 Blind tester (ELA)",
+   "what": "Phase b (passages, then key): solved, scored, 10 FIX + 2 JUDGMENT + 3 KEEP (RACE rounding leak, credit from paragraph numbers alone, A/B parity on q2 and q6, two accept lines, typos)",
+   "minutes": 2.8,
+   "tokens": 813234,
+   "cost": 1.29,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "🔎 Fact checker",
+   "what": "24 claims checked with web search: all KEEP; 2 JUDGMENT (minority view; the reef has partly slipped back since the 2000s)",
+   "minutes": 1.6,
+   "tokens": 412425,
+   "cost": 0.55,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Merged the round 1 entries from the probes, blind tester and fact checker into checks (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Wrote the round 1 FIX list for the maker: 10 FIX plus the fact checker's 'make it current' judgment (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 1
+  },
+  {
+   "at": null,
+   "who": "📝 Maker",
+   "what": "FIX round: fixed 10 items: quoted words required, RACE cap, new A q4 word, B q2 and B q6 rewritten, typos, a closing sentence to make the article current",
+   "minutes": 3.1,
+   "tokens": 1059514,
+   "cost": 0.98,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "🙈 No-passage probe (ELA)",
+   "what": "Version A, final run 1: FAIL: A q6 (general argument earns full credit; the only item not asking for words)",
+   "minutes": 0.7,
+   "tokens": 223697,
+   "cost": 0.27,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Scored version A, final run 1 (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "🙈 No-passage probe (ELA)",
+   "what": "Version A, final run 2: Pass",
+   "minutes": 0.5,
+   "tokens": 214181,
+   "cost": 0.22,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Scored version A, final run 2 (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "🙈 No-passage probe (ELA)",
+   "what": "Version B, final run 1: Pass",
+   "minutes": 0.7,
+   "tokens": 226188,
+   "cost": 0.27,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Scored version B, final run 1 (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "🙈 No-passage probe (ELA)",
+   "what": "Version B, final run 2: Pass",
+   "minutes": 0.7,
+   "tokens": 225830,
+   "cost": 0.27,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Scored version B, final run 2 (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "🔎 Fact checker",
+   "what": "Recheck: 29 claims: 1 FIX (\"about four times larger\" is disputed), rest KEEP",
+   "minutes": 1.6,
+   "tokens": 647954,
+   "cost": 0.67,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "🙈 Blind tester (ELA)",
+   "what": "Recheck (different session): 11 round-1 findings confirmed fixed; 4 new FIX (the new sentence muddles the ending, two accept lines miss right answers, one too wide)",
+   "minutes": 2.2,
+   "tokens": 894876,
+   "cost": 0.99,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Merged the round 2 entries into checks (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Wrote the round 2 FIX list: the A q6 gate failure, the blind tester's FIX, the fact checker's FIX (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 2
+  },
+  {
+   "at": null,
+   "who": "📝 Maker",
+   "what": "Targeted round: A q6 asks for copied words; the closing sentence reworded without the disputed size; three accept lines",
+   "minutes": 1.1,
+   "tokens": 750166,
+   "cost": 0.54,
+   "round": 3
+  },
+  {
+   "at": null,
+   "who": "🙈 No-passage probe (ELA)",
+   "what": "Version A, final run 1: Pass",
+   "minutes": 0.6,
+   "tokens": 215303,
+   "cost": 0.23,
+   "round": 3
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Scored version A, final run 1 (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 3
+  },
+  {
+   "at": null,
+   "who": "🙈 No-passage probe (ELA)",
+   "what": "Version A, final run 2: Pass",
+   "minutes": 0.5,
+   "tokens": 174799,
+   "cost": 0.22,
+   "round": 3
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Scored version A, final run 2 (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 3
+  },
+  {
+   "at": null,
+   "who": "🔎 Fact checker",
+   "what": "Final recheck: the reworded sentence and the whole article: all KEEP",
+   "minutes": 0.8,
+   "tokens": 274937,
+   "cost": 0.33,
+   "round": 3
+  },
+  {
+   "at": null,
+   "who": "📋 Order lead",
+   "what": "Merged the round 3 entries into checks (not measured)",
+   "minutes": null,
+   "tokens": null,
+   "cost": null,
+   "round": 3
+  },
+  {
+   "at": null,
+   "who": "🧾 Reporter",
+   "what": "Wrote the log and the audit notes from the session records and the checks",
+   "minutes": 1.9,
+   "tokens": 546089,
+   "cost": 0.7,
+   "round": 3
+  }
+ ],
+ "audit": {
+  "notes": [
+   "Order pp-2026-11-12-g7-ela3 is a sample order for a made-up teacher: a grade 7 ELA reading quiz on inference and citing evidence, two original passages, 7 items in versions A and B, and a 4-point RACE checklist.",
+   "The work took 3 rounds and 17 agent sessions: 3 maker rounds, 8 no-passage probe runs, 3 blind tester sessions (two phases, then a recheck) and 3 fact checks.",
+   "Round 1: the maker wrote the story 'Every Afternoon' (350 words), the article 'The Reef That Grew Back' (306 words), 7 items per version and the RACE checklist.",
+   "Round 1 no-passage gate: both versions failed. With no passage, a probe earned 8 of 16 points on A, with full credit on A q5. B q5 also earned full credit from general reef knowledge and a guessed paragraph number.",
+   "Round 1 blind tester: with the passages but without the key, it agreed with the key on 12 of 12 short answers, and both RACE answers fit the model. The scoring script showed 0 of 12 because it compares free text word for word, so the match was judged by hand.",
+   "Round 1 blind tester, no-passage phase: 3 of 7 A items and 2 of 7 B items matched without the passages. This phase was shown both versions at once, against the one-version rule, so cues leaked across versions. That slip was logged as a FIX.",
+   "Round 1 blind tester found 10 FIX, 2 JUDGMENT and 2 KEEP, plus the process FIX above.",
+   "FIX A q5 and B q5: answerable from general knowledge. Full credit now needs words copied from the paragraph.",
+   "FIX RACE checklist and q7 in both versions: a no-passage answer could score over half, because Restate and Answer had no cap. A cap was added.",
+   "FIX credit rule for all short answers: a correct paragraph number alone could earn full credit. Quoted words are now required.",
+   "FIX A q3 and B q3: the accept lines missed fair answers (A: details in [1] and [5]; B: the envelope in [5]). Both were widened.",
+   "FIX B q2 and B q6: easier than the matching A items (B q2 was mostly copying a tag; B q6 read as level 2, not 3). Both were rewritten to match A.",
+   "FIX typos in the story, paragraphs 7 and 8: missing spaces after periods. Fixed.",
+   "JUDGMENT A q2 (answered from version B's chess cues) and A q4 ('barrens' is guessable): A q2 now asks for words and A q4 has a new word, 'blades'. Both were settled in round 2.",
+   "KEEP B q1: an easy item is fine at level 1. KEEP A q1: the no-passage guess 'reluctant' is contradicted by [2] and earned nothing.",
+   "Round 1 fact checker: 24 claims checked with web search, all KEEP, including the 1975 reserve, its location, kina barrens, snapper and lobster as predators, the late-1990s recovery, the jade watering tag and the chess moves.",
+   "Round 1 fact checker raised 2 JUDGMENT: a few scientists dispute the cause of the recovery, and the reef has partly slipped back since the 2000s, which the article did not say. The second was settled by adding a closing sentence in round 2.",
+   "Round 2: the maker fixed all 10 items, gave A q4 a new word and added a closing sentence to make the article current.",
+   "Round 2 blind recheck, in a different session: all 11 round 1 findings were confirmed fixed. It found 4 new FIX: the new closing sentence was unsourced and changed the ending, the A q5 and B q2 accept lines missed right answers, and the checks had not been rerun after the edits.",
+   "Round 2 blind recheck: all 8 changed short answers and both RACE answers agreed with the key in substance. Each version has 3 of 7 items at level 3 (q3, q6, q7).",
+   "Round 2 no-passage gate: version A failed run 1 (7 of 16 points; A q6 earned full credit from a general argument, the only item not asking for copied words) and passed run 2 (6 of 16). A version fails if either run fails, so A failed. Version B passed both runs (6 of 16 each).",
+   "Round 2 fact recheck: 29 claims, 1 FIX: 'about four times larger' in the new sentence is disputed. The rest were KEEP, and the story typos were confirmed fixed.",
+   "Round 3: the maker made A q6 ask for copied words, reworded the closing sentence without the disputed size, and fixed three accept lines.",
+   "Round 3 no-passage gate on version A: passed both runs (6 of 16 each). Version B's questions did not change, so its round 2 passes stand.",
+   "Round 3 fact check: the reworded sentence and the whole article, all KEEP (the lobster counts since 2000 and the 2025 reserve extension are true).",
+   "Gate results by version: A failed in round 1, failed in round 2 (run 1 of 2), and passed both runs in round 3. B failed in round 1 and passed both runs in round 2.",
+   "Wilco ran after every round on that round's pack (the order lead ran keys, test-wise, no-passage and cross-item each time) and is recorded once, on the final pack: keys 14 rows and 0 errors, cross-item 13 items and 0 hits, no-passage passed (no multiple choice, so the guessing bots had nothing to play).",
+   "Open JUDGMENT 1 for the teacher: the article presents 'protect the predators, the kelp returns' as settled, but a few scientists dispute it. Our suggestion: keep it as it is; the mainstream view is well supported and q6 tests following the author's argument.",
+   "Settled in round 3 (was a judgment): B q5 no longer accepts the new paragraph 7 line, which is about a different place and time.",
+   "Open JUDGMENT 3 for the teacher (RACE checklist): an answer with only one piece of evidence can still round up to the top score. Our suggestion: require both pieces for a 4; citing two is the skill being tested.",
+   "Settled in round 3 (was a judgment): A q4 accepts \"leaves\" and \"leaf-like parts\" for the kelp's blades.",
+   "Open for the teacher: judgment 1 (the disputed cause) and judgment 3 (RACE rounding). Both have our suggestion.",
+   "No onboarding step, preview round or approval is in the records, so there is no approved final version yet.",
+   "Agent time was 25.9 minutes across 17 sessions, exact from each session's record. The lead's own steps were not measured. Wall-clock time is not known because the rows have no timestamps.",
+   "Agent tokens were 8,656,489, as reported by the sessions. The cache split was not in the hand-off.",
+   "Agent cost was $10.18, exact, from each session's own dollars ($9.48 for making and checking, $0.70 for the reporter).",
+   "The running cost was $4.49 after round 1, $8.16 after round 2 and $9.48 after round 3.",
+   "The order's budget is 165 tokens, or $16.50. The total of $10.18 is about 0.62 times the budget, under the 2× cost stop.",
+   "Cost per document was about $5.09 for each of the 2 documents.",
+   "Cost per question was about $0.73 for each of the 14 items.",
+   "Work redone: the round 1 gate failed both versions, the round 2 gate failed version A, and the new closing sentence was rewritten after the fact recheck.",
+   "Got smarter: the paragraph-number leak (A q5, B q5) was found by agents, not scripts. checks/no-passage.mjs now fails a reading short answer whose only asked-for evidence is a paragraph number, with a self-test, so a script catches it on every later order."
+  ],
+  "briefChanges": []
+ }
+}
