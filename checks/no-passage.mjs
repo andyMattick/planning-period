@@ -22,6 +22,12 @@
      readingVote  the three above, voting.
    FAIL rule: Wilco's (checks/test-wise.mjs): any bot more than 10 points above chance in a group of at least 8 mc
    rows (each version; each document with both versions; all reading documents). Exit 1 on any fail.
+   numberOnly (short answers; added Nov 12, 2026, g7-ela3 round 1): a reading short answer that asks for a paragraph
+     number as its evidence without asking for the words themselves (quote, copy, "the words", "the sentence", "name
+     exactly", "exact detail") fails.
+     A paragraph number is guessable (1 in 7 on a 7-paragraph passage): g7-ela3's fresh probes earned full credit on
+     A q5 and B q5 with general knowledge and a guessed number, and the scripts didn't see it. Fix the question: ask for
+     the quoted words too.
    --items prints each row with the bots that pick its key (what the maker changes: wrong choices, never keys). */
 import { pathToFileURL } from 'node:url';
 import { content, words, pSet, fired } from './test-wise-cues.mjs';
@@ -100,6 +106,7 @@ export function playReading(pack) {
     groups.push({ name: vers.length > 1 ? `${title} (all versions)` : title, sets: mine });
   }
   if (docs.length > 1) groups.push({ name: 'all reading documents', sets: mc });
+  const numberOnly = numberOnlyRows(R);
   const mean = (list, f) => (list.length ? list.reduce((a, x) => a + f(x), 0) / list.length : 0);
   for (const g of groups) {
     g.n = g.sets.length; g.counted = g.n >= MIN_SETS; g.chance = mean(g.sets, (x) => 1 / x.opts.length);
@@ -110,12 +117,19 @@ export function playReading(pack) {
     g.fails = g.rows.filter((r) => r.fail);
   }
   const worst = groups.length ? [...groups.flatMap((g) => g.rows.map((r) => ({ ...r, over: r.score - g.chance, group: g.name })))].sort((a, b) => b.over - a.over)[0] : null;
-  return { mc, groups, worst, pass: groups.every((g) => !g.fails.length) };
+  return { mc, groups, worst, numberOnly, pass: groups.every((g) => !g.fails.length) && !numberOnly.length };
+}
+// a short answer on a passage whose only asked-for evidence is a paragraph number (see numberOnly above)
+const ASKS_NUMBER = /paragraph numbers?|which paragraph|give (?:a|the) paragraph|\[paragraph\]/i;
+const ASKS_WORDS = /\bquot(?:e|ing)\b|\bcopy\b|\bthe words\b|\bthe sentence\b|\bthe phrase\b|\bname exactly\b|\bexact detail\b/i;
+export function numberOnlyRows(R) {
+  return R.filter((r) => r.type === 'short' && ASKS_NUMBER.test(String(r.prompt ?? '')) && !ASKS_WORDS.test(String(r.prompt ?? ''))).map((r) => r.where);
 }
 const pct = (v) => (100 * v).toFixed(0);
 
 function report(f, res, flags) {
-  if (!res.mc.length) { console.log(`✓ no-passage ${f}: no reading questions, nothing to play`); return; }
+  if (res.numberOnly.length) console.log(`✗ no-passage ${f}: ${res.numberOnly.length} short answer(s) ask for a paragraph number without the words (a guessed number earns the credit): ${res.numberOnly.join('; ')}`);
+  if (!res.mc.length) { console.log(`${res.numberOnly.length ? '✗' : '✓'} no-passage ${f}: no reading mc rows to play`); return; }
   console.log(`${res.pass ? '✓' : '✗'} no-passage ${f}: ${res.mc.length} reading mc rows (all versions); worst ${res.worst.name} ${pct(res.worst.score)}% (${res.worst.group}, ${res.worst.over >= 0 ? '+' : ''}${pct(res.worst.over)} points over chance)`);
   for (const g of res.groups) {
     console.log(`  ${g.fails.length ? '✗' : g.counted ? '✓' : '·'} ${g.name}: ${g.n} mc, chance ${pct(g.chance)}%${g.counted ? '' : ` (under ${MIN_SETS}: not judged)`}${g.fails.length ? ` — FAIL: ${g.fails.map((r) => `${r.name} ${pct(r.score)}%`).join('; ')}` : ''}`);
@@ -158,6 +172,14 @@ function selfTest() {
   }
   { const p = fixture(false); p.documents[0].item = 'quiz'; p.documents[0].kind = 'quiz'; delete p.documents[0].passages; delete p.documents[0].sections[0].passage; p.documents[0].sections[0].questions.forEach((q) => delete q.passage);
     const res = playReading(p); if (!res.mc.length) console.log('✓ skips a quiz with no passage'); else { bad++; console.log('✗ played a quiz with no passage'); } }
+  { // numberOnly: a paragraph number alone fails; the same question asking for the quoted words passes
+    const sa = (prompt) => { const p = fixture(false); p.documents[0].sections[0].questions.push({ id: 'q11', level: 2, skill: 'cause', type: 'short', passage: 'p1', points: 2, prompt: { A: prompt, B: prompt }, answer: { A: 'x', B: 'x' }, accept: ['x'] }); return playReading(p); };
+    const r1 = sa('Why did it take so long? Give the reason and the paragraph number that shows it.');
+    if (!r1.pass && r1.numberOnly.length === 2) console.log('✓ catches a short answer whose evidence is only a paragraph number'); else { bad++; console.log('✗ missed a short answer whose evidence is only a paragraph number'); }
+    const r2 = sa('Why did it take so long? Quote the words that show it and give the paragraph number.');
+    if (r2.pass && !r2.numberOnly.length) console.log('✓ passes a short answer that asks for the quoted words too'); else { bad++; console.log('✗ failed a short answer that asks for the quoted words'); }
+    const r3 = sa('What did she do earlier? Name exactly what she did and give that paragraph number.');
+    if (r3.pass && !r3.numberOnly.length) console.log('✓ passes a short answer that asks for the exact detail, named'); else { bad++; console.log('✗ failed a short answer that asks for the exact detail'); } }
   return bad;
 }
 
