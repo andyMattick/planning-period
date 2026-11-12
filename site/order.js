@@ -387,7 +387,7 @@
   var PAPER_KIND = { worksheet: 'lines', notes: 'lines', homework: 'lines', studyguide: 'lines', bellringer: 'lines',
     quiz: 'checks', readingquiz: 'checks', test: 'checks', versions: 'checks',
     slides: 'screen', quizshow: 'screen', rubric: 'grid', crossword: 'grid', wordsearch: 'grid', logicpuzzle: 'grid',
-    project: 'stack', unitpack: 'stack', unitfull: 'stack',
+    project: 'stack', unitpack: 'stack', unitfull: 'stack', lab: 'flask',
     reviewgame: 'device', reviewapp: 'device', interactive: 'device', practicegame: 'device', styleSetup: 'pen' };
   var PAPER_GLYPH = {
     lines: '<path d="M10 17h16M10 22h16M10 27h16M10 32h10"/>',
@@ -396,7 +396,8 @@
     grid: '<path d="M9.5 15.5h17v17h-17zM9.5 21.2h17M9.5 26.8h17M15.2 15.5v17M20.8 15.5v17"/>',
     stack: '<path d="M9 18h18M9 23h18M9 28h18M9 33h18"/><path d="M6 8v34h24" opacity=".55"/>',
     device: '<rect x="12.5" y="14.5" width="11" height="19" rx="2"/><path d="M16.5 30.5h3"/>',
-    pen: '<path d="M11 32l2-6 11-11 4 4-11 11z"/><path d="M21 18l4 4"/>'
+    pen: '<path d="M11 32l2-6 11-11 4 4-11 11z"/><path d="M21 18l4 4"/>',
+    flask: '<path d="M15 14h6M16 14v7l-5.5 9.5A2 2 0 0 0 12.2 33.5h11.6a2 2 0 0 0 1.7-3L20 21v-7"/><path d="M12.5 27h11"/>'
   };
   function paperIcon(id) {
     var k = PAPER_KIND[id] || 'lines';
@@ -483,9 +484,18 @@
       '<span><b>All-versions key</b> (one PDF + a key lookup page), +' + vp.keyPack + ' tokens. <span class="small muted">Each version\'s teacher copy is always included.</span></span></label>';
   }
   // The tokens for one of an item: the menu price, plus the versions it asks for (docs/PRICING.md, "Versions").
+  // A menu option with a price (menu.json items[].options[].tokens, e.g. a lab's simulation, +25) adds it when picked.
+  function optionTokens(id, sp) {
+    return ((itemById(id) || {}).options || []).reduce(function (t, o) { return t + (sp && sp[o.id] && o.tokens ? o.tokens : 0); }, 0);
+  }
+  function optionsLabel(id) {
+    var sp = (picked[id] && picked[id].spec) || {};
+    return ((itemById(id) || {}).options || []).filter(function (o) { return sp[o.id] && o.tokens; })
+      .map(function (o) { return 'with ' + o.label.replace(/\s*\(\+\d+ tokens\)$/, '').replace(/^Add (a |an )?/i, '').toLowerCase() + ', +' + o.tokens + ' tokens'; }).join(' · ');
+  }
   function itemTokens(id) {
     var it = itemById(id), vp = versionPricing(id), sp = (picked[id] && picked[id].spec) || {};
-    if (!vp) return it.tokens;
+    if (!vp) return it.tokens + optionTokens(id, sp);
     if (sp.versions === 'student') return it.tokens + vp.perStudent;
     var n = Number(sp.versions) || vp.included;
     return it.tokens + Math.max(0, n - vp.included) * vp.perExtra + (sp.keyPack && n >= 2 ? vp.keyPack : 0);
@@ -590,6 +600,7 @@
     var notes = $('item-requests').querySelector('[data-notes="' + item + '"]');
     if (notes) notes.innerHTML = notesHTML(item, spec, lim[item]);
     renderFeas();
+    if (((itemById(item) || {}).options || []).some(function (o) { return o.id === key && o.tokens; })) renderCost();   // a priced option
   });
   $('item-requests').addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'radio' || e.target.type === 'checkbox') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
 
@@ -598,7 +609,7 @@
     var lines = pickedIds().map(function (id) {
       var it = itemById(id), q = picked[id].qty;
       var each = itemTokens(id);
-      return { id: id, label: it.label, format: formatLabel(id) || undefined, versions: versionsLabel(id) || undefined, quantity: q, tokensEach: each, tokens: each * q };
+      return { id: id, label: it.label, format: formatLabel(id) || undefined, versions: [versionsLabel(id), optionsLabel(id)].filter(Boolean).join(' · ') || undefined, quantity: q, tokensEach: each, tokens: each * q };
     });
     menu.extras.forEach(function (x) {
       if (extras[x.id]) lines.push({ id: x.id, label: x.label, quantity: 1, tokensEach: x.tokens || 0, tokens: x.tokens || 0, extra: true });

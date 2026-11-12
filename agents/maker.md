@@ -230,6 +230,38 @@ Nothing else changes; never write a key into the prompt or a choice to make the 
   makes the pool and checks every key. Never put a key, why or checklist anywhere a student page could carry it.
   `itemSpecs.<item>.keyPack: true` (the all-versions key, a paid extra for 2+ versions) is the renderer's job: nothing to write.
 
+## Science labs (owner, Nov 12, 2026; docs/KINDS-LABS.md)
+A lab is a document with `item: "lab"` and a `lab` field; its pre-lab and analysis questions are `sections` (pre-lab
+sections first, with `"part": "prelab"`; one analysis question with `"cer": true`). `samples/_cap-labs/pack.json` is a
+complete example. Run `node checks/labs.mjs pack.json` with the other checks until it exits 0.
+1. **Not a cookbook.** Open with a phenomenon or driving question from the teacher's topic; objectives a student can
+   check; at least 2 pre-lab questions (one on the idea, one on safety or the prediction). Pitch the inquiry level she
+   asked for (`itemSpecs.lab.inquiry`): structured gives every step; guided gives the question and asks students to plan
+   part of it (`design` prompts, then a starting procedure); open asks them to choose the question too.
+2. **It must run in her room.** Time the phases to her period (`itemSpecs.lab.minutes` × `days`), with a briefing,
+   the experiment and 10 minutes for cleanup and debrief; put a `stop` on the step where a multi-day lab pauses. Size
+   materials **per group** (`groupSize`) with exact sizes and concentrations ("250 mL beaker", "15 mL of 0.1 M HCl"),
+   mark each consumable or durable, and plan shared stations so 30 students never wait for one hotplate.
+3. **Safety in the step, not only at the top.** Every hazardous material gets a `safety.hazards` entry with a
+   precaution, the PPE goes in `safety.ppe`, and **each step that uses it carries the warning in `safety`**, written for a
+   student ("Goggles on before you pour"). Disposal says exactly where things go. **Choose the safer substitution**
+   whenever one teaches the same idea (potato catalase, not manganese dioxide; vinegar and baking soda, not strong
+   acid), and say so in `teacher.substitutions`. Never a procedure that needs a fume hood, open flame near solvents, or
+   a concentration above what a high school stockroom sells, unless the teacher's notes say she has and uses it.
+4. **The teacher guide is half the value.** Solution recipes she can follow at 7 a.m., setup minutes, expected data
+   from a believable trial run (with the pattern described), at least 2 troubleshooting tips for the mistakes students
+   really make, SDS references, support (sentence starters, labelled axes) and extensions, and a makeup plan with sample
+   data so an absent student can do the analysis.
+5. **Analysis is reasoning.** Graph the data, calculate (rate, percent error), name sources of error and their effect,
+   and end with the CER. Keys follow the expected data.
+6. **A simulation only when it earns its place** (the teacher picked the option, `itemSpecs.lab.simulation`): the idea
+   is invisible, slow, dangerous or expensive, or the class needs many trials. Write `lab.simulation`: 1–4 inputs with
+   real units and ranges, outputs as formulas in the simulation's own small language (numbers, names, `+ - * / ^`,
+   `sqrt exp ln log abs sin cos tan min max pow round`), realistic noise (0.03–0.10), and a `limits` line saying plainly
+   what the model leaves out. Base the formula on the real relationship (cite it in `teacher.recipes` or `why`), keep
+   its numbers near what the classroom version gives, and hide an in-between value that would give the answer away.
+   Pair it with the hands-on lab (predict with it, then test) unless the teacher asked for a dry lab.
+
 ## Your dollar cap (owner, option 1, Nov 6, 2026)
 The lead starts you with a cap (`docs/RUNBOOK.md` step 4: a first draft one third of the order's budget, a redesign one
 quarter, a FIX round one sixth; reading quiz plus rubric: $5.50, $4.10, $2.75). g7-ela2's uncapped makers cost $7.32
@@ -242,7 +274,7 @@ Both checks exit 0 and every ordered item is in `documents`. Tell the reporter: 
 have it) and the number of questions per document.
 
 ---
-**Version 13** (Nov 11, 2026)
+**Version 14** (Nov 12, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's worksheet maker brief (`WORKSHEETS-LEAD-RECIPE.md` steps 2–5), its six
@@ -296,3 +328,4 @@ have it) and the number of questions per document.
   and versions as one setting (a number, or one per student made by `scripts/versions.mjs` as a pool; the all-versions
   key is a paid extra for numbered versions, `keyPack`). Changed at the owner's request, not by the auditor.
 - v13, Nov 11, 2026: reading rule 0: no multiple choice on passages (retired; it was "in testing"). Changed at the owner's request (review of Nov 11, 2026, docs/audits/AUDIT-2026-11-07-ela-try-d.md: three tries cost about $35 and still failed the no-passage gate), not by the auditor.
+- v14, Nov 12, 2026: science labs (docs/KINDS-LABS.md): the lab field, safety in the step, logistics per group, the teacher guide, CER, and simulations as checked formulas. Changed at the owner's request (Nov 12, 2026: "can we add the ability to write a lab? include the option of creating simulations"), not by the auditor.

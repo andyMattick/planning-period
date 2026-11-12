@@ -7,6 +7,7 @@ import {
 import { docxRuns as mr, plainMath } from './math.mjs';
 import { isGraphFigure, graphText } from './graph.mjs';
 import { needsHowToGrade, gradingRows, gradingIntro } from './grading.mjs';
+import { isLab, labOrder, labBlocks } from './lab.mjs';
 import { vv, questionsOf, keyText, workLinesFor, tfValue, letter, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped, stimulusPlan, groupLine, partsOf } from './util.mjs';
 
 const PAGE = { size: { width: 12240, height: 15840 }, margin: { top: 1008, bottom: 1008, left: 1008, right: 1008, footer: 500 } };
@@ -289,6 +290,36 @@ async function stimulusParas(st, ns, ver, ctx) {
   return out;
 }
 
+// A lab's blocks (scripts/render/lab.mjs) as Word paragraphs and tables. "**bold**" inside a line is drawn bold.
+async function richRuns(t, ctx, opts = {}) {
+  const out = [];
+  for (const [i, seg] of String(t ?? '').split('**').entries()) if (seg) out.push(...(await mr(seg, { ...opts, bold: opts.bold || i % 2 === 1 }, ctx)));
+  return out.length ? out : [runs('')];
+}
+async function labBlocksDocx(blocks, ctx, accent) {
+  const kids = [];
+  const boxed = { top: line(2), bottom: line(2), left: line(2), right: line(2) };
+  for (const b of blocks) {
+    if (b.pagebreak) kids.push(P(runs(''), { pageBreakBefore: true }));
+    else if (b.h) kids.push(b.sub ? P(runs(b.h, { bold: true, size: 22 }), { spacing: { before: 200, after: 60 }, keepNext: true }) : heading(b.h, accent));
+    else if (b.p != null) kids.push(P(await richRuns(b.p, ctx, { bold: !!b.bold, size: b.small ? 19 : undefined }), { spacing: { after: 100 } }));
+    else if (b.box) {
+      kids.push(P(runs((b.title || '').toUpperCase(), { bold: true, size: 19 }), { border: { ...boxed, bottom: undefined }, keepNext: true, spacing: { before: 120 }, shading: b.box === 'phenomenon' ? { type: ShadingType.CLEAR, fill: 'F2F2F2', color: 'auto' } : undefined }));
+      for (const [i, l] of b.lines.entries()) kids.push(P(await richRuns(l, ctx), { border: { left: line(2), right: line(2), ...(i === b.lines.length - 1 ? { bottom: line(2) } : {}) }, keepNext: i < b.lines.length - 1, spacing: { after: i === b.lines.length - 1 ? 160 : 40 }, shading: b.box === 'phenomenon' ? { type: ShadingType.CLEAR, fill: 'F2F2F2', color: 'auto' } : undefined }));
+    } else if (b.list) for (const l of b.list) kids.push(P([runs('• '), ...(await richRuns(l, ctx))], { indent: { left: 360, hanging: 200 }, spacing: { after: 40 } }));
+    else if (b.lines) for (let i = 0; i < b.lines; i++) kids.push(P(runs(''), { border: { bottom: { style: BorderStyle.DASHED, size: 6, color: '999999' } }, spacing: { before: 200 } }));
+    else if (b.table) {
+      const rows = [b.table.columns, ...b.table.rows.map((r) => r.map((c) => (b.table.tall && !c ? ' ' : c)))];
+      kids.push(table(rows.map((r) => r.map(String)), b.table.columns.map(() => 1)), P(runs(''), { spacing: { after: 120 } }));
+    } else if (b.steps) for (const [i, st] of b.steps.entries()) {
+      if (st.safety) kids.push(P([runs(`⚠ `, { bold: true }), ...(await richRuns(st.safety, ctx, { bold: true }))], { indent: { left: 360 }, border: { left: { style: BorderStyle.SINGLE, size: 18, color: '000000', space: 4 } }, keepNext: true, spacing: { before: 80 } }));
+      kids.push(P([runs(`${i + 1}. `, { bold: true }), ...(await richRuns(st.text, ctx))], { indent: { left: 360, hanging: 300 }, spacing: { after: st.stop ? 20 : 80 }, keepLines: true }));
+      if (st.stop) kids.push(P([runs('■ ', { bold: true }), ...(await richRuns(st.stop, ctx, { bold: true, size: 19 }))], { indent: { left: 360 }, spacing: { after: 100 } }));
+    }
+  }
+  return kids;
+}
+
 export async function copyDocx(doc, ver, ctx, teacher) {
   const accent = inkAccent(ctx.style.accent);
   const kids = [];
@@ -316,8 +347,13 @@ export async function copyDocx(doc, ver, ctx, teacher) {
   if (doc.directions) kids.push(P(await mr(vv(doc.directions, ver), { bold: ctx.layout.boldDirections }, ctx), { spacing: { before: 100, after: 120 } }));
   const items = questionsOf(doc);
   const plan = passagePlan(doc, ver), splan = stimulusPlan(doc, ver);
+  const lab = isLab(doc) ? labOrder(doc) : null;
+  const labPart = async (where) => { if (lab) kids.push(...(await labBlocksDocx(labBlocks(doc, ver, where, teacher, ctx.labBase), ctx, accent))); };
+  await labPart('top');
   for (const p of plan.top) kids.push(...(await passageParas(p, ver, ctx, accent)));
-  for (const [si, sec] of (doc.sections || []).entries()) {
+  for (const si of lab ? lab.order : (doc.sections || []).map((_, i) => i)) {
+    const sec = doc.sections[si];
+    if (lab && si === lab.benchBefore) await labPart('bench');
     for (const p of plan.before.get(si) || []) kids.push(...(await passageParas(p, ver, ctx, accent)));
     // A passage a question cites (and no earlier one did) prints just before it, ahead of its section heading.
     const secItems = items.filter((x) => x.si === si);
@@ -331,7 +367,10 @@ export async function copyDocx(doc, ver, ctx, teacher) {
       kids.push(...(await questionParas(it, ver, ctx, teacher)));
     }
   }
+  if (lab && lab.benchBefore == null) await labPart('bench');
+  await labPart('end');
   if (doc.rubric) kids.push(heading(doc.rubric.title || 'Rubric', accent), ...rubricTable(doc.rubric));
+  if (lab && teacher) await labPart('teacher');
   if (teacher && items.length) kids.push(...(await skillsMap(doc, ver, accent, ctx)));
   if (teacher && needsHowToGrade(doc)) kids.push(...(await howToGrade(doc, ver, accent, ctx)));
   const label = `${doc.title} · ${teacher ? 'Teacher' : 'Student'} copy${ver ? ` ${ver}` : ''}`;

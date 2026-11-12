@@ -2,6 +2,7 @@
 // Letter size, black-and-white safe: color is only ever a second signal next to weight, borders or text.
 
 import { mathHtml as mh, withMathCss, plainMath } from './math.mjs';
+import { isLab, labOrder, labBlocks } from './lab.mjs';
 import { needsHowToGrade, gradingRows, gradingIntro } from './grading.mjs';
 import { esc, vv, cleanSvg, questionsOf, answerText, keyText, workLinesFor, kindOf, tfValue, letter, fontStack, inkAccent, numLabel, choiceLabel, passagePlan, passageByline, BLIND_SKIPPED_LINE, blindSkipped, stimulusPlan, groupLine, partsOf } from './util.mjs';
 
@@ -251,12 +252,41 @@ function passageHtml(p, ver) {
   return `<div class="passage"><div class="keep"><h2>${esc(p.title || 'Passage')}</h2>${by ? `<p class="byline">${esc(by)}</p>` : ''}${para(paras[0], 0)}</div>${paras.slice(1).map((t, i) => para(t, i + 1)).join('')}</div>`;
 }
 
+// A lab's blocks (scripts/render/lab.mjs): boxes, steps with their safety callouts, tables to fill in, writing lines.
+// "**bold**" inside a line is drawn bold.
+const rich = (t) => String(t ?? '').split('**').map((seg, i) => (i % 2 ? `<b>${mh(seg)}</b>` : mh(seg))).join('');
+export function labBlocksHtml(blocks) {
+  return blocks.map((b) => {
+    if (b.pagebreak) return '<div class="pb"></div>';
+    if (b.h) return b.sub ? `<h3 class="lab-h3">${esc(b.h)}</h3>` : `<h2>${esc(b.h)}</h2>`;
+    if (b.p != null) return `<p class="${b.small ? 'small' : ''}${b.bold ? ' bold' : ''}">${rich(b.p)}</p>`;
+    if (b.box) return `<div class="lab-box ${esc(b.box)}"><p class="lab-box-t">${esc(b.title || '')}</p>${b.lines.map((l) => `<p>${rich(l)}</p>`).join('')}</div>`;
+    if (b.list) return `<ul class="lab-list">${b.list.map((l) => `<li>${rich(l)}</li>`).join('')}</ul>`;
+    if (b.lines) return `<div class="work">${'<div class="wl"></div>'.repeat(b.lines)}</div>`;
+    if (b.table) return `<table class="data lab-table${b.table.tall ? ' tall' : ''}"><thead><tr>${b.table.columns.map((c) => `<th scope="col">${rich(c)}</th>`).join('')}</tr></thead><tbody>${b.table.rows.map((r) => `<tr>${r.map((c) => `<td>${rich(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    if (b.steps) return `<ol class="lab-steps">${b.steps.map((st) => `<li>${st.safety ? `<p class="lab-safety">⚠ ${rich(st.safety)}</p>` : ''}<p>${rich(st.text)}</p>${st.stop ? `<p class="lab-stop">■ ${rich(st.stop)}</p>` : ''}</li>`).join('')}</ol>`;
+    return '';
+  }).join('');
+}
+const LAB_CSS = ` .lab-box { border: 1.5pt solid #000; border-radius: 4pt; padding: 6pt 9pt; margin: 6pt 0 10pt; break-inside: avoid; }
+  .lab-box p { margin: 2pt 0; } .lab-box-t { font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: 9.5pt; }
+  .lab-box.safety { border-width: 2.25pt; } .lab-box.phenomenon { background: #f2f2f2; } .lab-h3 { font-size: 11pt; margin: 10pt 0 3pt; }
+  .lab-steps { padding-left: 18pt; } .lab-steps li { margin: 0 0 5pt; break-inside: avoid; } .lab-steps p { margin: 0; }
+  .lab-safety { font-weight: 700; border-left: 3pt solid #000; padding-left: 5pt; margin-bottom: 2pt !important; }
+  .lab-stop { font-weight: 700; font-size: 9.5pt; margin-top: 3pt !important; } .lab-list { margin: 2pt 0 8pt; padding-left: 16pt; }
+  table.lab-table { width: 100%; margin: 4pt 0 10pt; } table.lab-table.tall td { height: 22pt; } p.bold { font-weight: 700; }`;
+
 export function copyHtml(doc, ver, ctx, teacher) {
   const items = questionsOf(doc);
   const plan = passagePlan(doc, ver), splan = stimulusPlan(doc, ver);
+  const lab = isLab(doc) ? labOrder(doc) : null;
   let body = headerHtml(doc, ver, ctx, teacher);
+  if (lab) body += labBlocksHtml(labBlocks(doc, ver, 'top', teacher, ctx.labBase));
   body += plan.top.map((p) => passageHtml(p, ver)).join('');
-  (doc.sections || []).forEach((sec, si) => {
+  const order = lab ? lab.order : (doc.sections || []).map((_, i) => i);
+  order.forEach((si) => {
+    const sec = doc.sections[si];
+    if (lab && si === lab.benchBefore) body += labBlocksHtml(labBlocks(doc, ver, 'bench', teacher, ctx.labBase));
     body += (plan.before.get(si) || []).map((p) => passageHtml(p, ver)).join('');
     // The heading and its directions travel with the first question: never alone at the foot of a page.
     let head = '';
@@ -274,10 +304,13 @@ export function copyHtml(doc, ver, ctx, teacher) {
     // printed straight before the box, whose own heading can't break away from it
     body += head ? (stim[0] ? `${head}${q.join('')}` : `<div class="keep">${head}${q[0] || ''}</div>${q.slice(1).join('')}`) : q.join('');
   });
+  if (lab && lab.benchBefore == null) body += labBlocksHtml(labBlocks(doc, ver, 'bench', teacher, ctx.labBase));
+  if (lab) body += labBlocksHtml(labBlocks(doc, ver, 'end', teacher, ctx.labBase));
   if (doc.rubric) body += `<h2>${esc(doc.rubric.title || 'Rubric')}</h2>${rubricTableHtml(doc.rubric)}`;
+  if (lab && teacher) body += labBlocksHtml(labBlocks(doc, ver, 'teacher', teacher, ctx.labBase));
   if (teacher && items.length) body += skillsMapHtml(doc, ver);
   if (teacher && needsHowToGrade(doc)) body += howToGradeHtml(doc, ver, ctx);
-  return page(doc.title, baseCss(ctx), body);
+  return page(doc.title, baseCss(ctx) + (lab ? LAB_CSS : ''), body);
 }
 
 export function rubricHtml(doc, ctx) {

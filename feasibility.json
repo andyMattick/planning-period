@@ -88,6 +88,13 @@
       "grouping": "either",
       "turnIn": "a product plus a short reflection"
     },
+    "lab": {
+      "inquiry": "structured",
+      "minutes": 50,
+      "days": 1,
+      "groupSize": 3,
+      "classSize": 30
+    },
     "unitfull": {
       "days": 10,
       "lessons": 4,
@@ -251,6 +258,24 @@
       "days": [
         1,
         30
+      ]
+    },
+    "lab": {
+      "minutes": [
+        30,
+        120
+      ],
+      "days": [
+        1,
+        5
+      ],
+      "groupSize": [
+        1,
+        6
+      ],
+      "classSize": [
+        1,
+        40
       ]
     },
     "unitfull": {

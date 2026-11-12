@@ -36,6 +36,13 @@
       { key: 'grouping', label: 'Alone or in groups', type: 'select', options: [['', 'Choose'], ['alone', 'Alone'], ['groups', 'In groups'], ['either', 'Either']] },
       { key: 'turnIn', label: 'What students turn in', type: 'text' }
     ],
+    lab: [
+      { key: 'inquiry', label: 'How much students design', type: 'select', options: [['', 'Choose'], ['structured', 'Structured: we give the steps'], ['guided', 'Guided: they plan part of it'], ['open', 'Open: they pick the question too']] },
+      { key: 'minutes', label: 'Class period (minutes)', type: 'number' },
+      { key: 'days', label: 'Days', type: 'number' },
+      { key: 'groupSize', label: 'Students per group', type: 'number' },
+      { key: 'classSize', label: 'Students in the class', type: 'number' }
+    ],
     unitfull: [
       { key: 'days', label: 'Days', type: 'number' }, { key: 'lessons', label: 'Lessons', type: 'number' },
       { key: 'quizzes', label: 'Quizzes', type: 'number' }, { key: 'tests', label: 'Tests', type: 'number' },
@@ -69,6 +76,8 @@
       parts.push(plural(d.days, 'school day'));
       parts.push(d.grouping === 'either' ? 'alone or in groups' : d.grouping);
       if (d.turnIn) parts.push('students turn in ' + d.turnIn);
+    } else if (id === 'lab') {
+      parts.push('a ' + d.inquiry + ' lab', (d.days === 1 ? 'one ' : d.days + ' ') + d.minutes + '-minute period' + (d.days === 1 ? '' : 's'), 'groups of ' + d.groupSize + ' in a class of ' + d.classSize);
     } else if (id === 'unitfull') {
       parts.push(plural(d.days, 'day'), plural(d.lessons, 'lesson'), plural(d.quizzes, 'quiz', 'quizzes'),
         plural(d.tests, 'test'), plural(d.bellringers, 'bell ringer'));
