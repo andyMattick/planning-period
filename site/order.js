@@ -787,6 +787,7 @@
       lines: lines,
       tokenTotal: tokenTotal,
       replyTo: $('reply').value.trim(),
+      referral: referralCode($('referral').value) || undefined,   // collected only; a reward program comes later (docs/ROADMAP.md)
       notices: { tokenNote: brand.tokenNote || '', aiNotice: brand.aiNotice || '', deleteNotice: brand.deleteNotice || '' }
     };
     renameSpecFile(orderJson, trainNames, srcNames);
@@ -977,6 +978,11 @@
       if (m && m.textContent.trim()) openSignIn(true, false);
     }).observe($('signin-forms'), { childList: true, subtree: true, characterData: true });
   }
+
+  // ---------- referral code (owner, Nov 12, 2026): typed, or from a shared link ?ref=CODE; stored with the order ----------
+  function referralCode(s) { return String(s || '').toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 24); }
+  try { var ref = referralCode(new URLSearchParams(location.search).get('ref')); if (ref) $('referral').value = ref; } catch (e) {}
+  $('referral').addEventListener('blur', function () { this.value = referralCode(this.value); });
 
   // ---------- start ----------
   PPBackend.load().then(function (b) { backend = b; if (b) PPBackend.wireSignIn(b, onUser); renderLinkAccess(); });
