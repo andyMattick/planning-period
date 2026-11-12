@@ -373,6 +373,10 @@ a.broken { opacity: .5; pointer-events: none; }
 .try-frame iframe { width: 100%; height: min(78vh, 900px); border: 1px solid var(--line-strong); border-radius: 8px; background: #fff; }
 .tag-int { display: inline-block; font-size: 12px; font-weight: 700; border: 1px solid var(--line-strong); border-radius: 999px; padding: 0 7px; margin-left: 4px; }
 .dl-list li.is-page .btn.link { margin-left: auto; }
+/* An interactive page's row has three buttons: on a phone they took the whole width and squeezed the file's name into a
+   column one letter wide (Nov 12, 2026). The row wraps, and the name keeps a readable width. */
+.dl-list li.is-page { flex-wrap: wrap; }
+.dl-list li.is-page > span { flex: 1 1 8em; overflow-wrap: anywhere; }
 @media (min-width: 1100px) {
   body.shell main.wrap:has(.review) { max-width: 1240px; }
   .review { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); gap: 22px; align-items: start; }
