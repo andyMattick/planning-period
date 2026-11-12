@@ -31,6 +31,8 @@
     return { rounds: rounds, fixed: fixed, findings: findings, minutes: minutes, cost: cost, steps: log.length, agents: Object.keys(agents).length };
   }
 
+  // The rendered files (out/) aren't published with the site yet: say so, not a link that goes nowhere (owner, Nov 12, 2026)
+  var NOT_ONLINE = '<p class="muted small">This sample’s files aren’t online yet.</p>';
   function fileList(folder, s, pack) {
     var known = s.files || pack.files;
     var out = folder + 'out/';
@@ -40,11 +42,11 @@
         .then(function (a) { if (!Array.isArray(a)) throw 0; return a; });
     return p.then(function (names) {
       names = names.filter(function (n) { return !/\/$/.test(n); });
-      if (!names.length) return '<p class="muted small">No files yet. <a href="' + esc(out) + '">Open the folder</a></p>';
+      if (!names.length) return NOT_ONLINE;
       return '<ul class="filelist">' + names.map(function (n) {
         return '<li><a href="' + esc(out + String(n).split('/').map(encodeURIComponent).join('/')) + '">' + esc(n) + '</a></li>';
       }).join('') + '</ul>';
-    }).catch(function () { return '<p class="small"><a href="' + esc(out) + '">Open the pack’s files</a></p>'; });
+    }).catch(function () { return NOT_ONLINE; });
   }
 
   function card(s) {
