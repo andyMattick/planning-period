@@ -124,6 +124,14 @@ You make nothing and change nothing in the order.
    plainly, with the reason in one line ("a quiz on passages takes more checking: every question is tested to make
    sure it needs the passage"), and asks before charging more.
 
+## Labs (owner, Nov 12, 2026; docs/KINDS-LABS.md)
+For a `lab`, the defaults are in `feasibility.json` `lab` (a structured lab, one 50-minute period, groups of 3 in a
+class of 30). Ask only what changes the lab and her source doesn't say, within the 3-question limit: **what equipment
+she has** when the lab needs anything beyond glassware and a balance (a hotplate, probes, a fume hood); the period
+length if her bell schedule isn't 45–55 minutes; and, if she picked the simulation, whether students use it before
+the lab (to predict), after it (to check) or instead of it. A source that needs a hazardous procedure: say we will use
+a safer substitution that teaches the same idea, and name it.
+
 ## Outputs (in the order folder)
 `onboarding.json`:
 ```jsonc
@@ -162,7 +170,7 @@ You make nothing and change nothing in the order.
 - Don't start the maker and don't change `order.json`. Tell the reporter your minutes and tokens.
 
 ---
-**Version 13** (Nov 11, 2026)
+**Version 14** (Nov 12, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, the owner's new agent: an intelligent follow-up for every order and a warning with a
@@ -203,3 +211,4 @@ You make nothing and change nothing in the order.
   change. Changed at the owner's request, not by the auditor.
 - v13, Nov 11, 2026: multiple choice on passages is retired: no menu option, no `mcInTesting` plan; a request for it
   gets a `notOffered` warning and the short answer + RACE default. Changed at the owner's request (review of Nov 11, 2026, docs/audits/AUDIT-2026-11-07-ela-try-d.md: three tries cost about $35 and still failed the no-passage gate), not by the auditor.
+- v14, Nov 12, 2026: labs: the defaults, what to ask (equipment, period length, how the simulation is used) and the safer-substitution promise. Changed at the owner's request (Nov 12, 2026: "can we add the ability to write a lab? include the option of creating simulations"), not by the auditor.

@@ -20,6 +20,7 @@ import { reviewHtml, STATEMENT } from './render/review.mjs';
 import { mathPngMaker, setMathEnabled } from './render/math.mjs';
 import { GAME_KINDS, renderGame } from './render/games.mjs';
 import { isAppDoc, renderAppDoc } from './render/apps.mjs';
+import { isLab, simFileName, simPageHtml } from './render/lab.mjs';
 import { isPracticeGameDoc, renderPracticeGameDoc } from './render/practicegames.mjs';
 import { needsAllKeys, keyVersions, allVersionsKeyHtml, teacherKeyPageHtml } from './render/keys.mjs';
 import { hasPool } from './render/util.mjs';
@@ -200,6 +201,12 @@ export async function renderPack(folder, { mode } = {}) {
       if (isAppDoc(doc)) { await renderAppDoc(doc, base, ctx, { pdf, write, browser }).catch((e) => { throw e instanceof RenderError ? e : new RenderError(e.message); }); continue; }
       // practice games: docs/KINDS-PRACTICEGAMES.md
       if (isPracticeGameDoc(doc)) { await renderPracticeGameDoc(doc, base, ctx, { pdf, write, browser }).catch((e) => { throw e instanceof RenderError ? e : new RenderError(e.message); }); continue; }
+      // a science lab (docs/KINDS-LABS.md): its simulation is its own offline page, in the preview and the final
+      ctx.labBase = base;
+      if (isLab(doc) && doc.lab.simulation) {
+        await html(simFileName(base), simPageHtml(doc.lab.simulation, { title: doc.title, preview, brandName: brand.shortName || brand.name }),
+          `${doc.title}: the simulation (one offline page that runs in any browser, Chromebooks included; no logins)`, `${doc.title} · Simulation`);
+      }
       const hasQs = questionsOf(doc).length > 0;
       const kind = kindOf(doc);
       const fmtProblems = formatProblems(pack, doc);

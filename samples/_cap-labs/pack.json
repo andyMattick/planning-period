@@ -1,0 +1,517 @@
+{
+  "format": 1,
+  "id": "pp-2026-11-12-caplab",
+  "date": "2026-11-12",
+  "order": {
+    "teacher": "Ms. Okafor (made-up capability sample)",
+    "grade": "10",
+    "subject": "science",
+    "topic": "Enzymes: how temperature changes the rate of catalase",
+    "items": [
+      "lab"
+    ],
+    "itemSpecs": {
+      "lab": {
+        "inquiry": "structured",
+        "minutes": 50,
+        "days": 1,
+        "groupSize": 3,
+        "classSize": 30,
+        "simulation": "yes"
+      }
+    }
+  },
+  "style": {
+    "notes": [
+      "Numbered steps, bold safety lines, a box for name and period"
+    ],
+    "accent": "#23695a",
+    "layout": {
+      "nameBox": true,
+      "fields": [
+        "Name",
+        "Period",
+        "Lab partners"
+      ]
+    }
+  },
+  "documents": [
+    {
+      "item": "lab",
+      "kind": "lab",
+      "title": "Catalase Lab: Does Temperature Change How Fast an Enzyme Works?",
+      "directions": "Read the phenomenon and the background, answer the pre-lab questions, then follow the procedure with your group.",
+      "lab": {
+        "phenomenon": "Pour 3% hydrogen peroxide on a scraped knee and it foams right away. In the brown bottle it sits there for months. Something in living cells speeds the reaction up.",
+        "drivingQuestion": "How does temperature change how fast the enzyme catalase breaks down hydrogen peroxide?",
+        "objectives": [
+          "Measure the rate of an enzyme reaction at four temperatures, with three trials each.",
+          "Graph rate against temperature and describe the pattern.",
+          "Write a claim, evidence and reasoning (CER) conclusion about temperature and enzyme activity."
+        ],
+        "standards": [
+          "HS-LS1-6 (practice: planning and carrying out investigations)"
+        ],
+        "inquiry": "structured",
+        "period": {
+          "minutes": 50,
+          "days": 1
+        },
+        "timing": [
+          {
+            "phase": "Pre-lab briefing",
+            "minutes": 8
+          },
+          {
+            "phase": "Experiment",
+            "minutes": 27
+          },
+          {
+            "phase": "Cleanup and debrief",
+            "minutes": 10
+          }
+        ],
+        "groups": {
+          "size": 3,
+          "classSize": 30,
+          "stations": 4
+        },
+        "background": [
+          "Catalase is an enzyme found in almost every living cell, including potatoes. It speeds up the breakdown of hydrogen peroxide into water and oxygen gas: 2 H₂O₂ → 2 H₂O + O₂.",
+          "You will soak a small paper disk in potato extract and drop it into hydrogen peroxide. Oxygen bubbles collect on the disk and lift it. The faster the enzyme works, the sooner the disk floats, so a shorter float time means a higher rate."
+        ],
+        "vocabulary": [
+          {
+            "term": "enzyme",
+            "meaning": "a protein that speeds up a chemical reaction without being used up"
+          },
+          {
+            "term": "substrate",
+            "meaning": "the molecule an enzyme acts on (here, hydrogen peroxide)"
+          },
+          {
+            "term": "rate",
+            "meaning": "how fast something happens; here, 1 ÷ float time, in 1/s"
+          },
+          {
+            "term": "denature",
+            "meaning": "to change a protein's shape so it no longer works"
+          }
+        ],
+        "safety": {
+          "ppe": [
+            "splash goggles",
+            "closed-toe shoes"
+          ],
+          "hazards": [
+            {
+              "material": "Hydrogen peroxide, 3%",
+              "hazard": "can irritate eyes and skin",
+              "precaution": "Goggles on before you pour. Rinse any spill with water, and wash your hands after the lab."
+            },
+            {
+              "material": "60 °C water bath",
+              "hazard": "hot enough to scald",
+              "precaution": "Leave the bath at its station and use tongs to move cups in and out."
+            }
+          ],
+          "disposal": [
+            "Pour used peroxide and potato extract down the sink with plenty of running water.",
+            "Throw filter-paper disks and paper towels in the trash."
+          ]
+        },
+        "materials": [
+          {
+            "item": "Hydrogen peroxide, 3% (drugstore strength)",
+            "amount": 60,
+            "unit": "mL",
+            "per": "group",
+            "kind": "consumable",
+            "hazard": "eye and skin irritant"
+          },
+          {
+            "item": "Potato catalase extract (in a cup on ice)",
+            "amount": 10,
+            "unit": "mL",
+            "per": "group",
+            "kind": "consumable"
+          },
+          {
+            "item": "Filter-paper disks, hole-punched (6 mm)",
+            "amount": 16,
+            "per": "group",
+            "kind": "consumable"
+          },
+          {
+            "item": "Plastic cups, 50 mL",
+            "amount": 4,
+            "per": "group",
+            "kind": "durable"
+          },
+          {
+            "item": "Forceps",
+            "amount": 1,
+            "per": "group",
+            "kind": "durable"
+          },
+          {
+            "item": "Timer (or a phone stopwatch)",
+            "amount": 1,
+            "per": "group",
+            "kind": "durable"
+          },
+          {
+            "item": "Thermometer",
+            "amount": 1,
+            "per": "group",
+            "kind": "durable"
+          },
+          {
+            "item": "Water baths: ice water, room temperature, 37 °C and 60 °C",
+            "amount": 4,
+            "per": "class",
+            "kind": "durable",
+            "note": "one per station"
+          }
+        ],
+        "procedure": [
+          {
+            "text": "Label four cups: 0–5 °C, 20 °C, 37 °C and 60 °C.",
+            "safety": "Put on your splash goggles now and keep them on until cleanup is done."
+          },
+          {
+            "text": "Pour 15 mL of 3% hydrogen peroxide into each cup.",
+            "safety": "Hydrogen peroxide can irritate eyes and skin: pour slowly, and rinse any spill with water."
+          },
+          {
+            "text": "Set each cup in its water bath for 3 minutes, then measure and record the temperature of the peroxide.",
+            "safety": "The 60 °C bath can scald: use tongs, and leave the bath at its station."
+          },
+          {
+            "text": "With forceps, dip one paper disk in the potato extract for 2 seconds. Let the extra drip off."
+          },
+          {
+            "text": "Drop the disk into the 0–5 °C cup and start the timer. Stop it when the disk reaches the top. Record the time."
+          },
+          {
+            "text": "Repeat steps 4 and 5 two more times at this temperature (three trials in all), using a new disk each time."
+          },
+          {
+            "text": "Repeat steps 4 to 6 for the 20 °C, 37 °C and 60 °C cups.",
+            "stop": "Stopping point: if time runs out, record what you have; your teacher has sample data for the rest."
+          },
+          {
+            "text": "Work out the mean time for each temperature, then the rate: rate = 1 ÷ mean time."
+          }
+        ],
+        "dataTable": {
+          "title": "Data: time for the disk to float",
+          "columns": [
+            {
+              "name": "Temperature",
+              "unit": "°C",
+              "digits": 0
+            },
+            {
+              "name": "Trial 1",
+              "unit": "s",
+              "digits": 1
+            },
+            {
+              "name": "Trial 2",
+              "unit": "s",
+              "digits": 1
+            },
+            {
+              "name": "Trial 3",
+              "unit": "s",
+              "digits": 1
+            },
+            {
+              "name": "Mean time",
+              "unit": "s",
+              "digits": 1
+            },
+            {
+              "name": "Rate",
+              "unit": "1/s",
+              "digits": 3
+            }
+          ],
+          "blankRows": 4
+        },
+        "differentiation": {
+          "support": [
+            "Claim starter: \"As the temperature rose from ___ °C to ___ °C, the rate ___ because ___.\"",
+            "Your graph's axes: temperature (°C) across the bottom, rate (1/s) up the side."
+          ],
+          "extension": [
+            "Predict what the 60 °C cup would do if you cooled it back to 37 °C. Test it if there is time, then explain it with the word denature.",
+            "Use the simulation to find the temperature with the highest rate to the nearest 5 °C."
+          ]
+        },
+        "makeup": {
+          "plan": "Absent students run the simulation at 0, 20, 37 and 60 °C (three trials each), copy their data into the table, and answer every analysis question from it. Or use this sample data set:",
+          "data": [
+            [
+              3,
+              61.2,
+              58.9,
+              63.0,
+              61.0,
+              0.016
+            ],
+            [
+              21,
+              18.4,
+              19.9,
+              18.8,
+              19.0,
+              0.053
+            ],
+            [
+              37,
+              8.1,
+              7.6,
+              8.3,
+              8.0,
+              0.125
+            ],
+            [
+              60,
+              24.7,
+              27.2,
+              26.0,
+              26.0,
+              0.038
+            ]
+          ]
+        },
+        "teacher": {
+          "setupMinutes": 25,
+          "recipes": [
+            "Potato catalase extract: blend 50 g of peeled raw potato with 100 mL of cold water for 30 seconds, strain it through a coffee filter and keep it on ice. That makes about 100 mL, enough for 10 groups. Make it the morning of the lab: it loses strength by the next day.",
+            "Water baths: a tub of ice water (0–5 °C), the tap at room temperature, a 37 °C bath and a 60 °C bath (a slow cooker on low, checked with a thermometer, works)."
+          ],
+          "substitutions": [
+            "Potato catalase instead of manganese dioxide or liver: cheaper, no chemical waste and no raw-meat handling.",
+            "Drugstore 3% hydrogen peroxide only. Never use stronger peroxide in this lab."
+          ],
+          "expectedData": [
+            [
+              3,
+              61.2,
+              58.9,
+              63.0,
+              61.0,
+              0.016
+            ],
+            [
+              21,
+              18.4,
+              19.9,
+              18.8,
+              19.0,
+              0.053
+            ],
+            [
+              37,
+              8.1,
+              7.6,
+              8.3,
+              8.0,
+              0.125
+            ],
+            [
+              60,
+              24.7,
+              27.2,
+              26.0,
+              26.0,
+              0.038
+            ]
+          ],
+          "expectedNote": "From a trial run of this procedure. Expect the fastest rate near body temperature, very slow rates in ice water, and a drop at 60 °C, where the enzyme starts to denature.",
+          "troubleshooting": [
+            "Disks don't float at any temperature: the extract is old or too weak. Make it fresh, or use less water.",
+            "Disks float in under 3 seconds: the extract is too strong to time well. Dilute it 1:1 with cold water.",
+            "Disks stick to the cup wall: drop them into the middle of the cup, and use a new disk for that trial.",
+            "60 °C results look like 37 °C: the cup sat out and cooled. Time it straight from the bath."
+          ],
+          "sds": [
+            "Keep the Safety Data Sheet for 3% hydrogen peroxide (from your supplier, or the bottle maker's website) in the lab binder.",
+            "Potato extract needs no SDS; tell the class about potato allergies before you start."
+          ]
+        },
+        "simulation": {
+          "title": "Catalase at different temperatures",
+          "intro": "Set the temperature and the peroxide strength, run trials, and watch the float time and the rate. Run at least three trials at each setting, as you would in the lab.",
+          "use": "Use it before the lab to predict, after the lab to check, or as the whole lab for an absent student.",
+          "limits": "Real potato pieces vary, so your class's times will not match these exactly. In a real cup, catalase heated above about 60 °C is damaged for good; this model only shows it working slowly.",
+          "inputs": [
+            {
+              "id": "T",
+              "label": "Temperature",
+              "unit": "°C",
+              "min": 0,
+              "max": 70,
+              "step": 1,
+              "value": 20,
+              "digits": 0
+            },
+            {
+              "id": "C",
+              "label": "Peroxide strength",
+              "unit": "%",
+              "min": 1,
+              "max": 3,
+              "step": 0.5,
+              "value": 3,
+              "digits": 1
+            }
+          ],
+          "outputs": [
+            {
+              "id": "a",
+              "label": "Enzyme activity",
+              "unit": "",
+              "expr": "exp(-((T - 38) / 16)^2)",
+              "digits": 2,
+              "noise": 0,
+              "min": 0,
+              "max": 1,
+              "hidden": true
+            },
+            {
+              "id": "t",
+              "label": "Float time",
+              "unit": "s",
+              "expr": "8 / (a * C / 3 + 0.06)",
+              "digits": 1,
+              "min": 0,
+              "max": 140
+            },
+            {
+              "id": "r",
+              "label": "Rate",
+              "unit": "1/s",
+              "expr": "1 / t",
+              "digits": 3,
+              "noise": 0,
+              "min": 0,
+              "max": 0.2
+            }
+          ],
+          "noise": 0.06,
+          "graph": {
+            "x": "T",
+            "y": "r"
+          }
+        }
+      },
+      "sections": [
+        {
+          "heading": "Pre-lab questions",
+          "part": "prelab",
+          "questions": [
+            {
+              "id": "q1",
+              "level": 1,
+              "skill": "enzyme function",
+              "type": "short",
+              "prompt": "What reaction does catalase speed up? Name what it breaks down and what it makes.",
+              "answer": "It breaks hydrogen peroxide down into water and oxygen gas.",
+              "accept": [
+                "hydrogen peroxide into water and oxygen"
+              ],
+              "why": "Background, first paragraph: 2 H₂O₂ → 2 H₂O + O₂.",
+              "points": 2,
+              "space": 2
+            },
+            {
+              "id": "q2",
+              "level": 2,
+              "skill": "rate from time",
+              "type": "short",
+              "prompt": "Disk A floats in 10 s and disk B in 25 s. Which disk's enzyme worked faster? Explain how you know.",
+              "answer": "Disk A: it floated sooner, so oxygen was made faster, which means a higher rate.",
+              "why": "A shorter float time means a higher rate (rate = 1 ÷ time).",
+              "points": 2,
+              "space": 2
+            },
+            {
+              "id": "q3",
+              "level": 2,
+              "skill": "prediction",
+              "type": "open",
+              "prompt": "Predict the temperature where catalase works fastest, and explain your prediction.",
+              "answer": "A reasonable prediction (often near body temperature, about 37 °C) with a reason, for example that enzymes from living things work best near the temperatures those cells live at.",
+              "why": "Any reasoned prediction earns full credit; it is tested in the lab.",
+              "points": 2
+            }
+          ]
+        },
+        {
+          "heading": "Analysis",
+          "questions": [
+            {
+              "id": "q4",
+              "level": 1,
+              "skill": "calculate rate",
+              "type": "numeric",
+              "prompt": "A group's mean float time at 37 °C was 8.0 s. What is the rate?",
+              "answer": 0.125,
+              "unit": "1/s",
+              "accept": [
+                "1/8"
+              ],
+              "why": "rate = 1 ÷ 8.0 s = 0.125 per second.",
+              "points": 2
+            },
+            {
+              "id": "q5",
+              "level": 2,
+              "skill": "percent error",
+              "type": "numeric",
+              "prompt": "The class mean at 37 °C was 8.0 s, and one group measured 10.0 s. What is that group's percent error compared with the class mean?",
+              "answer": 25,
+              "unit": "%",
+              "why": "|10.0 − 8.0| ÷ 8.0 × 100 = 25%.",
+              "points": 2
+            },
+            {
+              "id": "q6",
+              "level": 2,
+              "skill": "sources of error",
+              "type": "short",
+              "prompt": "Name two sources of error in this lab and how each one could change a float time.",
+              "answer": "Any two, for example: the peroxide warming or cooling before the disk goes in (changes the rate); disks soaking up different amounts of extract (more extract floats sooner); stopping the timer late.",
+              "why": "Look for a real source plus its effect on the time.",
+              "points": 2,
+              "space": 4
+            },
+            {
+              "id": "q7",
+              "level": 3,
+              "skill": "CER conclusion",
+              "type": "open",
+              "cer": true,
+              "prompt": "Write a CER conclusion: How does temperature change how fast catalase works? Claim, Evidence (at least two numbers from your data), Reasoning (use the word denature).",
+              "answer": "Claim: catalase works fastest near 37 °C and slower when colder or hotter. Evidence: for example, a mean of 8.0 s (0.125/s) at 37 °C against 61.0 s at 3 °C and 26.0 s at 60 °C. Reasoning: cold slows the molecules, so they meet less often; at 60 °C the enzyme starts to denature (its shape changes), so it works less well.",
+              "why": "Full credit: a claim that matches the data, two real numbers, and reasoning that explains both the cold and the hot results.",
+              "points": 6
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {},
+  "log": [],
+  "audit": {
+    "notes": [
+      "Capability sample for the lab writer and its simulation (docs/KINDS-LABS.md). Written by hand to test the renderer and checks/labs.mjs, not by the agent team."
+    ],
+    "briefChanges": []
+  }
+}

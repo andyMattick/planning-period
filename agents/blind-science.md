@@ -45,6 +45,16 @@ flags are what make the pack good.
   three false "before" figures, caught only by the fact checker).
 - An L3 item built on an equation or example the source practises is recall, not L3 (g8-science q8, three rounds).
 
+## Labs (owner, Nov 12, 2026; docs/KINDS-LABS.md)
+Answer the pre-lab and analysis questions cold, as for any document. Then read the procedure **as a student with the
+clock running** and flag:
+- a lab that can't fit its phases in the period, or a step that doesn't say how much, how long or with what (FIX);
+- a data column no step produces, or a step whose result has no column (FIX);
+- a hazard step without its warning in the step (FIX; the fact checker checks the hazards themselves);
+- an analysis question the data table can't answer, or a CER that could be written without doing the lab (FIX);
+- with a simulation: run it (the lead gives you the page), and flag a model that can't produce the pattern the analysis
+  asks about, or a graph or table that doesn't help answer it (FIX).
+
 ## Always (every subject; Pet World's never-again list)
 - Two choices the same in text or value; two right answers; no right answer.
 - Twin wrong choices: two that say the same thing in different words, so the item is really 3 choices (Pet World's
@@ -96,7 +106,7 @@ words>", "options": ["Keep it as it is (…)", "<one concrete change>"], "recomm
 The teacher picks one with a tap in her review, so write the options as she would read them (no level codes).
 
 ---
-**Version 4** (Nov 8, 2026)
+**Version 5** (Nov 12, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's blind review (`docs/BLIND-REVIEW.md` steps 2–4) and the traps its
@@ -110,3 +120,4 @@ The teacher picks one with a tap in her review, so write the options as she woul
   `judgment` (issue, options with "keep it" first, an optional pick and why), so the teacher report and her review
   show one-tap choices.
 - v4, Nov 8, 2026 (owner): shared data sets (chaining is a `giveaway`), multi-part answers, and a sample of 3 versions for one version per student (`--pool-sample 3`, `pool.blindSample`). Changed at the owner's request, not by the auditor.
+- v5, Nov 12, 2026: labs: the procedure read against the clock, data columns that match the steps, warnings in the step, analysis the data can answer, and running the simulation. Changed at the owner's request (Nov 12, 2026: "can we add the ability to write a lab? include the option of creating simulations"), not by the auditor.

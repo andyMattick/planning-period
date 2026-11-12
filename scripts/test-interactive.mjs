@@ -222,6 +222,47 @@ try {
     if (br.skipped) console.log(`⏭️  ${br.skipped}`);
     else { assert.deepEqual(br.errors, [], br.errors.join('\n')); ok(`every question type (samples/_fixture made interactive): ${br.notes.join('; ')}`); }
   }
+  // ===== science labs (docs/KINDS-LABS.md): the simulation page runs offline at phone and computer widths =====
+  {
+    const dir = path.join(TMP, 'lab'); fs.mkdirSync(dir);
+    fs.copyFileSync(path.join(ROOT, 'samples/_cap-labs/pack.json'), path.join(dir, 'pack.json'));
+    const r = render(dir, '--preview');
+    assert.equal(r.status, 0, `the lab sample renders:\n${r.stdout}${r.stderr}`);
+    const sim = fs.readdirSync(path.join(dir, 'out-preview')).find((f) => f.endsWith('-simulation.html'));
+    assert.ok(sim, 'the preview has the simulation page');
+    const { chromium } = (await import('node:module')).createRequire(import.meta.url)('playwright');
+    const exe = process.env.PP_CHROMIUM || '/opt/pw-browsers/chromium';
+    const b = await chromium.launch({ executablePath: fs.existsSync(exe) ? exe : undefined, args: ['--no-sandbox'] });
+    try {
+      for (const [w, h] of [[375, 667], [1280, 800]]) {
+        const page = await b.newPage({ viewport: { width: w, height: h } });
+        const errs = [], outside = [];
+        page.on('pageerror', (e) => errs.push(e.message));
+        page.on('request', (q) => { if (!q.url().startsWith('file:')) outside.push(q.url()); });
+        await page.goto('file://' + path.join(dir, 'out-preview', sim) + '?seed=11');
+        assert.match(await page.textContent('body'), /PREVIEW/, 'the preview simulation is marked');
+        assert.match(await page.textContent('.model'), /This is a model, not the real thing\./, 'the page says what the model leaves out');
+        for (const T of [0, 37, 60]) { await page.evaluate((t) => window.PPSim.set('T', t), T); await page.selectOption('#repeat', '3'); await page.click('#run'); }
+        const rows = await page.evaluate(() => window.PPSim.rows());
+        assert.equal(rows.length, 9, '3 settings × 3 trials make 9 rows');
+        assert.ok(rows.every((x) => Number.isFinite(x.t) && Number.isFinite(x.r) && x.t > 0), 'every trial is a finite, positive number');
+        const mean = (T) => rows.filter((x) => x.T === T).reduce((s, x) => s + x.r, 0) / 3;
+        assert.ok(mean(37) > mean(0) && mean(37) > mean(60), `the model's shape: fastest near body temperature (${mean(0).toFixed(3)}, ${mean(37).toFixed(3)}, ${mean(60).toFixed(3)})`);
+        assert.equal(await page.locator('#tbody tr').count(), 9, 'the data table has 9 rows');
+        assert.equal(await page.locator('#graph circle').count(), 9, 'the graph has 9 points');
+        assert.ok(!(await page.textContent('#thead')).includes('Enzyme activity'), 'a hidden output stays out of the table');
+        await page.click('#undo'); assert.equal(await page.locator('#tbody tr').count(), 8, 'Delete last removes a row');
+        await page.click('#copy'); await page.waitForFunction(() => /Copied|Select all/.test(document.getElementById('live').textContent));
+        const sw = await page.evaluate(() => document.documentElement.scrollWidth);
+        assert.ok(sw <= w + 1, `the simulation scrolls sideways at ${w} px (${sw})`);
+        assert.deepEqual(errs, [], `page errors: ${errs.join('; ')}`);
+        assert.deepEqual(outside, [], `the simulation reached outside: ${outside.join(', ')}`);
+        if (SHOTS) await page.screenshot({ path: path.join(SHOTS, `lab-simulation-${w}.png`), fullPage: true });
+        await page.close();
+      }
+    } finally { await b.close(); }
+    ok('lab simulation: offline (no outside requests), marked PREVIEW with its "this is a model" note; trials, table, graph, Delete last and Copy data work at 375 and 1280 px; the model is fastest near 37 °C; a hidden output stays hidden');
+  }
   console.log(`\nAll ${passed} interactive-format tests pass.${SHOTS ? ` Screenshots: ${SHOTS}` : ''}`);
 } catch (e) {
   console.error('\n✗ ' + (e.stack || e));
