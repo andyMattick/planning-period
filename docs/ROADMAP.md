@@ -35,6 +35,8 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
   "in testing" and make multiple choice an ordinary option again.
 - **Nov 11, 2026 (owner review):** retired, not sold even "in testing": the menu option, `mcInTesting` and the
   `inTesting` warning are gone; onboarding v13 says it isn't offered (`notOffered`), maker v13 never writes it.
+- **Nov 12, 2026:** a short-answer + RACE reading sample, `samples/g7-ela3`, passed the gate (two final runs per
+  version) and is public on the Samples page ($10.18, 3 rounds; `samples/g7-ela3/AUDIT-NOTES.md`).
 - **Status:** retired. g7-ela2 stays hidden from the Samples page and on `checks/cross-item-debt.json` until a later
   attempt passes.
 
