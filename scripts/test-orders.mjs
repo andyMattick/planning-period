@@ -171,6 +171,29 @@ try {
   }
   ok('referral code: optional, filled from ?ref= in a shared link, cleaned to capitals, digits and dashes; your new-order email shows it');
 
+  // ===== 1b3. a science lab (owner, Nov 12, 2026; docs/KINDS-LABS.md): 70 tokens, the simulation option +25 =====
+  {
+    const c = await ctx('phone'), page = await c.newPage();
+    await page.goto(LOCAL);
+    await page.waitForSelector('#items [data-item="lab"]', { state: 'attached' });
+    assert.match(await page.textContent('#items [data-item="lab"]'), /Science lab with teacher guide[\s\S]*safety warnings right in the steps[\s\S]*70 tokens/);
+    await page.evaluate(() => { const b = document.querySelector('#items [data-item="lab"] input[type=checkbox]'); b.checked = true; b.dispatchEvent(new Event('change', { bubbles: true })); window.PPShowStep(3); });
+    const spec = '[data-item-spec="lab"]';
+    assert.match(await page.textContent(spec), /a structured lab, one 50-minute period, groups of 3 in a class of 30/, 'the lab defaults');
+    for (const f of ['inquiry', 'minutes', 'days', 'groupSize', 'classSize', 'simulation']) assert.ok(await page.$(`#sp-lab-${f}`), `the ${f} field`);
+    assert.match(await page.textContent('#cost-lines'), /Science lab with teacher guide[\s\S]*70 tokens/);
+    await page.selectOption('#sp-lab-simulation', 'yes');
+    await page.waitForFunction(() => /95 tokens/.test(document.getElementById('cost-lines').textContent));
+    assert.match(await page.textContent('#cost-lines'), /with built-in simulation, \+25 tokens/);
+    assert.match(await page.textContent(spec + ' .spec-notes'), /Chromebooks included, with no logins/, 'the option says what it is');
+    await noSideways(page, 'order page, a lab with a simulation (phone)');
+    await shot(page, 'local-phone-lab-simulation');
+    await page.selectOption('#sp-lab-simulation', '');
+    await page.waitForFunction(() => /70 tokens/.test(document.getElementById('cost-lines').textContent) && !/95 tokens/.test(document.getElementById('cost-lines').textContent));
+    await c.close();
+  }
+  ok('science lab: on the menu at 70 tokens with its defaults and fields; the simulation option adds 25 tokens and says what it is, and taking it off takes them back');
+
   // ===== 1c. guided notes and the review game can be interactive too (owner, Nov 8, 2026), at the same price =====
   {
     const c = await ctx('phone'), page = await c.newPage();

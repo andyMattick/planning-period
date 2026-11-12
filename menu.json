@@ -197,6 +197,25 @@
       "versions": false
     },
     {
+      "id": "lab",
+      "label": "Science lab with teacher guide",
+      "detail": "A full lab from your notes, sized to your bell schedule: a phenomenon and driving question, pre-lab questions, safety warnings right in the steps, materials per group, a timed procedure, a data table, analysis with a CER conclusion, support and extensions, a makeup plan for absent students, and a teacher guide (prep and recipes, expected results, troubleshooting, disposal). Checked for safety and facts by separate agents.",
+      "tokens": 70,
+      "formats": [
+        "pdf",
+        "docx"
+      ],
+      "versions": false,
+      "options": [
+        {
+          "id": "simulation",
+          "label": "Add a built-in simulation (+25 tokens)",
+          "tokens": 25,
+          "note": "A simulation page students open in any browser, Chromebooks included, with no logins: they change the variables, run trials and graph their data. Good for a pre-lab prediction, a dry lab or absent students. It is a model, and it says what it leaves out."
+        }
+      ]
+    },
+    {
       "id": "unitpack",
       "label": "Whole unit pack",
       "detail": "Notes, a worksheet per lesson, a quiz, a review and a unit test with A/B versions.",

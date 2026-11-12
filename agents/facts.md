@@ -34,6 +34,20 @@ consistent with itself.
 8. **Games and apps:** a clue with `because` must be true and enough to fix the answer; a quiz-show clue has one fair
    answer; card backs and memorize passages match their source word for word (docs/KINDS-GAMES.md, KINDS-APPS.md).
 
+## Labs (owner, Nov 12, 2026; docs/KINDS-LABS.md)
+A lab gets a **safety pass** as well as the fact check, from `view.md` and the lab's teacher guide (the lead gives it to
+you; there is no key in it to protect):
+- Every material: its real hazards and PPE (check the SDS: name the source in `source`), and whether the amount and
+  concentration are what a high school stockroom sells. A hazard the lab doesn't name, or a precaution that wouldn't
+  protect a student, is FIX.
+- Every step that uses a hazardous material carries the warning **in that step**; a missing one is FIX.
+- Disposal: "down the sink" only for what may legally go there (dilute, neutral, no heavy metals); otherwise the right
+  waste container. A wrong disposal line is FIX.
+- A safer substitution that teaches the same idea and isn't used: JUDGMENT, with the substitution.
+- Recipes and quantities add up (10 groups × 60 mL = 600 mL; a 0.1 M solution's mass is right).
+- The expected data and the simulation's numbers are plausible for the real phenomenon (cite a source); a simulation
+  whose `limits` line hides something a student would wrongly learn is FIX.
+
 ## Output (`pack.json`)
 One entry for `checks.facts`: `{"round", "agent": "🔎 Fact checker", "claims", "flagged", "notes", "findings":
 [{"where", "kind": "FIX" | "KEEP" | "JUDGMENT", "what", "source"}]}`, written to a file (`checks-facts-r<N>.json`) for
@@ -48,7 +62,7 @@ words>", "options": ["Keep it as it is (…)", "<one concrete change>"], "recomm
 The teacher picks one with a tap in her review, so write the options as she would read them (no level codes).
 
 ---
-**Version 3** (Nov 8, 2026)
+**Version 4** (Nov 12, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's accuracy rules (`CONTENT-RULES.md` §4: facts current and not
@@ -62,3 +76,4 @@ The teacher picks one with a tap in her review, so write the options as she woul
 - v3, Nov 8, 2026 (owner review of the first real audit report, order pp-2026-11-08-a20840): a JUDGMENT adds
   `judgment` (issue, options with "keep it" first, an optional pick and why), so the teacher report and her review
   show one-tap choices.
+- v4, Nov 12, 2026: labs: a safety pass (hazards and PPE against the SDS, warnings in the step, disposal, substitutions, quantities) and the plausibility of expected data and simulations. Changed at the owner's request (Nov 12, 2026: "can we add the ability to write a lab? include the option of creating simulations"), not by the auditor.

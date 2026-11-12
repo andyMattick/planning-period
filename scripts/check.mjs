@@ -11,6 +11,7 @@
      5a. Every sample with a math check passes checks/math.mjs (SymPy), and broken copies of samples/_cap-math fail it.
      5c. checks/puzzles.mjs catches broken copies of samples/_cap-games (a bad grid, a word twice, a non-unique puzzle…).
      5d. Reading samples pass checks/no-passage.mjs (no-passage bots), except a shrink-only known-failing list.
+     5e. Labs: checks/labs.mjs --self-test, every sample passes it, and samples/_cap-labs renders (copies + simulation).
      5e. Every sample passes checks/cross-item.mjs (no key printed in another item), except a shrink-only known-failing list.
      5b. A sample with an out/ folder (final files) has an approval.json (no release without the teacher's agreement).
      6. If scripts/render-pack.mjs exists, it renders samples/_fixture (skipped with a message until both exist).
@@ -203,7 +204,7 @@ if (existsSync(FIX)) {
 const SAMPLES = join(ROOT, 'samples');
 const packs = existsSync(SAMPLES) ? readdirSync(SAMPLES).map((d) => join('samples', d, 'pack.json')).filter((p) => existsSync(join(ROOT, p))) : [];
 if (!packs.length) skip('no samples/*/pack.json yet: nothing to check');
-for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs', 'puzzles.mjs']) {   // puzzles.mjs: games and puzzles (docs/KINDS-GAMES.md)
+for (const p of packs) for (const s of ['keys.mjs', 'test-wise.mjs', 'puzzles.mjs', 'labs.mjs']) {   // puzzles.mjs: games and puzzles (docs/KINDS-GAMES.md); labs.mjs: science labs (docs/KINDS-LABS.md)
   const r = run(s, join(ROOT, p));
   if (r.status === 0) ok(`${p} passes checks/${s}`); else fail(`${p} fails checks/${s}:\n${r.stdout}${r.stderr}`);
 }
@@ -333,6 +334,27 @@ else {
 }
 
 // the five features in one made-up sample (shared data, statistics graphs, parts, navigation, one version per student):
+/* 5e. science labs (docs/KINDS-LABS.md): checks/labs.mjs bites (--self-test: the capability sample passes and every
+   broken copy fails), and samples/_cap-labs renders: student and teacher copies and the simulation page. */
+{
+  const st = spawnSync(process.execPath, [join(ROOT, 'checks', 'labs.mjs'), '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 60000 });
+  if (st.status === 0) ok(`checks/labs.mjs --self-test (${(st.stdout.match(/^✓/gm) || []).length} cases)`); else fail(`checks/labs.mjs --self-test failed:\n${st.stdout}${st.stderr}`);
+  const LDIR = join(ROOT, 'samples/_cap-labs');
+  if (existsSync(join(LDIR, 'pack.json'))) {
+    const tmp = mkdtempSync(join(tmpdir(), 'pp-lab-render-'));
+    writeFileSync(join(tmp, 'pack.json'), readFileSync(join(LDIR, 'pack.json')));
+    const r = spawnSync(process.execPath, [RENDER, tmp, '--preview'], { cwd: ROOT, encoding: 'utf8', timeout: 300000 });
+    const out = join(tmp, 'out-preview'), files = existsSync(out) ? readdirSync(out) : [];
+    const want = ['-student.pdf', '-teacher.pdf', '-simulation.html'];
+    const sim = files.find((f) => f.endsWith('-simulation.html'));
+    const simText = sim ? readFileSync(join(out, sim), 'utf8') : '';
+    if (r.status === 0 && want.every((w) => files.some((f) => f.endsWith(w))) && !/<script[^>]+src=|https?:\/\/(?!www\.w3\.org)/.test(simText))
+      ok(`render-pack.mjs rendered samples/_cap-labs (${files.length} files: student and teacher copies, and an offline simulation page with no outside requests)`);
+    else fail(`render-pack.mjs could not render samples/_cap-labs, or its simulation reaches outside (exit ${r.status}; ${files.join(', ')}):\n${(r.stdout || '').slice(-1500)}${(r.stderr || '').slice(-1500)}`);
+    rmSync(tmp, { recursive: true, force: true });
+  }
+}
+
 // samples/_cap-interactive/stats renders, with one student page, the teacher copy and every version's key
 {
   const SDIR = join(ROOT, 'samples/_cap-interactive/stats');

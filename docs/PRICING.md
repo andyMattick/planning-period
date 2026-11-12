@@ -51,6 +51,7 @@ the numbers are recalibrated. What a teacher pays for a token is separate (secti
 | `reviewgame` | 35 | $3.50 | $2.5–3.0 | about 20–30 question cards, one version: like a quiz without B |
 | `rubric` | 15 | $1.50 | $0.8–1.2 (**guess**) | short; a blind read for student-friendly wording, no key to solve |
 | `project` | 60 | $6.00 | $3.5–5 (**guess**) | steps, checklist and rubric; a fact and safety check for labs |
+| `lab` | 70 | $7.00 | $4–5.5 (**guess**) | a full lab with a teacher guide (added Nov 12, 2026, owner): maker output like a worksheet plus the guide, a fact checker on every claim and a safety pass on every hazard, quantity and disposal line, a blind read of the pre-lab and analysis questions, `checks/labs.mjs` (free). **Simulation option +25 tokens** ($2.5, **guess**): the model and its numbers, which `checks/labs.mjs` runs over every slider range, plus a browser test. Recalibrate after the first five labs |
 | `unitpack` | 220 | $22.00 | $20–27 | Pet World note-sheet units cost $10–18.7 (sheets only); add a quiz, a review and an A/B test (about $7–9). **Priced at about cost** |
 | `bellringer` | 20 | $2.00 | $1.2–1.8 | 10 short warm-ups, one version: about a sheet of items, blind and Wilco once (added Nov 5, 2026) |
 | `homework` | 20 | $2.00 | $1.2–1.8 | a shorter worksheet: about two-thirds of `worksheet`'s items (added Nov 5, 2026) |

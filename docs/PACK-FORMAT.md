@@ -121,6 +121,7 @@ All optional; a pack without them renders the same as before.
 | `originalReview` | For a `versions` order: findings about the teacher's own uploaded test, shown on the audit report's "What we found in your original" page and not counted with the pack's findings. `{ "file": "my-test.docx", "summary": "…", "findings": [{ "where", "kind": "FIX" \| "KEEP" \| "JUDGMENT", "what", "before", "suggestion", "inVersions" }], "notes": ["…"] }` (`inVersions`: what the A/B versions do instead) |
 | `format`, `grading` (document) | `"interactive"` with `"auto"` or `"print"`: the document is made as one offline HTML page per version for students, plus the teacher copy; `"printable"` or missing: as before. Question fields `tol`, `round`, `hint`, `miss`, `points` are read by the page. Guided notes: a line with several `______` blanks names them in order with `;` in `answer` and every `accept`. Review game: sections are categories; a card is worth `points`, else `level`. docs/KINDS-INTERACTIVE-FORMAT.md |
 | `math`, `mathText`, `figure: {graph}`, `$…$` LaTeX in any text | Math typesetting, graphs as data and the SymPy math check: docs/KINDS-MATH.md |
+| `lab` (document), section `part: "prelab"`, question `cer` | A science lab: phenomenon, safety, materials per group, procedure with safety callouts, data table, teacher guide, and an optional offline simulation page: docs/KINDS-LABS.md |
 
 ### Passages (reading items)
 
