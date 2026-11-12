@@ -528,3 +528,10 @@ main:focus { outline: none; }
 /* The review's judgment calls ("Your decisions") */
 fieldset.jcall { border: 0; padding: 0; margin: 10px 0; min-width: 0; }
 fieldset.jcall legend { padding: 0; font-weight: 500; }
+
+/* My orders, the owner's view: sign-ins waiting for pilot approval (supabase/migrations/20261112120000_pilot_limit.sql) */
+.pending { border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: var(--radius); background: var(--surface);
+  padding: 12px 16px; margin: 14px 0; box-shadow: var(--shadow); }
+.pending .h3 { margin: 0 0 4px; }
+.pending li > span { min-width: 0; flex: 1 1 auto; overflow-wrap: anywhere; }
+.pending li .btn { margin-left: auto; }

@@ -69,8 +69,21 @@ export function startFake({ port = 0 } = {}) {
     teachers: (w) => db.teachers.filter((t) => w.service || (w.uid && (t.id === w.uid || isAdmin(w.uid)))),
   };
 
+  // supabase/migrations/20261112120000_pilot_limit.sql: the owner approves each teacher (pilot_teachers, 150 tokens), and
+  // every order she sends counts against it. Off in the fake until /__test/pilot?on=1, so the other tests send freely.
+  const pilot = { on: false, tokens: {} };
+  const tokensLeft = (uid) => (uid in pilot.tokens ? pilot.tokens[uid] - db.orders.filter((o) => o.teacher === uid).reduce((t, o) => t + (o.token_total || 0), 0) : null);
   function rpc(w, fn, a) {
     if (fn === 'is_admin') return !!(w.uid && isAdmin(w.uid));
+    if (fn === 'my_pilot') return !pilot.on || !w.uid || isAdmin(w.uid) ? null : { approved: w.uid in pilot.tokens, tokensLeft: Math.max(0, tokensLeft(w.uid) || 0) };
+    if (fn === 'pending_teachers') {
+      if (!w.uid || !isAdmin(w.uid)) throw new PgErr('only the owner can see this', '42501', 403);
+      return pilot.on ? db.teachers.filter((t) => !(t.id in pilot.tokens) && !isAdmin(t.id)).map((t) => ({ id: t.id, email: t.email, name: t.name, created_at: t.created_at })) : [];
+    }
+    if (fn === 'approve_teacher') {
+      if (!w.uid || !isAdmin(w.uid)) throw new PgErr('only the owner can approve teachers', '42501', 403);
+      pilot.tokens[a.p_teacher] = a.p_tokens ?? 150; return null;
+    }
     if (fn === 'orders_due_for_purge') {
       if (!w.service) throw new PgErr('permission denied for function orders_due_for_purge', '42501', 401);
       const cutoff = Date.now() - (a.p_days ?? 7) * 864e5;
@@ -155,6 +168,7 @@ export function startFake({ port = 0 } = {}) {
         for (const [t, uid] of db.tokens) if (uid === u.id) db.expired.add(t);
         return send(200, {});
       }
+      if (path === '/__test/pilot') { pilot.on = url.searchParams.get('on') === '1'; return send(200, { on: pilot.on }); }
       if (path === '/__test/rate-limit') { db.rateLimit = Number(url.searchParams.get('n') || 1); return send(200, {}); }
       if (path === '/__test/user') { const u = db.users.find((x) => x.email === url.searchParams.get('email')); return send(u ? 200 : 404, u ? { ...publicUser(u), hasPassword: !!u.password, password: u.password } : {}); }
       if (path === '/__test/admin') { const u = userFor(url.searchParams.get('email')); if (!db.admins.includes(u.id)) db.admins.push(u.id); return send(200, u); }
@@ -246,6 +260,12 @@ export function startFake({ port = 0 } = {}) {
               const inFolder = new RegExp(`^${w.uid}/${String(r.id).replace(/[^a-z0-9-]/g, '')}/(sources|training)/[^/]+$`);
               if ((r.upload_files || []).some((f) => !inFolder.test(f) || /(^|\/)\.\.?(\/|$)/.test(f))) return send(403, { code: '42501', message: 'an upload path is outside this order\'s folder' });
               const mine = db.orders.filter((o) => o.teacher === w.uid);
+              if (pilot.on) {
+                const left = tokensLeft(w.uid), t = Number(r.token_total) || 0;
+                if (left == null) return send(400, { code: 'P0001', message: 'Your account is waiting for approval: we\'re letting teachers in a few at a time while we test.' });
+                if (t < 1) return send(400, { code: 'P0001', message: 'An order needs at least one item.' });
+                if (t > left) return send(400, { code: 'P0001', message: `This order is ${t} tokens, and you have ${Math.max(left, 0)} left in the pilot. Make it smaller, or email us for more.` });
+              }
               if (mine.filter((o) => Date.parse(o.created_at) > Date.now() - 864e5).length >= 10) return send(400, { code: 'P0001', message: 'That\'s a lot of orders in one day. Please wait a bit, or email us.' });
               if (mine.filter((o) => !['final_ready', 'cancelled', 'failed'].includes(o.status)).length >= 5) return send(400, { code: 'P0001', message: 'You have 5 orders in progress. Please wait for one to finish (or cancel one) before sending another.' });
             }

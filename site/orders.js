@@ -6,7 +6,7 @@
   var esc = PP.esc;
   var $ = function (id) { return document.getElementById(id); };
   var backend = null, me = null, admin = false, menu = { items: [], extras: [] };
-  var orders = [], events = {}, teachers = {};
+  var orders = [], events = {}, teachers = {}, pending = [];
   var drafts = {};   // order id -> what she has typed or ticked, kept across re-renders
 
   // The same four boxes as the preview's REVIEW.html and review.html (scripts/render/review.mjs CHECKLIST).
@@ -109,14 +109,30 @@
       orders = r[0] || []; admin = r[2] === true;
       events = {}; (r[1] || []).forEach(function (e) { (events[e.order_id] = events[e.order_id] || []).push(e); });
       if (!admin) return;
-      return backend.select('teachers', 'select=id,name,email').then(function (t) { teachers = {}; (t || []).forEach(function (x) { teachers[x.id] = x; }); }, function () {});
+      return Promise.all([
+        backend.select('teachers', 'select=id,name,email').then(function (t) { teachers = {}; (t || []).forEach(function (x) { teachers[x.id] = x; }); }, function () {}),
+        // the pilot (supabase/migrations/20261112120000_pilot_limit.sql): sign-ins waiting for the owner's approval
+        backend.rpc('pending_teachers').then(function (p) { pending = p || []; }, function () { pending = []; })
+      ]);
     }).then(function () { render(focusId); }, function (e) {
       $('list').innerHTML = '<div class="error" role="alert">We could not load your orders (' + esc(e.message || e) + '). <button type="button" class="btn link" data-refresh>Try again</button></div>';
     });
   }
 
+  // The owner approves new teachers for the pilot (150 tokens each; change one in the dashboard's pilot_teachers table).
+  var PILOT_TOKENS = 150;
+  function pendingHTML() {
+    if (!admin || !pending.length) return '';
+    return '<section class="pending" aria-labelledby="pending-h"><h2 id="pending-h" class="h3">Teachers waiting for approval (' + pending.length + ')</h2>' +
+      '<p class="small muted">They can sign in but not send orders until you approve them. Approving gives ' + PILOT_TOKENS + ' tokens for the pilot.</p>' +
+      '<ul class="dl-list">' + pending.map(function (t) {
+        return '<li><span><b>' + esc(t.email || '(no email)') + '</b>' + (t.name ? ' · ' + esc(t.name) : '') + '<br><span class="small muted">Signed up ' + esc(when(t.created_at)) + '</span></span>' +
+          '<button type="button" class="btn primary" data-approve-teacher="' + esc(t.id) + '">Approve</button></li>';
+      }).join('') + '</ul><div class="error" id="pending-err" role="alert"></div></section>';
+  }
+
   function render(focusId) {
-    var head = '<div class="list-head"><h2>' + (admin ? 'Every order <span class="ph">owner view</span>' : 'Your orders') + '</h2>' +
+    var head = pendingHTML() + '<div class="list-head"><h2>' + (admin ? 'Every order <span class="ph">owner view</span>' : 'Your orders') + '</h2>' +
       '<button type="button" class="btn" data-refresh>Refresh</button></div>';
     if (!orders.length) {
       $('list').innerHTML = head + '<div class="empty"><p>No orders yet.</p><p><a class="btn primary" href="./">Order a pack</a></p></div>';
@@ -369,6 +385,13 @@
   }
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-refresh]')) { loadAll(); return; }
+    var ap = e.target.closest('[data-approve-teacher]');
+    if (ap) {
+      ap.disabled = true; ap.textContent = 'Approving…';
+      backend.rpc('approve_teacher', { p_teacher: ap.getAttribute('data-approve-teacher'), p_tokens: PILOT_TOKENS })
+        .then(function () { loadAll(); }, function (er) { ap.disabled = false; ap.textContent = 'Approve'; $('pending-err').textContent = 'Could not approve (' + (er.message || er) + ').'; });
+      return;
+    }
     var b = e.target.closest('button'); if (!b) return;
     if (b.hasAttribute('data-try')) { tryPage(b); return; }
     if (b.hasAttribute('data-full')) { fullPage(b); return; }
