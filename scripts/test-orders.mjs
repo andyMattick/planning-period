@@ -158,6 +158,19 @@ try {
   }
   ok('reading quiz: short answers + RACE, no "multiple choice on passages" option, and the card says it is not offered (phone)');
 
+  // ===== 1b2. referral code (owner, Nov 12, 2026): optional, filled from a shared ?ref= link, cleaned to letters, digits and dashes =====
+  {
+    const c = await ctx('desktop'), page = await c.newPage();
+    await page.goto(LOCAL + '?ref=rivera-7!%3Cb%3E');
+    await page.waitForSelector('#items .card', { state: 'attached' });
+    assert.equal(await page.inputValue('#referral'), 'RIVERA-7B', 'a shared link fills it in, cleaned');
+    await page.fill('#referral', ' x y z ');
+    await page.locator('#referral').blur();
+    assert.equal(await page.inputValue('#referral'), 'XYZ', 'typed codes are cleaned too');
+    await c.close();
+  }
+  ok('referral code: optional, filled from ?ref= in a shared link, cleaned to capitals, digits and dashes; your new-order email shows it');
+
   // ===== 1c. guided notes and the review game can be interactive too (owner, Nov 8, 2026), at the same price =====
   {
     const c = await ctx('phone'), page = await c.newPage();
@@ -550,6 +563,7 @@ try {
   assert.deepEqual(o.order_json.order.itemSpecs.quiz, { format: 'interactive', grading: 'print' }, 'the format and grading are in the order');
   assert.equal(o.order_json.lines.find((l) => l.id === 'quiz').format, 'interactive, results printed to grade later');
   assert.deepEqual(o.order_json.order.checks, { blind: false }, 'the blind check choice is in the order');
+  assert.equal(o.order_json.referral, undefined, 'no referral code unless she gives one');
   ok('blind check: on by default; unchecking shows the warning (about 1 to 5 minutes, the solver/fact checker and Wilco still run, check it yourself) and the order stores checks.blind = false');
   ok('format and grading: printable by default; Interactive opens Grading (auto by default); the order stores itemSpecs.quiz {format: interactive, grading: print} and the summary line says so at the same price');
   ok('the pasted link went up as sources/' + LINK_FILE + ' (a header with the address, title and date, then the text) and order.json lists it in links');

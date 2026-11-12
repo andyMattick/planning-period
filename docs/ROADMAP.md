@@ -21,6 +21,12 @@ Ideas the owner asked for, in his words, with what's planned. Newest first.
 - **Open:** ordering questions; a class view of results (each result stays on the student's device); the Word teacher
   copy's note box; measure the price on the first five interactive orders.
 
+## Referral codes (owner, Nov 12, 2026)
+- **Done:** an optional "Referral code" box in step 5 of the order page, filled in by a shared link
+  (`…/?ref=CODE`), cleaned to capitals, digits and dashes (24 at most), saved as `referral` in the order
+  (`order_json.referral`) and shown in the owner's new-order email. No database change: it rides in `order_json`.
+- **Later:** the reward program (who gets what, when a code counts, codes per teacher). Nothing is promised to anyone yet.
+
 ## Reading quizzes: short answer + RACE; multiple choice on passages retired (owner, Nov 7 and Nov 11, 2026)
 - **Owner:** after four ELA tries (g7-ela2 remake, tries c and d) failed the fresh no-passage probe, reading quizzes are
   sold as citing short answers plus a RACE response until a passage-based multiple-choice version passes.

@@ -61,6 +61,7 @@ export function emailFor(row, { from, to, handoff = null } = {}) {
     `Subject: ${subject || '?'}`,
     `Topic:   ${oneLine(o.topic) || '?'}`,
     `Tokens:  ${row.token_total ?? '?'}`,
+    ...(oj.referral ? [`Referral: ${oneLine(oj.referral).slice(0, 24)}`] : []),
     `Files:   ${(row.upload_files || []).length} uploaded`,
     'Items:',
     ...(items.length ? items : ['  (none listed)']),
@@ -82,7 +83,7 @@ export function emailFor(row, { from, to, handoff = null } = {}) {
 }
 
 function selfTest() {
-  const row2 = { id: 'pp-2026-01-03-abcdef', token_total: 70, order_json: { replyTo: 't@example.org', lines: [{ id: 'test', label: 'Unit test', format: 'interactive', quantity: 1 }], order: { teacher: 'Mr. Lee', grade: '12', subject: 'other', subjectOther: 'Statistics', topic: 'Two-variable data', requests: 'SECRET 2', itemRequests: { test: 'SECRET 3' } } } };
+  const row2 = { id: 'pp-2026-01-03-abcdef', token_total: 70, order_json: { replyTo: 't@example.org', referral: 'RIVERA7\r\nBcc: x@y', lines: [{ id: 'test', label: 'Unit test', format: 'interactive', quantity: 1 }], order: { teacher: 'Mr. Lee', grade: '12', subject: 'other', subjectOther: 'Statistics', topic: 'Two-variable data', requests: 'SECRET 2', itemRequests: { test: 'SECRET 3' } } } };
   const t2 = emailFor(row2, { from: 'a@example.com', to: 'b@example.com' }).text;
   const row = { id: 'pp-2026-01-02-abcdef', token_total: 42, upload_files: [{}, {}], order_json: { teacher: 'Ms. Rivera\r\nBcc: x@y', grade: '7', subject: 'math', topic: 'Ratios', items: ['test'], quantities: { test: 1 }, itemSpecs: { test: { format: 'interactive', versions: 3, questions: 16 } }, requests: 'SECRET REQUEST TEXT' } };
   const { text, subject } = emailFor(row, { from: 'a@example.com', to: 'b@example.com' });
@@ -95,6 +96,8 @@ function selfTest() {
     ['links to the site', text.includes(brand.website)],
     ['saved-order shape: teacher, email, subject, item label', t2.includes('Mr. Lee <t@example.org>') && t2.includes('Subject: Statistics') && t2.includes('- Unit test (interactive)')],
     ['saved-order shape: no requests text', !t2.includes('SECRET')],
+    ['referral code on its own line, no header injection', t2.includes('Referral: RIVERA7') && !/\r\nBcc:/i.test(t2)],
+    ['no referral line without a code', !text.includes('Referral:')],
   ];
   const h = emailFor(row2, { from: 'a@example.com', to: 'b@example.com', handoff: 'build: bigger than the automatic path (One version per student)\r\nBcc: x@y' });
   cases.push(
