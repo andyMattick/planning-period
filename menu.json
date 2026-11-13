@@ -83,8 +83,8 @@
     },
     {
       "id": "quiz",
-      "label": "Quiz with A/B versions",
-      "detail": "8–12 questions, two versions with the same skills, keys for both.",
+      "label": "Quiz",
+      "detail": "8–12 questions with keys. Two versions (A and B) by default, or up to 10.",
       "tokens": 40,
       "formats": [
         "pdf",
@@ -105,7 +105,7 @@
     },
     {
       "id": "readingquiz",
-      "label": "Reading quiz on passages (A/B)",
+      "label": "Reading quiz on passages",
       "detail": "English reading: short answers that quote the passage and a RACE written response, on one to three short passages (yours, or written from your notes), two versions. Every question needs the passage: a reader who skips it is tested before anything else is checked. Multiple choice on passages is not offered for now: our checks could still answer it without reading.",
       "tokens": 150,
       "formats": [
@@ -117,8 +117,8 @@
     },
     {
       "id": "test",
-      "label": "Unit test with A/B versions",
-      "detail": "20–30 questions with about 40% harder questions, two versions, keys and a skills map.",
+      "label": "Unit test",
+      "detail": "20–30 questions with about 40% harder questions, keys and a skills map. Two versions by default, or up to 10.",
       "tokens": 70,
       "formats": [
         "pdf",
@@ -163,7 +163,7 @@
     },
     {
       "id": "reviewgame",
-      "label": "Review game",
+      "label": "Review game (cards or board)",
       "detail": "A printable or projector review game (question cards or a board) with answers. Or interactive: played on a device, alone or as a class with team scores.",
       "tokens": 35,
       "formats": [
@@ -187,8 +187,8 @@
     },
     {
       "id": "project",
-      "label": "Project or lab packet",
-      "detail": "Instructions, steps, a checklist and a rubric for a longer project or lab.",
+      "label": "Project packet",
+      "detail": "Instructions, steps, a checklist and a rubric for a longer project. For a science lab, pick Science lab with teacher guide.",
       "tokens": 60,
       "formats": [
         "pdf",
@@ -217,7 +217,7 @@
     },
     {
       "id": "unitpack",
-      "label": "Whole unit pack",
+      "label": "Unit pack from your notes",
       "detail": "Notes, a worksheet per lesson, a quiz, a review and a unit test with A/B versions.",
       "tokens": 220,
       "formats": [
@@ -255,8 +255,8 @@
     },
     {
       "id": "versions",
-      "label": "Make versions of my test",
-      "detail": "Drop in a test you already have: we make A/B versions (or A/B/C) that test the same skills at the same level, with keys, and our checkers look over your original too and tell you anything they find.",
+      "label": "New versions of a test you already have",
+      "detail": "Drop in a test you already have: we make new versions (A/B, or more) that test the same skills at the same level, with keys, and our checkers look over your original too and tell you anything they find.",
       "tokens": 30,
       "formats": [
         "pdf",
@@ -280,7 +280,7 @@
     },
     {
       "id": "quizshow",
-      "label": "Quiz-show review game",
+      "label": "Quiz-show game (projector)",
       "detail": "A projector game with categories and point values (like the TV quiz shows), with answers in the presenter notes and a printable score sheet.",
       "tokens": 35,
       "formats": [
@@ -333,17 +333,6 @@
       "versions": false
     },
     {
-      "id": "interactive",
-      "label": "Interactive worksheet",
-      "detail": "A worksheet students fill in on a device: it checks answers as they go, gives hints after two misses, saves on the device, and comes with a teacher solutions page.",
-      "tokens": 45,
-      "formats": [
-        "html",
-        "pdf"
-      ],
-      "versions": false
-    },
-    {
       "id": "practicegame",
       "label": "Practice game",
       "detail": "A game students play on any device, built from your questions on one of our tested game templates (answer-shooter, grid battle, rush, detective case, fix-it desk) with your theme. Works offline; every question checked like a quiz.",
@@ -356,7 +345,7 @@
     }
   ],
   "groups": {
-    "_note": "How the order page groups the menu (owner, Nov 13, 2026: \"that front page menu is massive, can we organize?\"). Every item is in exactly one group (npm run check); the first group starts open.",
+    "_note": "How the order page groups the menu (owner, Nov 13, 2026: \"that front page menu is massive, can we organize?\"). Every item is in exactly one group (npm run check); the first group starts open. Nov 13, 2026: \"Interactive worksheet\" left the menu (every worksheet already has \"or interactive\", at the worksheet price); names say what each item is, without repeating \"A/B versions\".",
     "list": [
       {
         "id": "tests",
@@ -401,10 +390,9 @@
         ]
       },
       {
-        "id": "interactive",
-        "label": "Interactive pages and apps",
+        "id": "apps",
+        "label": "Apps and practice games",
         "items": [
-          "interactive",
           "reviewapp",
           "practicegame"
         ]

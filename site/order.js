@@ -344,7 +344,7 @@
         '<label class="pick"><input type="checkbox" value="' + esc(it.id) + '">' + paperIcon(it.id) + '<span><b>' + esc(it.label) + '</b></span></label>' +
         '<p class="detail">' + esc(it.detail) + '</p>' +
         '<div class="tags"><span class="tag cost">' + it.tokens + ' tokens</span>' +
-        (it.versions ? '<span class="tag ab">A/B versions</span>' : '') +
+        (it.versions ? '<span class="tag ab">' + (it.versionPricing ? 'A/B or more versions' : 'A/B versions') + '</span>' : '') +
         (it.interactive ? '<span class="tag int">or interactive</span>' : '') +
         (it.formats || []).map(function (f) { return '<span class="tag">' + esc(f) + '</span>'; }).join('') + '</div>' +
         '<div class="qty" hidden><label for="qty-' + esc(it.id) + '">How many</label>' +
