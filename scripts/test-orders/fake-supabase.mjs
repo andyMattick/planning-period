@@ -264,7 +264,7 @@ export function startFake({ port = 0 } = {}) {
                 const left = tokensLeft(w.uid), t = Number(r.token_total) || 0;
                 if (left == null) return send(400, { code: 'P0001', message: 'Your account is waiting for approval: we\'re letting teachers in a few at a time while we test.' });
                 if (t < 1) return send(400, { code: 'P0001', message: 'An order needs at least one item.' });
-                if (t > left) return send(400, { code: 'P0001', message: `This order is ${t} tokens, and you have ${Math.max(left, 0)} left in the pilot. Make it smaller, or email us for more.` });
+                if (t > left) return send(400, { code: 'P0001', message: `This order is ${t} token${t === 1 ? '' : 's'}, and you have ${Math.max(left, 0)} left in the pilot. Make it smaller, or email us for more.` });
               }
               if (mine.filter((o) => Date.parse(o.created_at) > Date.now() - 864e5).length >= 10) return send(400, { code: 'P0001', message: 'That\'s a lot of orders in one day. Please wait a bit, or email us.' });
               if (mine.filter((o) => !['final_ready', 'cancelled', 'failed'].includes(o.status)).length >= 5) return send(400, { code: 'P0001', message: 'You have 5 orders in progress. Please wait for one to finish (or cancel one) before sending another.' });
