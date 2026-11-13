@@ -39,6 +39,7 @@ export function rows(pack) {
           type: q.type, level: pick(q.level, ver), skill: pick(q.skill, ver),
           prompt: pick(q.prompt, ver), choices: pick(q.choices, ver), answer: pick(q.answer, ver),
           accept: pick(q.accept, ver), why: pick(q.why, ver), figure: pick(q.figure, ver),
+          data: dataOf(doc, q, ver),
         });
       }
     }));
@@ -46,9 +47,19 @@ export function rows(pack) {
   return out;
 }
 
+// The shared data set a question reads in one version (docs/PACK-FORMAT.md, "Shared data sets"): its intro, table and
+// figure as text, so two versions that ask the same words about different data are not "the same question".
+function dataOf(doc, q, ver) {
+  const id = pick(q.stimulus, ver);
+  if (id == null || id === '') return '';
+  const list = pick(doc.stimuli, ver);
+  const st = (Array.isArray(list) ? list : []).find((x) => x && String(x.id) === String(id));
+  return st ? JSON.stringify(['intro', 'table', 'figure', 'plot'].map((k) => pick(st[k], ver) ?? null)) : '';
+}
 export const norm = (s) => String(s ?? '').toLowerCase().replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').replace(/[.!?;:,]+$/, '').trim();
-// what makes two questions "the same question": the prompt, the picture and the choices (as a set) or the answer
-export const signature = (r) => [norm(r.prompt), typeof r.figure === 'object' && r.figure ? JSON.stringify(r.figure) : String(r.figure || ''), Array.isArray(r.choices) ? r.choices.map(norm).sort().join('¦') : norm(r.answer)].join('‖');
+// what makes two questions "the same question": the prompt, the picture, the shared data set it reads (Nov 13, 2026: a
+// printed version with its own graph and table asks a new question in the same words) and the choices (as a set) or the answer
+export const signature = (r) => [norm(r.prompt), typeof r.figure === 'object' && r.figure ? JSON.stringify(r.figure) : String(r.figure || ''), r.data || '', Array.isArray(r.choices) ? r.choices.map(norm).sort().join('¦') : norm(r.answer)].join('‖');
 
 /* ---------- exact values (from Pet World scripts/notes/choice-gate.mjs) ---------- */
 const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a || 1; };

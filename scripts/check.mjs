@@ -182,6 +182,15 @@ if (existsSync(FIX)) {
   { const [p, q] = quiz(); const x = q.sections[0].questions[2]; x.accept = [x.choices.A[0]]; breaks.push(['keys.mjs', 'accept holding a wrong choice', p]); }
   { const [p, q] = quiz(); const x = q.sections[0].questions[3]; x.prompt.B = x.prompt.A; x.choices.B = [...x.choices.A].reverse(); x.answer.B = 3 - x.answer.A; breaks.push(['keys.mjs', 'B repeating A word for word', p]); }
   { const [p, q] = quiz(); q.sections[0].questions[4].level = { A: 2, B: 3 }; breaks.push(['keys.mjs', 'A and B at different levels', p]); }
+  // a shared data set (Nov 13, 2026): the same words on the same data in A and B is still a repeat
+  const shared = (dataB) => { const [p, q] = quiz(); const x = q.sections[0].questions[3];
+    q.stimuli = [{ id: 's1', title: 'Pets', table: { A: { columns: ['Pet', 'Count'], rows: [['Cats', '12'], ['Dogs', '9']] }, B: dataB } }];
+    x.stimulus = 's1'; x.prompt.B = x.prompt.A; x.choices.B = [...x.choices.A].reverse(); x.answer.B = 3 - x.answer.A; return p; };
+  breaks.push(['keys.mjs', 'B repeating A word for word on the same shared data', shared({ columns: ['Pet', 'Count'], rows: [['Cats', '12'], ['Dogs', '9']] })]);
+  { const f = join(tmp, 'shared-data-differs.json'); writeFileSync(f, JSON.stringify(shared({ columns: ['Pet', 'Count'], rows: [['Cats', '7'], ['Dogs', '15']] })));
+    const r = run('keys.mjs', f);
+    if (r.status === 0) ok('checks/keys.mjs passes the same words on different shared data (each printed version with its own graph or table)');
+    else fail(`checks/keys.mjs refused a question asked in the same words about a different data set in B:\n${r.stdout}${r.stderr}`); }
   { const [p, q] = quiz(); delete q.versions; breaks.push(['keys.mjs', 'a quiz without versions', p]); }
   { const [p, q] = quiz(); q.sections[0].questions[0].passage = 'p9'; breaks.push(['keys.mjs', 'a question citing a passage that is not there', p]); }
   { const [p, q] = quiz(); q.format = 'interactive'; breaks.push(['keys.mjs', 'an interactive document with no grading', p]); }

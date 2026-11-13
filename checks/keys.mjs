@@ -198,7 +198,7 @@ export function checkKeys(pack) {
           const twin = sigB.get(signature(r));
           if (twin) err(`${name}: ${r.id} (${A}) and ${twin.id} (${B}) are the same question word for word`);
           else {
-            const p = byVer[B].find((x) => norm(x.prompt) === norm(r.prompt) && !x.figure && !r.figure);
+            const p = byVer[B].find((x) => norm(x.prompt) === norm(r.prompt) && !x.figure && !r.figure && (x.data || '') === (r.data || ''));
             if (p) warn(`${name}: ${r.id} (${A}) and ${p.id} (${B}) share the prompt word for word (choices differ)`);
           }
         }
