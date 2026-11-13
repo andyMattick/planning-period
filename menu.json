@@ -355,6 +355,70 @@
       "versions": false
     }
   ],
+  "groups": {
+    "_note": "How the order page groups the menu (owner, Nov 13, 2026: \"that front page menu is massive, can we organize?\"). Every item is in exactly one group (npm run check); the first group starts open.",
+    "list": [
+      {
+        "id": "tests",
+        "label": "Quizzes and tests",
+        "items": [
+          "quiz",
+          "test",
+          "readingquiz",
+          "versions"
+        ]
+      },
+      {
+        "id": "practice",
+        "label": "Practice and notes",
+        "items": [
+          "worksheet",
+          "homework",
+          "notes",
+          "studyguide",
+          "bellringer"
+        ]
+      },
+      {
+        "id": "labs",
+        "label": "Labs, projects and units",
+        "items": [
+          "lab",
+          "project",
+          "unitpack",
+          "unitfull"
+        ]
+      },
+      {
+        "id": "games",
+        "label": "Review games and puzzles",
+        "items": [
+          "reviewgame",
+          "quizshow",
+          "crossword",
+          "wordsearch",
+          "logicpuzzle"
+        ]
+      },
+      {
+        "id": "interactive",
+        "label": "Interactive pages and apps",
+        "items": [
+          "interactive",
+          "reviewapp",
+          "practicegame"
+        ]
+      },
+      {
+        "id": "present",
+        "label": "Slides and rubrics",
+        "items": [
+          "slides",
+          "rubric"
+        ]
+      }
+    ]
+  },
   "extras": [
     {
       "id": "styleSetup",

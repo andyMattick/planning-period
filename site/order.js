@@ -317,6 +317,13 @@
   }
 
   // ---------- menu ----------
+  // "2 picked" on a group's heading, so a closed group still shows what's chosen inside it
+  function groupCounts() {
+    document.querySelectorAll('#items .menu-group').forEach(function (g) {
+      var n = g.querySelectorAll('.card.on').length, c = g.querySelector('[data-group-count]');
+      c.hidden = !n; c.textContent = n + ' picked';
+    });
+  }
   function fillMenu() {
     $('grade').innerHTML += menu.grades.map(function (g) {
       return '<option value="' + esc(g) + '">' + esc(/^\d+$/.test(g) ? 'Grade ' + g : g === 'K' ? 'Kindergarten' : g) + '</option>';
@@ -330,7 +337,9 @@
       renderCost();   // the turnaround depends on the subject
     });
 
-    $('items').innerHTML = menu.items.map(function (it) {
+    // The menu in groups (menu.json "groups"; owner, Nov 13, 2026): each group opens and closes, says what's in it and
+    // how many are picked; the first starts open. Without groups, one flat list as before.
+    var cardHTML = function (it) {
       return '<div class="card" data-item="' + esc(it.id) + '">' +
         '<label class="pick"><input type="checkbox" value="' + esc(it.id) + '">' + paperIcon(it.id) + '<span><b>' + esc(it.label) + '</b></span></label>' +
         '<p class="detail">' + esc(it.detail) + '</p>' +
@@ -341,7 +350,16 @@
         '<div class="qty" hidden><label for="qty-' + esc(it.id) + '">How many</label>' +
         '<input type="number" id="qty-' + esc(it.id) + '" min="1" max="20" value="1" inputmode="numeric">' +
         '<span class="muted small">' + esc(qtyUnit(it.id)) + '</span></div></div>';
-    }).join('');
+    };
+    var groups = (menu.groups && menu.groups.list) || [];
+    $('items').innerHTML = groups.length ? groups.map(function (g, gi) {
+      var its = g.items.map(itemById).filter(Boolean);
+      return '<details class="menu-group" data-group="' + esc(g.id) + '"' + (gi === 0 ? ' open' : '') + '><summary>' +
+        '<span class="mg-text"><span class="mg-h">' + esc(g.label) + '</span><span class="mg-sub">' + esc(its.map(function (it) { return it.label; }).join(' · ')) + '</span></span>' +
+        '<span class="mg-count" data-group-count hidden></span></summary><div class="cards">' + its.map(cardHTML).join('') + '</div></details>';
+    }).join('') : '<div class="cards">' + menu.items.map(cardHTML).join('') + '</div>';
+    // on a phone every group starts closed, so the six groups fit on about one screen
+    if (window.matchMedia && matchMedia('(max-width: 640px)').matches) document.querySelectorAll('#items .menu-group[open]').forEach(function (g) { g.open = false; });
 
     $('extras').innerHTML = menu.extras.map(function (x) {
       return '<div class="card" data-extra="' + esc(x.id) + '">' +
@@ -357,6 +375,7 @@
         if (e.target.checked) picked[id] = picked[id] || { qty: 1, req: '', spec: itemById(id).interactive ? { format: 'printable' } : {} }; else delete picked[id];
         card.classList.toggle('on', e.target.checked);
         card.querySelector('.qty').hidden = !e.target.checked;
+        groupCounts();
         $('err-menu').textContent = '';
         renderRequests();
       }
