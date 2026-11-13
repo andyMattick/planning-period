@@ -26,6 +26,14 @@ the work.
 
 **The builder never checks its own work.** Every check is a fresh agent.
 
+## Content work uses the shared team (owner, Nov 13, 2026)
+Any learning content made or changed here (packs, samples, fixtures, questions, keys) follows the shared team's
+process, which the owner's other projects use too: `.team/ADAPTER.md` says what each of its nine stages is called
+here, and the common briefs are in `.team/agents/`. The briefs in `agents/` stay the working briefs for orders: they
+know the pack format and are stricter. A lesson learned here that isn't about packs also goes to the team repo's
+`LESSONS.md`, so the other projects get it at the weekly sync. Never edit a file in `.team/`: change it in the team
+repo (`npm run check` fails on an edited copy).
+
 ## Rules (owner, Nov 5, 2026)
 1. **We aren't farming their work.** Uploads and working copies are deleted after delivery. Style examples are kept only
    for that teacher's own agents, deletable anytime, never used for anyone else.

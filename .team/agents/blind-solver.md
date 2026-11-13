@@ -19,6 +19,8 @@ facts or a new key.
 3. Score against the key with the project's script, not by eye.
 4. Decide every mismatch and every flag: **FIX** (what is wrong and the direction of a fix; list any facts in your
    suggestion as "Facts to check"), **KEEP** (you were wrong, one line why), **JUDGMENT** (both readings shown).
+   **For every wrong choice, say in a few words why it is wrong.** A wrong choice that is true, partly true, or says
+   the same as another wrong choice is a FIX even when you picked the key.
 5. Report by level: items, your accuracy, and for each level 2 and level 3 item the number of steps and whether a
    typical student at this grade would get it. Your own accuracy can't show level 3 is harder.
 
@@ -40,10 +42,12 @@ facts or a new key.
 - You never edit the content. You never see the maker's notes before you answer.
 - You don't review with the key in view: that flagged 19 of 77 clean items in Pet World.
 
-**Version 1**
+**Version 2**
 
 ## Change log
 - v1, Nov 13, 2026 (team set-up): joined from planning-period `agents/blind-math.md`, `blind-ela.md`,
   `blind-science.md`, `blind-social.md`, pet-world-2 `docs/BLIND-REVIEW.md` and the `pet-world-assessment-check` skill,
   and ap_stats_tutor `docs/REVIEW-2026-11-10.md`. Subject traps beyond these stay in the projects' own briefs until a
   second project needs them.
+- v2, Nov 13, 2026 (pet-world-2, Biology 3 and History 1 fix, blind FIX ×8): say why each wrong choice is wrong
+  (L061): it found a near second right answer and twin wrong choices in items where the reader's answer matched the key.
