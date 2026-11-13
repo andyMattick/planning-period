@@ -18,7 +18,7 @@
    Each hit is a FIX for the maker: change the other item (its stem or wrong choices) or this item's wrong choices, never
    the key. FAIL on any hit. Documents with fewer than 4 keyed items in a version are skipped. */
 import { pathToFileURL } from 'node:url';
-import { words, content } from './test-wise-cues.mjs';
+import { crossItemHits, quoted } from '../.team/checks/cross-item.mjs';
 import { loadPack, rows, nextRound, writeWilco, argsOf, norm, valueOf, sameValue, pick } from './pack-lib.mjs';
 
 /* Shared data sets (owner, Nov 8, 2026; docs/PACK-FORMAT.md, "Shared data sets"): in a group of questions on one data set,
@@ -50,49 +50,18 @@ export function stimulusHits(pack) {
   return hits;
 }
 
-const plain = (s) => String(s ?? '').replace(/\[\d+\]|\((?:paragraph|para\.?|¶)\s*\d+\)/gi, ' ');
-const SKIPW = new Set(['part', 'paragraph', 'quotation', 'passage', 'story', 'article', 'author', 'best', 'support', 'supports', 'answer', 'question', 'which', 'most', 'likely']);
-const cw = (s) => new Set([...content(plain(s))].filter((w) => w.length > 3 && !SKIPW.has(w)));
-const isContent = (w) => w.length > 3 && content(w).size > 0 && !SKIPW.has(w);
-const quoted = (s) => [...String(s ?? '').matchAll(/["“]([^"”]{12,})["”]/g)].map((m) => m[1]);
-
 function keyText(r) {
   if (r.type === 'mc' && Array.isArray(r.choices) && Number.isInteger(r.answer)) return [String(r.choices[r.answer] ?? '')];
   if (r.type === 'short' || r.type === 'open') return quoted(r.answer);
   return [];
 }
 
+/* The general check is the shared team's (.team/checks/cross-item.mjs, moved there unchanged Nov 13, 2026): this
+   function turns a pack into the plain items it reads, one list for each document version. */
 export function crossItem(pack) {
-  const all = rows(pack);
   const groups = new Map();
-  for (const r of all) { const k = `${r.d}|${r.ver}`; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(r); }
-  const hits = []; let checked = 0;
-  for (const list of groups.values()) {
-    const keyed = list.filter((r) => keyText(r).length);
-    if (keyed.length < 4) continue;
-    const texts = list.map((r) => ({ r, stem: String(r.prompt ?? ''), body: [String(r.prompt ?? ''), ...(Array.isArray(r.choices) ? r.choices.map(String) : [])].join(' \n ') }));
-    const df = new Map();
-    for (const t of texts) for (const w of cw(t.body)) df.set(w, (df.get(w) || 0) + 1);
-    const common = (w) => (df.get(w) || 0) >= Math.max(3, Math.ceil(texts.length / 4));
-    for (const r of keyed) {
-      checked++;
-      const own = cw(r.prompt);
-      for (const key of keyText(r)) {
-        const kw = words(plain(key));
-        const runs = [];
-        for (let i = 0; i + 2 < kw.length; i++) { const run = kw.slice(i, i + 3); if (run.filter(isContent).length >= 2) runs.push(run.join(' ')); }
-        const dist = [...cw(key)].filter((w) => !own.has(w) && !common(w));
-        for (const t of texts) {
-          if (t.r === r) continue;
-          const flat = ` ${words(plain(t.body)).join(' ')} `;
-          const run = runs.find((x) => flat.includes(` ${x} `));
-          const bodyW = cw(t.body), shared = dist.filter((w) => bodyW.has(w));
-          if (run) hits.push({ where: r.where, other: t.r.where, how: 'keyPhrase', what: `"${run}"` });
-          else if (shared.length >= 2 && shared.length / dist.length >= 0.6) hits.push({ where: r.where, other: t.r.where, how: 'keyWords', what: shared.join(', ') });
-        }
-      }
-    }
-  }
+  for (const r of rows(pack)) { const k = `${r.d}|${r.ver}`; if (!groups.has(k)) groups.set(k, []); groups.get(k).push({ where: r.where, prompt: r.prompt, choices: r.choices, keys: keyText(r) }); }
+  const { checked, hits } = crossItemHits([...groups.values()]);
   hits.push(...stimulusHits(pack));
   return { checked: checked || (hits.length ? 1 : rows(pack).filter((r) => r.q.stimulus != null).length), hits, pass: hits.length === 0 };
 }

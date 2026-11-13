@@ -30,19 +30,10 @@
      the quoted words too.
    --items prints each row with the bots that pick its key (what the maker changes: wrong choices, never keys). */
 import { pathToFileURL } from 'node:url';
-import { content, words, pSet, fired } from './test-wise-cues.mjs';
+import { fired } from './test-wise-cues.mjs';
+import { BOTS, readingPicks, judge, numberOnly, isPartA } from '../.team/checks/no-passage.mjs';
 import { loadPack, rows, versionsOf, kindOf, nextRound, writeWilco, argsOf } from './pack-lib.mjs';
 import { OVER, MIN_SETS } from './test-wise.mjs';
-
-const BOTS = ['pairMatch', 'echo', 'quoteEcho', 'readingVote'];
-const all = (o) => o.map((_, i) => i);
-const argmax = (v) => { const m = Math.max(...v); return m <= 0 ? all(v) : v.map((x, i) => (x === m ? i : -1)).filter((i) => i >= 0); };
-// strip "[6]" / "(paragraph 6)" citations: the number bots in test-wise.mjs already read those
-const plain = (s) => String(s ?? '').replace(/\[\d+\]|\((?:paragraph|para\.?|¶)\s*\d+\)/gi, ' ');
-const bag = (s) => new Set([...content(plain(s))].filter((w) => w.length > 3));
-const shingles = (s) => { const w = words(plain(s)), out = new Set(); for (let i = 0; i + 2 < w.length; i++) out.add(w.slice(i, i + 3).join(' ')); return out; };
-const isPartA = (r) => /^\s*part\s*a\b/i.test(String(r.prompt ?? ''));
-const isPartB = (r) => /^\s*part\s*b\b/i.test(String(r.prompt ?? ''));
 
 export function isReadingDoc(doc) {
   if (['readingquiz'].includes(kindOf(doc)) || doc.item === 'readingquiz') return true;
@@ -60,44 +51,11 @@ export function playReading(pack) {
   const R = rows(pack).filter((r) => isReadingDoc(r.doc));
   const mc = R.filter((r) => r.type === 'mc' && Array.isArray(r.choices) && Number.isInteger(r.answer) && r.answer >= 0 && r.answer < r.choices.length)
     .map((r) => ({ ...r, opts: r.choices.map(String), prompt: String(r.prompt ?? '') }));
-  // what one student holds: every row of the same document and version (prompts, choices; never passages)
+  // what one student holds: every row of the same document and version (prompts, choices; never passages). The bots
+  // are the shared team's (.team/checks/no-passage.mjs, moved there unchanged Nov 13, 2026).
   const byVer = new Map();
-  for (const r of R) { const k = `${r.d}|${r.ver}`; if (!byVer.has(k)) byVer.set(k, []); byVer.get(k).push(r); }
-  for (const list of byVer.values()) {
-    // pair Part A with the Part B right after it
-    const ordered = mc.filter((x) => list.some((r) => r.where === x.where));
-    ordered.forEach((x, i) => { const y = ordered[i + 1]; if (isPartA(x) && y && isPartB(y)) { x.partner = y; y.partner = x; } });
-    for (const x of ordered) {
-      const others = list.filter((r) => r.where !== x.where && r.where !== x.partner?.where);
-      const otherBag = new Set(), otherSh = new Set();
-      for (const r of others) {
-        const texts = [r.prompt, ...(Array.isArray(r.choices) ? r.choices : [])];
-        for (const t of texts) { bag(t).forEach((w) => otherBag.add(w)); shingles(t).forEach((s) => otherSh.add(s)); }
-      }
-      x.picks = {};
-      // pairMatch
-      if (x.partner) {
-        const [a, b] = isPartA(x) ? [x, x.partner] : [x.partner, x];
-        const A = a.opts.map(bag), B = b.opts.map(bag);
-        const M = A.map((s) => B.map((t) => [...s].filter((w) => t.has(w)).length));
-        const max = Math.max(...M.flat());
-        if (max > 0) {
-          const rowsBest = all(A).filter((i) => Math.max(...M[i]) === max), colsBest = all(B).filter((j) => A.some((_, i) => M[i][j] === max));
-          x.picks.pairMatch = x === a ? rowsBest : colsBest;
-        } else x.picks.pairMatch = all(x.opts);
-      } else x.picks.pairMatch = all(x.opts);
-      // echo
-      x.picks.echo = argmax(x.opts.map((o) => [...bag(o)].filter((w) => otherBag.has(w)).length));
-      // quoteEcho
-      const qe = x.opts.map((o, i) => ([...shingles(o)].some((s) => otherSh.has(s)) ? i : -1)).filter((i) => i >= 0);
-      x.picks.quoteEcho = qe.length && qe.length < x.opts.length ? qe : all(x.opts);
-      // vote
-      const score = x.opts.map(() => 0); let any = false;
-      for (const s of ['pairMatch', 'echo', 'quoteEcho']) { const k = x.picks[s]; if (!fired(k, x.opts)) continue; any = true; k.forEach((i) => { score[i] += 1 / k.length; }); }
-      x.picks.readingVote = any ? argmax(score.map((v) => Math.round(v * 1e6))) : all(x.opts);
-      x.p = Object.fromEntries(BOTS.map((s) => [s, pSet(x.picks[s], x.answer)]));
-    }
-  }
+  for (const r of R) { const k = `${r.d}|${r.ver}`; if (!byVer.has(k)) byVer.set(k, []); byVer.get(k).push(mc.find((x) => x.where === r.where) || r); }
+  for (const list of byVer.values()) readingPicks(list);
   const groups = [];
   const docs = [...new Set(mc.map((x) => x.d))];
   for (const d of docs) {
@@ -107,24 +65,11 @@ export function playReading(pack) {
   }
   if (docs.length > 1) groups.push({ name: 'all reading documents', sets: mc });
   const numberOnly = numberOnlyRows(R);
-  const mean = (list, f) => (list.length ? list.reduce((a, x) => a + f(x), 0) / list.length : 0);
-  for (const g of groups) {
-    g.n = g.sets.length; g.counted = g.n >= MIN_SETS; g.chance = mean(g.sets, (x) => 1 / x.opts.length);
-    g.rows = BOTS.map((s) => {
-      const score = mean(g.sets, (x) => x.p[s]);
-      return { name: s, score, fail: g.counted && (score - g.chance) * 100 > OVER, keys: g.sets.filter((x) => x.p[s] >= 0.5).map((x) => x.where) };
-    });
-    g.fails = g.rows.filter((r) => r.fail);
-  }
+  for (const g of groups) Object.assign(g, judge(g.sets, { over: OVER, minSets: MIN_SETS }));
   const worst = groups.length ? [...groups.flatMap((g) => g.rows.map((r) => ({ ...r, over: r.score - g.chance, group: g.name })))].sort((a, b) => b.over - a.over)[0] : null;
   return { mc, groups, worst, numberOnly, pass: groups.every((g) => !g.fails.length) && !numberOnly.length };
 }
-// a short answer on a passage whose only asked-for evidence is a paragraph number (see numberOnly above)
-const ASKS_NUMBER = /paragraph numbers?|which paragraph|give (?:a|the) paragraph|\[paragraph\]/i;
-const ASKS_WORDS = /\bquot(?:e|ing)\b|\bcopy\b|\bthe words\b|\bthe sentence\b|\bthe phrase\b|\bname exactly\b|\bexact detail\b/i;
-export function numberOnlyRows(R) {
-  return R.filter((r) => r.type === 'short' && ASKS_NUMBER.test(String(r.prompt ?? '')) && !ASKS_WORDS.test(String(r.prompt ?? ''))).map((r) => r.where);
-}
+export const numberOnlyRows = numberOnly;   // the rule is the shared team's too
 const pct = (v) => (100 * v).toFixed(0);
 
 function report(f, res, flags) {
