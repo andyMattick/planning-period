@@ -1,6 +1,11 @@
 -- The pilot limit (owner, Nov 12, 2026: "150 tokens MAX per teacher while testing and I approve new teacher sign ins").
 -- Run once in the Supabase SQL editor after 20261109120000_security.sql. Never edit this file after it has been run; add
--- a new migration instead. It changes no data.
+-- a new migration instead. It changes no data, and it is safe to run again.
+-- Copy ALL of it: open the file on GitHub, press "Raw", select all and copy. The last line is "-- end of the pilot
+-- migration"; if the editor doesn't show it at the bottom, the copy was cut short. (Nov 12, 2026: a first paste was cut
+-- after "return new;", and the dashboard misread a count inside the function as SQL that makes a table; the counts are now
+-- plain assignments, so it has nothing to misread.) If the dashboard offers to enable Row Level Security on new tables,
+-- you can say no: this file already does it for pilot_teachers.
 --
 -- A teacher can send orders only after the owner approves her (a row in pilot_teachers), and then only up to her token
 -- allowance (150 to start) across every order she has sent, cancelled ones too: an order can be cancelled after the
@@ -84,15 +89,15 @@ begin
     raise exception 'An order needs at least one item.' using errcode = 'P0001';
   end if;
   if new.token_total > tokens_left then
-    raise exception 'This order is % tokens, and you have % left in the pilot. Make it smaller, or email us for more.',
-      new.token_total, greatest(tokens_left, 0) using errcode = 'P0001';
+    raise exception 'This order is % %, and you have % left in the pilot. Make it smaller, or email us for more.',
+      new.token_total, case when new.token_total = 1 then 'token' else 'tokens' end, greatest(tokens_left, 0) using errcode = 'P0001';
   end if;
-  select count(*) into per_day from public.orders where teacher = auth.uid() and created_at > now() - interval '24 hours';
+  per_day := (select count(*) from public.orders where teacher = auth.uid() and created_at > now() - interval '24 hours');
   if per_day >= 10 then
     raise exception 'That''s a lot of orders in one day. Please wait a bit, or email us.' using errcode = 'P0001';
   end if;
-  select count(*) into open_now from public.orders where teacher = auth.uid()
-    and status not in ('final_ready', 'cancelled', 'failed');
+  open_now := (select count(*) from public.orders where teacher = auth.uid()
+    and status not in ('final_ready', 'cancelled', 'failed'));
   if open_now >= 5 then
     raise exception 'You have 5 orders in progress. Please wait for one to finish (or cancel one) before sending another.' using errcode = 'P0001';
   end if;
@@ -100,3 +105,4 @@ begin
   return new;
 end $$;
 revoke all on function public.orders_check_new() from public, anon, authenticated;
+-- end of the pilot migration
