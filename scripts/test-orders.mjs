@@ -194,6 +194,30 @@ try {
   }
   ok('science lab: on the menu at 70 tokens with its defaults and fields; the simulation option adds 25 tokens and says what it is, and taking it off takes them back');
 
+  // ===== 1b4. the menu in groups (owner, Nov 13, 2026: "that front page menu is massive"): six groups, every item in one,
+  // all closed on a phone, a closed group says what's picked inside it =====
+  {
+    const c = await ctx('phone'), page = await c.newPage();
+    await page.goto(LOCAL);
+    await page.waitForSelector('#items .menu-group', { state: 'attached' });
+    await page.evaluate(() => window.PPShowStep(2));
+    const groups = await page.$$eval('#items .menu-group', (gs) => gs.map((g) => ({ id: g.dataset.group, open: g.open, n: g.querySelectorAll('.card').length })));
+    const menuJson = JSON.parse(readFileSync(join(ROOT, 'menu.json'), 'utf8'));
+    assert.equal(groups.length, menuJson.groups.list.length, 'one section per group');
+    assert.equal(groups.reduce((t, g) => t + g.n, 0), menuJson.items.length, 'every item is in a group');
+    assert.ok(groups.every((g) => !g.open), 'on a phone every group starts closed');
+    assert.match(await page.textContent('[data-group="labs"] summary'), /Labs, projects and units[\s\S]*Science lab with teacher guide/);
+    await page.click('[data-group="labs"] > summary');
+    await page.check('#items [data-item="lab"] input[type=checkbox]');
+    await page.click('[data-group="labs"] > summary');
+    assert.equal(await page.textContent('[data-group="labs"] [data-group-count]'), '1 picked', 'a closed group shows what is picked in it');
+    await page.waitForFunction(() => /70 tokens/.test(document.getElementById('cost-lines').textContent));
+    await noSideways(page, 'order page, the menu in groups (phone)');
+    await shot(page, 'local-phone-menu-groups');
+    await c.close();
+  }
+  ok('menu groups: six sections holding every item once, all closed on a phone, "1 picked" on a closed section, and picking still prices the order');
+
   // ===== 1c. guided notes and the review game can be interactive too (owner, Nov 8, 2026), at the same price =====
   {
     const c = await ctx('phone'), page = await c.newPage();

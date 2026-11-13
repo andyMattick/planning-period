@@ -126,6 +126,15 @@ try {
   const pricing = existsSync(join(ROOT, 'docs/PRICING.md')) ? readFileSync(join(ROOT, 'docs/PRICING.md'), 'utf8') : '';
   if (!pricing) errs.push('docs/PRICING.md is missing');
   else for (const it of menu.items || []) if (!pricing.includes(`\`${it.id}\``)) errs.push(`docs/PRICING.md doesn't explain \`${it.id}\``);
+  // the order page's menu groups (owner, Nov 13, 2026): every item in exactly one group, every group with a label and items
+  if (menu.groups) {
+    const ids = (menu.items || []).map((i) => i.id), seen = {};
+    for (const g of menu.groups.list || []) {
+      if (!g.id || !g.label || !(g.items || []).length) errs.push(`groups: "${g.id || '?'}" needs an id, a label and items`);
+      for (const x of g.items || []) { if (!ids.includes(x)) errs.push(`groups: "${g.id}" lists "${x}", which is not a menu item`); seen[x] = (seen[x] || 0) + 1; }
+    }
+    for (const x of ids) if (seen[x] !== 1) errs.push(`groups: "${x}" is in ${seen[x] || 0} groups (it must be in exactly one)`);
+  }
   if (errs.length) errs.forEach((e) => fail(`menu.json: ${e}`)); else ok(`menu.json: ${menu.items.length} items, ${(menu.extras || []).length} extras, every item priced in docs/PRICING.md`);
 } catch (e) { fail(`menu.json: ${e.message}`); }
 

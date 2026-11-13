@@ -128,9 +128,6 @@
     "reviewapp": {
       "cards": 40
     },
-    "interactive": {
-      "questions": 15
-    },
     "practicegame": {
       "questions": 20
     }
@@ -360,12 +357,6 @@
       "cards": [
         10,
         200
-      ]
-    },
-    "interactive": {
-      "questions": [
-        5,
-        40
       ]
     },
     "practicegame": {
