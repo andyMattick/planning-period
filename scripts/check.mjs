@@ -133,7 +133,23 @@ try {
       if (!g.id || !g.label || !(g.items || []).length) errs.push(`groups: "${g.id || '?'}" needs an id, a label and items`);
       for (const x of g.items || []) { if (!ids.includes(x)) errs.push(`groups: "${g.id}" lists "${x}", which is not a menu item`); seen[x] = (seen[x] || 0) + 1; }
     }
-    for (const x of ids) if (seen[x] !== 1) errs.push(`groups: "${x}" is in ${seen[x] || 0} groups (it must be in exactly one)`);
+    // a style (owner, Nov 13, 2026: homework under worksheet, the quiz show under the review game, the review app under the
+    // practice game) is in no group: its parent card lists it in "styles", the parent itself first
+    const byId = Object.fromEntries((menu.items || []).map((i) => [i.id, i]));
+    for (const it of menu.items || []) {
+      if (it.under) {
+        const p = byId[it.under];
+        if (!p || p.under) errs.push(`"${it.id}" is a style of "${it.under}", which is not a card on the menu`);
+        else if (!(p.styles?.list || []).some((s) => s.id === it.id)) errs.push(`"${it.id}" is a style of "${it.under}", whose styles don't list it`);
+      }
+      if (it.styles) {
+        const list = it.styles.list || [];
+        if (!it.styles.label || list[0]?.id !== it.id) errs.push(`"${it.id}" styles need a label and the item itself first`);
+        for (const s of list.slice(1)) if (byId[s.id]?.under !== it.id) errs.push(`"${it.id}" lists the style "${s.id}", which isn't marked under it`);
+        for (const s of list) if (!s.label) errs.push(`"${it.id}" style "${s.id}" needs a label`);
+      }
+    }
+    for (const x of ids) if ((seen[x] || 0) !== (byId[x].under ? 0 : 1)) errs.push(byId[x].under ? `groups: "${x}" is a style of "${byId[x].under}", so it is in no group` : `groups: "${x}" is in ${seen[x] || 0} groups (it must be in exactly one)`);
   }
   if (errs.length) errs.forEach((e) => fail(`menu.json: ${e}`)); else ok(`menu.json: ${menu.items.length} items, ${(menu.extras || []).length} extras, every item priced in docs/PRICING.md`);
 } catch (e) { fail(`menu.json: ${e.message}`); }

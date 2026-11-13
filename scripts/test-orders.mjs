@@ -204,7 +204,7 @@ try {
     const groups = await page.$$eval('#items .menu-group', (gs) => gs.map((g) => ({ id: g.dataset.group, open: g.open, n: g.querySelectorAll('.card').length })));
     const menuJson = JSON.parse(readFileSync(join(ROOT, 'menu.json'), 'utf8'));
     assert.equal(groups.length, menuJson.groups.list.length, 'one section per group');
-    assert.equal(groups.reduce((t, g) => t + g.n, 0), menuJson.items.length, 'every item is in a group');
+    assert.equal(groups.reduce((t, g) => t + g.n, 0), menuJson.items.filter((i) => !i.under).length, 'every card is in a group (a style is not a card)');
     assert.ok(groups.every((g) => !g.open), 'on a phone every group starts closed');
     assert.match(await page.textContent('[data-group="labs"] summary'), /Labs, projects and units[\s\S]*Science lab with teacher guide/);
     await page.click('[data-group="labs"] > summary');
@@ -212,11 +212,25 @@ try {
     await page.click('[data-group="labs"] > summary');
     assert.equal(await page.textContent('[data-group="labs"] [data-group-count]'), '1 picked', 'a closed group shows what is picked in it');
     await page.waitForFunction(() => /70 tokens/.test(document.getElementById('cost-lines').textContent));
+    // styles (owner, Nov 13, 2026): homework is a short worksheet, the same card; the order names homework at its own price
+    assert.equal(await page.$('#items [data-item="homework"]'), null, 'homework is not a card of its own');
+    assert.match(await page.textContent('#items [data-item="worksheet"] .tag.cost'), /^20–30 tokens$/);
+    await page.evaluate(() => { const b = document.querySelector('#items [data-item="worksheet"] input[type=checkbox]'); b.checked = true; b.dispatchEvent(new Event('change', { bubbles: true })); });
+    const qty = await page.$('#qty-worksheet'); await page.evaluate((q) => { q.value = '2'; q.dispatchEvent(new Event('change', { bubbles: true })); }, qty);
+    const lines = () => page.$$eval('#cost-lines tr', (ls) => ls.map((l) => l.textContent.replace(/\s+/g, ' ').trim()));
+    assert.ok((await lines()).some((l) => /Worksheet with answer key/.test(l) && /60 tokens/.test(l)), 'two full worksheets: 60 tokens ' + JSON.stringify(await lines()));
+    await page.evaluate(() => { const r = document.getElementById('style-worksheet-homework'); r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); });
+    assert.ok((await lines()).some((l) => /Homework/.test(l) && /40 tokens/.test(l)), 'switched to homework: 2 × 20 tokens ' + JSON.stringify(await lines()));
+    assert.ok(!(await lines()).some((l) => /Worksheet with answer key/.test(l)), 'the full worksheet line is gone');
+    assert.equal(await page.isChecked('#items [data-item="worksheet"] input[type=checkbox]'), true, 'the card stays picked');
+    assert.equal(await page.textContent('[data-group="practice"] [data-group-count]'), '1 picked');
+    await page.evaluate(() => { const b = document.querySelector('#items [data-item="worksheet"] input[type=checkbox]'); b.checked = false; b.dispatchEvent(new Event('change', { bubbles: true })); });
+    assert.ok(!(await lines()).some((l) => /Homework/.test(l)), 'unpicking the card drops its style too');
     await noSideways(page, 'order page, the menu in groups (phone)');
     await shot(page, 'local-phone-menu-groups');
     await c.close();
   }
-  ok('menu groups: six sections holding every item once, all closed on a phone, "1 picked" on a closed section, and picking still prices the order');
+  ok('menu groups: five sections holding every card once, all closed on a phone, "1 picked" on a closed section, and picking still prices the order; a style (homework on the worksheet card) prices as its own item and goes with its card');
 
   // ===== 1c. guided notes and the review game can be interactive too (owner, Nov 8, 2026), at the same price =====
   {
@@ -580,9 +594,9 @@ try {
     await p3.evaluate(() => { const el = document.getElementById('subject'); el.value = 'ela'; el.dispatchEvent(new Event('change', { bubbles: true })); });
     assert.equal((await ta())[2], 'Why: English / reading.', 'English / reading: bigger');
     await p3.evaluate(() => { const el = document.getElementById('subject'); el.value = 'science'; el.dispatchEvent(new Event('change', { bubbles: true })); });
-    await tick(['worksheet', 'homework', 'studyguide'], true);
+    await tick(['worksheet', 'notes', 'studyguide'], true);
     assert.equal((await ta())[2], 'Why: More than 3 items.', 'four items: bigger');
-    await tick(['homework', 'studyguide'], false);
+    await tick(['notes', 'studyguide'], false);
     await tick(['slides'], true);
     assert.equal((await ta())[2], 'Why: Lesson slides.', 'an item the runner does not build: bigger');
     await tick(['slides'], false);

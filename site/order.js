@@ -343,7 +343,7 @@
       return '<div class="card" data-item="' + esc(it.id) + '">' +
         '<label class="pick"><input type="checkbox" value="' + esc(it.id) + '">' + paperIcon(it.id) + '<span><b>' + esc(it.label) + '</b></span></label>' +
         '<p class="detail">' + esc(it.detail) + '</p>' +
-        '<div class="tags"><span class="tag cost">' + it.tokens + ' tokens</span>' +
+        '<div class="tags"><span class="tag cost">' + tokensTag(it) + '</span>' +
         (it.versions ? '<span class="tag ab">' + (it.versionPricing ? 'A/B or more versions' : 'A/B versions') + '</span>' : '') +
         (it.interactive ? '<span class="tag int">or interactive</span>' : '') +
         (it.formats || []).map(function (f) { return '<span class="tag">' + esc(f) + '</span>'; }).join('') + '</div>' +
@@ -372,26 +372,26 @@
       var card = e.target.closest('[data-item]'); if (!card) return;
       var id = card.getAttribute('data-item');
       if (e.target.type === 'checkbox') {
-        if (e.target.checked) picked[id] = picked[id] || { qty: 1, req: '', spec: itemById(id).interactive ? { format: 'printable' } : {} }; else delete picked[id];
+        if (e.target.checked) { if (!pickedIn(id)) picked[id] = newPick(id); } else family(id).forEach(function (f) { delete picked[f]; });
         card.classList.toggle('on', e.target.checked);
         card.querySelector('.qty').hidden = !e.target.checked;
         groupCounts();
         $('err-menu').textContent = '';
         renderRequests();
       }
-      if (e.target.type === 'number' && picked[id]) {
+      if (e.target.type === 'number' && pickedIn(id)) {
         var q = Math.round(Number(e.target.value));
         if (!(q >= 1)) q = 1; if (q > 20) q = 20;
-        e.target.value = q; picked[id].qty = q;
+        e.target.value = q; picked[pickedIn(id)].qty = q;
         renderRequests();
       }
       renderCost();
     });
     $('items').addEventListener('input', function (e) {
       if (e.target.type !== 'number') return;
-      var id = e.target.closest('[data-item]').getAttribute('data-item');
+      var id = pickedIn(e.target.closest('[data-item]').getAttribute('data-item'));
       var q = Math.round(Number(e.target.value));
-      if (picked[id] && q >= 1 && q <= 20) { picked[id].qty = q; renderCost(); renderFeas(); }
+      if (id && q >= 1 && q <= 20) { picked[id].qty = q; renderCost(); renderFeas(); }
     });
     $('extras').addEventListener('change', function (e) {
       var card = e.target.closest('[data-extra]'); if (!card) return;
@@ -431,6 +431,26 @@
   }
   function itemById(id) { return menu.items.filter(function (i) { return i.id === id; })[0]; }
   function pickedIds() { return menu.items.map(function (i) { return i.id; }).filter(function (id) { return picked[id]; }); }
+  // Styles (owner, Nov 13, 2026: homework is a short worksheet, the quiz show a kind of review game, the review app and the
+  // practice game one card): an item with "under" is not a card of its own but a style of its parent card (the parent's
+  // "styles"). The order still names the style's own item, with its own price, so the agents and prices don't change.
+  function family(id) { var it = itemById(id); return it && it.styles ? it.styles.list.map(function (s) { return s.id; }) : [id]; }
+  function pickedIn(card) { return family(card).filter(function (f) { return picked[f]; })[0]; }
+  function newPick(id) { return { qty: 1, req: '', spec: itemById(id).interactive ? { format: 'printable' } : {} }; }
+  function tokensTag(it) {
+    var t = it.styles ? it.styles.list.map(function (s) { return itemById(s.id).tokens; }) : [it.tokens];
+    var lo = Math.min.apply(null, t), hi = Math.max.apply(null, t);
+    return (lo === hi ? lo : lo + '–' + hi) + ' tokens';
+  }
+  function styleHTML(id) {
+    var parent = itemById(itemById(id).under || id);
+    if (!parent.styles) return '';
+    return '<fieldset class="spec-format spec-style" data-style-group="' + esc(parent.id) + '"><legend>' + esc(parent.styles.label) + '</legend>' + parent.styles.list.map(function (s) {
+      var rid = 'style-' + parent.id + '-' + s.id;
+      return '<label class="radio-card" for="' + esc(rid) + '"><input type="radio" id="' + esc(rid) + '" name="style-' + esc(parent.id) + '" value="' + esc(s.id) + '" data-style="' + esc(id) + '"' + (s.id === id ? ' checked' : '') + '>' +
+        '<span><b>' + esc(s.label) + '</b><span class="small muted">' + itemById(s.id).tokens + ' tokens</span></span></label>';
+    }).join('') + '</fieldset>';
+  }
 
   // ---------- requests ----------
   function fieldHTML(id, f, spec, d) {
@@ -470,7 +490,7 @@
       var def = PPFeas.defaultText(id, d);
       return '<div class="item-spec req" data-item-spec="' + esc(id) + '"><h3>' + esc(itemById(id).label) +
         (picked[id].qty > 1 ? ' <span class="muted">× ' + picked[id].qty + '</span>' : '') + '</h3>' +
-        formatHTML(id, spec) +
+        styleHTML(id) + formatHTML(id, spec) +
         (fields.length ? '<div class="spec-grid">' + fields.map(function (f) { return fieldHTML(id, f, spec, d); }).join('') + '</div>' : '') +
         keyPackHTML(id, spec) +
         (def ? '<p class="small muted spec-default">' + esc(PPFeas.fill(tmpl, { default: def })) + '</p>' : '') +
@@ -586,6 +606,14 @@
 
   $('item-requests').addEventListener('input', function (e) {
     var id = e.target.getAttribute('data-req'); if (id && picked[id]) { picked[id].req = e.target.value; return; }
+    var from = e.target.getAttribute('data-style');
+    if (from) {   // a new style: the same card, quantity and note; the details start again, since they differ by style
+      var to = e.target.value; if (!e.target.checked || to === from || !picked[from]) return;
+      picked[to] = Object.assign(newPick(to), { qty: picked[from].qty, req: picked[from].req }); delete picked[from];
+      renderRequests(); renderCost(); renderFeas();
+      var back = document.getElementById('style-' + (itemById(from).under || from) + '-' + to); if (back) back.focus();
+      return;
+    }
     var sp = e.target.getAttribute('data-spec'); if (!sp) return;
     var parts = sp.split(':'), item = parts[0], key = parts[1];
     if (!picked[item]) return;

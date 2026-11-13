@@ -58,7 +58,7 @@
     {
       "id": "worksheet",
       "label": "Worksheet with answer key",
-      "detail": "Practice that gets harder (3 levels), a student copy and a teacher copy with the key.",
+      "detail": "Practice that gets harder (3 levels), a student copy and a teacher copy with the key. Or a short homework set.",
       "tokens": 30,
       "formats": [
         "pdf",
@@ -66,7 +66,20 @@
       ],
       "versions": false,
       "interactive": true,
-      "auto": true
+      "auto": true,
+      "styles": {
+        "label": "Length",
+        "list": [
+          {
+            "id": "worksheet",
+            "label": "Full worksheet: 3 levels that get harder"
+          },
+          {
+            "id": "homework",
+            "label": "Short homework set: about 15 minutes at home"
+          }
+        ]
+      }
     },
     {
       "id": "notes",
@@ -163,8 +176,8 @@
     },
     {
       "id": "reviewgame",
-      "label": "Review game (cards or board)",
-      "detail": "A printable or projector review game (question cards or a board) with answers. Or interactive: played on a device, alone or as a class with team scores.",
+      "label": "Review game",
+      "detail": "Question cards or a board with answers, or a quiz-show game for the projector (categories and point values). Cards can also be played on a device.",
       "tokens": 35,
       "formats": [
         "pdf",
@@ -172,7 +185,20 @@
       ],
       "versions": false,
       "interactive": true,
-      "auto": true
+      "auto": true,
+      "styles": {
+        "label": "Style",
+        "list": [
+          {
+            "id": "reviewgame",
+            "label": "Cards or a board (printable or on a device)"
+          },
+          {
+            "id": "quizshow",
+            "label": "Quiz-show game for the projector, with a score sheet"
+          }
+        ]
+      }
     },
     {
       "id": "rubric",
@@ -242,7 +268,7 @@
     },
     {
       "id": "homework",
-      "label": "Homework",
+      "label": "Homework (short worksheet)",
       "detail": "A short practice set for home (shorter than a worksheet), with a key and a teacher copy.",
       "tokens": 20,
       "formats": [
@@ -251,7 +277,8 @@
       ],
       "versions": false,
       "interactive": true,
-      "auto": true
+      "auto": true,
+      "under": "worksheet"
     },
     {
       "id": "versions",
@@ -280,7 +307,7 @@
     },
     {
       "id": "quizshow",
-      "label": "Quiz-show game (projector)",
+      "label": "Review game: quiz show (projector)",
       "detail": "A projector game with categories and point values (like the TV quiz shows), with answers in the presenter notes and a printable score sheet.",
       "tokens": 35,
       "formats": [
@@ -288,7 +315,8 @@
         "pdf",
         "html"
       ],
-      "versions": false
+      "versions": false,
+      "under": "reviewgame"
     },
     {
       "id": "crossword",
@@ -324,28 +352,42 @@
     },
     {
       "id": "reviewapp",
-      "label": "Review app",
+      "label": "Review app (flashcards and practice)",
       "detail": "A small app students open on any device (flashcards, memorize-by-steps, practice quizzes that come back to what they miss). Works offline, no accounts.",
       "tokens": 60,
       "formats": [
         "html"
       ],
-      "versions": false
+      "versions": false,
+      "under": "practicegame"
     },
     {
       "id": "practicegame",
-      "label": "Practice game",
-      "detail": "A game students play on any device, built from your questions on one of our tested game templates (answer-shooter, grid battle, rush, detective case, fix-it desk) with your theme. Works offline; every question checked like a quiz.",
+      "label": "Practice game or review app",
+      "detail": "Something students open on any device, offline with no accounts: a game built on one of our tested templates (answer-shooter, grid battle, rush, detective case, fix-it desk), or a review app (flashcards, memorize-by-steps, practice that comes back to what they miss). Every question checked like a quiz.",
       "tokens": 70,
       "formats": [
         "html",
         "pdf"
       ],
-      "versions": false
+      "versions": false,
+      "styles": {
+        "label": "Kind",
+        "list": [
+          {
+            "id": "practicegame",
+            "label": "Game on one of our templates"
+          },
+          {
+            "id": "reviewapp",
+            "label": "Review app: flashcards and practice"
+          }
+        ]
+      }
     }
   ],
   "groups": {
-    "_note": "How the order page groups the menu (owner, Nov 13, 2026: \"that front page menu is massive, can we organize?\"). Every item is in exactly one group (npm run check); the first group starts open. Nov 13, 2026: \"Interactive worksheet\" left the menu (every worksheet already has \"or interactive\", at the worksheet price); names say what each item is, without repeating \"A/B versions\".",
+    "_note": "How the order page groups the menu (owner, Nov 13, 2026: \"that front page menu is massive, can we organize?\"). Every item is in exactly one group (npm run check); the first group starts open. Nov 13, 2026: \"Interactive worksheet\" left the menu (every worksheet already has \"or interactive\", at the worksheet price); names say what each item is, without repeating \"A/B versions\". An item with \"under\" is a style of another card (its \"styles\"), not a card of its own: its price and pipeline stay its own (owner, Nov 13, 2026).",
     "list": [
       {
         "id": "tests",
@@ -362,7 +404,6 @@
         "label": "Practice and notes",
         "items": [
           "worksheet",
-          "homework",
           "notes",
           "studyguide",
           "bellringer"
@@ -380,21 +421,13 @@
       },
       {
         "id": "games",
-        "label": "Review games and puzzles",
+        "label": "Games, apps and puzzles",
         "items": [
           "reviewgame",
-          "quizshow",
+          "practicegame",
           "crossword",
           "wordsearch",
           "logicpuzzle"
-        ]
-      },
-      {
-        "id": "apps",
-        "label": "Apps and practice games",
-        "items": [
-          "reviewapp",
-          "practicegame"
         ]
       },
       {
