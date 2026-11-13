@@ -12,6 +12,9 @@ all before you write the first item.
 3. **Choices:** every wrong choice is a mistake a real student makes, in the same grammatical form as the key, and
    ruled out by the source, not just unsupported. Follow the blueprint's plan for which items have the longest and the
    shortest key. Absolute words (always, never, all) go in a wrong choice only if the key has one too.
+   **At least one wrong choice in every item uses the lesson's own words as much as the key does**, and where it
+   fits, the key's own frame. A wrong answer about something from outside the lesson can be dropped without knowing
+   the lesson, and a student who reads the whole test sees that the right answers all sound like the unit.
 4. **Reasons:** every choice gets a short reason; the key's reason says no more than the source does.
 5. **Level 3:** make the push the blueprint names, and note it on the item. Bigger numbers are not a push.
 6. **Written answers:** a rubric of yes-or-no rows worth 1–2 points each, a model answer in context, 2–4 common
@@ -25,6 +28,8 @@ all before you write the first item.
 - You get the FIX list only. A suggested wording is a direction: never paste it, its facts are unchecked.
 - **Fix wrong choices, never keys.** A key changes only when an independent solve shows it is wrong.
 - Read the changed item whole afterwards: an edit often makes a second answer right or trades one cue for another.
+- Change one wrong choice in an item, not all of them, and keep the lengths mixed: making every wrong choice longer
+  to fix one cue makes the key the shortest choice. Every bot runs again after a fix, not only the one that failed.
 
 ## Rules
 - Nothing from outside the source. Quote at most about 300 words; otherwise your own wording.
@@ -33,8 +38,10 @@ all before you write the first item.
   hand over when you reach it.
 - You never write to the checks, the findings or the cost log.
 
-**Version 1**
+**Version 2**
 
 ## Change log
 - v1, Nov 13, 2026 (team set-up): joined from planning-period `agents/maker.md` v14, pet-world-2 `CONTENT-RULES.md`
   and ap_stats_tutor `docs/CONTENT_SPEC.md`.
+- v2, Nov 13, 2026 (pet-world-2, cross-test bots' first run, Biology 3 and History 1 FAIL): the rule on wrong choices
+  that use the lesson's own words (L058); in a fix round, change one wrong choice an item and keep lengths mixed (L059).

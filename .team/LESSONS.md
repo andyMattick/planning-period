@@ -26,7 +26,10 @@ Seeded Nov 13, 2026 from the four projects' own reviews, audits and logs.
 - L016 | Nov 2026 | AP Statistics | Keys had double spaces the wrong choices lacked (197) | structure check: no double spaces
 - L017 | Nov 2026 | Pet World | Answers ended in a sign pattern a guesser could use (50/50) | math check: sign and spread patterns
 - L018 | Nov 2026 | Pet World | Twin wrong choices that say the same thing, so 4 choices are really 3 | reader only
+- L061 | Nov 2026 | Pet World | A fix round's new wrong choice was near a second right answer, and another twinned an old wrong choice; the reader's answer still matched the key | reader only: the blind solver says why each wrong choice is wrong
 - L019 | Nov 2026 | Pet World | A picture's arrow gave the answer | fresh eyes look at every picture
+- L058 | Nov 2026 | Pet World | Right answers kept the unit's words and wrong answers used outside words, so a bot reading the whole test found the key (Biology 3: 41.5% against 25% chance) while every one-item bot passed | whole-test bots: no-passage.mjs (echo) on every drawn test
+- L059 | Nov 2026 | Pet World | Making every wrong choice longer to fix one cue made the key the shortest choice | every bot runs again after a fix; change one wrong choice an item
 
 ## Giveaways between items
 - L020 | Nov 2026 | Planning Period | Items answered each other | cross-item check
@@ -35,6 +38,7 @@ Seeded Nov 13, 2026 from the four projects' own reviews, audits and logs.
 - L023 | Nov 2026 | AP Statistics | Stand-alone questions pointed back at earlier steps (31 of 477) | spec rule and a pattern check
 - L024 | Nov 2026 | Pet World | A student who memorised practice passed the test | reserved test-only pool
 - L025 | Nov 2026 | Pet World | Practice items reappeared on the test | to build: practice and test overlap check
+- L060 | Nov 2026 | Pet World | The cross-item check flagged 1,003 pairs on banks that reuse category answers on purpose ("compare and contrast" is one item's key and another's wrong choice) | to build: tell reused category choices from leaks before a bank-drawn project runs cross-item
 
 ## Reading and sources
 - L030 | Nov 2026 | Planning Period | A reading quiz was answered 20 of 20 without the passages | the no-passage gate and probe
