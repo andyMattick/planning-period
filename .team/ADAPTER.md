@@ -10,6 +10,11 @@ is `theATeam`; its `PROCESS.md`, `IMPROVEMENT.md` and `STREAMLINE.md` are the fu
   change in the team repo. Then run every check on the samples; new failures are fixed, or listed where a
   known-failing list exists, and a check is never loosened (CLAUDE.md rule 5).
 
+## Checks that run the team's code
+`checks/test-wise-cues.mjs`, `checks/cross-item.mjs` and `checks/no-passage.mjs` read the pack and call the team's
+copies in `.team/checks/`. The same-data-set check (`stimulusHits`), the number bots and everything about the pack
+format stay here.
+
 ## What each stage of the team's process is called here
 | Team stage | Here |
 |---|---|

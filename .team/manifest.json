@@ -10,6 +10,8 @@
     "agents/planner.md": "6089c58c9ea41db2345d0f856c591ec035a05206cab365f420ed83c14a48d28e",
     "agents/wilco.md": "e14234795b27ce08348e2059e19705436050600218cc021291b2f2f94c972ba6",
     "checks/test-wise-cues.mjs": "98771cd85e7db69f29d28e863c7d45a659e0de05decc45a9797bc07bb32257f2",
-    "LESSONS.md": "e8f8e1e58e0258fe83bdd437d586d5e1b1b757fc0444ca12fc10d903397b8fd3"
+    "LESSONS.md": "e8f8e1e58e0258fe83bdd437d586d5e1b1b757fc0444ca12fc10d903397b8fd3",
+    "checks/cross-item.mjs": "3b1461ce7698c74f31a1184d9cc59c10963a51ba2e781dcb720c0fbf3dbea6cb",
+    "checks/no-passage.mjs": "4b606175de35b6c5a73b18dd2836bff2d7e84eff1b1d7d2d6a0264516da56a19"
   }
 }

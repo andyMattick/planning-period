@@ -83,7 +83,7 @@ reporter each run's result and the worst strategy before and after (the audit re
 - `keys` rows have no chance and no line: report them as passed or not, never as a percentage.
 
 ---
-**Version 8** (Nov 13, 2026)
+**Version 9** (Nov 13, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's `docs/FAIRNESS.md` (the rule, the cues, converge counted on printed
@@ -108,3 +108,8 @@ reporter each run's result and the worst strategy before and after (the audit re
   adds `frameBreak` (the choice lacking a run of 3 words the others share; played by `checks/test-wise.mjs`, with a
   self-test in `npm run check`; every sample passes it) and `inPassage` (not played here: multiple choice on passages
   was retired Nov 11, and the bots don't read passage text). Changed at the owner's request, not by the auditor.
+- v9, Nov 13, 2026 (owner: one shared team for every project): the cores of `checks/cross-item.mjs` (keyPhrase,
+  keyWords) and `checks/no-passage.mjs` (the three bots, their vote, the line, numberOnly) moved unchanged to the
+  team (`.team/checks/`), so the other projects can run them; the scripts here read the pack and call them. Their
+  output is the same on every sample and self-test. The same-data-set check stays here. Changed at the owner's
+  request, not by the auditor.
