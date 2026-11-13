@@ -33,6 +33,7 @@ import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { execFileSync, spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const problems = [];
@@ -52,6 +53,7 @@ if (brand) {
   let hits = 0;
   for (const f of files) {
     if (f === 'brand.config.json') continue;
+    if (f.startsWith('.team/')) continue;   // the shared team's files, copied unedited (.team/ADAPTER.md); never served (.vercelignore)
     const p = join(ROOT, f);
     if (!existsSync(p) || statSync(p).size > 5e6) continue;
     const buf = readFileSync(p);
@@ -154,6 +156,22 @@ try {
   if (errs.length) errs.forEach((e) => fail(`feasibility.json: ${e}`)); else ok(`feasibility.json: defaults and limits for all ${ids.length} menu items, min ≤ default ≤ max`);
 } catch (e) { fail(`feasibility.json: ${e.message}`); }
 
+/* 2b. the shared team's files (.team/, copied from the team repo by its scripts/sync-check.mjs --write): every copy still
+   has the hash in .team/manifest.json. A copy is never edited here; a change is made in the team repo. Whether a copy
+   is behind the team is the weekly run's check, which has the team repo beside it. */
+{
+  const MAN = join(ROOT, '.team/manifest.json');
+  if (!existsSync(MAN)) fail('.team/manifest.json is missing: run the team repo\'s scripts/sync-check.mjs --project . --write');
+  else {
+    const man = readJSON('.team/manifest.json'), names = Object.keys(man.files || {});
+    const edited = names.filter((f) => !existsSync(join(ROOT, '.team', f)) || createHash('sha256').update(readFileSync(join(ROOT, '.team', f))).digest('hex') !== man.files[f]);
+    if (!names.length) fail('.team/manifest.json lists no files');
+    else if (edited.length) edited.forEach((f) => fail(`.team/${f} is missing or was edited here: undo it and make the change in the team repo`));
+    else ok(`.team/: ${names.length} files from the shared team, none edited here`);
+    if (!names.includes('checks/test-wise-cues.mjs')) fail('.team/manifest.json must list checks/test-wise-cues.mjs: checks/test-wise-cues.mjs passes it on');
+  }
+}
+
 /* 3. the briefs */
 const AGENTS = join(ROOT, 'agents');
 if (existsSync(AGENTS)) {
@@ -193,6 +211,12 @@ if (existsSync(FIX)) {
   { const [p, q] = quiz(); const ws = p.documents.find((d) => d.item === 'worksheet'); // the quiz's B copies A's choices: the memorizer remembers
     for (const x of q.sections[0].questions) { x.choices.B = [...x.choices.A]; x.answer.B = x.answer.A; }
     ws.sections[0].questions = ws.sections[0].questions.slice(0, 1); breaks.push(['test-wise.mjs', 'B reusing A\'s choices (memorizer and same letter)', p]); }
+  { const [p, q] = quiz(); // every wrong choice opens with the same three words and the key doesn't (frameBreak, the team's cue)
+    for (const x of q.sections[0].questions) for (const v of ['A', 'B']) x.choices[v] = x.choices[v].map((c, i) => (i === x.answer[v] ? c : `it may be ${c}`));
+    const f = join(tmp, 'broken-frame.json'); writeFileSync(f, JSON.stringify(p));
+    const r = spawnSync(process.execPath, [join(ROOT, 'checks', 'test-wise.mjs'), f, '--verbose'], { cwd: ROOT, encoding: 'utf8' });
+    if (r.status === 1 && /✗\s+choice cue\s+frameBreak/.test(r.stdout)) ok('checks/test-wise.mjs catches wrong choices that share an opening the key lacks (frameBreak)');
+    else fail(`checks/test-wise.mjs did not catch a shared opening on the wrong choices with frameBreak (exit ${r.status}):\n${r.stdout}${r.stderr}`); }
   breaks.forEach(([s, what, p], i) => {
     const f = join(tmp, `broken-${i}.json`); writeFileSync(f, JSON.stringify(p));
     const r = run(s, f);

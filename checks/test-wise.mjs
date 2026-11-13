@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 /* 🤖 Wilco's test-wise bots on a pack (agents/wilco.md). Can a student who doesn't know the content get the right
    choice by reading the choices? Ported from Pet World (scripts/notes/notes-test-wise.mjs and the course bot's rule in
-   docs/BLIND-REVIEW.md, Nov 5, 2026), with the same cue code (checks/test-wise-cues.mjs, copied unchanged).
+   docs/BLIND-REVIEW.md, Nov 5, 2026), with the same cue code (the team's copy, .team/checks/test-wise-cues.mjs).
 
      node checks/test-wise.mjs <pack.json> [more packs] [--verbose] [--items] [--pass 70] [--write [--round N]] [--json out.json]
 
    It plays every multiple-choice question of every document, in both versions, as printed (a printed page is never
    reshuffled, so letters count):
      - choice cues (test-wise-cues.mjs): longest, specific, overlap, absolute, grammar, oddOne, allAbove, vote, shortest,
-       middle, notLongest, general, notVote, and converge (the choice that shares the most with the others; it counts on
-       printed work, as on Pet World's note sheets)
+       middle, notLongest, general, notVote, converge (the choice that shares the most with the others; it counts on
+       printed work, as on Pet World's note sheets), and frameBreak (the choice that lacks a run of 3 words every other
+       choice shares; Pet World, Nov 10, 2026; played here since Nov 13, 2026, when the cue file became the team's)
      - position: posA, posB, posC, posD, posLast (always the same letter)
      - A/B: sameLetterAB, a student who copies a neighbour's letter from the other version (the key under the same letter
        in A and B for the same question)
@@ -38,7 +39,7 @@ import { STRATS, CUES, optFeatures, nbNew, nbAdd, nbPick, fold, pSet, fired, wor
 import { loadPack, rows, valueOf, versionsOf, nextRound, writeWilco, argsOf } from './pack-lib.mjs';
 
 export const OVER = 10, NEAR_PASS = 15, MIN_SETS = 8, MIN_NUMBER_SETS = 3, MIN_TF = 6, MIN_PAIRS = 6;
-const CHOICE_STRATS = [...CUES, 'vote', 'shortest', 'middle', 'notLongest', 'general', 'notVote', 'converge'];
+const CHOICE_STRATS = [...CUES, 'vote', 'shortest', 'middle', 'notLongest', 'general', 'notVote', 'converge', 'frameBreak'];
 const POS = { posA: () => [0], posB: () => [1], posC: (o) => [Math.min(2, o.length - 1)], posD: (o) => [Math.min(3, o.length - 1)], posLast: (o) => [o.length - 1] };
 
 /* ---------- numbers (Pet World's notes bots, scripts/notes/notes-test-wise.mjs) ---------- */

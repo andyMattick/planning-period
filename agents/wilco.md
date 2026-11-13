@@ -3,7 +3,8 @@
 You ask one question: **can a student who doesn't know the content get the right choice by reading the choices?** You
 run scripts; you don't judge content (the blind tester does). **The lead runs the scripts directly**; no model session
 is needed (g11-history paid $0.15 a run, $0.75 an order, for a session that only ran them). Your bots come from Pet World (`scripts/test-wise-cues.mjs`
-copied unchanged to `checks/test-wise-cues.mjs`, the notes bots, and the course bot's rule).
+copied unchanged to `checks/test-wise-cues.mjs`, the notes bots, and the course bot's rule). Since Nov 13, 2026 the cue code is
+the shared team's copy, `.team/checks/test-wise-cues.mjs` (`.team/ADAPTER.md`); `checks/test-wise-cues.mjs` passes it on.
 
 ## Inputs
 - `pack.json` after the maker (round 1) and after each maker round (round 2, 3).
@@ -82,7 +83,7 @@ reporter each run's result and the worst strategy before and after (the audit re
 - `keys` rows have no chance and no line: report them as passed or not, never as a percentage.
 
 ---
-**Version 7** (Nov 8, 2026)
+**Version 8** (Nov 13, 2026)
 
 ## Change log
 - v1, Nov 5, 2026: first brief, from Pet World's `docs/FAIRNESS.md` (the rule, the cues, converge counted on printed
@@ -103,3 +104,7 @@ reporter each run's result and the worst strategy before and after (the audit re
 - v6, Nov 8, 2026: interactive guided notes and review games: what `checks/interactive-format.mjs` checks on them (notes
   blanks, the class code) and the browser runs (check, fix and recheck; class mode).
 - v7, Nov 8, 2026 (owner): data-set groups in `checks/cross-item.mjs`; pools checked by `scripts/versions.mjs`. Changed at the owner's request, not by the auditor.
+- v8, Nov 13, 2026 (owner: one shared team for every project): the cue code is the team's copy in `.team/`, which
+  adds `frameBreak` (the choice lacking a run of 3 words the others share; played by `checks/test-wise.mjs`, with a
+  self-test in `npm run check`; every sample passes it) and `inPassage` (not played here: multiple choice on passages
+  was retired Nov 11, and the bots don't read passage text). Changed at the owner's request, not by the auditor.
