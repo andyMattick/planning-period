@@ -447,6 +447,22 @@ Tested: `node scripts/notify-order.mjs --self-test` (the text, no header injecti
 requests text, the "Needs you" hand-off email) and `--dry-run` (scripts/test-run-order.mjs runs `--handoff --dry-run`
 for each bigger order it hands off). Not tested: a real Gmail send.
 
+### Sign-up emails (owner, Nov 14, 2026)
+Two emails for the pilot, from `.github/workflows/teacher-email.yml` and `scripts/notify-teacher.mjs`:
+- **Someone signs up** → an email to `PP_NOTIFY_TO` (the owner): their name, email, when they signed up, whether they
+  confirmed their email, and how to approve (My orders → "Teachers waiting for approval" → Approve).
+- **The owner approves them** → a welcome email to the address they signed up with: their tokens (and what that buys, from
+  menu.json), the steps (sign in, examples, sources, what you want, requests, review cost and send, answer the
+  questions, check the preview, download), "check it before students see it", the delete notice, and replies go to the owner.
+
+Setup: the order email's Gmail setup above (`PP_NOTIFY_FROM`, `PP_NOTIFY_TO`, `PP_NOTIFY_APP_PASSWORD`), the runner's
+Supabase secrets and Vault secrets (`pp_github_repo`, `pp_github_token`), then run
+`supabase/runner/dispatch-teachers.sql` once in the SQL Editor. Try it: **Actions → Teacher email → Run workflow** with
+`signup` and a teacher's id (the email comes to you). Changing a teacher's tokens later sends nothing. Same off switch:
+`PP_NOTIFY_ENABLED` = `false`.
+
+Tested: `node scripts/notify-teacher.mjs --self-test` (in `npm run check`) and `--dry-run`. Not tested: a real Gmail send.
+
 ## Tested, and how
 
 - `node scripts/test-orders.mjs [--shots <folder>]`: a fake Supabase (`scripts/test-orders/fake-supabase.mjs`: the Auth,

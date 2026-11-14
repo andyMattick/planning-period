@@ -27,6 +27,7 @@
      15. The auditor's gate: scripts/auditor-gate.mjs --self-test (a good brief change lands on main; checks/, scripts/,
          CLAUDE.md, prices, thresholds, a removed or reworded rule, a skipped check, no version bump and a failing check are refused).
      16. 🛡️ Dominyk's security self-test: scripts/security-check.mjs --self-test (each fixed weakness stays fixed; docs/security/).
+     17. The emails: scripts/notify-order.mjs and scripts/notify-teacher.mjs --self-test (the sign-up and welcome emails).
    Exit 1 on any problem. */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -607,6 +608,13 @@ else {
 {
   const r = spawnSync(process.execPath, [join(ROOT, 'scripts/security-check.mjs'), '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
   if (r.status === 0) ok(r.stdout.trim().split('\n').pop()); else fail(`scripts/security-check.mjs --self-test failed:\n${r.stdout}${r.stderr}`);
+}
+
+/* 17. The emails (owner, Nov 14, 2026: a note to the owner when a teacher signs up, a welcome with the steps when she is
+   approved): the text, no header injection from a name, no requests text */
+for (const f of ['scripts/notify-order.mjs', 'scripts/notify-teacher.mjs']) {
+  const r = spawnSync(process.execPath, [join(ROOT, f), '--self-test'], { cwd: ROOT, encoding: 'utf8', timeout: 60000 });
+  if (r.status === 0) ok(`${f} --self-test (${(r.stdout.match(/^✓/gm) || []).length} cases)`); else fail(`${f} --self-test failed:\n${r.stdout}${r.stderr}`);
 }
 
 console.log(problems.length ? `\nCHECK FAILED: ${problems.length} problem(s).` : '\nAll checks pass.');
