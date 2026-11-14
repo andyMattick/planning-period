@@ -1,0 +1,54 @@
+# Pilot sign-up emails (owner, Nov 14, 2026). supabase/runner/dispatch-teachers.sql starts this when someone signs up
+# ('teacher-signup': a note to the owner that a teacher is waiting for approval) and when the owner approves a teacher
+# ('teacher-approved': a welcome email to the teacher with the steps). scripts/notify-teacher.mjs writes and sends them
+# through Gmail, with the same setup as the order email (docs/BACKEND.md, "Order emails" and "Sign-up emails").
+# Off switch: repository variable PP_NOTIFY_ENABLED = false. Not set up: it says so and sends nothing.
+name: Teacher email
+
+on:
+  repository_dispatch:
+    types: [teacher-signup, teacher-approved]
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: signup (email the owner) or approved (welcome the teacher)
+        required: true
+        type: choice
+        options: [signup, approved]
+      id:
+        description: The teacher's id (from the teachers table)
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  email:
+    if: vars.PP_NOTIFY_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Send the email
+        shell: bash
+        env:
+          KIND: ${{ github.event.action == 'teacher-approved' && 'approved' || github.event.action == 'teacher-signup' && 'signup' || inputs.kind }}
+          TEACHER_ID: ${{ github.event.client_payload.id || inputs.id }}
+          PP_SUPABASE_URL: ${{ secrets.PP_SUPABASE_URL }}
+          PP_SUPABASE_SERVICE_KEY: ${{ secrets.PP_SUPABASE_SERVICE_KEY }}
+          PP_NOTIFY_FROM: ${{ vars.PP_NOTIFY_FROM }}
+          PP_NOTIFY_TO: ${{ vars.PP_NOTIFY_TO }}
+          PP_NOTIFY_APP_PASSWORD: ${{ secrets.PP_NOTIFY_APP_PASSWORD }}
+        run: |
+          if [ -z "$PP_SUPABASE_URL" ] || [ -z "$PP_SUPABASE_SERVICE_KEY" ]; then
+            echo "Not set up: no PP_SUPABASE_URL / PP_SUPABASE_SERVICE_KEY secrets (docs/BACKEND.md). Nothing sent." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          node scripts/notify-teacher.mjs "$KIND" "$TEACHER_ID" | tee -a "$GITHUB_STEP_SUMMARY"
