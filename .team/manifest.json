@@ -12,6 +12,7 @@
     "checks/test-wise-cues.mjs": "98771cd85e7db69f29d28e863c7d45a659e0de05decc45a9797bc07bb32257f2",
     "LESSONS.md": "601e0cc582b9a020c9f5660110963e6b0a81c9d47155e8187daa5aaa90a179e4",
     "checks/cross-item.mjs": "3b1461ce7698c74f31a1184d9cc59c10963a51ba2e781dcb720c0fbf3dbea6cb",
-    "checks/no-passage.mjs": "4b606175de35b6c5a73b18dd2836bff2d7e84eff1b1d7d2d6a0264516da56a19"
+    "checks/no-passage.mjs": "4b606175de35b6c5a73b18dd2836bff2d7e84eff1b1d7d2d6a0264516da56a19",
+    "checks/outbox.mjs": "1a50eef33cee0581d49b82b0acdcd38253791b5511eb1e457cccff17720627ab"
   }
 }

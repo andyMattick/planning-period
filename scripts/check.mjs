@@ -31,7 +31,7 @@
 import { readFileSync, existsSync, readdirSync, mkdtempSync, rmSync, writeFileSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 
@@ -194,6 +194,16 @@ try {
     else if (edited.length) edited.forEach((f) => fail(`.team/${f} is missing or was edited here: undo it and make the change in the team repo`));
     else ok(`.team/: ${names.length} files from the shared team, none edited here`);
     if (!names.includes('checks/test-wise-cues.mjs')) fail('.team/manifest.json must list checks/test-wise-cues.mjs: checks/test-wise-cues.mjs passes it on');
+    /* the outbox (.team/OUTBOX.md): lessons for the shared team that a session couldn't send itself. A malformed line
+       fails, and so does one that has waited more than 14 days: the weekly run should have taken it (.team/checks/outbox.mjs). */
+    try {
+      const ob = await import(pathToFileURL(join(ROOT, '.team/checks/outbox.mjs')).href);
+      const OUT = join(ROOT, '.team/OUTBOX.md'), now = new Date('2026-12-01T12:00:00Z');
+      const bites = !ob.outboxProblems('# Outbox\n\n- 2026-11-28 | a | b\n', now).length && ob.outboxProblems('- 2026-11-01 | a | b\n', now).length && ob.outboxProblems('- no date here\n', now).length && ob.outboxProblems(null, now).length;
+      if (!bites) fail('.team/checks/outbox.mjs no longer catches a stale, a malformed and a missing outbox');
+      const probs = ob.outboxProblems(existsSync(OUT) ? readFileSync(OUT, 'utf8') : null);
+      if (probs.length) probs.forEach((p) => fail(p)); else if (bites) ok('.team/OUTBOX.md holds nothing stale or malformed (and the rule catches both)');
+    } catch (e) { fail(`.team/checks/outbox.mjs can't be loaded: ${e.message}`); }
   }
 }
 
