@@ -10,6 +10,14 @@ is `theATeam`; its `PROCESS.md`, `IMPROVEMENT.md` and `STREAMLINE.md` are the fu
   change in the team repo. Then run every check on the samples; new failures are fixed, or listed where a
   known-failing list exists, and a check is never loosened (CLAUDE.md rule 5).
 
+## Before content work, and after it
+- **Before:** if the team repo is in the session, sync first (the command above), so the work starts from the team's
+  newest briefs and lessons. If it isn't, work from the copies in `.team/` as they are: the weekly run keeps them
+  within a week of the team.
+- **After:** a lesson that isn't about this project's own code goes to the team's `LESSONS.md`. If the team repo can't
+  be reached from the session, add one line to `.team/OUTBOX.md` instead; the weekly run takes it to the team and
+  empties the outbox. `npm run check` fails if a line waits there more than 14 days.
+
 ## Checks that run the team's code
 `checks/test-wise-cues.mjs`, `checks/cross-item.mjs` and `checks/no-passage.mjs` read the pack and call the team's
 copies in `.team/checks/`. The same-data-set check (`stimulusHits`), the number bots and everything about the pack
