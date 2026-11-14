@@ -44,11 +44,19 @@ export function emailFor(row, { from, to, handoff = null } = {}) {
     const bits = [spec.format, spec.versions ? `${spec.versions} version${spec.versions === 1 ? '' : 's'}` : '', spec.questions ? `${spec.questions} questions` : ''].filter(Boolean);
     return `  - ${itemName(id)}${n > 1 ? ` ×${n}` : ''}${bits.length ? ` (${bits.join(', ')})` : ''}`;
   });
-  const title = handoff != null
+  // run-order.mjs writes "<stage>: failed: <reason>" when an order failed (her note says "we have been told")
+  const failed = handoff != null && /^\w+: failed: /.test(oneLine(handoff));
+  const title = failed ? `Failed: ${row.id}, grade ${oneLine(o.grade) || '?'} ${subject}`.trim()
+    : handoff != null
     ? `Needs you: ${row.id}, grade ${oneLine(o.grade) || '?'} ${subject}`.trim()
     : `New order: ${oneLine(o.teacher) || 'a teacher'}, grade ${oneLine(o.grade) || '?'} ${subject}`.trim();
   const body = [
-    ...(handoff != null ? [
+    ...(failed ? [
+      'This order failed. Her order shows "Something went wrong while we were making your order. We have been told and will be in touch."',
+      '',
+      `Why:     ${oneLine(handoff).slice(0, 500)}`,
+      `Next:    fix the cause, then Actions → Run order → Run workflow with ${row.id}, or write to her. Her tokens for a failed order are not counted.`,
+    ] : handoff != null ? [
       `The order runner handed this order to you. She has a note in My orders that it will be ready within 24 hours.`,
       '',
       `Why:     ${oneLine(handoff).slice(0, 500) || '(no reason given)'}`,
@@ -105,6 +113,12 @@ function selfTest() {
     ['hand-off: the reason, the 24-hour promise and the next step', h.text.includes('Why:     build: bigger than the automatic path (One version per student)') && /within 24 hours/.test(h.text) && h.text.includes('work-get pp-2026-01-03-abcdef')],
     ['hand-off: no header injection from the reason', !/\r\nBcc:/i.test(h.text)],
     ['hand-off: what was ordered, without her requests text', h.text.includes('- Unit test (interactive)') && !h.text.includes('SECRET')],
+  );
+  const f = emailFor(row2, { from: 'a@example.com', to: 'b@example.com', handoff: 'onboard: failed: session onboarding-r1 failed: success (Credit balance is too low)\r\nBcc: x@y' });
+  cases.push(
+    ['failed: subject says "Failed" with the order id', f.subject.startsWith('Failed: pp-2026-01-03-abcdef')],
+    ['failed: the reason and what she sees, no 24-hour promise', f.text.includes('Credit balance is too low') && f.text.includes('Something went wrong') && !/within 24 hours/.test(f.text)],
+    ['failed: no header injection from the reason', !/\r\nBcc:/i.test(f.text)],
   );
   let bad = 0;
   for (const [name, pass] of cases) { console.log(`${pass ? '✓' : '✗'} ${name}`); if (!pass) bad++; }

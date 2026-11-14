@@ -6,6 +6,7 @@
 // --max-budget-usd cap like the real one.
 //   PP_FAKE_FIXTURES  the fixtures folder        PP_FAKE_CALLS  a .jsonl file to record each call in (optional)
 //   PP_FAKE_COST_SCALE multiply every cost        PP_FAKE_FAIL_ROLE  this role exits 1 with no record
+//   PP_FAKE_API_ERROR_ROLE  this role is refused by the API before any work (is_error, cost 0)
 //   PP_FAKE_TOKENS    rewrites onboarding.json's token total (the cost-stop test)
 // A fixture folder may hold _edit.mjs instead of (or beside) files: its default export runs with the session's folder
 // (the auditor's edits to the briefs; PP_FAKE_AUDIT picks the variant).
@@ -20,6 +21,8 @@ const start = Date.now();
 const files = readdirSync(cwd);
 const view = existsSync(join(cwd, 'view.md')) ? [...readFileSync(join(cwd, 'view.md'), 'utf8').matchAll(/^\*\*(.+?)\*\*/gm)].map((m) => m[1]) : null;
 if (process.env.PP_FAKE_FAIL_ROLE === role) { console.error('fake failure'); process.exit(1); }
+// an API refusal before any work (a bad key, no credit): Claude Code's record says is_error with subtype "success", cost 0
+if (process.env.PP_FAKE_API_ERROR_ROLE === role) { console.log(JSON.stringify({ type: 'result', subtype: 'success', is_error: true, result: 'Credit balance is too low', total_cost_usd: 0, num_turns: 1, duration_ms: 900, session_id: 'fake' })); process.exit(1); }
 await new Promise((r) => setTimeout(r, 400));   // long enough for the test to see parallel sessions overlap
 const dir = fx && join(fx, role);
 let result = { cost: 0.1, ms: 30000 };
