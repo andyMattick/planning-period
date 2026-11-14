@@ -20,6 +20,9 @@ jobs:
   purge:
     if: vars.PP_PURGE_ENABLED != 'false'
     runs-on: ubuntu-latest
+    # the owner's secrets (ANTHROPIC_API_KEY, PP_NOTIFY_APP_PASSWORD, PP_SUPABASE_URL, PP_SUPABASE_SERVICE_KEY) live in the
+    # repository's environment named ANTHROPIC_API_KEY (owner, Nov 14, 2026); without this line the job sees them blank
+    environment: ANTHROPIC_API_KEY
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4

@@ -34,6 +34,9 @@ jobs:
     # the off switch: repository variable PP_RUNNER_ENABLED must be "true"
     if: vars.PP_RUNNER_ENABLED == 'true'
     runs-on: ubuntu-latest
+    # the owner's secrets (ANTHROPIC_API_KEY, PP_NOTIFY_APP_PASSWORD, PP_SUPABASE_URL, PP_SUPABASE_SERVICE_KEY) live in the
+    # repository's environment named ANTHROPIC_API_KEY (owner, Nov 14, 2026); without this line the job sees them blank
+    environment: ANTHROPIC_API_KEY
     # the final (render, post, purge) takes minutes; the auditor's gate runs npm run check once or twice
     timeout-minutes: ${{ github.event.action == 'order-approved' && 45 || 75 }}
     env:

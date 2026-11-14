@@ -356,7 +356,9 @@ whole path (send → follow-up → preview → final → purge); 7–8 turn on t
    runner is best), then on that workspace **Limits** → set a **monthly spend limit**. Each order is capped by its own
    cost stop (2× its tokens × $0.10) and each audit at $1.00, but the workspace limit is the backstop.
 2. **The repository's Actions secrets.** GitHub → this repository → **Settings → Secrets and variables → Actions →
-   Secrets → New repository secret**, three times:
+   Secrets → New repository secret**, three times (Nov 14, 2026: this repository keeps them as **environment** secrets in an
+   environment named `ANTHROPIC_API_KEY`, and the workflows that need them say `environment: ANTHROPIC_API_KEY`; either
+   place works for a new secret, as long as it is that environment or the repository's own secrets):
    - `ANTHROPIC_API_KEY`: the key from step 1;
    - `PP_SUPABASE_URL`: the Project URL (the same as in `~/.pp-owner.env`);
    - `PP_SUPABASE_SERVICE_KEY`: the service_role (secret) key. It only ever lives here and on your computer.
