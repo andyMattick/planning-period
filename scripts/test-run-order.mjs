@@ -125,12 +125,28 @@ try {
   ok(!callsOf(calls3).some((x) => x.role === 'maker-r1'), 'no maker session after the cost stop');
   ok(!existsSync(join(tmp, 'w3b')), 'the working folder is deleted after a hand-off');
 
+  const node = (args, env = {}) => new Promise((res) => {   // async: the fake Supabase runs in this process
+    const p = spawn(process.execPath, args, { env: { ...process.env, PP_SUPABASE_URL: fake.url, PP_SUPABASE_SERVICE_KEY: SERVICE, ...env } });
+    let out = ''; p.stdout.on('data', (d) => { out += d; }); p.stderr.on('data', (d) => { out += d; });
+    p.on('close', (code) => res({ code, out }));
+  });
   /* 4. a session that crashes → failed, with a note she sees */
   const ID4 = 'pp-2026-11-08-test04';
   await newOrder(ID4);
   const r4 = await run(ID4, ['--work', join(tmp, 'w4')], { PP_FAKE_FAIL_ROLE: 'onboarding-r1' });
   o = await orderOf(ID4);
   ok(r4.code === 1 && o.status === 'failed' && /went wrong/.test(o.note || ''), `a crash: exit ${r4.code}, ${o.status}`);
+  // an API refusal (Nov 14, 2026: two real orders failed as "failed: success"): the reason is kept, and the owner is told
+  const ID4b = 'pp-2026-11-08-test4b', hf4 = join(tmp, 'handoff-4b.txt');
+  await newOrder(ID4b);
+  const r4b = await run(ID4b, ['--work', join(tmp, 'w4b')], { PP_FAKE_API_ERROR_ROLE: 'onboarding-r1', PP_HANDOFF_FILE: hf4 });
+  o = await orderOf(ID4b);
+  ok(r4b.code === 1 && o.status === 'failed', `an API refusal: exit ${r4b.code}, ${o.status}`);
+  ok(/session onboarding-r1 failed: success \(Credit balance is too low\)/.test(r4b.out), `the API's reason is in the log:\n${r4b.out}`);
+  const why4 = existsSync(hf4) ? readFileSync(hf4, 'utf8') : '';
+  ok(/^onboard: failed: session onboarding-r1 failed: success \(Credit balance is too low\)/.test(why4), `the owner's email gets the reason: ${why4}`);
+  const mail4 = await node([join(ROOT, 'scripts/notify-order.mjs'), ID4b, '--handoff', why4.trim(), '--dry-run']);
+  ok(/Subject: Failed: pp-2026-11-08-test4b/.test(mail4.out) && /Credit balance is too low/.test(mail4.out) && !/will be ready within 24 hours/.test(mail4.out), `a "Failed" email, not a hand-off:\n${mail4.out}`);
 
   /* 5. the teacher skipped the blind check: no blind tester, every other check, and every page says so */
   const ID5 = 'pp-2026-11-08-test05', calls5 = join(tmp, 'calls5.jsonl'), work5 = join(tmp, 'w5');
@@ -160,11 +176,6 @@ try {
   /* 5b. bigger orders (owner, Nov 8, 2026: "leave the runner for what we see as simple … within 24 hours for bigger"):
      onboarding runs as usual; the build hands off before any session, with the 24-hour note for her, the reason for
      the owner's email (PP_HANDOFF_FILE), and notify-order.mjs --handoff --dry-run prints a "Needs you" email */
-  const node = (args, env = {}) => new Promise((res) => {   // async: the fake Supabase runs in this process
-    const p = spawn(process.execPath, args, { env: { ...process.env, PP_SUPABASE_URL: fake.url, PP_SUPABASE_SERVICE_KEY: SERVICE, ...env } });
-    let out = ''; p.stdout.on('data', (d) => { out += d; }); p.stderr.on('data', (d) => { out += d; });
-    p.on('close', (code) => res({ code, out }));
-  });
   const bigger = [
     ['pp-2026-11-08-big001', 'one per student', { itemSpecs: { quiz: { format: 'interactive', grading: 'print', versions: 'student', students: 30 } } }, /One version per student/],
     ['pp-2026-11-08-big002', 'a reading quiz', { subject: 'ela', items: ['readingquiz'], itemSpecs: { readingquiz: { versions: 2 } } }, /English \/ reading/],

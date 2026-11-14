@@ -138,6 +138,13 @@ const TOOLS = { base: ['Read', 'Write', 'Edit', 'Glob', 'Grep', 'Bash(node:*)', 
 const NAMES = { auditor: '🔎 Auditor', onboarding: '🧭 Onboarding', style: '🎨 Style notes', maker: '📝 Maker', blind: null, solver: '🧮 Solver', 'solver-bc': '🧮 Solver', facts: '🔎 Fact checker', reporter: '🧾 Reporter' };
 let blindName = '🙈 Blind tester';
 
+// Why a session that did no work failed (Nov 14, 2026: two orders failed as "failed: success", and the reason, an API key
+// or billing message, was thrown away). Only when it cost nothing: then the model wrote nothing, and the text is the
+// command line's own error ("Invalid API key", "Credit balance is too low"), never her content.
+function apiError(rec) {
+  if (!rec || Number(rec.total_cost_usd) > 0 || typeof rec.result !== 'string' || !rec.result.trim()) return '';
+  return ` (${rec.result.replace(/\s+/g, ' ').trim().slice(0, 200)})`;
+}
 /* One fresh headless session (or a resumed one for a second phase). Returns its record. */
 async function session(role, round, phase, dir, { setting = 'standard', cap, tools = TOOLS.base, resume = null, minutes = 30, what = '' } = {}) {
   const key = `${role}-r${round}${phase || ''}`;
@@ -164,7 +171,7 @@ async function session(role, round, phase, dir, { setting = 'standard', cap, too
   const tokens = rec ? (u.input_tokens || 0) + (u.output_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0) : null;
   const out = { key, sessionId: rec?.session_id || null, cost: rec ? Number(rec.total_cost_usd) || 0 : null,
     minutes: rec?.duration_ms ? Math.round(rec.duration_ms / 6000) / 10 : Math.round((Date.now() - t0) / 6000) / 10,
-    capped: rec?.subtype === 'error_max_budget_usd', error: r.code !== 0 && !rec ? (r.err || r.out).trim().split('\n').pop() : (rec?.is_error && rec?.subtype !== 'error_max_budget_usd' ? rec.subtype || 'error' : null) };
+    capped: rec?.subtype === 'error_max_budget_usd', error: r.code !== 0 && !rec ? (r.err || r.out).trim().split('\n').pop() : (rec?.is_error && rec?.subtype !== 'error_max_budget_usd' ? (rec.subtype || 'error') + apiError(rec) : null) };
   logRow({ who: role === 'blind' ? blindName : NAMES[role], what: `${what}${phase ? ` (phase ${phase})` : ''}; ${setting} setting, cap ${money(cap)}${out.capped ? ', stopped at its cap' : ''}`,
     minutes: out.minutes, tokens, cost: out.cost, round, session: key, wall: Math.round((Date.now() - t0) / 1000) });
   say(`end ${key}: ${out.minutes} min, ${out.cost == null ? 'no record' : money(out.cost)}${out.capped ? ' (cap)' : ''}${out.error ? `, error: ${out.error}` : ''}`);
@@ -734,6 +741,8 @@ try {
   } else {
     code = 1; say(`failed: ${e.message}`);
     await keepWork(`failed: ${e.message}`);
+    // the note tells her "we have been told": so tell the owner (run-order.yml emails what this file says)
+    if (process.env.PP_HANDOFF_FILE) try { writeFileSync(process.env.PP_HANDOFF_FILE, `${STAGE || 'start'}: failed: ${e.message}`.replace(/[\r\n]+/g, ' ').slice(0, 500) + '\n'); } catch (x) { say(`could not write the failure reason: ${x.message}`); }
     try { await orders('status', ID, 'failed', 'Something went wrong while we were making your order. We have been told and will be in touch.'); } catch (x) { say(`could not set the status: ${x.message}`); }
   }
 } finally {

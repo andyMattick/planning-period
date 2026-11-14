@@ -72,7 +72,7 @@ export function startFake({ port = 0 } = {}) {
   // supabase/migrations/20261112120000_pilot_limit.sql: the owner approves each teacher (pilot_teachers, 150 tokens), and
   // every order she sends counts against it. Off in the fake until /__test/pilot?on=1, so the other tests send freely.
   const pilot = { on: false, tokens: {} };
-  const tokensLeft = (uid) => (uid in pilot.tokens ? pilot.tokens[uid] - db.orders.filter((o) => o.teacher === uid).reduce((t, o) => t + (o.token_total || 0), 0) : null);
+  const tokensLeft = (uid) => (uid in pilot.tokens ? pilot.tokens[uid] - db.orders.filter((o) => o.teacher === uid && o.status !== 'failed').reduce((t, o) => t + (o.token_total || 0), 0) : null);
   function rpc(w, fn, a) {
     if (fn === 'is_admin') return !!(w.uid && isAdmin(w.uid));
     if (fn === 'my_pilot') return !pilot.on || !w.uid || isAdmin(w.uid) ? null : { approved: w.uid in pilot.tokens, tokensLeft: Math.max(0, tokensLeft(w.uid) || 0) };

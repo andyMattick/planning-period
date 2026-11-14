@@ -934,10 +934,14 @@ try {
     assert.equal(await send(p3, 'pp-2026-11-12-pilot4', 0), 'An order needs at least one item.');
     await p3.reload(); await p3.waitForSelector('#pilot-note:not([hidden])');
     assert.match(await p3.textContent('#pilot-note'), /^You’ve used your pilot tokens\. Thank you for testing! Email us( at \S+)? if you’d like more\.$/);
+    // a failed order gives its tokens back (owner, Nov 14, 2026; 20261114120000_pilot_failed_free.sql)
+    await owner('status', 'pp-2026-11-12-pilot3', 'failed', 'Something went wrong while we were making your order. We have been told and will be in touch.');
+    await p3.reload(); await p3.waitForSelector('#pilot-note:not([hidden])');
+    assert.equal(await p3.textContent('#pilot-note'), 'Pilot: free while we test. You have 50 tokens left.', 'a failed order does not count');
     await fetch(`${fake.url}/__test/pilot?on=0`);
     await c3.close();
   }
-  ok('pilot: a new sign-in waits for approval and cannot send; the owner approves her in My orders; then 150 tokens across her orders (60 tokens with 50 left refused with the numbers, the page warns before Send, 0-token orders refused, a used-up note at the end)');
+  ok('pilot: a new sign-in waits for approval and cannot send; the owner approves her in My orders; then 150 tokens across her orders (60 tokens with 50 left refused with the numbers, the page warns before Send, 0-token orders refused, a used-up note at the end, and a failed order gives its tokens back)');
 
   // ===== 9. retention: purge =====
   await fetch(`${fake.url}/__test/age?id=${orderId}`);
