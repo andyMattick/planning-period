@@ -9,5 +9,10 @@
   "website": "https://planning-period.vercel.app",
   "tokenNote": "Token prices are pilot estimates from real build costs; they will be recalibrated after the first orders.",
   "aiNotice": "Made with AI from the source material you provided, then checked by separate AI agents. Please review everything before it goes in front of students.",
-  "deleteNotice": "Your uploads and our working copies are deleted after you receive your pack. Your style examples are kept only for your own agents, and you can delete them at any time. Nothing you send is used for anyone else."
+  "deleteNotice": "Your uploads and our working copies are deleted about a week after you receive your pack, and our AI provider deletes its copy within 30 days. Your style examples are kept only for your own agents, and you can ask us to delete them at any time. Nothing you send is used for anyone else.",
+  "trainingNotice": "Your material is never used to train AI. We don't train models, and we use Anthropic's paid API, which doesn't use what we send it to train Claude.",
+  "studentDataNotice": "Please take out student names, grades and anything else about your students before you upload. We never need them.",
+  "feedbackNotice": "Your comments help our agents get better for every teacher: we keep the lesson as a general rule (like \"number the steps\"), never your name, your material or your words.",
+  "termsNotice": "What we make for you is yours to use with your students. Only upload material you have the right to use: you're responsible for what you upload and for how you use the pack. We don't sell your material or your packs, or share them with anyone but the services that run this site (our AI provider, our storage and our web host). This is a pilot, so please check every pack before students see it.",
+  "_noteNotices": "Owner, Nov 14, 2026: the privacy, student-data, feedback and terms notices. Keep them true: the daily purge runs 7 days after an order ends (.github/workflows/purge-due.yml), Anthropic's API keeps inputs and outputs up to 30 days and doesn't train on them by default, the auditor turns comments into general rules. Have a lawyer read them before charging money."
 }
